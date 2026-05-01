@@ -1,3 +1,14 @@
+---
+title: "神々の pantheon"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "religion"
+tags: ["deities", "gods", "religion", "pantheon"]
+status: "stable"
+---
+
 # 神々の pantheon - エターナル・アルカディア
 
 ## 神々の体系

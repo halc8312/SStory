@@ -1,3 +1,14 @@
+---
+title: "世界観イメージギャラリー"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "assets"
+tags: ["images", "gallery", "assets"]
+status: "stable"
+---
+
 # 世界観イメージギャラリー
 
 このディレクトリには、エターナル・アルカディアのイメージ画像を格納する予定です。

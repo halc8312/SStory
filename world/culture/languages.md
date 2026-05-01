@@ -1,3 +1,14 @@
+---
+title: "言語"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "culture"
+tags: ["languages", "culture", "communication"]
+status: "stable"
+---
+
 # 言語 - エターナル・アルカディア
 
 ## 言語系統

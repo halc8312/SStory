@@ -1,3 +1,14 @@
+---
+title: "歴史年表"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "lore"
+tags: ["timeline", "history", "chronology"]
+status: "stable"
+---
+
 # 歴史年表 - エターナル・アルカディア
 
 ## 遠古の時代（-10000年～-5000年）
