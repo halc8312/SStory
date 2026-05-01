@@ -18,7 +18,7 @@ jobs:
       contains(github.event.comment.body, '\n/oc') ||
       contains(github.event.comment.body, '\n/opencode')
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     permissions:
       id-token: write
@@ -28,17 +28,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           persist-credentials: false
 
+      - name: Configure git author
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
       - name: Run opencode
-        uses: anomalyco/opencode/github@v1.14.31
+        uses: anomalyco/opencode/github@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           STEPFUN_API_KEY: ${{ secrets.STEPFUN_API_KEY }}
         with:
           model: stepfun/step-3.5-flash-2603
           share: false
-          use_github_token: true
