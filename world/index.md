@@ -1,3 +1,15 @@
+---
+title: "エターナル・アルカディア世界構築"
+version: "1.0.0"
+created: "2026-01-15"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "index"
+tags: ["world", "overview", "index", "toc"]
+status: "stable"
+---
+
 # エターナル・アルカディア世界構築
 
 ## 世界概要

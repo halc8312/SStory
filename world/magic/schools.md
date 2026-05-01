@@ -1,3 +1,15 @@
+---
+title: "魔法学校 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-02-22"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "magic"
+tags: ["magic-schools", "education", "academy"]
+status: "stable"
+---
+
 # 魔法学校 - エターナル・アルカディア
 
 ## 精霊協会公認魔法学校制度

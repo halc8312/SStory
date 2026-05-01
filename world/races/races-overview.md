@@ -1,3 +1,15 @@
+---
+title: "五大種族 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-02-15"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "races"
+tags: ["races", "species", "five-races", "spirit-contracts"]
+status: "stable"
+---
+
 # 五大種族 - エターナル・アルカディア
 
 ## 種族の起源

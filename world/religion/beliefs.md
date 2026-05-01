@@ -1,3 +1,15 @@
+---
+title: "信仰体系 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-03-28"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "religion"
+tags: ["beliefs", "faith", "religion", "worship"]
+status: "stable"
+---
+
 # 信仰体系 - エターナル・アルカディア
 
 ## 信仰の基本概念

@@ -1,3 +1,15 @@
+---
+title: "創世神話 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-01-15"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "lore"
+tags: ["creation", "gods", "four-primordials", "spirit-contracts"]
+status: "stable"
+---
+
 # 創世神話 - エターナル・アルカディア
 
 ## 始まり: 原初の混沌

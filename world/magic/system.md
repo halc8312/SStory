@@ -1,3 +1,15 @@
+---
+title: "魔法系統 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-02-20"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "magic"
+tags: ["magic", "spirit-contracts", "system", "ranks"]
+status: "stable"
+---
+
 # 魔法系統 - エターナル・アルカディア
 
 ## 魔法の基盤

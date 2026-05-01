@@ -1,3 +1,15 @@
+---
+title: "同盟と戦争 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-03-05"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "politics"
+tags: ["alliances", "war", "diplomacy", "treaties"]
+status: "stable"
+---
+
 # 同盟と戦争 - エターナル・アルカディア
 
 ## 国際軍事同盟

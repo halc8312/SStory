@@ -1,3 +1,15 @@
+---
+title: "魔導器 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-02-25"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "magic"
+tags: ["artifacts", "items", "equipment", "magic-items"]
+status: "stable"
+---
+
 # 魔導器 - エターナル・アルカディア
 
 ## 魔導器とは

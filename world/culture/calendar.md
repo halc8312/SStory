@@ -1,3 +1,15 @@
+---
+title: "暦 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-03-18"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "culture"
+tags: ["calendar", "time", "dating-system"]
+status: "stable"
+---
+
 # 暦 - エターナル・アルカディア
 
 ## 暦法の概要

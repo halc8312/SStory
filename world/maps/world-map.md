@@ -1,3 +1,15 @@
+---
+title: "世界地図 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-04-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "maps"
+tags: ["world-map", "cartography", "continents"]
+status: "stable"
+---
+
 # 世界地図 - エターナル・アルカディア
 
 ## 世界地図の基本情報

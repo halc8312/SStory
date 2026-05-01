@@ -1,3 +1,15 @@
+---
+title: "大陸概要 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-02-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "geography"
+tags: ["continents", "landmasses", "geography"]
+status: "stable"
+---
+
 # 大陸概要 - エターナル・アルカディア
 
 ## 世界地形的特徴

@@ -1,3 +1,15 @@
+---
+title: "地域詳細: エルディア中央地域"
+version: "1.0.0"
+created: "2026-02-10"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "geography"
+tags: ["region", "central", "elida", "detailed"]
+status: "stable"
+---
+
 # 地域詳細: エルディア中央地域
 
 ## 中央地域概要

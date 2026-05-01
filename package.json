@@ -1,0 +1,42 @@
+{
+  "name": "sstory-worldbuilding",
+  "version": "1.0.0",
+  "description": "SStory - エターナル・アルカディア世界構築プロジェクト",
+  "main": "index.js",
+  "scripts": {
+    "lint": "markdownlint '**/*.md' --ignore node_modules",
+    "lint:fix": "markdownlint '**/*.md' --fix --ignore node_modules",
+    "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
+    "spell": "cspell '**/*.md'",
+    "validate": "node scripts/validate-frontmatter.js",
+    "test": "npm run lint && npm run links && npm run spell",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "worldbuilding",
+    "fantasy",
+    "trpg",
+    "rpg",
+    "setting",
+    "markdown",
+    "japanese"
+  ],
+  "author": "halc8312",
+  "contributors": [
+    "SStory Community"
+  ],
+  "license": "CC-BY-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halc8312/SStory.git"
+  },
+  "devDependencies": {
+    "markdownlint-cli": "^0.40.0",
+    "markdown-link-check": "^3.10.0",
+    "cspell": "^8.0.0",
+    "husky": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

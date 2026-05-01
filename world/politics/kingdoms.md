@@ -1,3 +1,15 @@
+---
+title: "国家一覧 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-03-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "politics"
+tags: ["nations", "kingdoms", "politics", "twelve-nations"]
+status: "stable"
+---
+
 # 国家一覧 - エターナル・アルカディア
 
 ## 世界の政治体制

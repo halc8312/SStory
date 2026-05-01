@@ -1,0 +1,94 @@
+name: Lint and Validate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install markdownlint
+        run: npm install -g markdownlint-cli
+      - name: Run markdownlint
+        run: markdownlint '**/*.md' --ignore node_modules
+
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check
+      - name: Create config
+        run: |
+          cat > .markdown-link-check.json <<'EOF'
+          {
+            "ignorePatterns": [
+              { "pattern": "^https://" }
+            ],
+            "timeout": 10000,
+            "retryOn429": true,
+            "retryCount": 3,
+            "checkLinks": [
+              {
+                "path": "**/*.md",
+                "recurse": true
+              }
+            ]
+          }
+          EOF
+      - name: Check links
+        run: markdown-link-check -q -c .markdown-link-check.json '**/*.md'
+
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run cspell
+        uses: streetsidesoftware/cspell-action@v1
+        with:
+          files: '**/*.md'
+          language: 'ja'
+          spellcheckLimit: 100
+          failOnError: false
+
+  frontmatter-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check YAML frontmatter
+        run: |
+          echo "Checking for YAML frontmatter in all markdown files..."
+          for file in $(find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*"); do
+            if ! head -1 "$file" | grep -q "^---"; then
+              echo "❌ Missing frontmatter: $file"
+              exit 1
+            fi
+          done
+          echo "✅ All files have YAML frontmatter"
+
+  consistency-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check terminology consistency
+        run: |
+          echo "Checking terminology consistency..."
+          # Check for inconsistent earth spirit naming
+          if grep -r "地の精霊ドリト" world/ 2>/dev/null; then
+            echo "❌ Found inconsistent earth spirit name (ドリト instead of グラン)"
+            exit 1
+          fi
+          # Check for kmkm² typo
+          if grep -r "kmkm²" world/ 2>/dev/null; then
+            echo "❌ Found kmkm² typo"
+            exit 1
+          fi
+          echo "✅ Terminology consistency check passed"

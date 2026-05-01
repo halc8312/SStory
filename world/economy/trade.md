@@ -1,3 +1,15 @@
+---
+title: "通貨と交易 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-03-20"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "economy"
+tags: ["trade", "currency", "economy", "commerce"]
+status: "stable"
+---
+
 # 通貨と交易 - エターナル・アルカディア
 
 ## 通貨システム

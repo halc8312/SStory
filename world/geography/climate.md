@@ -1,3 +1,15 @@
+---
+title: "気候と生態系 - エターナル・アルカディア"
+version: "1.0.0"
+created: "2026-02-05"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+category: "geography"
+tags: ["climate", "ecosystem", "environment"]
+status: "stable"
+---
+
 # 気候と生態系 - エターナル・アルカディア
 
 ## 気候帯の分類
