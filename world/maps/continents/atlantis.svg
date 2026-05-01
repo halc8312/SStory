@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <style>
+    .land { fill: #b3d9ff; stroke: #4682b4; stroke-width: 2; }
+    .water { fill: #a0c8f0; }
+    .city { fill: #ff0000; }
+    .label { font-family: sans-serif; font-size: 16px; fill: #333; text-anchor: middle; }
+    .city-label { font-family: sans-serif; font-size: 12px; fill: #555; }
+  </style>
+  <rect width="800" height="600" class="water"/>
+  <!-- Atlantis -->
+  <polygon class="land" points="50,200 200,180 220,380 100,400"/>
+  <!-- Cities -->
+  <circle class="city" cx="140" cy="280" r="5"/>
+  <text x="140" y="270" class="city-label">アトランティア</text>
+  <text x="140" y="330" class="label">アトランティス大陸</text>
+</svg>

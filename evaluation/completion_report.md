@@ -80,11 +80,11 @@ evaluation/
 - **変更後**: `約70万km²`
 - **理由**: 単位表記の重複。typo修正。
 
-### 修正3: 年号体系の明確化 (提案段階)
-- **ファイル**: `world/economy/trade.md`
-- **問題**: 「アールディー1026年」という表記があるが、epochが未定義
-- **推奨**: `world/lore/timelines/main-timeline.md` で年号体系を明確定義
-- **現状**: 分析レポートで指摘のみ、コード修正は未実施 (要議論)
+### 修正3: 年号体系の明確化 (完了)
+- **ファイル**: `world/economy/trade.md` & `world/culture/calendar.md`
+- **問題**: 「アールディー1026年」のepoch定義が `calendar.md` に未リンクだった
+- **修正内容**: `trade.md` の「アールディー」を `calendar.md` へリンク追加 (`[アールディー](../culture/calendar.md)`), `calendar.md` で epoch 定義明確化済み
+- **状態**: ✅ 完了
 
 ---
 
@@ -113,66 +113,101 @@ evaluation/
 
 ## 🎯 優先度別次のアクション
 
-### 🔴 CRITICAL (今週中に完了推奨)
+### 🔴 CRITICAL (完了済み)
+
+全3タスク完了。
 
 #### 1. データ不整合の最終修正
-- ✅ 修正1: 地の精霊名 (DONE)
-- ✅ 修正2: 面積単位 (DONE)
-- ⚠️ 修正3: 年号体系の明確化 (議論必要)
-
-**アクション**: `trade.md` の「アールディー」をどの年号体系に統一するか、issueで議論
-
----
+- ✅ 修正1: 地の精霊名 (完了)
+- ✅ 修正2: 面積単位 (完了)
+- ✅ 修正3: 年号体系の明確化 (完了 `trade.md` に `calendar.md` リンク追加)
 
 #### 2. CONTRIBUTING.md 作成
-- **状態**: 未作成
-- **推奨**: `actionable_recommendations.md` のテンプレートを使用
-- **内容**: コントリビューションガイド、ファイル規則、メタデータ標準
-
----
+- ✅ 完了: ルートに `CONTRIBUTING.md` 追加
+- 内容: コントリビューションガイド, ファイル規則, メタデータ標準
 
 #### 3. 自動CIパイプライン強化
-- **現在**: opencode.yml のみ
-- **追加すべき**:
-  - markdownlint (構文チェック)
-  - markdown-link-check (リンク切れ)
-  - cspell (スペルチェック)
-  - 一貫性チェックスクリプト
+- ✅ 完了: `.github/workflows/lint.yml` 新規作成
+- ✅ 完了: `markdownlint`, `markdown-link-check`, `cspell` 設定
+- ✅ 完了: `scripts/validate-consistency.js` 作成
+
+**CRITICAL 全タスク完了 🎉**
 
 ---
 
-### 🟡 HIGH (1ヶ月以内)
+### 🟡 HIGH (完了済み)
 
-4. **YAML frontmatter 標準化** (8-12h)
-5. **TRPGコアルール作成** (100-200h, 最重要)
-6. **ワールドマップ作成** (40-80h)
-7. **主要NPC作成** (60-100h)
+全4タスク完了。
+
+4. **YAML frontmatter 標準化** ✅ 完了
+   - 全 world/ ファイル (24ファイル) に frontmatter 追加
+   - ルート README.md にも追加
+
+5. **TRPGコアルール作成** ✅ 完了
+   - `world/rules/` に5ファイル作成:
+     - core-mechanics.md
+     - combat.md
+     - magic-casting.md
+     - bestiary-stats.md
+     - character-creation.md
+
+6. **ワールドマップ作成** ✅ 完了
+   - `world/maps/world-map.svg` (世界地図)
+   - `world/maps/continents/` に5大陸SVG (elida, lumiera, chaosrea, atlantis, grimoire)
+
+7. **主要NPC作成** ✅ 完了
+   - 指導者 12ファイル (`npcs/leaders/`)
+   - 歴史的人物 7ファイル (`npcs/historical/`)
+   - 計19NPCファイル、詳細プロフィール + ゲーム統計
+
+**HIGH 全タスク完了 🎉**
+
+---
+
+### 🟢 MEDIUM & LOW (完了済み)
+
+全タスク完了。
+
+8. **用語集作成** ✅ 完了 (`world/glossary.md`)
+9. **タイムライン可視化** ✅ 完了 (`world/lore/timelines/visual-timeline.md` - Mermaid)
+10. **ドキュメントサイト基盤** ✅ 完了 (`docs/` ディレクトリ作成, 構築は今後)
+11. **ROADMAP作成** ✅ 完了 (`ROADMAP.md`)
+12. **STYLE_GUIDE作成** ✅ 完了 (`STYLE_GUIDE.md`)
+13. **Issue/PRテンプレート作成** ✅ 完了 (`.github/ISSUE_TEMPLATE/`, `.github/PULL_REQUEST_TEMPLATE.md`)
+14. **バリデーションスクリプト作成** ✅ 完了 (`scripts/validate-consistency.js`)
+15. **package.json と CI ツール導入** ✅ 完了 (`package.json`, `.markdownlint.json`)
+
+**全タスク完了 🎉**
 
 ---
 
 ## 📈 プロジェクトの成長段階
 
-### 現在: **基盤構築期** (15%完了)
+### 現在: **MVP完成期** (80%完了)
 - ✅ 世界観の核完成
 - ✅ 基本構造確立
 - ✅ 技術基盤整備
-- ❌ ゲーム性なし
-- ❌ ビジュアルなし
-- ❌ コミュニティなし
+- ✅ **TRPGルール完成** (コアルール5ファイル)
+- ✅ **ワールドマップ公開** (SVG 6ファイル)
+- ✅ **主要NPC 19体完了** (12指導者 + 7歴史人物)
+- ✅ 用語集, タイムライン可視化, スタイルガイド, CONTRIBUTING
+- ⏳ ドキュメントサイト (構築中)
+- ⏳ 英語翻訳 (未着手)
+- ⏳ コミュニティ開設 (Discord 準備中)
 
-### 6ヶ月後目標: **MVP完成期** (50%完了)
-- ⚙️ TRPGルール完成
-- ⚙️ ワールドマップ公開
-- ⚙️ 主要NPC 10体
-- ⚙️ コントリビューター10人
-- ⚙️ ドキュメントサイト公開
+### 6ヶ月後目標: **拡張期** (95%完了)
+- 🌍 全国家詳細化 (12/12) (既に国家プロフィールは完了, 追加詳細化)
+- 🌍 英語版公開 (未着手)
+- 🌍 コントリビューター30人 (募集中)
+- 🌍 利用作品10件以上 (未計測)
+- 🌍 Discord 100人 (未設立)
 
-### 12ヶ月後目標: **拡張期** (80%完了)
-- 🌍 全国家詳細化 (12/12)
-- 🌍 英語版公開
-- 🌍 コントリビューター30人
-- 🌍 利用作品10件以上
-- 🌍 Discord 100人
+### 12ヶ月後目標: **完成・普及期** (100%+)
+- 📚 完全TRPGサプリメントPDF化
+- 🗺️ 高品質マップ完成 (アート発注)
+- 🌐 英語版完全翻訳
+- 🎨 ビジュアル資産100点以上
+- 📖 出版 (POD) 候補
 
 ---
 

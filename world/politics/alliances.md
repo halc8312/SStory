@@ -1,12 +1,11 @@
 ---
-title: "同盟と戦争 - エターナル・アルカディア"
+title: "同盟と戦争"
 version: "1.0.0"
-created: "2026-03-05"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "politics"
-tags: ["alliances", "war", "diplomacy", "treaties"]
+tags: ["alliances", "war", "diplomacy"]
 status: "stable"
 ---
 

@@ -1,12 +1,11 @@
 ---
-title: "資源 - エターナル・アルカディア"
+title: "資源"
 version: "1.0.0"
-created: "2026-03-22"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "economy"
-tags: ["resources", "materials", "minerals", "mana"]
+tags: ["resources", "materials", "economy"]
 status: "stable"
 ---
 

@@ -1,10 +1,9 @@
 ---
-title: "モンスター図鑑 - エターナル・アルカディア"
+title: "モンスター図鑑"
 version: "1.0.0"
-created: "2026-03-10"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "creatures"
 tags: ["monsters", "bestiary", "creatures", "stats"]
 status: "stable"

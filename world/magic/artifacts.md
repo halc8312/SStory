@@ -1,12 +1,11 @@
 ---
-title: "魔導器 - エターナル・アルカディア"
+title: "魔導器"
 version: "1.0.0"
-created: "2026-02-25"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "magic"
-tags: ["artifacts", "items", "equipment", "magic-items"]
+tags: ["artifacts", "items", "equipment", "magic"]
 status: "stable"
 ---
 

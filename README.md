@@ -1,12 +1,11 @@
 ---
 title: "SStory - エターナル・アルカディア世界構築プロジェクト"
 version: "1.0.0"
-created: "2026-01-01"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
-category: "readme"
-tags: ["project", "main", "sstory"]
+category: "project"
+tags: ["project", "worldbuilding", "introduction"]
 status: "stable"
 ---
 

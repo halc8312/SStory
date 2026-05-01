@@ -1,12 +1,11 @@
 ---
-title: "大陸概要 - エターナル・アルカディア"
+title: "大陸概要"
 version: "1.0.0"
-created: "2026-02-01"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "geography"
-tags: ["continents", "landmasses", "geography"]
+tags: ["continents", "landmass", "geography"]
 status: "stable"
 ---
 

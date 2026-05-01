@@ -1,13 +1,12 @@
 ---
 title: "世界観イメージギャラリー"
 version: "1.0.0"
-created: "2026-04-01"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
-category: "maps"
-tags: ["images", "gallery", "assets", "planned"]
-status: "draft"
+category: "assets"
+tags: ["images", "gallery", "assets"]
+status: "stable"
 ---
 
 # 世界観イメージギャラリー

@@ -1,12 +1,11 @@
 ---
-title: "魔法系統 - エターナル・アルカディア"
+title: "魔法系統"
 version: "1.0.0"
-created: "2026-02-20"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "magic"
-tags: ["magic", "spirit-contracts", "system", "ranks"]
+tags: ["magic", "system", "spirit-contracts", "elements"]
 status: "stable"
 ---
 

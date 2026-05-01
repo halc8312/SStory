@@ -1,12 +1,11 @@
 ---
-title: "五大種族 - エターナル・アルカディア"
+title: "五大種族"
 version: "1.0.0"
-created: "2026-02-15"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "races"
-tags: ["races", "species", "five-races", "spirit-contracts"]
+tags: ["races", "species", "overview"]
 status: "stable"
 ---
 

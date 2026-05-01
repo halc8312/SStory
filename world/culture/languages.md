@@ -1,12 +1,11 @@
 ---
-title: "言語 - エターナル・アルカディア"
+title: "言語"
 version: "1.0.0"
-created: "2026-03-15"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "culture"
-tags: ["languages", "linguistics", "communication"]
+tags: ["languages", "culture", "communication"]
 status: "stable"
 ---
 

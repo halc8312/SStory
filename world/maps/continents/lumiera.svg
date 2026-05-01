@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <style>
+    .land { fill: #c8e6c9; stroke: #556b2f; stroke-width: 2; }
+    .water { fill: #a0c8f0; }
+    .city { fill: #ff0000; }
+    .label { font-family: sans-serif; font-size: 16px; fill: #333; text-anchor: middle; }
+    .city-label { font-family: sans-serif; font-size: 12px; fill: #555; }
+  </style>
+  <rect width="800" height="600" class="water"/>
+  <!-- Lumiera continent -->
+  <polygon class="land" points="500,150 750,130 770,350 650,380 530,300"/>
+  <!-- Cities -->
+  <circle class="city" cx="600" cy="200" r="5"/>
+  <text x="600" y="190" class="city-label">ムーンライト・グレイス</text>
+  <circle class="city" cx="650" cy="280" r="3"/>
+  <text x="650" y="270" class="city-label">エメラルド・シティ</text>
+  <text x="640" y="250" class="label">リュミエラ大陸</text>
+</svg>

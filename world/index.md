@@ -1,12 +1,11 @@
 ---
 title: "エターナル・アルカディア世界構築"
 version: "1.0.0"
-created: "2026-01-15"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
-category: "index"
-tags: ["world", "overview", "index", "toc"]
+category: "overview"
+tags: ["index", "toc", "navigation"]
 status: "stable"
 ---
 

@@ -1,12 +1,11 @@
 ---
-title: "創世神話 - エターナル・アルカディア"
+title: "創世神話"
 version: "1.0.0"
-created: "2026-01-15"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "lore"
-tags: ["creation", "gods", "four-primordials", "spirit-contracts"]
+tags: ["creation", "gods", "mythology", "origin"]
 status: "stable"
 ---
 

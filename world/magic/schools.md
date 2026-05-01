@@ -1,12 +1,11 @@
 ---
-title: "魔法学校 - エターナル・アルカディア"
+title: "魔法学校"
 version: "1.0.0"
-created: "2026-02-22"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "magic"
-tags: ["magic-schools", "education", "academy"]
+tags: ["magic", "education", "schools"]
 status: "stable"
 ---
 

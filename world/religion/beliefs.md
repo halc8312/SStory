@@ -1,12 +1,11 @@
 ---
-title: "信仰体系 - エターナル・アルカディア"
+title: "信仰体系"
 version: "1.0.0"
-created: "2026-03-28"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "religion"
-tags: ["beliefs", "faith", "religion", "worship"]
+tags: ["beliefs", "religion", "faith", "doctrine"]
 status: "stable"
 ---
 

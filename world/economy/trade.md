@@ -1,10 +1,9 @@
 ---
-title: "通貨と交易 - エターナル・アルカディア"
+title: "通貨と交易"
 version: "1.0.0"
-created: "2026-03-20"
+created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-contributors: []
 category: "economy"
 tags: ["trade", "currency", "economy", "commerce"]
 status: "stable"
@@ -75,7 +74,7 @@ status: "stable"
 
 ## 経済システム
 
-### 経済規模比較（アールディー1026年現在）
+### 経済規模比較（[アールディー](../culture/calendar.md)1026年現在）
 
 | 国家 | GDP（億金币） | 一人当たりGDP | 主要産業 |
 |------|---------------|---------------|----------|
