@@ -1,3 +1,14 @@
+---
+title: "古代文明"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "lore"
+tags: ["civilizations", "history", "ancient"]
+status: "stable"
+---
+
 # 古代文明 - エターナル・アルカディア
 
 ## 古代文明の定義

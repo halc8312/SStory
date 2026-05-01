@@ -1,3 +1,14 @@
+---
+title: "資源"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "economy"
+tags: ["resources", "materials", "economy"]
+status: "stable"
+---
+
 # 資源 - エターナル・アルカディア
 
 ## 資源分類

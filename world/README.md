@@ -1,3 +1,14 @@
+---
+title: "エターナル・アルカディア世界構築プロジェクト"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "overview"
+tags: ["project", "worldbuilding", "introduction"]
+status: "stable"
+---
+
 # エターナル・アルカディア世界構築プロジェクト
 
 ## プロジェクト概要

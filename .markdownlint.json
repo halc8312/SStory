@@ -1,0 +1,16 @@
+{
+  "default": true,
+  "MD003": { "style": "atx" },
+  "MD004": { "style": "dash" },
+  "MD007": { "indent": 2 },
+  "MD013": {
+    "line_length": 120,
+    "code_blocks": false,
+    "tables": false
+  },
+  "MD025": { "front_matter": ".*" },
+  "MD026": { "punctuation": ".,;:!?" },
+  "MD029": { "style": "ordered" },
+  "MD033": { "allowed_elements": ["br", "hr", "img", "input", "meta", "link"] },
+  "MD040": { "allowed_languages": ["bash", "json", "yaml", "javascript", "typescript", "plaintext", "markdown"] }
+}

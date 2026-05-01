@@ -1,3 +1,14 @@
+---
+title: "五大種族"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "races"
+tags: ["races", "species", "overview"]
+status: "stable"
+---
+
 # 五大種族 - エターナル・アルカディア
 
 ## 種族の起源

@@ -1,3 +1,14 @@
+---
+title: "モンスター図鑑"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "creatures"
+tags: ["monsters", "bestiary", "creatures", "stats"]
+status: "stable"
+---
+
 # モンスター図鑑 - エターナル・アルカディア
 
 ## モンスターの定義

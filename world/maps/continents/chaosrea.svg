@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <style>
+    .land { fill: #ffccb3; stroke: #cd5c5c; stroke-width: 2; }
+    .water { fill: #a0c8f0; }
+    .city { fill: #ff0000; }
+    .label { font-family: sans-serif; font-size: 16px; fill: #333; text-anchor: middle; }
+    .city-label { font-family: sans-serif; font-size: 12px; fill: #555; }
+  </style>
+  <rect width="800" height="600" class="water"/>
+  <!-- Chaos-Rea -->
+  <polygon class="land" points="280,300 600,280 630,500 400,550 250,450"/>
+  <!-- Cities -->
+  <circle class="city" cx="350" cy="380" r="5"/>
+  <text x="350" y="370" class="city-label">ブラッド・フォート</text>
+  <circle class="city" cx="480" cy="420" r="3"/>
+  <text x="480" y="410" class="city-label">オアシス・シティ</text>
+  <text x="440" y="350" class="label">カオス・リア大陸</text>
+</svg>

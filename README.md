@@ -1,3 +1,14 @@
+---
+title: "SStory - エターナル・アルカディア世界構築プロジェクト"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+category: "project"
+tags: ["project", "worldbuilding", "introduction"]
+status: "stable"
+---
+
 # SStory - エターナル・アルカディア世界構築プロジェクト
 
 ファンタジー世界「エターナル・アルカディア」の完全な世界観を構築するプロジェクトです。
