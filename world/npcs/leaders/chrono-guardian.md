@@ -1,9 +1,17 @@
 ---
-title: "クロノス・タイムウォッチャー (時空の番人 時空監視長官)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "クロノス・タイムウォッチャー (時空の番人 時空監視長官)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "human", "time", "chrono-guardian"]
+status: "stable"
+npc_type: "leader"
 race: "human (time-affected)"
-age: 200 (chronologically)
+age: 200
 alignment: "lawful-neutral"
 class: "Wizard (School of Divination) 18"
 ---

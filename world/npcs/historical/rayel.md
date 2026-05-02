@@ -1,9 +1,17 @@
 ---
-title: "レイエル (精霊協会創設者・エルフの祭司)"
+type: "npc"
 category: "npcs"
-type: "historical"
+title: "レイエル (精霊協会創設者・エルフの祭司)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "historical", "elf", "priest", "founder"]
+status: "stable"
+npc_type: "historical"
 race: "elf"
-age: 1500 (death -50)
+age: 1500
 alignment: "lawful-good"
 class: "Cleric (Nature Domain) 15 / Druid 5"
 ---

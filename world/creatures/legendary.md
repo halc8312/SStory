@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "creatures"
 title: "伝説の生物"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "creatures"
+contributors: []
 tags: ["legendary", "creatures", "mythical", "epic"]
 status: "stable"
 ---

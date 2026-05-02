@@ -1,9 +1,17 @@
 ---
-title: "カイン・ユニオン (ゼフィア連合初代大統領)"
+type: "npc"
 category: "npcs"
-type: "historical"
+title: "カイン・ユニオン (ゼフィア連合初代大統領)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "historical", "human", "president", "founder"]
+status: "stable"
+npc_type: "historical"
 race: "human"
-age: 78 (death at -950)
+age: 78
 alignment: "lawful-good"
 class: "Fighter (Champion) 10 / Bard 5"
 ---

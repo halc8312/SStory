@@ -1,0 +1,116 @@
+# Canon Document Schema
+# 正統世界観文書（公式設定）用スキーマ
+# 対象: lore, geography, races, magic, politics, creatures, culture, economy, religion, maps, transportation などの公式設定文書
+
+type: "object"
+allOf:
+  - "$ref": "common.yaml#/properties"
+required:
+  - type
+  - category
+  - title
+  - version
+  - created
+  - last_updated
+  - author
+  - tags
+  - status
+  - contributors  # 追加必須フィールド
+properties:
+  type:
+    const: "canon-document"
+    description: "正統世界観文書（公式設定）"
+  category:
+    enum: ["lore", "geography", "races", "magic", "politics", "creatures", "culture", "economy", "religion", "maps", "transportation"]
+    description: "内容カテゴリ"
+  contributors:
+    type: "array"
+    items:
+      type: "string"
+    default: []
+    description: "貢献者GitHub usernameリスト（複数可）"
+  previous_version:
+    type: "string"
+    description: "前バージョン番号（変更履歴用）"
+  changelog:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        version:
+          type: "string"
+        date:
+          type: "string"
+          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        changes:
+          type: "array"
+          items:
+            type: "string"
+        author:
+          type: "string"
+    description: "変更履歴リスト"
+  based_on:
+    type: "string"
+    description: "ベースとなった資料・引用元（あれば）"
+  reviewed_by:
+    type: "array"
+    items:
+      type: "string"
+    description: "レビュー担当者GitHub usernameリスト"
+
+# 説明
+description: |
+  **canon-document** は、エターナル・アルカディア世界の公式設定を記述する文書です。
+
+  **特徴**:
+  - 世界観の事実（历史、地理、文化、経済など）を客観的に記述
+  - 複数人の共同編集を想定（contributors配列で管理）
+  - 変更履歴（changelog）を保持推奨
+  - レビュープロセスを経てstableに遷移
+
+  **使用例**:
+  - world/lore/creation-myth.md（創世神話）
+  - world/geography/continents.md（大陸概要）
+  - world/races/races-overview.md（種族概要）
+  - world/magic/system.md（魔法システム）
+  - world/politics/kingdoms.md（国家一覧）
+  - world/economy/trade.md（通貨と交易）
+
+  **最小frontmatter例**:
+  ```yaml
+  ---
+  type: "canon-document"
+  category: "lore"
+  title: "創世神話"
+  version: "1.0.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-01"
+  author: "halc8312"
+  contributors: []
+  tags: ["creation", "gods", "mythology"]
+  status: "stable"
+  ---
+  ```
+
+  **推奨frontmatter例**:
+  ```yaml
+  ---
+  type: "canon-document"
+  category: "lore"
+  title: "創世神話"
+  version: "1.2.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-15"
+  author: "halc8312"
+  contributors: ["contributor1", "contributor2"]
+  tags: ["creation", "gods", "mythology", "origin"]
+  status: "stable"
+  previous_version: "1.1.0"
+  changelog:
+    - version: "1.2.0"
+      date: "2026-05-15"
+      changes: ["古代文明の記述を追加", "タイポ修正"]
+      author: "halc8312"
+  reviewed_by: ["reviewer1"]
+  ---
+  ```

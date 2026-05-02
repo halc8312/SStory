@@ -1,11 +1,13 @@
 ---
+type: "canon-document"
+category: "politics"
 title: "同盟と戦争"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "politics"
-tags: ["alliances", "war", "diplomacy"]
+contributors: []
+tags: ["alliances", "wars", "diplomacy", "politics"]
 status: "stable"
 ---
 

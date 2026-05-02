@@ -1,13 +1,25 @@
 ---
+type: "npc"
+category: "npcs"
 title: "最後の月帝国女皇"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-category: "npcs"
 tags: ["npc", "historical", "empress", "lunar-empire"]
 status: "stable"
+npc_type: "historical"
+race: "elf"
+age: 60
+alignment: "lawful-neutral"
+class: "Wizard (School of Divination) 18 / Cleric (Moon Domain) 10"
+spirit_contract:
+  wind: 10
+  earth: 10
+  fire: 10
+  water: 20
+  moon: 95
 ---
 
 # 最後の月帝国女皇 (Last Empress of Lunarian Empire)

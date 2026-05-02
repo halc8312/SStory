@@ -1,7 +1,15 @@
 ---
-title: "ミヤ・ジェイド (翡翠王国女王)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "ミヤ・ジェイド (翡翠王国女王)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "human", "queen", "jade-kingdom"]
+status: "stable"
+npc_type: "leader"
 race: "human"
 age: 26
 alignment: "lawful-good"

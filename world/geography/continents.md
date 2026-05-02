@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "geography"
 title: "大陸概要"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "geography"
+contributors: []
 tags: ["continents", "landmass", "geography"]
 status: "stable"
 ---

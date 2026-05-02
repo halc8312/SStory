@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "lore"
 title: "創世神話"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "lore"
+contributors: []
 tags: ["creation", "gods", "mythology", "origin"]
 status: "stable"
 ---

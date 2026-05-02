@@ -1,7 +1,15 @@
 ---
-title: "マーカス・フリーポート (自由都市国家群 代表)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "マーカス・フリーポート (自由都市国家群 代表)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "human", "free-cities"]
+status: "stable"
+npc_type: "leader"
 race: "human"
 age: 58
 alignment: "chaotic-good"

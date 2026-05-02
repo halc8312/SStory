@@ -1,12 +1,18 @@
 ---
+type: "rule"
+category: "rules"
 title: "コアルール: 基本メカニクス"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "rules"
+contributors: []
 tags: ["core-mechanics", "rules", "system", "basics"]
 status: "stable"
+rule_type: "core"
+system: "custom"
+complexity: "intermediate"
+related_rules: ["character-creation.md", "combat.md", "magic-casting.md"]
 ---
 
 # コアルール - 基本メカニクス

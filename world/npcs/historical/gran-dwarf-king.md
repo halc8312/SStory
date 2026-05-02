@@ -1,13 +1,25 @@
 ---
+type: "npc"
+category: "npcs"
 title: "偉大なるドワーフ王 グランキング1世"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-category: "npcs"
 tags: ["npc", "historical", "dwarf", "king"]
 status: "stable"
+npc_type: "historical"
+race: "dwarf"
+age: 50
+alignment: "lawful-good"
+class: "Fighter (Champion) 10 / Cleric (Forge Domain) 10"
+spirit_contract:
+  wind: 20
+  earth: 90
+  fire: 30
+  water: 10
+  moon: 10
 ---
 
 # 偉大なるドワーフ王 グランキング1世 (Gran King I)

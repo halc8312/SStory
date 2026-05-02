@@ -1,9 +1,17 @@
 ---
-title: "グルム・メカニカ (グランドリア王国 技術王)"
+type: "npc"
 category: "npcs"
-type: "historical"
+title: "グルム・メカニカ (グランドリア王国 技術王)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "historical", "dwarf", "artificer", "king"]
+status: "stable"
+npc_type: "historical"
 race: "dwarf"
-age: 210 (death -1000)
+age: 210
 alignment: "lawful-neutral"
 class: "Artificer (Artillerist) 18 / Wizard 2"
 ---

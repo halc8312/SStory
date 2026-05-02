@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "geography"
 title: "地理座標データ"
 version: "2.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-02"
 author: "halc8312 (修正: opencode)"
-category: "geography"
+contributors: []
 tags: ["coordinates", "locations", "geodata"]
 status: "stable"
 ---

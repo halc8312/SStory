@@ -1,12 +1,18 @@
 ---
+type: "rule"
+category: "rules"
 title: "魔法発動ルール"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "rules"
+contributors: []
 tags: ["magic", "spellcasting", "rules", "system"]
 status: "stable"
+rule_type: "magic"
+system: "custom"
+complexity: "advanced"
+related_rules: ["core-mechanics.md", "magic/system.md"]
 ---
 
 # 魔法発動ルール - エターナル・アルカディア

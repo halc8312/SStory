@@ -1,12 +1,18 @@
 ---
+type: "asset"
+category: "assets"
 title: "世界観イメージギャラリー"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "assets"
 tags: ["images", "gallery", "assets"]
 status: "stable"
+asset_type: "image"
+license: "CC BY-SA 4.0"
+attribution_required: true
+items: []
+related_documents: []
 ---
 
 # 世界観イメージギャラリー

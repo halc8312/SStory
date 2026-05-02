@@ -1,12 +1,38 @@
 ---
+type: "analysis"
+category: "analysis"
 title: "世界地理分析レポート"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "opencode AI Assistant"
-category: "geography"
-tags: ["analysis", "geography", "map", "positioning"]
+tags: ["analysis", "geography", "map", "positioning", "audit"]
 status: "stable"
+analysis_type: "world-analysis"
+scope: "world/geography/ および関連ファイルの地理データを包括的に分析"
+base_files:
+  - "world/geography/continents.md"
+  - "world/maps/world-map.md"
+  - "world/geography/climate.md"
+  - "world/geography/regions/central-region.md"
+  - "world/economy/resources.md"
+  - "world/economy/trade.md"
+  - "world/politics/kingdoms.md"
+  - "world/races/races-overview.md"
+methodology: |
+  33個の世界観ファイルからデータを収集し、統合・分析。
+  座標計算（Haversine formula）、面積比較、矛盾検出を実施。
+findings: []
+metrics:
+  completeness: 0.75
+  consistency: 0.80
+ratings:
+  overall: 8.0
+  worldbuilding_depth: 9.0
+  internal_consistency: 8.0
+  documentation_quality: 8.0
+  completeness: 7.5
+recommendations: []
 ---
 
 # 世界地理分析レポート - エターナル・アルカディア

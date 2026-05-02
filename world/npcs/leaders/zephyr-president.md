@@ -1,11 +1,19 @@
 ---
-title: "ライル・グレイソン (ゼフィア連合共和国大統領)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "ライル・グレイソン (ゼフィア連合共和国大統領)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "human", "president", "zephyr"]
+status: "stable"
+npc_type: "leader"
 race: "human"
 age: 55
 alignment: "lawful-good"
-class: "Bard ( Lore) 12 / Fighter 3"
+class: "Bard (Lore) 12 / Fighter 3"
 ---
 
 # ライル・グレイソン (Lyle Grayson)

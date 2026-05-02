@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "maps"
 title: "世界地図"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "maps"
+contributors: []
 tags: ["world-map", "cartography", "geography"]
 status: "stable"
 ---

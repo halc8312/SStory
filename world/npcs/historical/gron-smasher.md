@@ -1,9 +1,17 @@
 ---
-title: "グロン・スマッシャー (伝説のオーク戦士)"
+type: "npc"
 category: "npcs"
-type: "historical"
+title: "グロン・スマッシャー (伝説のオーク戦士)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "historical", "orc", "warrior", "legend"]
+status: "stable"
+npc_type: "historical"
 race: "orc"
-age: 65 (death -1200)
+age: 65
 alignment: "chaotic-good"
 class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 ---

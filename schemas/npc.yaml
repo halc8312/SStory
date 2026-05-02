@@ -1,0 +1,170 @@
+# NPC Character Sheet Schema
+# NPCキャラクターシート用スキーマ
+# 対象: world/npcs/leaders/, world/npcs/historical/, world/npcs/adventurers/ など
+
+type: "object"
+allOf:
+  - "$ref": "common.yaml#/properties"
+required:
+  - type
+  - category
+  - title
+  - status
+  - race
+  - age
+  - alignment
+  - class
+properties:
+  type:
+    const: "npc"
+    description: "NPC character sheet"
+  category:
+    const: "npcs"
+    description: "Fixed to 'npcs' for all NPC documents"
+  npc_type:
+    type: "string"
+    enum: ["leader", "historical", "adventurer", "commoner", "deity", "monster-npc"]
+    description: |
+      NPCの種別:
+      - leader: 現役の指導者（国家首脳、ギルドマスターなど）
+      - historical: 歴史的人物（故人）
+      - adventurer: 冒険者
+      - commoner: 一般市民
+      - deity: 精霊・神格
+      - monster-npc: モンスターだが個体名を持つもの
+  race:
+    type: "string"
+    enum: ["human", "elf", "dwarf", "orc", "halfling", "aquatic-elf", "half-elf", "half-orc", "elemental", "deity", "other"]
+    description: "種族名"
+  subrace:
+    type: "string"
+    description: "亜種（例: 月影エルフ、星霜エルフ、翡翠エルフ）"
+  age:
+    type: ["integer", "string"]
+    description: "年齢（数値または 'eternal', 'unknown' など）"
+  alignment:
+    type: "string"
+    enum: ["lawful-good", "neutral-good", "chaotic-good", "lawful-neutral", "true-neutral", "chaotic-neutral", "lawful-evil", "neutral-evil", "chaotic-evil"]
+    description: "D&Dスタイルのアライメント"
+  class:
+    type: "string"
+    description: "クラス・職業（TRPGルールに準拠、例: 'Fighter (Champion) 15 / Bard 3'）"
+  background:
+    type: "string"
+    description: "背景（例: '貴族', '植民地出身', '孤児'）"
+  level:
+    type: "integer"
+    minimum: 1
+    maximum: 20
+    description: "総合レベル（クラスレベルの合計）"
+  spirit_contract:
+    type: "object"
+    additionalProperties:
+      type: "integer"
+      minimum: 0
+      maximum: 100
+    description: "精霊契約度（%）のオブジェクト、例: {wind: 40, earth: 60, fire: 10, water: 60, moon: 20}"
+  title:
+    type: "string"
+    description: "肩書き・称号（名前と合わせて表示）"
+  position:
+    type: "string"
+    description: "役職・地位（国家・組織内での位置づけ）"
+  affiliation:
+    type: "string"
+    description: "所属組織・国家"
+  location:
+    type: "string"
+    description: "現在の所在地（首都、街、地域など）"
+  appearance:
+    type: "string"
+    description: "外見の描写（身長、体格、特徴など）"
+  personality:
+    type: "string"
+    description: "性格・性向・価値観"
+  goals:
+    type: "string"
+    description: "目標・野望・動機"
+  flaws:
+    type: "string"
+    description: "弱点・短所・欠点"
+  abilities:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        description:
+          type: "string"
+    description: "特殊能力・ feat のリスト"
+  equipment:
+    type: "array"
+    items:
+      type: "string"
+    description: "主要装備・アイテムのリスト"
+  relationships:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        relation:
+          type: "string"
+          enum: ["ally", "friend", "rival", "enemy", "family", "mentor", "student"]
+        name:
+          type: "string"
+        organization:
+          type: "string"
+    description: "関係者リスト"
+  wealth:
+    type: "string"
+    description: "所持金・財産（例: '金貨10,000枚', '莫大な財産'）"
+  history:
+    type: "string"
+    description: "経歴・来歴・重要な過去の出来事"
+  notes:
+    type: "string"
+    description: "その他メモ・GM向け補足"
+
+# 共通フィールドも必須
+additionalProperties: false
+
+# 説明
+description: |
+  **npc** タイプは、非プレイヤーキャラクター（NPC）のキャラクターシートです。
+
+  **特徴**:
+  - TRPGキャラクターシート形式
+  - 能力値、装備、経歴、関係性を構造化
+  - リーダー、歴史的人物、冒険者などサブタイプあり（`npc_type`で指定）
+
+  **使用例**:
+  - world/npcs/leaders/halfling-trade-leader.md
+  - world/npcs/historical/rayel.md
+  - world/npcs/adventurers/guild-master.md
+
+  **最小例**:
+  ```yaml
+  ---
+  type: "npc"
+  category: "npcs"
+  title: "ライル・グレイソン (ゼフィア連合共和国大統領)"
+  version: "1.0.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-01"
+  author: "halc8312"
+  tags: ["npc", "leader", "human", "president"]
+  status: "stable"
+  npc_type: "leader"
+  race: "human"
+  age: 55
+  alignment: "lawful-good"
+  class: "Bard (Lore) 12 / Fighter 3"
+  spirit_contract:
+    wind: 40
+    earth: 40
+    fire: 40
+    water: 40
+    moon: 40
+  ---
+  ```

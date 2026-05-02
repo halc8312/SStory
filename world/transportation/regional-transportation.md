@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "transportation"
 title: "地域別交通網"
 version: "1.0.0"
 created: "2026-05-02"
 last_updated: "2026-05-02"
 author: "halc8312"
-category: "transportation"
+contributors: []
 tags: ["regions", "local", "transportation", "infrastructure"]
 status: "stable"
 ---

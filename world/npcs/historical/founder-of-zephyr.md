@@ -1,13 +1,25 @@
 ---
+type: "npc"
+category: "npcs"
 title: "ゼフィア連合共和国 建国者"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-category: "npcs"
 tags: ["npc", "historical", "founder", "zephyr"]
 status: "stable"
+npc_type: "historical"
+race: "human"
+age: 100
+alignment: "lawful-good"
+class: "Paladin (Oath of Devotion) 20 / Fighter (Eldritch Knight) 5"
+spirit_contract:
+  wind: 98
+  earth: 80
+  fire: 60
+  water: 80
+  moon: 70
 ---
 
 # ゼフィア連合共和国 建国者 (Founder of Zephyr)

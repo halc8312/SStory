@@ -1,7 +1,15 @@
 ---
-title: "エルロンド・シルバーレイン (月影エルフ女王)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "エルロンド・シルバーレイン (月影エルフ女王)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "elf", "queen", "moon-elf"]
+status: "stable"
+npc_type: "leader"
 race: "elf"
 age: 1020
 alignment: "lawful-good"

@@ -1,13 +1,25 @@
 ---
+type: "npc"
+category: "npcs"
 title: "ハーフリング交易連合 理事長"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-category: "npcs"
 tags: ["npc", "leader", "halfling", "trade"]
 status: "stable"
+npc_type: "leader"
+race: "halfling"
+age: 62
+alignment: "neutral-good"
+class: "Rogue (Mastermind) 10 / Bard (College of Lore) 5"
+spirit_contract:
+  wind: 20
+  earth: 60
+  fire: 10
+  water: 60
+  moon: 20
 ---
 
 # ハーフリング交易連合 理事長 (Master of Halfling Trade League)

@@ -1,11 +1,13 @@
 ---
+type: "canon-document"
+category: "politics"
 title: "国家一覧"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "politics"
-tags: ["nations", "kingdoms", "politics", "government"]
+contributors: []
+tags: ["kingdoms", "nations", "politics", "government"]
 status: "stable"
 ---
 

@@ -1,7 +1,15 @@
 ---
-title: "ガルガッシュ・ブラッドサイズ (赤砂オーク連合盟主)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "ガルガッシュ・ブラッドサイズ (赤砂オーク連合盟主)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "orc", "warlord", "red-sand"]
+status: "stable"
+npc_type: "leader"
 race: "orc"
 age: 45
 alignment: "chaotic-neutral"

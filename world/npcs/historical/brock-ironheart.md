@@ -1,9 +1,17 @@
 ---
-title: "ブロック・アイアンハート (精霊協会創設者・ドワーフの錬金術師)"
+type: "npc"
 category: "npcs"
-type: "historical"
+title: "ブロック・アイアンハート (精霊協会創設者・ドワーフの錬金術師)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "historical", "dwarf", "artificer", "founder"]
+status: "stable"
+npc_type: "historical"
 race: "dwarf"
-age: 195 (death -80)
+age: 195
 alignment: "lawful-neutral"
 class: "Artificer (Alchemist) 17 / Wizard 3"
 ---

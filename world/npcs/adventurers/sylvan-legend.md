@@ -1,13 +1,25 @@
 ---
+type: "npc"
+category: "npcs"
 title: "冒険者ギルド 伝説の冒険者"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-category: "npcs"
 tags: ["npc", "adventurer", "hero", "legend"]
 status: "stable"
+npc_type: "adventurer"
+race: "elf"
+age: 52
+alignment: "neutral-good"
+class: "Ranger (Gloom Stalker) 10 / Rogue (Scout) 5"
+spirit_contract:
+  wind: 65
+  earth: 30
+  fire: 20
+  water: 30
+  moon: 40
 ---
 
 # 冒険者ギルド 伝説の冒険者 (Legendary Adventurer)
