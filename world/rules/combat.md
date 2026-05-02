@@ -1,12 +1,18 @@
 ---
+type: "rule"
+category: "rules"
 title: "戦闘ルール"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "rules"
+contributors: []
 tags: ["combat", "rules", "tactics", "action"]
 status: "stable"
+rule_type: "combat"
+system: "custom"
+complexity: "intermediate"
+related_rules: ["core-mechanics.md", "character-creation.md"]
 ---
 
 # 戦闘ルール - エターナル・アルカディア

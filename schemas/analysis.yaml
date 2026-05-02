@@ -1,0 +1,240 @@
+# Analysis Report Schema
+# 分析・評価レポート用スキーマ
+# 対象: evaluation/, analysis/ 配下の分析レポート
+
+type: "object"
+allOf:
+  - "$ref": "common.yaml#/properties"
+required:
+  - type
+  - category
+  - title
+  - version
+  - created
+  - last_updated
+  - author
+  - tags
+  - status
+properties:
+  type:
+    const: "analysis"
+    description: "分析・評価レポート"
+  category:
+    const: "analysis"
+    description: "Fixed to 'analysis' for all analysis documents"
+  analysis_type:
+    type: "string"
+    enum: ["world-analysis", "repository-analysis", "data-consistency", "content-audit", "technical-debt", "feature-evaluation"]
+    description: |
+      分析タイプ:
+      - world-analysis: 世界観の整合性・完全性分析
+      - repository-analysis: リポジトリ全体の技術評価
+      - data-consistency: データ矛盾検出
+      - content-audit: コンテンツ棚卸し
+      - technical-debt: 技術的負債評価
+      - feature-evaluation: 機能・設定の評価
+  scope:
+    type: "string"
+    description: "分析対象の範囲（例: 'world/ 配下の全33ファイル', 'リポジトリ全体'）"
+  base_files:
+    type: "array"
+    items:
+      type: "string"
+    description: "分析のベースとなったファイル・データソース一覧"
+  methodology:
+    type: "string"
+    description: "使用した分析方法・手法・ツール"
+  findings:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        category:
+          type: "string"
+          description: "発見カテゴリ（例: '矛盾', '不足', '改善提案'）"
+        severity:
+          type: "string"
+          enum: ["critical", "high", "medium", "low", "info"]
+          description: "重要度"
+        description:
+          type: "string"
+          description: "発見内容の説明"
+        location:
+          type: "array"
+          items:
+            type: "string"
+          description: "関連ファイル・行数など"
+        recommendation:
+          type: "string"
+          description: "推奨対応策"
+    description: "主要発見事項のリスト"
+  metrics:
+    type: "object"
+    additionalProperties:
+      type: "number"
+    description: "評価指標・スコア（例: completeness: 0.85, consistency: 0.92）"
+  ratings:
+    type: "object"
+    properties:
+      overall:
+        type: "number"
+        minimum: 0
+        maximum: 10
+      worldbuilding_depth:
+        type: "number"
+        minimum: 0
+        maximum: 10
+      internal_consistency:
+        type: "number"
+        minimum: 0
+        maximum: 10
+      documentation_quality:
+        type: "number"
+        minimum: 0
+        maximum: 10
+      technical_infrastructure:
+        type: "number"
+        minimum: 0
+        maximum: 10
+      completeness:
+        type: "number"
+        minimum: 0
+        maximum: 10
+      community_readiness:
+        type: "number"
+        minimum: 0
+        maximum: 10
+    description: "各項目の評価（10点満点）"
+  recommendations:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        priority:
+          type: "string"
+          enum: ["critical", "high", "medium", "low"]
+        title:
+          type: "string"
+        description:
+          type: "string"
+        estimated_effort:
+          type: "string"
+          description: "作業見積もり（例: '2h', '1d', '1w'）"
+    description: "推奨アクション項目リスト"
+  related_issues:
+    type: "array"
+    items:
+      type: "string"
+      pattern: "^#\\d+$"
+    description: "関連GitHub Issue番号（#123 形式）"
+  appendix:
+    type: "object"
+    additionalProperties:
+      type: "string"
+    description: "補足資料・付録データ（自由形式）"
+
+additionalProperties: false
+
+description: |
+  **analysis** タイプは、世界観やリポジトリの分析・評価レポートです。
+
+  **特徴**:
+  - 体系的調査・評価結果を記録
+  - 発見された問題・課題を構造化
+  - 評価スコアと推奨アクションを含む
+  - 将来の参照・比較用
+
+  **使用例**:
+  - evaluation/analysis_report.md（リポジトリ分析）
+  - evaluation/completion_report.md（進捗報告）
+  - world/geography/geographical-analysis-report.md（→ 本来はこのスキーマ適用すべき）
+
+  **最小例**:
+  ```yaml
+  ---
+  type: "analysis"
+  category: "analysis"
+  title: "世界観整合性分析レポート"
+  version: "1.0.0"
+  created: "2026-05-02"
+  last_updated: "2026-05-02"
+  author: "opencode AI Assistant"
+  tags: ["analysis", "consistency", "audit"]
+  status: "stable"
+  analysis_type: "world-analysis"
+  scope: "world/ 配下の全コンテンツ"
+  base_files: ["world/lore/*.md", "world/geography/*.md"]
+  methodology: "手動精読 + 自動スクリプトによるリンク切れチェック"
+  findings: []
+  metrics:
+    completeness: 0.75
+    consistency: 0.88
+  ratings:
+    overall: 8.0
+    worldbuilding_depth: 9.0
+    internal_consistency: 8.5
+  recommendations: []
+  ---
+  ```
+
+  **完全例の構造**:
+  ```yaml
+  ---
+  type: "analysis"
+  category: "analysis"
+  title: "SStoryリポジトリ分析レポート"
+  version: "1.0.0"
+  created: "2026-05-02"
+  last_updated: "2026-05-02"
+  author: "opencode AI Assistant"
+  tags: ["repository", "analysis", "evaluation"]
+  status: "stable"
+  analysis_type: "repository-analysis"
+  scope: "リポジトリ全体（world/, evaluation/, .github/ 含む）"
+  base_files:
+    - "world/**/*.md"
+    - "CONTRIBUTING.md"
+    - "STYLE_GUIDE.md"
+  methodology: |
+      opencode AI (step-3.5-flash-2603) による自動解析 + 手動検証
+      - ファイル数: 35
+      - 総行数: 約8,000行
+      - クロスリファレンスマップ作成
+  findings:
+    - category: "矛盾"
+      severity: "medium"
+      description: "地の精霊の呼称が『グラン』と『ドリト』で不一致"
+      location: ["world/races/races-overview.md", "world/magic/system.md"]
+      recommendation: "全ファイルを『グラン (Granus)』に統一"
+    - category: "不足"
+      severity: "high"
+      description: "world/images/ に実際の画像ファイルが存在しない"
+      location: ["world/images/README.md"]
+      recommendation: "アセット画像を追加するか、TODOリストを明確化"
+  metrics:
+    completeness: 0.65
+    consistency: 0.88
+    usability: 0.72
+  ratings:
+    overall: 7.5
+    worldbuilding_depth: 9.0
+    internal_consistency: 8.0
+    documentation_quality: 7.0
+    technical_infrastructure: 8.5
+    completeness: 6.5
+    community_readiness: 7.0
+  recommendations:
+    - priority: "high"
+      title: "データ不整合の解消"
+      description: "精霊名、単位表記などを全ファイルで統一"
+      estimated_effort: "2h"
+    - priority: "critical"
+      title: "TRPGルールの完成"
+      description: "character-creation, combat, magic-casting の詳細化"
+      estimated_effort: "40h"
+  related_issues: ["#1"]
+  appendix:
+    file_count: "35 files"
+    total_lines: "8,000+"
+  ---
+  ```

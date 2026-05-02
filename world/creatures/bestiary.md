@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "creatures"
 title: "モンスター図鑑"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "creatures"
+contributors: []
 tags: ["monsters", "bestiary", "creatures", "stats"]
 status: "stable"
 ---

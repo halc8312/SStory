@@ -1,0 +1,142 @@
+# Asset Document Schema
+# アセット参照文書用スキーマ
+# 対象: world/images/README.md などの画像・音声・動画アセット管理文書
+
+type: "object"
+allOf:
+  - "$ref": "common.yaml#/properties"
+required:
+  - type
+  - category
+  - title
+  - version
+  - created
+  - last_updated
+  - author
+  - tags
+  - status
+properties:
+  type:
+    const: "asset"
+    description: "アセット参照・管理文書"
+  category:
+    const: "assets"
+    description: "Fixed to 'assets' for all asset documents"
+  asset_type:
+    type: "string"
+    enum: ["image", "audio", "video", "3d-model", "font", "other"]
+    description: "アセットの種類"
+  license:
+    type: "string"
+    description: "アセット個別のライセンス（プロジェクト全体のCC BY-SA 4.0とは別個）"
+  attribution_required:
+    type: "boolean"
+    default: true
+    description: "クレジット表示必須かどうか"
+  items:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        filename:
+          type: "string"
+        description:
+          type: "string"
+        alt_text:
+          type: "string"
+        source:
+          type: "string"
+          description: "作成者・ソース（例: ' commissioned from artist X'）"
+        license:
+          type: "string"
+          description: "このアイテム固有のライセンス"
+        status:
+          type: "string"
+          enum: ["planned", "in-progress", "completed", "needs-replacement"]
+        dimensions:
+          type: "string"
+          description: "画像サイズ（例: '1920x1080'）"
+        file_size:
+          type: "string"
+          description: "ファイルサイズ（例: '2.3 MB'）"
+        format:
+          type: "string"
+          description: "ファイルフォーマット（PNG, JPG, MP3, etc）"
+    description: "アセットアイテムのリスト"
+  related_documents:
+    type: "array"
+    items:
+      type: "string"
+    description: "このアセットが参照される文書の相対パスリスト"
+  TODO:
+    type: "array"
+    items:
+      type: "string"
+    description: "今後追加予定のアセット"
+
+additionalProperties: false
+
+description: |
+  **asset** タイプは、画像・音声・動画などのメディアアセットを参照・管理する文書です。
+
+  **特徴**:
+  - アセットのメタデータ（ライセンス、クレジット、形式）を管理
+  - 各アセットのステータス（計画中・進行中・完成）を追跡
+  - どの文書で使用されるかを記録
+  - ライセンス条項を明示
+
+  **使用例**:
+  - world/images/README.md（画像ギャラリー）
+  - （将来）world/audio/README.md（BGM・効果音）
+  - （将来）world/art/concept-art.md（コンセプトアート集）
+
+  **最小例**:
+  ```yaml
+  ---
+  type: "asset"
+  category: "assets"
+  title: "世界観イメージギャラリー"
+  version: "1.0.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-01"
+  author: "halc8312"
+  tags: ["images", "gallery", "assets"]
+  status: "stable"
+  asset_type: "image"
+  license: "CC BY-SA 4.0 (project default)"
+  attribution_required: true
+  items: []
+  related_documents: []
+  ---
+  ```
+
+  **完全例**:
+  ```yaml
+  ---
+  type: "asset"
+  category: "assets"
+  title: "世界地図アセット"
+  version: "1.0.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-10"
+  author: "halc8312"
+  tags: ["map", "world", "visual", "cartography"]
+  status: "stable"
+  asset_type: "image"
+  license: "CC BY-SA 4.0"
+  attribution_required: true
+  items:
+    - filename: "world-map.png"
+      description: "五大陸と浮島群を表現した世界地図"
+      alt_text: "エターナル・アルカディア世界地図"
+      source: "Commissioned from artist: MapMaster"
+      status: "completed"
+      dimensions: "4000x3000"
+      format: "PNG"
+    - filename: "political-map.png"
+      description: "国家境界と首都位置を示した政治地図"
+      alt_text: "エターナル・アルカディア政治地図"
+      status: "planned"
+  related_documents: ["world/maps/world-map.md"]
+  ---
+  ```

@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "economy"
 title: "通貨と交易"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "economy"
+contributors: []
 tags: ["trade", "currency", "economy", "commerce"]
 status: "stable"
 ---

@@ -1,12 +1,15 @@
 ---
+type: "overview"
+category: "overview"
 title: "エターナル・アルカディア世界構築"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "overview"
 tags: ["index", "toc", "navigation"]
 status: "stable"
+document_kind: "index"
+summary: "エターナル・アルカディア世界構築の全体目次と案内です。"
 ---
 
 # エターナル・アルカディア世界構築

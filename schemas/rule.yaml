@@ -1,0 +1,119 @@
+# Rule Document Schema
+# ルール文書用スキーマ
+# 対象: world/rules/ のTRPGルールブック文書
+
+type: "object"
+allOf:
+  - "$ref": "common.yaml#/properties"
+required:
+  - type
+  - category
+  - title
+  - version
+  - created
+  - last_updated
+  - author
+  - tags
+  - status
+properties:
+  type:
+    const: "rule"
+    description: "TRPGルール文書"
+  category:
+    const: "rules"
+    description: "Fixed to 'rules' for all rule documents"
+  rule_type:
+    type: "string"
+    enum: ["core", "combat", "magic", "character", "bestiary", "equipment", "setting"]
+    description: |
+      ルールタイプ:
+      - core: 基本メカニクス（能力値、判定、レベルアップなど）
+      - combat: 戦闘ルール
+      - magic: 魔法発動・呪文ルール
+      - character: キャラクター作成
+      - bestiary: モンスター統計・戦闘データ
+      - equipment: 装備・アイテムルール
+      - setting: 世界設定特有的ルール（精霊契約など）
+  system:
+    type: "string"
+    enum: ["custom", "dnd5e", "pathfinder2e", "other"]
+    description: "ベースシステム（custom=独自システム）"
+  system_version:
+    type: "string"
+    description: "ベースシステムのバージョン（例: '5.0' for D&D 5e）"
+  complexity:
+    type: "string"
+    enum: ["beginner", "intermediate", "advanced", "expert"]
+    description: "ルールの複雑度"
+  related_rules:
+    type: "array"
+    items:
+      type: "string"
+    description: "関連ルール文書の相対パスリスト（例: ['character-creation.md', 'combat.md']）"
+  required_tables:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        description:
+          type: "string"
+        reference_page:
+          type: "string"
+    description: "この文書で使用される主要表のリスト"
+  examples:
+    type: "array"
+    items:
+      type: "string"
+    description: "ルールの使用例・サンプル計算"
+  errata:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        date:
+          type: "string"
+          pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+        text:
+          type: "string"
+        correction:
+          type: "string"
+    description: "正誤表・既知の問題"
+
+additionalProperties: false
+
+description: |
+  **rule** タイプは、TRPG（テーブルトークRPG）のルール文書です。
+
+  **特徴**:
+  - ゲームメカニクスを定義
+  - システムバージョンと複雑度を明記
+  - 他のルール文書への相互参照を含む
+  - 計算例・サンプルを推奨
+
+  **使用例**:
+  - world/rules/core-mechanics.md
+  - world/rules/combat.md
+  - world/rules/character-creation.md
+  - world/rules/magic-casting.md
+  - world/rules/bestiary-stats.md
+
+  **最小例**:
+  ```yaml
+  ---
+  type: "rule"
+  category: "rules"
+  title: "コアルール: 基本メカニクス"
+  version: "1.0.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-01"
+  author: "halc8312"
+  tags: ["core-mechanics", "rules", "system", "basics"]
+  status: "stable"
+  rule_type: "core"
+  system: "custom"
+  complexity: "intermediate"
+  related_rules: ["character-creation.md", "combat.md"]
+  ---
+  ```

@@ -1,7 +1,15 @@
 ---
-title: "アストラエル (創世神)"
+type: "npc"
 category: "npcs"
-type: "historical"
+title: "アストラエル (創世神)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "historical", "deity", "primordial"]
+status: "stable"
+npc_type: "historical"
 race: "deity"
 age: "eternal"
 alignment: "neutral-good"

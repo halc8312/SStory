@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "races"
 title: "五大種族"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "races"
+contributors: []
 tags: ["races", "species", "overview"]
 status: "stable"
 ---

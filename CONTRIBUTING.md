@@ -24,79 +24,215 @@ SStory - エターナル・アルカディア世界構築プロジェクトへ�
 
 ```
 world/
-  ├── index.md                    # 世界目次
-  ├── README.md                   # プロジェクト概要
-  ├── lore/                       # 歴史・神話
+  ├── index.md                    # 世界目次 (type: overview, category: overview)
+  ├── README.md                   # プロジェクト概要 (type: overview, category: overview)
+  ├── lore/                       # 歴史・神話 (canon-document)
   │   ├── creation-myth.md
   │   ├── ancient-civilizations.md
   │   └── timelines/
   │       └── main-timeline.md
-  ├── geography/                  # 地理・環境
+  ├── geography/                  # 地理・環境 (canon-document)
   │   ├── continents.md
   │   ├── climate.md
   │   └── regions/
   │       └── central-region.md
-  ├── races/                      # 種族・文化
+  ├── races/                      # 種族・文化 (canon-document)
   │   └── races-overview.md
-  ├── magic/                      # 魔法・技術
+  ├── magic/                      # 魔法・技術 (canon-document)
   │   ├── system.md
   │   ├── schools.md
   │   └── artifacts.md
-  ├── politics/                   # 政治・社会
+  ├── politics/                   # 政治・社会 (canon-document)
   │   ├── kingdoms.md
   │   └── alliances.md
-  ├── creatures/                  # 生物・モンスター
+  ├── creatures/                  # 生物・モンスター (canon-document)
   │   ├── bestiary.md
   │   └── legendary.md
-  ├── culture/                    # 文化・社会
+  ├── culture/                    # 文化・社会 (canon-document)
   │   ├── languages.md
   │   └── calendar.md
-  ├── economy/                    # 経済
+  ├── economy/                    # 経済 (canon-document)
   │   ├── trade.md
   │   └── resources.md
-  ├── religion/                   # 信仰
+  ├── religion/                   # 信仰 (canon-document)
   │   ├── pantheon.md
   │   └── beliefs.md
-  ├── maps/                       # 地図
+  ├── maps/                       # 地図 (canon-document)
   │   └── world-map.md
-  ├── npcs/                       # NPC (将来拡張)
-  │   ├── leaders/
-  │   └── historical/
-  ├── rules/                      # TRPGルール (将来拡張)
+  ├── transportation/             # 交通 (canon-document)
+  │   ├── index.md
+  │   ├── land-transportation.md
+  │   ├── sea-transportation.md
+  │   ├── air-transportation.md
+  │   ├── historical-transportation.md
+  │   └── regional-transportation.md
+  ├── npcs/                       # NPC (type: npc の文書が入る)
+  │   ├── leaders/               # 現役指導者
+  │   │   ├── halfling-trade-leader.md
+  │   │   └── ...
+  │   ├── historical/            # 歴史的人物
+  │   │   ├── rayel.md
+  │   │   └── ...
+  │   └── adventurers/           # 冒険者
+  │       └── ...
+  ├── rules/                      # TRPGルール (type: rule の文書)
   │   ├── core-mechanics.md
   │   ├── combat.md
   │   ├── magic-casting.md
   │   ├── bestiary-stats.md
   │   └── character-creation.md
-  └── images/                     # 画像資産
+  └── images/                     # 画像アセット (type: asset の管理文書)
+      └── README.md
+evaluation/                        # 分析レポート (type: analysis)
+  ├── analysis_report.md
+  ├── summary.md
+  └── ...
+schemas/                           # メタデータスキーマ定義
+  ├── README.md
+  ├── common.yaml
+  ├── canon-document.yaml
+  ├── npc.yaml
+  ├── rule.yaml
+  ├── asset.yaml
+  ├── analysis.yaml
+  └── overview.yaml
 ```
+
+**ディレクトリガイドライン**:
+
+- **`world/`**: 世界観の正統な設定文書（`canon-document`タイプ）と、`overview`タイプの目次・READMEを含む
+  - サブディレクトリはテーマ別に分かれている
+  - 各ファイルは `category` をそのディレクトリのテーマに合わせる
+  - NPCとルールは中身が `type: npc` / `type: rule` だが、ファイルは `world/npcs/` と `world/rules/` に置く
+
+- **`evaluation/`**: 分析・評価レポート（`type: analysis`）を置く
+  - 世界観そのものではなく、世界観やリポジトリに関する分析
+  - 例: `geographical-analysis-report.md` は本来ここに移動すべき
+
+- **`schemas/`**: メタデータスキーマ定義（本システムの定義書）
+  - 各スキーマYAMLファイルを参照してfrontmatter作成
+  - `schemas/README.md`に使用法を記載
+
 
 ### メタデータ (必須)
 
-各Markdownファイルの先頭にYAML frontmatterを記述してください：
+各Markdownファイルの先頭にYAML frontmatterを記述してください。文書タイプに応じたスキーマは `schemas/` ディレクトリで定義されています。
+
+#### 共通必須フィールド（全タイプ共通）
 
 ```yaml
 ---
+type: "canon-document|npc|rule|asset|analysis|overview"
+category: "lore|geography|races|magic|politics|creatures|culture|economy|religion|maps|transportation|npcs|rules|overview|assets|analysis"
 title: "ファイルタイトル"
 version: "1.0.0"
 created: "YYYY-MM-DD"
 last_updated: "YYYY-MM-DD"
 author: "GitHub username"
-category: "lore|geography|races|magic|politics|creatures|culture|economy|religion|maps|npcs|rules"
 tags: ["tag1", "tag2", "tag3"]
 status: "draft|review|stable"
 ---
 ```
 
 **項目説明**:
-- `title`: ファイルのタイトル（日本語）
-- `version`: コンテンツバージョン（初期値 1.0.0）
-- `created`: 作成日（不明な場合は 2026-05-01）
-- `last_updated`: 最終更新日
+- `type`: 文書タイプ（構造・目的）。[詳細](schemas/README.md)
+- `category`: 内容カテゴリ（主題）。[カテゴリ一覧](#カテゴリ一覧)参照
+- `title`: ファイルのタイトル（日本語、プロジェクト名含まない）
+- `version`: セマンティックバージョン（初期値 `1.0.0`）
+- `created`: 作成日（不明な場合は `2026-05-01`）
+- `last_updated`: 最終更新日（更新時必ず更新）
 - `author`: 主な作成者（GitHub username）
-- `category`: 上記いずれかのカテゴリ
 - `tags`: 関連キーワード（5〜10個程度）
-- `status`: 現状（draft=草案, review=レビュー中, stable=安定）
+- `status`: 現状（`draft`=草案, `review`=レビュー中, `stable`=安定）
+
+#### カテゴリ一覧
+
+| カテゴリ | 説明 | 例 |
+|----------|------|----|
+| `lore` | 歴史・神話・物語 | creation-myth.md, ancient-civilizations.md |
+| `geography` | 地理・環境・気候 | continents.md, climate.md |
+| `races` | 種族・文化 | races-overview.md |
+| `magic` | 魔法・技術・魔導器 | system.md, artifacts.md |
+| `politics` | 政治・国家・同盟 | kingdoms.md, alliances.md |
+| `creatures` | 生物・モンスター | bestiary.md, legendary.md |
+| `culture` | 文化・言語・暦 | languages.md, calendar.md |
+| `economy` | 経済・交易・資源 | trade.md, resources.md |
+| `religion` | 信仰・神々・教義 | pantheon.md, beliefs.md |
+| `maps` | 地図・座標・航路 | world-map.md, coordinates.md |
+| `transportation` | 交通・輸送・移動 | land-transportation.md |
+| `npcs` | NPCカテゴリ（文書の入る場所） | npcs/leaders/, npcs/historical/ |
+| `rules` | ルールカテゴリ（文書の入る場所） | rules/core-mechanics.md |
+| `overview` | 概要・目次・案内 | index.md, README.md |
+| `assets` | アセット参照 | images/README.md |
+| `analysis` | 分析・評価レポート | evaluation/analysis_report.md |
+
+#### タイプ別追加フィールド
+
+各文書タイプに応じて、以下の追加フィールドが必要です：
+
+**canon-document**（正統世界観文書）:
+```yaml
+type: "canon-document"
+contributors: []  # 貢献者GitHub usernameリスト
+```
+
+**npc**（NPCキャラクターシート）:
+```yaml
+type: "npc"
+npc_type: "leader|historical|adventurer|commoner|deity|monster-npc"
+race: "human|elf|dwarf|orc|halfling|aquatic-elf|elemental|deity|other"
+age: 55  # または "eternal", "unknown"
+alignment: "lawful-good|neutral-good|chaotic-good|..."
+class: "Fighter (Champion) 15 / Bard 3"
+spirit_contract:
+  wind: 40   # 0-100%
+  earth: 60
+  fire: 10
+  water: 60
+  moon: 20
+```
+
+**rule**（ルール文書）:
+```yaml
+type: "rule"
+rule_type: "core|combat|magic|character|bestiary|equipment|setting"
+system: "custom|dnd5e|pathfinder2e|other"
+complexity: "beginner|intermediate|advanced|expert"
+related_rules: ["character-creation.md", "combat.md"]
+```
+
+**asset**（アセット参照）:
+```yaml
+type: "asset"
+asset_type: "image|audio|video|3d-model|font|other"
+items:
+  - filename: "world-map.png"
+    description: "五大陸と浮島群を表現した世界地図"
+    alt_text: "エターナル・アルカディア世界地図"
+    status: "completed|planned"
+    license: "CC BY-SA 4.0"
+```
+
+**analysis**（分析レポート）:
+```yaml
+type: "analysis"
+analysis_type: "world-analysis|repository-analysis|data-consistency|content-audit"
+scope: "分析対象範囲"
+base_files: ["world/lore/*.md", "world/geography/*.md"]
+findings: []  # 発見事項リスト
+ratings:      # 評価スコア
+  overall: 8.0
+  completeness: 0.75
+```
+
+**overview**（概要・目次）:
+```yaml
+type: "overview"
+document_kind: "index|readme|toc|navigation|landing"
+summary: "短い概要（1-2文）"
+```
+
+各タイプの完全なスキーマ定義は [`schemas/`](schemas/README.md) ディレクトリを参照してください。
 
 ### マークダウン規約
 

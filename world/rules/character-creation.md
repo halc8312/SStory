@@ -1,12 +1,18 @@
 ---
+type: "rule"
+category: "rules"
 title: "キャラクター作成ガイド"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "rules"
+contributors: []
 tags: ["character-creation", "rules", "pc", "guide"]
 status: "stable"
+rule_type: "character"
+system: "custom"
+complexity: "beginner"
+related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-stats.md"]
 ---
 
 # キャラクター作成ガイド - エターナル・アルカディア

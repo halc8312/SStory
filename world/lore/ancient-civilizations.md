@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "lore"
 title: "古代文明"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "lore"
+contributors: []
 tags: ["civilizations", "history", "ancient"]
 status: "stable"
 ---

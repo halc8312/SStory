@@ -1,13 +1,25 @@
 ---
+type: "npc"
+category: "npcs"
 title: "冒険者ギルド ギルドマスター"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-category: "npcs"
 tags: ["npc", "adventurer", "guild-master", "human"]
 status: "stable"
+npc_type: "leader"
+race: "human"
+age: 55
+alignment: "lawful-neutral"
+class: "Fighter (Eldritch Knight) 8 / Paladin (Oath of Vengeance) 7"
+spirit_contract:
+  wind: 25
+  earth: 30
+  fire: 20
+  water: 25
+  moon: 20
 ---
 
 # 冒険者ギルド ギルドマスター (Guild Master of Adventurers)

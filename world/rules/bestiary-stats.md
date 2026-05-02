@@ -1,12 +1,18 @@
 ---
+type: "rule"
+category: "rules"
 title: "モンスター統計フォーマット"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "rules"
+contributors: []
 tags: ["bestiary", "monsters", "stats", "cr", "combat"]
 status: "stable"
+rule_type: "bestiary"
+system: "custom"
+complexity: "intermediate"
+related_rules: ["core-mechanics.md", "combat.md"]
 ---
 
 # モンスター統計 (Bestiary Stats)

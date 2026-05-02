@@ -1,9 +1,17 @@
 ---
-title: "グラン (Granus) - 地の大精霊、精霊協会現議長"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "グラン (Granus) - 地の大精霊、精霊協会現議長"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "elemental", "earth", "elemental-council"]
+status: "stable"
+npc_type: "leader"
 race: "elemental"
-age: "10000+ (immortal)"
+age: "10000+"
 alignment: "neutral-good"
 class: "Primordial Deity (Earth Aspect)"
 ---

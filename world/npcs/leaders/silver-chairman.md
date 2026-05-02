@@ -1,7 +1,15 @@
 ---
-title: "ヴィクター・シルバーストーン (銀盟共和国議長)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "ヴィクター・シルバーストーン (銀盟共和国議長)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "human", "silver-confederation"]
+status: "stable"
+npc_type: "leader"
 race: "human"
 age: 62
 alignment: "neutral-good"

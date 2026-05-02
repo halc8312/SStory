@@ -1,7 +1,15 @@
 ---
-title: "アクア・マリーン (アトランティス女王)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "アクア・マリーン (アトランティス女王)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "aquatic-elf", "queen", "atlantis"]
+status: "stable"
+npc_type: "leader"
 race: "aquatic-elf"
 age: 120
 alignment: "neutral-good"

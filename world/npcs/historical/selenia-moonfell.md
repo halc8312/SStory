@@ -1,9 +1,17 @@
 ---
-title: "セレネア・ムーンフェル (ルナリア帝国最後の女王)"
+type: "npc"
 category: "npcs"
-type: "historical"
+title: "セレネア・ムーンフェル (ルナリア帝国最後の女王)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "historical", "elf", "queen", "lunar-empire"]
+status: "stable"
+npc_type: "historical"
 race: "elf"
-age: 850 (death at -3000)
+age: 850
 alignment: "lawful-neutral"
 class: "Mage (Enchanter) 20"
 ---

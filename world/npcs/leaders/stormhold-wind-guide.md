@@ -1,7 +1,15 @@
 ---
-title: "ゼファー・ウインドストーカー (嵐の都 風導師)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "ゼファー・ウインドストーカー (嵐の都 風導師)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "human", "stormhold", "wind"]
+status: "stable"
+npc_type: "leader"
 race: "human (wind-blooded)"
 age: 120
 alignment: "neutral"

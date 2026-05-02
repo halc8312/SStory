@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "lore"
 title: "歴史年表"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "lore"
+contributors: []
 tags: ["timeline", "history", "chronology"]
 status: "stable"
 ---

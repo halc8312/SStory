@@ -1,7 +1,15 @@
 ---
-title: "エバリスト・ミスリルパイ (ハーフリング郷士国家連合 長老会議議長)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "エバリスト・ミスリルパイ (ハーフリング郷士国家連合 長老会議議長)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "halfling", "elder", "council"]
+status: "stable"
+npc_type: "leader"
 race: "halfling"
 age: 80
 alignment: "lawful-good"

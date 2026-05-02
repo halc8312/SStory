@@ -249,28 +249,154 @@ key: value
 
 ## 9. メタデータ (YAML Frontmatter)
 
-すべての `world/` 配下のMarkdownファイルに必須:
+すべてのMarkdownファイルに必須のfrontmatter。文書タイプに応じたスキーマは `schemas/` ディレクトリで定義されています。
+
+### 9.1 共通必須フィールド（全タイプ共通）
 
 ```yaml
 ---
+type: "canon-document|npc|rule|asset|analysis|overview"
+category: "lore|geography|races|magic|politics|creatures|culture|economy|religion|maps|transportation|npcs|rules|overview|assets|analysis"
 title: "ファイルタイトル"
 version: "1.0.0"
-created: "2026-05-01"
-last_updated: "2026-05-01"
-author: "halc8312"
-category: "lore|geography|races|magic|politics|creatures|culture|economy|religion|maps|npcs|rules"
+created: "YYYY-MM-DD"
+last_updated: "YYYY-MM-DD"
+author: "GitHub username"
 tags: ["tag1", "tag2", "tag3"]
 status: "draft|review|stable"
 ---
 ```
 
-- `title`: ファイルのタイトル (日本語, プロジェクト名を含まない)
-- `version`: セマンティックバージョン (initial 1.0.0)
-- `created` / `last_updated`: `YYYY-MM-DD`
-- `author`: GitHub username
-- `category`: 上記いずれか
-- `tags`: 関連キーワード (5-10個程度)
+**項目説明**:
+- `type`: 文書タイプ（構造・目的）。[詳細](schemas/README.md)
+- `category`: 内容カテゴリ（主題）。下記「カテゴリ一覧」参照
+- `title`: ファイルのタイトル（日本語、プロジェクト名含まない）
+- `version`: セマンティックバージョン（初期値 `1.0.0`）
+- `created` / `last_updated`: `YYYY-MM-DD`（更新時は必ず `last_updated` を更新）
+- `author`: 主な作成者（GitHub username）
+- `tags`: 関連キーワード（5〜10個程度）
 - `status`: `draft` (草案), `review` (レビュー中), `stable` (安定)
+
+### 9.2 カテゴリ一覧
+
+| カテゴリ | 説明 | 例 |
+|----------|------|----|
+| `lore` | 歴史・神話・物語 | creation-myth.md |
+| `geography` | 地理・環境・気候 | continents.md |
+| `races` | 種族・文化 | races-overview.md |
+| `magic` | 魔法・技術・魔導器 | system.md |
+| `politics` | 政治・国家・同盟 | kingdoms.md |
+| `creatures` | 生物・モンスター | bestiary.md |
+| `culture` | 文化・言語・暦 | languages.md |
+| `economy` | 経済・交易・資源 | trade.md |
+| `religion` | 信仰・神々・教義 | pantheon.md |
+| `maps` | 地図・座標・航路 | world-map.md |
+| `transportation` | 交通・輸送・移動 | land-transportation.md |
+| `npcs` | NPCカテゴリ（文書の置く場所） | npcs/leaders/ |
+| `rules` | ルールカテゴリ（文書の置く場所） | rules/ |
+| `overview` | 概要・目次・案内 | index.md |
+| `assets` | アセット参照 | images/README.md |
+| `analysis` | 分析・評価レポート | evaluation/ |
+
+### 9.3 タイプ別追加フィールド
+
+各文書タイプに応じて、以下の追加フィールドが必要です。完全な定義は [`schemas/`](schemas/README.md) を参照。
+
+**canon-document**（正統世界観文書）:
+```yaml
+type: "canon-document"
+contributors: []  # 貢献者GitHub usernameリスト
+previous_version: "1.0.0"  # (optional)
+changlog: []  # (optional) 変更履歴
+```
+
+**npc**（NPCキャラクターシート）:
+```yaml
+type: "npc"
+npc_type: "leader|historical|adventurer|commoner|deity|monster-npc"
+race: "human|elf|dwarf|orc|halfling|aquatic-elf|elemental|deity|other"
+age: 55  # 数値または "eternal", "unknown"
+alignment: "lawful-good|neutral-good|..."
+class: "Fighter (Champion) 15 / Bard 3"
+spirit_contract:
+  wind: 40   # 0-100%
+  earth: 60
+  fire: 10
+  water: 60
+  moon: 20
+```
+
+**rule**（ルール文書）:
+```yaml
+type: "rule"
+rule_type: "core|combat|magic|character|bestiary|equipment|setting"
+system: "custom|dnd5e|pathfinder2e|other"
+complexity: "beginner|intermediate|advanced|expert"
+related_rules: ["character-creation.md", "combat.md"]
+```
+
+**asset**（アセット参照）:
+```yaml
+type: "asset"
+asset_type: "image|audio|video|3d-model|font|other"
+items:
+  - filename: "world-map.png"
+    description: "..."
+    alt_text: "..."
+    status: "completed|planned"
+```
+
+**analysis**（分析レポート）:
+```yaml
+type: "analysis"
+analysis_type: "world-analysis|repository-analysis|data-consistency|content-audit"
+scope: "分析対象範囲"
+base_files: ["world/lore/*.md"]
+ratings:
+  overall: 8.0
+```
+
+**overview**（概要・目次）:
+```yaml
+type: "overview"
+document_kind: "index|readme|toc|navigation|landing"
+summary: "短い概要（1-2文）"
+```
+
+### 9.4 命名規則
+
+- 小文字、ハイフン区切り (kebab-case)
+- 例: `creation-myth.md`, `central-region.md`
+- 日本語ファイル名は避ける（英語推奨、ただし日本語内容可）
+
+### 9.5 ファイル配置とtype/categoryの対応
+
+| タイプ | カテゴリ | 配置先 | 例 |
+|--------|----------|--------|----|
+| canon-document | lore | world/lore/ | creation-myth.md |
+| canon-document | geography | world/geography/ | continents.md |
+| canon-document | races | world/races/ | races-overview.md |
+| canon-document | magic | world/magic/ | system.md |
+| canon-document | politics | world/politics/ | kingdoms.md |
+| canon-document | creatures | world/creatures/ | bestiary.md |
+| canon-document | culture | world/culture/ | languages.md |
+| canon-document | economy | world/economy/ | trade.md |
+| canon-document | religion | world/religion/ | pantheon.md |
+| canon-document | maps | world/maps/ | world-map.md |
+| canon-document | transportation | world/transportation/ | land-transportation.md |
+| npc | npcs | world/npcs/ | leaders/xxx.md |
+| rule | rules | world/rules/ | core-mechanics.md |
+| asset | assets | world/images/ | README.md |
+| analysis | analysis | evaluation/ | analysis_report.md |
+| overview | overview | world/ | index.md, README.md |
+
+**ルール**:
+- 正統世界観文書は `type: canon-document`, `category` はそのテーマ
+- NPCは `type: npc`, `category: npcs`（ファイルは world/npcs/ に配置）
+- ルールは `type: rule`, `category: rules`（ファイルは world/rules/ に配置）
+- アセット管理は `type: asset`, `category: assets`
+- 分析レポートは `type: analysis`, `category: analysis`（world/ ではなく evaluation/ に配置）
+- 概要・目次は `type: overview`, `category: overview`
 
 ## 10. 引用と出典
 

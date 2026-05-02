@@ -1,0 +1,143 @@
+# Overview Document Schema
+# 概要・目次文書用スキーマ
+# 対象: index.md, README.md などの案内・目次文書
+
+type: "object"
+allOf:
+  - "$ref": "common.yaml#/properties"
+required:
+  - type
+  - category
+  - title
+  - version
+  - created
+  - last_updated
+  - author
+  - tags
+  - status
+properties:
+  type:
+    const: "overview"
+    description: "概要・目次・案内文書"
+  category:
+    const: "overview"
+    description: "Fixed to 'overview' for overview documents"
+  document_kind:
+    type: "string"
+    enum: ["index", "readme", "toc", "navigation", "landing"]
+    description: |
+      文書の種類:
+      - index: 階層的目次（world/index.md など）
+      - readme: プロジェクト概要・利用ガイド（README.md）
+      - toc: 特定セクションの目次
+      - navigation: ナビゲーションガイド
+      - landing: ランディングページ（入り口）
+  summary:
+    type: "string"
+    description: "短い概要（1-2文）"
+  directory_structure:
+    type: "string"
+    description: "ディレクトリ構造説明（README.md用）"
+  getting_started:
+    type: "array"
+    items:
+      type: "string"
+    description: "初心者向けスタートガイド（手順リスト）"
+  usage_examples:
+    type: "array"
+    items:
+      type: "string"
+    description: "使用例・応用方法"
+  contact:
+    type: "object"
+    properties:
+      issues_url:
+        type: "string"
+        format: "uri"
+      discussions_url:
+        type: "string"
+        format: "uri"
+      maintainer:
+        type: "string"
+    description: "連絡先・問い合わせ先"
+  license:
+    type: "string"
+    description: "ライセンス表記（通常は CC BY-SA 4.0）"
+  related_projects:
+    type: "array"
+    items:
+      type: "string"
+    description: "関連プロジェクト・参考リソース"
+
+additionalProperties: false
+
+description: |
+  **overview** タイプは、プロジェクトやディレクトリの概要・目次・案内文書です。
+
+  **特徴**:
+  - 読者を適切な文書へナビゲート
+  - プロジェクトの目的と使い方を説明
+  - ディレクトリ構造を明示
+  - 連絡先・ライセンス情報を含む
+
+  **使用例**:
+  - world/index.md（世界構築目次）
+  - world/README.md（世界構築プロジェクト概要）
+  - （各サブディレクトリのREADME.md）
+
+  **最小例**:
+  ```yaml
+  ---
+  type: "overview"
+  category: "overview"
+  title: "エターナル・アルカディア世界構築プロジェクト"
+  version: "1.0.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-01"
+  author: "halc8312"
+  tags: ["project", "worldbuilding", "introduction"]
+  status: "stable"
+  document_kind: "readme"
+  summary: "ファンタジー世界『エターナル・アルカディア』の詳細な世界観を構築するプロジェクトです。"
+  license: "CC BY-SA 4.0"
+  ---
+  ```
+
+  **完全例（README.md用）**:
+  ```yaml
+  ---
+  type: "overview"
+  category: "overview"
+  title: "エターナル・アルカディア世界構築プロジェクト"
+  version: "1.0.0"
+  created: "2026-05-01"
+  last_updated: "2026-05-15"
+  author: "halc8312"
+  tags: ["project", "worldbuilding", "introduction", "guide"]
+  status: "stable"
+  document_kind: "readme"
+  summary: "ファンタジー世界『エターナル・アルカディア』の詳細な世界観を構築するプロジェクトです。"
+  directory_structure: |
+    world/
+      ├── index.md      # 世界目次
+      ├── lore/          # 歴史・神話
+      ├── geography/     # 地理・環境
+      ...
+  getting_started:
+    - "world/index.md を読んで全体像を把握"
+    - "気になるカテゴリの文書を参照"
+    - "CONTRIBUTING.md を読んで貢獻方法を確認"
+  usage_examples:
+    - "TRPGの舞台設定として"
+    - "小説・漫画の舞台として"
+    - "世界設定資料集として"
+  contact:
+    issues_url: "https://github.com/halc8312/SStory/issues"
+    discussions_url: "https://github.com/halc8312/SStory/discussions"
+    maintainer: "@halc8312"
+  license: "CC BY-SA 4.0"
+  related_projects:
+    - "D&D Forgotten Realms (inspiration)"
+    - "The Elder Scrolls (inspiration)"
+  ---
+  ```

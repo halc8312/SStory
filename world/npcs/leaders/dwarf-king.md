@@ -1,7 +1,15 @@
 ---
-title: "バルドル・アイアンフィスト (鉄山脉ドワーフ国王)"
+type: "npc"
 category: "npcs"
-type: "leader"
+title: "バルドル・アイアンフィスト (鉄山脉ドワーフ国王)"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-05-01"
+author: "halc8312"
+contributors: []
+tags: ["npc", "leader", "dwarf", "king", "ironridge"]
+status: "stable"
+npc_type: "leader"
 race: "dwarf"
 age: 180
 alignment: "lawful-good"

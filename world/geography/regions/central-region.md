@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "geography"
 title: "地域詳細: エリュシオン中央地域"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
-category: "geography"
+contributors: []
 tags: ["region", "central", "detail"]
 status: "stable"
 ---

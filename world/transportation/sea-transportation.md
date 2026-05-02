@@ -1,10 +1,12 @@
 ---
+type: "canon-document"
+category: "transportation"
 title: "海上交通"
 version: "1.0.0"
 created: "2026-05-02"
 last_updated: "2026-05-02"
 author: "halc8312"
-category: "transportation"
+contributors: []
 tags: ["sea", "ships", "maritime", "nautical"]
 status: "stable"
 ---
