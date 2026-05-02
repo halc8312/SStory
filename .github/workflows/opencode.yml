@@ -2,9 +2,10 @@ name: opencode
 
 # This workflow runs the opencode AI agent in response to comments or manual dispatch.
 # Permissions are minimized to only what's needed:
-# - contents: read   -> checkout repository
-# - pull-requests: write -> post comments on PRs
-# - issues: write -> post comments on issues
+# - contents: read         -> checkout repository
+# - pull-requests: write   -> post comments on PRs
+# - issues: write          -> post comments on issues
+# - id-token: write        -> allow OIDC token retrieval for opencode
 # External actions are pinned to specific versions for security and reproducibility.
 
 on:
@@ -16,14 +17,19 @@ on:
 
 jobs:
   opencode:
-    if: |
+    if: >
       github.event_name == 'workflow_dispatch' ||
-      startsWith(github.event.comment.body, '/oc') ||
-      startsWith(github.event.comment.body, '/opencode') ||
-      contains(github.event.comment.body, ' /oc') ||
-      contains(github.event.comment.body, ' /opencode') ||
-      contains(github.event.comment.body, '\n/oc') ||
-      contains(github.event.comment.body, '\n/opencode')
+      (
+        (github.event_name == 'issue_comment' || github.event_name == 'pull_request_review_comment') &&
+        (
+          startsWith(github.event.comment.body, '/oc') ||
+          startsWith(github.event.comment.body, '/opencode') ||
+          contains(github.event.comment.body, ' /oc') ||
+          contains(github.event.comment.body, ' /opencode') ||
+          contains(github.event.comment.body, '\n/oc') ||
+          contains(github.event.comment.body, '\n/opencode')
+        )
+      )
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -31,6 +37,7 @@ jobs:
       contents: read
       pull-requests: write
       issues: write
+      id-token: write
 
     steps:
       - name: Checkout repository
