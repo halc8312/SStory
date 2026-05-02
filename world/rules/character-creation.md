@@ -61,35 +61,35 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 
 ### 3.1 戦士 (Warrior)
 
-**主能力**: STR or DEX
-**Hit Die**: d10
+**主能力**: STRまたはDEX
+**ヒットダイス**: d10
 **主な特徴**:
 - 攻撃ボーナス +2 (戦闘訓練)
 - 追加攻撃 (レベル5)
-- 不屈の精神 (saveボーナス)
+- 不屈の精神 (セーブボーナス)
 - 武器・防具マスター
 
 **役割**: 前衛ダメージ、タンク。
 
 ### 3.2 魔導士 (Mage)
 
-**主能力**: INT (学術系) or WIS (自然系) or CHA (pact系)
-**Hit Die**: d6
+**主能力**: INT（学術系）またはWIS（自然系）またはCHA（契約系）
+**ヒットダイス**: d6
 **主な特徴**:
 - 呪文唱え (Spellcasting)
 - 精霊契約: 選択元素の契約度を上げやすい
 - 魔法探知 (Detect Magic)
 - 呪文破壊 (Disrupt Spell)
 
-**役割**:  ranged damage, support, utility.
+**役割**: 遠隔攻撃、支援、補助。
 
 ### 3.3 盗賊 (Rogue)
 
 **主能力**: DEX
-**Hit Die**: d8
+**ヒットダイス**: d8
 **主な特徴**:
 - 隠密とスリ
--  Sneak Attack (1d6, レベルで増加)
+- 隠密攻撃 (1d6, レベルで増加)
 - 回避 (Evasion)
 - 器用な手先
 
@@ -98,19 +98,19 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 ### 3.4 聖職者 (Cleric)
 
 **主能力**: WIS
-**Hit Die**: d8
+**ヒットダイス**: d8
 **主な特徴**:
 - 治癒魔法 (Healing)
 - 精霊との対話 (Turn Undead)
 - 祝福・呪い
 - 武器: 鈍器のみ (mace, staff)
 
-**役割**: 回復、支援、 undead対策。
+**役割**: 回復、支援、アンデッド対策。
 
 ### 3.5 レンジャー (Ranger)
 
-**主能力**: DEX or STR
-**Hit Die**: d10
+**主能力**: DEXまたはSTR
+**ヒットダイス**: d10
 **主な特徴**:
 - 自然環境での優位性
 - 追跡 (Track)
@@ -122,19 +122,19 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 ### 3.6 吟遊詩人 (Bard)
 
 **主能力**: CHA
-**Hit Die**: d8
+**ヒットダイス**: d8
 **主な特徴**:
 - 音楽・演説による支援 (Bardic Inspiration)
 - 知識全般
-- 魔法 (arcane 寄り)
+- 魔法 (秘術寄り)
 - 交渉得意
 
 **役割**: 支援、社交、万能。
 
-### 3.7  barbarian (バーバリアン)
+### 3.7 バーバリアン (barbarian)
 
 **主能力**: STR
-**Hit Die**: d12
+**ヒットダイス**: d12
 **主な特徴**:
 - 狂暴 (Rage): 戦闘中ダメージボーナス、ダメージ耐性
 - 危険感知
@@ -142,10 +142,10 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 
 **役割**: 近接ダメージ、耐久。
 
-### 3.8  summoner (召喚術士)
+### 3.8 召喚術士 (summoner)
 
-**主能力**: CHA or INT
-**Hit Die**: d8
+**主能力**: CHAまたはINT
+**ヒットダイス**: d8
 **主な特徴**:
 - 精霊召喚 (Summon Spirit)
 - 契約精霊と一体化
