@@ -89,7 +89,7 @@
 | ファイル | 形式 | 説明 |
 |----------|------|------|
 | `world/maps/world-map.svg` | SVG | 世界全体図 (五大陸+浮島) |
-| `world/maps/continents/elida.svg` | SVG | エルディア大陸 |
+| `world/maps/continents/elysion.svg` | SVG | エリュシオン大陸 |
 | `world/maps/continents/lumiera.svg` | SVG | リュミエラ大陸 |
 | `world/maps/continents/chaosrea.svg` | SVG | カオス・リア大陸 |
 | `world/maps/continents/atlantis.svg` | SVG | アトランティス大陸 |

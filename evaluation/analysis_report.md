@@ -32,7 +32,7 @@ The world is designed with four core principles:
 ### 1.2 Core World Features
 
 **Geographic**:
-- Five major continents (Elida, Lumiera, Chaos-Rea, Atlantis, Grimoire)
+- Five major continents (Elysion, Lumiera, Chaos-Rea, Atlantis, Grimoire)
 - Over 1,000 floating islands
 - Double moon system (Selene & Luna)
 - Elemental pulse phenomenon

@@ -62,7 +62,7 @@ SStory/                                    # プロジェクトルート
 │   │   ├── world-map.md                    # 世界地図参照 ✅ frontmatter
 │   │   ├── world-map.svg                   # 世界地図 (SVG) 新規 ✅
 │   │   └── continents/
-│   │       ├── elida.svg                   # エルディア 新規 ✅
+│   │       ├── elysion.svg                   # エリュシオン 新規 ✅
 │   │       ├── lumiera.svg                 # リュミエラ 新規 ✅
 │   │       ├── chaosrea.svg                # カオス・リア 新規 ✅
 │   │       ├── atlantis.svg                # アトランティス 新規 ✅
