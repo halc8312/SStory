@@ -95,6 +95,13 @@ world/
 ├── religion/                 # 信仰
 │   ├── pantheon.md           # 神々の pantheon
 │   └── beliefs.md            # 信仰体系
+├── transportation/           # 交通 新着！
+│   ├── index.md              # 交通手段概要
+│   ├── land-transportation.md
+│   ├── sea-transportation.md
+│   ├── air-transportation.md
+│   ├── historical-transportation.md
+│   └── regional-transportation.md
 ├── maps/                     # 地図
 │   └── world-map.md          # 世界地図
 └── images/                   # イメージ画像（将来実装予定）

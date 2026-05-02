@@ -54,6 +54,7 @@ status: "stable"
 ### 経済・技術
 - [通貨と交易](economy/trade.md)
 - [資源](economy/resources.md)
+- [交通手段](transportation/index.md) 新着！
 
 ### 信仰・宗教
 - [神々の pantheon](religion/pantheon.md)
