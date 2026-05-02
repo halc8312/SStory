@@ -38,7 +38,7 @@ related_documents: []
 
 ### 魔法・技術
 - `magic-system.jpg`: 魔法系統図
-- `artifacts.jpg`: 主要魔導器のイラスト
+- `魔導器s.jpg`: 主要魔導器のイラスト
 - `airship.jpg`: 浮島船
 
 ### 文化・祭り

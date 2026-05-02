@@ -58,7 +58,7 @@ status: "stable"
 | 馬車（一般道） | 15km/h | 約7日 | 10金貨 | 最も一般的 |
 | 急行馬車 | 25km/h | 約4日 | 30金貨 | 主要都市間 |
 | 魔導列车（地下鉄） | 80km/h | 約1.5日 | 50金貨 | ゼフィア国内のみ |
-| 浮遊石 carriage | 40km/h | 約3日 | 40金貨 | expensive but smooth |
+| 浮遊石 carriage | 40km/h | 約3日 | 40金貨 | expensive、smooth |
 | 個人用飛翔杖 | 60km/h | 約2日 | - | 魔導士限定 |
 
 ---

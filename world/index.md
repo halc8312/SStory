@@ -44,7 +44,7 @@ summary: "エターナル・アルカディア世界構築の全体目次と案�
 ### 魔法・技術
 - [魔法系統](magic/system.md)
 - [魔法学校](magic/schools.md)
-- [魔導器](magic/artifacts.md)
+- [魔導器](magic/魔導器s.md)
 
 ### 政治・社会
 - [国家一覧](politics/kingdoms.md)
@@ -60,7 +60,7 @@ summary: "エターナル・アルカディア世界構築の全体目次と案�
 - [交通手段](transportation/index.md) 新着！
 
 ### 信仰・宗教
-- [神々の pantheon](religion/pantheon.md)
+ - [神々のパンテオン](religion/pantheon.md)
 - [信仰体系](religion/beliefs.md)
 
 ---

@@ -53,7 +53,7 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 **防御**:
 - **AC**: 18 ( natural scale + magic)
 - **HP**: 110 (12d8+36 from Cleric 12 + 3d6+3 from Sorcerer 3)
-- **速度**: 30ft, swim 60ft
+- **速度**: 30フィート, swim 60フィート
 
 **セービングスロー**: DEX +6, CON +6, WIS +7, CHA +6
 
@@ -62,11 +62,11 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 **戦闘能力**:
 
 **攻撃**:
-- **三叉槍 (Trident)**: +8 to hit, 1d8+2 刺突 + 1d6 電撃.
-- **水流圧迫 (Hydraulic Push)**: 射程60ft, DC17 STR save or  pushed 20ft + 2d6 bludgeoning.
+- **三叉槍 (Trident)**: +8 命中, 1d8+2 刺突 + 1d6 電撃.
+- **水流圧迫 (Hydraulic Push)**: 射程60フィート, DC17 STR saveまたは pushed 20フィート + 2d6 bludgeoning.
 
 **特殊能力**:
-- ** Spellcasting (Cleric 12)**: 治癒・Storm呪文, DC17, +9.
+- ** 呪文発動 (Cleric 12)**: 治癒・Storm呪文, DC17, +9.
 - ** Font of Life (Cleric)**: 治癒魔法の効果+1レベル.
 - ** Sea Sorcery**: 水中での魔法+1レベル, 水耐性.
 - ** Tempest Domain**: 雷・風魔法得意.
@@ -86,7 +86,7 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 - 精霊の涙 (healing item, 1回/週)
 - 珊瑚の王冠 (CHI+1, water affinity)
 
-**所持金**: 800 GP (真珠通貨), 国家財産別
+**所持金**: 800金貨 (真珠通貨), 国家財産別
 
 ## 経歴
 
@@ -105,7 +105,7 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 ## 所有アイテム
 
 - **アトランティスの王冠**: 水の精霊より授与
-- **海神の三叉槍**: 海を支配するartifact
+- **海神の三叉槍**: 海を支配する魔導器
 - **真珠の印章**: 国家承認の証
 
 ## 現在の状況

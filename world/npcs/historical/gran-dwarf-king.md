@@ -74,17 +74,17 @@ spirit_contract:
 
 **AC**: 25 ( plate + shield + forge blessing)
 **HP**: 290 (Fighter d10×10 + Cleric d8×10 + CON×20)
-**速度**: 25 ft.
+**速度**: 25 フィート.
 
 **攻撃**:
 - **近接**: 戦鎚グランハンマー (2d8+6 bludgeoning, 1d6 fire追加)
-- **範囲**: 地震の一撃 (Recharge 5-6): 10ft radius、3d6 bludgeoning + knock prone
+- **範囲**: 地震の一撃 (Recharge 5-6): 10フィート radius、3d6 bludgeoning + knock prone
 - **支援**: Bless (3 targets, 1d4 to attack/saves)
 
 **特殊能力**:
-- **Action Surge** (1/戦闘)
-- **Second Wind** (1/休憩)
-- **Aura of Protection** (10ft, WIS+3 to saves)
+- **アクションサージ** (1/戦闘)
+- **セカンドウインド** (1/休憩)
+- **Aura of Protection** (10フィート, WIS+3 to saves)
 - **Forge Domain features**:
   - Blessing of the Forge: 武器に +1 追加 (1h)
   - Soul of the Forge: fire resistance, +1 AC (non-magical fire)

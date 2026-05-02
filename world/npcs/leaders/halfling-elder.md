@@ -53,7 +53,7 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 **防御**:
 - **AC**: 14 (通常の服 + 敏捷)
 - **HP**: 112 (12d8+24 from Druid 12 + 3d6+3 from Bard 3)
-- **速度**: 25ft
+- **速度**: 25フィート
 
 **セービングスロー**: DEX +6, CON +5, WIS +7, CHA +6
 
@@ -62,13 +62,13 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 **戦闘能力**:
 
 **攻撃**:
-- **長老の杖 (Staff)**: +7 to hit, 1d6+2 打撃 + 1d4 自然ダメージ.
+- **長老の杖 (Staff)**: +7 命中, 1d6+2 打撃 + 1d4 自然ダメージ.
 - **自然の怒り (Entangle)**: エリア制御、敵を拘束.
 
 **特殊能力**:
-- ** Spellcasting (Druid 12)**: 自然・治癒呪文, DC17, +9.
+- ** 呪文発動 (Druid 12)**: 自然・治癒呪文, DC17, +9.
 - ** Wild Shape (Druid)**: 1日2回、小型動物に変身.
-- ** Bardic Inspiration (d6)**: 2回/長休憩.
+- ** 音楽・演説による支援 (d6)**: 2回/長休憩.
 - ** Land's Stride (Druid Circle)**:  difficult terrain 無視.
 - ** Natural Recovery**: スロット一部回復 (短休憩).
 - ** Halflingの幸運**: セーブに再 roll (1回/日).
@@ -86,7 +86,7 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 - 美食のレシピ帳 (宝物)
 - 交易用の香辛料袋
 
-**所持金**: 150 GP (個人), 村落共同財産別
+**所持金**: 150金貨 (個人), 村落共同財産別
 
 ## 経歴
 
@@ -105,7 +105,7 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 ## 所有アイテム
 
 - **長寿の杖**: 12代前の長老が作った治癒の杖
-- **黄金のレシピ**: 秘伝の料理書 (artefact)
+- **黄金のレシピ**: 秘伝の料理書 (魔導器)
 - **合意の印章**: 全村落の同意を証する
 
 ## 現在の状況

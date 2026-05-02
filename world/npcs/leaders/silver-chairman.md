@@ -53,7 +53,7 @@ class: "Wizard (School of Transmutation) 14 / Rogue 2"
 **防御**:
 - **AC**: 13 (布の服 + 回避)
 - **HP**: 120 (14d6+28 from Wizard 14 + 2d8+2 from Rogue 2)
-- **速度**: 30ft
+- **速度**: 30フィート
 
 **セービングスロー**: INT +8, WIS +4, CHA +6
 
@@ -62,15 +62,15 @@ class: "Wizard (School of Transmutation) 14 / Rogue 2"
 **戦闘能力**:
 
 **攻撃**:
-- **魔法弾 (Fire Bolt)**: +11 to hit, 4d10+5 fire, range 120ft.
+- **魔法弾 (Fire Bolt)**: +11 命中, 4d10+5 fire, range 120フィート.
 - **変容の触手 (Transmuter's Touch)**: melee, 2d6 force + 状態異常.
 
 **特殊能力**:
-- ** Spellcasting (Wizard 14)**: スロット 4/3/3/3/2/2/1, DC19, +11.
+- ** 呪文発動 (Wizard 14)**: スロット 4/3/3/3/2/2/1, DC19, +11.
 - ** Transmuter's Stone**: 特定の耐性/能力を付与 (1日1回変更).
 - ** Arcane Recovery**: 1日1回、スロット回復 (LV1-5).
 - ** Expert Sneak (Rogue)**: 隠密にadvantage.
-- ** Jack of All Trades**: 技能判定に半修正.
+- ** 多芸の才**: 技能判定に半修正.
 
 **精霊契約**:
 - 風: 55% (情報通信)
@@ -85,7 +85,7 @@ class: "Wizard (School of Transmutation) 14 / Rogue 2"
 - 変容の石 (Transmuter's Stone) (選択効果)
 - 巻き符多数 (spell components)
 
-**所持金**: 1,000 GP (個人), 国家予算別
+**所持金**: 1,000金貨 (個人), 国家予算別
 
 ## 経歴
 

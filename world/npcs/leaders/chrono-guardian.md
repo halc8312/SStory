@@ -53,7 +53,7 @@ class: "Wizard (School of Divination) 18"
 **防御**:
 - **AC**: 17 ( mage armor + 時空の盾)
 - **HP**: 150 (18d6+36 from Wizard 18)
-- **速度**: 30ft
+- **速度**: 30フィート
 
 **セービングスロー**: INT +10, WIS +9, CHA +4
 
@@ -62,12 +62,12 @@ class: "Wizard (School of Divination) 18"
 **戦闘能力**:
 
 **攻撃**:
-- **時空の矢 (Shatter)**: 60ft sphere, DC18 CON save, 8d6 force.
+- **時空の矢 (Shatter)**: 60フィート sphere, DC18 CON save, 8d6 force.
 - **時間停止 (Time Stop)**: 伝説級, 1日1回, 数ラウンド時間停止 (制限あり).
 
 **特殊能力**:
-- ** Spellcasting (Wizard 18)**: 全学派, DC21, +13.
-- ** Portent (Divination)**: 毎日2回、未来の判定結果を20 or 1に設定可能.
+- ** 呪文発動 (Wizard 18)**: 全学派, DC21, +13.
+- ** Portent (Divination)**: 毎日2回、未来の判定結果を20または1に設定可能.
 - ** The Third Eye (Divination)**: 透明視, 心読み.
 - ** Timeless Body**: 老化せず, 時間の歪み耐性.
 - ** Chrono Shield**: 反応で時間をずらし, 攻撃回避 (1回/日).
@@ -81,7 +81,7 @@ class: "Wizard (School of Divination) 18"
 - 火: 10%
 
 **装備**:
-- 時の砂時計 (timekeeping artifact)
+- 時の砂時計 (timekeeping 魔導器)
 - 予言の眼鏡 (未来透視)
 - 時間封印の杖 (Forbidden magic seal)
 - 監視長官のローブ (AC+2, 時間耐性)

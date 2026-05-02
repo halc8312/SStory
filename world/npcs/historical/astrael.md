@@ -13,7 +13,7 @@ npc_type: "historical"
 race: "deity"
 age: "eternal"
 alignment: "neutral-good"
-class: "Primordial Deity (God of Stars and Magic)"
+class: "Primordial Deity (God of StarsかつMagic)"
 ---
 
 # アストラエル (Astrael)

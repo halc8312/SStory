@@ -74,21 +74,21 @@ spirit_contract:
 
 **AC**: 15 ( leather armor + DEX)
 **HP**: 98 (Rogue d8×10 + CON×10 + Bard d8×5)
-**速度**: 25 ft.
+**速度**: 25 フィート.
 
 **攻撃**:
-- **近接**: 短剣 (1d4-1 piercing, +3 to hit)
+- **近接**: 短剣 (1d4-1 piercing, +3 命中)
 - **遠隔**: スリング (1d4-1 bludgeoning, range 80/320)
-- **特殊**: Cutting Words (barding, 攻撃ロール-1d8)
+- **特殊**: 言葉の斬撃 (barding, 攻撃ロール-1d8)
 - **支援**: Help action が無料 (Mastermind feature)
 
 **特殊能力**:
 - **Sneak Attack** (3d6): 位置優位時
-- **Cunning Action**: ターン中 bonus action で hide/disengage/dash
+- **Cunning Action**: ターン中 ボーナスアクション で hide/disengage/dash
 - **Master of Intrigue**: 欺瞞・ disguise にadvantage
-- **Master of Tactics**: Help action が bonus action、60ft range
-- **Bardic Inspiration** (d8, 5/day): 味方のd20ロールに+1d8
-- **Jack of All Trades**: すべての skill check に半分proficiency bonus 追加
+- **Master of Tactics**: Help action が ボーナスアクション、60フィート range
+- **音楽・演説による支援** (d8, 5/day): 味方のd20ロールに+1d8
+- **多芸の才**: すべての skill check に半分proficiency bonus 追加
 
 **セービング**: STR-1, DEX+5, CON+4, INT+6, WIS+4, CHA+7
 
@@ -125,7 +125,7 @@ spirit_contract:
 ## 所有アイテム
 
 - **商人の指輪**: 交渉時に CHA check +2
-- **魔法の鞄 (Bag of Holding)**: 容量500ポンド、内部空間 64立方ft
+- **魔法の鞄 (Bag of Holding)**: 容量500ポンド、内部空間 64立方フィート
 - **取引の書**: すべての主要取引契約の写し、違反時のペナルティ明記
 - **通信の魔導器**: 遠隔通信 (1/day Message 全店舗)
 - **金貨10,000枚**: 流動資金 (実際はもっと多い)

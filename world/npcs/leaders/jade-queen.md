@@ -53,7 +53,7 @@ class: "Bard (College of Glamour) 10 / Paladin 2"
 **防御**:
 - **AC**: 16 ( mundane dress with magic)
 - **HP**: 95 (10d8+30 from Bard 10 + 2d10+2 from Paladin 2)
-- **速度**: 30ft
+- **速度**: 30フィート
 
 **セービングスロー**: DEX +5, CON +4, WIS +5, CHA +7
 
@@ -62,16 +62,16 @@ class: "Bard (College of Glamour) 10 / Paladin 2"
 **戦闘能力**:
 
 **攻撃**:
-- **翡翠の杖 (Jade Staff)**: +8 to hit, 1d6+2 打撃 + 1d6 光ダメージ.
+- **翡翠の杖 (Jade Staff)**: +8 命中, 1d6+2 打撃 + 1d6 光ダメージ.
 - **恵みの言葉 (Word of Healing)**: ボーナスアクション、味方1体 2d8+4 HP回復.
 
 **特殊能力**:
-- ** Bardic Inspiration (d8)**: 3回/長休憩, 60ft.
-- ** Jack of All Trades**: 技能判定に半修正.
+- ** 音楽・演説による支援 (d8)**: 3回/長休憩, 60フィート.
+- ** 多芸の才**: 技能判定に半修正.
 - ** Countercharm (Bard)**: 魅了に対して自動成功.
 - ** Paladin's Divine Sense**: 邪悪な存在を感知.
 - ** Lay on Hands**: 15 HP回復/日.
-- ** Spellcasting**: Bard & Paladin 呪文 (治癒・支援中心).
+- ** 呪文発動**: Bard & Paladin 呪文 (治癒・支援中心).
 
 **精霊契約**:
 - 地: 70% (主契約)
@@ -86,7 +86,7 @@ class: "Bard (College of Glamour) 10 / Paladin 2"
 - 平和の首飾り (魅了耐性)
 - 国の印章
 
-**所持金**: 300 GP
+**所持金**: 300金貨
 
 ## 経歴
 

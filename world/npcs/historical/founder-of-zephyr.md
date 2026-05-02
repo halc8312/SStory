@@ -72,7 +72,7 @@ spirit_contract:
 
 **AC**: 21 ( plate + shield + deflection)
 **HP**: 210 (Fighter d10×5 + Paladin d10×20 + CON×25)
-**速度**: 30 ft.
+**速度**: 30 フィート.
 
 **攻撃**:
 - **近接**: 聖剣ゼフィア (2d8+5 radiant, +1, 対邪恶extra damage)
@@ -81,11 +81,11 @@ spirit_contract:
 
 **主な呪文/能力**:
 - **Divine Smite**: 攻撃時に光ダメージ追加
-- **Aura of Protection**: 10ft radius, CHA+5 to saves
-- **Aura of Courage**: 10ft, fear無効
-- **Spellcasting**: Paladin spells (healing, protection)
-- **Second Wind** (1/休憩)
-- **Action Surge** (1/戦闘)
+- **Aura of Protection**: 10フィート radius, CHA+5 to saves
+- **Aura of Courage**: 10フィート, fear無効
+- **呪文発動**: Paladin spells (healing, protection)
+- **セカンドウインド** (1/休憩)
+- **アクションサージ** (1/戦闘)
 
 **セービング**: 全能力+〜+7 (高)
 

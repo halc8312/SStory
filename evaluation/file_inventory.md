@@ -36,7 +36,7 @@ SStory/                                    # プロジェクトルート
 │   ├── magic/                              # 魔法・技術
 │   │   ├── system.md                       # 魔法系統 (292行) ✅ frontmatter
 │   │   ├── schools.md                      # 魔法学校 ✅ frontmatter
-│   │   └── artifacts.md                    # 魔導器 ✅ frontmatter
+│   │   └── 魔導器s.md                    # 魔導器 ✅ frontmatter
 │   │
 │   ├── politics/                           # 政治・社会
 │   │   ├── kingdoms.md                     # 国家一覧 (459行) ✅ frontmatter, 修正済
@@ -191,7 +191,7 @@ SStory/                                    # プロジェクトルート
 ├─ [魔法・技術](magic/)                 ✅ 存在
 │  ├─ system.md                         ✅ 存在
 │  ├─ schools.md                        ✅ 存在 (未読)
-│  └─ artifacts.md                      ✅ 存在 (未読)
+│  └─ 魔導器s.md                      ✅ 存在 (未読)
 ├─ [政治・社会](politics/)              ✅ 存在
 │  ├─ kingdoms.md                       ✅ 存在
 │  └─ alliances.md                      ✅ 存在 (未読)
@@ -235,7 +235,7 @@ author: "halc8312"
 contributors: []
 category: "lore"
 tags: ["creation", "gods", "mythology"]
-status: "stable"  # or "draft", "review"
+status: "stable"  #または"draフィート", "review"
 ---
 ```
 

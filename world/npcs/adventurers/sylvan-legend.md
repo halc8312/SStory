@@ -73,7 +73,7 @@ spirit_contract:
 
 **AC**: 18 ( leather armor + DEX + shield spell)
 **HP**: 130 (Ranger d10×10 + Rogue d8×5 + CON×15)
-**速度**: 35 ft. (elf)
+**速度**: 35 フィート. (elf)
 
 **攻撃**:
 - **遠隔**: ロングボウ+2 (1d8+5 piercing, +2 enh, range 150/600)
@@ -90,8 +90,8 @@ spirit_contract:
 **特殊能力**:
 - **Favored Enemy**: Monstrosity +2d6 damage
 - **Natural Explorer**: 森・荒野で不利地形無視、警戒半減睡眠
-- **Rogue Cunning Action**: bonus action hide/disengage/dash
-- **Skirmisher**: 攻撃後10ft後退 (free)
+- **Rogue Cunning Action**: ボーナスアクション hide/disengage/dash
+- **Skirmisher**: 攻撃後10フィート後退 (free)
 - **Second-Story Work**: climbing speed, jump distance double
 
 **セービング**: DEX+7, WIS+5, CON+5, INT+4, STR+4, CHA+3
@@ -130,7 +130,7 @@ spirit_contract:
 ## 所有アイテム
 
 - **弓グリーンウッド (Longbow of Greenwood)**: +2 ロングボウ、風属性ダメージ追加、1/day 風の矢 (3d6)
-- **月光のクローク**: 暗視60ft、月明かり下で Stealth +5
+- **月光のクローク**: 暗視60フィート、月明かり下で Stealth +5
 - **森の護符**: 自然環境での生存判定 +5、動物との会話 (1/day)
 - **影の短剣**: +1 短剣、暗所での攻撃ロールに自動クリティカル (19-20)
 - **薬瓶**: ヒールポーション ×5、 antidote ×3

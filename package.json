@@ -4,14 +4,15 @@
   "description": "SStory - Eternal Arcadia Worldbuilding Project",
   "main": "index.js",
    "scripts": {
-     "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
-     "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
-     "spell": "cspell '**/*.md' --language=ja",
-     "frontmatter": "node scripts/validate-frontmatter.js",
-     "consistency": "node scripts/validate-consistency.js",
-     "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency",
-     "test": "npm run validate"
-   },
+      "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
+      "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
+      "spell": "cspell '**/*.md' --language=ja",
+      "frontmatter": "node scripts/validate-frontmatter.js",
+      "consistency": "node scripts/validate-consistency.js",
+      "terminology": "python3 tools/terminology_check.py",
+      "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency && npm run terminology",
+      "test": "npm run validate"
+    },
   "keywords": [
     "worldbuilding",
     "fantasy",

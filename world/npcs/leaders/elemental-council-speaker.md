@@ -26,7 +26,7 @@ class: "Primordial Deity (Earth Aspect)"
 
 ## 外見
 
-- **形態**: 巨大な岩と水晶でできた人型像, 高さ30ft, 重量無量
+- **形態**: 巨大な岩と水晶でできた人型像, 高さ30フィート, 重量無量
 - **顔**: 洞窟のような目, 柔和な光
 - **声**: 地鳴りのような低音, だが温かみ
 - **特徴**: 周囲の岩石が浮遊, 大地のenergyが溢れる
@@ -52,7 +52,7 @@ class: "Primordial Deity (Earth Aspect)"
 **防御**:
 - **AC**: 25 ( natural stone armor)
 - **HP**: 1,200 (100d20+500) (godly)
-- **速度**: 20ft, burrow 100ft
+- **速度**: 20フィート, burrow 100フィート
 
 **免疫**:  poison, psychic, 非魔法ダメージ耐性 (一部)
 **耐性**:  bludgeoning, piercing, slashing (非魔法武器)
@@ -62,21 +62,21 @@ class: "Primordial Deity (Earth Aspect)"
 **戦闘能力**:
 
 **攻撃**:
-- **岩石落とし (Rock Fall)**: 1ラウンドで 10d10 bludgeoning, 範囲30ft.
+- **岩石落とし (Rock Fall)**: 1ラウンドで 10d10 bludgeoning, 範囲30フィート.
 - **地脈波 (Earth Pulse)**: 全大陸の地脈を刺激, 地震発生 (regional).
 - **精霊召喚 (Summon Earth Elementals)**: 5体まで召喚.
 
 **特殊能力**:
-- ** Godly Presence**: 半径1mile内の全生物が WIS save (DC25) 失敗 → 恐怖 or 従順
+- ** Godly Presence**: 半径1mile内の全生物が WIS save (DC25) 失敗 → 恐怖または従順
 - ** Earth Mastery**: 地中・岩場で無敵
 - ** Immortality**:  death しない, 消滅しても数世紀で復活
 - ** Elemental Form**: 任意の大きさに変化, 元素状態
-- ** Spellcasting (Deity Level)**: 全元素呪文無制限, DC25.
+- ** 呪文発動 (Deity Level)**: 全元素呪文無制限, DC25.
 
 **精霊契約**: 地: 100% (神格), 他元素: 80% each (協調)
 
 **装備**:
-- 大地の心臓 (Heart of the World) - artifact
+- 大地の心臓 (Heart of the World) - 魔導器
 - 精霊協会の印章
 
 ## 経歴
@@ -95,7 +95,7 @@ class: "Primordial Deity (Earth Aspect)"
 
 ## 所有アイテム
 
-- **大地の心臓**: 地脈の源を制御するartifact
+- **大地の心臓**: 地脈の源を制御する魔導器
 - **精霊契約の指輪**: 全種族との契約を象徴
 
 ## 現在の状況

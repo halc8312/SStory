@@ -53,7 +53,7 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 **防御**:
 - **AC**: 18 ( heavy armor)
 - **HP**: 240 (16d12+48 from Barbarian 16 + 4d10+8 from Fighter 4)
-- **速度**: 30ft
+- **速度**: 30フィート
 
 **セービングスロー**: STR +9, CON +10, WIS +5, CHA +4
 
@@ -62,7 +62,7 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 **戦闘能力**:
 
 **攻撃**:
-- **クラッシャー (Giant Axe)**: +11 to hit, 2d12+6 斬撃 + 2d6 (rage).
+- **クラッシャー (Giant Axe)**: +11 命中, 2d12+6 斬撃 + 2d6 (rage).
 - **盾撃**: ターゲットを prone.
 
 **特殊能力**:
@@ -71,7 +71,7 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 - ** Danger Sense**: 危険感知.
 - ** Brutal Critical**: 追加 3d12.
 - ** Extra Attack (Fighter)**: 2回攻撃.
-- ** Action Surge (Fighter)**: 追加アクション.
+- ** アクションサージ (Fighter)**: 追加アクション.
 - ** Indomitable (Fighter)**: セーブ再 roll.
 
 **精霊契約**:
@@ -86,7 +86,7 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 - 鋼のplate armor (AC18)
 - 戦士の牙 (首飾り)
 
-**所持金**: 50 GP
+**所持金**: 50金貨
 
 ## 経歴
 

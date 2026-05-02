@@ -52,7 +52,7 @@ class: "Mage (Enchanter) 20"
 **防御**:
 - **AC**: 18 ( mage armor +  dex)
 - **HP**: 180 (20d6+40) (Mage 20)
-- **速度**: 30ft, 暗視60ft
+- **速度**: 30フィート, 暗視60フィート
 
 **セービングスロー**: DEX +8, CON +7, INT +9, WIS +7, CHA +8
 
@@ -61,11 +61,11 @@ class: "Mage (Enchanter) 20"
 **戦闘能力**:
 
 **攻撃**:
-- **月の光線 (Moonbeam)**: 120ft, DC20, 6d10 moon damage + 盲目.
+- **月の光線 (Moonbeam)**: 120フィート, DC20, 6d10 moon damage + 盲目.
 - **エンチャント: 支配 (Enslave)**: 意志セーブ DC20, 失敗で支配 (1日).
 
 **特殊能力**:
-- ** Spellcasting (Mage 20)**: 全学派, DC21, +13 to hit.
+- ** 呪文発動 (Mage 20)**: 全学派, DC21, +13 命中.
 - ** Archmage**: 伝説の魔法使い, 2呪文無成分.
 - ** Immortality Quest**: 永遠の命を求め, 時間魔法研究.
 - ** Moon Affinity**: 月魔法+2レベル, 夜間に+2 AC.
@@ -79,7 +79,7 @@ class: "Mage (Enchanter) 20"
 - 水: 15%
 
 **装備**:
-- 月の王冠 (artifact, 月魔法強化)
+- 月の王冠 (魔導器, 月魔法強化)
 - 禁断の書 (forbidden tome)
 - エターナル・ジュエル (不老の鍵)
 

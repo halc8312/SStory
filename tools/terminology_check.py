@@ -52,12 +52,10 @@ def main():
     if not terms:
         print("Warning: No terms defined in dictionary.", file=sys.stderr)
 
-    # Collect all markdown files, excluding node_modules, .git, and tool directories
+    # Collect markdown files from world/ directory only
     md_files = []
-    exclude_dirs = {'node_modules', '.git', 'terminology', 'tools'}
-    for root, dirs, files in os.walk(repo_root):
-        # Modify dirs in-place to prune traversal
-        dirs[:] = [d for d in dirs if d not in exclude_dirs]
+    world_dir = repo_root / 'world'
+    for root, dirs, files in os.walk(world_dir):
         for fname in files:
             if fname.endswith('.md'):
                 md_files.append(os.path.join(root, fname))
