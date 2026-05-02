@@ -158,6 +158,18 @@ world/
 
 ---
 
+### 交通・航路
+
+- [交通網概要](transportation/README.md)
+- [交通史](transportation/history.md)
+- [街道網](transportation/road-network.md)
+- [海上航路](transportation/sea-routes.md)
+- [空中航路](transportation/sky-routes.md)
+- [交通拠点](transportation/stations-and-terminals.md)
+- [公共交通](transportation/public-transport.md)
+
+---
+
 ### 魔法ランク
 1. **禁忌魔法**: 使用禁止（世界破壊級）
 2. **上級魔法**: A級、国家規模の影響
