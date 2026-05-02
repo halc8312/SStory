@@ -18,7 +18,7 @@ status: "stable"
 ### アストラリス (Astralis)
 ゼフィア連合共和国の首都。世界最大の都市で、政治・経済・魔法の中心。
 
-### アールディー (AD: Arcadia Dating)
+### アールディー (Arcadia Dating)
 現代の年号。ゼフィア連合共和国成立の年を元年とする。例: アールディー1026年。
 
 ### 元素精霊 (Elemental Spirits)

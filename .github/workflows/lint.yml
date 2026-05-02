@@ -35,20 +35,19 @@ jobs:
       - name: Check links
         run: npm run links
 
-  spell-check:
-    name: Spelling (cspell)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run cspell
-        uses: streetsidesoftware/cspell-action@v1
-        with:
-          files: '**/*.md'
-          language: 'ja'
-          exclude: |
-            **/node_modules/**
-            **/evaluation/**
-            **/Language/**
+   spell-check:
+     name: Spelling (cspell)
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v4
+       - name: Setup Node.js
+         uses: actions/setup-node@v4
+         with:
+           node-version: '20'
+       - name: Install dependencies
+         run: npm ci
+       - name: Check spelling
+         run: npm run spell
 
   frontmatter-check:
     name: Frontmatter Validation
@@ -78,16 +77,18 @@ jobs:
        - name: Check consistency
          run: npm run consistency
 
-   terminology-check:
-     name: Terminology Check
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v4
-       - name: Setup Python
-         uses: actions/setup-python@v5
-         with:
-           python-version: '3.12'
-       - name: Install dependencies
-         run: pip install pyyaml
-       - name: Check terminology
-         run: python3 tools/terminology_check.py
+    terminology-check:
+      name: Terminology Check
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Setup Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.12'
+        - name: Install Python dependencies
+          run: pip install pyyaml
+        - name: Install Node dependencies
+          run: npm ci
+        - name: Check terminology
+          run: npm run terminology

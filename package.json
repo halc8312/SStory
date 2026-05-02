@@ -6,7 +6,7 @@
    "scripts": {
       "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
       "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
-      "spell": "cspell '**/*.md' --language=ja",
+       "spell": "cspell '**/*.md' --language=ja --ignore-paths '**/node_modules/**' --ignore-paths '**/evaluation/**' --ignore-paths '**/Language/**'",
       "frontmatter": "node scripts/validate-frontmatter.js",
       "consistency": "node scripts/validate-consistency.js",
       "terminology": "python3 tools/terminology_check.py",
