@@ -1,0 +1,20 @@
+# CODEOWNERS file
+# This file specifies the code owners for the repository.
+# 形式: パス スペース 所有者(@username)
+# 詳細: https://docs.github.com/ja/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# デフォルト: リポジトリ全体の所有者
+*       @halc8312
+
+# 世界観文書 (world/) は主担当
+/world/                  @halc8312
+
+# スキーマ定義
+/schemas/                @halc8312
+
+# スクリプト・CI
+/scripts/                @halc8312
+/.github/workflows/      @halc8312
+
+# ドキュメント
+*.md                     @halc8312

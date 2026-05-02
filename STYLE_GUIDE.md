@@ -249,7 +249,8 @@ key: value
 
 ## 9. メタデータ (YAML Frontmatter)
 
-すべてのMarkdownファイルに必須のfrontmatter。文書タイプに応じたスキーマは `schemas/` ディレクトリで定義されています。
+**world/ ディレクトリ以下の文書**には、文書タイプに応じた YAML frontmatter が必須です。
+スキーマ定義は `schemas/` ディレクトリで定義されています。ルートのプロジェクト文書（CONTRIBUTING.md, ROADMAP.md など）は任意ですが、メタデータが必要な場合は本節を参考にしてください。
 
 ### 9.1 共通必須フィールド（全タイプ共通）
 
@@ -305,9 +306,11 @@ status: "draft|review|stable"
 **canon-document**（正統世界観文書）:
 ```yaml
 type: "canon-document"
-contributors: []  # 貢献者GitHub usernameリスト
-previous_version: "1.0.0"  # (optional)
-changlog: []  # (optional) 変更履歴
+contributors: []  # 貢献者GitHub usernameリスト（必須）
+previous_version: "1.0.0"  # (任意) 前バージョン番号
+changelog: []  # (任意) 変更履歴リスト
+based_on: ""   # (任意) ベース資料・引用元
+reviewed_by: []  # (任意) レビュー担当者GitHub usernameリスト
 ```
 
 **npc**（NPCキャラクターシート）:
@@ -416,10 +419,13 @@ summary: "短い概要（1-2文）"
 
 ## 11. 画像の取り扱い
 
-- 現在画像なし (後日追加予定)
-- 追加時は `world/images/` に格納
-- 相対パスで参照: `![説明](../images/file.png)`
-- 代替テキスト必須: `alt="説明"`
+- 画像アセットは `world/images/` ディレクトリに格納します
+- 現在はプレースホルダー状態であり、実際の画像は段階的に追加予定です
+- 画像追加時は `world/images/README.md` に一覧を記載します
+- 参照方法: `![代替テキスト](../images/filename.png)` （相対パス）
+- 代替テキスト（alt）は必須で、画像の内容を簡潔に記述
+- ライセンス: プロジェクト全体の CC BY-SA 4.0 に準拠
+- アセット管理は `world/images/README.md` の asset タイプ文書で実施
 
 ## 12. 共通ミスと回避策
 
@@ -491,6 +497,6 @@ world/
 
 ---
 
-**最終更新**: 2026-05-01
+**最終更新**: 2026-05-02
 **バージョン**: 1.0.0
 **著者**: halc8312

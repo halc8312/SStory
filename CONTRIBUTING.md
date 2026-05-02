@@ -5,6 +5,8 @@
 SStory - エターナル・アルカディア世界構築プロジェクトへようこそ！
 このプロジェクトは、誰でも自由に利用・拡張できるファンタジー世界観を提供します。
 
+世界観の詳細は [world/README.md](world/README.md) を参照してください。
+
 ## 開発プロセス
 
 1. **Issueで提案**: 新規設定追加や修正をIssueで議論
@@ -114,11 +116,11 @@ schemas/                           # メタデータスキーマ定義
   - `schemas/README.md`に使用法を記載
 
 
-### メタデータ (必須)
+### メタデータ (YAML Frontmatter)
 
-各Markdownファイルの先頭にYAML frontmatterを記述してください。文書タイプに応じたスキーマは `schemas/` ディレクトリで定義されています。
+すべてのMarkdownファイルには、先頭にYAML frontmatterの記述が必須です。文書タイプに応じたスキーマは `schemas/` ディレクトリで定義されています。詳細な説明と全タイプの完全な仕様は [`STYLE_GUIDE.md`](STYLE_GUIDE.md#9-メタデータ-yaml-frontmatter) を参照してください。
 
-#### 共通必須フィールド（全タイプ共通）
+#### 共通必須フィールド（簡易版）
 
 ```yaml
 ---
@@ -134,105 +136,17 @@ status: "draft|review|stable"
 ---
 ```
 
-**項目説明**:
-- `type`: 文書タイプ（構造・目的）。[詳細](schemas/README.md)
-- `category`: 内容カテゴリ（主題）。[カテゴリ一覧](#カテゴリ一覧)参照
-- `title`: ファイルのタイトル（日本語、プロジェクト名含まない）
+**各項目の意味**:
+- `type`: 文書の構造・目的（`canon-document`=世界観文書, `npc`=NPC, `rule`=ルール, `asset`=アセット, `analysis`=分析, `overview`=概要）
+- `category`: 内容カテゴリ（歴史・地理・種族など）
+- `title`: ファイルタイトル（日本語、プロジェクト名含まない）
 - `version`: セマンティックバージョン（初期値 `1.0.0`）
-- `created`: 作成日（不明な場合は `2026-05-01`）
-- `last_updated`: 最終更新日（更新時必ず更新）
+- `created` / `last_updated`: 作成日・更新日（`YYYY-MM-DD`）
 - `author`: 主な作成者（GitHub username）
 - `tags`: 関連キーワード（5〜10個程度）
-- `status`: 現状（`draft`=草案, `review`=レビュー中, `stable`=安定）
+- `status`: `draft`=草案, `review`=レビュー中, `stable`=安定
 
-#### カテゴリ一覧
-
-| カテゴリ | 説明 | 例 |
-|----------|------|----|
-| `lore` | 歴史・神話・物語 | creation-myth.md, ancient-civilizations.md |
-| `geography` | 地理・環境・気候 | continents.md, climate.md |
-| `races` | 種族・文化 | races-overview.md |
-| `magic` | 魔法・技術・魔導器 | system.md, artifacts.md |
-| `politics` | 政治・国家・同盟 | kingdoms.md, alliances.md |
-| `creatures` | 生物・モンスター | bestiary.md, legendary.md |
-| `culture` | 文化・言語・暦 | languages.md, calendar.md |
-| `economy` | 経済・交易・資源 | trade.md, resources.md |
-| `religion` | 信仰・神々・教義 | pantheon.md, beliefs.md |
-| `maps` | 地図・座標・航路 | world-map.md, coordinates.md |
-| `transportation` | 交通・輸送・移動 | land-transportation.md |
-| `npcs` | NPCカテゴリ（文書の入る場所） | npcs/leaders/, npcs/historical/ |
-| `rules` | ルールカテゴリ（文書の入る場所） | rules/core-mechanics.md |
-| `overview` | 概要・目次・案内 | index.md, README.md |
-| `assets` | アセット参照 | images/README.md |
-| `analysis` | 分析・評価レポート | evaluation/analysis_report.md |
-
-#### タイプ別追加フィールド
-
-各文書タイプに応じて、以下の追加フィールドが必要です：
-
-**canon-document**（正統世界観文書）:
-```yaml
-type: "canon-document"
-contributors: []  # 貢献者GitHub usernameリスト
-```
-
-**npc**（NPCキャラクターシート）:
-```yaml
-type: "npc"
-npc_type: "leader|historical|adventurer|commoner|deity|monster-npc"
-race: "human|elf|dwarf|orc|halfling|aquatic-elf|elemental|deity|other"
-age: 55  # または "eternal", "unknown"
-alignment: "lawful-good|neutral-good|chaotic-good|..."
-class: "Fighter (Champion) 15 / Bard 3"
-spirit_contract:
-  wind: 40   # 0-100%
-  earth: 60
-  fire: 10
-  water: 60
-  moon: 20
-```
-
-**rule**（ルール文書）:
-```yaml
-type: "rule"
-rule_type: "core|combat|magic|character|bestiary|equipment|setting"
-system: "custom|dnd5e|pathfinder2e|other"
-complexity: "beginner|intermediate|advanced|expert"
-related_rules: ["character-creation.md", "combat.md"]
-```
-
-**asset**（アセット参照）:
-```yaml
-type: "asset"
-asset_type: "image|audio|video|3d-model|font|other"
-items:
-  - filename: "world-map.png"
-    description: "五大陸と浮島群を表現した世界地図"
-    alt_text: "エターナル・アルカディア世界地図"
-    status: "completed|planned"
-    license: "CC BY-SA 4.0"
-```
-
-**analysis**（分析レポート）:
-```yaml
-type: "analysis"
-analysis_type: "world-analysis|repository-analysis|data-consistency|content-audit"
-scope: "分析対象範囲"
-base_files: ["world/lore/*.md", "world/geography/*.md"]
-findings: []  # 発見事項リスト
-ratings:      # 評価スコア
-  overall: 8.0
-  completeness: 0.75
-```
-
-**overview**（概要・目次）:
-```yaml
-type: "overview"
-document_kind: "index|readme|toc|navigation|landing"
-summary: "短い概要（1-2文）"
-```
-
-各タイプの完全なスキーマ定義は [`schemas/`](schemas/README.md) ディレクトリを参照してください。
+**詳細とタイプ別追加フィールド**: [STYLE_GUIDE.md 第9節](STYLE_GUIDE.md#9-メタデータ-yaml-frontmatter) を参照。各タイプ（canon-document, npc, rule, asset, analysis, overview）ごとに必要な追加フィールドが定義されています。
 
 ### マークダウン規約
 
@@ -329,7 +243,7 @@ PRを作成する前に、以下を確認してください：
 4. **Frontmatter検証**: `scripts/validate-frontmatter.js` でYAML frontmatterの必須項目・形式を検証
 5. **一貫性チェック**: `scripts/validate-consistency.js` で用語統一・データ整合性を検証
 
-すべてのチェックが合格しないとマージできません。詳細は [`.github/workflows/lint.yml`](../.github/workflows/lint.yml) を参照してください。
+すべてのチェックが合格しないとマージできません。詳細は [`.github/workflows/lint.yml`](.github/workflows/lint.yml) を参照してください。
 
 ローカルでも同じコマンドで実行可能です：
 ```bash
@@ -363,5 +277,5 @@ CC BY-SA 4.0 - 商用利用可、クレジット表示必須、継承義務あ�
 
 ---
 
-**ガイドライン最終更新**: 2026-05-01
+**ガイドライン最終更新**: 2026-05-02
 **バージョン**: 1.0.0

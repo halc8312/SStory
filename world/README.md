@@ -4,7 +4,7 @@ category: "overview"
 title: "エターナル・アルカディア世界構築プロジェクト"
 version: "1.0.0"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-05-02"
 author: "halc8312"
 tags: ["project", "worldbuilding", "introduction"]
 status: "stable"
@@ -189,8 +189,14 @@ world/
 ---
 
 ### 3. クレジット
-特に必要ありませんが、以下のようにクレジットを入れて頂けると嬉しいです：
-> 世界観: エターナル・アルカディア世界構築プロジェクト (https://github.com/your-repo)
+
+CC BY-SA 4.0 ライセンスに基づき、クレジット表示が必要です。以下の形式での表示を推奨します：
+
+> 世界観: エターナル・アルカディア世界構築プロジェクト (SStory)
+> 出典: https://github.com/halc8312/SStory
+> ライセンス: CC BY-SA 4.0
+
+詳細な利用ガイドラインは [USAGE_POLICY.md](../USAGE_POLICY.md) を参照してください。
 
 ---
 
@@ -252,6 +258,8 @@ world/
 
 ## コントリビューション
 
+詳細な Contributing ガイドは [CONTRIBUTING.md](../CONTRIBUTING.md) を参照してください。
+
 ### バグ報告・提案
 Issueにてご報告ください。
 
@@ -263,6 +271,8 @@ Issueにてご報告ください。
 2. ファイルを適切な場所に配置
 3. 読みやすい markdown 形式で
 4. 既存のフォーマットに合わせる
+
+**公式設定（カノン）の変更プロセス**については [CANON_POLICY.md](../CANON_POLICY.md) を参照してください。
 
 ---
 
