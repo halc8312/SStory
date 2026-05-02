@@ -55,9 +55,9 @@ summary: "エターナル・アルカディア世界構築の全体目次と案�
 - [伝説の生物](creatures/legendary.md)
 
 ### 経済・技術
-- [通貨と交易](economy/trade.md)
-- [資源](economy/resources.md)
-- [交通手段](transportation/index.md) 新着！
+- [通貨と交易](../economy/trade.md)
+- [資源](../economy/resources.md)
+- [交通手段](../transportation/index.md)
 
 ### 信仰・宗教
  - [神々のパンテオン](religion/pantheon.md)
