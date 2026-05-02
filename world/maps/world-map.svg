@@ -9,7 +9,7 @@
   <!-- Background -->
   <rect width="1000" height="800" class="water"/>
   <!-- Continents -->
-  <!-- Elida (Central-West, largest) -->
+   <!-- Elysion (Central-West, largest) -->
   <polygon class="land" points="200,250 550,220 600,350 550,500 400,520 300,450 180,400"/>
   <!-- Lumiera (East) -->
   <polygon class="land" points="620,230 880,250 900,400 750,450 640,380"/>
@@ -25,7 +25,7 @@
   <circle class="island" cx="400" cy="150" r="12"/>
   <circle class="island" cx="480" cy="130" r="8"/>
   <!-- Labels -->
-  <text x="400" y="380" class="title">エルディア</text>
+   <text x="400" y="380" class="title">エリュシオン</text>
   <text x="750" y="350" class="title">リュミエラ</text>
   <text x="500" y="620" class="title">カオス・リア</text>
   <text x="150" y="400" class="title">アトランティス</text>

@@ -153,7 +153,7 @@ evaluation/
 
 6. **ワールドマップ作成** ✅ 完了
    - `world/maps/world-map.svg` (世界地図)
-   - `world/maps/continents/` に5大陸SVG (elida, lumiera, chaosrea, atlantis, grimoire)
+    - `world/maps/continents/` に5大陸SVG (elysion, lumiera, chaosrea, atlantis, grimoire)
 
 7. **主要NPC作成** ✅ 完了
    - 指導者 12ファイル (`npcs/leaders/`)
@@ -418,8 +418,8 @@ diff --git a/world/politics/kingdoms.md b/world/politics/kingdoms.md
 @@ -165,7 +165,7 @@
  | **元首** | 議長（1年任期） |
  | **人口** | 約600万人（人間・エルフ混在） |
- | **面積** | エルディア北西部（約70万kmkm²） |
-+| **面積** | エルディア北西部（約70万km²） |
+  | **面積** | エリュシオン北西部（約70万kmkm²） |
++| **面積** | エリュシオン北西部（約70万km²） |
  | **軍事力** | 連合軍10万人、各都市防衛隊 |
  | **GDP** | 約90億金币（鉱物・金融） |
  | **通貨** | 銀貨（Silver Dollar） |

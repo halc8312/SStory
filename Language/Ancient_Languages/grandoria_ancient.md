@@ -318,7 +318,7 @@ Terra kāra forge.
    - 内容: 基本術式50式・地脈理論・座標一覧
 
 2. **Grandoria技術書 断片47点** (Tech Fragments)
-   - 場所: 世界各遺跡（主にChaos-Rea砂漠下、Elida大陸中央）
+    - 場所: 世界各遺跡（主にChaos-Rea砂漠下、Elysion大陸中央）
    - 状態: 各断片5-50行、文字判別率30-80%
    - 内容: 建築・採掘・地魔法・金属加工
 
