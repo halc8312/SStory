@@ -57,7 +57,14 @@ summary: "エターナル・アルカディア世界構築の全体目次と案�
 ### 経済・技術
 - [通貨と交易](economy/trade.md)
 - [資源](economy/resources.md)
-- [交通手段](transportation/index.md) 新着！
+- **交通・航路**:
+  - [交通設定概要](transportation/README.md)
+  - [交通史](transportation/history.md)
+  - [街道網](transportation/road-network.md)
+  - [海上航路](transportation/sea-routes.md)
+  - [空中航路](transportation/sky-routes.md)
+  - [交通拠点](transportation/stations-and-terminals.md)
+  - [公共交通](transportation/public-transport.md)
 
 ### 信仰・宗教
  - [神々のパンテオン](religion/pantheon.md)
