@@ -273,4 +273,4 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 - [キャラクター作成](character-creation.md)
 - [魔法系統](../magic/system.md)
 - [精霊契約](../races/races-overview.md#精霊契約)
-- [魔導器](../magic/魔導器s.md)
+- [魔導器](../magic/artifacts.md)

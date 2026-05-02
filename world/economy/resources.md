@@ -316,4 +316,4 @@ status: "stable"
 
 ---
 
-**関連項目**: [国家一覧](../politics/kingdoms.md) | [魔導器](../magic/魔導器s.md) | [貿易](../economy/trade.md)
+**関連項目**: [国家一覧](../politics/kingdoms.md) | [魔導器](../magic/artifacts.md) | [貿易](../economy/trade.md)

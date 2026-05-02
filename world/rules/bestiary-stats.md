@@ -368,4 +368,4 @@ CRに応じた財宝：
 - [キャラクター作成](character-creation.md)
 - [コアルール](../core-mechanics.md)
 - [種族概要](../races/races-overview.md)
-- [魔導器](../magic/魔導器s.md)
+- [魔導器](../magic/artifacts.md)
