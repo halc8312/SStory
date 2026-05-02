@@ -1,5 +1,12 @@
 name: opencode
 
+# This workflow runs the opencode AI agent in response to comments or manual dispatch.
+# Permissions are minimized to only what's needed:
+# - contents: read   -> checkout repository
+# - pull-requests: write -> post comments on PRs
+# - issues: write -> post comments on issues
+# External actions are pinned to specific versions for security and reproducibility.
+
 on:
   issue_comment:
     types: [created, edited]
@@ -21,8 +28,7 @@ jobs:
     timeout-minutes: 30
 
     permissions:
-      id-token: write
-      contents: write
+      contents: read
       pull-requests: write
       issues: write
 
@@ -39,7 +45,7 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Run opencode
-        uses: anomalyco/opencode/github@latest
+        uses: anomalyco/opencode/github@v1.14.31
         env:
           STEPFUN_API_KEY: ${{ secrets.STEPFUN_API_KEY }}
         with:

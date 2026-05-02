@@ -154,9 +154,9 @@ function main() {
   log('SStory Frontmatter Validator starting...', 'INFO');
   console.log('');
 
-  // Check all markdown files
+  // Check all markdown files under world/
   const allFiles = [];
-  walkDir(ROOT, (filePath, fileName) => {
+  walkDir(WORLD_DIR, (filePath, fileName) => {
     allFiles.push({ filePath, fileName });
   });
 
