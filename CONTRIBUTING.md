@@ -288,9 +288,11 @@ summary: "短い概要（1-2文）"
 PRを作成する前に、以下を確認してください：
 
 - [ ] 既存設定との矛盾なし
-- [ ] マークダウン構文チェック済み（`markdownlint` パス）
-- [ ] リンク切れなし（`markdown-link-check` パス）
-- [ ] スペルチェック済み（`cspell` パス）
+- [ ] マークダウン構文チェック済み（`npm run lint` パス）
+- [ ] リンク切れなし（`npm run links` パス）
+- [ ] スペルチェック済み（`npm run spell` パス）
+- [ ] Frontmatter検証済み（`npm run frontmatter` パス）
+- [ ] 一貫性チェック済み（`npm run consistency` パス）
 - [ ] メタデータ更新済み（`created`/`last_updated`）
 - [ ] カテゴリ・tags適切
 - [ ] 関連項目リンク記載
@@ -314,6 +316,33 @@ PRを作成する前に、以下を確認してください：
 ### 4. 年号・単位の統一
 - **問題**: 「アールディー」と「AD」が混在、単位「kmkm²」など
 - **回避**: 用語集とスタイルガイドを参照
+
+## CI（継続的インテグレーション）パイプライン
+
+本项目では、すべてのプルリクエストに対して自動的に以下のCIチェックが実行されます：
+
+### チェック一覧
+
+1. **文法チェック（Grammar）**: `markdownlint` でマークダウン構文を検証
+2. **リンクチェック（Link Integrity）**: `markdown-link-check` で内部リンク切れを検証
+3. **スペルチェック（Spelling）**: `cspell` で日本語スペルを検証
+4. **Frontmatter検証**: `scripts/validate-frontmatter.js` でYAML frontmatterの必須項目・形式を検証
+5. **一貫性チェック**: `scripts/validate-consistency.js` で用語統一・データ整合性を検証
+
+すべてのチェックが合格しないとマージできません。詳細は [`.github/workflows/lint.yml`](../.github/workflows/lint.yml) を参照してください。
+
+ローカルでも同じコマンドで実行可能です：
+```bash
+npm run validate
+```
+
+---
+
+### セキュリティとメンテナンス
+
+CIパイプラインでは、外部GitHub Actionのバージョンをピン留め（`actions/checkout@v4`, `actions/setup-node@v4`, `streetsidesoftware/cspell-action@v1`, `anomalyco/opencode/github@v1.14.31`）し、最小限の権限で実行します。詳細は各ワークフローファイルを参照してください。
+
+---
 
 ## 質問がある場合
 

@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "SStory - Eternal Arcadia Worldbuilding Project",
   "main": "index.js",
-  "scripts": {
-    "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
-    "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
-    "spell": "cspell '**/*.md' --language=ja",
-    "validate": "npm run lint && npm run links && npm run spell",
-    "test": "npm run validate"
-  },
+   "scripts": {
+     "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
+     "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
+     "spell": "cspell '**/*.md' --language=ja",
+     "frontmatter": "node scripts/validate-frontmatter.js",
+     "consistency": "node scripts/validate-consistency.js",
+     "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency",
+     "test": "npm run validate"
+   },
   "keywords": [
     "worldbuilding",
     "fantasy",
@@ -19,11 +21,12 @@
   ],
   "author": "halc8312",
   "license": "CC-BY-SA-4.0",
-  "devDependencies": {
-    "markdownlint-cli": "^0.40.0",
-    "markdown-link-check": "^3.10.0",
-    "cspell": "^8.0.0"
-  },
+   "devDependencies": {
+     "markdownlint-cli": "^0.40.0",
+     "markdown-link-check": "^3.10.0",
+     "cspell": "^8.0.0",
+     "yaml": "^2.6.0"
+   },
   "repository": {
     "type": "git",
     "url": "https://github.com/halc8312/SStory.git"

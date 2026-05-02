@@ -7,7 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  markdown-lint:
+  grammar-check:
+    name: Grammar (markdownlint)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,34 +16,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install markdownlint-cli
-        run: npm install -g markdownlint-cli
+      - name: Install dependencies
+        run: npm ci
       - name: Run markdownlint
-        run: markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'
+        run: npm run lint
 
   link-check:
+    name: Link Integrity
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install markdown-link-check
-        run: npm install -g markdown-link-check
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
       - name: Check links
-        run: |
-          cat > .markdown-link-check.json <<'EOF'
-          {
-            "ignorePatterns": [
-              {"pattern": "http://localhost.*"},
-              {"pattern": "https://localhost.*"},
-              {"pattern": "^#.*"}
-            ],
-            "timeout": "10s",
-            "retryOn429": true,
-            "retryCount": 3
-          }
-          EOF
-          markdown-link-check -q -c .markdown-link-check.json '**/*.md'
+        run: npm run links
 
   spell-check:
+    name: Spelling (cspell)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,23 +51,29 @@ jobs:
             **/Language/**
 
   frontmatter-check:
+    name: Frontmatter Validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check YAML frontmatter presence
-        run: |
-          echo "Checking for YAML frontmatter in world/*.md files..."
-          missing=0
-          for file in world/**/*.md; do
-            if ! head -1 "$file" | grep -q "^---"; then
-              echo "❌ Missing frontmatter: $file"
-              missing=$((missing+1))
-            else
-              echo "✅ Has frontmatter: $file"
-            fi
-          done
-          if [ $missing -gt 0 ]; then
-            echo "❌ $missing files missing YAML frontmatter"
-            exit 1
-          fi
-          echo "✅ All files have YAML frontmatter"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Check frontmatter
+        run: npm run frontmatter
+
+  consistency-check:
+    name: Consistency Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Check consistency
+        run: npm run consistency
