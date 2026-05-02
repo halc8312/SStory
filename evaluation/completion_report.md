@@ -421,7 +421,7 @@ diff --git a/world/politics/kingdoms.md b/world/politics/kingdoms.md
   | **面積** | エリュシオン北西部（約70万kmkm²） |
 +| **面積** | エリュシオン北西部（約70万km²） |
  | **軍事力** | 連合軍10万人、各都市防衛隊 |
- | **GDP** | 約90億金币（鉱物・金融） |
+ | **GDP** | 約90億金貨（鉱物・金融） |
  | **通貨** | 銀貨（Silver Dollar） |
 
 ```
