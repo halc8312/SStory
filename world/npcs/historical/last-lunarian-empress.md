@@ -73,7 +73,7 @@ spirit_contract:
 
 **AC**: 17 ( mage robe + deflection)
 **HP**: 210 (Wizard d6×18 + CON×18)
-**速度**: 30 ft.
+**速度**: 30 フィート.
 
 **攻撃**:
 - **遠隔**: 月の光線 (spell, 6d6 radiant, DC23)
@@ -83,7 +83,7 @@ spirit_contract:
 
 **主な呪文** (9th-level slots ×3):
 - **Time Stop** (9th): 時を止める (1d4+1 rounds)
-- **Meteor Swarm** (9th): 隕石召喚 (40ft radius, 20d6 fire+bludgeoning)
+- **Meteor Swarm** (9th): 隕石召喚 (40フィート radius, 20d6 fire+bludgeoning)
 - **Gate** (9th): 精霊召喚 (月精霊)
 - **Mass Heal** (9th): 全回復
 - **True Seeing** (6th): 真実の視界
@@ -92,7 +92,7 @@ spirit_contract:
 **特殊能力**:
 - **Portent**: 1日2回、未来視で任意のd20ロールを指定値に変更
 - **Expert Divination**: 予言系呪文の回復
-- **Third Eye**: 常に true sight 30ft
+- **Third Eye**: 常に true sight 30フィート
 - **Saving Throw Proficiencies**: INT, WIS
 
 **セービング**: 全能力+5以上

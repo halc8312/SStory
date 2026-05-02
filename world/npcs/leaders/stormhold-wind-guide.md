@@ -53,7 +53,7 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 **防御**:
 - **AC**: 15 ( mage armor + 敏捷)
 - **HP**: 115 (15d6+30 from Sorcerer 15 + 3d8+3 from Druid 3)
-- **速度**: 30ft, fly 40ft (wind walk)
+- **速度**: 30フィート, fly 40フィート (wind walk)
 
 **セービングスロー**: DEX +6, CON +5, WIS +6, CHA +7
 
@@ -62,12 +62,12 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 **戦闘能力**:
 
 **攻撃**:
-- **雷の矢 (Lightning Bolt)**: 線状100ft, DC18 DEX save, 8d6 lightning.
-- **風の鎌 (Gust of Wind)**: 60ft 直線、押し退け、吹き飛ばし.
+- **雷の矢 (Lightning Bolt)**: 線状100フィート, DC18 DEX save, 8d6 lightning.
+- **風の鎌 (Gust of Wind)**: 60フィート 直線、押し退け、吹き飛ばし.
 
 **特殊能力**:
-- ** Spellcasting (Sorcerer 15)**: 気象・風魔法, DC18, +10.
-- ** Storm Sorcery**: 雨天時+1レベル, 飞行常時 (30ft).
+- ** 呪文発動 (Sorcerer 15)**: 気象・風魔法, DC18, +10.
+- ** Storm Sorcery**: 雨天時+1レベル, 飞行常時 (30フィート).
 - ** Spell Bombardment (Sorcerer)**: 呪文ダイス追加.
 - ** Druidic Focus**: 自然との調和.
 - ** Wind Guide**: 風を読む、天候予知.
@@ -85,7 +85,7 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 - 嵐の pearl (気象予報)
 - 導師の紋章 (国家権威)
 
-**所持金**: 500 GP (国家財産)
+**所持金**: 500金貨 (国家財産)
 
 ## 経歴
 
@@ -104,7 +104,7 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 ## 所有アイテム
 
 - **風の王冠**: 風の精霊より授与、嵐制御可能
-- **ストーム・コア**: 嵐の都のエネルギー源 (artifact)
+- **ストーム・コア**: 嵐の都のエネルギー源 (魔導器)
 - **空の地図**: 全浮島の位置記録
 
 ## 現在の状況

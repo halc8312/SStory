@@ -121,7 +121,7 @@
 - `world/races/races-overview.md` (修正済)
 - `world/magic/system.md`
 - `world/magic/schools.md`
-- `world/magic/artifacts.md`
+- `world/magic/魔導器s.md`
 - `world/politics/kingdoms.md` (修正済)
 - `world/politics/alliances.md`
 - `world/creatures/bestiary.md`

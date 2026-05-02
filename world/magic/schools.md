@@ -284,4 +284,4 @@ status: "stable"
 
 ---
 
-**関連項目**: [魔法系統](system.md) | [魔導器](artifacts.md) | [魔導士免許](../politics/kingdoms.md#魔導士協会)
+**関連項目**: [魔法系統](system.md) | [魔導器](魔導器s.md) | [魔導士免許](../politics/kingdoms.md#魔導士協会)

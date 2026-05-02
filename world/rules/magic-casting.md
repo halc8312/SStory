@@ -7,7 +7,7 @@ created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-tags: ["magic", "spellcasting", "rules", "system"]
+ tags: ["magic", "呪文発動", "rules", "system"]
 status: "stable"
 rule_type: "magic"
 system: "custom"
@@ -57,7 +57,7 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 - **1アクション**: 標準的な呪文 (戦闘中)。
 - **1ボーナスアクション**: 短い呪文。
 - **1分～数分**: 短時間の集中。
-- **10分～1時間**: 儀式魔法 (ritual)。
+- **10分～1時間**: 儀式魔法 (儀式)。
 - **数時間～数日**: 大規模魔法。
 
 ### 2.3 成分 (Components)
@@ -90,7 +90,7 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 
 *各レベルに対応するランク: 1=D, 2=C, 3=B, 4=A, 5=S, 6=S+, 7=Forbidden.
 
-### 2.5 呪文判定 (Spellcasting Check)
+### 2.5 呪文判定 (呪文発動判定)
 
 敵がセーブを行う場合：
 
@@ -98,7 +98,7 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 
 目標は `d20 + セーブ修正` でDCを上回れば半減/無効。
 
-**例**: DC15のセーブ、目標がd18+2=20 → 成功 (半ダメージ or 無効)。
+**例**: DC15のセーブ、目標がd18+2=20 → 成功 (半ダメージまたは無効)。
 
 ### 2.6 呪文攻撃ロール (Spell Attack)
 
@@ -149,7 +149,7 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 
 - **成分**: V, S
 - **詠唱時間**: 1アクション
-- **範囲**: 120ft, 1目標
+- **範囲**: 120フィート, 1目標
 - **効果**: `2d10` 火炎ダメージ。目標はDEXセーブ (DC13) で半減。
 - **契約要求**: 火の精霊 契約度 ≥ 30%
 
@@ -165,21 +165,21 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 
 - **成分**: V, S, M (羽根1枚)
 - **詠唱時間**: 1分
-- **効果**: 自身または触れた生物1体に飛行能力 (速度30ft) を10分間付与。
+- **効果**: 自身または触れた生物1体に飛行能力 (速度30フィート) を10分間付与。
 - **契約要求**: 風の精霊 契約度 ≥ 50%
 
 ### 5.4 地の壁 (Earth Wall) - Bランク (3rd level)
 
 - **成分**: V, S, M (小石5つ)
 - **詠唱時間**: 1アクション
-- **効果**: 20ft立方の石壁を生成、AC15、HP50。10分持続 or 破壊。
+- **効果**: 20フィート立方の石壁を生成、AC15、HP50。10分持続または破壊。
 - **契約要求**: 地の精霊 契約度 ≥ 50%
 
 ### 5.5 月の幻影 (Moon Phantasm) - Aランク (4th level)
 
 - **成分**: V, S
 - **詠唱時間**: 1アクション
-- **範囲**: 60ft 球形容器
+- **範囲**: 60フィート 球形容器
 - **効果**: 範囲内の全敵に WISセーブ (DC15) 失敗 → 混乱 (1ラウンド) + 魅了 (1分)。
 - **契約要求**: 月の精霊 契約度 ≥ 70%
 
@@ -201,9 +201,9 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 
 - **自己**: 自分 only
 - **触れる**: 自身か触れた生物/物
-- **60ft 円錐**: 扇形範囲
-- **球**: 半径X ft の球体
-- **直線**: 長さX ft の線
+- **60フィート 円錐**: 扇形範囲
+- **球**: 半径X フィート の球体
+- **直線**: 長さX フィート の線
 
 ## 7. 高位魔法のリスク
 
@@ -273,4 +273,4 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 - [キャラクター作成](character-creation.md)
 - [魔法系統](../magic/system.md)
 - [精霊契約](../races/races-overview.md#精霊契約)
-- [魔導器](../magic/artifacts.md)
+- [魔導器](../magic/魔導器s.md)

@@ -74,7 +74,7 @@ spirit_contract:
 
 **AC**: 21 ( plate armor + shield + Defense fighting style)
 **HP**: 187 (Fighter d10×8 + Paladin d10×7 + CON×15)
-**速度**: 30 ft.
+**速度**: 30 フィート.
 
 **攻撃**:
 - **近接**: 魔法の大剣 (2d6+4 slashing, +1, fire damage 1d6)
@@ -87,10 +87,10 @@ spirit_contract:
 - **Paladin**: Bless, Cure Wounds, Shield of Faith, Branding Smite
 
 **特殊能力**:
-- **Action Surge** (1/戦闘)
-- **Second Wind** (1/休憩)
+- **アクションサージ** (1/戦闘)
+- **セカンドウインド** (1/休憩)
 - **Lay on Hands** (30HP pool)
-- **Aura of Protection** (10ft, CHA+3)
+- **Aura of Protection** (10フィート, CHA+3)
 - **Vow of Enmity** (advantage vs 1 enemy 1min, 1/day)
 - **Improved Divine Smite** (追加1d8 radiant)
 

@@ -35,7 +35,7 @@ class: "Fighter (Champion) 15 / Artificer 3"
 ## 性格
 
 - **主要特性**: 堅実、名誉を重んじる、技術愛好家
-- **価値観**:  craftsmanship, 家族, 忠義
+- **価値観**:  craフィートsmanship, 家族, 忠義
 - **目標**: ドワーフ技術の更なる発展、国家の繁栄
 - **欠点**: 頑固、変化を好まない
 
@@ -53,7 +53,7 @@ class: "Fighter (Champion) 15 / Artificer 3"
 **防御**:
 - **AC**: 20 ( plate armor + shield)
 - **HP**: 145 (15d10+45 from Fighter 15 + 3d8+9 from Artificer 3)
-- **速度**: 25ft (heavy armor)
+- **速度**: 25フィート (heavy armor)
 
 **セービングスロー**: STR +7, CON +8, WIS +5, CHA +4
 
@@ -62,12 +62,12 @@ class: "Fighter (Champion) 15 / Artificer 3"
 **戦闘能力**:
 
 **攻撃**:
-- **戦斧 (Greataxe)**: +10 to hit, 1d12+6 斬撃 + 2d6 fire (magic)
-- **盾撃 (Shield Bash)**: +9 to hit, 1d6+4 打撃, ターゲットを prone (CON save DC17).
+- **戦斧 (Greataxe)**: +10 命中, 1d12+6 斬撃 + 2d6 fire (magic)
+- **盾撃 (Shield Bash)**: +9 命中, 1d6+4 打撃, ターゲットを prone (CON save DC17).
 
 **特殊能力**:
 - ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Action Surge**: 1戦闘中、追加アクション.
+- ** アクションサージ**: 1戦闘中、追加アクション.
 - ** Indomitable (Fighter)**: セーブ再 roll (1回/長休憩).
 - ** Artificer Infusions**: 装備に魔法効果付与 (例: Enhanced Defense).
 - ** Dwarven Resilience**: 毒セーブにadvantage, 毒耐性.
@@ -88,7 +88,7 @@ class: "Fighter (Champion) 15 / Artificer 3"
 - 精霊の盾 (地の精霊の加護, AC+1, 地耐性+5%)
 - 鉱山の地図 (国家の鉱脈データ)
 
-**所持金**: 300 GP (質素), 国家財産別
+**所持金**: 300金貨 (質素), 国家財産別
 
 ## 経歴
 

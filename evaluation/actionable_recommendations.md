@@ -78,7 +78,7 @@ last_updated: "YYYY-MM-DD"
 author: "GitHub username"
 category: "lore|geography|magic|..."
 tags: ["tag1", "tag2"]
-status: "draft|review|stable"
+status: "draフィート|review|stable"
 ---
 
 ### マークダウン規約
@@ -122,7 +122,7 @@ CC BY-SA 4.0 - 商用利用可、クレジット必須、継承義務あり
 
 **Content**:
 ```yaml
-name: Lint and Validate
+name: LintかつValidate
 
 on:
   pull_request:
@@ -158,7 +158,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run cspell
-        uses: streetsidesoftware/cspell-action@v1
+        uses: streetsidesoフィートware/cspell-action@v1
         with:
           files: '**/*.md'
           language: 'ja'
@@ -188,7 +188,7 @@ jobs:
    - `author` (halc8312)
    - `category` (lore/geography/races/magic/politics/creatures/culture/economy/religion)
    - `tags` (5-10個のキーワード)
-   - `status` (stable/draft)
+   - `status` (stable/draフィート)
 
 **Example**:
 ```yaml
@@ -298,7 +298,7 @@ done
 - 品質: 中
 
 **Option B: デジタル描画 (高品質)**
-- ツール: Inkarnate, Wonderdraft, Photoshop
+- ツール: Inkarnate, Wonderdraフィート, Photoshop
 - 時間: 40-80時間
 - 品質: 高
 
@@ -694,7 +694,7 @@ GET  /api/v1/lore/timeline
 - 手動で確認した内容
 
 ## Screenshots (該当する場合)
--  before/after
+-  before/aフィートer
 
 ## チェックリスト
 - [ ] 既存設定との矛盾なし

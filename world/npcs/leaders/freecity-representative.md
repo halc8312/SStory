@@ -53,7 +53,7 @@ class: "Rogue (Mastermind) 12 / Bard 2"
 **防御**:
 - **AC**: 15 ( leather armor + 敏捷)
 - **HP**: 125 (12d8+36 from Rogue 12 + 2d8+2 from Bard 2)
-- **速度**: 30ft
+- **速度**: 30フィート
 
 **セービングスロー**: DEX +6, INT +6, CHA +7
 
@@ -62,15 +62,15 @@ class: "Rogue (Mastermind) 12 / Bard 2"
 **戦闘能力**:
 
 **攻撃**:
-- **短剣 (Rapier)**: +8 to hit, 1d6+3 刺突 + 1d6 ( sneak attack 3d6)
-- **投げナイフ (Dagger)**: +8 to hit, 1d4+3 刺突,  ranged (20/60).
+- **短剣 (Rapier)**: +8 命中, 1d6+3 刺突 + 1d6 ( sneak attack 3d6)
+- **投げナイフ (Dagger)**: +8 命中, 1d4+3 刺突,  ranged (20/60).
 
 **特殊能力**:
-- ** Sneak Attack (Rogue)**: 1ターン1回、advantage時 or 味方隣接時 追加 3d6.
+- ** Sneak Attack (Rogue)**: 1ターン1回、advantage時または味方隣接時 追加 3d6.
 - ** Cunning Action (Rogue)**: ターンに隠密/脱出アクション可能.
 - ** Master of Intrigue (Mastermind)**: 欺きにadvantage, 言語習得容易.
-- ** Bardic Inspiration (d6)**: 2回/長休憩.
-- ** Jack of All Trades**: 技能判定に半修正.
+- ** 音楽・演説による支援 (d6)**: 2回/長休憩.
+- ** 多芸の才**: 技能判定に半修正.
 
 **精霊契約**:
 - 風: 60% (自由, 通信)
@@ -85,7 +85,7 @@ class: "Rogue (Mastermind) 12 / Bard 2"
 - 交易许可证 (全都市共通)
 - 金貨100 (trade capital)
 
-**所持金**: 500 GP (個人), 都市連合基金別
+**所持金**: 500金貨 (個人), 都市連合基金別
 
 ## 経歴
 

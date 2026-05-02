@@ -52,7 +52,7 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 **防御**:
 - **AC**: 16 ( artificer armor)
 - **HP**: 210 (17d8+85 from Artificer 17 + 3d6+3)
-- **速度**: 25ft
+- **速度**: 25フィート
 
 **セービングスロー**: CON +10, INT +9, WIS +5
 
@@ -61,11 +61,11 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 **戦闘能力**:
 
 **攻撃**:
-- **酸のflask (Acid Flask)**: 投擲, 20ft, 2d6 acid + 1d6 next turn.
+- **酸のflask (Acid Flask)**: 投擲, 20フィート, 2d6 acid + 1d6 next turn.
 - **火薬爆弾 (Alchemist's Fire)**: 2d8 fire, 継続ダメージ.
 
 **特殊能力**:
-- ** Spellcasting (Artificer 17)**: 道具強化, 治療,  elemental.
+- ** 呪文発動 (Artificer 17)**: 道具強化, 治療,  elemental.
 - ** Alchemical Savant (Alchemist)**: 薬品効果+1d8.
 - ** Tool Expertise**: 工具判定双倍.
 - ** Magic Item Infusion**: アイテムに魔法付与 (5種同時).
@@ -85,7 +85,7 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 - 実験用エプロン (AC+1)
 - 秘伝のノート (全レシピ)
 
-**所持金**: 300 GP ( but workshop value 10,000+)
+**所持金**: 300金貨 (、workshop value 10,000+)
 
 ## 経歴
 
@@ -106,7 +106,7 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 
 - **アイアンハートの工房**: 伝説の作業場
 - **錬金術の書**: 全レシピ記録
-- **地脈の鍵**: 地脈制御の原型 (artifact)
+- **地脈の鍵**: 地脈制御の原型 (魔導器)
 
 ## 現在の状況
 

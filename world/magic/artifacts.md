@@ -7,7 +7,7 @@ created: "2026-05-01"
 last_updated: "2026-05-01"
 author: "halc8312"
 contributors: []
-tags: ["artifacts", "items", "equipment", "magic"]
+tags: ["魔導器s", "items", "equipment", "magic"]
 status: "stable"
 ---
 

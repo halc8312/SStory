@@ -302,4 +302,4 @@ status: "stable"
 
 ---
 
-**関連項目**: [魔法学校](schools.md) | [魔導器](artifacts.md) | [精霊契約](../lore/creation-myth.md)
+**関連項目**: [魔法学校](schools.md) | [魔導器](魔導器s.md) | [精霊契約](../lore/creation-myth.md)

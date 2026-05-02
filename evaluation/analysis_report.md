@@ -9,25 +9,25 @@
 **Status**: Active development (Version 1.0.0)
 **Created**: 2026-05-01
 
-This is a comprehensive fantasy worldbuilding project documenting the world of "Eternal Arcadia" - a richly detailed medieval fantasy setting with a unique elemental spirit contract system, multiple races, complex politics, and integrated magic-technology fusion.
+This is a comprehensive fantasy worldbuilding project documenting the world of "Eternal Arcadia" - a richly detailed medieval fantasy setting with a unique elemental spirit contract system, multiple races, complex politics,かつintegrated magic-technology fusion.
 
 ---
 
 ## 1. Project Overview
 
-### 1.1 Purpose and Vision
+### 1.1 PurposeかつVision
 The project aims to create a complete, internally consistent fantasy world suitable for various creative works including:
 - TRPG (Tabletop Role-Playing Games)
 - RPG video games
-- Novels and manga
+- Novelsかつmanga
 - Simulation games
 - Educational materials
 
 The world is designed with four core principles:
 1. **Consistency** - All settings interrelate without contradiction
-2. **Depth** - Background history, culture, economics, and politics are defined
+2. **Depth** - Background history, culture, economics,かつpolitics are defined
 3. **Usability** - Available for all creative activities (commercial OK)
-4. **Extensibility** - Base settings are fixed but freely extensible
+4. **Extensibility** - Base settings are fixed、freely extensible
 
 ### 1.2 Core World Features
 
@@ -47,12 +47,12 @@ The world is designed with four core principles:
 **Political**:
 - Twelve major nations forming the "Twelve-Nation Alliance"
 - Neutral Elemental Council governing spirit contracts
-- Complex inter-nation relations and trade networks
+- Complex inter-nation relationsかつtrade networks
 
 **Cultural**:
 - Five major races (Human, Elf, Dwarf, Orc, Halfling)
 - Ten thousand years of history across three great civilizations
-- Diverse languages and calendar systems
+- Diverse languagesかつcalendar systems
 
 ---
 
@@ -84,7 +84,7 @@ SStory/
 │   ├── magic/                     # Magic & technology
 │   │   ├── system.md              # Magic system rules
 │   │   ├── schools.md             # Magic schools
-│   │   └── artifacts.md           # Magical artifacts
+│   │   └── 魔導器s.md           # Magical 魔導器s
 │   ├── politics/                  # Political & social systems
 │   │   ├── kingdoms.md            # Twelve nations details
 │   │   └── alliances.md           # Alliances & conflicts
@@ -132,7 +132,7 @@ SStory/
 
 ```yaml
 Triggers:
-- Issue comments containing '/oc' or '/opencode'
+- Issue comments containing '/oc'または'/opencode'
 - Pull request review comments with same commands
 - Manual workflow dispatch
 
@@ -192,7 +192,7 @@ Actions:
 2. **Complex Magic System**:
    - Well-defined elemental spirit contracts
    - Hierarchical magic ranking (Forbidden → S+ → D)
-   - Clear costs, limitations, and risks
+   - Clear costs, limitations,かつrisks
    - Magic education system from childhood to graduate school
    - Magic-technology fusion (Magitech) applications
 
@@ -201,26 +201,26 @@ Actions:
    - Detailed stats (population, GDP, military, currency)
    - Realistic diplomatic relationships
    - International organizations (Twelve-Nation Alliance, Elemental Council)
-   - Economic interdependence and conflicts
+   - Economic interdependenceかつconflicts
 
 4. **Cultural Richness**:
    - Five major races with detailed biology, society, culture
    - Multiple sub-races for each race
-   - Racial relationships and historical context
-   - Diverse languages and calendar systems
+   - Racial relationshipsかつhistorical context
+   - Diverse languagesかつcalendar systems
 
 5. **Economic System**:
    - Eight different currencies with exchange rates
-   - GDP figures and per-capita calculations
-   - Major industries and trade routes
-   - Tax systems and labor markets
-   - Poverty and wealth inequality data
+   - GDP figuresかつper-capita calculations
+   - Major industriesかつtrade routes
+   - Tax systemsかつlabor markets
+   - Povertyかつwealth inequality data
 
 6. **Religious Depth**:
    - Hierarchical deity system (Four Primordial → Great Elementals → Spirits)
    - Six major religious organizations
-   - Rituals, ceremonies, and holy texts
-   - Religious calendars and festivals
+   - Rituals, ceremonies,かつholy texts
+   - Religious calendarsかつfestivals
    - Heretical movements
 
 ### 4.2 Internal Consistency
@@ -232,14 +232,14 @@ Actions:
 - Race characteristics align with their elemental affinities
 - Geographic features match climate descriptions
 - Political relationships have historical justification
-- Economic data correlates with nation sizes and resources
+- Economic data correlates with nation sizesかつresources
 - Timeline flows logically from creation to present
 
 **Minor Inconsistencies Found**:
 1. In `races-overview.md` line 154: Earth spirit named "ドリト" (Dorito) while in `magic/system.md` line 16 it's "グラン" (Granus) - inconsistent naming for Earth spirit
 2. In `politics/kingdoms.md` line 167: "約70万kmkm²" has duplicate "km" unit (typo)
 3. Some documents use "km²" while others use "万km²" - inconsistent unit formatting
-4. `economy/trade.md` references "アールディー1026年" (Year 1026 AD) but no standard epoch defined in timeline
+4. `economy/trade.md` references "アールディー1026年" (Year 1026 AD)、no standard epoch defined in timeline
 
 ### 4.3 Documentation Quality
 
@@ -250,13 +250,13 @@ Actions:
 - Consistent Markdown formatting
 - Tables for statistical data
 - Clear section hierarchies
-- Japanese language is natural and professional
+- Japanese language is naturalかつprofessional
 
 **Areas for Improvement**:
 1. No standardized template for nation entries (some have tables, others don't)
 2. Missing metadata (creation date, last updated, author) on most files
 3. No table of contents in longer documents
-4. Image directory exists but empty (`world/images/`)
+4. Image directory exists、empty (`world/images/`)
 5. Some files lack cross-linking to related concepts
 
 ### 4.4 Writing & Presentation
@@ -264,8 +264,8 @@ Actions:
 **Rating**: Excellent (9/10)
 
 **Japanese Language Quality**: Native-level, professional terminology
-**Clarity**: Well-structured with clear headings and subheadings
-**Engagement**: Lore is compelling and immersive
+**Clarity**: Well-structured with clear headingsかつsubheadings
+**Engagement**: Lore is compellingかつimmersive
 **Technical Accuracy**: Consistent terminology throughout
 
 ---
@@ -285,7 +285,7 @@ Actions:
 #### Medium-term (1-3 years):
 - [ ] Detailed ethnic cultural settings - **NOT STARTED**
 - [ ] Magitech development timeline - **PARTIALLY DONE** (magic/system.md has some)
-- [ ] Economic simulation data - **NOT STARTED** (basic data exists but no simulation)
+- [ ] Economic simulation data - **NOT STARTED** (basic data exists、no simulation)
 - [ ] Novel/game scenario examples - **NOT STARTED**
 
 #### Long-term (3+ years):
@@ -298,11 +298,11 @@ Actions:
 
 ### 5.2 Missing Critical Components
 
-1. **TRPG Game Mechanics**: No actual game rules, stats, or character creation systems
+1. **TRPG Game Mechanics**: No actual game rules, stats,またはcharacter creation systems
 2. **Maps**: No actual visual maps, only textual descriptions
 3. **Timeline Visualization**: No graphical timeline
-4. **Character Database**: No named NPCs or historical figures
-5. **Bestiary Stats**: Creatures described but no game statistics
+4. **Character Database**: No named NPCsまたはhistorical figures
+5. **Bestiary Stats**: Creatures described、no game statistics
 6. **Artwork**: Images directory is empty
 7. **API/Data Format**: No structured data format for programmatic use
 
@@ -317,7 +317,7 @@ Actions:
 3. **Internal Logic**: Clear cause-effect relationships, no major contradictions
 4. **Cultural Diversity**: Five distinct races with rich cultural backgrounds
 5. **Economic Realism**: GDP, trade routes, currency systems with realistic numbers
-6. **Political Complexity**: Twelve nations with unique governments and relationships
+6. **Political Complexity**: Twelve nations with unique governmentsかつrelationships
 7. **Magic System Rigor**: Clear rules, costs, limitations, educational path
 8. **Japanese Language Quality**: Professional, natural Japanese throughout
 9. **Open Licensing**: CC BY-SA 4.0 encourages community contribution
@@ -326,13 +326,13 @@ Actions:
 ### 6.2 Weaknesses
 
 1. **Incomplete Implementation**: Only core concepts done, many planned features not started
-2. **Missing Visual Assets**: No actual maps, character art, or concept art
+2. **Missing Visual Assets**: No actual maps, character art,またはconcept art
 3. **No Game Mechanics**: For a TRPG-oriented project, lacks actual rules
 4. **Data Consistency Issues**: Minor naming inconsistencies (Earth spirit name)
-5. **Documentation Gaps**: No contributor guidelines, style guide, or templates
+5. **Documentation Gaps**: No contributor guidelines, style guide,またはtemplates
 6. **Testing/Validation**: No way to validate consistency across documents
-7. **Export Formats**: Only Markdown, no PDF, web, or data export options
-8. **Community Features**: No discussion forum, wiki, or collaborative tools
+7. **Export Formats**: Only Markdown, no PDF, web,またはdata export options
+8. **Community Features**: No discussion forum, wiki,またはcollaborative tools
 
 ---
 
@@ -343,7 +343,7 @@ Actions:
 1. **Fix Data Inconsistencies**:
    - Standardize Earth spirit name across all documents
    - Fix typo in `kingdoms.md` line 167 ("kmkm²" → "km²")
-   - Establish naming conventions for spirits and entities
+   - Establish naming conventions for spiritsかつentities
 
 2. **Create Contributor Guide**:
    - Document file naming conventions
@@ -360,14 +360,14 @@ Actions:
    - Character creation system
    - Combat resolution rules
    - Magic casting mechanics with dice rolls
-   - Skill and attribute system
+   - Skillかつattribute system
    - Bestiary with stats
 
 ### 7.2 Short-term Goals (1-6 months)
 
 5. **Map Creation**:
-   - Commission or create world map
-   - Continental maps with cities and regions
+   - Commissionまたはcreate world map
+   - Continental maps with citiesかつregions
    - Political boundaries map
    - Trade route visualization
 
@@ -380,12 +380,12 @@ Actions:
 7. **Timeline Visualization**:
    - Graphical timeline from -10,000 to present
    - Key events marked with descriptions
-   - Civilization rise and fall visualization
+   - Civilization riseかつfall visualization
 
 8. **Bestiary with Stats**:
    - Monster stats for game use
    - CR (Challenge Rating) system
-   - Habitat and behavior data
+   - Habitatかつbehavior data
    - Loot tables
 
 ### 7.3 Medium-term Goals (6-12 months)
@@ -398,13 +398,13 @@ Actions:
 
 10. **Data Export System**:
     - JSON/XML export of all world data
-    - CSV for economic and demographic data
+    - CSV for economicかつdemographic data
     - API endpoint for programmatic access
     - Character sheet generator
 
 11. **Community Features**:
     - GitHub Discussions for worldbuilding talk
-    - Issue templates for bug reports and suggestions
+    - Issue templates for bug reportsかつsuggestions
     - Pull request guidelines for contributors
     - Monthly community worldbuilding sessions
 
@@ -412,27 +412,27 @@ Actions:
     - Commission concept art for races, nations, creatures
     - Create token/avatar images for use in VTTs
     - Music/sound effects for atmospheric use
-    - 3D models for important locations/artifacts
+    - 3D models for important locations/魔導器s
 
 ### 7.4 Long-term Vision (1-3 years)
 
-13. **Software Tools**:
+13. **Soフィートware Tools**:
     - Worldbuilding management application
     - Campaign management tool for GMs
     - Character sheet generator with auto-calculation
-    - Random encounter and quest generator
+    - Random encounterかつquest generator
 
 14. **Published Works**:
     - Core rulebook (PDF/print)
     - Setting sourcebooks (one per major nation)
-    - Adventure modules and campaign settings
-    - Novel or comic series set in the world
+    - Adventure modulesかつcampaign settings
+    - Novelまたはcomic series set in the world
 
 15. **Educational Use**:
     - Worldbuilding methodology case study
     - Language learning materials (Japanese cultural concepts)
     - History education (comparative civilizations)
-    - Economics education (trade and resource management)
+    - Economics education (tradeかつresource management)
 
 ---
 
@@ -440,11 +440,11 @@ Actions:
 
 ### 8.1 Current Technical Debt
 
-1. **No Automated Testing**: No way to verify content accuracy or consistency
+1. **No Automated Testing**: No way to verify content accuracyまたはconsistency
 2. **Manual Process**: Everything done by hand, error-prone
-3. **No Backup System**: Only GitHub, but no offsite or versioned backups
+3. **No Backup System**: Only GitHub,、no offsiteまたはversioned backups
 4. **Single Maintainer**: Appears to be solo project (halc8312)
-5. **No CI for Content**: No linting, spell-check, or link validation
+5. **No CI for Content**: No linting, spell-check,またはlink validation
 
 ### 8.2 Maintenance Recommendations
 
@@ -477,24 +477,24 @@ Actions:
 1. **Dungeons & Dragons Forgotten Realms**:
    - Much more mature (decades of development)
    - Extensive published material
-   - Official art and maps
+   - Official artかつmaps
    - But: Less internally consistent, many retcons
 
 2. **The Elder Scrolls (Tamriel)**:
-   - Deep lore and history
+   - Deep loreかつhistory
    - Rich cultural detail
    - But: Inconsistent application across games
    - No open licensing
 
-3. **World of Warcraft (Azeroth)**:
+3. **World of Warcraフィート (Azeroth)**:
    - Extensive world content
    - Official visual assets
    - But: Primarily game-driven, less systematic
    - Copyright restrictions
 
 4. **Open-Source Worlds**:
-   - **Eora (Pillars of Eternity)**: Somewhat open but not CC
-   - **Golarion (Pathfinder)**: Open license but not fully open source
+   - **Eora (Pillars of Eternity)**: Somewhat open、not CC
+   - **Golarion (Pathfinder)**: Open license、not fully open source
    - **Oerth (D&D)**: Legacy setting, not open
 
 ### 9.2 SStory's Competitive Advantages
@@ -551,28 +551,28 @@ Actions:
 
 **Exceptional Qualities**:
 1. One of the most systematically thorough fantasy worlds ever documented
-2. Economic and political systems rival those of serious simulation games
-3. Magic system with clear rules, costs, and educational progression
-4. Excellent use of modern software development practices (GitHub, CI/CD)
+2. Economicかつpolitical systems rival those of serious simulation games
+3. Magic system with clear rules, costs,かつeducational progression
+4. Excellent use of modern soフィートware development practices (GitHub, CI/CD)
 5. Strong foundation for community-driven open-source worldbuilding
 
 **Critical Gaps**:
 1. **Implementation Gap**: Ambitious vision far exceeds current completion (~15%)
 2. **Missing Game Mechanics**: For TRPG focus, needs actual rules
-3. **Visual Assets**: No maps or art, despite being a visual medium
+3. **Visual Assets**: No mapsまたはart, despite being a visual medium
 4. **Single Point of Failure**: Reliant on one maintainer
 5. **No User Onboarding**: No getting started guide for new contributors
 
 ### 11.3 Verdict
 
-SStory is an **ambitious, high-quality worldbuilding project** with exceptional depth and systematic rigor. It has the potential to become a significant open-source creative resource comparable to commercial settings, but requires:
+SStory is an **ambitious, high-quality worldbuilding project** with exceptional depthかつsystematic rigor. It has the potential to become a significant open-source creative resource comparable to commercial settings,、requires:
 
 1. **Community building** to avoid abandonment
 2. **Core game mechanics** to fulfill TRPG promise
 3. **Visual assets** to enhance usability
 4. **Structured process** to maintain consistency at scale
 
-The foundation is rock-solid. The execution needs momentum and broader participation.
+The foundation is rock-solid. The execution needs momentumかつbroader participation.
 
 ---
 
@@ -582,18 +582,18 @@ The foundation is rock-solid. The execution needs momentum and broader participa
 1. Fix all data inconsistencies (spirit names, units)
 2. Create contributor documentation (CONTRIBUTING.md, style guide)
 3. Set up automated content validation CI
-4. Establish release versioning and changelog
+4. Establish release versioningかつchangelog
 
 ### Phase 2: MVP Completion (Next 3-6 months)
-1. Complete TRPG core rulebook draft (combat, skills, magic in action)
+1. Complete TRPG core rulebook draフィート (combat, skills, magic in action)
 2. Create basic world map (even if placeholder)
 3. Generate 10-20 notable NPCs with stats
 4. Build 5-10 ready-to-play adventure seeds
 
 ### Phase 3: Community Launch (Next 6-12 months)
-1. Publish to GitHub with clear README and getting started
+1. Publish to GitHub with clear READMEかつgetting started
 2. Create documentation website (GitHub Pages)
-3. Announce on worldbuilding, RPG, and indie game dev communities
+3. Announce on worldbuilding, RPG,かつindie game dev communities
 4. Recruit 3-5 core contributors
 5. Run first community worldbuilding sprint
 
@@ -608,9 +608,9 @@ The foundation is rock-solid. The execution needs momentum and broader participa
 
 ## 13. Conclusion
 
-SStory represents a **serious, professional-grade worldbuilding effort** with a solid technical foundation and exceptional content depth. The repository structure is well-organized, the GitHub Actions integration shows modern development practices, and the world itself is richly detailed with internal consistency.
+SStory represents a **serious, professional-grade worldbuilding effort** with a solid technical foundationかつexceptional content depth. The repository structure is well-organized, the GitHub Actions integration shows modern development practices,かつthe world itself is richly detailed with internal consistency.
 
-However, the project is at a critical juncture: it has built an excellent foundation but risks stagnation without community engagement and completion of core deliverables (game mechanics, maps, NPCs). The single-contributor model is unsustainable for a project of this scale.
+However, the project is at a critical juncture: it has built an excellent foundation、risks stagnation without community engagementかつcompletion of core deliverables (game mechanics, maps, NPCs). The single-contributor model is unsustainable for a project of this scale.
 
 **To succeed long-term, the project must**:
 1. **Transition from solo to community ownership**
@@ -619,9 +619,9 @@ However, the project is at a critical juncture: it has built an excellent founda
 4. **Lower the barrier to entry** for new contributors
 5. **Promote actively** to attract collaborators
 
-With these steps, SStory could become the go-to open-source fantasy world for creators, filling a niche between generic RPG settings and fully commercial properties.
+With these steps, SStory could become the go-to open-source fantasy world for creators, filling a niche between generic RPG settingsかつfully commercial properties.
 
-**Recommendation**: **APPROVE** the project's current state and proceed with Phase 1 stabilization. The foundation is excellent; now build the community to realize the vision.
+**Recommendation**: **APPROVE** the project's current stateかつproceed with Phase 1 stabilization. The foundation is excellent; now build the community to realize the vision.
 
 ---
 
@@ -651,7 +651,7 @@ With these steps, SStory could become the go-to open-source fantasy world for cr
 ### Magic (3 files)
 - world/magic/system.md
 - world/magic/schools.md
-- world/magic/artifacts.md
+- world/magic/魔導器s.md
 
 ### Politics (3 files)
 - world/politics/kingdoms.md
@@ -724,7 +724,7 @@ races-overview.md ─┼─> cultures/ (detailed culture)
                    └─> magic/system.md (racial affinities)
 
 system.md ─────────┼─> schools.md (education)
-                   ├─> artifacts.md (items)
+                   ├─> 魔導器s.md (items)
                    ├─> bestiary.md (creature magic)
                    └─> kingdoms.md (magic regulation)
 
@@ -757,7 +757,7 @@ This analysis used the following criteria:
 **Technical Implementation (30%)**:
 - Repository structure
 - Documentation standards
-- Tooling and automation
+- Toolingかつautomation
 - Code/content quality
 
 **Sustainability (20%)**:

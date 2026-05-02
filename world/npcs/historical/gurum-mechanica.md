@@ -52,7 +52,7 @@ class: "Artificer (Artillerist) 18 / Wizard 2"
 **防御**:
 - **AC**: 18 ( artificial armor)
 - **HP**: 200 (18d8+90 from Artificer 18 + 2d6+2)
-- **速度**: 25ft
+- **速度**: 25フィート
 
 **セービングスロー**: CON +10, INT +9, WIS +6
 
@@ -61,16 +61,16 @@ class: "Artificer (Artillerist) 18 / Wizard 2"
 **戦闘能力**:
 
 **攻撃**:
-- **地脈砲 (Earth-cannon)**: 120ft range, 8d10 force, area effect.
+- **地脈砲 (Earth-cannon)**: 120フィート range, 8d10 force, area effect.
 - **自動防衛システム (Auto-turret)**: 1ラウンドで設置, 毎ターン攻撃.
 
 **特殊能力**:
-- ** Spellcasting (Artificer 18)**: 人造魔法, DC19, +11.
+- ** 呪文発動 (Artificer 18)**: 人造魔法, DC19, +11.
 - ** Infuse Item**: 装備に永久魔法効果付与.
 - ** Tool Expertise**: 工具判定双倍.
 - ** Mechanic's Intuition**: 機械触ると即理解.
 - ** Forge Master**: 鍛冶場で超高速製作.
-- ** Wizard Spellcasting (2)**: 補助呪文.
+- ** Wizard 呪文発動 (2)**: 補助呪文.
 
 **精霊契約**:
 - 地: 95% (極強)
@@ -81,7 +81,7 @@ class: "Artificer (Artillerist) 18 / Wizard 2"
 
 **装備**:
 - 万能ツール (any tool at +5)
-- 地脈コア (artefact, energy source)
+- 地脈コア (魔導器, energy source)
 - 自動鎧 (AC20, STR16必要)
 - 設計ノート (全技術記録)
 

@@ -380,4 +380,4 @@ status: "stable"
 
 ---
 
-**関連項目**: [国家一覧](../politics/kingdoms.md) | [魔導器](../magic/artifacts.md) | [交易路](../geography/continents.md)
+**関連項目**: [国家一覧](../politics/kingdoms.md) | [魔導器](../magic/魔導器s.md) | [交易路](../geography/continents.md)

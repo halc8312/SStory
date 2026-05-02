@@ -83,7 +83,7 @@ world/
 ├── magic/                    # 魔法・技術
 │   ├── system.md             # 魔法系統
 │   ├── schools.md            # 魔法学校
-│   └── artifacts.md          # 魔導器
+│   └── 魔導器s.md          # 魔導器
 ├── politics/                 # 政治・社会
 │   ├── kingdoms.md           # 国家一覧
 │   └── alliances.md          # 同盟と戦争

@@ -52,7 +52,7 @@ class: "Cleric (Nature Domain) 15 / Druid 5"
 **防御**:
 - **AC**: 15 (布の服 + 回避)
 - **HP**: 130 (15d8+15 from Cleric 15 + 5d6+5 from Druid 5)
-- **速度**: 30ft
+- **速度**: 30フィート
 
 **セービングスロー**: WIS +8, CHA +7, CON +4
 
@@ -61,11 +61,11 @@ class: "Cleric (Nature Domain) 15 / Druid 5"
 **戦闘能力**:
 
 **攻撃**:
-- **平和の杖 (Staff)**: +7 to hit, 1d6+2 打撃 + 1d4 光.
+- **平和の杖 (Staff)**: +7 命中, 1d6+2 打撃 + 1d4 光.
 - **治癒の光 (Healing Word)**: ボーナスアクション, 2d8+5 HP.
 
 **特殊能力**:
-- ** Spellcasting (Cleric 15/Druid 5)**: 治癒・保護魔法, DC18, +10.
+- ** 呪文発動 (Cleric 15/Druid 5)**: 治癒・保護魔法, DC18, +10.
 - ** Channel Divinity (Cleric)**: 1/休憩, 精霊の力発動.
 - ** Wild Shape (Druid)**: 小型動物に変身.
 - ** Nature's Sanctuary**: 動物が敵対しない.
@@ -83,7 +83,7 @@ class: "Cleric (Nature Domain) 15 / Druid 5"
 - 精霊のローブ (AC+2,  element resistance)
 - 契約の指輪 (全精霊と軽度契約)
 
-**所持金**: 50 GP (質素)
+**所持金**: 50金貨 (質素)
 
 ## 経歴
 

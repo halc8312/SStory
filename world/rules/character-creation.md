@@ -76,7 +76,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: INT（学術系）またはWIS（自然系）またはCHA（契約系）
 **ヒットダイス**: d6
 **主な特徴**:
-- 呪文唱え (Spellcasting)
+- 呪文唱え (呪文発動)
 - 精霊契約: 選択元素の契約度を上げやすい
 - 魔法探知 (Detect Magic)
 - 呪文破壊 (Disrupt Spell)
@@ -101,7 +101,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **ヒットダイス**: d8
 **主な特徴**:
 - 治癒魔法 (Healing)
-- 精霊との対話 (Turn Undead)
+- 精霊との対話
 - 祝福・呪い
 - 武器: 鈍器のみ (mace, staff)
 
@@ -124,7 +124,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: CHA
 **ヒットダイス**: d8
 **主な特徴**:
-- 音楽・演説による支援 (Bardic Inspiration)
+- 音楽・演説による支援 (音楽・演説による支援)
 - 知識全般
 - 魔法 (秘術寄り)
 - 交渉得意
@@ -220,13 +220,13 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 
 ## 7. ヒットポイント (HP)
 
-`HP = Hit Dieの平均 (切り上げ) + CON修正 (各レベル)`
+`HP = ヒットダイスの平均 (切り上げ) + CON修正 (各レベル)`
 
 - **戦士 (d10)**: (1d10+5) 平均8 per level
 - **魔導士 (d6)**: (1d6+2) 平均5 per level
 - **盗賊 (d8)**: (1d8+4) 平均6 per level
 
-レベル1は最大値 (最大Hit Die + CON)。以後は各レベルでダイスを振る or 平均を取る。
+レベル1は最大値 (最大ヒットダイス + CON)。以後は各レベルでダイスを振るまたは平均を取る。
 
 ## 8. 装備と所持金
 
@@ -250,7 +250,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 - **衣類**: 通常の服 (AC10)
 - **袋**:  backpack, 水袋, 糧食 (1日分)
 - **武器**: 種族・クラスに応じた基本武器
-- **防具**: 初期は軽装 or 中装 (クラス条件)
+- **防具**: 初期は軽装または中装 (クラス条件)
 
 ## 9. 精霊契約 (Spirit Contract) の決定
 
@@ -293,11 +293,11 @@ INT 18 (+4), WIS 14 (+2), CHA 10 (+0)
 
 **HP**: 18 (3d6+3)
 **AC**: 12 (布の服)
-**速度**: 30ft, 暗視60ft
+**速度**: 30フィート, 暗視60フィート
 
 **攻撃**:
-- 杖: +5 to hit, 1d4+2 bludgeoning
-- Fire Bolt: +7 to hit, 2d10+4 fire
+- 杖: +5 命中, 1d4+2 bludgeoning
+- Fire Bolt: +7 命中, 2d10+4 fire
 
 **技能**: Arcana +6, History +6, Investigation +6, Perception +4
 
@@ -308,7 +308,7 @@ INT 18 (+4), WIS 14 (+2), CHA 10 (+0)
 - 火: 15%
 - 水: 28%
 
-**装備**: 木の杖, 学者の服,  backpack, 学者ノート, 魔法成分ポーチ, 15 GP.
+**装備**: 木の杖, 学者の服,  backpack, 学者ノート, 魔法成分ポーチ, 15金貨.
 
 **性格**:  curiosity, 冷静, 少し傲慢
 **理想**: 真実の探求
@@ -320,8 +320,8 @@ INT 18 (+4), WIS 14 (+2), CHA 10 (+0)
 
 レベル4以降、別のクラスを追加可能 (GM許可)。
 
-- **要件**: 特定能力値13以上 (例: 戦士追加ならSTR13 or DEX13)。
-- **得られるもの**: 新クラスのHit Die, 技能, 呪文など。
+- **要件**: 特定能力値13以上 (例: 戦士追加ならSTR13またはDEX13)。
+- **得られるもの**: 新クラスのヒットダイス, 技能, 呪文など。
 - **失うもの**: 元クラスの追加攻撃など (多重取得不可)。
 
 ---

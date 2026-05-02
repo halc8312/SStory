@@ -53,7 +53,7 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 **防御**:
 - **AC**: 18 (重装鎧 + 盾)
 - **HP**: 210 (15d12+45 from Barbarian 15 + 5d10+15 from Fighter 5)
-- **速度**: 30ft (重装でも)
+- **速度**: 30フィート (重装でも)
 
 **セービングスロー**: STR +8, CON +9, WIS +4, CHA +5
 
@@ -62,8 +62,8 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 **戦闘能力**:
 
 **攻撃**:
-- **巨斧 (Giant Axe)**: +10 to hit, 1d12+5 斬撃 + 2d6 rage (熱血).
-- **盾撃 (Shield Bash)**: +9 to hit, 1d8+4 打撃, ターゲット stunned (CON save DC17).
+- **巨斧 (Giant Axe)**: +10 命中, 1d12+5 斬撃 + 2d6 rage (熱血).
+- **盾撃 (Shield Bash)**: +9 命中, 1d8+4 打撃, ターゲット stunned (CON save DC17).
 
 **特殊能力**:
 - ** Rage (Barbarian)**: 1戦闘あたり2回、STR+4, CON+4, 物理ダメージ耐性, 耐性なし.
@@ -71,7 +71,7 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 - ** Danger Sense**: 危険感知、エリア効果セーブにadvantage.
 - ** Brutal Critical**: クリティカル時の追加ダイス 2d12.
 - ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Action Surge (Fighter)**: 追加アクション1回.
+- ** アクションサージ (Fighter)**: 追加アクション1回.
 - ** Indomitable (Fighter)**: セーブ再 roll.
 
 **精霊契約**:
@@ -87,7 +87,7 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 - 大盾 (+2 AC)
 - 戦士の牙 (首飾り, CHA+2, 名誉の証)
 
-**所持金**: 200 GP (質素), 部族財産別
+**所持金**: 200金貨 (質素), 部族財産別
 
 ## 経歴
 

@@ -1,7 +1,7 @@
 ---
 type: "canon-document"
 category: "religion"
-title: "神々の pantheon"
+ title: "神々のパンテオン"
 version: "1.0.0"
 created: "2026-05-01"
 last_updated: "2026-05-01"
@@ -11,7 +11,7 @@ tags: ["deities", "gods", "religion", "pantheon"]
 status: "stable"
 ---
 
-# 神々の pantheon - エターナル・アルカディア
+# 神々のパンテオン - エターナル・アルカディア
 
 ## 神々の体系
 エターナル・アルカディアの宗教体系は、**原初の四柱神**を頂点とし、**大精霊**、**属性精霊**、**神格化された存在**から成る階層構造を持つ。
@@ -278,7 +278,7 @@ status: "stable"
 
 ---
 
-#### 3. 満月の儀式（Full Moon Ritual）
+#### 3. 満月の儀式
 **目的**: 月の精霊に感謝、魔力の調整
 **手順**:
 1. 満月の夜に集う

@@ -53,7 +53,7 @@ class: "Fighter (Champion) 10 / Bard 5"
 **防御**:
 - **AC**: 18 ( plate + shield)
 - **HP**: 165 (10d10+30 from Fighter 10 + 5d8+15 from Bard 5)
-- **速度**: 30ft
+- **速度**: 30フィート
 
 **セービングスロー**: STR +6, CON +6, WIS +5, CHA +7
 
@@ -62,16 +62,16 @@ class: "Fighter (Champion) 10 / Bard 5"
 **戦闘能力**:
 
 **攻撃**:
-- **長剣 (Longsword)**: +8 to hit, 1d8+3 斬撃 + 1d6 執念.
-- **率いの号令 (Inspiring Leader)**: 周囲10ftの味方に一時HP+5.
+- **長剣 (Longsword)**: +8 命中, 1d8+3 斬撃 + 1d6 執念.
+- **率いの号令 (Inspiring Leader)**: 周囲10フィートの味方に一時HP+5.
 
 **特殊能力**:
 - ** Fighting Style (Champion)**: クリティカル範囲拡大 (19-20).
-- ** Action Surge (Fighter)**: 追加アクション.
-- ** Second Wind (Fighter)**: HP回復.
-- ** Bardic Inspiration (d6)**: 3回/長休憩.
-- ** Leadership (Bard)**: 味方のセーブ +1d4 (10ft).
-- ** Turn Undead (Bard)**: 不死を退散.
+- ** アクションサージ (Fighter)**: 追加アクション.
+- ** セカンドウインド (Fighter)**: HP回復.
+- ** 音楽・演説による支援 (d6)**: 3回/長休憩.
+- ** Leadership (Bard)**: 味方のセーブ +1d4 (10フィート).
+- **アンデッド退散 (Bard)**: 不死を退散.
 
 **精霊契約**:
 - 風: 80% (人間の主契約)
@@ -85,7 +85,7 @@ class: "Fighter (Champion) 10 / Bard 5"
 - プレートアーマー (国営)
 - 盟約の指輪 (十二国同盟の原稿)
 
-**所持金**: 50 GP (質素)
+**所持金**: 50金貨 (質素)
 
 ## 経歴
 
