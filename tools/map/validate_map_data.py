@@ -3,7 +3,7 @@
 Map Data Validator
 
 Validates the structured map data files for consistency and correctness.
-Checks: unique IDs, valid references, schema compliance, value ranges.
+Checks: unique IDs, valid references, basic structural checks, value ranges.
 """
 
 import json
