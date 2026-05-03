@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ロードマップ - エターナル・アルカディア設定資料館</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>エターナル・アルカディア設定資料館</h1>
+    <p class="subtitle">SStory 世界設定ポータル v0.1</p>
+  </header>
+
+  <nav>
+    <ul class="nav-grid">
+      <li><a href="../index.html">🏠 トップ</a></li>
+      <li><a href="./world.html">🌍 世界概要</a></li>
+      <li><a href="./geography.html">🗻 地理</a></li>
+      <li><a href="./transportation.html">🚢 交通</a></li>
+      <li><a href="./maps.html">📋 地図</a></li>
+      <li><a href="./map-data.html">💾 Map Data</a></li>
+      <li><a href="./roadmap.html">🛣️ ロードマップ</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>開発ロードマップ</h2>
+
+    <p>
+      SStory 世界設定ポータルの開発は、以下のフェーズで進めていきます。<br>
+      現在は <strong>Phase 1 (v0.1)</strong> の実装が完了した段階です。
+    </p>
+
+    <section>
+      <h3>Phase 1: GitHub Pages ポータル v0.1 ✅ 完了</h3>
+      <ul>
+        <li>✅ docs/ フォルダ追加</li>
+        <li>✅ トップページ（index.html）</li>
+        <li>✅ 世界概要ページ</li>
+        <li>✅ 地理ページ</li>
+        <li>✅ 交通ページ</li>
+        <li>✅ 地図ページ</li>
+        <li>✅ Map Data ページ</li>
+        <li>✅ ロードマップページ</li>
+        <li>✅ 404ページ</li>
+        <li>✅ CSS / JS 静的ファイル</li>
+      </ul>
+      <p>
+        <strong>実装済み機能:</strong> 静的HTML/CSS/JSによる世界設定ポータル。<li>GitHub Pages の /docs 公開元対応。<li>相対パスでのリンク・モバイル対応。
+      </p>
+    </section>
+
+    <section>
+      <h3>Phase 2: 既存Markdown資料の閲覧導線強化 (予定)</h3>
+      <p>
+        world/ 配下の豊富なMarkdown資料を、ポータル内からよりアクセスしやすく整理します。
+      </p>
+      <ul>
+        <li>world/ 配下資料へのリンク整理</li>
+        <li>地理・歴史・種族・魔法・政治・経済・交通のカテゴリ整理</li>
+        <li>サイト内ナビゲーション改善</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Phase 3: 地図ギャラリー整備 (予定)</h3>
+      <p>
+        生成済みの地図画像を、ポータル上で閲覧できるようにします。
+      </p>
+      <ul>
+        <li>世界地図</li>
+        <li>大陸地図</li>
+        <li>地域地図</li>
+        <li>交通地図</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Phase 4: インタラクティブ交通マップ v0.1 (予定)</h3>
+      <p>
+        Map Data を読み込んで、Web地図上にノードとルートを表示します。
+      </p>
+      <ul>
+        <li>nodes.json / routes.json / hazards.json の読み込み</li>
+        <li>Leaflet 等の地図ライブラリ導入</li>
+        <li>交通種別フィルタ機能</li>
+        <li>ノードクリックで詳細情報表示</li>
+        <li>GeoJSON 表示対応</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Phase 5: Web版ルート検索 (予定)</h3>
+      <p>
+        Python 版 route_finder.py のロジックを JavaScript へ移植。
+      </p>
+      <ul>
+        <li>出発地・目的地選択UI</li>
+        <li>陸路/海路/空路フィルタ</li>
+        <li>季節運行判定</li>
+        <li>最短経路計算（Dijkstra法）</li>
+        <li>所要時間・距離の表示</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Phase 6: 地図画像オーバーレイ (予定)</h3>
+      <p>
+        生成済みの地図画像を背景として、Map Data を重ね合わせます。
+      </p>
+      <ul>
+        <li>地図画像のアップロード・アップロード</li>
+        <li>座標補正（地図画像と地理座標の位置合わせ）</li>
+        <li>ノードとルートの重ね合わせ</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Phase 7: タイルマップ試作 (予定)</h3>
+      <p>
+        特定地域を対象に、タイルマップ方式の効率的な地図表示を試みます。
+      </p>
+      <ul>
+        <li>アストラリス首都圏</li>
+        <li>紅海砂漠隊商路</li>
+        <li>アトランティス潜水交通</li>
+        <li>グリモワール危険区域</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Phase 8: 世界設定データベース化 (予定)</h3>
+      <p>
+        バラバラな設定資料を、相互リンク可能な構造化データとして整理します。
+      </p>
+      <ul>
+        <li>国家</li>
+        <li>種族</li>
+        <li>魔法</li>
+        <li>経済</li>
+        <li>歴史</li>
+        <li>交通</li>
+        <li>地理</li>
+      </ul>
+      <p>
+        各エントリが相互にリンクされ、横断的な検索・参照が可能になります。
+      </p>
+    </section>
+
+    <section class="github-pages-setup">
+      <h3>GitHub Pages 設定手順</h3>
+      <p>
+        このサイトを GitHub Pages で公開するには、以下の手順で設定します：
+      </p>
+      <ol>
+        <li>GitHub のリポジトリページを開く</li>
+        <li><strong>Settings</strong> タブをクリック</li>
+        <li>サイドメニューから <strong>Pages</strong> を選択</li>
+        <li><strong>Build and deployment</strong> を <code>Deploy from a branch</code> に変更</li>
+        <li><strong>Branch</strong> を <code>main</code> に選択</li>
+        <li><strong>Folder</strong> を <code>/docs</code> に選択</li>
+        <li><strong>Save</strong> ボタンをクリック</li>
+        <li>数分待つと、<code>https://halc8312.github.io/SStory/</code> でサイトが公開されます</li>
+      </ol>
+      <p class="note">
+        ※ この設定は GitHub リポジトリの管理画面で行う必要があります。<br>
+        PR ではファイルの追加のみを行い、Pages 設定自体は管理者が行ってください。
+      </p>
+    </section>
+
+    <section>
+      <h3>フォローアップ Issue</h3>
+      <p>
+        この Issue 完了後、以下の機能を別 Issue として作成予定です：
+      </p>
+      <ul>
+        <li><a href="#">地図ギャラリーに生成済み地図画像を追加</a></li>
+        <li><a href="#">インタラクティブ交通マップ v0.1 実装</a></li>
+        <li><a href="#">Web版ルート検索実装</a></li>
+        <li><a href="#">既存 world/ 配下Markdownをポータル内で整理</a></li>
+        <li><a href="#">タイルマップ試作</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; <span id="current-year"></span> SStory / エターナル・アルカディア<br>
+      <small><a href="../index.html">設定資料館トップ</a></small>
+    </p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

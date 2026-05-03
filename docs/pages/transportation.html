@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>交通 - エターナル・アルカディア設定資料館</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>エターナル・アルカディア設定資料館</h1>
+    <p class="subtitle">SStory 世界設定ポータル v0.1</p>
+  </header>
+
+  <nav>
+    <ul class="nav-grid">
+      <li><a href="../index.html">🏠 トップ</a></li>
+      <li><a href="./world.html">🌍 世界概要</a></li>
+      <li><a href="./geography.html">🗻 地理</a></li>
+      <li><a href="./transportation.html">🚢 交通</a></li>
+      <li><a href="./maps.html">📋 地図</a></li>
+      <li><a href="./map-data.html">💾 Map Data</a></li>
+      <li><a href="./roadmap.html">🛣️ ロードマップ</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>交通</h2>
+
+    <section>
+      <h3>交通網の概要</h3>
+      <p>
+        エターナル・アルカディア世界では、陸路、海路、空路、そして魔法や特殊な手段による
+        交通が発達しています。五大陸と浮島群を結ぶ複雑なネットワークは、
+        貿易、旅行、情報伝達の基盤となっています。
+      </p>
+    </section>
+
+    <section>
+      <h3>陸路</h3>
+      <ul>
+        <li><strong>街道</strong> - 主要都市を結ぶ整備された道路</li>
+        <li><strong>里道</strong> - 地方の集落間を結ぶ小道</li>
+        <li><strong> caravan 路</strong> - 隊商が通る交易路</li>
+        <li><strong>隠密路径</strong> - 特定の種族や組織が使う秘道</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>海路</h3>
+      <ul>
+        <li><strong>中央海航路</strong> - 五大陸周辺の安全な定期航路</li>
+        <li><strong>外海航路</strong> - 危険を伴うがshortcutな遠洋航路</li>
+        <li><strong>島嶼間航路</strong> - 浮島群を結ぶ小規模航路</li>
+        <li><strong>内河航路</strong> - 大陸内の河川・湖沼交通</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>空路</h3>
+      <ul>
+        <li><strong>飛空艇路線</strong> - 主要都市間の定期便</li>
+        <li><strong>翼獣乗り</strong> - 特定地域での飛行生物利用</li>
+        <li><strong>魔法浮遊</strong> - 高級魔導師専用の移動手段</li>
+        <li><strong>気球・飛行船</strong> - 大規模貨物輸送</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>特殊交通</h3>
+      <ul>
+        <li><strong>転送ゲート</strong> - 主要都市に設置された魔法転送装置</li>
+        <li><strong>空間指輪</strong> - 高級アイテムによる個人転送</li>
+        <li><strong>精霊移動</strong> - 精霊族の特殊な移動術</li>
+        <li><strong>地下トンネル</strong> - ドワーフが掘削した坑道ネットワーク</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>公共交通制度</h3>
+      <p>
+        各大陸では、定期便、共有馬車、公共交通機関などの制度が発達しています。
+        運賃、予約、運行スケジュールなどは地域ごとに異なり、
+        季節や天候によっても運行状況が変わることがあります。
+      </p>
+      <p>
+        現在、<code>tools/map/route_finder.py</code> というPythonスクリプトにより、
+        拠点間の最適ルート計算が可能です（ローカル/CI用）。
+        将来的には、このロジックをJavaScriptに移植し、Web版ルート検索を実装予定です。
+      </p>
+    </section>
+
+    <section>
+      <h3>交通資料への導線</h3>
+      <p>
+        詳しい交通設定は、リポジトリ内の以下の資料をご覧ください：
+      </p>
+      <ul>
+        <li><a href="../../world/transportation/" target="_blank">交通設定フォルダ</a></li>
+        <li><a href="../../tools/map/route_finder.py" target="_blank">ルート検索ツール (Python)</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; <span id="current-year"></span> SStory / エターナル・アルカディア<br>
+      <small><a href="../index.html">設定資料館トップ</a></small>
+    </p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

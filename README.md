@@ -54,79 +54,77 @@ mkdocs serve
 
 ### サイトURL
 
-**公開URL**: `https://halc8312.github.io/SStory/` (デプロイ後)
+**公開URL**: `https://halc8312.github.io/SStory/`
 
-### ローカルでの起動方法
+### GitHub Pages 設定方法
+
+このリポジトリでは、`main` ブランチの `/docs` フォルダを公開元にしています。
+
+**設定手順**:
+1. GitHub のリポジトリページを開く
+2. **Settings** → **Pages** を開く
+3. **Build and deployment** を `Deploy from a branch` に変更
+4. **Branch** を `main` に選択
+5. **Folder** を `/docs` に選択
+6. **Save** をクリック
+7. 数分待つと `https://halc8312.github.io/SStory/` でサイトが公開されます
+
+### 現在の実装方式
+
+**v0.1 静的HTMLポータル**（本リリース）:
+- ビルド不要の静的HTML/CSS/JS
+- `docs/` フォルダを GitHub Pages の公開元として直接配置
+- MkDocs / GitHub Actions は使用せず
+
+今後の v0.2 以降で、MkDocs と Material テーマ、GitHub Actions 自動デプロイを導入予定。
+
+### サイト構成（v0.1）
+
+```
+docs/
+├── .nojekyll                       # Jekyll 処理を無効化
+├── index.html                      # ホームページ
+├── 404.html                        # エラーページ
+├── assets/                         # 静的リソース
+│   ├── css/
+│   │   └── style.css               # 羊皮紙風デザイン
+│   └── js/
+│       └── main.js                 # 軽量スクリプト
+├── pages/                          # 各ページ
+│   ├── world.html                  # 世界概要
+│   ├── geography.html              # 地理
+│   ├── transportation.html         # 交通
+│   ├── maps.html                   # 地図ギャラリー
+│   ├── map-data.html               # Map Data 仕様
+│   └── roadmap.html                # 開発ロードマップ
+└── data/
+    └── map/
+        └── README.md               # Map Data 説明
+```
+
+### ローカルでの確認
 
 ```bash
-# MkDocs と Material テーマをインストール
-pip install mkdocs mkdocs-material
-
-# サイトをローカルで起動（ポート8000）
-cd docs-site
-mkdocs serve
-
-# ビルド（静的ファイル生成）
-mkdocs build
+cd docs
+python -m http.server 8000
+# ブラウザで http://localhost:8000 を開く
 ```
 
-ブラウザで `http://localhost:8000` を開くと、サイトを閲覧できます。
+### 採用技術（v0.1）
 
-### GitHub Pages への公開方法
-
-このリポジトリの `main` ブランチへの push で自動的にデプロイされます。
-
-ワークフロー: `.github/workflows/pages.yml`
-
-**手動デプロイ** (必要な場合):
-1. リポジトリの [Settings] → [Pages] に移動
-2. Source を "GitHub Actions" に設定
-3. 保存
-
-### サイト構成
-
-```
-docs-site/
-├── mkdocs.yml                 # サイト設定
-├── docs/
-│   ├── index.md              # ホーム
-│   ├── world/                # 世界設定カテゴリ
-│   │   ├── overview.md
-│   │   ├── geography.md
-│   │   ├── history.md
-│   │   ├── races.md
-│   │   ├── magic.md
-│   │   ├── politics.md
-│   │   ├── economy.md
-│   │   └── transportation.md
-│   ├── maps/                 # 地図カテゴリ
-│   │   ├── gallery.md
-│   │   ├── map-data.md
-│   │   └── interactive-map-plan.md
-│   ├── roadmap/              # ロードマップ
-│   │   └── index.md
-│   └── assets/               # 静的リソース
-│       ├── css/
-│       └── js/
-└── site/                     # ビルド成果物（.gitignore で除外）
-```
-
-### 採用技術
-
-- **MkDocs**: 静的サイトジェネレータ
-- **Material for MkDocs**: テーマ（日本語対応、検索機能付き）
-- **GitHub Actions**: 自動ビルド・デプロイ
-- **GitHub Pages**: ホスティング
+- 静的HTML / CSS / JavaScript（Vanilla）
+- モバイル対応・レスポンシブデザイン
+- 相対パスによるProject Pages対応
 
 ### 現在のステータス
 
-- ✅ **v0.1**: 基本ポータル構築（本リリース予定）
+- ✅ **v0.1**: 静的ポータル基本構築（本Issueで実装）
 - ⏳ **v0.2**: 既存Markdown整理とリンク充実
 - ⏳ **v0.3**: インタラクティブ交通マップ v0.1 (Leaflet)
 - ⏳ **v1.0**: Web版ルート検索 (JavaScript実装)
 - ⏳ **v2.0**: 世界設定データベース化
 
-詳細な開発ロードマップ: [docs-site/roadmap/index.md](docs-site/roadmap/index.md)
+詳細な開発ロードマップ: [docs/pages/roadmap.html](./pages/roadmap.html)
 
 ### 正史資料との関係
 
