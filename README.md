@@ -34,7 +34,107 @@ cat world/lore/creation-myth.md
 
 # 地理を学ぶ
 cat world/geography/continents.md
+
+# 世界設定ポータル（GitHub Pages）をローカルで起動
+cd docs-site
+mkdocs serve
 ```
+
+---
+
+## 🌐 世界設定ポータル (GitHub Pages)
+
+このリポジトリには、**エターナル・アルカディア設定資料館**（世界設定ポータル）が含まれています。
+
+### 目的
+
+- 世界設定資料を体系的に閲覧できるWebサイトを提供
+- GitHub Pages 上で公開、誰でも無料でアクセス可能
+- 初めて訪れる読者にも世界観を理解しやすい構成
+
+### サイトURL
+
+**公開URL**: `https://halc8312.github.io/SStory/` (デプロイ後)
+
+### ローカルでの起動方法
+
+```bash
+# MkDocs と Material テーマをインストール
+pip install mkdocs mkdocs-material
+
+# サイトをローカルで起動（ポート8000）
+cd docs-site
+mkdocs serve
+
+# ビルド（静的ファイル生成）
+mkdocs build
+```
+
+ブラウザで `http://localhost:8000` を開くと、サイトを閲覧できます。
+
+### GitHub Pages への公開方法
+
+このリポジトリの `main` ブランチへの push で自動的にデプロイされます。
+
+ワークフロー: `.github/workflows/pages.yml`
+
+**手動デプロイ** (必要な場合):
+1. リポジトリの [Settings] → [Pages] に移動
+2. Source を "GitHub Actions" に設定
+3. 保存
+
+### サイト構成
+
+```
+docs-site/
+├── mkdocs.yml                 # サイト設定
+├── docs/
+│   ├── index.md              # ホーム
+│   ├── world/                # 世界設定カテゴリ
+│   │   ├── overview.md
+│   │   ├── geography.md
+│   │   ├── history.md
+│   │   ├── races.md
+│   │   ├── magic.md
+│   │   ├── politics.md
+│   │   ├── economy.md
+│   │   └── transportation.md
+│   ├── maps/                 # 地図カテゴリ
+│   │   ├── gallery.md
+│   │   ├── map-data.md
+│   │   └── interactive-map-plan.md
+│   ├── roadmap/              # ロードマップ
+│   │   └── index.md
+│   └── assets/               # 静的リソース
+│       ├── css/
+│       └── js/
+└── site/                     # ビルド成果物（.gitignore で除外）
+```
+
+### 採用技術
+
+- **MkDocs**: 静的サイトジェネレータ
+- **Material for MkDocs**: テーマ（日本語対応、検索機能付き）
+- **GitHub Actions**: 自動ビルド・デプロイ
+- **GitHub Pages**: ホスティング
+
+### 現在のステータス
+
+- ✅ **v0.1**: 基本ポータル構築（本リリース予定）
+- ⏳ **v0.2**: 既存Markdown整理とリンク充実
+- ⏳ **v0.3**: インタラクティブ交通マップ v0.1 (Leaflet)
+- ⏳ **v1.0**: Web版ルート検索 (JavaScript実装)
+- ⏳ **v2.0**: 世界設定データベース化
+
+詳細な開発ロードマップ: [docs-site/roadmap/index.md](docs-site/roadmap/index.md)
+
+### 正史資料との関係
+
+- **本ポータル**は `world/` 配下の**正史Markdownへのナビゲーション**です
+- 詳細な設定は `world/` 以下のファイルを直接参照してください
+- Map Data は `world/map-data/data/` のJSONを参照
+
+---
 
 ## ディレクトリ構造
 

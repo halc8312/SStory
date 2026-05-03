@@ -1,0 +1,243 @@
+/**
+ * エターナル・アルカディア設定資料館 - カスタムCSS
+ *
+ * 世界設定資料館としての雰囲気を出すためのスタイル調整
+ */
+
+/* サイト全体の背景色をほんのり暖色系に */
+:root {
+  --md-primary-fg-color: #00695c;
+  --md-primary-bg-color: #e0f2f1;
+  --md-accent-fg-color: #004d40;
+}
+
+/* タイトル部分の装飾 */
+.md-header {
+  background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+}
+
+/* ホームページのクイックリンクをカード風に */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.quick-links table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.quick-links td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.quick-links tr:hover td {
+  background: #f0f0f0;
+}
+
+.quick-links a {
+  color: #00695c;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.quick-links a:hover {
+  text-decoration: underline;
+}
+
+/* セクション見出しに装飾 */
+h1, h2, h3, h4, h5, h6 {
+  color: #004d40;
+  font-weight: 600;
+}
+
+h1 {
+  border-bottom: 3px solid #00695c;
+  padding-bottom: 0.5rem;
+}
+
+/* アドモーション（注釈ブロック）のスタイル調整 */
+.admonition {
+  border-left: 4px solid #00695c;
+  border-radius: 4px;
+}
+
+.admonition-title {
+  background-color: #e0f2f1;
+  color: #004d40;
+}
+
+/* コードブロックのスタイル */
+.highlight {
+  border-radius: 6px;
+}
+
+/* リンクカラー */
+a {
+  color: #00796b;
+}
+
+a:hover {
+  color: #004d40;
+}
+
+/* テーブル行のストライプ */
+th {
+  background-color: #e0f2f1;
+  color: #004d40;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* 引用符装飾 */
+blockquote {
+  border-left-color: #00695c;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+}
+
+/* ホームページのウェルカムメッセージ */
+.md-content h1:first-of-type {
+  background: linear-gradient(90deg, #00695c, #00897b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* サイドバーのカテゴリ見出し */
+.md-nav--secondary .md-nav__title {
+  color: #00695c;
+  font-weight: 600;
+}
+
+/* フッターのクレジット */
+.md-footer__inner {
+  background-color: #004d40;
+}
+
+/* 検索ボックスの色調 */
+.md-search__input {
+  border-color: #00695c;
+}
+
+/* ページネーション */
+.md-prev, .md-next {
+  border-color: #00695c;
+}
+
+.md-prev:hover, .md-next:hover {
+  background-color: #e0f2f1;
+}
+
+/* 地図ギャラリー用の画像スタイル */
+.maps-gallery img {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.maps-gallery img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* データテーブル用 */
+.data-table {
+  font-size: 0.9em;
+}
+
+.data-table th {
+  background: #e8f5e9;
+}
+
+/* カテゴリタグ */
+.category-tag {
+  display: inline-block;
+  background: #e0f2f1;
+  color: #00695c;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 500;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 種族カード風レイアウト（種族ページ用） */
+.race-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fafafa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.race-card h3 {
+  margin-top: 0;
+  color: #00695c;
+}
+
+/* 重要な情報ハイライト */
+.important-note {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-left-color: #ff9800;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+/* Map Data コードブロック用 */
+pre code.language-json {
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+/* ロードマップのタイムライン風表示 */
+.timeline-item {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #00695c;
+  border-radius: 50%;
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 0.95rem;
+  top: 1.25rem;
+  width: 2px;
+  height: calc(100% + 0.5rem);
+  background: #e0e0e0;
+}
+
+.timeline-item:last-child::after {
+  display: none;
+}
+
+/* モバイル表示調整 */
+@media screen and (max-width: 76.1875em) {
+  .quick-links {
+    grid-template-columns: 1fr;
+  }
+}
