@@ -1,0 +1,71 @@
+site_name: エターナル・アルカディア設定資料館
+site_description: エターナル・アルカディア世界の設定資料ポータル
+site_author: halc8312
+repo_url: https://github.com/halc8312/SStory
+repo_name: halc8312/SStory
+
+theme:
+  name: material
+  language: ja
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: ダークモードに切り替え
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: ライトモードに切り替え
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - search.share
+
+nav:
+  - ホーム: index.md
+  - 世界設定:
+    - 世界概要: world/overview.md
+    - 地理: world/geography.md
+    - 歴史: world/history.md
+    - 種族: world/races.md
+    - 魔法: world/magic.md
+    - 政治: world/politics.md
+    - 経済: world/economy.md
+    - 交通: world/transportation.md
+  - 地図:
+    - 地図ギャラリー: maps/gallery.md
+    - Map Data 紹介: maps/map-data.md
+    - インタラクティブマップ計画: maps/interactive-map-plan.md
+  - ロードマップ:
+    - 開発ロードマップ: roadmap/index.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      lang: ja
+
+extra_css:
+  - assets/css/custom.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/halc8312/SStory

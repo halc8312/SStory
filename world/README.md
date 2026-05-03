@@ -242,6 +242,25 @@ CC BY-SA 4.0 ライセンスに基づき、クレジット表示が必要です�
 
 ---
 
+## 世界設定ポータル (GitHub Pages)
+
+この世界設定は、GitHub Pages 上で公開されている**世界設定ポータル**でも閲覧できます。
+
+- **URL**: https://halc8312.github.io/SStory/ (デプロイ後)
+- **サイト名**: エターナル・アルカディア設定資料館
+- **技術**: MkDocs Material
+
+ローカルで起動:
+```bash
+cd docs-site
+pip install mkdocs mkdocs-material
+mkdocs serve
+```
+
+詳細はルートREADMEの「世界設定ポータル」セクションを参照。
+
+---
+
 ## 今後の開発予定
 
 ### 短期（1年以内）
