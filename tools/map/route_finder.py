@@ -33,15 +33,16 @@ def build_graph(routes, weight="time", avoid_danger_level=None, allow_restricted
     for route in routes:
         # Filter by status
         status = route.get("status", "active")
-        if status == "forbidden" and not allow_restricted:
+        if status == "forbidden":
             continue
         if status == "restricted" and not allow_restricted:
             continue
         if status in {"closed", "dangerous"}:
             continue
 
-        # Seasonal filter
-        if route.get("seasonal") and month is not None:
+        # Seasonal filter: routes with seasonal=true OR active_months field are considered seasonal
+        is_seasonal = route.get("seasonal", False) or "active_months" in route
+        if is_seasonal and month is not None:
             active_months = route.get("active_months", [])
             if month not in active_months:
                 continue
@@ -146,11 +147,15 @@ def main():
     parser.add_argument("--to", dest="dst", required=True, help="Destination node ID")
     parser.add_argument("--weight", choices=["time", "distance", "safety", "cost"],
                         default="time", help="Optimization metric")
-    parser.add_argument("--avoid-danger-level", type=int, help="Avoid routes with danger >= this level")
-    parser.add_argument("--allow-air", action="store_true", default=True, help="Allow air routes (default: enabled)")
-    parser.add_argument("--allow-sea", action="store_true", default=True, help="Allow sea routes (default: enabled)")
-    parser.add_argument("--allow-restricted", action="store_true", help="Allow restricted/seasonal routes")
-    parser.add_argument("--month", type=int, help="Travel month (1-12) for seasonal routing")
+    parser.add_argument("--avoid-danger-level", type=int, help="Avoid routes with danger >= this level (e.g., 4 = avoid very dangerous)")
+    # Deprecated: use --no-air instead
+    parser.add_argument("--allow-air", action="store_true", help="(DEPRECATED) Include air routes (default: included without this flag). Use --no-air to exclude.")
+    # Deprecated: use --no-sea instead
+    parser.add_argument("--allow-sea", action="store_true", help="(DEPRECATED) Include sea routes (default: included without this flag). Use --no-sea to exclude.")
+    parser.add_argument("--no-air", action="store_true", help="Exclude air routes")
+    parser.add_argument("--no-sea", action="store_true", help="Exclude sea routes")
+    parser.add_argument("--allow-restricted", action="store_true", help="Include routes with status 'restricted' (does not affect seasonal routes)")
+    parser.add_argument("--month", type=int, choices=range(1,13), help="Travel month (1-12) for seasonal route filtering")
     args = parser.parse_args()
 
     # Load data
@@ -166,14 +171,26 @@ def main():
         print(f"Error: destination node '{args.dst}' not found", file=sys.stderr)
         sys.exit(1)
 
+    # Resolve air/sea allowances with backward compatibility
+    # Default: air and sea are allowed.
+    # --no-air / --no-sea explicitly exclude.
+    # --allow-air / --allow-sea explicitly include (deprecated, for compatibility).
+    # If both --no-? and --allow-? are given, --no-? takes precedence.
+    allow_air = not args.no_air
+    if args.allow_air and not args.no_air:
+        allow_air = True
+    allow_sea = not args.no_sea
+    if args.allow_sea and not args.no_sea:
+        allow_sea = True
+
     # Build graph
     graph = build_graph(
         routes,
         weight=args.weight,
         avoid_danger_level=args.avoid_danger_level,
         allow_restricted=args.allow_restricted,
-        allow_air=args.allow_air,
-        allow_sea=args.allow_sea,
+        allow_air=allow_air,
+        allow_sea=allow_sea,
         month=args.month
     )
 
@@ -217,8 +234,24 @@ def main():
         from_node_name = node_names.get(route['from'], route['from'])
         to_node_name = node_names.get(route['to'], route['to'])
         time_h = route.get("estimated_time_hours", 0)
+        
+        # Build extra info line: status and seasonal info
+        extra_parts = []
+        status = route.get("status", "active")
+        seasonal = route.get("seasonal", False)
+        active_months = route.get("active_months", [])
+        extra_parts.append(f"status: {status}")
+        if seasonal or active_months:
+            months_str = ",".join(str(m) for m in active_months) if active_months else "none"
+            note = ""
+            if args.month is None:
+                note = " (month not specified; availability uncertain)"
+            extra_parts.append(f"seasonal: {seasonal}, active_months: {months_str}{note}")
+        
         print(f"  {idx}. {rname} ({rtype}/{rmode})")
         print(f"     {from_node_name} → {to_node_name}")
+        if extra_parts:
+            print(f"     [{'; '.join(extra_parts)}]")
         print(f"     時間: {format_time(time_h)}, 距離: {route.get('distance_km', 0)}km, 危険度: {danger}")
         idx += 1
 

@@ -142,9 +142,9 @@ Expected output:
 ```
 Map data validation passed.
 Continents: 5
-Regions: 12
-Nodes: 30
-Routes: 25
+Regions: 13
+Nodes: 37
+Routes: 33
 Hazards: 8
 ```
 
@@ -164,14 +164,17 @@ Find optimal routes between nodes:
 # Find fastest route from Astralis to Jade Port
 python tools/map/route_finder.py --from astralis --to jade_port --weight time
 
-# Find safest route, avoiding high-danger paths
-python tools/map/route_finder.py --from port_zephia --to time_port --weight safety --avoid-danger-level 4
+# Exclude air routes
+python tools/map/route_finder.py --from astralis --to jade_port --weight time --no-air
 
-# Allow restricted routes and consider seasonal conditions (month 7 = July)
-python tools/map/route_finder.py --from astralis --to marineport --weight time --allow-restricted --month 7
+# Exclude sea routes
+python tools/map/route_finder.py --from port_zephia --to marineport --weight time --no-sea
 
-# Enable air or sea routes as needed
-python tools/map/route_finder.py --from astralis --to stormhold --weight time --allow-air
+# Seasonal route in summer (month 7); avoid high danger
+python tools/map/route_finder.py --from port_zephia --to time_port --weight safety --avoid-danger-level 4 --month 7
+
+# Seasonal route check in winter (month 12) - likely no route
+python tools/map/route_finder.py --from port_zephia --to time_port --weight safety --avoid-danger-level 4 --month 12
 ```
 
 **Weight options:**
@@ -182,10 +185,17 @@ python tools/map/route_finder.py --from astralis --to stormhold --weight time --
 
 **Filters:**
 - `--avoid-danger-level N` - Skip routes with danger >= N
-- `--allow-air` - Include air routes
-- `--allow-sea` - Include sea routes
-- `--allow-restricted` - Include restricted/seasonal routes
-- `--month N` - Consider seasonal routes for month 1-12
+- `--no-air` - Exclude air routes (default: air routes are included)
+- `--no-sea` - Exclude sea routes (default: sea routes are included)
+- `--allow-restricted` - Include routes with status `restricted` (permits required). Does not affect `seasonal` routes.
+- `--month N` - Travel month (1-12); seasonal routes only operate in their active months. If omitted, seasonal routes are included but their seasonal availability is not evaluated.
+
+**Route status handling (v0.1):**
+- `active` - always included
+- `seasonal` - included if `--month` matches `active_months`; if `--month` omitted, included without evaluation
+- `restricted` - excluded unless `--allow-restricted` is given
+- `forbidden` - always excluded (no option to include)
+- `experimental`, `dangerous`, `closed` - always excluded
 
 ## GeoJSON Export
 

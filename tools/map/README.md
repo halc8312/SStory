@@ -47,26 +47,36 @@ python tools/map/route_finder.py --from <node_id> --to <node_id> [options]
 - `--weight {time,distance,safety,cost}` - Optimization metric (default: time)
 
 **Filtering options:**
-- `--avoid-danger-level N` - Exclude routes with danger level >= N (e.g., 4 = avoid very dangerous)
-- `--allow-air` - Include air routes (default: included)
-- `--allow-sea` - Include sea routes (default: included)
-- `--allow-restricted` - Include restricted/seasonal routes (default: excluded)
-- `--month N` - Travel month (1-12); seasonal routes only operate in their active months
+- `--avoid-danger-level N` - Exclude routes with danger >= N (e.g., 4 = avoid very dangerous)
+- `--no-air` - Exclude air routes (default: air routes included)
+- `--no-sea` - Exclude sea routes (default: sea routes included)
+- `--allow-restricted` - Include routes with status `restricted` (does not affect seasonal routes)
+- `--month N` - Travel month (1-12); seasonal routes only operate in their active months. If not specified, seasonal routes are included without month-based filtering (availability uncertain).
+
+**Route status:**
+- `active` - Regularly operating
+- `seasonal` - Seasonal operation (controlled by `--month` and `active_months`)
+- `restricted` - Permits required (requires `--allow-restricted`)
+- `forbidden` - Always excluded in v0.1 (no option to include)
+- `experimental` / `dangerous` / `closed` - Always excluded
 
 **Examples:**
 
 ```bash
-# Fastest time from Astralis to Jade Port
+# Fastest time from Astralis to Jade Port (default includes air/sea routes)
 python tools/map/route_finder.py --from astralis --to jade_port --weight time
 
-# Safest route from Port Zephia to Time Port, avoiding high danger
-python tools/map/route_finder.py --from port_zephia --to time_port --weight safety --avoid-danger-level 4
+# Exclude air routes
+python tools/map/route_finder.py --from astralis --to jade_port --weight time --no-air
 
-# Route from Astralis to Marineport allowing restricted routes in July
-python tools/map/route_finder.py --from astralis --to marineport --weight time --allow-restricted --month 7
+# Exclude sea routes
+python tools/map/route_finder.py --from port_zephia --to time_port --weight safety --no-sea
 
-# Air route from Astralis Airport to Stormhold
-python tools/map/route_finder.py --from astralis_airport --to stormhold --weight time --allow-air
+# Seasonal northern ocean route in summer (month 7); avoid high danger
+python tools/map/route_finder.py --from port_zephia --to time_port --weight safety --avoid-danger-level 4 --month 7
+
+# Check winter exclusion of seasonal northern ocean route (month 12)
+python tools/map/route_finder.py --from port_zephia --to time_port --weight safety --avoid-danger-level 4 --month 12
 ```
 
 **Output:**
@@ -126,10 +136,10 @@ All data stored in `world/map-data/data/` as JSON. See `world/map-data/README.md
 
 **Key files:**
 - `continents.json` - 5 major continents
-- `regions.json` - 12 regions
-- `nodes.json` - 30+ locations (cities, ports, airports, etc.)
-- `routes.json` - 25+ transportation paths
-- `hazards.json` - 8 danger zones
+- `regions.json` - 13 regions
+- `nodes.json` - locations (cities, ports, airports, etc.); count varies with data updates
+- `routes.json` - transportation paths; count varies with data updates
+- `hazards.json` - danger zones; count varies
 
 ## Common Tasks
 
@@ -155,11 +165,7 @@ python tools/map/render_static_network.py
 
 ## Troubleshooting
 
-**"No route found"** - Check that nodes exist and are connected via routes. Use `--allow-air`/`--allow-sea` if needed. Restricted routes require `--allow-restricted`.
-
-**Validation errors** - Check JSON syntax, required fields, ID format (lowercase snake_case), and reference IDs.
-
-**Month filtering** - Remember months are 1-12 (January=1). Some routes are seasonal and only operate in specific months.
+**"No route found"** - Check that nodes exist and are connected via routes. Use `--no-air`/`--no-sea` to exclude route types if needed. Restricted routes require `--allow-restricted`. Seasonal routes require appropriate `--month` (1-12) and are only available in their active months.
 
 ## Development Notes
 
