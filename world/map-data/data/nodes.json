@@ -12,16 +12,13 @@
     },
     "transport_roles": [
       "road_hub",
-      "political_hub",
-      "air_hub",
-      "sea_port"
+      "political_hub"
     ],
     "facilities": [
       "central_carriage_plaza",
       "government",
       "magic_academy",
-      "spirit_tower",
-      "international_airport"
+      "spirit_tower"
     ],
     "description": "エリュシオンの王都。主要街道の起点。",
     "tags": [
@@ -447,6 +444,61 @@
       "caravan"
     ],
     "confidence": "canon"
+  },
+  {
+    "id": "jade_north",
+    "name": "翡翠王国北部",
+    "type": "town",
+    "continent_id": "chaos_ria",
+    "region_id": "jade_oasis_region",
+    "position": {
+      "x": 5400,
+      "y": 6900,
+      "z": 0
+    },
+    "transport_roles": [
+      "road_hub"
+    ],
+    "facilities": [
+      "carriage_terminal",
+      "market",
+      "customs"
+    ],
+    "description": "中央街道と翡翠王国方面交通を接続する北部交通拠点。",
+    "tags": [
+      "jade_kingdom",
+      "road_hub",
+      "estimated"
+    ],
+    "confidence": "estimated"
+  },
+  {
+    "id": "jade_capital",
+    "name": "翡翠王都",
+    "type": "city",
+    "continent_id": "chaos_ria",
+    "region_id": "jade_oasis_region",
+    "position": {
+      "x": 5600,
+      "y": 7200,
+      "z": 0
+    },
+    "transport_roles": [
+      "road_hub",
+      "political_hub"
+    ],
+    "facilities": [
+      "carriage_terminal",
+      "market",
+      "government"
+    ],
+    "description": "翡翠王国の王都。中央街道の終点として扱う。",
+    "tags": [
+      "jade_kingdom",
+      "capital",
+      "estimated"
+    ],
+    "confidence": "estimated"
   },
   {
     "id": "red_sea_desert_supply_station",
@@ -944,7 +996,7 @@
     "position": {
       "x": 4800,
       "y": 5100,
-      "z": 6500
+      "z": 1000
     },
     "transport_roles": [
       "air_capital",

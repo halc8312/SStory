@@ -13,7 +13,7 @@ These tools provide validation, route finding, data export, and visualization ca
 
 ### validate_map_data.py
 
-Validates all map data files for consistency, referential integrity, and schema compliance.
+Validates all map data files for consistency, referential integrity, and basic structural checks.
 
 ```bash
 python tools/map/validate_map_data.py
@@ -48,8 +48,8 @@ python tools/map/route_finder.py --from <node_id> --to <node_id> [options]
 
 **Filtering options:**
 - `--avoid-danger-level N` - Exclude routes with danger level >= N (e.g., 4 = avoid very dangerous)
-- `--allow-air` - Include air routes (default: excluded)
-- `--allow-sea` - Include sea routes (default: excluded)
+- `--allow-air` - Include air routes (default: included)
+- `--allow-sea` - Include sea routes (default: included)
 - `--allow-restricted` - Include restricted/seasonal routes (default: excluded)
 - `--month N` - Travel month (1-12); seasonal routes only operate in their active months
 
@@ -65,8 +65,8 @@ python tools/map/route_finder.py --from port_zephia --to time_port --weight safe
 # Route from Astralis to Marineport allowing restricted routes in July
 python tools/map/route_finder.py --from astralis --to marineport --weight time --allow-restricted --month 7
 
-# Air route from Astralis to Stormhold
-python tools/map/route_finder.py --from astralis --to stormhold --weight time --allow-air
+# Air route from Astralis Airport to Stormhold
+python tools/map/route_finder.py --from astralis_airport --to stormhold --weight time --allow-air
 ```
 
 **Output:**

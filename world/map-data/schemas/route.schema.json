@@ -80,6 +80,18 @@
       "type": "boolean",
       "description": "Whether route is seasonal"
     },
+    "active_months": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 12
+      },
+      "minItems": 1,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "description": "Months (1-12) when seasonal route operates; ignored if seasonal=false"
+    },
     "operators": {
       "type": "array",
       "items": {
