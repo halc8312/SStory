@@ -75,8 +75,11 @@ mkdocs serve
 - ビルド不要の静的HTML/CSS/JS
 - `docs/` フォルダを GitHub Pages の公開元として直接配置
 - MkDocs / GitHub Actions は使用せず
+- Pages デプロイ用 GitHub Actions ワークフローは削除済み (`pages.yml`, `jekyll-gh-pages.yml`)
 
-今後の v0.2 以降で、MkDocs と Material テーマ、GitHub Actions 自動デプロイを導入予定。
+**注意**: 本リポジトリは **Project Pages** として `https://halc8312.github.io/SStory/` に公開されます。
+ユーザーサイトURL (`https://halc8312.github.io/`) ではなく、プロジェクトサイトURLを使用してください。
+`docs/` 静的公開方式では、Pages用 GitHub Actions は不要です。
 
 ### サイト構成（v0.1）
 
