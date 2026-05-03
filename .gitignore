@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Exports (generated)
+world/map-data/exports/*.geojson
+world/map-data/exports/*.svg
+!world/map-data/exports/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

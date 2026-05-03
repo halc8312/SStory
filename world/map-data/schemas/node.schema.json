@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Node Schema",
+  "description": "Schema for validating node (location) data",
+  "required": ["id", "name", "type", "continent_id", "position", "description", "tags", "confidence"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Unique identifier in lowercase snake_case"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display name in Japanese"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "capital",
+        "city",
+        "town",
+        "port",
+        "airport",
+        "air_terminal",
+        "carriage_terminal",
+        "inn",
+        "checkpoint",
+        "oasis",
+        "caravan_lodge",
+        "floating_island",
+        "underwater_city",
+        "submarine_terminal",
+        "warp_gate",
+        "forbidden_gate",
+        "landmark",
+        "ruin"
+      ],
+      "description": "Type of node/location"
+    },
+    "continent_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Reference to parent continent"
+    },
+    "region_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Reference to parent region (optional)"
+    },
+    "position": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "z": {
+          "type": "integer",
+          "description": "Height/depth: 0=ground, positive=air/floating, negative=underwater/underground"
+        }
+      }
+    },
+    "transport_roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "road_hub",
+          "sea_hub",
+          "air_hub",
+          "political_hub",
+          "trade_center",
+          "mining_hub",
+          "mountain_city",
+          "caravan_hub",
+          "terminal",
+          "checkpoint",
+          "customs",
+          "refueling_station",
+          "waypoint",
+          "restricted",
+          "forbidden_zone"
+        ]
+      }
+    },
+    "facilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["canon", "estimated", "inferred", "placeholder"]
+    }
+  },
+  "additionalProperties": false
+}

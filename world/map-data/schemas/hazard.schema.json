@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Hazard Schema",
+  "description": "Schema for validating hazard/danger zone data",
+  "required": ["id", "name", "type", "continent_id", "center", "radius", "severity", "effects", "description", "confidence"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Unique identifier in lowercase snake_case"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display name in Japanese"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "sandstorm",
+        "pirate_sea",
+        "ice_sea",
+        "time_distortion",
+        "forbidden_zone",
+        "monster_sea",
+        "volcanic_zone",
+        "avalanche",
+        "spirit_anomaly",
+        "fog",
+        "storm"
+      ],
+      "description": "Type of hazard"
+    },
+    "continent_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Continent where hazard is located"
+    },
+    "center": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "z": {
+          "type": "integer",
+          "description": "Height/depth of hazard center"
+        }
+      }
+    },
+    "radius": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Radius of hazard area in coordinate units"
+    },
+    "severity": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Severity: 0=none, 5=catastrophic"
+    },
+    "seasonal": {
+      "type": "boolean",
+      "description": "Whether hazard is seasonal"
+    },
+    "active_months": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 12
+      },
+      "description": "Months when hazard is active (1-12)"
+    },
+    "effects": {
+      "type": "object",
+      "description": "Game effects of this hazard"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["canon", "estimated", "inferred", "placeholder"]
+    }
+  },
+  "additionalProperties": false
+}

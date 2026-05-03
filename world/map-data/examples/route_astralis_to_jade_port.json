@@ -1,0 +1,44 @@
+{
+  "from": "astralis",
+  "to": "jade_port",
+  "weight": "time",
+  "total_time_hours": 295,
+  "total_time_formatted": "11日23時間",
+  "total_distance_km": 900,
+  "total_cost_gold": 115,
+  "max_danger_level": 3,
+  "average_danger_level": 2.5,
+  "segments": [
+    {
+      "segment": 1,
+      "route_id": "southern_road_astralis_blood_fort",
+      "route_name": "南方街道：アストラリス〜ブラッド・フォート",
+      "type": "road",
+      "mode": "stagecoach",
+      "from": "astralis",
+      "from_name": "アストラリス",
+      "to": "blood_fort",
+      "to_name": "ブラッド・フォート",
+      "distance_km": 520,
+      "estimated_time_hours": 166,
+      "cost_gold": 52,
+      "danger_level": 2
+    },
+    {
+      "segment": 2,
+      "route_id": "southern_road_blood_fort_jade_port",
+      "route_name": "南方街道：ブラッド・フォート〜翡翠港",
+      "type": "road",
+      "mode": "stagecoach",
+      "from": "blood_fort",
+      "from_name": "ブラッド・フォート",
+      "to": "jade_port",
+      "to_name": "翡翠港",
+      "distance_km": 380,
+      "estimated_time_hours": 121,
+      "cost_gold": 38,
+      "danger_level": 3
+    }
+  ],
+  "notes": "This is the primary southern route through the desert. Seasonal restrictions may apply in summer months."
+}
