@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>地理 - エターナル・アルカディア設定資料館</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>エターナル・アルカディア設定資料館</h1>
+    <p class="subtitle">SStory 世界設定ポータル v0.1</p>
+  </header>
+
+  <nav>
+    <ul class="nav-grid">
+      <li><a href="../index.html">🏠 トップ</a></li>
+      <li><a href="./world.html">🌍 世界概要</a></li>
+      <li><a href="./geography.html">🗻 地理</a></li>
+      <li><a href="./transportation.html">🚢 交通</a></li>
+      <li><a href="./maps.html">📋 地図</a></li>
+      <li><a href="./map-data.html">💾 Map Data</a></li>
+      <li><a href="./roadmap.html">🛣️ ロードマップ</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>地理</h2>
+
+    <section>
+      <h3>五大陸への旅</h3>
+      <p>
+        エターナル・アルカディア世界は、5つの主要大陸から成り立っています。
+        各大陸には独特の気候、地形、文化が存在し、冒険者や商人、知識の探求者を惹きつけます。
+      </p>
+      <div class="card-grid">
+        <div class="card">
+          <h3>エリュシオン</h3>
+          <p>秩序と繁栄の大陸。広大な草原と輝く都市が広がる。</p>
+          <p><a href="../../world/geography/elysion.md" target="_blank">詳細 &rarr;</a></p>
+        </div>
+        <div class="card">
+          <h3>リュミエラ</h3>
+          <p>光と魔法の大陸。精霊の森と魔導都市が共存する。</p>
+          <p><a href="../../world/geography/lumiera.md" target="_blank">詳細 &rarr;</a></p>
+        </div>
+        <div class="card">
+          <h3>カオス・リア</h3>
+          <p>混沌と変革の大陸。常に変化する地形と多様な種族。</p>
+          <p><a href="../../world/geography/chaos_realm.md" target="_blank">詳細 &rarr;</a></p>
+        </div>
+        <div class="card">
+          <h3>アトランティス</h3>
+          <p>水と神秘の大陸。沈んだ都市と海の遺跡が語りかける。</p>
+          <p><a href="../../world/geography/atlantis.md" target="_blank">詳細 &rarr;</a></p>
+        </div>
+        <div class="card">
+          <h3>グリモワール</h3>
+          <p>知識と禁忌の大陸。禁書の塔と魔獣の棲む荒野。</p>
+          <p><a href="../../world/geography/grimoire.md" target="_blank">詳細 &rarr;</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>地図ギャラリー</h3>
+      <p>
+        現在、以下の地図の作成・公開を準備中です。
+        将来的にはインタラクティブな地図表示機能を実装予定です。
+      </p>
+      <ul>
+        <li>世界地図（全体像）</li>
+        <li>大陸地図（各大陸詳細）</li>
+        <li>地域地図（主要都市・地形）</li>
+        <li>交通地図（航路・街道）</li>
+      </ul>
+      <p><a href="./maps.html">地図ページを見る &rarr;</a></p>
+    </section>
+
+    <section>
+      <h3>データ駆動型地理情報</h3>
+      <p>
+        今後、地理情報は機械可読なJSON/GeoJSON形式で管理され、
+        Webマップ上での表示やルート検索などに活用される予定です。<br>
+        詳細は <a href="./map-data.html">Map Data ページ</a>をご覧ください。
+      </p>
+    </section>
+
+    <section>
+      <h3>地理資料への導線</h3>
+      <p>
+        リポジトリ内の地理関連資料は以下の場所にあります：
+      </p>
+      <ul>
+        <li><code>world/geography/</code> - 大陸・地域ごとの詳細設定</li>
+        <li><code>world/maps/</code> - 生成された地図画像とデータ</li>
+        <li><a href="../../world/geography/" target="_blank">GitHub リポジトリの geography フォルダ</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; <span id="current-year"></span> SStory / エターナル・アルカディア<br>
+      <small><a href="../index.html">設定資料館トップ</a></small>
+    </p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>地図 - エターナル・アルカディア設定資料館</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>エターナル・アルカディア設定資料館</h1>
+    <p class="subtitle">SStory 世界設定ポータル v0.1</p>
+  </header>
+
+  <nav>
+    <ul class="nav-grid">
+      <li><a href="../index.html">🏠 トップ</a></li>
+      <li><a href="./world.html">🌍 世界概要</a></li>
+      <li><a href="./geography.html">🗻 地理</a></li>
+      <li><a href="./transportation.html">🚢 交通</a></li>
+      <li><a href="./maps.html">📋 地図</a></li>
+      <li><a href="./map-data.html">💾 Map Data</a></li>
+      <li><a href="./roadmap.html">🛣️ ロードマップ</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>地図ギャラリー</h2>
+
+    <section>
+      <h3>地図コレクション予定</h3>
+      <p>
+        エターナル・アルカディア世界の地図は、現在生成・整備中です。
+        以下の地図タイプを順次公開予定です。
+      </p>
+      <div class="card-grid">
+        <div class="card">
+          <h3>世界地図</h3>
+          <p>五大陸、中央海、外海、浮島群を含む世界全体の概観図。</p>
+          <p class="placeholder">(準備中)</p>
+        </div>
+        <div class="card">
+          <h3>大陸地図</h3>
+          <p>各五大陸（エリュシオン、リュミエラ、カオス・リア、アトランティス、グリモワール）の詳細地图。</p>
+          <p class="placeholder">(準備中)</p>
+        </div>
+        <div class="card">
+          <h3>地域地図</h3>
+          <p>主要都市、王国、地域ごとの詳細地形図。</p>
+          <p class="placeholder">(準備中)</p>
+        </div>
+        <div class="card">
+          <h3>交通地図</h3>
+          <p>航路、街道、空路、転送ゲートなどをまとめた交通ネットワーク図。</p>
+          <p class="placeholder">(準備中)</p>
+        </div>
+        <div class="card">
+          <h3>詳細交通図</h3>
+          <p>主要街道や航路のルート詳細、宿場町・寄港地情報。</p>
+          <p class="placeholder">(準備中)</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>今後の実装予定</h3>
+      <p>
+        現在の v0.1 は静的ポータルのため、地図画像はまだ掲載されていませんが、
+        今後以下の機能を段階的に実装していきます：
+      </p>
+      <ul>
+        <li>生成済み地図画像の掲載</li>
+        <li>Map Data と地図画像の連携</li>
+        <li>インタラクティブマップ（Leaflet 等を使用したWeb地図）</li>
+        <li>地図上のノード・ルート表示</li>
+        <li>ユーザー操作によるズーム・パン機能</li>
+      </ul>
+      <p>
+        詳しい開発ロードマップは <a href="./roadmap.html">ロードマップページ</a>をご覧ください。
+      </p>
+    </section>
+
+    <section>
+      <h3>地図データについて</h3>
+      <p>
+        地図画像と並行して、機械可読な地図データ（Map Data）も整備中です。<br>
+        nodes.json, routes.json, hazards.json などのデータファイルを読み込み、
+        Webマップ上に表示する仕組みを開発しています。
+      </p>
+      <p><a href="./map-data.html">Map Data 詳細 &rarr;</a></p>
+    </section>
+
+    <section>
+      <h3>既存の地図資料</h3>
+      <p>
+        リポジトリ内には、すでにいくつかの地図関連資料があります：
+      </p>
+      <ul>
+        <li><a href="../../world/maps/" target="_blank">world/maps/ フォルダ</a> - 生成された地図画像・データ</li>
+        <li><a href="../../world/geography/" target="_blank">world/geography/ フォルダ</a> - 地理設定と地域情報</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; <span id="current-year"></span> SStory / エターナル・アルカディア<br>
+      <small><a href="../index.html">設定資料館トップ</a></small>
+    </p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Map Data - エターナル・アルカディア設定資料館</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>エターナル・アルカディア設定資料館</h1>
+    <p class="subtitle">SStory 世界設定ポータル v0.1</p>
+  </header>
+
+  <nav>
+    <ul class="nav-grid">
+      <li><a href="../index.html">🏠 トップ</a></li>
+      <li><a href="./world.html">🌍 世界概要</a></li>
+      <li><a href="./geography.html">🗻 地理</a></li>
+      <li><a href="./transportation.html">🚢 交通</a></li>
+      <li><a href="./maps.html">📋 地図</a></li>
+      <li><a href="./map-data.html">💾 Map Data</a></li>
+      <li><a href="./roadmap.html">🛣️ ロードマップ</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Map Data</h2>
+
+    <section>
+      <h3>Map Data とは</h3>
+      <p>
+        Map Data は、エターナル・アルカディア世界の地図情報を機械可読な形式で管理するための
+        データセットです。JSON および GeoJSON 形式で、ノード（地点）、ルート（経路）、
+        危険区域、大陸・地域情報などを定義します。
+      </p>
+      <p>
+        これらのデータは、Python ツールで生成・管理され、将来的には Web ブラウザ上で
+        JavaScript が読み込んでインタラクティブな地図表示に利用されます。
+      </p>
+    </section>
+
+    <section>
+      <h3>データファイル一覧</h3>
+      <p>
+        <code>world/map-data/</code> には以下のファイルを配置予定です：
+      </p>
+      <ul>
+        <li><strong>nodes.json</strong> - すべての地点（都市、村、港、転送ゲートなど）の座標・属性データ</li>
+        <li><strong>routes.json</strong> - 地点間を結ぶ経路（陸路・海路・空路）の接続情報と距離・所要時間</li>
+        <li><strong>hazards.json</strong> - 危険区域（海獣出没地帯、異常気象域、魔物棲息地など）のポリゴン</li>
+        <li><strong>continents.json</strong> - 五大陸の境界ポリゴンと基本情報</li>
+        <li><strong>regions.json</strong> - 地域・国・州などの行政区画データ</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>GeoJSON 出力</h3>
+      <p>
+        上記 JSON データは、GeoJSON 形式にも変換可能です。
+        GeoJSON は GIS ソフトや Leaflet、OpenLayers などの地図ライブラリで
+        直接読み込むことができます。
+      </p>
+      <p>
+        変換スクリプトは <code>tools/map/</code> 配下にて提供予定です。
+      </p>
+    </section>
+
+    <section>
+      <h3>ルート検索ツール</h3>
+      <p>
+        現在、<code>tools/map/route_finder.py</code> というPythonスクリプトにより、
+        nodes.json と routes.json を読み込んで、2地点間の最短経路（Dijkstra法）を
+        計算できます。
+      </p>
+      <p>
+        ただし、これはローカルまたはCI環境で実行されるバックエンド用ツールです。<br>
+        GitHub Pages 上では直接実行できません。<br>
+        <strong>将来的には、このロジックを JavaScript に移植し、Web版ルート検索を実装予定</strong>です。
+      </p>
+      <ul>
+        <li>出発地・目的地選択UI</li>
+        <li>交通手段フィルタ（陸路/海路/空路）</li>
+        <li>季節運行判定</li>
+        <li>所要時間・距離の表示</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Webマップ・タイルマップへの発展</h3>
+      <p>
+        Map Data は、以下の段階を経て Web 地図として展開される予定です：
+      </p>
+      <ol>
+        <li>Map Data を Leaflet で表示（インタラクティブマップ v0.1）</li>
+        <li>生成済み地図画像をオーバーレイ</li>
+        <li>タイルマップ化（小タイルに分割して効率的表示）</li>
+        <li>特定地域（アストラリス首都圏、紅海砂漠隊商路など）から試作</li>
+      </ol>
+      <p>
+        詳しくは <a href="./roadmap.html">ロードマップページ</a>をご覧ください。
+      </p>
+    </section>
+
+    <section>
+      <h3>Map Data 資料への導線</h3>
+      <p>
+        Map Data 関連の設定資料は以下の場所にあります：
+      </p>
+      <ul>
+        <li><a href="../../world/map-data/" target="_blank">world/map-data/ フォルダ</a> - Map Data 仕様・データ定義</li>
+        <li><a href="../../tools/map/" target="_blank">tools/map/ フォルダ</a> - ルート検索ツール・データ生成スクリプト</li>
+      </ul>
+      <p class="note">
+        ※ 現時点では、GitHub Pages 上で JSON ファイルを直接ブラウザ表示することはできません。<br>
+        データは JavaScript から AJAX/Fetch で読み込む形になります。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; <span id="current-year"></span> SStory / エターナル・アルカディア<br>
+      <small><a href="../index.html">設定資料館トップ</a></small>
+    </p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
