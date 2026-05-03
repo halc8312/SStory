@@ -1,0 +1,29 @@
+{
+  "from": "astralis",
+  "to": "marineport",
+  "weight": "time",
+  "total_time_hours": 168,
+  "total_time_formatted": "7日0時間",
+  "total_distance_km": 500,
+  "total_cost_gold": 60,
+  "max_danger_level": 1,
+  "average_danger_level": 1.0,
+  "segments": [
+    {
+      "segment": 1,
+      "route_id": "central_sea_portzephia_marineport",
+      "route_name": "中央海航路：ポートゼフィア〜マリンポート",
+      "type": "sea",
+      "mode": "wind_magic_ship",
+      "from": "port_zephia",
+      "from_name": "ポートゼフィア",
+      "to": "marineport",
+      "to_name": "マリンポート",
+      "distance_km": 500,
+      "estimated_time_hours": 168,
+      "cost_gold": 60,
+      "danger_level": 1
+    }
+  ],
+  "notes": "Direct central sea route. Safe and regular."
+}

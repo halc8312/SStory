@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Route Schema",
+  "description": "Schema for validating route/transportation path data",
+  "required": ["id", "name", "type", "mode", "from", "to", "distance_km", "estimated_time_hours", "cost_gold", "danger_level", "status", "description", "confidence"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Unique identifier in lowercase snake_case"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display name in Japanese"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["road", "rail", "sea", "air", "caravan", "submarine", "tunnel", "underwater_tunnel", "ice_road", "warp", "forbidden_path"],
+      "description": "Physical type of route"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "stagecoach",
+        "express_carriage",
+        "magic_train",
+        "wind_magic_ship",
+        "sailing_ship",
+        "airship",
+        "griffin",
+        "caravan",
+        "sand_vehicle",
+        "submarine",
+        "tidal_train",
+        "walking",
+        "spirit_warp",
+        "chrono_tunnel"
+      ],
+      "description": "Transportation mode used on this route"
+    },
+    "from": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Starting node ID"
+    },
+    "to": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Destination node ID"
+    },
+    "distance_km": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Distance in kilometers"
+    },
+    "estimated_time_hours": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Estimated travel time in hours"
+    },
+    "cost_gold": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Typical cost in gold coins"
+    },
+    "danger_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Danger level: 0=safe, 5=forbidden"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "seasonal", "restricted", "forbidden", "experimental", "dangerous", "closed"],
+      "description": "Operational status"
+    },
+    "seasonal": {
+      "type": "boolean",
+      "description": "Whether route is seasonal"
+    },
+    "operators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["canon", "estimated", "inferred", "placeholder"]
+    }
+  },
+  "additionalProperties": false
+}

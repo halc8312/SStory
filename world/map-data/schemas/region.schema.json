@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Region Schema",
+  "description": "Schema for validating region data",
+  "required": ["id", "name", "continent_id", "type", "center", "description", "tags", "confidence"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Unique identifier in lowercase snake_case"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display name in Japanese"
+    },
+    "continent_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Reference to parent continent"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "capital_region",
+        "region",
+        "agricultural_region",
+        "mountain_region",
+        "forest_region",
+        "desert_region",
+        "oasis_region",
+        "coastal_region",
+        "underwater_region",
+        "floating_islands_region",
+        "spirit_core_region",
+        "special_region"
+      ],
+      "description": "Type of region"
+    },
+    "center": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "z": {
+          "type": "integer"
+        }
+      }
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["canon", "estimated", "inferred", "placeholder"]
+    }
+  },
+  "additionalProperties": false
+}

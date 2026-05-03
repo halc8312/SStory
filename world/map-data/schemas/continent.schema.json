@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Continent Schema",
+  "description": "Schema for validating continent data",
+  "required": ["id", "name", "type", "center", "description", "tags", "confidence"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Unique identifier in lowercase snake_case"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display name in Japanese"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["continent"],
+      "description": "Type of geographical entity"
+    },
+    "center": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000,
+          "description": "World coordinate X (0-10000)"
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000,
+          "description": "World coordinate Y (0-10000)"
+        },
+        "z": {
+          "type": "integer",
+          "description": "Height/depth layer (0 = ground level)"
+        }
+      }
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Description of the continent"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["canon", "estimated", "inferred", "placeholder"],
+      "description": "Data confidence level"
+    }
+  },
+  "additionalProperties": false
+}
