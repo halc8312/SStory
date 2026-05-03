@@ -138,15 +138,16 @@ Validate all map data files:
 python tools/map/validate_map_data.py
 ```
 
-Expected output:
+Example output (counts may vary):
 ```
 Map data validation passed.
-Continents: 5
-Regions: 13
-Nodes: 37
-Routes: 33
-Hazards: 8
+  Continents: <count>
+  Regions: <count>
+  Nodes: <count>
+  Routes: <count>
+  Hazards: <count>
 ```
+The actual counts reflect the current dataset and may change over time. Run the validator for the latest numbers.
 
 The validator checks:
 - Unique IDs across all datasets
