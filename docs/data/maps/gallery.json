@@ -118,7 +118,7 @@
     "title": "アストラリス地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "エリュシオン北東部に位置する首都圏地域。アストラリス首都を中心とする政治・経済の中心地。",
     "related": [
       {
@@ -137,7 +137,7 @@
     "title": "銀の平野地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "エリュシオン南部に広がる穀倉地帯。肥沃な平野と農業地域が特徴。",
     "related": [
       {
@@ -156,7 +156,7 @@
     "title": "天翔山脈地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "エリュシオン中央を南北に貫く山脈地域。険しい山峰と鉱物資源が豊富。",
     "related": [
       {
@@ -175,7 +175,7 @@
     "title": "月影の森地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "エリュシオン北西部、エルフの領地である深い森。精霊の恩恵を受けた生態系。",
     "related": [
       {
@@ -194,7 +194,7 @@
     "title": "エメラルド・ベルト地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "リュミエラ大陸に広がる大森林地域。古代ルナリア帝国の遺跡が点在。",
     "related": [
       {
@@ -213,7 +213,7 @@
     "title": "リュミエラ・アーチ地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "リュミエラ東海岸沖に浮かぶ浮島群。数百の島からなり、月の精霊の力が強い。",
     "related": [
       {
@@ -232,7 +232,7 @@
     "title": "紅海砂漠地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "カオス・リア中央部に位置する世界最大の砂漠。過酷な環境とオアシス都市群。",
     "related": [
       {
@@ -251,7 +251,7 @@
     "title": "炎の大地地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "カオス・リア南部の火山地帯。活発な火山活動と特殊な鉱物資源。",
     "related": [
       {
@@ -270,7 +270,7 @@
     "title": "鉄山脉地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "アトランティス中央部の山脈地域。魔導金属の産地で、ドワーフの鉱山都市が集まる。",
     "related": [
       {
@@ -289,7 +289,7 @@
     "title": "時の迷宮地域地図",
     "category": "region",
     "categoryLabel": "地域地図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "グリモワール中央部に存在する時間の歪みの迷宮。古い禁忌と古代兵器が眠る。",
     "related": [
       {
@@ -308,7 +308,7 @@
     "title": "世界交通網図",
     "category": "transport",
     "categoryLabel": "交通網図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "エターナル・アルカディア世界全体の交通ネットワークを概括した図。主要航路、街道、空路、転送ゲートなどを掲載。",
     "related": [
       {
@@ -327,7 +327,7 @@
     "title": "エリュシオン交通網図",
     "category": "transport",
     "categoryLabel": "交通網図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "エリュシオン大陸内の交通網詳細図。主要街道、鉄道（魔導鉄道）、都市間航路などを表示。",
     "related": [
       {
@@ -346,7 +346,7 @@
     "title": "リュミエラ交通網図",
     "category": "transport",
     "categoryLabel": "交通網図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "リュミエラ大陸の交通網。浮島群間の航路、森の中の小径、魔法による移動手段などを網羅。",
     "related": [
       {
@@ -365,7 +365,7 @@
     "title": "カオス・リア交通網図",
     "category": "transport",
     "categoryLabel": "交通網図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "カオス・リア大陸の交通網。砂漠隊商路、オアシス間の航路、危険地帯の回避ルートなど。",
     "related": [
       {
@@ -384,7 +384,7 @@
     "title": "アトランティス交通網図",
     "category": "transport",
     "categoryLabel": "交通網図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "アトランティス大陸の交通網。水中トンネル、潜水艦航路、氷上道路など独特のネットワーク。",
     "related": [
       {
@@ -403,7 +403,7 @@
     "title": "グリモワール交通網図",
     "category": "transport",
     "categoryLabel": "交通網図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "グリモワール大陸の交通網。危険区域の回避路、魔導船の航路、結界内の安全な道など。",
     "related": [
       {
@@ -422,7 +422,7 @@
     "title": "エリュシオン道路・魔導鉄道詳細図",
     "category": "transport-detail",
     "categoryLabel": "交通詳細図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "エリュシオン主要街道と魔導鉄道の詳細ルート。宿場町、駅、トンネル、橋など施設も表示。",
     "related": [
       {
@@ -441,7 +441,7 @@
     "title": "リュミエラ月魔法空中航路詳細図",
     "category": "transport-detail",
     "categoryLabel": "交通詳細図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "リュミエラにおける月の魔法を使用した飛行航路。浮島間の空中ルートと安全な高度帯を記載。",
     "related": [
       {
@@ -460,7 +460,7 @@
     "title": "カオス・リア砂漠隊商路詳細図",
     "category": "transport-detail",
     "categoryLabel": "交通詳細図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "カオス・リアの砂漠を横断する隊商路詳細。オアシスの位置、危険ゾーン、季節によるルート変更情報。",
     "related": [
       {
@@ -479,7 +479,7 @@
     "title": "アトランティス水中交通詳細図",
     "category": "transport-detail",
     "categoryLabel": "交通詳細図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "アトランティス周辺の海中ルート詳細。水中トンネル、潜没路、危険生物区域、潮流情報。",
     "related": [
       {
@@ -498,7 +498,7 @@
     "title": "グリモワール危険区域交通詳細図",
     "category": "transport-detail",
     "categoryLabel": "交通詳細図",
-    "image": "",
+    "image": "../assets/images/maps/placeholder.svg",
     "description": "グリモワールの危険区域を避ける交通ルート詳細。結界通過ポイント、避難所、警備 station。",
     "related": [
       {
