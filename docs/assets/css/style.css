@@ -190,6 +190,112 @@ section h2 {
   font-size: 1.1rem;
 }
 
+/* --- Map Gallery --- */
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-brown);
+  transition: all 0.2s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent-gold);
+  color: white;
+  border-color: var(--accent-brown);
+}
+
+.map-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-card img.map-thumb {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+  background: #eee;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.map-card .map-placeholder {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-parchment-dark);
+  border: 2px dashed var(--border-color);
+  border-radius: 4px;
+  color: var(--text-brown-light);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.map-card .category {
+  font-size: 0.85rem;
+  color: var(--text-brown-light);
+  margin-bottom: 0.5rem;
+}
+
+.map-card .description {
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.map-card .card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.map-card .btn {
+  padding: 0.4rem 0.8rem;
+  background: var(--accent-gold);
+  color: white;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  border-bottom: none;
+}
+
+.map-card .btn:hover {
+  background: var(--accent-brown);
+}
+
+/* Generic button style for CTAs */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--accent-gold);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  border-bottom: none;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+.btn:hover {
+  background: var(--accent-brown);
+}
+
+.map-card.hidden {
+  display: none;
+}
+
 /* --- Lists --- */
 ul, ol {
   margin-left: 1.5rem;
