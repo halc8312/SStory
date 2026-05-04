@@ -1,0 +1,515 @@
+[
+  {
+    "id": "world-map",
+    "title": "エターナル・アルカディア世界地図",
+    "category": "world",
+    "categoryLabel": "世界地図",
+    "image": "../assets/images/maps/world/world-map.svg",
+    "description": "五大陸、中央海、外海、浮島群を描いた正史ベースの世界地図。エターニア投影法を使用。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": "elysion-continent",
+    "title": "エリュシオン大陸地図",
+    "category": "continent",
+    "categoryLabel": "大陸地図",
+    "image": "../assets/images/maps/continents/elysion.svg",
+    "description": "秩序と繁栄の大陸。人間族の主要居住地。中央に天翔山脈、銀の平野など主要地形を描く。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/elysion.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": "lumiera-continent",
+    "title": "リュミエラ大陸地図",
+    "category": "continent",
+    "categoryLabel": "大陸地図",
+    "image": "../assets/images/maps/continents/lumiera.svg",
+    "description": "光と魔法の大陸。精霊族と魔法文明が発達。エメラルド・ベルトの大森林と浮島群が特徴。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/lumiera.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": "chaos-ria-continent",
+    "title": "カオス・リア大陸地図",
+    "category": "continent",
+    "categoryLabel": "大陸地図",
+    "image": "../assets/images/maps/continents/chaos-ria.svg",
+    "description": "混沌と変革の大陸。様々な種族が入り混じる。紅海砂漠や炎の大地など過酷な地形が広がる。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/chaos_realm.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": "atlantis-continent",
+    "title": "アトランティス大陸地図",
+    "category": "continent",
+    "categoryLabel": "大陸地図",
+    "image": "../assets/images/maps/continents/atlantis.svg",
+    "description": "水と神秘の大陸。海を越えた古代文明の遺産。フィヨルド群や氷河都市が特徴。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/atlantis.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": "grimoire-continent",
+    "title": "グリモワール大陸地図",
+    "category": "continent",
+    "categoryLabel": "大陸地図",
+    "image": "../assets/images/maps/continents/grimoire.svg",
+    "description": "知識と禁忌の大陸。魔導書と謎が渦巻く。大結節点「エターニア・コア」や時の迷宮が存在。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/grimoire.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "available"
+  },
+  {
+    "id": "astralis-region",
+    "title": "アストラリス地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "エリュシオン北東部に位置する首都圏地域。アストラリス首都を中心とする政治・経済の中心地。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/central-region.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "silver-plains",
+    "title": "銀の平野地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "エリュシオン南部に広がる穀倉地帯。肥沃な平野と農業地域が特徴。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "tensho-mountains",
+    "title": "天翔山脈地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "エリュシオン中央を南北に貫く山脈地域。険しい山峰と鉱物資源が豊富。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "moonshadow-forest",
+    "title": "月影の森地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "エリュシオン北西部、エルフの領地である深い森。精霊の恩恵を受けた生態系。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "emerald-belt",
+    "title": "エメラルド・ベルト地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "リュミエラ大陸に広がる大森林地域。古代ルナリア帝国の遺跡が点在。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "lumiera-arch",
+    "title": "リュミエラ・アーチ地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "リュミエラ東海岸沖に浮かぶ浮島群。数百の島からなり、月の精霊の力が強い。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "red-sea-desert",
+    "title": "紅海砂漠地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "カオス・リア中央部に位置する世界最大の砂漠。過酷な環境とオアシス都市群。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "lands-of-fire",
+    "title": "炎の大地地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "カオス・リア南部の火山地帯。活発な火山活動と特殊な鉱物資源。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "iron-mountains",
+    "title": "鉄山脉地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "アトランティス中央部の山脈地域。魔導金属の産地で、ドワーフの鉱山都市が集まる。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "labyrinth-of-time",
+    "title": "時の迷宮地域地図",
+    "category": "region",
+    "categoryLabel": "地域地図",
+    "image": "",
+    "description": "グリモワール中央部に存在する時間の歪みの迷宮。古い禁忌と古代兵器が眠る。",
+    "related": [
+      {
+        "label": "地理設定",
+        "href": "../../world/geography/regions/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "world-transport",
+    "title": "世界交通網図",
+    "category": "transport",
+    "categoryLabel": "交通網図",
+    "image": "",
+    "description": "エターナル・アルカディア世界全体の交通ネットワークを概括した図。主要航路、街道、空路、転送ゲートなどを掲載。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "elysion-transport",
+    "title": "エリュシオン交通網図",
+    "category": "transport",
+    "categoryLabel": "交通網図",
+    "image": "",
+    "description": "エリュシオン大陸内の交通網詳細図。主要街道、鉄道（魔導鉄道）、都市間航路などを表示。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/land-transportation.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "lumiera-transport",
+    "title": "リュミエラ交通網図",
+    "category": "transport",
+    "categoryLabel": "交通網図",
+    "image": "",
+    "description": "リュミエラ大陸の交通網。浮島群間の航路、森の中の小径、魔法による移動手段などを網羅。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "chaos-ria-transport",
+    "title": "カオス・リア交通網図",
+    "category": "transport",
+    "categoryLabel": "交通網図",
+    "image": "",
+    "description": "カオス・リア大陸の交通網。砂漠隊商路、オアシス間の航路、危険地帯の回避ルートなど。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/land-transportation.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "atlantis-transport",
+    "title": "アトランティス交通網図",
+    "category": "transport",
+    "categoryLabel": "交通網図",
+    "image": "",
+    "description": "アトランティス大陸の交通網。水中トンネル、潜水艦航路、氷上道路など独特のネットワーク。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "grimoire-transport",
+    "title": "グリモワール交通網図",
+    "category": "transport",
+    "categoryLabel": "交通網図",
+    "image": "",
+    "description": "グリモワール大陸の交通網。危険区域の回避路、魔導船の航路、結界内の安全な道など。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "elysion-roads-and-magirail",
+    "title": "エリュシオン道路・魔導鉄道詳細図",
+    "category": "transport-detail",
+    "categoryLabel": "交通詳細図",
+    "image": "",
+    "description": "エリュシオン主要街道と魔導鉄道の詳細ルート。宿場町、駅、トンネル、橋など施設も表示。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/land-transportation.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "lumiera-moon-magic-air-routes",
+    "title": "リュミエラ月魔法空中航路詳細図",
+    "category": "transport-detail",
+    "categoryLabel": "交通詳細図",
+    "image": "",
+    "description": "リュミエラにおける月の魔法を使用した飛行航路。浮島間の空中ルートと安全な高度帯を記載。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/air-transportation.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "chaos-ria-desert-caravan-routes",
+    "title": "カオス・リア砂漠隊商路詳細図",
+    "category": "transport-detail",
+    "categoryLabel": "交通詳細図",
+    "image": "",
+    "description": "カオス・リアの砂漠を横断する隊商路詳細。オアシスの位置、危険ゾーン、季節によるルート変更情報。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/land-transportation.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "atlantis-underwater-transport",
+    "title": "アトランティス水中交通詳細図",
+    "category": "transport-detail",
+    "categoryLabel": "交通詳細図",
+    "image": "",
+    "description": "アトランティス周辺の海中ルート詳細。水中トンネル、潜没路、危険生物区域、潮流情報。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/sea-transportation.md"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  },
+  {
+    "id": "grimoire-danger-zone-transport",
+    "title": "グリモワール危険区域交通詳細図",
+    "category": "transport-detail",
+    "categoryLabel": "交通詳細図",
+    "image": "",
+    "description": "グリモワールの危険区域を避ける交通ルート詳細。結界通過ポイント、避難所、警備 station。",
+    "related": [
+      {
+        "label": "交通設定",
+        "href": "../../world/transportation/"
+      },
+      {
+        "label": "Map Data",
+        "href": "./map-data.html"
+      }
+    ],
+    "status": "planned"
+  }
+]
