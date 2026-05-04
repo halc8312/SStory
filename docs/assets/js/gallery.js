@@ -80,19 +80,21 @@ function renderCard(item) {
     ? '<span class="map-card__badge map-card__badge--planned">準備中</span>'
     : '';
 
-  const imageClickable = !isPlanned
-    ? `href="${item.image}" target="_blank" rel="noopener"`
-    : '';
+  // For planned items, use a span wrapper (non-clickable). For available, use anchor.
+  const imageLinkStart = isPlanned
+    ? '<span class="map-card__image-link">'
+    : `<a href="${item.image}" target="_blank" rel="noopener" class="map-card__image-link">`;
+  const imageLinkEnd = isPlanned ? '</span>' : '</a>';
 
   const linksHtml = (item.related || []).map(link =>
     `<a href="${link.href}" class="map-card__link"${link.href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${link.label}</a>`
   ).join('');
 
   return `
-    <article class="map-card" data-id="${item.id}">
-      <a ${imageClickable} class="map-card__image-link">
+    <article class="map-card" data-id="${item.id}" data-category="${item.category}">
+      ${imageLinkStart}
         <img src="${imageUrl}" alt="${item.title}" class="map-card__image" loading="lazy">
-      </a>
+      ${imageLinkEnd}
       <div class="map-card__body">
         <div class="map-card__header">
           <h3 class="map-card__title">${item.title}</h3>
