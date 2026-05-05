@@ -9,6 +9,9 @@
   const NODE_START_CLASS = 'map-node--start';
   const NODE_GOAL_CLASS = 'map-node--goal';
   const NODE_VIA_CLASS = 'map-node--via';
+  const DEFAULT_NODE_TYPE = 'unknown';
+  const DEFAULT_ROUTE_COST = 9999;
+  const MINIMUM_EDGE_COST = 0.1;
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -108,7 +111,7 @@
 
     nodes.forEach(node => {
       options.push(
-        `<option value="${escapeHtml(node.id)}">${escapeHtml(`${node.name} / ${node.type || 'unknown'}`)}</option>`
+        `<option value="${escapeHtml(node.id)}">${escapeHtml(`${node.name} / ${node.type || DEFAULT_NODE_TYPE}`)}</option>`
       );
     });
 
@@ -125,7 +128,7 @@
         return value;
       }
     }
-    return 9999;
+    return DEFAULT_ROUTE_COST;
   }
 
   function computeRouteCost(route, weight) {
@@ -223,7 +226,7 @@
 
       const edge = {
         route,
-        cost: Math.max(0.1, evaluation.cost || 0.1),
+        cost: Math.max(MINIMUM_EDGE_COST, evaluation.cost || MINIMUM_EDGE_COST),
         warnings: evaluation.warnings || []
       };
 
