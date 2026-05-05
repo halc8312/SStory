@@ -772,14 +772,25 @@ footer a {
 
 /* Map Controls */
 .map-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
   margin-bottom: 1rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid var(--border-color);
   border-radius: 8px;
+  text-align: center;
+}
+
+.map-controls h2 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  color: var(--accent-brown);
+}
+
+.map-control-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: center;
 }
 
@@ -867,12 +878,107 @@ footer a {
 }
 
 /* Map Legend */
+/* Map Legend */
 .map-legend {
   margin-top: 1.5rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid var(--border-color);
   border-radius: 8px;
+}
+
+.map-legend h2 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  color: var(--accent-brown);
+}
+
+.map-legend-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.map-legend-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Base symbol for nodes */
+.legend-symbol {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  display: inline-block;
+}
+
+/* Node types */
+.legend-symbol.legend-node-capital {
+  width: 28px;
+  height: 28px;
+  background: #FFD700;
+}
+
+.legend-symbol.legend-node-city {
+  background: #CD853F;
+}
+
+.legend-symbol.legend-node-port {
+  background: #4169E1;
+}
+
+.legend-symbol.legend-node-airport {
+  background: #9370DB;
+}
+
+/* Line base for routes */
+.legend-line {
+  width: 40px;
+  height: 4px;
+  border-radius: 0;
+  display: inline-block;
+  border: none;
+}
+
+.legend-line.legend-road {
+  background: #8B4513;
+}
+
+.legend-line.legend-sea {
+  background: transparent;
+  border-top: 4px dashed #1E90FF;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+
+.legend-line.legend-air {
+  background: transparent;
+  border: 4px dashed #9370DB;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+}
+
+.legend-line.legend-special {
+  background: #8A2BE2;
+}
+
+/* Area base for hazards */
+.legend-area {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #FF4500;
+  background: rgba(255, 69, 0, 0.5);
 }
 
 .map-legend h3 {

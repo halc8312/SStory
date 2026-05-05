@@ -52,20 +52,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // エラーメッセージ表示
   function showError(message) {
-    messageElement.textContent = message;
-    messageElement.hidden = false;
+    if (messageElement) {
+      messageElement.textContent = message;
+      messageElement.hidden = false;
+    }
     console.error('[InteractiveMap]', message);
   }
 
   // 警告メッセージ表示（コンソール＋ページ内）
   function showWarning(message) {
     console.warn('[InteractiveMap]', message);
-    const warningEl = document.createElement('p');
-    warningEl.className = 'map-warning';
-    warningEl.textContent = message;
-    warningEl.style.cssText = 'color: #c00; font-size: 0.85rem; margin-top: 0.5rem;';
-    messageElement.appendChild(warningEl);
-    messageElement.hidden = false;
+    if (messageElement) {
+      const warningEl = document.createElement('p');
+      warningEl.className = 'map-warning';
+      warningEl.textContent = message;
+      warningEl.style.cssText = 'color: #c00; font-size: 0.85rem; margin-top: 0.5rem;';
+      messageElement.appendChild(warningEl);
+      messageElement.hidden = false;
+    }
   }
 
   // 個別データ読み込み
@@ -436,6 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== 詳細パネル表示関数群 =====
 
   function showNodeDetail(node) {
+    if (!detailContent || !detailPanel) return;
     const continent = mapData.continents?.find(c => c.id === node.continent_id) || null;
     const region = mapData.regions?.find(r => r.id === node.region_id) || null;
 
@@ -459,6 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showRouteDetail(route, fromNode, toNode) {
+    if (!detailContent || !detailPanel) return;
     let html = `
       <h3>${escapeHtml(route.name || route.id)}</h3>
       <dl class="detail-list">
@@ -485,6 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showHazardDetail(hazard) {
+    if (!detailContent || !detailPanel) return;
     const continent = mapData.continents?.find(c => c.id === hazard.continent_id) || null;
 
     let html = `
@@ -517,6 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== レイヤー切替機能 =====
 
   function setupLayerToggles() {
+    if (!svgElement) return;
     layerToggles.forEach(toggle => {
       toggle.addEventListener('change', (e) => {
         const layer = e.target.getAttribute('data-layer-toggle');
@@ -538,6 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderNodesPreview(nodes) {
     const container = previewContainers.nodes;
+    if (!container) return;
     const items = nodes.slice(0, 10);
 
     if (items.length === 0) {
@@ -561,6 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderRoutesPreview(routes) {
     const container = previewContainers.routes;
+    if (!container) return;
     const items = routes.slice(0, 10);
 
     if (items.length === 0) {
@@ -584,6 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderHazardsPreview(hazards) {
     const container = previewContainers.hazards;
+    if (!container) return;
     const items = hazards.slice(0, 10);
 
     if (items.length === 0) {
@@ -657,13 +668,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // SVG描画実行
-    try {
-      renderTransportMap();
-      setupLayerToggles();
-      console.log('[InteractiveMap] SVG rendering completed');
-    } catch (err) {
-      showError('SVG描画に失敗しました: ' + err.message);
-      console.error('[InteractiveMap] Render error:', err);
+    if (svgElement) {
+      try {
+        renderTransportMap();
+        setupLayerToggles();
+        console.log('[InteractiveMap] SVG rendering completed');
+      } catch (err) {
+        showError('SVG描画に失敗しました: ' + err.message);
+        console.error('[InteractiveMap] Render error:', err);
+      }
+    } else {
+      showError('SVG描画領域が見つかりません。interactive-map.html を確認してください。');
     }
   }
 

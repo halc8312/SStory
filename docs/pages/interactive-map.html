@@ -49,14 +49,17 @@
      <section class="interactive-map-section">
        <h2>交通マップ</h2>
 
-       <div class="map-controls" aria-label="地図表示切替">
-         <label><input type="checkbox" data-layer-toggle="nodes" checked> ノード</label>
-         <label><input type="checkbox" data-layer-toggle="road" checked> 陸路</label>
-         <label><input type="checkbox" data-layer-toggle="sea" checked> 海路</label>
-         <label><input type="checkbox" data-layer-toggle="air" checked> 空路</label>
-         <label><input type="checkbox" data-layer-toggle="special" checked> 特殊交通</label>
-         <label><input type="checkbox" data-layer-toggle="hazards" checked> 危険区域</label>
-       </div>
+        <section class="map-controls" aria-label="地図表示切替">
+          <h2>表示切替</h2>
+          <div class="map-control-list">
+            <label><input type="checkbox" data-layer-toggle="nodes" checked> ノード</label>
+            <label><input type="checkbox" data-layer-toggle="road" checked> 陸路</label>
+            <label><input type="checkbox" data-layer-toggle="sea" checked> 海路</label>
+            <label><input type="checkbox" data-layer-toggle="air" checked> 空路</label>
+            <label><input type="checkbox" data-layer-toggle="special" checked> 特殊交通</label>
+            <label><input type="checkbox" data-layer-toggle="hazards" checked> 危険区域</label>
+          </div>
+        </section>
 
        <div id="transport-map-canvas" class="transport-map-canvas">
          <svg
@@ -68,20 +71,20 @@
          ></svg>
        </div>
 
-       <div class="map-legend">
-         <h3>凡例</h3>
-         <ul class="legend-items">
-           <li><span class="legend-symbol node-capital"></span> 首都</li>
-           <li><span class="legend-symbol node-city"></span> 都市</li>
-           <li><span class="legend-symbol node-port"></span> 港</li>
-           <li><span class="legend-symbol node-airport"></span> 空港</li>
-           <li><span class="legend-symbol route-road"></span> 陸路</li>
-           <li><span class="legend-symbol route-sea"></span> 海路</li>
-           <li><span class="legend-symbol route-air"></span> 空路</li>
-           <li><span class="legend-symbol route-special"></span> 特殊交通</li>
-           <li><span class="legend-symbol hazard"></span> 危険区域</li>
-         </ul>
-       </div>
+        <section class="map-legend" aria-label="地図凡例">
+          <h2>凡例</h2>
+          <ul class="map-legend-list">
+            <li><span class="legend-symbol legend-node-capital"></span> 首都</li>
+            <li><span class="legend-symbol legend-node-city"></span> 都市</li>
+            <li><span class="legend-symbol legend-node-port"></span> 港</li>
+            <li><span class="legend-symbol legend-node-airport"></span> 空港・空中港</li>
+            <li><span class="legend-line legend-road"></span> 陸路</li>
+            <li><span class="legend-line legend-sea"></span> 海路</li>
+            <li><span class="legend-line legend-air"></span> 空路</li>
+            <li><span class="legend-line legend-special"></span> 特殊交通</li>
+            <li><span class="legend-area legend-hazard"></span> 危険区域</li>
+          </ul>
+        </section>
      </section>
 
      <aside id="map-detail-panel" class="map-detail-panel" hidden>
