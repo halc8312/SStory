@@ -48,7 +48,9 @@
         <li>✅ CSS / JS 静的ファイル</li>
       </ul>
       <p>
-        <strong>実装済み機能:</strong> 静的HTML/CSS/JSによる世界設定ポータル。<li>GitHub Pages の /docs 公開元対応。<li>相対パスでのリンク・モバイル対応。
+        <strong>実装済み機能:</strong> 静的HTML/CSS/JSによる世界設定ポータル。<br>
+        GitHub Pages の /docs 公開元対応。<br>
+        相対パスでのリンク・モバイル対応。
       </p>
     </section>
 
@@ -65,7 +67,7 @@
     </section>
 
     <section>
-      <h3>Phase 3: 地図ギャラリー整備 (完了)</h3>
+      <h3>Phase 3: 地図ギャラリー整備 ✅ 完了</h3>
       <p>
         生成済みの地図画像を、ポータル上で閲覧できるようにします。
       </p>
@@ -79,16 +81,39 @@
     </section>
 
     <section>
-      <h3>Phase 4: インタラクティブ交通マップ v0.1 (予定)</h3>
+      <h3>Phase 3.5: Map Data 公開コピー ✅ 完了</h3>
       <p>
-        Map Data を読み込んで、Web地図上にノードとルートを表示します。
+        <code>world/map-data/data/</code> の正史JSONを <code>docs/data/map/</code> にコピーし、
+        GitHub Pages 上で JavaScript から Fetch 可能な状態にしました。
       </p>
       <ul>
-        <li>nodes.json / routes.json / hazards.json の読み込み</li>
+        <li>continents.json, regions.json, nodes.json, routes.json, hazards.json をコピー</li>
+        <li>README.md で位置づけと同期方法を明記</li>
+        <li>インタラクティブマップ準備ページ（interactive-map.html）を追加</li>
+        <li>interactive-map.js で5ファイルの読み込み・件数表示・先頭10件一覧を実装</li>
+        <li>CSSスタイル追加</li>
+        <li>各ページからインタラクティブマップへの導線を設置</li>
+      </ul>
+      <p>
+        <strong>実装済み機能:</strong> Map Data のブラウザ読み込み確認、件数表示、簡易一覧表示。<br>
+        <strong>次のステップ:</strong> 実際の地図描画（ノード点・ルート線・危険区域表示）。
+      </p>
+    </section>
+
+    <section>
+      <h3>Phase 4: インタラクティブ交通マップ v0.1 - 描画実装 (予定)</h3>
+      <p>
+        Map Data を読み込んで、Web地図上にノード・ルート・危険区域を描画します。
+        Phase 3.5 でデータ読み込み基盤は整いました。
+      </p>
+      <ul>
         <li>Leaflet 等の地図ライブラリ導入</li>
+        <li>ノードを点として表示</li>
+        <li>ルートを線として表示</li>
+        <li>危険区域をポリゴンとして表示</li>
         <li>交通種別フィルタ機能</li>
         <li>ノードクリックで詳細情報表示</li>
-        <li>GeoJSON 表示対応</li>
+        <li>背景地図画像オーバーレイ（オプション）</li>
       </ul>
     </section>
 
@@ -178,7 +203,7 @@
       </p>
       <ul>
         <li><a href="#">地図ギャラリーに生成済み地図画像を追加</a></li>
-        <li><a href="#">インタラクティブ交通マップ v0.1 実装</a></li>
+        <li><a href="interactive-map.html">インタラクティブ交通マップ v0.1 描画実装</a> ← 次段階</li>
         <li><a href="#">Web版ルート検索実装</a></li>
         <li><a href="#">既存 world/ 配下Markdownをポータル内で整理</a></li>
         <li><a href="#">タイルマップ試作</a></li>

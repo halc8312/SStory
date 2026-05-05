@@ -1,0 +1,1019 @@
+[
+  {
+    "id": "astralis",
+    "name": "アストラリス",
+    "type": "capital",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "position": {
+      "x": 5000,
+      "y": 5000,
+      "z": 0
+    },
+    "transport_roles": [
+      "road_hub",
+      "political_hub"
+    ],
+    "facilities": [
+      "central_carriage_plaza",
+      "government",
+      "magic_academy",
+      "spirit_tower"
+    ],
+    "description": "エリュシオンの王都。主要街道の起点。",
+    "tags": [
+      "capital",
+      "major_hub",
+      "elysion"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "astralis_carriage_plaza",
+    "name": "アストラリス中央駅馬車広場",
+    "type": "carriage_terminal",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "position": {
+      "x": 5020,
+      "y": 4980,
+      "z": 0
+    },
+    "transport_roles": [
+      "road_hub",
+      "terminal"
+    ],
+    "facilities": [
+      "ticketing",
+      "waiting_area",
+      "baggage_storage"
+    ],
+    "description": "王都の駅馬車ターミナル。全主要街道へ向かう便が発着。",
+    "tags": [
+      "carriage_terminal",
+      "transport_hub"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "astralis_airport",
+    "name": "アストラリス国際空港",
+    "type": "airport",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "position": {
+      "x": 5000,
+      "y": 5000,
+      "z": 1000
+    },
+    "transport_roles": [
+      "air_hub",
+      "international"
+    ],
+    "facilities": [
+      "runway",
+      "control_tower",
+      "terminal",
+      "hangar"
+    ],
+    "description": "浮島上の国際空港。全大陸の航空ハブ。",
+    "tags": [
+      "airport",
+      "floating_island",
+      "international"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "granrock",
+    "name": "グランロック",
+    "type": "city",
+    "continent_id": "elysion",
+    "region_id": "soaring_mountains_region",
+    "position": {
+      "x": 4800,
+      "y": 4800,
+      "z": 0
+    },
+    "transport_roles": [
+      "road_hub",
+      "mining_hub",
+      "mountain_city"
+    ],
+    "facilities": [
+      "north_gate_inn",
+      "mine_access",
+      "train_station"
+    ],
+    "description": "山岳都市。ドワーフ王国の中心。地下100階。",
+    "tags": [
+      "mountain_city",
+      "dwarven",
+      "mining"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "granrock_north_gate_inn",
+    "name": "グランロック北門宿",
+    "type": "inn",
+    "continent_id": "elysion",
+    "region_id": "soaring_mountains_region",
+    "position": {
+      "x": 4780,
+      "y": 4820,
+      "z": 0
+    },
+    "transport_roles": [
+      "checkpoint",
+      "inn",
+      "customs"
+    ],
+    "facilities": [
+      "lodging",
+      "stable",
+      "customs"
+    ],
+    "description": "山岳関所。駅馬車宿と関所を兼ねる。",
+    "tags": [
+      "mountain_pass",
+      "checkpoint"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "port_zephia",
+    "name": "ポートゼフィア",
+    "type": "port",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "position": {
+      "x": 5200,
+      "y": 4800,
+      "z": 0
+    },
+    "transport_roles": [
+      "sea_hub",
+      "international",
+      "trade_center"
+    ],
+    "facilities": [
+      "dock",
+      "warehouse",
+      "customs",
+      "ship_repair"
+    ],
+    "description": "国際港湾。海上交通の中心。",
+    "tags": [
+      "port",
+      "major_hub",
+      "international"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "silverport",
+    "name": "シルバーポート",
+    "type": "port",
+    "continent_id": "elysion",
+    "region_id": "silver_plains_region",
+    "position": {
+      "x": 5500,
+      "y": 5500,
+      "z": 0
+    },
+    "transport_roles": [
+      "sea_port",
+      "trade"
+    ],
+    "facilities": [
+      "dock",
+      "market"
+    ],
+    "description": "銀の平野の主要港湾。",
+    "tags": [
+      "port",
+      "trade"
+    ],
+    "confidence": "estimated"
+  },
+  {
+    "id": "silver_airport",
+    "name": "シルバー空港",
+    "type": "airport",
+    "continent_id": "elysion",
+    "region_id": "silver_plains_region",
+    "position": {
+      "x": 5500,
+      "y": 5500,
+      "z": 800
+    },
+    "transport_roles": [
+      "air_terminal",
+      "regional"
+    ],
+    "facilities": [
+      "runway",
+      "terminal"
+    ],
+    "description": "銀盟共和国の主要空港。",
+    "tags": [
+      "airport",
+      "regional"
+    ],
+    "confidence": "estimated"
+  },
+  {
+    "id": "moonlight_grace",
+    "name": "ムーンライト・グレイス",
+    "type": "city",
+    "continent_id": "lumiera",
+    "region_id": "emerald_belt_region",
+    "position": {
+      "x": 7000,
+      "y": 5200,
+      "z": 0
+    },
+    "transport_roles": [
+      "political_hub",
+      "cultural_center"
+    ],
+    "facilities": [
+      "palace",
+      "temple",
+      "air_terminal"
+    ],
+    "description": "月影エルフ王国の首都。",
+    "tags": [
+      "capital",
+      "elven",
+      "lumiera"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "moonport",
+    "name": "ムーンポート",
+    "type": "port",
+    "continent_id": "lumiera",
+    "region_id": "emerald_belt_region",
+    "position": {
+      "x": 7100,
+      "y": 5100,
+      "z": 0
+    },
+    "transport_roles": [
+      "sea_port",
+      "coastal"
+    ],
+    "facilities": [
+      "dock",
+      "customs"
+    ],
+    "description": "月影エルフ王国の主要港。",
+    "tags": [
+      "port",
+      "elven"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "moonlight_platform",
+    "name": "月光台",
+    "type": "air_terminal",
+    "continent_id": "lumiera",
+    "region_id": "emerald_belt_region",
+    "position": {
+      "x": 7050,
+      "y": 5150,
+      "z": 1200
+    },
+    "transport_roles": [
+      "air_hub",
+      "floating_island"
+    ],
+    "facilities": [
+      "floating_dock",
+      "terminal",
+      "temple"
+    ],
+    "description": "浮島上のエルフ空港。月魔法の研究拠点。",
+    "tags": [
+      "airport",
+      "floating_island",
+      "elven"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "moonshadow_floating_island",
+    "name": "月影浮島",
+    "type": "floating_island",
+    "continent_id": "lumiera",
+    "region_id": "lumiera_arch_region",
+    "position": {
+      "x": 7300,
+      "y": 5400,
+      "z": 1500
+    },
+    "transport_roles": [
+      "air_waypoint",
+      "refueling_station"
+    ],
+    "facilities": [
+      "dock",
+      "refueling",
+      "observation_deck"
+    ],
+    "description": "リュミエラ・アーチの主要浮島。",
+    "tags": [
+      "floating_island",
+      "waypoint"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "lumiera_arch_air_terminal",
+    "name": "リュミエラ・アーチ空中埠頭",
+    "type": "air_terminal",
+    "continent_id": "lumiera",
+    "region_id": "lumiera_arch_region",
+    "position": {
+      "x": 7400,
+      "y": 5300,
+      "z": 1200
+    },
+    "transport_roles": [
+      "air_hub",
+      "tourist_hub"
+    ],
+    "facilities": [
+      "floating_dock",
+      "terminal",
+      "tourist_facilities"
+    ],
+    "description": "リュミエラ・アーチ航路の中心空中港。",
+    "tags": [
+      "airport",
+      "floating_island",
+      "tourist"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "emerald_city",
+    "name": "エメラルド・シティ",
+    "type": "city",
+    "continent_id": "lumiera",
+    "region_id": "emerald_belt_region",
+    "position": {
+      "x": 7200,
+      "y": 6000,
+      "z": 0
+    },
+    "transport_roles": [
+      "academic_center",
+      "research"
+    ],
+    "facilities": [
+      "magic_research_institute",
+      "library"
+    ],
+    "description": "学術都市。月魔法研究所。",
+    "tags": [
+      "city",
+      "academic",
+      "elven"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "blood_fort",
+    "name": "ブラッド・フォート",
+    "type": "city",
+    "continent_id": "chaos_ria",
+    "region_id": "red_sea_desert_region",
+    "position": {
+      "x": 5000,
+      "y": 7400,
+      "z": 0
+    },
+    "transport_roles": [
+      "fortress",
+      "caravan_hub",
+      "military"
+    ],
+    "facilities": [
+      "caravan_gate",
+      "barracks",
+      "market"
+    ],
+    "description": "戦士の都。オーク族の首都。",
+    "tags": [
+      "fortress_city",
+      "orcs",
+      "caravan"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "jade_oasis",
+    "name": "翡翠のオアシス",
+    "type": "town",
+    "continent_id": "chaos_ria",
+    "region_id": "jade_oasis_region",
+    "position": {
+      "x": 5400,
+      "y": 6600,
+      "z": 0
+    },
+    "transport_roles": [
+      "oasis",
+      "caravan_stop",
+      "trade_center"
+    ],
+    "facilities": [
+      "caravanserai",
+      "water_generation",
+      "market"
+    ],
+    "description": "紅海砂漠の交易中心地。",
+    "tags": [
+      "oasis",
+      "trade_center",
+      "caravan"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "jade_north",
+    "name": "翡翠王国北部",
+    "type": "town",
+    "continent_id": "chaos_ria",
+    "region_id": "jade_oasis_region",
+    "position": {
+      "x": 5400,
+      "y": 6900,
+      "z": 0
+    },
+    "transport_roles": [
+      "road_hub"
+    ],
+    "facilities": [
+      "carriage_terminal",
+      "market",
+      "customs"
+    ],
+    "description": "中央街道と翡翠王国方面交通を接続する北部交通拠点。",
+    "tags": [
+      "jade_kingdom",
+      "road_hub",
+      "estimated"
+    ],
+    "confidence": "estimated"
+  },
+  {
+    "id": "jade_capital",
+    "name": "翡翠王都",
+    "type": "city",
+    "continent_id": "chaos_ria",
+    "region_id": "jade_oasis_region",
+    "position": {
+      "x": 5600,
+      "y": 7200,
+      "z": 0
+    },
+    "transport_roles": [
+      "road_hub",
+      "political_hub"
+    ],
+    "facilities": [
+      "carriage_terminal",
+      "market",
+      "government"
+    ],
+    "description": "翡翠王国の王都。中央街道の終点として扱う。",
+    "tags": [
+      "jade_kingdom",
+      "capital",
+      "estimated"
+    ],
+    "confidence": "estimated"
+  },
+  {
+    "id": "red_sea_desert_supply_station",
+    "name": "紅海砂漠補給所",
+    "type": "checkpoint",
+    "continent_id": "chaos_ria",
+    "region_id": "red_sea_desert_region",
+    "position": {
+      "x": 5200,
+      "y": 7000,
+      "z": 0
+    },
+    "transport_roles": [
+      "supply_point",
+      "waypoint"
+    ],
+    "facilities": [
+      "water_station",
+      "shelter"
+    ],
+    "description": "砂漠区間の水補給所。",
+    "tags": [
+      "supply_station",
+      "desert"
+    ],
+    "confidence": "estimated"
+  },
+  {
+    "id": "warrior_port",
+    "name": "戦士の港",
+    "type": "port",
+    "continent_id": "chaos_ria",
+    "region_id": "red_sea_desert_region",
+    "position": {
+      "x": 4700,
+      "y": 7200,
+      "z": 0
+    },
+    "transport_roles": [
+      "sea_port",
+      "military_port"
+    ],
+    "facilities": [
+      "dock",
+      "naval_base"
+    ],
+    "description": "赤砂オーク連合の海軍基地。",
+    "tags": [
+      "port",
+      "military",
+      "orcs"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "jade_port",
+    "name": "翡翠港",
+    "type": "port",
+    "continent_id": "chaos_ria",
+    "region_id": "jade_oasis_region",
+    "position": {
+      "x": 5800,
+      "y": 6400,
+      "z": 0
+    },
+    "transport_roles": [
+      "sea_port",
+      "export_hub"
+    ],
+    "facilities": [
+      "dock",
+      "warehouse",
+      "customs"
+    ],
+    "description": "農産物・宝石の輸出港。",
+    "tags": [
+      "port",
+      "export",
+      "agricultural"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "jade_airport",
+    "name": "翡翠空港",
+    "type": "airport",
+    "continent_id": "chaos_ria",
+    "region_id": "jade_oasis_region",
+    "position": {
+      "x": 5800,
+      "y": 6400,
+      "z": 800
+    },
+    "transport_roles": [
+      "air_terminal",
+      "regional"
+    ],
+    "facilities": [
+      "runway",
+      "terminal"
+    ],
+    "description": "翡翠王国の地域空港。",
+    "tags": [
+      "airport",
+      "regional"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "marineport",
+    "name": "マリンポート",
+    "type": "port",
+    "continent_id": "atlantis",
+    "region_id": "marineport_region",
+    "position": {
+      "x": 2800,
+      "y": 4800,
+      "z": 0
+    },
+    "transport_roles": [
+      "sea_port",
+      "underwater_access",
+      "international"
+    ],
+    "facilities": [
+      "dock",
+      "submarine_terminal",
+      "customs"
+    ],
+    "description": "アトランティスの地上交易港。潜水艇基地。",
+    "tags": [
+      "port",
+      "underwater_access",
+      "atlantis"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "iron_mountain_port",
+    "name": "鉄山港",
+    "type": "port",
+    "continent_id": "atlantis",
+    "region_id": "marineport_region",
+    "position": {
+      "x": 3000,
+      "y": 4600,
+      "z": 0
+    },
+    "transport_roles": [
+      "mining_port",
+      "export"
+    ],
+    "facilities": [
+      "dock",
+      "ore_loading"
+    ],
+    "description": "鉄山脉の鉱石輸出港。",
+    "tags": [
+      "port",
+      "mining"
+    ],
+    "confidence": "estimated"
+  },
+  {
+    "id": "atlantia_undersea_city",
+    "name": "アトランティア",
+    "type": "underwater_city",
+    "continent_id": "atlantis",
+    "region_id": "atlantia_region",
+    "position": {
+      "x": 2500,
+      "y": 4700,
+      "z": -300
+    },
+    "transport_roles": [
+      "underwater_city",
+      "submarine_hub"
+    ],
+    "facilities": [
+      "submarine_dock",
+      "pressure_chambers",
+      "crystal_observation_deck"
+    ],
+    "description": "海底都市。深度1200m。",
+    "tags": [
+      "underwater_city",
+      "ancient",
+      "atlantis"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "glacier_city",
+    "name": "氷河都市",
+    "type": "city",
+    "continent_id": "atlantis",
+    "region_id": "marineport_region",
+    "position": {
+      "x": 3200,
+      "y": 4400,
+      "z": 0
+    },
+    "transport_roles": [
+      "mountain_city",
+      "cold_climate"
+    ],
+    "facilities": [
+      "heated_tunnels",
+      "fortress"
+    ],
+    "description": "ドワーフの堅牢な要塞都市。",
+    "tags": [
+      "city",
+      "glacier",
+      "dwarven"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "atlantis_floating_base",
+    "name": "アトランティス浮上基地",
+    "type": "air_terminal",
+    "continent_id": "atlantis",
+    "region_id": "marineport_region",
+    "position": {
+      "x": 2800,
+      "y": 4800,
+      "z": 900
+    },
+    "transport_roles": [
+      "air_hub",
+      "naval_air"
+    ],
+    "facilities": [
+      "floating_dock",
+      "heliport"
+    ],
+    "description": "海上空中路の中継基地。",
+    "tags": [
+      "airport",
+      "floating",
+      "military"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "time_port",
+    "name": "時空の港",
+    "type": "port",
+    "continent_id": "grimoire",
+    "region_id": "time_port_region",
+    "position": {
+      "x": 5000,
+      "y": 2200,
+      "z": 0
+    },
+    "transport_roles": [
+      "special_gateway",
+      "restricted"
+    ],
+    "facilities": [
+      "dock",
+      "temporal_gate",
+      "monitoring_station"
+    ],
+    "description": "グリモワールへの玄関口。時空の番人が管理。",
+    "tags": [
+      "port",
+      "time_space",
+      "restricted"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "time_airport",
+    "name": "時空空港",
+    "type": "airport",
+    "continent_id": "grimoire",
+    "region_id": "time_port_region",
+    "position": {
+      "x": 5000,
+      "y": 2200,
+      "z": 1000
+    },
+    "transport_roles": [
+      "air_terminal",
+      "special"
+    ],
+    "facilities": [
+      "runway",
+      "temporal_stabilizer"
+    ],
+    "description": "時空歪み地域対応の特殊空港。",
+    "tags": [
+      "airport",
+      "time_space",
+      "special"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "labyrinth_of_time",
+    "name": "時の迷宮",
+    "type": "landmark",
+    "continent_id": "grimoire",
+    "region_id": "ethernia_core_region",
+    "position": {
+      "x": 5100,
+      "y": 2250,
+      "z": 0
+    },
+    "transport_roles": [
+      "landmark",
+      "restricted_area"
+    ],
+    "facilities": [
+      "entrance",
+      "monitoring_post"
+    ],
+    "description": "時間の歪みの迷宮。立ち入り禁止区域。",
+    "tags": [
+      "labyrinth",
+      "time_distortion",
+      "forbidden"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "ethernia_core",
+    "name": "エターニア・コア",
+    "type": "landmark",
+    "continent_id": "grimoire",
+    "region_id": "ethernia_core_region",
+    "position": {
+      "x": 5000,
+      "y": 2200,
+      "z": 0
+    },
+    "transport_roles": [
+      "spirit_nexus",
+      "sacred_site"
+    ],
+    "facilities": [
+      "shrine",
+      "monitoring_station"
+    ],
+    "description": "精霊力の大結節点。",
+    "tags": [
+      "spirit_core",
+      "ley_line_nexus",
+      "sacred"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "spirit_gate",
+    "name": "精霊の門",
+    "type": "warp_gate",
+    "continent_id": "grimoire",
+    "region_id": "ethernia_core_region",
+    "position": {
+      "x": 4950,
+      "y": 2180,
+      "z": 0
+    },
+    "transport_roles": [
+      "warp_point",
+      "spirit_gateway"
+    ],
+    "facilities": [
+      "gate",
+      "shrine"
+    ],
+    "description": "精霊界との境界ゲート。",
+    "tags": [
+      "warp_gate",
+      "spirit_world",
+      "sacred"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "sealed_lands",
+    "name": "封印の地",
+    "type": "forbidden_gate",
+    "continent_id": "grimoire",
+    "region_id": "ethernia_core_region",
+    "position": {
+      "x": 5050,
+      "y": 2220,
+      "z": 0
+    },
+    "transport_roles": [
+      "forbidden_zone",
+      "sealed_area"
+    ],
+    "facilities": [
+      "seal_monument",
+      "barrier"
+    ],
+    "description": "古代兵器と禁断魔法の封印地。",
+    "tags": [
+      "forbidden",
+      "sealed",
+      "ancient_weapons"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "wind_rest_isle",
+    "name": "風の休息所",
+    "type": "floating_island",
+    "continent_id": "elysion",
+    "region_id": "soaring_mountains_region",
+    "position": {
+      "x": 4950,
+      "y": 5050,
+      "z": 800
+    },
+    "transport_roles": [
+      "air_waypoint",
+      "refueling_station"
+    ],
+    "facilities": [
+      "dock",
+      "refueling",
+      "rest_area"
+    ],
+    "description": "スカイ・チェーン航路の給油・補給所。",
+    "tags": [
+      "floating_island",
+      "waypoint",
+      "refueling"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "griffin_nest",
+    "name": "グリフォン栖",
+    "type": "landmark",
+    "continent_id": "elysion",
+    "region_id": "soaring_mountains_region",
+    "position": {
+      "x": 4900,
+      "y": 5200,
+      "z": 1500
+    },
+    "transport_roles": [
+      "griffin_terminal",
+      "training_facility"
+    ],
+    "facilities": [
+      "griffin_loft",
+      "training_field"
+    ],
+    "description": "グリフォン飼育・訓練施設。",
+    "tags": [
+      "griffin",
+      "flying_mount",
+      "tourist"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "eye_of_storm",
+    "name": "嵐の目",
+    "type": "landmark",
+    "continent_id": "elysion",
+    "region_id": "soaring_mountains_region",
+    "position": {
+      "x": 4850,
+      "y": 5150,
+      "z": 500
+    },
+    "transport_roles": [
+      "weather_station",
+      "waypoint"
+    ],
+    "facilities": [
+      "meteorological_observatory"
+    ],
+    "description": "気象観測所。スカイ・チェーン航路の中継点。",
+    "tags": [
+      "weather_station",
+      "observation"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "stormhold",
+    "name": "嵐の都",
+    "type": "floating_island",
+    "continent_id": "elysion",
+    "region_id": "soaring_mountains_region",
+    "position": {
+      "x": 4800,
+      "y": 5100,
+      "z": 1000
+    },
+    "transport_roles": [
+      "air_capital",
+      "floating_nation",
+      "air_hub"
+    ],
+    "facilities": [
+      "international_airport",
+      "palace",
+      "air_traffic_control"
+    ],
+    "description": "空中浮島国家。唯一の空中国家。",
+    "tags": [
+      "floating_city",
+      "air_capital",
+      "independent_nation"
+    ],
+    "confidence": "canon"
+  }
+]

@@ -1,0 +1,191 @@
+[
+  {
+    "id": "red_sea_desert_sandstorm_zone",
+    "name": "紅海砂漠・砂嵐多発地帯",
+    "type": "sandstorm",
+    "continent_id": "chaos_ria",
+    "center": {
+      "x": 5200,
+      "y": 7000,
+      "z": 0
+    },
+    "radius": 600,
+    "severity": 4,
+    "seasonal": true,
+    "active_months": [
+      6,
+      7,
+      8
+    ],
+    "effects": {
+      "travel_time_multiplier": 1.8,
+      "danger_bonus": 2,
+      "air_route_penalty": 3
+    },
+    "description": "夏季に砂嵐が頻発する危険区域。",
+    "confidence": "canon"
+  },
+  {
+    "id": "red_sand_coast_pirate_zone",
+    "name": "赤砂海岸・海賊海域",
+    "type": "pirate_sea",
+    "continent_id": "chaos_ria",
+    "center": {
+      "x": 4700,
+      "y": 7100,
+      "z": 0
+    },
+    "radius": 400,
+    "severity": 3,
+    "seasonal": false,
+    "effects": {
+      "travel_time_multiplier": 1.2,
+      "danger_bonus": 3,
+      "cost_multiplier": 1.5
+    },
+    "description": "海賊が頻出する危険海域。武装護衛必須。",
+    "confidence": "canon"
+  },
+  {
+    "id": "northern_ocean_ice_sea",
+    "name": "北大洋・氷海",
+    "type": "ice_sea",
+    "continent_id": "grimoire",
+    "center": {
+      "x": 3000,
+      "y": 2000,
+      "z": 0
+    },
+    "radius": 800,
+    "severity": 4,
+    "seasonal": true,
+    "active_months": [
+      12,
+      1,
+      2
+    ],
+    "effects": {
+      "travel_time_multiplier": 2.0,
+      "danger_bonus": 2,
+      "ship_damage_risk": 0.3
+    },
+    "description": "冬季に凍結する危険海域。夏季限定航行。",
+    "confidence": "canon"
+  },
+  {
+    "id": "grimoire_time_distortion_zone",
+    "name": "グリモワール時空歪み地帯",
+    "type": "time_distortion",
+    "continent_id": "grimoire",
+    "center": {
+      "x": 5050,
+      "y": 2250,
+      "z": 0
+    },
+    "radius": 300,
+    "severity": 5,
+    "seasonal": false,
+    "effects": {
+      "time_dilation": "random",
+      "danger_bonus": 5,
+      "navigation_failure": 0.5
+    },
+    "description": "時間の流れが不規則な危険区域。特別許可制。",
+    "confidence": "canon"
+  },
+  {
+    "id": "sealed_lands_forbidden_zone",
+    "name": "封印の地・禁断区域",
+    "type": "forbidden_zone",
+    "continent_id": "grimoire",
+    "center": {
+      "x": 5050,
+      "y": 2220,
+      "z": 0
+    },
+    "radius": 200,
+    "severity": 5,
+    "seasonal": false,
+    "effects": {
+      "danger_bonus": 5,
+      "spawn_anomalies": true,
+      "entry_forbidden": true
+    },
+    "description": "古代兵器と禁断魔法が封印された禁域。立入禁止。",
+    "confidence": "canon"
+  },
+  {
+    "id": "phantom_road_danger_zone",
+    "name": "幻影道路・危険地帯",
+    "type": "monster_sea",
+    "continent_id": "elysion",
+    "center": {
+      "x": 4600,
+      "y": 4800,
+      "z": 0
+    },
+    "radius": 250,
+    "severity": 3,
+    "seasonal": false,
+    "effects": {
+      "travel_time_multiplier": 1.5,
+      "danger_bonus": 2,
+      "illusion_risk": 0.4
+    },
+    "description": "魔獣が頻出する山岳危険区域。",
+    "confidence": "estimated"
+  },
+  {
+    "id": "atlantis_ice_road_closure_zone",
+    "name": "アトランティス氷結道路閉鎖区域",
+    "type": "avalanche",
+    "continent_id": "atlantis",
+    "center": {
+      "x": 3100,
+      "y": 4500,
+      "z": 0
+    },
+    "radius": 150,
+    "severity": 3,
+    "seasonal": true,
+    "active_months": [
+      12,
+      1,
+      2
+    ],
+    "effects": {
+      "travel_time_multiplier": 2.5,
+      "danger_bonus": 2,
+      "road_closure_risk": 0.6
+    },
+    "description": "冬季に雪崩危険性が高く道路が閉鎖される区域。",
+    "confidence": "estimated"
+  },
+  {
+    "id": "stormhold_air_turbulence_zone",
+    "name": "嵐の都空中乱気流 zone",
+    "type": "storm",
+    "continent_id": "elysion",
+    "center": {
+      "x": 4800,
+      "y": 5100,
+      "z": 1000
+    },
+    "radius": 200,
+    "severity": 3,
+    "seasonal": true,
+    "active_months": [
+      3,
+      4,
+      9,
+      10
+    ],
+    "effects": {
+      "flight_delay_risk": 0.5,
+      "danger_bonus": 2,
+      "landing_restriction": true
+    },
+    "description": "嵐の都周辺で発生する空中乱気流。着陸困難になることが多い。",
+    "confidence": "estimated"
+  }
+]

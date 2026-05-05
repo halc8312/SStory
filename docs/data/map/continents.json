@@ -1,0 +1,87 @@
+[
+  {
+    "id": "elysion",
+    "name": "エリュシオン",
+    "type": "continent",
+    "center": {
+      "x": 5000,
+      "y": 5000,
+      "z": 0
+    },
+    "description": "中央大陸。政治経済の中心で、最も発達した交通網を持つ。",
+    "tags": [
+      "central_continent",
+      "political_center",
+      "transport_hub"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "lumiera",
+    "name": "リュミエラ",
+    "type": "continent",
+    "center": {
+      "x": 7500,
+      "y": 4700,
+      "z": 0
+    },
+    "description": "東大陸。巨大な熱帯雨林と浮島群が特徴。",
+    "tags": [
+      "eastern_continent",
+      "tropical",
+      "floating_islands"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "chaos_ria",
+    "name": "カオス・リア",
+    "type": "continent",
+    "center": {
+      "x": 5000,
+      "y": 7600,
+      "z": 0
+    },
+    "description": "南大陸。世界最大の砂漠とオアシス都市群。",
+    "tags": [
+      "southern_continent",
+      "desert",
+      "caravan_routes"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "atlantis",
+    "name": "アトランティス",
+    "type": "continent",
+    "center": {
+      "x": 2500,
+      "y": 4700,
+      "z": 0
+    },
+    "description": "西大陸。凍った大地と海底都市の伝説。",
+    "tags": [
+      "western_continent",
+      "cold",
+      "underwater_cities"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "grimoire",
+    "name": "グリモワール",
+    "type": "continent",
+    "center": {
+      "x": 5000,
+      "y": 2200,
+      "z": 0
+    },
+    "description": "北大陸。精霊力の源と時空の歪みが特徴。",
+    "tags": [
+      "northern_continent",
+      "spirit_power",
+      "time_distortion"
+    ],
+    "confidence": "canon"
+  }
+]

@@ -1,0 +1,875 @@
+[
+  {
+    "id": "central_road_astralis_granrock",
+    "name": "中央街道：アストラリス〜グランロック",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "astralis",
+    "to": "granrock",
+    "distance_km": 300,
+    "estimated_time_hours": 96,
+    "cost_gold": 30,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "王都道路局",
+      "駅馬車ギルド"
+    ],
+    "tags": [
+      "major_road",
+      "paved",
+      "carriage"
+    ],
+    "description": "王道・国際街道・駅馬車路線を兼ねる主要区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "central_road_granrock_jade_north",
+    "name": "中央街道：グランロック〜翡翠北",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "granrock",
+    "to": "jade_north",
+    "distance_km": 450,
+    "estimated_time_hours": 144,
+    "cost_gold": 45,
+    "danger_level": 2,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "ドワーフ道路管理局",
+      "翡翠王国交通省"
+    ],
+    "tags": [
+      "major_road",
+      "mountain_road",
+      "carriage"
+    ],
+    "description": "山脈を越える中央街道の山岳区間。",
+    "confidence": "estimated"
+  },
+  {
+    "id": "central_road_jade_north_jade_capital",
+    "name": "中央街道：翡翠北〜翡翠王都",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "jade_north",
+    "to": "jade_capital",
+    "distance_km": 250,
+    "estimated_time_hours": 80,
+    "cost_gold": 25,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "翡翠王国交通省"
+    ],
+    "tags": [
+      "major_road",
+      "paved",
+      "carriage"
+    ],
+    "description": "翡翠平原を貫く中央街道の終点区間。",
+    "confidence": "estimated"
+  },
+  {
+    "id": "eastern_road_astralis_moonlight",
+    "name": "東方街道：アストラリス〜ムーンライト・グレイス",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "astralis",
+    "to": "moonlight_grace",
+    "distance_km": 420,
+    "estimated_time_hours": 134,
+    "cost_gold": 42,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "王都道路局",
+      "月影エルフ王国道路局"
+    ],
+    "tags": [
+      "international_road",
+      "elven_territory",
+      "carriage"
+    ],
+    "description": "エリュシオンとリュミエラを結ぶ外交路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "southern_road_astralis_blood_fort",
+    "name": "南方街道：アストラリス〜ブラッド・フォート",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "astralis",
+    "to": "blood_fort",
+    "distance_km": 520,
+    "estimated_time_hours": 166,
+    "cost_gold": 52,
+      "danger_level": 2,
+      "status": "active",
+      "seasonal": true,
+      "active_months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "operators": [
+        "王都道路局",
+        "赤砂オーク連合戦士団道路部"
+      ],
+    "tags": [
+      "international_road",
+      "desert_route",
+      "carriage"
+    ],
+    "description": "銀の平野と砂漠地帯を結ぶ主要街道。",
+    "confidence": "canon"
+  },
+  {
+    "id": "southern_road_blood_fort_jade_port",
+    "name": "南方街道：ブラッド・フォート〜翡翠港",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "blood_fort",
+    "to": "jade_port",
+    "distance_km": 380,
+    "estimated_time_hours": 121,
+    "cost_gold": 38,
+      "danger_level": 3,
+      "status": "active",
+      "seasonal": true,
+      "active_months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "operators": [
+        "赤砂オーク連合戦士団道路部",
+        "翡翠王国交通省"
+      ],
+    "tags": [
+      "desert_road",
+      "caravan_route",
+      "carriage"
+    ],
+    "description": "紅海砂漠を横断する砂漠道路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "western_road_marineport_iron_mountains",
+    "name": "西方街道：マリンポート〜鉄山脈",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "marineport",
+    "to": "iron_mountain_port",
+    "distance_km": 350,
+    "estimated_time_hours": 112,
+    "cost_gold": 35,
+    "danger_level": 2,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "アトランティス港湾局",
+      "ドワーフ王国道路庁"
+    ],
+    "tags": [
+      "mountain_road",
+      "coastal_route",
+      "carriage"
+    ],
+    "description": "山岳と海岸を結ぶ鉱石交易路。",
+    "confidence": "estimated"
+  },
+  {
+    "id": "western_road_iron_mountains_glacier_city",
+    "name": "西方街道：鉄山脈〜氷河都市",
+    "type": "road",
+    "mode": "stagecoach",
+    "from": "iron_mountain_port",
+    "to": "glacier_city",
+    "distance_km": 200,
+    "estimated_time_hours": 64,
+    "cost_gold": 20,
+      "danger_level": 2,
+      "status": "active",
+      "seasonal": true,
+      "active_months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "operators": [
+        "ドワーフ王国道路庁"
+      ],
+    "tags": [
+      "mountain_road",
+      "cold_region",
+      "carriage"
+    ],
+    "description": "寒冷山岳地帯の山道。",
+    "confidence": "estimated"
+  },
+  {
+    "id": "astralis_loop_line",
+    "name": "アストラリス環状線",
+    "type": "rail",
+    "mode": "magic_train",
+    "from": "astralis",
+    "to": "astralis",
+    "distance_km": 120,
+    "estimated_time_hours": 3,
+    "cost_gold": 15,
+    "danger_level": 0,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "王都道路局",
+      "駅馬車ギルド"
+    ],
+    "tags": [
+      "urban_rail",
+      "magic_train",
+      "loop"
+    ],
+    "description": "王都内を環状する魔導列車。",
+    "confidence": "canon"
+  },
+  {
+    "id": "astralis_port_zephia_magic_train",
+    "name": "アストラリス・ポートゼフィア魔導列車",
+    "type": "rail",
+    "mode": "magic_train",
+    "from": "astralis",
+    "to": "port_zephia",
+    "distance_km": 120,
+    "estimated_time_hours": 2,
+    "cost_gold": 20,
+    "danger_level": 0,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "王都道路局",
+      "駅馬車ギルド"
+    ],
+    "tags": [
+      "magic_train",
+      "commuter_rail"
+    ],
+    "description": "王都と港湾を結ぶ魔導列車。",
+    "confidence": "canon"
+  },
+  {
+    "id": "atlantis_tidal_train_experimental",
+    "name": "アトランティス潮力列車（実験）",
+    "type": "rail",
+    "mode": "tidal_train",
+    "from": "marineport",
+    "to": "atlantia_undersea_city",
+    "distance_km": 80,
+    "estimated_time_hours": 4,
+    "cost_gold": 50,
+    "danger_level": 2,
+    "status": "experimental",
+    "seasonal": false,
+    "operators": [
+      "アトランティス海底交通局"
+    ],
+    "tags": [
+      "experimental",
+      "underwater",
+      "tidal_power"
+    ],
+    "description": "海底都市への実験的潮力列車。",
+    "confidence": "canon"
+  },
+  {
+    "id": "central_sea_portzephia_marineport",
+    "name": "中央海航路：ポートゼフィア〜マリンポート",
+    "type": "sea",
+    "mode": "wind_magic_ship",
+    "from": "port_zephia",
+    "to": "marineport",
+    "distance_km": 500,
+    "estimated_time_hours": 168,
+    "cost_gold": 60,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "海上交通連合"
+    ],
+    "tags": [
+      "major_sea_route",
+      "international",
+      "wind_magic_ship"
+    ],
+    "description": "中央海の大動脈。五大陸間の主要海上路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "central_sea_marineport_jadeport",
+    "name": "中央海航路：マリンポート〜翡翠港",
+    "type": "sea",
+    "mode": "wind_magic_ship",
+    "from": "marineport",
+    "to": "jade_port",
+    "distance_km": 360,
+    "estimated_time_hours": 120,
+    "cost_gold": 40,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "海上交通連合"
+    ],
+    "tags": [
+      "sea_route",
+      "international",
+      "wind_magic_ship"
+    ],
+    "description": "中央海東部の定期航路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "red_sand_coastal_warriorport_jadeport",
+    "name": "赤砂海岸航路：戦士の港〜翡翠港",
+    "type": "sea",
+    "mode": "sailing_ship",
+    "from": "warrior_port",
+    "to": "jade_port",
+    "distance_km": 440,
+    "estimated_time_hours": 132,
+    "cost_gold": 35,
+      "danger_level": 3,
+      "status": "active",
+      "seasonal": true,
+      "active_months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "operators": [
+        "赤砂オーク連合海上戦士団"
+      ],
+    "tags": [
+      "coastal_route",
+      "armed_escort",
+      "desert_coast"
+    ],
+    "description": "赤砂海岸の武装護衛付き航路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "northern_ocean_ironport_timeport",
+    "name": "北大洋航路：鉄山港〜時空の港",
+    "type": "sea",
+    "mode": "sailing_ship",
+    "from": "iron_mountain_port",
+    "to": "time_port",
+    "distance_km": 900,
+    "estimated_time_hours": 288,
+    "cost_gold": 120,
+    "danger_level": 3,
+    "status": "seasonal",
+    "seasonal": true,
+    "operators": [
+      "ドワーフ王国北洋航路局",
+      "時空の番人"
+    ],
+    "tags": [
+      "arctic_route",
+      "seasonal",
+      "restricted"
+    ],
+    "active_months": [
+      6,
+      7,
+      8
+    ],
+    "description": "北大洋の季節限定航路。時空歪み海域注意。",
+    "confidence": "canon"
+  },
+  {
+    "id": "sky_chain_astralis_wind_rest",
+    "name": "スカイ・チェーン：アストラリス〜風の休息所",
+    "type": "air",
+    "mode": "airship",
+    "from": "astralis_airport",
+    "to": "wind_rest_isle",
+    "distance_km": 150,
+    "estimated_time_hours": 2,
+    "cost_gold": 40,
+    "danger_level": 0,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "空中交通公社"
+    ],
+    "tags": [
+      "sky_chain",
+      "airship",
+      "refueling"
+    ],
+    "description": "スカイ・チェーン航路第一区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "sky_chain_wind_rest_moonshadow_isle",
+    "name": "スカイ・チェーン：風の休息所〜月影浮島",
+    "type": "air",
+    "mode": "airship",
+    "from": "wind_rest_isle",
+    "to": "moonshadow_floating_island",
+    "distance_km": 200,
+    "estimated_time_hours": 2.5,
+    "cost_gold": 50,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "空中交通公社"
+    ],
+    "tags": [
+      "sky_chain",
+      "airship",
+      "floating_islands"
+    ],
+    "description": "リュミエラ・アーチ航路接続区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "sky_chain_moonshadow_griffin_nest",
+    "name": "スカイ・チェーン：月影浮島〜グリフォン栖",
+    "type": "air",
+    "mode": "airship",
+    "from": "moonshadow_floating_island",
+    "to": "griffin_nest",
+    "distance_km": 180,
+    "estimated_time_hours": 2.2,
+    "cost_gold": 45,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "空中交通公社"
+    ],
+    "tags": [
+      "sky_chain",
+      "airship",
+      "griffin_route"
+    ],
+    "description": "グリフォン便発着地点経由区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "sky_chain_griffin_nest_eye_of_storm",
+    "name": "スカイ・チェーン：グリフォン栖〜嵐の目",
+    "type": "air",
+    "mode": "airship",
+    "from": "griffin_nest",
+    "to": "eye_of_storm",
+    "distance_km": 120,
+    "estimated_time_hours": 1.5,
+    "cost_gold": 35,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "空中交通公社"
+    ],
+    "tags": [
+      "sky_chain",
+      "airship",
+      "weather_station"
+    ],
+    "description": "気象観測所経由区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "sky_chain_eye_of_storm_stormhold",
+    "name": "スカイ・チェーン：嵐の目〜嵐の都",
+    "type": "air",
+    "mode": "airship",
+    "from": "eye_of_storm",
+    "to": "stormhold",
+    "distance_km": 200,
+    "estimated_time_hours": 2.5,
+    "cost_gold": 55,
+    "danger_level": 2,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "空中交通公社",
+      "嵐の都政府"
+    ],
+    "tags": [
+      "sky_chain",
+      "airship",
+      "capital_route"
+    ],
+    "description": "スカイ・チェーン終点・嵐の都への最終区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "lumiera_arch_astralis_moonshadow",
+    "name": "リュミエラ・アーチ航路：アストラリス〜月影浮島",
+    "type": "air",
+    "mode": "airship",
+    "from": "astralis_airport",
+    "to": "moonshadow_floating_island",
+    "distance_km": 280,
+    "estimated_time_hours": 3.5,
+    "cost_gold": 80,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "空中交通公社",
+      "月影エルフ王国"
+    ],
+    "tags": [
+      "lumiera_arch",
+      "airship",
+      "international"
+    ],
+    "description": "リュミエラ・アーチ航路主要区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "lumiera_arch_moonshadow_moonlight_platform",
+    "name": "リュミエラ・アーチ航路：月影浮島〜月光台",
+    "type": "air",
+    "mode": "airship",
+    "from": "moonshadow_floating_island",
+    "to": "moonlight_platform",
+    "distance_km": 200,
+    "estimated_time_hours": 2.5,
+    "cost_gold": 60,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "月影エルフ王国航空局"
+    ],
+    "tags": [
+      "lumiera_arch",
+      "airship",
+      "elven_route"
+    ],
+    "description": "リュミエラ・アーチ航路エルフ領内区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "southern_air_corridor_astralis_jade_airport",
+    "name": "南方空中回廊：アストラリス〜翡翠空港",
+    "type": "air",
+    "mode": "airship",
+    "from": "astralis_airport",
+    "to": "jade_airport",
+    "distance_km": 600,
+    "estimated_time_hours": 3,
+    "cost_gold": 90,
+    "danger_level": 2,
+      "status": "active",
+      "seasonal": true,
+      "active_months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "operators": [
+        "空中交通公社",
+        "翡翠王国航空局"
+      ],
+    "tags": [
+      "southern_corridor",
+      "low_altitude",
+      "airship"
+    ],
+    "description": "砂嵐回避のための低空飛行路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "western_air_corridor_astralis_atlantis_base",
+    "name": "西方空中回廊：アストラリス〜アトランティス浮上基地",
+    "type": "air",
+    "mode": "airship",
+    "from": "astralis_airport",
+    "to": "atlantis_floating_base",
+    "distance_km": 700,
+    "estimated_time_hours": 3.5,
+    "cost_gold": 100,
+    "danger_level": 2,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "空中交通公社",
+      "アトランティス空中管理局"
+    ],
+    "tags": [
+      "western_corridor",
+      "armed_escort",
+      "airship"
+    ],
+    "description": "海上空中路。軍用護衛帯同。",
+    "confidence": "canon"
+  },
+  {
+    "id": "western_air_corridor_atlantis_base_marineport",
+    "name": "西方空中回廊：アトランティス浮上基地〜マリンポート",
+    "type": "air",
+    "mode": "airship",
+    "from": "atlantis_floating_base",
+    "to": "marineport",
+    "distance_km": 150,
+    "estimated_time_hours": 1,
+    "cost_gold": 30,
+    "danger_level": 1,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "アトランティス空中管理局"
+    ],
+    "tags": [
+      "western_corridor",
+      "short_haul",
+      "airship"
+    ],
+    "description": "西方空中回廊の最終区間。",
+    "confidence": "canon"
+  },
+  {
+    "id": "red_desert_caravan_bloodfort_jade_oasis",
+    "name": "紅海砂漠隊商路：ブラッド・フォート〜翡翠のオアシス",
+    "type": "caravan",
+    "mode": "caravan",
+    "from": "blood_fort",
+    "to": "jade_oasis",
+    "distance_km": 320,
+    "estimated_time_hours": 240,
+    "cost_gold": 70,
+      "danger_level": 3,
+      "status": "active",
+      "seasonal": true,
+      "active_months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "operators": [
+        "赤砂オーク連合戦士団",
+        "商人ギルド"
+      ],
+    "tags": [
+      "desert_caravan",
+      "armed_escort",
+      "trade_route"
+    ],
+    "description": "紅海砂漠を横断する主要隊商路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "red_desert_caravan_jade_oasis_jade_port",
+    "name": "紅海砂漠隊商路：翡翠のオアシス〜翡翠港",
+    "type": "caravan",
+    "mode": "caravan",
+    "from": "jade_oasis",
+    "to": "jade_port",
+    "distance_km": 200,
+    "estimated_time_hours": 160,
+    "cost_gold": 40,
+      "danger_level": 2,
+      "status": "active",
+      "seasonal": true,
+      "active_months": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "operators": [
+        "翡翠王国交通省",
+        "商人ギルド"
+      ],
+    "tags": [
+      "desert_caravan",
+      "trade_route"
+    ],
+    "description": "オアシスから港湾に至る隊商路。",
+    "confidence": "canon"
+  },
+  {
+    "id": "atlantis_submarine_marineport_atlantia",
+    "name": "アトランティス潜水艇路：マリンポート〜アトランティア",
+    "type": "submarine",
+    "mode": "submarine",
+    "from": "marineport",
+    "to": "atlantia_undersea_city",
+    "distance_km": 80,
+    "estimated_time_hours": 3,
+    "cost_gold": 80,
+    "danger_level": 2,
+    "status": "active",
+    "seasonal": false,
+    "operators": [
+      "アトランティス海底交通局"
+    ],
+    "tags": [
+      "underwater",
+      "submarine",
+      "tourist_route"
+    ],
+    "description": "海底都市への定期潜水艇路線。",
+    "confidence": "canon"
+  },
+  {
+    "id": "atlantis_undersea_tunnel_atlantia_glacier",
+    "name": "アトランティス海底トンネル：アトランティア〜氷河都市",
+    "type": "underwater_tunnel",
+    "mode": "submarine",
+    "from": "atlantia_undersea_city",
+    "to": "glacier_city",
+    "distance_km": 150,
+    "estimated_time_hours": 5,
+    "cost_gold": 100,
+    "danger_level": 3,
+    "status": "experimental",
+    "seasonal": false,
+    "operators": [
+      "アトランティス海底交通局",
+      "ドワーフ王国"
+    ],
+    "tags": [
+      "underwater_tunnel",
+      "experimental",
+      "strategic"
+    ],
+    "description": "海底と山岳を結ぶ実験的トンネル。",
+    "confidence": "canon"
+  },
+  {
+    "id": "grimoire_north_road_timeport_labyrinth",
+    "name": "グリモワール北道：時空の港〜時の迷宮",
+    "type": "road",
+    "mode": "walking",
+    "from": "time_port",
+    "to": "labyrinth_of_time",
+    "distance_km": 50,
+    "estimated_time_hours": 12,
+    "cost_gold": 5,
+    "danger_level": 4,
+    "status": "restricted",
+    "seasonal": false,
+    "operators": [
+      "時空の番人"
+    ],
+    "tags": [
+      "restricted_road",
+      "time_zone",
+      "monitored"
+    ],
+    "description": "時空歪み地域への監視道路。許可制。",
+    "confidence": "canon"
+  },
+  {
+    "id": "grimoire_barrier_road_labyrinth_spirit_gate",
+    "name": "グリモワール結界道：時の迷宮〜精霊の門",
+    "type": "road",
+    "mode": "walking",
+    "from": "labyrinth_of_time",
+    "to": "spirit_gate",
+    "distance_km": 20,
+    "estimated_time_hours": 5,
+    "cost_gold": 2,
+    "danger_level": 5,
+    "status": "forbidden",
+    "seasonal": false,
+    "operators": [
+      "時空の番人",
+      "精霊協会"
+    ],
+    "tags": [
+      "forbidden",
+      "spirit_realm",
+      "sealed"
+    ],
+    "description": "精霊界に通じる禁断の道。一般人の立入り禁止。",
+    "confidence": "canon"
+  },
+  {
+    "id": "grimoire_chrono_tunnel_labyrinth_sealed_lands",
+    "name": "グリモワール時空トンネル：時の迷宮〜封印の地",
+    "type": "tunnel",
+    "mode": "chrono_tunnel",
+    "from": "labyrinth_of_time",
+    "to": "sealed_lands",
+    "distance_km": 10,
+    "estimated_time_hours": 0.5,
+    "cost_gold": 500,
+    "danger_level": 5,
+    "status": "restricted",
+    "seasonal": false,
+    "operators": [
+      "時空の番人"
+    ],
+    "tags": [
+      "time_tunnel",
+      "experimental",
+      "high_risk"
+    ],
+    "description": "時空を短縮する特殊トンネル。許可制。",
+    "confidence": "canon"
+  },
+  {
+    "id": "grimoire_spirit_warp_spirit_gate_ethernia_core",
+    "name": "精霊ワープ：精霊の門〜エターニア・コア",
+    "type": "warp",
+    "mode": "spirit_warp",
+    "from": "spirit_gate",
+    "to": "ethernia_core",
+    "distance_km": 5,
+    "estimated_time_hours": 0.1,
+    "cost_gold": 1000,
+    "danger_level": 5,
+    "status": "forbidden",
+    "seasonal": false,
+    "operators": [
+      "精霊協会"
+    ],
+    "tags": [
+      "spirit_warp",
+      "forbidden",
+      "sacred"
+    ],
+    "description": "精霊界を経由する瞬間移動。精霊協会限定。",
+    "confidence": "canon"
+  }
+]

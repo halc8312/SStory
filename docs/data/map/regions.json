@@ -1,0 +1,236 @@
+[
+  {
+    "id": "royal_capital_region",
+    "name": "王都地方",
+    "continent_id": "elysion",
+    "type": "capital_region",
+    "center": {
+      "x": 5000,
+      "y": 5000,
+      "z": 0
+    },
+    "description": "アストラリスを中心とする王都圏。",
+    "tags": [
+      "capital",
+      "administrative",
+      "road_hub"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "silver_plains_region",
+    "name": "銀の平野",
+    "continent_id": "elysion",
+    "type": "agricultural_region",
+    "center": {
+      "x": 5200,
+      "y": 5500,
+      "z": 0
+    },
+    "description": "小麦・魔法穀物の主要産地。",
+    "tags": [
+      "farmland",
+      "grain_production",
+      "spirit_balance"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "soaring_mountains_region",
+    "name": "天翔山脈",
+    "continent_id": "elysion",
+    "type": "mountain_region",
+    "center": {
+      "x": 4800,
+      "y": 4800,
+      "z": 500
+    },
+    "description": "ドワーフの山岳都市群。鉱物資源が豊富。",
+    "tags": [
+      "mountains",
+      "mining",
+      "dwarven"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "moonlit_forest_region",
+    "name": "月影の森",
+    "continent_id": "elysion",
+    "type": "forest_region",
+    "center": {
+      "x": 4200,
+      "y": 5200,
+      "z": 0
+    },
+    "description": "エルフの聖域。精霊の力が極めて強い。",
+    "tags": [
+      "forest",
+      "elven",
+      "spirit_sanctuary"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "emerald_plains_region",
+    "name": "翡翠平原",
+    "continent_id": "elysion",
+    "type": "region",
+    "center": {
+      "x": 5400,
+      "y": 4200,
+      "z": 0
+    },
+    "description": "翡翠王国領。",
+    "tags": [
+      "plains",
+      "kingdom",
+      "agricultural"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "lumiera_arch_region",
+    "name": "リュミエラ・アーチ",
+    "continent_id": "lumiera",
+    "type": "floating_islands_region",
+    "center": {
+      "x": 7800,
+      "y": 4800,
+      "z": 1200
+    },
+    "description": "リュミエラ東海岸に浮かぶ浮島群。",
+    "tags": [
+      "floating_islands",
+      "archipelago",
+      "aerial"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "emerald_belt_region",
+    "name": "エメラルド・ベルト",
+    "continent_id": "lumiera",
+    "type": "forest_region",
+    "center": {
+      "x": 7000,
+      "y": 5500,
+      "z": 0
+    },
+    "description": "世界最大の森、妖精族の故郷。",
+    "tags": [
+      "tropical_forest",
+      "fairy",
+      "ancient_magic"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "red_sea_desert_region",
+    "name": "紅海砂漠",
+    "continent_id": "chaos_ria",
+    "type": "desert_region",
+    "center": {
+      "x": 5000,
+      "y": 7400,
+      "z": 0
+    },
+    "description": "世界最大の砂漠。オーク族の遊牧地。",
+    "tags": [
+      "desert",
+      "orcs",
+      "caravan"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "jade_oasis_region",
+    "name": "翡翠のオアシス",
+    "continent_id": "chaos_ria",
+    "type": "oasis_region",
+    "center": {
+      "x": 5400,
+      "y": 6600,
+      "z": 0
+    },
+    "description": "交易の中心都市。",
+    "tags": [
+      "oasis",
+      "trade_center",
+      "caravanserai"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "marineport_region",
+    "name": "マリンポート地方",
+    "continent_id": "atlantis",
+    "type": "coastal_region",
+    "center": {
+      "x": 2800,
+      "y": 4800,
+      "z": 0
+    },
+    "description": "アトランティスの地上交易港。",
+    "tags": [
+      "coastal",
+      "port",
+      "marine"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "atlantia_region",
+    "name": "アトランティア",
+    "continent_id": "atlantis",
+    "type": "underwater_region",
+    "center": {
+      "x": 2500,
+      "y": 4700,
+      "z": -300
+    },
+    "description": "海底都市。深度1200m。",
+    "tags": [
+      "underwater",
+      "city",
+      "ancient"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "time_port_region",
+    "name": "時空の港",
+    "continent_id": "grimoire",
+    "type": "special_region",
+    "center": {
+      "x": 5000,
+      "y": 2200,
+      "z": 0
+    },
+    "description": "グリモワールの玄関口。時空の番人が管理。",
+    "tags": [
+      "time_space",
+      "gateway",
+      "restricted"
+    ],
+    "confidence": "canon"
+  },
+  {
+    "id": "ethernia_core_region",
+    "name": "エターニア・コア",
+    "continent_id": "grimoire",
+    "type": "spirit_core_region",
+    "center": {
+      "x": 5000,
+      "y": 2200,
+      "z": 0
+    },
+    "description": "精霊力の大結節点。世界の精霊力源。",
+    "tags": [
+      "spirit_core",
+      "ley_line_nexus",
+      "sacred"
+    ],
+    "confidence": "canon"
+  }
+]

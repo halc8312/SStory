@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>インタラクティブ交通マップ（準備版） - エターナル・アルカディア設定資料館</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+</head>
+<body>
+  <header>
+    <h1>エターナル・アルカディア設定資料館</h1>
+    <p class="subtitle">SStory 世界設定ポータル v0.1</p>
+  </header>
+
+  <nav>
+    <ul class="nav-grid">
+      <li><a href="../index.html">🏠 トップ</a></li>
+      <li><a href="./maps.html">📋 地図</a></li>
+      <li><a href="./map-data.html">💾 Map Data</a></li>
+      <li><a href="./roadmap.html">🛣️ ロードマップ</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="intro">
+      <h2>インタラクティブ交通マップ（準備版）</h2>
+      <p>
+        このページは、将来のWebインタラクティブ地図の土台となるテストページです。
+        v0.1では、GitHub Pages上でMap Data（JSON）を読み込めることを確認します。
+      </p>
+      <p>
+        現在はデータの読み込みと件数表示のみです。実際の地図描画は次の開発フェーズで実装予定です。
+      </p>
+    </section>
+
+    <section class="map-data-status">
+      <h2>データ読み込み状況</h2>
+      <ul id="map-data-summary" class="map-data-summary">
+        <li><span class="label">Continents:</span> <span id="count-continents" class="count">読み込み中...</span></li>
+        <li><span class="label">Regions:</span> <span id="count-regions" class="count">読み込み中...</span></li>
+        <li><span class="label">Nodes:</span> <span id="count-nodes" class="count">読み込み中...</span></li>
+        <li><span class="label">Routes:</span> <span id="count-routes" class="count">読み込み中...</span></li>
+        <li><span class="label">Hazards:</span> <span id="count-hazards" class="count">読み込み中...</span></li>
+      </ul>
+      <p id="map-data-message" class="gallery-message" hidden></p>
+    </section>
+
+    <section class="interactive-map-placeholder">
+      <h2>交通マップ表示予定地</h2>
+      <div id="transport-map-canvas" class="transport-map-canvas">
+        <p>次の段階で、ここにノード・ルート・危険区域を描画します。</p>
+      </div>
+    </section>
+
+    <section class="map-data-preview">
+      <h2>データプレビュー</h2>
+
+      <div class="preview-section">
+        <h3>ノード一覧（先頭10件）</h3>
+        <div id="nodes-preview" class="data-preview-list">
+          <p class="loading">読み込み中...</p>
+        </div>
+      </div>
+
+      <div class="preview-section">
+        <h3>ルート一覧（先頭10件）</h3>
+        <div id="routes-preview" class="data-preview-list">
+          <p class="loading">読み込み中...</p>
+        </div>
+      </div>
+
+      <div class="preview-section">
+        <h3>危険区域一覧（先頭10件）</h3>
+        <div id="hazards-preview" class="data-preview-list">
+          <p class="loading">読み込み中...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="nav-links">
+      <h2>関連ページ</h2>
+      <ul class="link-list">
+        <li><a href="../index.html">🏠 トップページ</a></li>
+        <li><a href="./maps.html">📋 地図ギャラリー</a></li>
+        <li><a href="./map-data.html">💾 Map Data仕様</a></li>
+        <li><a href="./roadmap.html">🛣️ 開発ロードマップ</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; <span id="current-year"></span> SStory / エターナル・アルカディア<br>
+      <small>このサイトは <a href="https://github.com/halc8312/SStory">SStory プロジェクト</a> の一部です。</small>
+    </p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/interactive-map.js"></script>
+</body>
+</html>
