@@ -12,6 +12,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const BASE_PATH = '../data/map/';
+  const CACHE_BUSTER = '20260505';
   const DATA_FILES = [
     { key: 'continents', url: 'continents.json' },
     { key: 'regions', url: 'regions.json' },
@@ -74,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 個別データ読み込み
   function fetchData(key, url) {
-    return fetch(BASE_PATH + url)
+    const requestUrl = `${BASE_PATH + url}?v=${CACHE_BUSTER}`;
+    return fetch(requestUrl)
       .then(response => {
         if (!response.ok) {
           throw new Error(`${key}: HTTP ${response.status} - ${response.statusText}`);
@@ -504,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <dt>半径</dt><dd>${hazard.radius ?? '?'}</dd>
         <dt>危険度</dt><dd><span class="severity-badge">Severity ${hazard.severity ?? '?'}</span></dd>
         <dt>季節性</dt><dd>${hazard.seasonal ? 'あり' : 'なし'}</dd>
-        ${hazard.active_months ? `<dt>活跃月</dt><dd>${hazard.active_months.join(', ')}</dd>` : ''}
+        ${hazard.active_months ? `<dt>活動月</dt><dd>${hazard.active_months.join(', ')}</dd>` : ''}
         <dt>効果</dt><dd>${formatEffects(hazard.effects)}</dd>
       </dl>
       <p class="detail-description">${escapeHtml(hazard.description || '説明なし')}</p>
