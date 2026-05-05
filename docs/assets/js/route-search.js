@@ -25,6 +25,70 @@
     return [...new Set(values.filter(Boolean))];
   }
 
+  function createPriorityQueue() {
+    const heap = [];
+
+    function swap(leftIndex, rightIndex) {
+      [heap[leftIndex], heap[rightIndex]] = [heap[rightIndex], heap[leftIndex]];
+    }
+
+    function bubbleUp(index) {
+      let currentIndex = index;
+      while (currentIndex > 0) {
+        const parentIndex = Math.floor((currentIndex - 1) / 2);
+        if (heap[parentIndex].cost <= heap[currentIndex].cost) {
+          break;
+        }
+        swap(parentIndex, currentIndex);
+        currentIndex = parentIndex;
+      }
+    }
+
+    function bubbleDown(index) {
+      let currentIndex = index;
+      while (true) {
+        const leftChildIndex = currentIndex * 2 + 1;
+        const rightChildIndex = currentIndex * 2 + 2;
+        let smallestIndex = currentIndex;
+
+        if (leftChildIndex < heap.length && heap[leftChildIndex].cost < heap[smallestIndex].cost) {
+          smallestIndex = leftChildIndex;
+        }
+        if (rightChildIndex < heap.length && heap[rightChildIndex].cost < heap[smallestIndex].cost) {
+          smallestIndex = rightChildIndex;
+        }
+        if (smallestIndex === currentIndex) {
+          break;
+        }
+        swap(currentIndex, smallestIndex);
+        currentIndex = smallestIndex;
+      }
+    }
+
+    return {
+      push(value) {
+        heap.push(value);
+        bubbleUp(heap.length - 1);
+      },
+      pop() {
+        if (heap.length === 0) {
+          return null;
+        }
+        if (heap.length === 1) {
+          return heap.pop();
+        }
+
+        const first = heap[0];
+        heap[0] = heap.pop();
+        bubbleDown(0);
+        return first;
+      },
+      get size() {
+        return heap.length;
+      }
+    };
+  }
+
   function getValidSelectableNodes(nodes) {
     return (Array.isArray(nodes) ? nodes : [])
       .filter(node => node?.id && node?.name && node?.position && node.position.x !== undefined && node.position.y !== undefined)
@@ -212,12 +276,12 @@
 
     const distances = { [fromId]: 0 };
     const previous = {};
-    const queue = [{ nodeId: fromId, cost: 0 }];
+    const queue = createPriorityQueue();
     const visited = new Set();
+    queue.push({ nodeId: fromId, cost: 0 });
 
-    while (queue.length > 0) {
-      queue.sort((left, right) => left.cost - right.cost);
-      const current = queue.shift();
+    while (queue.size > 0) {
+      const current = queue.pop();
       if (!current || visited.has(current.nodeId)) {
         continue;
       }
@@ -455,15 +519,6 @@
           resultElement.innerHTML = renderResult({
             found: false,
             message: '出発地と目的地を選択してください。',
-            warnings: []
-          });
-          return;
-        }
-
-        if (options.fromId === options.toId) {
-          resultElement.innerHTML = renderResult({
-            found: false,
-            message: '出発地と目的地が同じです。',
             warnings: []
           });
           return;
