@@ -25,6 +25,10 @@
     return [...new Set(values.filter(Boolean))];
   }
 
+  function getRouteLabel(route, fallback = 'unnamed') {
+    return route?.name || route?.id || fallback;
+  }
+
   function createPriorityQueue() {
     const heap = [];
 
@@ -164,20 +168,21 @@
     const warnings = [];
     if (isSeasonalRoute(route)) {
       const activeMonths = Array.isArray(route.active_months) ? route.active_months : [];
+      const routeLabel = getRouteLabel(route, '季節ルート');
 
       if (options.month === null) {
-        warnings.push(`月指定がないため、${route.name || route.id || '季節ルート'} の季節運行は判定していません。`);
+        warnings.push(`月指定がないため、${routeLabel} の季節運行は判定していません。`);
       } else if (activeMonths.length > 0) {
         if (!activeMonths.includes(options.month)) {
           return { allowed: false, warnings: [] };
         }
       } else {
-        warnings.push(`${route.name || route.id || '季節ルート'} は active_months がないため、月指定 ${options.month} 月でも利用可能として扱いました。`);
+        warnings.push(`${routeLabel} は active_months がないため、月指定 ${options.month} 月でも利用可能として扱いました。`);
       }
     }
 
     if (status === 'restricted') {
-      warnings.push(`${route.name || route.id || 'restricted route'} は restricted route です。`);
+      warnings.push(`${getRouteLabel(route, 'restricted route')} は restricted route です。`);
     }
 
     return {
@@ -264,6 +269,14 @@
   }
 
   function findRoute({ nodes, routes, fromId, toId, weight, month, noAir, noSea, allowRestricted }) {
+    if (fromId === toId) {
+      return {
+        found: false,
+        message: '出発地と目的地が同じです。',
+        warnings: []
+      };
+    }
+
     const { graph, nodeById } = buildGraph(nodes, routes, { weight, month, noAir, noSea, allowRestricted });
 
     if (!nodeById[fromId] || !nodeById[toId]) {
@@ -304,14 +317,6 @@
           queue.push({ nodeId: edge.to, cost: nextCost });
         }
       });
-    }
-
-    if (fromId === toId) {
-      return {
-        found: false,
-        message: '出発地と目的地が同じです。',
-        warnings: []
-      };
     }
 
     if (!previous[toId]) {
