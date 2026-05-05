@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>インタラクティブ交通マップ v0.1 - エターナル・アルカディア設定資料館</title>
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260505b">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260505c">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
 </head>
 <body>
@@ -51,6 +51,76 @@
 
       <div class="interactive-map-layout">
         <div class="interactive-map-stage">
+          <section class="route-search-panel" aria-labelledby="route-search-title">
+            <div class="route-search-panel-header">
+              <div>
+                <h2 id="route-search-title">ルート検索</h2>
+                <p class="route-search-panel-note">出発地・目的地・検索条件を指定して、経路をテキストと地図上で確認できます。</p>
+              </div>
+            </div>
+
+            <form id="route-search-form" class="route-search-form">
+              <div class="route-search-grid">
+                <label class="route-search-field">
+                  <span>出発地</span>
+                  <select id="route-from-select" name="from">
+                    <option value="">選択してください</option>
+                  </select>
+                </label>
+
+                <label class="route-search-field">
+                  <span>目的地</span>
+                  <select id="route-to-select" name="to">
+                    <option value="">選択してください</option>
+                  </select>
+                </label>
+
+                <label class="route-search-field">
+                  <span>検索条件</span>
+                  <select id="route-weight-select" name="weight">
+                    <option value="time">最短時間</option>
+                    <option value="distance">最短距離</option>
+                    <option value="safety">安全優先</option>
+                  </select>
+                </label>
+
+                <label class="route-search-field">
+                  <span>月指定</span>
+                  <select id="route-month-select" name="month">
+                    <option value="">指定なし</option>
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="route-search-options" role="group" aria-label="検索オプション">
+                <label><input id="route-no-air" type="checkbox" name="noAir"> 空路なし</label>
+                <label><input id="route-no-sea" type="checkbox" name="noSea"> 海路なし</label>
+                <label><input id="route-allow-restricted" type="checkbox" name="allowRestricted"> restricted route を含める</label>
+              </div>
+
+              <div class="route-search-actions">
+                <button id="route-search-button" type="submit">検索</button>
+                <button id="route-clear-button" type="button" class="route-search-button-secondary">クリア</button>
+              </div>
+            </form>
+
+            <div id="route-search-result" class="route-search-result" aria-live="polite">
+              <p class="route-search-placeholder">条件を指定して「検索」を押すと、結果がここに表示されます。</p>
+            </div>
+          </section>
+
           <section class="map-controls" aria-label="地図表示切替">
             <h2>表示切替</h2>
             <div class="map-control-list">
@@ -159,7 +229,8 @@
     </p>
   </footer>
 
-  <script src="../assets/js/main.js?v=20260505b"></script>
-  <script src="../assets/js/interactive-map.js?v=20260505b"></script>
+  <script src="../assets/js/main.js?v=20260505c"></script>
+  <script src="../assets/js/route-search.js?v=20260505c"></script>
+  <script src="../assets/js/interactive-map.js?v=20260505c"></script>
 </body>
 </html>

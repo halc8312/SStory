@@ -433,6 +433,19 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNodes(svgElement, nodes);
   }
 
+  function initializeRouteSearchModule() {
+    if (typeof window.initializeRouteSearch !== 'function') {
+      console.warn('[InteractiveMap] route-search.js is not available');
+      return;
+    }
+
+    window.initializeRouteSearch({
+      nodes: Array.isArray(mapData.nodes) ? mapData.nodes : [],
+      routes: Array.isArray(mapData.routes) ? mapData.routes : [],
+      svgElement
+    });
+  }
+
   function createBadge(text, className = 'detail-badge') {
     return `<span class="${className}">${escapeHtml(text)}</span>`;
   }
@@ -713,6 +726,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       renderTransportMap();
+      initializeRouteSearchModule();
       setupLayerToggles();
       setupZoomControls();
       console.log('[InteractiveMap] SVG rendering completed');
