@@ -1738,7 +1738,7 @@ footer a {
   }
 
   .map-controls label,
-  .map-zoom-button {
+.map-zoom-button {
     width: 100%;
     justify-content: center;
   }
