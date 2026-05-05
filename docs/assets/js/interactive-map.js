@@ -1,18 +1,14 @@
 /**
  * Interactive Map v0.1
  * SVG描画・表示制御・詳細パネル担当
- *
- * 機能：
- * - Map Data読み込み
- * - SVG地図描画（ノード・ルート・危険区域）
- * - レイヤー切替
- * - クリックで詳細表示
- * - エラーハンドリング
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  const SVG_NS = 'http://www.w3.org/2000/svg';
   const BASE_PATH = '../data/map/';
-  const CACHE_BUSTER = '20260505';
+  const CACHE_BUSTER = '20260505b';
+  const DEFAULT_VIEW_BOX = { x: 0, y: 0, width: 10000, height: 10000 };
+  const MIN_VIEW_BOX_SIZE = 2200;
   const DATA_FILES = [
     { key: 'continents', url: 'continents.json' },
     { key: 'regions', url: 'regions.json' },
@@ -22,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const mapData = {};
+  const currentViewBox = { ...DEFAULT_VIEW_BOX };
   const countElements = {
     continents: document.getElementById('count-continents'),
     regions: document.getElementById('count-regions'),
@@ -35,23 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
     routes: document.getElementById('routes-preview'),
     hazards: document.getElementById('hazards-preview')
   };
-
-  // SVG関連要素
   const svgElement = document.getElementById('transport-map-svg');
   const detailPanel = document.getElementById('map-detail-panel');
   const detailContent = document.getElementById('map-detail-content');
-
-  // レイヤー切替チェックボックス
   const layerToggles = document.querySelectorAll('input[data-layer-toggle]');
+  const zoomInButton = document.getElementById('map-zoom-in');
+  const zoomOutButton = document.getElementById('map-zoom-out');
+  const zoomResetButton = document.getElementById('map-zoom-reset');
 
-  // HTMLエスケープ
+  function createSvgElement(tagName) {
+    return document.createElementNS(SVG_NS, tagName);
+  }
+
   function escapeHtml(text) {
     const div = document.createElement('div');
-    div.textContent = text;
+    div.textContent = String(text ?? '');
     return div.innerHTML;
   }
 
-  // エラーメッセージ表示
   function showError(message) {
     if (messageElement) {
       messageElement.textContent = message;
@@ -60,20 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('[InteractiveMap]', message);
   }
 
-  // 警告メッセージ表示（コンソール＋ページ内）
   function showWarning(message) {
     console.warn('[InteractiveMap]', message);
     if (messageElement) {
       const warningEl = document.createElement('p');
       warningEl.className = 'map-warning';
       warningEl.textContent = message;
-      warningEl.style.cssText = 'color: #c00; font-size: 0.85rem; margin-top: 0.5rem;';
       messageElement.appendChild(warningEl);
       messageElement.hidden = false;
     }
   }
 
-  // 個別データ読み込み
   function fetchData(key, url) {
     const requestUrl = `${BASE_PATH + url}?v=${CACHE_BUSTER}`;
     return fetch(requestUrl)
@@ -87,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Array.isArray(data)) {
           mapData[key] = data;
           return data.length;
-        } else if (typeof data === 'object' && data !== null) {
+        }
+        if (typeof data === 'object' && data !== null) {
           mapData[key] = data;
           if (data.nodes) return data.nodes.length;
           if (data.routes) return data.routes.length;
@@ -98,13 +94,120 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // ===== SVG描画関数群 =====
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
 
-  // ノード描画
+  function formatArray(values, fallback = 'なし') {
+    if (!Array.isArray(values) || values.length === 0) {
+      return fallback;
+    }
+    return values.map(item => escapeHtml(item)).join(', ');
+  }
+
+  function formatMonths(months) {
+    if (!Array.isArray(months) || months.length === 0) {
+      return 'なし';
+    }
+    return months.join(', ');
+  }
+
+  function formatCoordinate(position) {
+    return `X: ${position?.x ?? '?'}, Y: ${position?.y ?? '?'}, Z: ${position?.z ?? 0}`;
+  }
+
+  function appendTitle(svgParent, text) {
+    const title = createSvgElement('title');
+    title.textContent = text;
+    svgParent.appendChild(title);
+  }
+
+  function enableMapInteraction(target, onActivate) {
+    target.setAttribute('tabindex', '0');
+    target.setAttribute('role', 'button');
+    target.addEventListener('click', event => {
+      event.stopPropagation();
+      onActivate();
+    });
+    target.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        onActivate();
+      }
+    });
+  }
+
+  function getNodeVisual(type, isMajor) {
+    if (type === 'capital') return { className: 'node-capital', radius: 48 };
+    if (type === 'port' || type === 'seaport') return { className: 'node-port', radius: isMajor ? 30 : 24 };
+    if (type === 'airport' || type === 'air_terminal') return { className: 'node-airport', radius: isMajor ? 32 : 25 };
+    if (type === 'oasis') return { className: 'node-oasis', radius: 24 };
+    if (type === 'floating_island') return { className: 'node-floating-island', radius: isMajor ? 30 : 24 };
+    if (type === 'underwater_city') return { className: 'node-underwater-city', radius: isMajor ? 30 : 24 };
+    if (type === 'forbidden_gate' || type === 'warp_gate') return { className: 'node-warp-gate', radius: 28 };
+    return { className: 'node-city', radius: isMajor ? 28 : 22 };
+  }
+
+  function getRouteVisual(type, status) {
+    if (type === 'road') return { layer: 'road', className: 'route-road', stroke: '#9d5a31', width: 24, hoverWidth: 34, dasharray: '' };
+    if (type === 'caravan') return { layer: 'road', className: 'route-caravan', stroke: '#bb8a43', width: 20, hoverWidth: 30, dasharray: '20 14 4 14' };
+    if (type === 'ice_road') return { layer: 'road', className: 'route-ice-road', stroke: '#9fb7cb', width: 20, hoverWidth: 30, dasharray: '16 10' };
+    if (type === 'rail') return { layer: 'road', className: 'route-rail', stroke: '#4b4f5a', width: 30, hoverWidth: 40, dasharray: '' };
+    if (type === 'sea') return { layer: 'sea', className: 'route-sea', stroke: '#317fcb', width: 18, hoverWidth: 28, dasharray: '18 18' };
+    if (type === 'air') return { layer: 'air', className: 'route-air', stroke: '#8558c7', width: 18, hoverWidth: 28, dasharray: '14 14' };
+    if (type === 'submarine') return { layer: 'special', className: 'route-submarine', stroke: '#1f9aa1', width: 20, hoverWidth: 30, dasharray: '10 8' };
+    if (type === 'tunnel' || type === 'underwater_tunnel') {
+      return {
+        layer: 'special',
+        className: type === 'tunnel' ? 'route-tunnel' : 'route-underwater-tunnel',
+        stroke: type === 'tunnel' ? '#67636a' : '#2389a8',
+        width: 20,
+        hoverWidth: 30,
+        dasharray: '12 10'
+      };
+    }
+
+    const isForbidden = status === 'forbidden' || type === 'forbidden_path';
+    return {
+      layer: 'special',
+      className: isForbidden ? 'route-forbidden' : 'route-warp',
+      stroke: isForbidden ? '#9b3441' : '#9150b8',
+      width: 22,
+      hoverWidth: 32,
+      dasharray: isForbidden ? '8 10 2 10' : '8 12'
+    };
+  }
+
+  function getHazardVisual(type, severity) {
+    const severityValue = clamp(Number(severity) || 1, 1, 5);
+    const baseOpacity = (0.12 + severityValue * 0.035).toFixed(3);
+
+    if (type === 'ice_sea' || type === 'ice') {
+      return { className: 'hazard-ice', fill: '#5f95c8', stroke: '#3a6f9a', opacity: baseOpacity };
+    }
+    if (type === 'time_distortion') {
+      return { className: 'hazard-time', fill: '#8c56bf', stroke: '#69328e', opacity: (0.14 + severityValue * 0.04).toFixed(3) };
+    }
+    if (type === 'forbidden_zone') {
+      return { className: 'hazard-forbidden', fill: '#9d3947', stroke: '#6f202a', opacity: (0.15 + severityValue * 0.04).toFixed(3) };
+    }
+    if (type === 'pirate_sea' || type === 'monster_sea') {
+      return { className: 'hazard-sea-danger', fill: '#a54c3d', stroke: '#7d2c22', opacity: baseOpacity };
+    }
+    if (type === 'storm') {
+      return { className: 'hazard-storm', fill: '#8567a8', stroke: '#5c4575', opacity: baseOpacity };
+    }
+    return { className: 'hazard-default', fill: '#b86b44', stroke: '#8c3b2c', opacity: baseOpacity };
+  }
+
   function renderNodes(svg, nodes) {
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('id', 'layer-nodes');
-    g.setAttribute('data-layer', 'nodes');
+    const layerGroup = createSvgElement('g');
+    layerGroup.setAttribute('id', 'layer-nodes');
+    layerGroup.setAttribute('data-layer', 'nodes');
+
+    const labelGroup = createSvgElement('g');
+    labelGroup.setAttribute('id', 'layer-node-labels');
+    labelGroup.setAttribute('data-layer', 'labels');
 
     nodes.forEach(node => {
       if (!node.position || node.position.x === undefined || node.position.y === undefined) {
@@ -118,307 +221,199 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = node.name || node.id || 'unnamed';
       const transportRoles = node.transport_roles || [];
       const tags = node.tags || [];
+      const isMajor = type === 'capital' || transportRoles.includes('major_hub') || transportRoles.includes('road_hub') || tags.includes('major_hub');
+      const visual = getNodeVisual(type, isMajor);
 
-      // 主要ノード判定
-      const isMajor = type === 'capital' ||
-                      transportRoles.includes('major_hub') ||
-                      transportRoles.includes('road_hub') ||
-                      tags.includes('major_hub');
-
-      // ノード種別からクラス判定
-      let nodeClass = 'node-city';
-      if (type === 'capital') nodeClass = 'node-capital';
-      else if (type === 'port' || type === 'seaport') nodeClass = 'node-port';
-      else if (type === 'airport' || type === 'air_terminal') nodeClass = 'node-airport';
-      else if (type === 'oasis') nodeClass = 'node-oasis';
-      else if (type === 'floating_island') nodeClass = 'node-floating-island';
-      else if (type === 'underwater_city') nodeClass = 'node-underwater-city';
-      else if (type === 'forbidden_gate' || type === 'warp_gate') nodeClass = 'node-warp-gate';
-
-      // 円の半径
-      const radius = type === 'capital' ? 30 : (isMajor ? 20 : 12);
-
-      // ノードグループ（円＋ラベル）
-      const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      nodeGroup.setAttribute('class', `map-node ${nodeClass}`);
+      const nodeGroup = createSvgElement('g');
+      nodeGroup.setAttribute('class', `map-node ${visual.className}`);
       nodeGroup.setAttribute('data-layer', 'nodes');
-      nodeGroup.setAttribute('data-node-id', node.id);
-      nodeGroup.style.cursor = 'pointer';
+      nodeGroup.setAttribute('data-node-id', node.id || name);
+      nodeGroup.style.setProperty('--node-radius', String(visual.radius));
+      nodeGroup.setAttribute('aria-label', `${name} の詳細を表示`);
 
-      // 円
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('cx', x);
-      circle.setAttribute('cy', y);
-      circle.setAttribute('r', radius);
-      circle.setAttribute('stroke', '#333');
-      circle.setAttribute('stroke-width', type === 'capital' ? 3 : 2);
-      circle.setAttribute('fill', getNodeColor(type, nodeClass));
+      const ring = createSvgElement('circle');
+      ring.setAttribute('class', 'map-node-ring');
+      ring.setAttribute('cx', x);
+      ring.setAttribute('cy', y);
+      ring.setAttribute('r', visual.radius + 5);
 
-      // ホバー効果用の透明円（当たり判定拡大）
-      const hitCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      hitCircle.setAttribute('cx', x);
-      hitCircle.setAttribute('cy', y);
-      hitCircle.setAttribute('r', radius + 10);
-      hitCircle.setAttribute('fill', 'transparent');
-      hitCircle.style.pointerEvents = 'all';
+      const core = createSvgElement('circle');
+      core.setAttribute('class', 'map-node-core');
+      core.setAttribute('cx', x);
+      core.setAttribute('cy', y);
+      core.setAttribute('r', visual.radius);
 
-      nodeGroup.appendChild(circle);
-      nodeGroup.appendChild(hitCircle);
+      const hitArea = createSvgElement('circle');
+      hitArea.setAttribute('class', 'map-node-hitarea');
+      hitArea.setAttribute('cx', x);
+      hitArea.setAttribute('cy', y);
+      hitArea.setAttribute('r', visual.radius + 22);
 
-      // 主要ノードのみラベル表示
+      appendTitle(nodeGroup, name);
+      nodeGroup.appendChild(ring);
+      nodeGroup.appendChild(core);
+      nodeGroup.appendChild(hitArea);
+      enableMapInteraction(nodeGroup, () => showNodeDetail(node));
+      layerGroup.appendChild(nodeGroup);
+
       if (isMajor) {
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', x);
-        text.setAttribute('y', y - radius - 5);
-        text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('font-size', type === 'capital' ? '24' : '18');
-        text.setAttribute('fill', '#333');
-        text.setAttribute('font-weight', type === 'capital' ? 'bold' : 'normal');
-        text.textContent = name;
-        nodeGroup.appendChild(text);
+        const label = createSvgElement('text');
+        label.setAttribute('class', `map-label map-node-label ${visual.className}`);
+        label.setAttribute('data-layer', 'labels');
+        label.setAttribute('x', x);
+        label.setAttribute('y', y - visual.radius - 26);
+        label.setAttribute('text-anchor', 'middle');
+        label.textContent = name;
+        labelGroup.appendChild(label);
       }
-
-      // クリックイベント
-      nodeGroup.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showNodeDetail(node);
-      });
-
-      g.appendChild(nodeGroup);
     });
 
-    svg.appendChild(g);
+    svg.appendChild(layerGroup);
+    svg.appendChild(labelGroup);
   }
 
-  // ノードの色を取得
-  function getNodeColor(type, nodeClass) {
-    if (type === 'capital') return '#FFD700'; // 金
-    if (nodeClass.includes('port')) return '#4169E1'; // 青
-    if (nodeClass.includes('airport') || nodeClass.includes('air')) return '#9370DB'; // 紫
-    if (nodeClass.includes('oasis')) return '#228B22'; // 緑
-    if (nodeClass.includes('warp') || nodeClass.includes('forbidden')) return '#FF4500'; // 橙赤
-    if (nodeClass.includes('underwater') || nodeClass.includes('floating')) return '#20B2AA'; // 青緑
-    return '#CD853F'; // 茶（default都市）
-  }
+  function renderRoutes(svg, routes, nodes) {
+    const nodeById = {};
+    nodes.forEach(node => {
+      if (node.id && node.position) {
+        nodeById[node.id] = node;
+      }
+    });
 
-   // ルート描画
-   function renderRoutes(svg, routes, nodes) {
-     const nodeById = {};
-     nodes.forEach(node => {
-       if (node.id && node.position) {
-         nodeById[node.id] = node;
-       }
-     });
+    const layers = {
+      road: createSvgElement('g'),
+      sea: createSvgElement('g'),
+      air: createSvgElement('g'),
+      special: createSvgElement('g')
+    };
 
-     // レイヤー別にグループ分け
-     const layers = {
-       road: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
-       sea: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
-       air: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
-       special: document.createElementNS('http://www.w3.org/2000/svg', 'g')
-     };
-
-     // 各レイヤーグループにdata-layerを設定
-     layers.road.setAttribute('data-layer', 'road');
-     layers.sea.setAttribute('data-layer', 'sea');
-     layers.air.setAttribute('data-layer', 'air');
-     layers.special.setAttribute('data-layer', 'special');
+    Object.entries(layers).forEach(([layerName, group]) => {
+      group.setAttribute('data-layer', layerName);
+    });
 
     routes.forEach(route => {
       const fromNode = nodeById[route.from];
       const toNode = nodeById[route.to];
 
-      if (!fromNode || !toNode) {
-        showWarning(`ルート ${route.id || 'unknown'}: from/toのノードが見つかりません、スキップします`);
+      if (!fromNode || !toNode || !fromNode.position || !toNode.position) {
+        showWarning(`ルート ${route.id || 'unknown'}: from/toノード情報不足、スキップします`);
         return;
       }
 
-      if (!fromNode.position || !toNode.position) {
-        showWarning(`ルート ${route.id}: ノードのpositionデータが不足、スキップします`);
-        return;
-      }
-
-      const x1 = fromNode.position.x;
-      const y1 = fromNode.position.y;
-      const x2 = toNode.position.x;
-      const y2 = toNode.position.y;
-
-      const type = route.type || 'unknown';
-      const mode = route.mode || '';
+      const visual = getRouteVisual(route.type || 'unknown', route.status || 'unknown');
       const name = route.name || route.id || 'unnamed';
-
-      // ルート種別からレイヤーとクラスを判定
-      let layer, routeClass, stroke, strokeWidth, strokeDasharray;
-
-      if (type === 'road' || type === 'rail' || type === 'caravan' || type === 'ice_road') {
-        layer = 'road';
-        routeClass = `route-${type}`;
-        stroke = type === 'rail' ? '#2F4F4F' : '#8B4513'; // 鉄道:暗灰色, 陸路:茶色
-        strokeWidth = type === 'rail' ? 6 : 3;
-        strokeDasharray = type === 'caravan' || type === 'ice_road' ? '8,4' : 'none';
-      } else if (type === 'sea') {
-        layer = 'sea';
-        routeClass = 'route-sea';
-        stroke = '#1E90FF'; // 青
-        strokeWidth = 2;
-        strokeDasharray = '6,4'; // 破線
-      } else if (type === 'air') {
-        layer = 'air';
-        routeClass = 'route-air';
-        stroke = '#9370DB'; // 紫
-        strokeWidth = 2;
-        strokeDasharray = '6,4'; // 破線
-      } else {
-        layer = 'special';
-        routeClass = `route-${type}`;
-        // 特殊交通の種別ごとに色を分ける
-        if (type === 'submarine' || type === 'underwater_tunnel') {
-          stroke = '#00CED1'; // 青緑
-        } else if (type === 'warp' || type === 'forbidden_path') {
-          stroke = '#FF4500'; // 橙赤
-        } else if (type === 'tunnel') {
-          stroke = '#696969'; // 灰色
-        } else {
-          stroke = '#8A2BE2'; // 紫（デフォルト）
-        }
-        strokeWidth = 3;
-        strokeDasharray = type.includes('warp') || type.includes('forbidden') ? '4,2' : 'none';
+      const routeGroup = createSvgElement('g');
+      routeGroup.setAttribute('class', `map-route ${visual.className}`);
+      routeGroup.setAttribute('data-layer', visual.layer);
+      routeGroup.setAttribute('data-route-id', route.id || name);
+      routeGroup.style.setProperty('--route-color', visual.stroke);
+      routeGroup.style.setProperty('--route-width', String(visual.width));
+      routeGroup.style.setProperty('--route-hover-width', String(visual.hoverWidth));
+      routeGroup.style.setProperty('--route-hit-width', String(Math.max(visual.width + 22, 34)));
+      if (visual.dasharray) {
+        routeGroup.style.setProperty('--route-dasharray', visual.dasharray);
       }
+      routeGroup.setAttribute('aria-label', `${name} の詳細を表示`);
 
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      path.setAttribute('x1', x1);
-      path.setAttribute('y1', y1);
-      path.setAttribute('x2', x2);
-      path.setAttribute('y2', y2);
-      path.setAttribute('stroke', stroke);
-      path.setAttribute('stroke-width', strokeWidth);
-      if (strokeDasharray !== 'none') {
-        path.setAttribute('stroke-dasharray', strokeDasharray);
-      }
-      path.setAttribute('stroke-linecap', 'round');
-      path.setAttribute('class', `map-route ${routeClass}`);
-      path.setAttribute('data-layer', layer);
-      path.setAttribute('data-route-id', route.id);
-      path.style.cursor = 'pointer';
+      const line = createSvgElement('line');
+      line.setAttribute('class', 'map-route-visual');
+      line.setAttribute('x1', fromNode.position.x);
+      line.setAttribute('y1', fromNode.position.y);
+      line.setAttribute('x2', toNode.position.x);
+      line.setAttribute('y2', toNode.position.y);
 
-      // クリックイベント
-      path.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showRouteDetail(route, fromNode, toNode);
-      });
+      const hitArea = createSvgElement('line');
+      hitArea.setAttribute('class', 'map-route-hitarea');
+      hitArea.setAttribute('x1', fromNode.position.x);
+      hitArea.setAttribute('y1', fromNode.position.y);
+      hitArea.setAttribute('x2', toNode.position.x);
+      hitArea.setAttribute('y2', toNode.position.y);
 
-      layers[layer].appendChild(path);
+      appendTitle(routeGroup, name);
+      routeGroup.appendChild(line);
+      routeGroup.appendChild(hitArea);
+      enableMapInteraction(routeGroup, () => showRouteDetail(route, fromNode, toNode));
+      layers[visual.layer].appendChild(routeGroup);
     });
 
-    Object.values(layers).forEach(layerGroup => {
-      if (layerGroup.childNodes.length > 0) {
-        svg.appendChild(layerGroup);
+    Object.values(layers).forEach(group => {
+      if (group.childNodes.length > 0) {
+        svg.appendChild(group);
       }
     });
   }
 
-  // 危険区域描画
   function renderHazards(svg, hazards) {
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('id', 'layer-hazards');
-    g.setAttribute('data-layer', 'hazards');
+    const group = createSvgElement('g');
+    group.setAttribute('id', 'layer-hazards');
+    group.setAttribute('data-layer', 'hazards');
 
     hazards.forEach(hazard => {
-      if (!hazard.center || hazard.center.x === undefined || hazard.center.y === undefined) {
-        showWarning(`危険区域 ${hazard.id || 'unknown'}: centerデータ不足、スキップします`);
+      if (!hazard.center || hazard.center.x === undefined || hazard.center.y === undefined || !hazard.radius) {
+        showWarning(`危険区域 ${hazard.id || 'unknown'}: center/radiusデータ不足、スキップします`);
         return;
       }
 
-      if (!hazard.radius) {
-        showWarning(`危険区域 ${hazard.id || 'unknown'}: radiusデータ不足、スキップします`);
-        return;
-      }
-
-      const x = hazard.center.x;
-      const y = hazard.center.y;
-      const radius = hazard.radius;
-      const type = hazard.type || 'unknown';
       const name = hazard.name || hazard.id || 'unnamed';
-      const severity = hazard.severity || 1;
+      const visual = getHazardVisual(hazard.type || 'unknown', hazard.severity || 1);
+      const severity = clamp(Number(hazard.severity) || 1, 1, 5);
+      const hazardGroup = createSvgElement('g');
+      hazardGroup.setAttribute('class', `map-hazard ${visual.className}`);
+      hazardGroup.setAttribute('data-layer', 'hazards');
+      hazardGroup.setAttribute('data-severity', String(severity));
+      hazardGroup.setAttribute('data-hazard-id', hazard.id || name);
+      hazardGroup.style.setProperty('--hazard-fill', visual.fill);
+      hazardGroup.style.setProperty('--hazard-stroke', visual.stroke);
+      hazardGroup.style.setProperty('--hazard-opacity', visual.opacity);
+      hazardGroup.setAttribute('aria-label', `${name} の詳細を表示`);
 
-      // 危険区域クラス
-      let hazardClass = `hazard-${type}`;
+      const area = createSvgElement('circle');
+      area.setAttribute('class', 'map-hazard-area');
+      area.setAttribute('cx', hazard.center.x);
+      area.setAttribute('cy', hazard.center.y);
+      area.setAttribute('r', hazard.radius);
 
-      // 色と透明度を危険度に応じて設定
-      const opacity = 0.2 + (severity * 0.15); // severity 1-5 で 0.35-0.95
-      const fillColor = getHazardColor(type);
+      const hitArea = createSvgElement('circle');
+      hitArea.setAttribute('class', 'map-hazard-hitarea');
+      hitArea.setAttribute('cx', hazard.center.x);
+      hitArea.setAttribute('cy', hazard.center.y);
+      hitArea.setAttribute('r', hazard.radius + 32);
 
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('cx', x);
-      circle.setAttribute('cy', y);
-      circle.setAttribute('r', radius);
-      circle.setAttribute('fill', fillColor);
-      circle.setAttribute('fill-opacity', opacity);
-      circle.setAttribute('stroke', fillColor);
-      circle.setAttribute('stroke-width', 2);
-      circle.setAttribute('class', `map-hazard ${hazardClass}`);
-      circle.setAttribute('data-layer', 'hazards');
-      circle.setAttribute('data-severity', severity);
-      circle.style.cursor = 'pointer';
-
-      // クリックイベント
-      circle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showHazardDetail(hazard);
-      });
-
-      g.appendChild(circle);
+      appendTitle(hazardGroup, name);
+      hazardGroup.appendChild(area);
+      hazardGroup.appendChild(hitArea);
+      enableMapInteraction(hazardGroup, () => showHazardDetail(hazard));
+      group.appendChild(hazardGroup);
     });
 
-    svg.appendChild(g);
+    svg.appendChild(group);
   }
 
-  // 危険区域の色を取得
-  function getHazardColor(type) {
-    if (type === 'sandstorm') return '#D2691E'; // チョコレート
-    if (type === 'pirate_sea' || type === 'pirate') return '#8B0000'; // 暗赤
-    if (type === 'ice_sea' || type === 'ice') return '#4682B4'; // 鋼青
-    if (type === 'time_distortion') return '#8A2BE2'; // 藍紫
-    if (type === 'forbidden_zone') return '#4B0082'; // インディゴ
-    if (type === 'volcanic_zone') return '#FF4500'; // オレンジ赤
-    return '#808080'; // 灰色（デフォルト）
+  function renderContinents(svg, continents) {
+    const group = createSvgElement('g');
+    group.setAttribute('id', 'layer-continents');
+    group.setAttribute('data-layer', 'labels');
+
+    continents.forEach(continent => {
+      const center = continent.center || {};
+      const label = createSvgElement('text');
+      label.setAttribute('class', 'map-label map-continent-label');
+      label.setAttribute('data-layer', 'labels');
+      label.setAttribute('x', center.x ?? 5000);
+      label.setAttribute('y', center.y ?? 5000);
+      label.setAttribute('text-anchor', 'middle');
+      label.textContent = continent.name || continent.id || 'unknown';
+      group.appendChild(label);
+    });
+
+    svg.appendChild(group);
   }
 
-   // 大陸・地域描画（簡易：ラベルのみ）
-   function renderContinents(svg, continents) {
-     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-     g.setAttribute('id', 'layer-continents');
-     g.setAttribute('data-layer', 'continents');
-
-     continents.forEach(continent => {
-       const name = continent.name || continent.id || 'unknown';
-       // continent.center を使用
-       const center = continent.center;
-       let x = 5000, y = 5000;
-       if (center && center.x !== undefined && center.y !== undefined) {
-         x = center.x;
-         y = center.y;
-       }
-
-       const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-       text.setAttribute('x', x);
-       text.setAttribute('y', y);
-       text.setAttribute('text-anchor', 'middle');
-       text.setAttribute('font-size', '48');
-       text.setAttribute('fill', '#666');
-       text.setAttribute('font-weight', 'bold');
-       text.setAttribute('opacity', '0.3');
-       text.textContent = name;
-       g.appendChild(text);
-     });
-
-     svg.appendChild(g);
-   }
-
-  // メイン描画関数
   function renderTransportMap() {
-    // 既存の内容をクリア
+    if (!svgElement) return;
+
     svgElement.innerHTML = '';
+    resetZoom();
 
     const nodes = mapData.nodes || [];
     const routes = mapData.routes || [];
@@ -432,119 +427,194 @@ document.addEventListener('DOMContentLoaded', () => {
       continents: continents.length
     });
 
-    // 描画順序: 大陸 → 危険区域 → ルート → ノード
     renderContinents(svgElement, continents);
     renderHazards(svgElement, hazards);
     renderRoutes(svgElement, routes, nodes);
     renderNodes(svgElement, nodes);
   }
 
-  // ===== 詳細パネル表示関数群 =====
+  function createBadge(text, className = 'detail-badge') {
+    return `<span class="${className}">${escapeHtml(text)}</span>`;
+  }
+
+  function createStatusBadge(status) {
+    return createBadge(status || 'unknown', `detail-badge status-badge status-${escapeHtml(status || 'unknown')}`);
+  }
+
+  function createSeverityBadge(value) {
+    return createBadge(`危険度 ${value ?? '?'}`, `detail-badge severity-badge severity-level-${clamp(Number(value) || 1, 1, 5)}`);
+  }
+
+  function formatEffects(effects) {
+    if (!effects || Object.keys(effects).length === 0) {
+      return '<span class="detail-muted">なし</span>';
+    }
+
+    const items = Object.entries(effects)
+      .map(([key, value]) => `<li><span class="detail-effect-key">${escapeHtml(key)}</span><span>${escapeHtml(value)}</span></li>`)
+      .join('');
+    return `<ul class="detail-inline-list">${items}</ul>`;
+  }
+
+  function renderDetailCard(kindLabel, title, badges, rows, description) {
+    const badgeHtml = badges.filter(Boolean).join('');
+    const rowHtml = rows
+      .map(({ term, value, html }) => `<dt>${escapeHtml(term)}</dt><dd>${html ? value : escapeHtml(value ?? 'なし')}</dd>`)
+      .join('');
+
+    detailContent.innerHTML = `
+      <article class="detail-card">
+        <header class="detail-header">
+          <p class="detail-kicker">${escapeHtml(kindLabel)}</p>
+          <h3>${escapeHtml(title)}</h3>
+          ${badgeHtml ? `<div class="detail-badge-list">${badgeHtml}</div>` : ''}
+        </header>
+        <dl class="detail-list">${rowHtml}</dl>
+        <div class="detail-description"><p>${escapeHtml(description || '説明なし')}</p></div>
+      </article>
+    `;
+    detailPanel.hidden = false;
+  }
 
   function showNodeDetail(node) {
     if (!detailContent || !detailPanel) return;
-    const continent = mapData.continents?.find(c => c.id === node.continent_id) || null;
-    const region = mapData.regions?.find(r => r.id === node.region_id) || null;
 
-    let html = `
-      <h3>${escapeHtml(node.name || node.id)}</h3>
-      <dl class="detail-list">
-        <dt>ID</dt><dd>${escapeHtml(node.id)}</dd>
-        <dt>種別</dt><dd>${escapeHtml(node.type)}</dd>
-        <dt>大陸</dt><dd>${continent ? escapeHtml(continent.name) : escapeHtml(node.continent_id || '不明')}</dd>
-        <dt>地域</dt><dd>${region ? escapeHtml(region.name) : escapeHtml(node.region_id || '不明')}</dd>
-        <dt>座標</dt><dd>X: ${node.position?.x ?? '?'}, Y: ${node.position?.y ?? '?'}, Z: ${node.position?.z ?? 0}</dd>
-        <dt>交通ロール</dt><dd>${(node.transport_roles || []).join(', ') || 'なし'}</dd>
-        <dt>施設</dt><dd>${(node.facilities || []).join(', ') || 'なし'}</dd>
-        <dt>タグ</dt><dd>${(node.tags || []).join(', ') || 'なし'}</dd>
-      </dl>
-      <p class="detail-description">${escapeHtml(node.description || '説明なし')}</p>
-    `;
+    const continent = mapData.continents?.find(item => item.id === node.continent_id) || null;
+    const region = mapData.regions?.find(item => item.id === node.region_id) || null;
+    const badges = [createBadge(node.type || 'unknown')];
 
-    detailContent.innerHTML = html;
-    detailPanel.hidden = false;
+    if ((node.transport_roles || []).includes('major_hub') || (node.tags || []).includes('major_hub')) {
+      badges.push(createBadge('主要拠点'));
+    }
+
+    renderDetailCard(
+      'ノード',
+      node.name || node.id,
+      badges,
+      [
+        { term: 'ID', value: node.id || '不明' },
+        { term: '種別', value: node.type || 'unknown' },
+        { term: '大陸', value: continent?.name || node.continent_id || '不明' },
+        { term: '地域', value: region?.name || node.region_id || '不明' },
+        { term: '座標', value: formatCoordinate(node.position) },
+        { term: '交通ロール', value: formatArray(node.transport_roles) },
+        { term: '施設', value: formatArray(node.facilities) },
+        { term: 'タグ', value: formatArray(node.tags) }
+      ],
+      node.description
+    );
   }
 
   function showRouteDetail(route, fromNode, toNode) {
     if (!detailContent || !detailPanel) return;
-    let html = `
-      <h3>${escapeHtml(route.name || route.id)}</h3>
-      <dl class="detail-list">
-        <dt>ID</dt><dd>${escapeHtml(route.id)}</dd>
-        <dt>種別</dt><dd>${escapeHtml(route.type)}</dd>
-        <dt>交通モード</dt><dd>${escapeHtml(route.mode || '未設定')}</dd>
-        <dt>出発地</dt><dd>${escapeHtml(fromNode?.name || fromNode?.id || route.from)}</dd>
-        <dt>到着地</dt><dd>${escapeHtml(toNode?.name || toNode?.id || route.to)}</dd>
-        <dt>距離</dt><dd>${route.distance_km ?? '?'} km</dd>
-        <dt>所要時間</dt><dd>${route.estimated_time_hours ?? '?'} 時間</dd>
-        <dt>費用</dt><dd>${route.cost_gold ?? '?'} GP</dd>
-        <dt>危険度</dt><dd>${route.danger_level ?? '?'}</dd>
-        <dt>状態</dt><dd><span class="status-badge status-${escapeHtml(route.status || 'unknown')}">${escapeHtml(route.status || 'unknown')}</span></dd>
-        <dt>季節運行</dt><dd>${route.seasonal ? 'はい' : 'いいえ'}</dd>
-        ${route.active_months ? `<dt>運行月</dt><dd>${route.active_months.join(', ')}</dd>` : ''}
-        <dt>運営者</dt><dd>${(route.operators || []).join(', ') || '不明'}</dd>
-        <dt>タグ</dt><dd>${(route.tags || []).join(', ') || 'なし'}</dd>
-      </dl>
-      <p class="detail-description">${escapeHtml(route.description || '説明なし')}</p>
-    `;
 
-    detailContent.innerHTML = html;
-    detailPanel.hidden = false;
+    const isRestricted = route.status === 'restricted' || route.status === 'forbidden' || (route.tags || []).includes('restricted');
+    const badges = [createBadge(route.type || 'unknown'), createStatusBadge(route.status || 'unknown')];
+
+    if (route.seasonal) {
+      badges.push(createBadge('季節運行', 'detail-badge detail-badge-accent'));
+    }
+    if (isRestricted) {
+      badges.push(createBadge('制限あり', 'detail-badge detail-badge-warning'));
+    }
+    if (route.danger_level !== undefined && route.danger_level !== null) {
+      badges.push(createSeverityBadge(route.danger_level));
+    }
+
+    renderDetailCard(
+      'ルート',
+      route.name || route.id,
+      badges,
+      [
+        { term: 'ID', value: route.id || '不明' },
+        { term: '種別', value: route.type || 'unknown' },
+        { term: '交通モード', value: route.mode || '未設定' },
+        { term: '出発地', value: fromNode?.name || fromNode?.id || route.from || '不明' },
+        { term: '到着地', value: toNode?.name || toNode?.id || route.to || '不明' },
+        { term: '距離', value: `${route.distance_km ?? '?'} km` },
+        { term: '所要時間', value: `${route.estimated_time_hours ?? '?'} 時間` },
+        { term: '費用', value: `${route.cost_gold ?? '?'} GP` },
+        { term: '運行月', value: formatMonths(route.active_months) },
+        { term: '運営者', value: formatArray(route.operators, '不明') },
+        { term: 'タグ', value: formatArray(route.tags) }
+      ],
+      route.description
+    );
   }
 
   function showHazardDetail(hazard) {
     if (!detailContent || !detailPanel) return;
-    const continent = mapData.continents?.find(c => c.id === hazard.continent_id) || null;
 
-    let html = `
-      <h3>${escapeHtml(hazard.name || hazard.id)}</h3>
-      <dl class="detail-list">
-        <dt>ID</dt><dd>${escapeHtml(hazard.id)}</dd>
-        <dt>種別</dt><dd>${escapeHtml(hazard.type)}</dd>
-        <dt>大陸</dt><dd>${continent ? escapeHtml(continent.name) : escapeHtml(hazard.continent_id || '不明')}</dd>
-        <dt>中心座標</dt><dd>X: ${hazard.center?.x ?? '?'}, Y: ${hazard.center?.y ?? '?'}</dd>
-        <dt>半径</dt><dd>${hazard.radius ?? '?'}</dd>
-        <dt>危険度</dt><dd><span class="severity-badge">Severity ${hazard.severity ?? '?'}</span></dd>
-        <dt>季節性</dt><dd>${hazard.seasonal ? 'あり' : 'なし'}</dd>
-        ${hazard.active_months ? `<dt>活動月</dt><dd>${hazard.active_months.join(', ')}</dd>` : ''}
-        <dt>効果</dt><dd>${formatEffects(hazard.effects)}</dd>
-      </dl>
-      <p class="detail-description">${escapeHtml(hazard.description || '説明なし')}</p>
-    `;
+    const continent = mapData.continents?.find(item => item.id === hazard.continent_id) || null;
+    const badges = [createBadge(hazard.type || 'unknown'), createSeverityBadge(hazard.severity)];
 
-    detailContent.innerHTML = html;
-    detailPanel.hidden = false;
+    if (hazard.seasonal) {
+      badges.push(createBadge('季節変動', 'detail-badge detail-badge-accent'));
+    }
+
+    renderDetailCard(
+      '危険区域',
+      hazard.name || hazard.id,
+      badges,
+      [
+        { term: 'ID', value: hazard.id || '不明' },
+        { term: '種別', value: hazard.type || 'unknown' },
+        { term: '大陸', value: continent?.name || hazard.continent_id || '不明' },
+        { term: '中心座標', value: formatCoordinate(hazard.center) },
+        { term: '半径', value: `${hazard.radius ?? '?'} km相当` },
+        { term: '活動月', value: formatMonths(hazard.active_months) },
+        { term: '効果', value: formatEffects(hazard.effects), html: true }
+      ],
+      hazard.description
+    );
   }
-
-  function formatEffects(effects) {
-    if (!effects || Object.keys(effects).length === 0) return 'なし';
-    return Object.entries(effects)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join(', ');
-  }
-
-  // ===== レイヤー切替機能 =====
 
   function setupLayerToggles() {
     if (!svgElement) return;
-    layerToggles.forEach(toggle => {
-      toggle.addEventListener('change', (e) => {
-        const layer = e.target.getAttribute('data-layer-toggle');
-        const isVisible = e.target.checked;
 
-        const layerElements = svgElement.querySelectorAll(`[data-layer="${layer}"]`);
-        layerElements.forEach(el => {
-          if (isVisible) {
-            el.classList.remove('map-hidden');
-          } else {
-            el.classList.add('map-hidden');
-          }
+    layerToggles.forEach(toggle => {
+      toggle.addEventListener('change', event => {
+        const layer = event.target.getAttribute('data-layer-toggle');
+        const isVisible = event.target.checked;
+        const elements = svgElement.querySelectorAll(`[data-layer="${layer}"]`);
+        elements.forEach(element => {
+          element.classList.toggle('map-hidden', !isVisible);
         });
       });
     });
   }
 
-  // ===== 既存のプレビュー関数群 =====
+  function applyViewBox() {
+    if (!svgElement) return;
+    svgElement.setAttribute('viewBox', `${currentViewBox.x} ${currentViewBox.y} ${currentViewBox.width} ${currentViewBox.height}`);
+  }
+
+  function resetZoom() {
+    currentViewBox.x = DEFAULT_VIEW_BOX.x;
+    currentViewBox.y = DEFAULT_VIEW_BOX.y;
+    currentViewBox.width = DEFAULT_VIEW_BOX.width;
+    currentViewBox.height = DEFAULT_VIEW_BOX.height;
+    applyViewBox();
+  }
+
+  function zoomBy(factor) {
+    const nextWidth = clamp(Math.round(currentViewBox.width * factor), MIN_VIEW_BOX_SIZE, DEFAULT_VIEW_BOX.width);
+    const nextHeight = clamp(Math.round(currentViewBox.height * factor), MIN_VIEW_BOX_SIZE, DEFAULT_VIEW_BOX.height);
+    const centerX = currentViewBox.x + currentViewBox.width / 2;
+    const centerY = currentViewBox.y + currentViewBox.height / 2;
+
+    currentViewBox.width = nextWidth;
+    currentViewBox.height = nextHeight;
+    currentViewBox.x = clamp(Math.round(centerX - nextWidth / 2), DEFAULT_VIEW_BOX.x, DEFAULT_VIEW_BOX.width - nextWidth);
+    currentViewBox.y = clamp(Math.round(centerY - nextHeight / 2), DEFAULT_VIEW_BOX.y, DEFAULT_VIEW_BOX.height - nextHeight);
+    applyViewBox();
+  }
+
+  function setupZoomControls() {
+    zoomInButton?.addEventListener('click', () => zoomBy(0.8));
+    zoomOutButton?.addEventListener('click', () => zoomBy(1.25));
+    zoomResetButton?.addEventListener('click', resetZoom);
+  }
 
   function renderNodesPreview(nodes) {
     const container = previewContainers.nodes;
@@ -556,18 +626,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const html = items.map(node => {
-      const name = node.name || node.id || ' unnamed';
+    container.innerHTML = items.map(node => {
+      const name = node.name || node.id || 'unnamed';
       const type = node.type || 'unknown';
       const location = node.continent_id || node.region_id || '';
-      return `<div class="data-preview-card">
-        <strong>${escapeHtml(name)}</strong>
-        <span class="type-badge">${escapeHtml(type)}</span>
-        ${location ? `<span class="location">${escapeHtml(location)}</span>` : ''}
-      </div>`;
+      return `<div class="data-preview-card"><strong>${escapeHtml(name)}</strong><span class="type-badge">${escapeHtml(type)}</span>${location ? `<span class="location">${escapeHtml(location)}</span>` : ''}</div>`;
     }).join('');
-
-    container.innerHTML = html;
   }
 
   function renderRoutesPreview(routes) {
@@ -580,18 +644,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const html = items.map(route => {
-      const name = route.name || route.id || ' unnamed';
+    container.innerHTML = items.map(route => {
+      const name = route.name || route.id || 'unnamed';
       const type = route.type || 'unknown';
       const status = route.status || 'unknown';
-      return `<div class="data-preview-card">
-        <strong>${escapeHtml(name)}</strong>
-        <span class="type-badge">${escapeHtml(type)}</span>
-        <span class="status-badge status-${escapeHtml(status)}">${escapeHtml(status)}</span>
-      </div>`;
+      return `<div class="data-preview-card"><strong>${escapeHtml(name)}</strong><span class="type-badge">${escapeHtml(type)}</span><span class="status-badge status-${escapeHtml(status)}">${escapeHtml(status)}</span></div>`;
     }).join('');
-
-    container.innerHTML = html;
   }
 
   function renderHazardsPreview(hazards) {
@@ -604,86 +662,65 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const html = items.map(hazard => {
-      const name = hazard.name || hazard.id || ' unnamed';
+    container.innerHTML = items.map(hazard => {
+      const name = hazard.name || hazard.id || 'unnamed';
       const type = hazard.type || 'unknown';
       const severity = hazard.severity || '?';
-      return `<div class="data-preview-card">
-        <strong>${escapeHtml(name)}</strong>
-        <span class="type-badge">${escapeHtml(type)}</span>
-        <span class="severity-badge">severity ${severity}</span>
-      </div>`;
+      return `<div class="data-preview-card"><strong>${escapeHtml(name)}</strong><span class="type-badge">${escapeHtml(type)}</span><span class="severity-badge severity-level-${clamp(Number(severity) || 1, 1, 5)}">危険度 ${escapeHtml(severity)}</span></div>`;
     }).join('');
-
-    container.innerHTML = html;
   }
 
-  // ステータス更新
   function updateCount(key, count) {
-    const el = countElements[key];
-    if (el) {
-      el.textContent = `${count}件`;
-      el.classList.add('status-ok');
+    const element = countElements[key];
+    if (element) {
+      element.textContent = `${count}件`;
+      element.classList.add('status-ok');
     }
   }
 
   function setErrorCount(key) {
-    const el = countElements[key];
-    if (el) {
-      el.textContent = 'エラー';
-      el.classList.add('status-error');
+    const element = countElements[key];
+    if (element) {
+      element.textContent = 'エラー';
+      element.classList.add('status-error');
     }
   }
 
-  // ===== メイン処理 =====
-
   async function loadAllData() {
-    const promises = DATA_FILES.map(file => {
-      return fetchData(file.key, file.url)
-        .then(count => ({ key: file.key, count }))
-        .catch(err => {
-          console.error(`Failed to load ${file.key}:`, err);
-          setErrorCount(file.key);
-          // エラーでも継続
-          return { key: file.key, count: 0 };
-        });
-    });
+    const promises = DATA_FILES.map(file => fetchData(file.key, file.url)
+      .then(count => ({ key: file.key, count }))
+      .catch(error => {
+        console.error(`Failed to load ${file.key}:`, error);
+        setErrorCount(file.key);
+        return { key: file.key, count: 0 };
+      }));
 
     try {
       const results = await Promise.all(promises);
-      results.forEach(({ key, count }) => {
-        updateCount(key, count);
-      });
+      results.forEach(({ key, count }) => updateCount(key, count));
     } catch (error) {
       showError('データ読み込み中にエラーが発生しました。');
     }
 
-    // プレビュー表示
-    if (mapData.nodes && Array.isArray(mapData.nodes)) {
-      renderNodesPreview(mapData.nodes);
-    }
-    if (mapData.routes && Array.isArray(mapData.routes)) {
-      renderRoutesPreview(mapData.routes);
-    }
-    if (mapData.hazards && Array.isArray(mapData.hazards)) {
-      renderHazardsPreview(mapData.hazards);
+    if (Array.isArray(mapData.nodes)) renderNodesPreview(mapData.nodes);
+    if (Array.isArray(mapData.routes)) renderRoutesPreview(mapData.routes);
+    if (Array.isArray(mapData.hazards)) renderHazardsPreview(mapData.hazards);
+
+    if (!svgElement) {
+      showError('SVG描画領域が見つかりません。interactive-map.html を確認してください。');
+      return;
     }
 
-    // SVG描画実行
-    if (svgElement) {
-      try {
-        renderTransportMap();
-        setupLayerToggles();
-        console.log('[InteractiveMap] SVG rendering completed');
-      } catch (err) {
-        showError('SVG描画に失敗しました: ' + err.message);
-        console.error('[InteractiveMap] Render error:', err);
-      }
-    } else {
-      showError('SVG描画領域が見つかりません。interactive-map.html を確認してください。');
+    try {
+      renderTransportMap();
+      setupLayerToggles();
+      setupZoomControls();
+      console.log('[InteractiveMap] SVG rendering completed');
+    } catch (error) {
+      showError(`SVG描画に失敗しました: ${error.message}`);
+      console.error('[InteractiveMap] Render error:', error);
     }
   }
 
-  // 実行
   loadAllData();
 });

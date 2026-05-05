@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>インタラクティブ交通マップ v0.1 - エターナル・アルカディア設定資料館</title>
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260505">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260505b">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
 </head>
 <body>
@@ -22,102 +22,124 @@
     </ul>
   </nav>
 
-   <main>
-      <section class="intro">
-        <h2>インタラクティブ交通マップ v0.1</h2>
-        <p>
-          このページは、エターナル・アルカディア世界の交通ネットワークをインタラクティブに探索できる地図です。
-          v0.1では、Map Data（JSON）を読み込み、SVGBasedの描画を行います。
-        </p>
-        <p>
-          ノード（拠点）、ルート（交通路）、危険区域を表示し、レイヤー切替や詳細情報確認ができます。
-        </p>
-      </section>
+  <main>
+    <section class="intro">
+      <h2>インタラクティブ交通マップ v0.1</h2>
+      <p>
+        このページは、エターナル・アルカディア世界の交通ネットワークをインタラクティブに探索できる地図です。
+        v0.1では、Map Data（JSON）を読み込み、SVG Based の描画を行います。
+      </p>
+      <p>
+        ノード（拠点）、ルート（交通路）、危険区域を表示し、レイヤー切替や詳細情報確認ができます。
+      </p>
+    </section>
 
-     <section class="map-data-status">
-       <h2>データ読み込み状況</h2>
-       <ul id="map-data-summary" class="map-data-summary">
-         <li><span class="label">Continents:</span> <span id="count-continents" class="count">読み込み中...</span></li>
-         <li><span class="label">Regions:</span> <span id="count-regions" class="count">読み込み中...</span></li>
-         <li><span class="label">Nodes:</span> <span id="count-nodes" class="count">読み込み中...</span></li>
-         <li><span class="label">Routes:</span> <span id="count-routes" class="count">読み込み中...</span></li>
-         <li><span class="label">Hazards:</span> <span id="count-hazards" class="count">読み込み中...</span></li>
-       </ul>
-        <div id="map-data-message" class="gallery-message" hidden></div>
-     </section>
+    <section class="map-data-status">
+      <h2>データ読み込み状況</h2>
+      <ul id="map-data-summary" class="map-data-summary">
+        <li><span class="label">Continents:</span> <span id="count-continents" class="count">読み込み中...</span></li>
+        <li><span class="label">Regions:</span> <span id="count-regions" class="count">読み込み中...</span></li>
+        <li><span class="label">Nodes:</span> <span id="count-nodes" class="count">読み込み中...</span></li>
+        <li><span class="label">Routes:</span> <span id="count-routes" class="count">読み込み中...</span></li>
+        <li><span class="label">Hazards:</span> <span id="count-hazards" class="count">読み込み中...</span></li>
+      </ul>
+      <div id="map-data-message" class="gallery-message" hidden></div>
+    </section>
 
-     <section class="interactive-map-section">
-       <h2>交通マップ</h2>
+    <section class="interactive-map-section">
+      <h2>交通マップ</h2>
 
-        <section class="map-controls" aria-label="地図表示切替">
-          <h2>表示切替</h2>
-          <div class="map-control-list">
-            <label><input type="checkbox" data-layer-toggle="nodes" checked> ノード</label>
-            <label><input type="checkbox" data-layer-toggle="road" checked> 陸路</label>
-            <label><input type="checkbox" data-layer-toggle="sea" checked> 海路</label>
-            <label><input type="checkbox" data-layer-toggle="air" checked> 空路</label>
-            <label><input type="checkbox" data-layer-toggle="special" checked> 特殊交通</label>
-            <label><input type="checkbox" data-layer-toggle="hazards" checked> 危険区域</label>
+      <div class="interactive-map-layout">
+        <div class="interactive-map-stage">
+          <section class="map-controls" aria-label="地図表示切替">
+            <h2>表示切替</h2>
+            <div class="map-control-list">
+              <label><input type="checkbox" data-layer-toggle="nodes" checked> ノード</label>
+              <label><input type="checkbox" data-layer-toggle="labels" checked> ラベル</label>
+              <label><input type="checkbox" data-layer-toggle="road" checked> 陸路</label>
+              <label><input type="checkbox" data-layer-toggle="sea" checked> 海路</label>
+              <label><input type="checkbox" data-layer-toggle="air" checked> 空路</label>
+              <label><input type="checkbox" data-layer-toggle="special" checked> 特殊交通</label>
+              <label><input type="checkbox" data-layer-toggle="hazards" checked> 危険区域</label>
+            </div>
+          </section>
+
+          <div class="map-toolbar" aria-label="地図操作">
+            <p class="map-toolbar-note">ホバーで名前を確認、クリックで詳細を表示できます。</p>
+            <div class="map-zoom-controls" role="group" aria-label="ズーム操作">
+              <button id="map-zoom-in" class="map-zoom-button" type="button">＋ 拡大</button>
+              <button id="map-zoom-out" class="map-zoom-button" type="button">－ 縮小</button>
+              <button id="map-zoom-reset" class="map-zoom-button map-zoom-button-reset" type="button">リセット</button>
+            </div>
           </div>
-        </section>
 
-       <div id="transport-map-canvas" class="transport-map-canvas">
-         <svg
-           id="transport-map-svg"
-           class="transport-map-svg"
-           viewBox="0 0 10000 10000"
-           role="img"
-           aria-label="エターナル・アルカディア交通ネットワーク図"
-         ></svg>
-       </div>
+          <div id="transport-map-canvas" class="transport-map-canvas">
+            <svg
+              id="transport-map-svg"
+              class="transport-map-svg"
+              viewBox="0 0 10000 10000"
+              role="img"
+              aria-label="エターナル・アルカディア交通ネットワーク図"
+            ></svg>
+          </div>
 
-        <section class="map-legend" aria-label="地図凡例">
-          <h2>凡例</h2>
-          <ul class="map-legend-list">
-            <li><span class="legend-symbol legend-node-capital"></span> 首都</li>
-            <li><span class="legend-symbol legend-node-city"></span> 都市</li>
-            <li><span class="legend-symbol legend-node-port"></span> 港</li>
-            <li><span class="legend-symbol legend-node-airport"></span> 空港・空中港</li>
-            <li><span class="legend-line legend-road"></span> 陸路</li>
-            <li><span class="legend-line legend-sea"></span> 海路</li>
-            <li><span class="legend-line legend-air"></span> 空路</li>
-            <li><span class="legend-line legend-special"></span> 特殊交通</li>
-            <li><span class="legend-area legend-hazard"></span> 危険区域</li>
-          </ul>
-        </section>
-     </section>
+          <p class="map-debug-hint">
+            開発時チェック:
+            <code>document.querySelectorAll(&quot;.map-node&quot;).length</code>
+            <code>document.querySelectorAll(&quot;.map-route&quot;).length</code>
+            <code>document.querySelectorAll(&quot;.map-hazard&quot;).length</code>
+          </p>
 
-     <aside id="map-detail-panel" class="map-detail-panel" hidden>
-       <h2>詳細情報</h2>
-       <div id="map-detail-content">
-         <p>地図上のノード、ルート、危険区域を選択してください。</p>
-       </div>
-     </aside>
+          <section class="map-legend" aria-label="地図凡例">
+            <h2>凡例</h2>
+            <ul class="map-legend-list">
+              <li><span class="legend-symbol legend-node-capital"></span> 首都</li>
+              <li><span class="legend-symbol legend-node-city"></span> 都市</li>
+              <li><span class="legend-symbol legend-node-port"></span> 港</li>
+              <li><span class="legend-symbol legend-node-airport"></span> 空港・空中港</li>
+              <li><span class="legend-line legend-road"></span> 陸路</li>
+              <li><span class="legend-line legend-rail"></span> 鉄道</li>
+              <li><span class="legend-line legend-sea"></span> 海路</li>
+              <li><span class="legend-line legend-air"></span> 空路</li>
+              <li><span class="legend-line legend-special"></span> 特殊交通</li>
+              <li><span class="legend-area legend-hazard"></span> 危険区域</li>
+            </ul>
+          </section>
+        </div>
 
-     <section class="map-data-preview">
-       <h2>データプレビュー</h2>
+        <aside id="map-detail-panel" class="map-detail-panel" hidden>
+          <h2>詳細情報</h2>
+          <div id="map-detail-content">
+            <p>地図上のノード、ルート、危険区域を選択してください。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-       <div class="preview-section">
-         <h3>ノード一覧（先頭10件）</h3>
-         <div id="nodes-preview" class="data-preview-list">
-           <p class="loading">読み込み中...</p>
-         </div>
-       </div>
+    <section class="map-data-preview">
+      <h2>データプレビュー</h2>
 
-       <div class="preview-section">
-         <h3>ルート一覧（先頭10件）</h3>
-         <div id="routes-preview" class="data-preview-list">
-           <p class="loading">読み込み中...</p>
-         </div>
-       </div>
+      <div class="preview-section">
+        <h3>ノード一覧（先頭10件）</h3>
+        <div id="nodes-preview" class="data-preview-list">
+          <p class="loading">読み込み中...</p>
+        </div>
+      </div>
 
-       <div class="preview-section">
-         <h3>危険区域一覧（先頭10件）</h3>
-         <div id="hazards-preview" class="data-preview-list">
-           <p class="loading">読み込み中...</p>
-         </div>
-       </div>
-     </section>
+      <div class="preview-section">
+        <h3>ルート一覧（先頭10件）</h3>
+        <div id="routes-preview" class="data-preview-list">
+          <p class="loading">読み込み中...</p>
+        </div>
+      </div>
+
+      <div class="preview-section">
+        <h3>危険区域一覧（先頭10件）</h3>
+        <div id="hazards-preview" class="data-preview-list">
+          <p class="loading">読み込み中...</p>
+        </div>
+      </div>
+    </section>
 
     <section class="nav-links">
       <h2>関連ページ</h2>
@@ -137,7 +159,7 @@
     </p>
   </footer>
 
-  <script src="../assets/js/main.js?v=20260505"></script>
-  <script src="../assets/js/interactive-map.js?v=20260505"></script>
+  <script src="../assets/js/main.js?v=20260505b"></script>
+  <script src="../assets/js/interactive-map.js?v=20260505b"></script>
 </body>
 </html>
