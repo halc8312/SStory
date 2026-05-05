@@ -5,6 +5,7 @@
 
 (() => {
   const SEARCH_RESULT_EMPTY_HTML = '<p class="route-search-placeholder">条件を指定して「検索」を押すと、結果がここに表示されます。</p>';
+  const NODE_SELECT_PLACEHOLDER_HTML = '<option value="">選択してください</option>';
   const ROUTE_SELECTED_CLASS = 'map-route--selected';
   const NODE_START_CLASS = 'map-node--start';
   const NODE_GOAL_CLASS = 'map-node--goal';
@@ -30,6 +31,18 @@
 
   function getRouteLabel(route, fallback = 'unnamed') {
     return route?.name || route?.id || fallback;
+  }
+
+  function formatNodeLabel(node) {
+    return `${node.name} / ${node.type || DEFAULT_NODE_TYPE}`;
+  }
+
+  function createSeasonalWarning(routeLabel) {
+    return `月指定がないため、${routeLabel} の季節運行は判定していません。`;
+  }
+
+  function createSeasonalFallbackWarning(routeLabel, month) {
+    return `${routeLabel} は active_months がないため、月指定 ${month} 月でも利用可能として扱いました。`;
   }
 
   function createPriorityQueue() {
@@ -107,11 +120,11 @@
     if (!selectElement) return;
 
     const currentValue = selectElement.value;
-    const options = ['<option value="">選択してください</option>'];
+    const options = [NODE_SELECT_PLACEHOLDER_HTML];
 
     nodes.forEach(node => {
       options.push(
-        `<option value="${escapeHtml(node.id)}">${escapeHtml(`${node.name} / ${node.type || DEFAULT_NODE_TYPE}`)}</option>`
+        `<option value="${escapeHtml(node.id)}">${escapeHtml(formatNodeLabel(node))}</option>`
       );
     });
 
@@ -174,13 +187,13 @@
       const routeLabel = getRouteLabel(route, '季節ルート');
 
       if (options.month === null) {
-        warnings.push(`月指定がないため、${routeLabel} の季節運行は判定していません。`);
+        warnings.push(createSeasonalWarning(routeLabel));
       } else if (activeMonths.length > 0) {
         if (!activeMonths.includes(options.month)) {
           return { allowed: false, warnings: [] };
         }
       } else {
-        warnings.push(`${routeLabel} は active_months がないため、月指定 ${options.month} 月でも利用可能として扱いました。`);
+        warnings.push(createSeasonalFallbackWarning(routeLabel, options.month));
       }
     }
 
