@@ -195,26 +195,28 @@ document.addEventListener('DOMContentLoaded', () => {
     return '#CD853F'; // 茶（default都市）
   }
 
-  // ルート描画
-  function renderRoutes(svg, routes, nodes) {
-    const nodeById = {};
-    nodes.forEach(node => {
-      if (node.id && node.position) {
-        nodeById[node.id] = node;
-      }
-    });
+   // ルート描画
+   function renderRoutes(svg, routes, nodes) {
+     const nodeById = {};
+     nodes.forEach(node => {
+       if (node.id && node.position) {
+         nodeById[node.id] = node;
+       }
+     });
 
-    // レイヤー別にグループ分け
-    const layers = {
-      road: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
-      sea: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
-      air: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
-      special: document.createElementNS('http://www.w3.org/2000/svg', 'g')
-    };
+     // レイヤー別にグループ分け
+     const layers = {
+       road: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
+       sea: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
+       air: document.createElementNS('http://www.w3.org/2000/svg', 'g'),
+       special: document.createElementNS('http://www.w3.org/2000/svg', 'g')
+     };
 
-    Object.values(layers).forEach(g => {
-      g.setAttribute('data-layer', g === layers.road ? 'road' : g === layers.sea ? 'sea' : g === layers.air ? 'air' : 'special');
-    });
+     // 各レイヤーグループにdata-layerを設定
+     layers.road.setAttribute('data-layer', 'road');
+     layers.sea.setAttribute('data-layer', 'sea');
+     layers.air.setAttribute('data-layer', 'air');
+     layers.special.setAttribute('data-layer', 'special');
 
     routes.forEach(route => {
       const fromNode = nodeById[route.from];
@@ -376,32 +378,36 @@ document.addEventListener('DOMContentLoaded', () => {
     return '#808080'; // 灰色（デフォルト）
   }
 
-  // 大陸・地域描画（簡易：ラベルのみ）
-  function renderContinents(svg, continents) {
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('id', 'layer-continents');
-    g.setAttribute('data-layer', 'continents');
+   // 大陸・地域描画（簡易：ラベルのみ）
+   function renderContinents(svg, continents) {
+     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+     g.setAttribute('id', 'layer-continents');
+     g.setAttribute('data-layer', 'continents');
 
-    continents.forEach(continent => {
-      // 簡易的に continent の中心にラベルを配置
-      // 実際のpositionは regions.json に含まれる可能性があるが、v0.1では簡略化
-      const name = continent.name || continent.id || 'unknown';
-      // 大陸の中心座標を決め打ち（必要に応じてデータから取得）
-      // ここでは仮に中央配置
-      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      text.setAttribute('x', 5000);
-      text.setAttribute('y', 5000);
-      text.setAttribute('text-anchor', 'middle');
-      text.setAttribute('font-size', '48');
-      text.setAttribute('fill', '#666');
-      text.setAttribute('font-weight', 'bold');
-      text.setAttribute('opacity', '0.3');
-      text.textContent = name;
-      g.appendChild(text);
-    });
+     continents.forEach(continent => {
+       const name = continent.name || continent.id || 'unknown';
+       // continent.center を使用
+       const center = continent.center;
+       let x = 5000, y = 5000;
+       if (center && center.x !== undefined && center.y !== undefined) {
+         x = center.x;
+         y = center.y;
+       }
 
-    svg.appendChild(g);
-  }
+       const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+       text.setAttribute('x', x);
+       text.setAttribute('y', y);
+       text.setAttribute('text-anchor', 'middle');
+       text.setAttribute('font-size', '48');
+       text.setAttribute('fill', '#666');
+       text.setAttribute('font-weight', 'bold');
+       text.setAttribute('opacity', '0.3');
+       text.textContent = name;
+       g.appendChild(text);
+     });
+
+     svg.appendChild(g);
+   }
 
   // メイン描画関数
   function renderTransportMap() {

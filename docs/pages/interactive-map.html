@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>インタラクティブ交通マップ（準備版） - エターナル・アルカディア設定資料館</title>
+  <title>インタラクティブ交通マップ v0.1 - エターナル・アルカディア設定資料館</title>
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
 </head>
@@ -23,16 +23,16 @@
   </nav>
 
    <main>
-     <section class="intro">
-       <h2>インタラクティブ交通マップ（準備版）</h2>
-       <p>
-         このページは、将来のWebインタラクティブ地図の土台となるテストページです。
-         v0.1では、GitHub Pages上でMap Data（JSON）を読み込めることを確認します。
-       </p>
-       <p>
-         現在はデータの読み込みと件数表示のみです。実際の地図描画は次の開発フェーズで実装予定です。
-       </p>
-     </section>
+      <section class="intro">
+        <h2>インタラクティブ交通マップ v0.1</h2>
+        <p>
+          このページは、エターナル・アルカディア世界の交通ネットワークをインタラクティブに探索できる地図です。
+          v0.1では、Map Data（JSON）を読み込み、SVGBasedの描画を行います。
+        </p>
+        <p>
+          ノード（拠点）、ルート（交通路）、危険区域を表示し、レイヤー切替や詳細情報確認ができます。
+        </p>
+      </section>
 
      <section class="map-data-status">
        <h2>データ読み込み状況</h2>
@@ -43,7 +43,7 @@
          <li><span class="label">Routes:</span> <span id="count-routes" class="count">読み込み中...</span></li>
          <li><span class="label">Hazards:</span> <span id="count-hazards" class="count">読み込み中...</span></li>
        </ul>
-       <p id="map-data-message" class="gallery-message" hidden></p>
+        <div id="map-data-message" class="gallery-message" hidden></div>
      </section>
 
      <section class="interactive-map-section">
