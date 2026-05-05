@@ -105,6 +105,35 @@
     </section>
 
     <section>
+      <h3>GitHub Pages 公開用コピー</h3>
+      <p>
+        GitHub Pages 上でブラウザが直接 JSON を読み込めるように、
+        <code>world/map-data/data/</code> の正史データを <code>docs/data/map/</code> にコピーしています。
+      </p>
+      <ul>
+        <li><strong>正史データ本体</strong>: <code>world/map-data/data/</code> （Python ツールや設定管理用）</li>
+        <li><strong>公開用コピー</strong>: <code>docs/data/map/</code> （GitHub Pages 上から Fetch 可能）</li>
+      </ul>
+      <p>
+        更新時は <code>world/map-data/data/</code> から手動で同期してください。
+        将来的には GitHub Actions による自動同期を検討中です。
+      </p>
+    </section>
+
+    <section>
+      <h3>インタラクティブ交通マップ（準備版）</h3>
+      <p>
+        <a href="./interactive-map.html">インタラクティブ交通マップ準備ページ</a> では、
+        <code>docs/data/map/</code> の JSON をブラウザの JavaScript で読み込み、
+        ノード・ルート・危険区域の件数を表示しています。
+      </p>
+      <p>
+        v0.1 ではデータの読み込み確認と簡易一覧表示のみです。
+        次のフェーズで実際の地図描画（ノードを点、ルートを線、危険区域を領域で表示）を実装予定です。
+      </p>
+    </section>
+
+    <section>
       <h3>Map Data 資料への導線</h3>
       <p>
         Map Data 関連の設定資料は以下の場所にあります：
