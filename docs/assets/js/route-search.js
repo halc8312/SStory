@@ -451,6 +451,21 @@
     `;
   }
 
+  function updateMessage(messageElement, message, { isError = false } = {}) {
+    if (!messageElement) return;
+
+    if (!message) {
+      messageElement.innerHTML = '';
+      messageElement.hidden = true;
+      messageElement.classList.remove('route-search-message-error');
+      return;
+    }
+
+    messageElement.innerHTML = `<p>${escapeHtml(message)}</p>`;
+    messageElement.hidden = false;
+    messageElement.classList.toggle('route-search-message-error', isError);
+  }
+
   function clearHighlights(svgElement) {
     if (!svgElement) return;
     svgElement.querySelectorAll(`.${ROUTE_SELECTED_CLASS}`).forEach(element => element.classList.remove(ROUTE_SELECTED_CLASS));
@@ -510,6 +525,7 @@
 
   function initializeRouteSearch({ nodes, routes, svgElement }) {
     const form = document.getElementById('route-search-form');
+    const messageElement = document.getElementById('route-search-message');
     const resultElement = document.getElementById('route-search-result');
     const clearButton = document.getElementById('route-clear-button');
     const formElements = {
@@ -537,6 +553,7 @@
         clearHighlights(svgElement);
 
         if (!options.fromId || !options.toId) {
+          updateMessage(messageElement, '出発地と目的地を選択してください。', { isError: true });
           resultElement.innerHTML = renderResult({
             found: false,
             message: '出発地と目的地を選択してください。',
@@ -553,12 +570,16 @@
 
         resultElement.innerHTML = renderResult(result);
         if (result.found) {
+          updateMessage(messageElement, `${result.segments.length} 区間のルートを地図上でハイライトしています。`);
           applyHighlights(svgElement, result);
+        } else {
+          updateMessage(messageElement, result.message || '条件に一致するルートが見つかりませんでした。', { isError: true });
         }
       });
 
       clearButton?.addEventListener('click', () => {
         clearHighlights(svgElement);
+        updateMessage(messageElement, '');
         resultElement.innerHTML = SEARCH_RESULT_EMPTY_HTML;
       });
 
@@ -566,6 +587,7 @@
     }
 
     resultElement.innerHTML = resultElement.innerHTML.trim() || SEARCH_RESULT_EMPTY_HTML;
+    updateMessage(messageElement, '');
 
     return {
       fillNodeSelects() {
