@@ -57,12 +57,23 @@
         ドラッグで移動、ホイールやピンチでズーム、右上のレイヤー切替で表示内容を切り替えられます。
       </p>
       <div id="leaflet-transport-map-message" class="gallery-message" hidden></div>
-      <div
-        id="leaflet-transport-map"
-        class="leaflet-transport-map"
-        role="region"
-        aria-label="Leaflet版インタラクティブ交通マップ"
-      ></div>
+       <div
+         id="leaflet-transport-map"
+         class="leaflet-transport-map"
+         role="region"
+         aria-label="Leaflet版インタラクティブ交通マップ"
+       ></div>
+       <label class="leaflet-opacity-control">
+         世界地図背景の濃さ
+         <input
+           type="range"
+           id="world-map-opacity"
+           min="0"
+           max="1"
+           step="0.05"
+           value="0.82"
+         >
+       </label>
     </section>
 
     <section class="interactive-map-section">

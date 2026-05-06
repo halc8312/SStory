@@ -177,7 +177,7 @@
       let highlightedNodeIds = [];
       let highlightedRouteIds = [];
 
-      const map = L.map(mapElement, {
+       const map = L.map(mapElement, {
         crs: L.CRS.Simple,
         minZoom: -4,
         maxZoom: 4,
@@ -190,13 +190,25 @@
       map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
       map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
 
-      const nodeLayer = L.layerGroup().addTo(map);
+      const WORLD_MAP_IMAGE_URL = '../assets/images/maps/world/world-map.svg';
+      const worldMapLayer = L.imageOverlay(WORLD_MAP_IMAGE_URL, WORLD_BOUNDS, {
+        opacity: 0.82,
+        interactive: false,
+        zIndex: 0
+      }).addTo(map);
+
+      worldMapLayer.on('error', () => {
+        console.warn('[LeafletTransportMap] World map background image failed to load.');
+        showLeafletMessage('世界地図背景画像を読み込めませんでした。交通データのみ表示します。');
+      });
+
+      const hazardLayer = L.layerGroup().addTo(map);
       const roadLayer = L.layerGroup().addTo(map);
       const railLayer = L.layerGroup().addTo(map);
       const seaLayer = L.layerGroup().addTo(map);
       const airLayer = L.layerGroup().addTo(map);
       const specialLayer = L.layerGroup().addTo(map);
-      const hazardLayer = L.layerGroup().addTo(map);
+      const nodeLayer = L.layerGroup().addTo(map);
 
     function getNodeStyle(node) {
       return NODE_STYLE_BY_TYPE[node?.type] || DEFAULT_NODE_STYLE;
@@ -397,38 +409,52 @@
       ));
     });
 
-    L.control.layers(null, {
-      'ノード': nodeLayer,
-      '陸路': roadLayer,
-      '鉄道': railLayer,
-      '海路': seaLayer,
-      '空路': airLayer,
-      '特殊交通': specialLayer,
-      '危険区域': hazardLayer
-    }, { collapsed: false }).addTo(map);
+     L.control.layers(null, {
+       '世界地図背景': worldMapLayer,
+       'ノード': nodeLayer,
+       '陸路': roadLayer,
+       '鉄道': railLayer,
+       '海路': seaLayer,
+       '空路': airLayer,
+       '特殊交通': specialLayer,
+       '危険区域': hazardLayer
+     }, { collapsed: false }).addTo(map);
 
-    /**
-     * Public Leaflet map API for future integrations such as route-search highlighting.
-     * Consumers can access the raw Leaflet map instance, node/route layer maps,
-     * reset the viewport, and apply simple node/route highlighting.
-     */
-      window.EternalArcadiaLeafletMap = {
-        isAvailable: true,
-        map,
-        routeLayerById,
-        nodeMarkerById,
-        fitWorld() {
-          map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
-        },
-        clearHighlights,
-        highlightRouteIds(routeIds = []) {
-          highlightRoutes(routeIds);
-        },
-        focusNodeIds(nodeIds = []) {
-          highlightNodes(nodeIds);
-          focusNodes(nodeIds);
-        }
-      };
+     const opacityInput = document.getElementById('world-map-opacity');
+     if (opacityInput) {
+       opacityInput.addEventListener('input', () => {
+         worldMapLayer.setOpacity(Number(opacityInput.value));
+       });
+     } else {
+       console.warn('[LeafletTransportMap] world-map-opacity input not found.');
+     }
+
+     /**
+      * Public Leaflet map API for future integrations such as route-search highlighting.
+      * Consumers can access the raw Leaflet map instance, node/route layer maps,
+      * reset the viewport, apply simple node/route highlighting, and control world map opacity.
+      */
+       window.EternalArcadiaLeafletMap = {
+         isAvailable: true,
+         map,
+         routeLayerById,
+         nodeMarkerById,
+         worldMapLayer,
+         fitWorld() {
+           map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
+         },
+         setWorldMapOpacity(value) {
+           worldMapLayer.setOpacity(value);
+         },
+         clearHighlights,
+         highlightRouteIds(routeIds = []) {
+           highlightRoutes(routeIds);
+         },
+         focusNodeIds(nodeIds = []) {
+           highlightNodes(nodeIds);
+           focusNodes(nodeIds);
+         }
+       };
 
       if (!datasets.nodes.length && !datasets.routes.length && !datasets.hazards.length) {
         showLeafletMessage(DEFAULT_MESSAGE);
