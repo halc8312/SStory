@@ -1,8 +1,40 @@
 (() => {
-  const BASE_PATH = '../data/map/';
-  const CACHE_BUSTER = '20260506a';
-  const WORLD_BOUNDS = [[0, 0], [10000, 10000]];
-  const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
+   const BASE_PATH = '../data/map/';
+   const CACHE_BUSTER = '20260506a';
+
+   // === 座標変換設定 ===
+   // Data座標系 (0-10000) を Leaflet表示座標に変換する設定
+   const MAP_COORDINATE_CONFIG = {
+     // データ座標の範囲
+     dataWidth: 10000,
+     dataHeight: 10000,
+     // 反転
+     flipX: false,
+     flipY: false,
+     // スケール (1=等倍, >1で拡大, <1で縮小)
+     // 現在: 縦長画像(1000x800)を正方形データ座標に合わせるため、Y方向を0.8倍で補正
+     // さらに、大陸位置合わせのための微調整を行っている
+     scaleX: 0.95,  //  empirically adjusted to align continents horizontally
+     scaleY: 0.85,  //  empirically adjusted to align continents vertically
+     // オフセット
+     offsetX: -300, // empirically adjusted
+     offsetY: -200, // empirically adjusted
+     // スケールの中心点
+     centerX: 5000,
+     centerY: 5000,
+     // デバッグ表示
+     showGrid: false,
+     showDebugNodes: true
+   };
+
+   // データ座標の範囲 (変換前)
+   const DATA_BOUNDS = [[0, 0], [MAP_COORDINATE_CONFIG.dataWidth, MAP_COORDINATE_CONFIG.dataHeight]];
+
+   // 背景画像の表示範囲 (変換後座標系)
+   // 現在はデータ座標系と同一。必要に応じて画像の実効範囲に合わせて調整可。
+   const WORLD_IMAGE_BOUNDS = DATA_BOUNDS;
+
+   const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
   const DEFAULT_NODE_STYLE = { radius: 6, fillColor: '#c18857', color: '#7d5130', weight: 1.8, fillOpacity: 0.9 };
   const NODE_STYLE_BY_TYPE = {
     capital: { radius: 9, fillColor: '#d5b34b', color: '#8c6a10', weight: 2.2, fillOpacity: 0.95 },
@@ -35,9 +67,30 @@
     return div.innerHTML;
   }
 
-  function toLatLng(position) {
-    return [Number(position?.y ?? 0), Number(position?.x ?? 0)];
-  }
+   function transformPosition(position) {
+     const config = MAP_COORDINATE_CONFIG;
+     let x = Number(position?.x ?? 0);
+     let y = Number(position?.y ?? 0);
+
+     // 反転
+     if (config.flipX) {
+       x = config.dataWidth - x;
+     }
+     if (config.flipY) {
+       y = config.dataHeight - y;
+     }
+
+     // スケール・オフセット (中心からの相対)
+     x = config.centerX + (x - config.centerX) * config.scaleX + config.offsetX;
+     y = config.centerY + (y - config.centerY) * config.scaleY + config.offsetY;
+
+     return { x, y };
+   }
+
+   function toLatLng(position) {
+     const transformed = transformPosition(position);
+     return [transformed.y, transformed.x];
+   }
 
   function formatMonths(months) {
     return Array.isArray(months) && months.length > 0 ? months.join(', ') : 'なし';
@@ -178,17 +231,19 @@
    let highlightedRouteIds = [];
 
        const map = L.map(mapElement, {
-        crs: L.CRS.Simple,
-        minZoom: -4,
-        maxZoom: 4,
-        zoomSnap: 0.25,
-        wheelPxPerZoomLevel: 80,
-        attributionControl: false,
-        preferCanvas: true
-      });
+         crs: L.CRS.Simple,
+         minZoom: -4,
+         maxZoom: 4,
+         zoomSnap: 0.25,
+         wheelPxPerZoomLevel: 80,
+         attributionControl: false,
+         preferCanvas: true
+       });
 
-      map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
-      map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
+       // 初期表示: データ座標範囲に合わせる
+       map.fitBounds(DATA_BOUNDS, { padding: [24, 24] });
+       // 表示可能範囲をデータ座標範囲に制限（余白を少し確保）
+       map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
 
       const WORLD_MAP_IMAGE_URL = '../assets/images/maps/world/world-map.svg';
       const worldMapLayer = L.imageOverlay(WORLD_MAP_IMAGE_URL, WORLD_BOUNDS, {
@@ -588,7 +643,7 @@
           nodeMarkerById,
           worldMapLayer,
           fitWorld() {
-            map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
+            map.fitBounds(DATA_BOUNDS, { padding: [24, 24] });
           },
           setWorldMapOpacity(value) {
             worldMapLayer.setOpacity(value);
