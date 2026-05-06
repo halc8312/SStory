@@ -54,6 +54,10 @@
     return Number.isFinite(Number(value));
   }
 
+  function buildLookupById(items) {
+    return Object.fromEntries((items || []).filter(item => item?.id).map(item => [item.id, item]));
+  }
+
   function createPopupHtml(title, rows, description) {
     const rowHtml = rows.map(([term, value]) => `
       <dt>${escapeHtml(term)}</dt>
@@ -133,9 +137,9 @@
       clearLeafletMessage();
     }
 
-    const continentsById = Object.fromEntries((datasets.continents || []).filter(item => item?.id).map(item => [item.id, item]));
-    const regionsById = Object.fromEntries((datasets.regions || []).filter(item => item?.id).map(item => [item.id, item]));
-    const nodeById = Object.fromEntries((datasets.nodes || []).filter(item => item?.id).map(item => [item.id, item]));
+    const continentsById = buildLookupById(datasets.continents);
+    const regionsById = buildLookupById(datasets.regions);
+    const nodeById = buildLookupById(datasets.nodes);
 
     const nodeMarkerById = new Map();
     const routeLayerById = new Map();
