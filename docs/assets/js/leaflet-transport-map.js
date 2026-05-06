@@ -304,17 +304,17 @@
         route.name || route.id || 'ルート',
         [
           ['ID', route.id || '不明'],
-          ['type', route.type || 'unknown'],
-          ['mode', route.mode || 'unknown'],
+          ['種別', route.type || 'unknown'],
+          ['交通モード', route.mode || 'unknown'],
           ['分類', definition.label],
-          ['from', fromNode.name || route.from || '不明'],
-          ['to', toNode.name || route.to || '不明'],
-          ['distance_km', route.distance_km ?? '不明'],
-          ['estimated_time_hours', route.estimated_time_hours ?? '不明'],
-          ['danger_level', route.danger_level ?? '不明'],
-          ['status', route.status || 'unknown'],
-          ['seasonal', route.seasonal ? 'true' : 'false'],
-          ['active_months', formatMonths(route.active_months)]
+          ['出発地', fromNode.name || route.from || '不明'],
+          ['到着地', toNode.name || route.to || '不明'],
+          ['距離(km)', route.distance_km ?? '不明'],
+          ['推定所要時間(時間)', route.estimated_time_hours ?? '不明'],
+          ['危険度', route.danger_level ?? '不明'],
+          ['状態', route.status || 'unknown'],
+          ['季節運行', route.seasonal ? 'あり' : 'なし'],
+          ['活動月', formatMonths(route.active_months)]
         ],
         route.description
       ));
