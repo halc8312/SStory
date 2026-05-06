@@ -4,7 +4,7 @@
  */
 
 (() => {
-  const SEARCH_RESULT_EMPTY_HTML = '<p class="route-search-placeholder">条件を指定して「検索」を押すと、結果がここに表示されます。</p>';
+  const SEARCH_RESULT_EMPTY_HTML = `<p class="route-search-placeholder">条件を指定して「検索」を押すと、結果がここに表示されます。</p>`;
   const NODE_SELECT_PLACEHOLDER_HTML = '<option value="">選択してください</option>';
   const ROUTE_SELECTED_CLASS = 'map-route--selected';
   const NODE_START_CLASS = 'map-node--start';
