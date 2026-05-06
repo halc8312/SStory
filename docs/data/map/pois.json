@@ -28,31 +28,423 @@
     "tags": ["trade", "capital", "market", "elysion", "sample"]
   },
   {
-    "id": "moonshadow_observatory",
-    "name": "月影観測所",
-    "category": "research",
-    "type": "observatory",
-    "continent_id": "lumiera",
-    "region_id": "spirit_forest_region",
-    "nearest_node_id": "moonshadow_floating_island",
+    "id": "astralis_royal_palace",
+    "name": "アストラリス王宮",
+    "category": "government",
+    "type": "royal_palace",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
     "position": {
-      "x": 7650,
-      "y": 4650,
-      "z": 50
+      "x": 5100,
+      "y": 4300,
+      "z": 0
+    },
+    "importance": 5,
+    "status": "draft",
+    "description": "エリュシオン王権の中枢であり、王都アストラリスの政治・儀礼・外交の中心となる宮殿。",
+    "lore_basis": [
+      "アストラリスがエリュシオンの王都であること",
+      "エリュシオンが秩序ある政治・交易圏として設定されていること",
+      "王都が中央大陸の政治的中心であること"
+    ],
+    "historical_reason": "王都形成期に、街道交通と周辺諸都市を統合する統治拠点として築かれた。",
+    "economic_role": "王宮御用商人、行政機関、儀礼需要を通じて王都経済を支える。",
+    "cultural_role": "国家儀礼、祝祭、騎士叙任、外交儀礼の中心。",
+    "transport_role": "王都中心部に位置し、中央街道・行政区・市場区へ短時間で移動できる。",
+    "risk_context": "警備は厳重であり、立入には身分確認や許可が必要。",
+    "tags": ["astralis", "elysion", "capital", "government", "royal"]
+  },
+  {
+    "id": "astralis_admin_hall",
+    "name": "王都行政庁",
+    "category": "government",
+    "type": "city_hall",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 4900,
+      "y": 4400,
+      "z": 0
+    },
+    "importance": 4,
+    "status": "draft",
+    "description": "王都アストラリスの日常行政を司る中枢庁舎。市民登録、税務、許可発布などを取り扱う。",
+    "lore_basis": [
+      "アストラリスがエリュシオンの王都であること",
+      "エリュシオンが秩序ある行政システムを有すること",
+      "王都に行政機関が集中していること"
+    ],
+    "historical_reason": "王都拡張に伴い、分散していた行政機能を集約するために設立された。",
+    "economic_role": "都市運営、商工業登録、税収管理、公共事業発注。",
+    "cultural_role": "市民の権利義務手続きの中心として、日常生活に深く関わる。",
+    "transport_role": "王宮から徒歩圏内にあり、主要道路からもアクセス良好。",
+    "risk_context": "公的文書を取り扱うため、セキュリティは中程度。立入には身分証明が必要な区域あり。",
+    "tags": ["astralis", "elysion", "government", "administration", "capital"]
+  },
+  {
+    "id": "astralis_carriage_plaza",
+    "name": "アストラリス中央駅馬車広場",
+    "category": "transport",
+    "type": "carriage_terminal",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 5020,
+      "y": 4980,
+      "z": 0
+    },
+    "importance": 4,
+    "status": "draft",
+    "description": "王都の駅馬車ターミナル。全主要街道へ向かう便が発着し、中央大陸の交通結節点として機能する。",
+    "lore_basis": [
+      "アストラリスが中央街道の起点として設定されていること",
+      "王都交通網が整備されていること",
+      "エリュシオン内の街道ネットワークが発達していること"
+    ],
+    "historical_reason": "王都建設当初から存在する交通施設で、街道整備とともに拡張されてきた。",
+    "economic_role": "旅客輸送、貨物輸送、旅人向けサービス、地域間物流の結節点。",
+    "cultural_role": "旅人や商人が集う情報交換の場として、王都の多様性を象徴する。",
+    "transport_role": "中央街道、王都内各街区、港湾部への連絡が集中する。",
+    "risk_context": "混雑時には置き引きや詐欺に注意。騎士団による巡回が定期的に行われる。",
+    "tags": ["astralis", "elysion", "transport", "carriage", "terminal"]
+  },
+  {
+    "id": "astralis_west_gate",
+    "name": "王都街道門",
+    "category": "transport",
+    "type": "city_gate",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 4800,
+      "y": 5000,
+      "z": 0
     },
     "importance": 3,
     "status": "draft",
-    "description": "リュミエラの浮島に建つ月魔法観測所。精霊力の周期と月の軌道を研究する。",
+    "description": "王都アストラリスの西側正面門。中央街道から直接王都内へ至る主要出入り口。",
     "lore_basis": [
-      "リュミエラが月魔法と精霊信仰の中心であること",
-      "浮島群が魔法観測に適した環境であること",
-      "月読（ツクヨミ）信仰がリュミエラに根付いていること"
+      "アストラリスが中央街道の起点として設定されていること",
+      "王都が防御と管理のための門を有すること",
+      "エリュシオンの秩序維持のため検問が存在すること"
     ],
-    "historical_reason": "古より月の満ち欠けと精霊の動向を記録する施設として、浮島環境を活かして設置された。",
-    "economic_role": "観測データの提供、魔法士・学者向け教育、精霊術の実証研究。",
-    "cultural_role": "月読信仰の儀礼施設としても機能し、祭礼期間は一般参拝も受け入れる。",
-    "transport_role": "月影浮島の空中港から小型飛空艇でアクセス可能。",
-    "risk_context": "浮島の不安定な気流と精霊力の変動に注意が必要。封印はされていないが、立ち入りには学識者の同行が望ましい。",
-    "tags": ["magic", "observatory", "lumiera", "floating_island", "sample"]
+    "historical_reason": "王都建設当初に設けられた門で、西方からの街道交易路を統制する目的で築かれた。",
+    "economic_role": "西部からの商品・旅客の流入管理、関税・検問、都市防衛の第一線。",
+    "cultural_role": "儀礼的行進や行列の出入り口として、国家的行事にも使用される。",
+    "transport_role": "中央街道の終点に位置し、王都内道路網の起点となる。",
+    "risk_context": "検問所のため治安は比較的安定。ただし、密輸や密入国への警戒が常時行われている。",
+    "tags": ["astralis", "elysion", "transport", "gate", "checkpoint"]
+  },
+  {
+    "id": "alchemist_row",
+    "name": "錬金術師通り",
+    "category": "shop",
+    "type": "alchemy",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 5050,
+      "y": 4800,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "draft",
+    "description": "王都でも有数の錬金術師と魔法薬店が軒を連ねる専門店街。魔法学術区に隣接。",
+    "lore_basis": [
+      "アストラリスに王立魔法学院が存在すること",
+      "エリュシオンで魔法と学術が保護されていること",
+      "王都に専門職人街が形成されていること"
+    ],
+    "historical_reason": "王立魔法学院の設立に伴い、その学生・研究者向けの専門店が集積して形成された。",
+    "economic_role": "魔法薬、魔導具、研究材料の販売。学者・学生・冒険者向けの高単価商取引。",
+    "cultural_role": "魔法技術の実用化と普及を担う場として、学術区と一体となった文化を形成。",
+    "transport_role": "王立魔法学院と大市場の中間に位置し、徒歩でアクセス可能。",
+    "risk_context": "危険な薬品や魔導具も扱うため、未成年者立入制限と販売規制あり。騎士団の抜き打ち検査が行われる。",
+    "tags": ["astralis", "elysion", "alchemy", "shop", "magic"]
+  },
+  {
+    "id": "laurel_inn",
+    "name": "月桂樹の宿",
+    "category": "inn",
+    "type": "coaching_inn",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 4900,
+      "y": 5100,
+      "z": 0
+    },
+    "importance": 2,
+    "status": "draft",
+    "description": "王都で古くから営業する中級宿泊施設。駅馬車広場から徒歩圏内で、旅人に人気。",
+    "lore_basis": [
+      "アストラリスに交通ターミナルが存在すること",
+      "王都に宿泊施設が必要であること",
+      "エリュシオンの街道網が発達していること"
+    ],
+    "historical_reason": "王都拡張期に駅馬車利用者のために設けられた宿泊所が原型。",
+    "economic_role": "宿泊、食事、馬車の手配、荷物預かり。",
+    "cultural_role": "旅人同士の情報交換の場として、王都の玄関口的役割を果たす。",
+    "transport_role": "中央駅馬車広場から徒歩5分程度。",
+    "risk_context": "王都内のため治安は良好。ただし、深夜の外出には注意。",
+    "tags": ["astralis", "elysion", "inn", "traveler", "coaching"]
+  },
+  {
+    "id": "silver_owl_tavern",
+    "name": "銀梟亭",
+    "category": "food",
+    "type": "tavern",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 5150,
+      "y": 4950,
+      "z": 0
+    },
+    "importance": 2,
+    "status": "draft",
+    "description": "王都の下町エリアにある古風な酒場。冒険者や職人に人気の隠れ家的店舗。",
+    "lore_basis": [
+      "王都に庶民の飲食施設が存在すること",
+      "冒険者文化がエリュシオンに根付いていること",
+      "職人階級が都市経済を支えていること"
+    ],
+    "historical_reason": "王都の職人街のそばに自然発生的にできた酒場が起源。",
+    "economic_role": "飲食提供、地域情報の交換、一時労働の仲介。",
+    "cultural_role": "庶民の社交場として、職人や冒険者の情報ネットワークの一翼を担う。",
+    "transport_role": "大市場と職人街の中間に位置し、徒歩アクセス良好。",
+    "risk_context": "夜間は軽犯罪が多発するため、一人での外出は推奨されない。騎士団の夜間巡邏あり。",
+    "tags": ["astralis", "elysion", "tavern", "traveler", "guild"]
+  },
+  {
+    "id": "astralis_magic_academy",
+    "name": "王立魔法学院",
+    "category": "academy",
+    "type": "magic",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 5200,
+      "y": 4700,
+      "z": 0
+    },
+    "importance": 5,
+    "status": "draft",
+    "description": "エリュシオン最高峰の魔法教育機関。王都の学術・文化・魔術の中枢を成す。",
+    "lore_basis": [
+      "エリュシオンが秩序ある魔術制度を有すること",
+      "アストラリスが王都として学術施設を保護していること",
+      "王都に高等教育和機関が集中していること"
+    ],
+    "historical_reason": "王国成立と同時に設立され、魔術師の育成と国家規模の魔法研究を目的とする。",
+    "economic_role": "魔法士の育成、国家プロジェクトへの協力、魔導具の研究開発、技術指導。",
+    "cultural_role": "魔法文化の保護と発展、学術誌発行、公開講座、王都の知的威信の象徴。",
+    "transport_role": "学院専用馬車が王都各所から運行。王宮にも近接。",
+    "risk_context": "危険な魔法実験区画は立入制限あり。学院警備隊が常駐。",
+    "tags": ["astralis", "elysion", "magic", "academy", "education"]
+  },
+  {
+    "id": "central_archive",
+    "name": "中央図書院",
+    "category": "culture",
+    "type": "library",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 4850,
+      "y": 5200,
+      "z": 0
+    },
+    "importance": 4,
+    "status": "draft",
+    "description": "王都アストラリスの公文書館兼公立図書館。歴史文書、地図、法律集を収蔵する学術施設。",
+    "lore_basis": [
+      "王都が行政・歴史の中心であること",
+      "エリュシオンで文書管理と学術保存の制度があること",
+      "アストラリスに文化施設が集積していること"
+    ],
+    "historical_reason": "王都の記録院として創設され、後に一般公開を開始した。",
+    "economic_role": "学術情報提供、歴史研究支援、公的文書閲覧。",
+    "cultural_role": "王都の歴史と文化を継承する場。市民の学習拠点。",
+    "transport_role": "王都中心部から徒歩圏内。",
+    "risk_context": "貴重書庫は閉架式で、複写・複製には許可が必要。",
+    "tags": ["astralis", "elysion", "library", "archive", "culture"]
+  },
+  {
+    "id": "star_cup_temple",
+    "name": "星杯神殿",
+    "category": "temple",
+    "type": "cathedral",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 5000,
+      "y": 4600,
+      "z": 0
+    },
+    "importance": 4,
+    "status": "draft",
+    "description": "エリュシオン全土で信仰される星杯教の総本山。王都の精神的中枢を成す大聖堂。",
+    "lore_basis": [
+      "エリュシオンに星杯教の信仰が広く浸透していること",
+      "王都アストラリスが宗教的にも重要拠点であること",
+      "星杯神話がエリュシオンの世界観の基盤であること"
+    ],
+    "historical_reason": "王都創設以前から聖地として知られ、王都建設に伴い公式の総本山として建立された。",
+    "economic_role": "宗教収入、巡礼者向けサービス、慈善活動、祭礼経済の中心。",
+    "cultural_role": "星杯の祭礼、結婚式、叙任式など、国家レベルの儀礼が行われる。",
+    "transport_role": "王都中心部に位置し、主要道路からアクセス良好。巡礼者向け宿泊施設併設。",
+    "risk_context": "聖地のため治安は極めて良好。ただし、異端審問局の監視下にある。",
+    "tags": ["astralis", "elysion", "temple", "cathedral", "faith"]
+  },
+  {
+    "id": "adventurer_guild_branch",
+    "name": "冒険者ギルド王都支部",
+    "category": "guild",
+    "type": "adventurer",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 4700,
+      "y": 4900,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "draft",
+    "description": "王都における冒険者の拠点。クエスト受付、パーティ募集、危険地帯情報の提供などを行う。",
+    "lore_basis": [
+      "エリュシオンに冒険者文化が存在すること",
+      "王都が国内・国外の冒険者を受け入れる拠点であること",
+      "街道・遺跡・ダンジョンへの冒険者が集まること"
+    ],
+    "historical_reason": "王都の対外冒険需要の高まりに応じて、支部が設立された。",
+    "economic_role": "冒険者仲介、クエスト発注、装備・消耗品販売、報酬分配。",
+    "cultural_role": "冒険者コミュニティの中心。情報交換とネットワーク構築の場。",
+    "transport_role": "王都外郭部に位置し、城外への脱出経路に近い。",
+    "risk_context": "危険なクエストが日常的に扱われるため、施設内には治療所と遺体安置所を併設。",
+    "tags": ["astralis", "elysion", "guild", "adventurer", "quest"]
+  },
+  {
+    "id": "knight_hq",
+    "name": "騎士団中央詰所",
+    "category": "military",
+    "type": "knight_order",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 5300,
+      "y": 5100,
+      "z": 0
+    },
+    "importance": 4,
+    "status": "draft",
+    "description": "エリュシオン王国王立騎士団の王都中枢。都市防衛、王宮警護、緊急出動の指揮を執る。",
+    "lore_basis": [
+      "エリュシオンに王国王立騎士団が存在すること",
+      "王都アストラリスの治安・防衛が必要であること",
+      "騎士制度がエリュシオンの秩序維持の根幹であること"
+    ],
+    "historical_reason": "王都建設と同時に設けられ、王宮と市民の防衛を担う。",
+    "economic_role": "軍事物資調達、騎士給与、装備整備、都市防衛関連産業。",
+    "cultural_role": "騎士の名誉と忠義の象徴。叙任式や表彰式も行われる。",
+    "transport_role": "王宮に隣接し、各主要街道への緊急展開を想定した配置。",
+    "risk_context": "軍事施設のため立入制限あり。有事には市民の避難誘導も担当。",
+    "tags": ["astralis", "elysion", "military", "knight", "security"]
+  },
+  {
+    "id": "star_cup_square",
+    "name": "星杯広場",
+    "category": "landmark",
+    "type": "square",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 4950,
+      "y": 4850,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "draft",
+    "description": "王都アストラリスの中心広場。星杯神殿前に位置し、祭礼、 markets、市民集会に使われる。",
+    "lore_basis": [
+      "アストラリスが王都として中枢機能を有すること",
+      "星杯神殿が宗教的・文化的中心であること",
+      "王都に市民の公共広場が存在すること"
+    ],
+    "historical_reason": "王都計画段階から設けられた公共空間で、王宮・神殿・市場を結ぶ。",
+    "economic_role": "臨時市場、露天商、祭礼経済、パフォーマンス収入。",
+    "cultural_role": "星杯の祭礼、国王演説、市民祭、死刑宣告など公共行事の場。",
+    "transport_role": "王都各主要施設から徒歩で集結可能な中心地点。",
+    "risk_context": "大規模な群衆が集まるため、混乱時には騎士団が交通規制と秩序維持を行う。",
+    "tags": ["astralis", "elysion", "square", "landmark", "public"]
+  },
+  {
+    "id": "royal_theater",
+    "name": "王立劇場",
+    "category": "culture",
+    "type": "theater",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 5250,
+      "y": 4550,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "draft",
+    "description": "王都アストラリスの王室劇場。オペラ、舞踏、演劇など王侯貴族と市民の文化施設。",
+    "lore_basis": [
+      "アストラリスが文化・芸術の中心であること",
+      "エリュシオンで貴族文化と市民文化が発展していること",
+      "王都に高級文化施設が集積していること"
+    ],
+    "historical_reason": "王都の文化振興と貴族の entertainment を目的に建設された。",
+    "economic_role": "興行収入、観光収入、周辺商業活性化。",
+    "cultural_role": "エリュシオンの芸術・音楽・演劇の発信地。貴族と市民の交流の場。",
+    "transport_role": "王都北東部に位置し、主要道路からアクセス可能。",
+    "risk_context": "貴族が多く訪れるため、警備が厳重。身分を問わず入場可能だが、貴族席区域は制限あり。",
+    "tags": ["astralis", "elysion", "theater", "culture", "noble"]
+  },
+  {
+    "id": "craftsmen_guildhall",
+    "name": "王都職人工房街",
+    "category": "industry",
+    "type": "workshop_district",
+    "continent_id": "elysion",
+    "region_id": "royal_capital_region",
+    "nearest_node_id": "astralis",
+    "position": {
+      "x": 4750,
+      "y": 4950,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "draft",
+    "description": "王都の職人・工房が集積する地域。鍛冶、織物、木工、彫刻など各工房が軒を連ねる。",
+    "lore_basis": [
+      "アストラリスに職人階級が存在し経済を支えていること",
+      "エリュシオンで職能組合制度が発達していること",
+      "王都に製造業が集中していること"
+    ],
+    "historical_reason": "王都建設時に職人たちが集住し、共同工房として発展。",
+    "economic_role": "製品製造、職人育成、order受注、地場産業の供給。",
+    "cultural_role": "職人の技術継承と組合文化が根付く。祭礼時には出品会展も開催。",
+    "transport_role": "大市場に近接し、資材搬入と製品出荷が容易。",
+    "risk_context": "火災危険性が高いため、消防体制と区画整理が徹底されている。",
+    "tags": ["astralis", "elysion", "craftsmen", "industry", "workshop"]
   }
 ]
