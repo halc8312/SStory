@@ -417,19 +417,25 @@
       pathNames.push(segment.toNode?.name || segment.toNode?.id || '不明');
     });
 
-    return `
-      <article class="route-search-summary">
-        <header>
-          <p class="route-search-path">${pathNames.map(name => escapeHtml(name)).join(' → ')}</p>
-          <dl class="route-search-metrics">
-            <div><dt>総距離</dt><dd>${formatNumber(result.totalDistanceKm)} km</dd></div>
-            <div><dt>推定所要時間</dt><dd>${formatNumber(result.totalTimeHours, 1)} 時間</dd></div>
-            <div><dt>最大危険度</dt><dd>${formatNumber(result.maxDangerLevel)}</dd></div>
-            <div><dt>区間数</dt><dd>${formatNumber(result.segments.length)}</dd></div>
-          </dl>
-        </header>
+     return `
+       <article class="route-search-summary">
+         <header>
+           <p class="route-search-path">${pathNames.map(name => escapeHtml(name)).join(' → ')}</p>
+           <dl class="route-search-metrics">
+             <div><dt>総距離</dt><dd>${formatNumber(result.totalDistanceKm)} km</dd></div>
+             <div><dt>推定所要時間</dt><dd>${formatNumber(result.totalTimeHours, 1)} 時間</dd></div>
+             <div><dt>最大危険度</dt><dd>${formatNumber(result.maxDangerLevel)}</dd></div>
+             <div><dt>区間数</dt><dd>${formatNumber(result.segments.length)}</dd></div>
+           </dl>
+         </header>
 
-        <ol class="route-search-segments">
+         <div class="route-search-map-actions">
+           <button type="button" id="route-scroll-to-leaflet" class="route-search-map-button">
+             Leaflet地図で見る
+           </button>
+         </div>
+
+         <ol class="route-search-segments">
           ${result.segments.map(segment => {
             const routeName = segment.route?.name || segment.route?.id || 'unnamed';
             const fromName = segment.fromNode?.name || segment.fromNode?.id || segment.route?.from || '不明';
@@ -568,20 +574,37 @@
           ...options
         });
 
-        resultElement.innerHTML = renderResult(result);
-        if (result.found) {
-          updateMessage(messageElement, `${result.segments.length} 区間のルートを地図上でハイライトしています。`);
-          applyHighlights(svgElement, result);
-        } else {
-          updateMessage(messageElement, result.message || '条件に一致するルートが見つかりませんでした。', { isError: true });
-        }
+         resultElement.innerHTML = renderResult(result);
+         if (result.found) {
+           updateMessage(messageElement, `${result.segments.length} 区間のルートを地図上でハイライトしています。`);
+           applyHighlights(svgElement, result);
+           // Leaflet highlight
+           if (window.EternalArcadiaLeafletMap?.highlightRoute) {
+             window.EternalArcadiaLeafletMap.highlightRoute(result);
+           }
+           // Attach click handler for "View on Map" button
+           const mapButton = resultElement.querySelector('#route-scroll-to-leaflet');
+           if (mapButton) {
+             mapButton.addEventListener('click', () => {
+               const leafletMap = document.getElementById('leaflet-transport-map');
+               if (leafletMap) {
+                 leafletMap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+               }
+             });
+           }
+         } else {
+           updateMessage(messageElement, result.message || '条件に一致するルートが見つかりませんでした。', { isError: true });
+         }
       });
 
-      clearButton?.addEventListener('click', () => {
-        clearHighlights(svgElement);
-        updateMessage(messageElement, '');
-        resultElement.innerHTML = SEARCH_RESULT_EMPTY_HTML;
-      });
+       clearButton?.addEventListener('click', () => {
+         clearHighlights(svgElement);
+         updateMessage(messageElement, '');
+         resultElement.innerHTML = SEARCH_RESULT_EMPTY_HTML;
+         if (window.EternalArcadiaLeafletMap?.clearRouteHighlight) {
+           window.EternalArcadiaLeafletMap.clearRouteHighlight();
+         }
+       });
 
       form.dataset.routeSearchBound = 'true';
     }
@@ -594,10 +617,13 @@
         fillNodeSelect(formElements.fromSelect, selectableNodes);
         fillNodeSelect(formElements.toSelect, selectableNodes);
       },
-      clear() {
-        clearHighlights(svgElement);
-        resultElement.innerHTML = SEARCH_RESULT_EMPTY_HTML;
-      },
+       clear() {
+         clearHighlights(svgElement);
+         resultElement.innerHTML = SEARCH_RESULT_EMPTY_HTML;
+         if (window.EternalArcadiaLeafletMap?.clearRouteHighlight) {
+           window.EternalArcadiaLeafletMap.clearRouteHighlight();
+         }
+       },
       renderResult,
       findRoute
     };
