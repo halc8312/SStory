@@ -1,4 +1,17 @@
-# POI / Spot Design Guidelines
+---
+type: "canon-document"
+category: "maps"
+title: "POI / Spot Design Guidelines"
+version: "1.0.0"
+created: "2026-05-06"
+last_updated: "2026-05-06"
+author: "halc8312"
+contributors: []
+tags: ["map-data", "poi", "guidelines"]
+status: "stable"
+---
+
+<!-- cspell:disable -->
 
 ## Purpose
 
@@ -384,28 +397,26 @@ Guideline:
 
 Recommended categories for future `pois.json` data:
 
-```text
-government
-military
-transport
-market
-shop
-inn
-food
-guild
-academy
-temple
-culture
-entertainment
-industry
-research
-hazard_support
-dungeon
-landmark
-residential
-utility
-restricted
-```
+- `government`
+- `military`
+- `transport`
+- `market`
+- `shop`
+- `inn`
+- `food`
+- `guild`
+- `academy`
+- `temple`
+- `culture`
+- `entertainment`
+- `industry`
+- `research`
+- `hazard_support`
+- `dungeon`
+- `landmark`
+- `residential`
+- `utility`
+- `restricted`
 
 Category notes:
 
@@ -524,3 +535,5 @@ Recommended sequence:
 7. add major Lumiera, Atlantis, and Grimoire POIs
 8. add POI search and category filters
 9. add POI detail pages and links to setting documents
+
+<!-- cspell:enable -->
