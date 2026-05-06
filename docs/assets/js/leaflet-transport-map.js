@@ -354,6 +354,11 @@
       危険区域: hazardLayer
     }, { collapsed: false }).addTo(map);
 
+    /**
+     * Public Leaflet map API for future integrations such as route-search highlighting.
+     * Consumers can access the raw Leaflet map instance, node/route layer maps,
+     * reset the viewport, and apply simple node/route highlighting.
+     */
     window.EternalArcadiaLeafletMap = {
       map,
       routeLayerById,
