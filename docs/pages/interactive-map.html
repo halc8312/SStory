@@ -4,13 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>インタラクティブ交通マップ v0.1 - エターナル・アルカディア設定資料館</title>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha512-o9N1jRV0MNDoAuSo2uNQl6bVQ+B4pLHwtxRsNMzatoNg5RoiE5wl6Bbu5ZGDG7r1grKeR+ocF+AA1sQ+EhuxQw=="
-    crossorigin=""
-  >
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260506a">
+  <link rel="stylesheet" href="../vendor/leaflet/leaflet.css?v=20260506b">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260506b">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
 </head>
 <body>
@@ -37,6 +32,10 @@
       </p>
       <p>
         Leaflet版は操作用・閲覧用、SVG版はデータ確認・デバッグ用として利用できます。
+      </p>
+      <p>
+        Leaflet版交通マップはズーム・パン・レイヤー切替のためにLeafletを利用しています。
+        Leafletが読み込めない場合でも、SVG版交通マップとMap Dataプレビュー、ルート検索は引き続き利用できます。
       </p>
     </section>
 
@@ -252,14 +251,10 @@
     </p>
   </footer>
 
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha512-uM3jB8RMBJbW/D9QLp5rx0NOW8kodIQtVQ1H6buqmWrbEgKBV0WJG9oRHy3U6NMoVOmFwW52dufvIFnEkxYBFw=="
-    crossorigin=""
-  ></script>
+  <script src="../vendor/leaflet/leaflet.js?v=20260506b"></script>
   <script src="../assets/js/route-search.js?v=20260505c"></script>
-  <script src="../assets/js/leaflet-transport-map.js?v=20260506a"></script>
-  <script src="../assets/js/interactive-map.js?v=20260505c"></script>
+  <script src="../assets/js/leaflet-transport-map.js?v=20260506b"></script>
+  <script src="../assets/js/interactive-map.js?v=20260506b"></script>
   <script src="../assets/js/main.js?v=20260505c"></script>
 </body>
 </html>

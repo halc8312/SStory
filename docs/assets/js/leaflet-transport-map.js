@@ -73,6 +73,20 @@
     `;
   }
 
+  function createLeafletUnavailableApi(reason = 'Leaflet unavailable') {
+    return {
+      isAvailable: false,
+      reason,
+      map: null,
+      routeLayerById: new Map(),
+      nodeMarkerById: new Map(),
+      fitWorld() {},
+      clearHighlights() {},
+      highlightRouteIds() {},
+      focusNodeIds() {}
+    };
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
     const mapElement = document.getElementById('leaflet-transport-map');
     const messageElement = document.getElementById('leaflet-transport-map-message');
@@ -80,6 +94,8 @@
     if (!mapElement) {
       return;
     }
+
+    window.EternalArcadiaLeafletMap = createLeafletUnavailableApi('Leaflet map not initialized yet.');
 
     function showLeafletMessage(message) {
       if (!messageElement) {
@@ -97,77 +113,90 @@
       messageElement.hidden = true;
     }
 
-    if (!window.L) {
-      showLeafletMessage('Leafletを読み込めませんでした。ネットワーク接続を確認してください。');
-      return;
-    }
-
-    const fetchJson = async (name) => {
-      const response = await fetch(`${BASE_PATH}${name}?v=${CACHE_BUSTER}`);
-      if (!response.ok) {
-        throw new Error(`${name}: HTTP ${response.status}`);
+    try {
+      if (!window.L) {
+        showLeafletMessage('Leafletを読み込めませんでした。ページを再読み込みするか、時間をおいて再度お試しください。');
+        window.EternalArcadiaLeafletMap = createLeafletUnavailableApi('Leaflet global `window.L` is missing.');
+        console.error(
+          '[LeafletTransportMap] Leaflet is not available. Check Leaflet CSS/JS loading, CDN integrity, script order, cache state, or local vendor files.'
+        );
+        return;
       }
-      return response.json();
-    };
 
-    let datasets = {};
-    const fetchResults = await Promise.allSettled([
-      fetchJson('nodes.json'),
-      fetchJson('routes.json'),
-      fetchJson('hazards.json'),
-      fetchJson('continents.json'),
-      fetchJson('regions.json')
-    ]);
+      const leafletCssElement = document.querySelector('link[href*="leaflet.css"]');
+      if (!leafletCssElement) {
+        console.warn('[LeafletTransportMap] Leaflet CSS link was not found. Controls may render incorrectly.');
+      }
+      if (mapElement.clientHeight < 300) {
+        console.warn('[LeafletTransportMap] Map container height is smaller than expected:', mapElement.clientHeight);
+      }
 
-    const keys = ['nodes', 'routes', 'hazards', 'continents', 'regions'];
-    const failedKeys = [];
-    fetchResults.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
-        datasets[keys[index]] = Array.isArray(result.value) ? result.value : [];
+      const fetchJson = async (name) => {
+        const response = await fetch(`${BASE_PATH}${name}?v=${CACHE_BUSTER}`);
+        if (!response.ok) {
+          throw new Error(`${name}: HTTP ${response.status}`);
+        }
+        return response.json();
+      };
+
+      let datasets = {};
+      const fetchResults = await Promise.allSettled([
+        fetchJson('nodes.json'),
+        fetchJson('routes.json'),
+        fetchJson('hazards.json'),
+        fetchJson('continents.json'),
+        fetchJson('regions.json')
+      ]);
+
+      const keys = ['nodes', 'routes', 'hazards', 'continents', 'regions'];
+      const failedKeys = [];
+      fetchResults.forEach((result, index) => {
+        if (result.status === 'fulfilled') {
+          datasets[keys[index]] = Array.isArray(result.value) ? result.value : [];
+        } else {
+          failedKeys.push(keys[index]);
+          datasets[keys[index]] = [];
+          console.error('[LeafletTransportMap] Failed to load dataset:', keys[index], result.reason);
+        }
+      });
+
+      if (failedKeys.length > 0) {
+        showLeafletMessage(`一部のMap Dataを読み込めませんでした: ${failedKeys.join(', ')}`);
       } else {
-        failedKeys.push(keys[index]);
-        datasets[keys[index]] = [];
-        console.error('[LeafletTransportMap] Failed to load dataset:', keys[index], result.reason);
+        clearLeafletMessage();
       }
-    });
 
-    if (failedKeys.length > 0) {
-      showLeafletMessage(`一部のMap Dataを読み込めませんでした: ${failedKeys.join(', ')}`);
-    } else {
-      clearLeafletMessage();
-    }
+      const continentsById = buildLookupById(datasets.continents);
+      const regionsById = buildLookupById(datasets.regions);
+      const nodeById = buildLookupById(datasets.nodes);
 
-    const continentsById = buildLookupById(datasets.continents);
-    const regionsById = buildLookupById(datasets.regions);
-    const nodeById = buildLookupById(datasets.nodes);
+      const nodeMarkerById = new Map();
+      const routeLayerById = new Map();
+      const nodeBaseStyleById = new Map();
+      const routeBaseStyleById = new Map();
+      let highlightedNodeIds = [];
+      let highlightedRouteIds = [];
 
-    const nodeMarkerById = new Map();
-    const routeLayerById = new Map();
-    const nodeBaseStyleById = new Map();
-    const routeBaseStyleById = new Map();
-    let highlightedNodeIds = [];
-    let highlightedRouteIds = [];
+      const map = L.map(mapElement, {
+        crs: L.CRS.Simple,
+        minZoom: -4,
+        maxZoom: 4,
+        zoomSnap: 0.25,
+        wheelPxPerZoomLevel: 80,
+        attributionControl: false,
+        preferCanvas: true
+      });
 
-    const map = L.map(mapElement, {
-      crs: L.CRS.Simple,
-      minZoom: -4,
-      maxZoom: 4,
-      zoomSnap: 0.25,
-      wheelPxPerZoomLevel: 80,
-      attributionControl: false,
-      preferCanvas: true
-    });
+      map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
+      map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
 
-    map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
-    map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
-
-    const nodeLayer = L.layerGroup().addTo(map);
-    const roadLayer = L.layerGroup().addTo(map);
-    const railLayer = L.layerGroup().addTo(map);
-    const seaLayer = L.layerGroup().addTo(map);
-    const airLayer = L.layerGroup().addTo(map);
-    const specialLayer = L.layerGroup().addTo(map);
-    const hazardLayer = L.layerGroup().addTo(map);
+      const nodeLayer = L.layerGroup().addTo(map);
+      const roadLayer = L.layerGroup().addTo(map);
+      const railLayer = L.layerGroup().addTo(map);
+      const seaLayer = L.layerGroup().addTo(map);
+      const airLayer = L.layerGroup().addTo(map);
+      const specialLayer = L.layerGroup().addTo(map);
+      const hazardLayer = L.layerGroup().addTo(map);
 
     function getNodeStyle(node) {
       return NODE_STYLE_BY_TYPE[node?.type] || DEFAULT_NODE_STYLE;
@@ -383,25 +412,31 @@
      * Consumers can access the raw Leaflet map instance, node/route layer maps,
      * reset the viewport, and apply simple node/route highlighting.
      */
-    window.EternalArcadiaLeafletMap = {
-      map,
-      routeLayerById,
-      nodeMarkerById,
-      fitWorld() {
-        map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
-      },
-      clearHighlights,
-      highlightRouteIds(routeIds = []) {
-        highlightRoutes(routeIds);
-      },
-      focusNodeIds(nodeIds = []) {
-        highlightNodes(nodeIds);
-        focusNodes(nodeIds);
-      }
-    };
+      window.EternalArcadiaLeafletMap = {
+        isAvailable: true,
+        map,
+        routeLayerById,
+        nodeMarkerById,
+        fitWorld() {
+          map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
+        },
+        clearHighlights,
+        highlightRouteIds(routeIds = []) {
+          highlightRoutes(routeIds);
+        },
+        focusNodeIds(nodeIds = []) {
+          highlightNodes(nodeIds);
+          focusNodes(nodeIds);
+        }
+      };
 
-    if (!datasets.nodes.length && !datasets.routes.length && !datasets.hazards.length) {
-      showLeafletMessage(DEFAULT_MESSAGE);
+      if (!datasets.nodes.length && !datasets.routes.length && !datasets.hazards.length) {
+        showLeafletMessage(DEFAULT_MESSAGE);
+      }
+    } catch (error) {
+      showLeafletMessage('Leaflet版交通マップを読み込めませんでした。しばらくしてから再度お試しください。');
+      window.EternalArcadiaLeafletMap = createLeafletUnavailableApi(error?.message || 'Leaflet initialization failed.');
+      console.error('[LeafletTransportMap] Initialization failed.', error);
     }
   });
 })();
