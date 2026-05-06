@@ -170,12 +170,12 @@
       const regionsById = buildLookupById(datasets.regions);
       const nodeById = buildLookupById(datasets.nodes);
 
-      const nodeMarkerById = new Map();
-      const routeLayerById = new Map();
-      const nodeBaseStyleById = new Map();
-      const routeBaseStyleById = new Map();
-      let highlightedNodeIds = [];
-      let highlightedRouteIds = [];
+   const nodeMarkerById = new Map();
+   const routeLayerById = new Map();
+   const nodeBaseStyleById = new Map();
+   const routeBaseStyleById = new Map();
+   let highlightedNodeIds = [];
+   let highlightedRouteIds = [];
 
        const map = L.map(mapElement, {
         crs: L.CRS.Simple,
@@ -209,6 +209,12 @@
       const airLayer = L.layerGroup().addTo(map);
       const specialLayer = L.layerGroup().addTo(map);
       const nodeLayer = L.layerGroup().addTo(map);
+
+      // Highlight layers for search results (separate from base layers)
+      const routeHighlightLayer = L.layerGroup().addTo(map);
+      const nodeHighlightLayer = L.layerGroup().addTo(map);
+      const routeHighlightPolylinesById = new Map();
+      const nodeHighlightMarkersById = new Map();
 
     function getNodeStyle(node) {
       return NODE_STYLE_BY_TYPE[node?.type] || DEFAULT_NODE_STYLE;
@@ -325,6 +331,129 @@
       map.fitBounds(L.latLngBounds(latLngs), { padding: [40, 40] });
     }
 
+    // ----- Search Result Highlighting (separate layers) -----
+
+    function highlightRouteNodes(nodeIds = [], nodeTypes = {}) {
+      nodeIds.forEach(nodeId => {
+        const node = nodeById[nodeId];
+        const marker = nodeMarkerById.get(nodeId);
+        if (!node || !marker || !node.position) return;
+
+        const baseStyle = nodeBaseStyleById.get(nodeId) || DEFAULT_NODE_STYLE;
+        const type = nodeTypes[nodeId] || 'via';
+        let fillColor, strokeColor, radius, className;
+
+        if (type === 'start') {
+          fillColor = '#4db67e';
+          strokeColor = '#1d6e46';
+          radius = (baseStyle.radius || 6) + 4;
+          className = 'leaflet-route-start';
+        } else if (type === 'goal') {
+          fillColor = '#cf6d58';
+          strokeColor = '#8d3024';
+          radius = (baseStyle.radius || 6) + 4;
+          className = 'leaflet-route-goal';
+        } else {
+          fillColor = '#f0c05a';
+          strokeColor = '#9b6c14';
+          radius = (baseStyle.radius || 6) + 3;
+          className = 'leaflet-route-via';
+        }
+
+        const highlightMarker = L.circleMarker(toLatLng(node.position), {
+          radius,
+          fillColor,
+          color: strokeColor,
+          weight: 4,
+          fillOpacity: 0.95,
+          className,
+          interactive: false
+        }).addTo(nodeHighlightLayer);
+
+        nodeHighlightMarkersById.set(nodeId, highlightMarker);
+      });
+    }
+
+    function highlightRoutePolylines(routeIds = []) {
+      routeIds.forEach(routeId => {
+        const layer = routeLayerById.get(routeId);
+        const baseStyle = routeBaseStyleById.get(routeId);
+        if (!layer || !baseStyle) return;
+
+        const latlngs = layer.getLatLngs();
+        if (!latlngs || latlngs.length < 2) return;
+
+        const highlightPolyline = L.polyline(latlngs, {
+          color: '#f1c232',
+          weight: (baseStyle.weight || 4) + 4,
+          opacity: 1,
+          dashArray: baseStyle.dashArray || undefined,
+          className: 'leaflet-route-highlight',
+          interactive: false
+        }).addTo(routeHighlightLayer);
+
+        routeHighlightPolylinesById.set(routeId, highlightPolyline);
+      });
+    }
+
+    function fitRouteBounds(result) {
+      const allCoords = [];
+      result.segments.forEach(segment => {
+        if (segment.fromNode?.position) {
+          const pos = segment.fromNode.position;
+          if (isFiniteNumber(pos.x) && isFiniteNumber(pos.y)) {
+            allCoords.push(toLatLng(pos));
+          }
+        }
+        if (segment.toNode?.position) {
+          const pos = segment.toNode.position;
+          if (isFiniteNumber(pos.x) && isFiniteNumber(pos.y)) {
+            allCoords.push(toLatLng(pos));
+          }
+        }
+      });
+
+      if (allCoords.length === 0) return;
+
+      const bounds = L.latLngBounds(allCoords);
+      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+      const padding = isMobile ? [60, 60] : [40, 40];
+      map.fitBounds(bounds, { padding });
+    }
+
+    function clearRouteHighlight() {
+      // Clear route highlight layer
+      routeHighlightLayer.clearLayers();
+      routeHighlightPolylinesById.clear();
+
+      // Clear node highlight layer
+      nodeHighlightLayer.clearLayers();
+      nodeHighlightMarkersById.clear();
+    }
+
+    function highlightRoute(result) {
+      if (!result?.found || !result.segments) return;
+
+      clearRouteHighlight();
+
+      const routeIds = result.segments.map(seg => seg.route?.id).filter(Boolean);
+      highlightRoutePolylines(routeIds);
+
+      const startId = result.segments[0]?.fromNode?.id;
+      const goalId = result.segments[result.segments.length - 1]?.toNode?.id;
+      const viaIds = result.segments.slice(0, -1)
+        .map(seg => seg.toNode?.id)
+        .filter(id => id && id !== startId && id !== goalId);
+
+      const nodeTypes = {};
+      if (startId) nodeTypes[startId] = 'start';
+      if (goalId) nodeTypes[goalId] = 'goal';
+      viaIds.forEach(id => { nodeTypes[id] = 'via'; });
+
+      highlightRouteNodes([startId, goalId, ...viaIds], nodeTypes);
+      fitRouteBounds(result);
+    }
+
     (datasets.hazards || []).forEach(hazard => {
       if (!hazard?.center || !isFiniteNumber(hazard.center.x) || !isFiniteNumber(hazard.center.y) || !isFiniteNumber(hazard.radius)) {
         console.warn('[LeafletTransportMap] Hazard skipped due to missing center/radius:', hazard?.id || hazard);
@@ -409,16 +538,34 @@
       ));
     });
 
-     L.control.layers(null, {
-       '世界地図背景': worldMapLayer,
-       'ノード': nodeLayer,
-       '陸路': roadLayer,
-       '鉄道': railLayer,
-       '海路': seaLayer,
-       '空路': airLayer,
-       '特殊交通': specialLayer,
-       '危険区域': hazardLayer
-     }, { collapsed: false }).addTo(map);
+      const layersControl = L.control.layers(null, {
+        '世界地図背景': worldMapLayer,
+        'ノード': nodeLayer,
+        '陸路': roadLayer,
+        '鉄道': railLayer,
+        '海路': seaLayer,
+        '空路': airLayer,
+        '特殊交通': specialLayer,
+        '危険区域': hazardLayer
+      }, { collapsed: window.matchMedia("(max-width: 720px)").matches }).addTo(map);
+
+      // Responsive layer control collapse on resize
+      const updateLayerControlCollapse = () => {
+        const isSmallScreen = window.matchMedia("(max-width: 720px)").matches;
+        const controlContainer = document.querySelector('.leaflet-control-layers');
+        if (controlContainer) {
+          if (isSmallScreen) {
+            controlContainer.classList.remove('leaflet-control-layers-expanded');
+          } else {
+            controlContainer.classList.add('leaflet-control-layers-expanded');
+          }
+        }
+      };
+      // Run after a short delay to ensure Leaflet has added its classes
+      setTimeout(updateLayerControlCollapse, 0);
+      window.addEventListener('resize', () => {
+        updateLayerControlCollapse();
+      });
 
      const opacityInput = document.getElementById('world-map-opacity');
      if (opacityInput) {
@@ -434,27 +581,29 @@
       * Consumers can access the raw Leaflet map instance, node/route layer maps,
       * reset the viewport, apply simple node/route highlighting, and control world map opacity.
       */
-       window.EternalArcadiaLeafletMap = {
-         isAvailable: true,
-         map,
-         routeLayerById,
-         nodeMarkerById,
-         worldMapLayer,
-         fitWorld() {
-           map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
-         },
-         setWorldMapOpacity(value) {
-           worldMapLayer.setOpacity(value);
-         },
-         clearHighlights,
-         highlightRouteIds(routeIds = []) {
-           highlightRoutes(routeIds);
-         },
-         focusNodeIds(nodeIds = []) {
-           highlightNodes(nodeIds);
-           focusNodes(nodeIds);
-         }
-       };
+        window.EternalArcadiaLeafletMap = {
+          isAvailable: true,
+          map,
+          routeLayerById,
+          nodeMarkerById,
+          worldMapLayer,
+          fitWorld() {
+            map.fitBounds(WORLD_BOUNDS, { padding: [24, 24] });
+          },
+          setWorldMapOpacity(value) {
+            worldMapLayer.setOpacity(value);
+          },
+          clearHighlights,
+          highlightRouteIds(routeIds = []) {
+            highlightRoutes(routeIds);
+          },
+          highlightRoute,
+          clearRouteHighlight,
+          focusNodeIds(nodeIds = []) {
+            highlightNodes(nodeIds);
+            focusNodes(nodeIds);
+          }
+        };
 
       if (!datasets.nodes.length && !datasets.routes.length && !datasets.hazards.length) {
         showLeafletMessage(DEFAULT_MESSAGE);
