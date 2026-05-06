@@ -107,13 +107,18 @@
         バリデーションルールを整備しました。
       </p>
       <ul>
-        <li>✅ <code>world/map-data/data/pois.json</code> 作成（サンプル2件投入）</li>
-        <li>✅ <code>docs/data/map/pois.json</code> 作成（GitHub Pages公開用コピー）</li>
+        <li>✅ <code>world/map-data/data/pois.json</code> 作成（アストラリス首都圏へ9件の試験データ投入）</li>
+        <li>✅ <code>docs/data/map/pois.json</code> 作成（GitHub Pages公開用コピー、同期済み）</li>
         <li>✅ <code>world/map-data/schemas/poi.schema.json</code> 作成（JSON Schemaバリデーション）</li>
         <li>✅ <code>world/map-data/docs/poi-data-spec.md</code> 作成（詳細仕様書）</li>
+        <li>✅ <code>world/map-data/poi-design-guidelines.md</code> 作成（設計ガイドライン）</li>
         <li>✅ <code>world/map-data/README.md</code> 更新（POIセクション追加）</li>
         <li>✅ <code>docs/pages/map-data.html</code> 更新（POIデータ説明追加）</li>
         <li>✅ <code>docs/pages/roadmap.html</code> 更新（ロードマップ反映）</li>
+        <li>✅ POI ID 命名規則の統一（<code>astralis_</code> prefix 適用）</li>
+        <li>✅ 不自然な英語混入・断片的表現の修正</li>
+        <li>✅ world/docs 間のデータ同期確認</li>
+        <li>✅ JSON Schema 検証パス</li>
       </ul>
       <p>
         <strong>仕様の要点:</strong>
@@ -126,9 +131,9 @@
         <li>ID命名規則: lowercase snake_case</li>
         <li>既存のMap DataやLeaflet交通マップを一切破壊していない</li>
       </ul>
-      <p>
-        <strong>次のステップ:</strong> アストラリス首都圏へのPOI試験投入（10〜15件）。
-      </p>
+        <p>
+          <strong>次のステップ:</strong> Leaflet POI レイヤー実装（Phase 4 へ進捗）。
+        </p>
     </section>
 
     <section>
@@ -248,7 +253,7 @@
           </a>
           <strong>（完了：v0.1 策定済み）</strong>
         </li>
-        <li><a href="#">アストラリス首都圏 POI 試験投入</a> ← 次の本番作業</li>
+         <li><a href="#">アストラリス首都圏 POI 試験データ品質修正</a> ← 完了</li>
         <li><a href="#">Leaflet POI レイヤー実装</a></li>
         <li><a href="#">Web版ルート検索実装</a></li>
         <li><a href="#">既存 world/ 配下Markdownをポータル内で整理</a></li>

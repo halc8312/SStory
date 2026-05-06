@@ -140,7 +140,7 @@
     "tags": ["astralis", "elysion", "transport", "gate", "checkpoint"]
   },
   {
-    "id": "alchemist_row",
+    "id": "astralis_alchemist_row",
     "name": "錬金術師通り",
     "category": "shop",
     "type": "alchemy",
@@ -168,7 +168,7 @@
     "tags": ["astralis", "elysion", "alchemy", "shop", "magic"]
   },
   {
-    "id": "laurel_inn",
+    "id": "astralis_laurel_inn",
     "name": "月桂樹の宿",
     "category": "inn",
     "type": "coaching_inn",
@@ -196,7 +196,7 @@
     "tags": ["astralis", "elysion", "inn", "traveler", "coaching"]
   },
   {
-    "id": "silver_owl_tavern",
+    "id": "astralis_silver_owl_tavern",
     "name": "銀梟亭",
     "category": "food",
     "type": "tavern",
@@ -242,7 +242,7 @@
     "lore_basis": [
       "エリュシオンが秩序ある魔術制度を有すること",
       "アストラリスが王都として学術施設を保護していること",
-      "王都に高等教育和機関が集中していること"
+       "王都に高等教育機関が集中していること"
     ],
     "historical_reason": "王国成立と同時に設立され、魔術師の育成と国家規模の魔法研究を目的とする。",
     "economic_role": "魔法士の育成、国家プロジェクトへの協力、魔導具の研究開発、技術指導。",
@@ -252,7 +252,7 @@
     "tags": ["astralis", "elysion", "magic", "academy", "education"]
   },
   {
-    "id": "central_archive",
+    "id": "astralis_central_archive",
     "name": "中央図書院",
     "category": "culture",
     "type": "library",
@@ -280,7 +280,7 @@
     "tags": ["astralis", "elysion", "library", "archive", "culture"]
   },
   {
-    "id": "star_cup_temple",
+    "id": "astralis_star_cup_temple",
     "name": "星杯神殿",
     "category": "temple",
     "type": "cathedral",
@@ -308,7 +308,7 @@
     "tags": ["astralis", "elysion", "temple", "cathedral", "faith"]
   },
   {
-    "id": "adventurer_guild_branch",
+    "id": "astralis_adventurer_guild_branch",
     "name": "冒険者ギルド王都支部",
     "category": "guild",
     "type": "adventurer",
@@ -336,7 +336,7 @@
     "tags": ["astralis", "elysion", "guild", "adventurer", "quest"]
   },
   {
-    "id": "knight_hq",
+    "id": "astralis_knight_hq",
     "name": "騎士団中央詰所",
     "category": "military",
     "type": "knight_order",
@@ -364,7 +364,7 @@
     "tags": ["astralis", "elysion", "military", "knight", "security"]
   },
   {
-    "id": "star_cup_square",
+    "id": "astralis_star_cup_square",
     "name": "星杯広場",
     "category": "landmark",
     "type": "square",
@@ -378,7 +378,7 @@
     },
     "importance": 3,
     "status": "draft",
-    "description": "王都アストラリスの中心広場。星杯神殿前に位置し、祭礼、 markets、市民集会に使われる。",
+    "description": "王都アストラリスの中心広場。星杯神殿前に位置し、祭礼、市場、市民集会に使われる。",
     "lore_basis": [
       "アストラリスが王都として中枢機能を有すること",
       "星杯神殿が宗教的・文化的中心であること",
@@ -392,7 +392,7 @@
     "tags": ["astralis", "elysion", "square", "landmark", "public"]
   },
   {
-    "id": "royal_theater",
+    "id": "astralis_royal_theater",
     "name": "王立劇場",
     "category": "culture",
     "type": "theater",
@@ -412,7 +412,7 @@
       "エリュシオンで貴族文化と市民文化が発展していること",
       "王都に高級文化施設が集積していること"
     ],
-    "historical_reason": "王都の文化振興と貴族の entertainment を目的に建設された。",
+    "historical_reason": "王都の文化振興と貴族の娯楽を目的に建設された。",
     "economic_role": "興行収入、観光収入、周辺商業活性化。",
     "cultural_role": "エリュシオンの芸術・音楽・演劇の発信地。貴族と市民の交流の場。",
     "transport_role": "王都北東部に位置し、主要道路からアクセス可能。",
@@ -420,7 +420,7 @@
     "tags": ["astralis", "elysion", "theater", "culture", "noble"]
   },
   {
-    "id": "craftsmen_guildhall",
+    "id": "astralis_craftsmen_guildhall",
     "name": "王都職人工房街",
     "category": "industry",
     "type": "workshop_district",
@@ -441,7 +441,7 @@
       "王都に製造業が集中していること"
     ],
     "historical_reason": "王都建設時に職人たちが集住し、共同工房として発展。",
-    "economic_role": "製品製造、職人育成、order受注、地場産業の供給。",
+    "economic_role": "製品製造、職人育成、受注生産、地場産業の供給。",
     "cultural_role": "職人の技術継承と組合文化が根付く。祭礼時には出品会展も開催。",
     "transport_role": "大市場に近接し、資材搬入と製品出荷が容易。",
     "risk_context": "火災危険性が高いため、消防体制と区画整理が徹底されている。",
