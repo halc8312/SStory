@@ -846,7 +846,7 @@ footer a {
 
 .leaflet-transport-map.leaflet-container {
   font-family: inherit;
-  color: var(--text-dark);
+  color: var(--text-brown);
 }
 
 .leaflet-transport-map .leaflet-control-layers,
@@ -854,7 +854,7 @@ footer a {
 .leaflet-transport-map .leaflet-popup-content-wrapper,
 .leaflet-transport-map .leaflet-popup-tip {
   background: rgba(255, 250, 241, 0.96);
-  color: var(--text-dark);
+  color: var(--text-brown);
   border-color: rgba(107, 83, 68, 0.22);
 }
 
@@ -986,7 +986,7 @@ footer a {
   border: 1px solid rgba(107, 83, 68, 0.22);
   border-radius: 10px;
   background: rgba(255, 250, 241, 0.98);
-  color: var(--text-dark);
+  color: var(--text-brown);
   font: inherit;
 }
 
