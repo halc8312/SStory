@@ -1849,9 +1849,40 @@ footer a {
     grid-template-columns: 1fr;
   }
 
-  .map-controls label,
-.map-zoom-button {
+ .map-controls label,
+ .map-zoom-button {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* Leaflet Opacity Control */
+.leaflet-opacity-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0 1rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(120, 85, 45, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 248, 225, 0.72);
+  font-size: 0.95rem;
+  color: var(--text-brown);
+}
+
+.leaflet-opacity-control input {
+  min-width: 160px;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .leaflet-opacity-control {
+    align-items: flex-start;
+    flex-direction: column;
+    border-radius: 14px;
+  }
+
+  .leaflet-opacity-control input {
+    width: 100%;
   }
 }
