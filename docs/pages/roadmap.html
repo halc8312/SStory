@@ -101,6 +101,37 @@
     </section>
 
     <section>
+      <h3>Phase 3.75: POIデータ仕様 v0.1 策定 ✅ 完了</h3>
+      <p>
+        POI（ポイント・オブ・インタレスト）データの仕様を定義し、データ構造と
+        バリデーションルールを整備しました。
+      </p>
+      <ul>
+        <li>✅ <code>world/map-data/data/pois.json</code> 作成（サンプル2件投入）</li>
+        <li>✅ <code>docs/data/map/pois.json</code> 作成（GitHub Pages公開用コピー）</li>
+        <li>✅ <code>world/map-data/schemas/poi.schema.json</code> 作成（JSON Schemaバリデーション）</li>
+        <li>✅ <code>world/map-data/docs/poi-data-spec.md</code> 作成（詳細仕様書）</li>
+        <li>✅ <code>world/map-data/README.md</code> 更新（POIセクション追加）</li>
+        <li>✅ <code>docs/pages/map-data.html</code> 更新（POIデータ説明追加）</li>
+        <li>✅ <code>docs/pages/roadmap.html</code> 更新（ロードマップ反映）</li>
+      </ul>
+      <p>
+        <strong>仕様の要点:</strong>
+      </p>
+      <ul>
+        <li>必須根拠フィールド: <code>lore_basis</code>, <code>historical_reason</code>, <code>economic_role</code>, <code>cultural_role</code>, <code>transport_role</code>, <code>risk_context</code></li>
+        <li>カテゴリ21種、ステータス9種を定義</li>
+        <li>importance 1-5 スケール</li>
+        <li>座標系と <code>nearest_node_id</code> による交通ノード紐づけ</li>
+        <li>ID命名規則: lowercase snake_case</li>
+        <li>既存のMap DataやLeaflet交通マップを一切破壊していない</li>
+      </ul>
+      <p>
+        <strong>次のステップ:</strong> アストラリス首都圏へのPOI試験投入（10〜15件）。
+      </p>
+    </section>
+
+    <section>
       <h3>Phase 4: インタラクティブ交通マップ v0.1 - 描画実装 (予定)</h3>
       <p>
         Map Data を読み込んで、Web地図上にノード・ルート・危険区域を描画します。
@@ -213,9 +244,12 @@
         <li><a href="interactive-map.html">インタラクティブ交通マップ v0.1 描画実装</a> ← 次段階</li>
         <li>
           <a href="../../world/map-data/poi-design-guidelines.md" target="_blank">
-            POI設計ガイドラインに基づく `pois.json` 仕様策定
+            POI設計ガイドラインに基づく pois.json 仕様策定
           </a>
+          <strong>（完了：v0.1 策定済み）</strong>
         </li>
+        <li><a href="#">アストラリス首都圏 POI 試験投入</a> ← 次の本番作業</li>
+        <li><a href="#">Leaflet POI レイヤー実装</a></li>
         <li><a href="#">Web版ルート検索実装</a></li>
         <li><a href="#">既存 world/ 配下Markdownをポータル内で整理</a></li>
         <li><a href="#">タイルマップ試作</a></li>

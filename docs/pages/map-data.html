@@ -64,6 +64,41 @@
     </section>
 
     <section>
+      <h3>POI / スポットデータ</h3>
+      <p>
+        POI（Point of Interest）データは、都市施設・商店・宿屋・市場・神殿・ギルド・
+        観光名所・ダンジョン入口など、地図上の特定スポットを管理します。
+      </p>
+      <p>
+        現在、<strong>POIデータ仕様 v0.1</strong> を策定中です。
+        大規模なPOI投入はまだ行っておらず、仕様確認用のサンプル（2件）のみ登録済みです。
+      </p>
+      <ul>
+        <li><strong>データファイル</strong>: <code>world/map-data/data/pois.json</code> （正史データ）</li>
+        <li><strong>公開用コピー</strong>: <code>docs/data/map/pois.json</code> （GitHub Pages用）</li>
+        <li><strong>JSON Schema</strong>: <code>world/map-data/schemas/poi.schema.json</code></li>
+        <li><strong>仕様書</strong>: <code>world/map-data/docs/poi-data-spec.md</code></li>
+      </ul>
+      <p>
+        POIの追加・編集は、必ず
+        <a href="../../world/map-data/poi-design-guidelines.md" target="_blank">
+          POI設計ガイドライン
+        </a>
+        と
+        <a href="../../world/map-data/docs/poi-data-spec.md" target="_blank">
+          POIデータ仕様 v0.1
+        </a>
+        に従ってください。
+        特に <code>lore_basis</code>（世界観根拠）と <code>historical_reason</code>（歴史的理由）などの
+        必須根拠フィールドを充実させる必要があります。
+      </p>
+      <p class="note">
+        ※ 現段階では、アストラリス首都圏への試験投入（10〜15件）を準備中です。
+        大規模なPOI投入やLeaflet地図へのPOIレイヤー実装は、今後のフェーズで行います。
+      </p>
+    </section>
+
+    <section>
       <h3>GeoJSON 出力</h3>
       <p>
         上記 JSON データは、GeoJSON 形式にも変換可能です。

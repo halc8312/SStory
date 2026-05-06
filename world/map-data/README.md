@@ -17,12 +17,16 @@ world/map-data/
     nodes.json           # Cities, ports, airports, terminals (30+)
     routes.json          # Transportation paths (25+)
     hazards.json         # Danger zones (6+)
+    pois.json            # POI and spots data (planned)
   schemas/
     continent.schema.json
     region.schema.json
     node.schema.json
     route.schema.json
     hazard.schema.json
+    poi.schema.json      # POI schema (v0.1)
+  docs/
+    poi-data-spec.md     # POI data specification v0.1
   examples/
     route_astralis_to_jade_port.json   # Example route output
     route_astralis_to_marineport.json
@@ -157,13 +161,93 @@ The validator checks:
 - Value ranges (danger_level 0-5, severity 0-5, coordinates 0-10000)
 - Confidence levels valid
 
+## POI Data Specification
+
+POI (Point of Interest) data is managed in [`data/pois.json`](./data/pois.json) and follows
+the specification defined in [`docs/poi-data-spec.md`](./docs/poi-data-spec.md).
+
+### Purpose
+
+POIs represent specific facilities, landmarks, and spots within settlements or
+along transportation routes: markets, shops, inns, temples, guilds, academies,
+theaters, administrative buildings, industrial sites, research facilities,
+dungeon entrances, hazardous locations, and more.
+
+### Data Structure
+
+Each POI entry includes:
+
+- **Basic info**: id, name, category, type
+- **Location**: continent_id, region_id, nearest_node_id, position (x,y,z)
+- **Importance**: 1–5 scale (local to world-significant)
+- **Status**: draft, active, historical, ruined, restricted, sealed, abandoned, seasonal, hidden
+- **Justification fields** (required): lore_basis, historical_reason, economic_role, cultural_role, transport_role, risk_context
+- **Tags**: keywords for filtering
+
+See [`docs/poi-data-spec.md`](./docs/poi-data-spec.md) for full field definitions and examples.
+
+### Alignment Rules
+
+All POIs must align with:
+
+- continental history and geography
+- city and regional roles
+- transportation networks
+- established religion and beliefs
+- magic systems
+- political structure
+- economic sphere
+- hazard zones
+- existing Map Data
+- canon setting documents
+
+The required justification fields (`lore_basis`, `historical_reason`, etc.) enforce
+this alignment. See [`poi-design-guidelines.md`](./poi-design-guidelines.md) for detailed rules.
+
+### Schema Validation
+
+POI data is validated against [`schemas/poi.schema.json`](./schemas/poi.schema.json).
+The schema enforces:
+
+- Required fields presence
+- Enum values for `category` (21 types) and `status` (9 types)
+- `importance` as integer 1–5
+- Coordinate ranges (0–10000 for x, y; any number for z)
+- Pattern matching for IDs (lowercase snake_case)
+- Non-empty arrays for `lore_basis` and `tags`
+- No additional properties beyond defined optional fields
+
+### Current Status
+
+**v0.1 — Specification draft, sample data only.**
+
+`pois.json` currently contains 0–3 sample entries with `status: "draft"` and `tags`
+including `sample`. No large-scale POI entry has been performed yet.
+
+Next step: trial entry of 10–15 POIs in the Astralis capital region.
+
+### GitHub Pages Copy
+
+GitHub Pages uses the copy at [`docs/data/map/pois.json`](../../docs/data/map/pois.json).
+Update both files manually when adding data. Future automation may be considered.
+
 ## POI Design Guidance
 
-For future spot and POI expansion on the Leaflet-based world map, see
-[`poi-design-guidelines.md`](./poi-design-guidelines.md).
+For detailed design rules and world-alignment requirements, see
+[POI / Spot Design Guidelines](./poi-design-guidelines.md).
 
-This guideline defines lore-alignment rules, required evidence fields, category
-proposals, naming rules, and the planned path toward `pois.json`.
+This guideline defines:
+
+- Core principle: POIs must arise from world settings
+- Alignment checklists
+- Required evidence fields (same as specification)
+- Continental POI tendencies (Elysion, Lumiera, Chaos Ria, Atlantis, Grimoire)
+- POI capacity by settlement scale
+- Common POIs around transport nodes
+- Proposed categories and naming rules
+- Rules against shallow additions
+
+## Route Finder
 
 ## Route Finder
 
