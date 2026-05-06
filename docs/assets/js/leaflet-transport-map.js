@@ -2,37 +2,36 @@
    const BASE_PATH = '../data/map/';
    const CACHE_BUSTER = '20260506a';
 
-   // === 座標変換設定 ===
-   // Data座標系 (0-10000) を Leaflet表示座標に変換する設定
-   const MAP_COORDINATE_CONFIG = {
-     // データ座標の範囲
-     dataWidth: 10000,
-     dataHeight: 10000,
-     // 反転
-     flipX: false,
-     flipY: false,
-     // スケール (1=等倍, >1で拡大, <1で縮小)
-     // 現在: 縦長画像(1000x800)を正方形データ座標に合わせるため、Y方向を0.8倍で補正
-     // さらに、大陸位置合わせのための微調整を行っている
-     scaleX: 0.95,  //  empirically adjusted to align continents horizontally
-     scaleY: 0.85,  //  empirically adjusted to align continents vertically
-     // オフセット
-     offsetX: -300, // empirically adjusted
-     offsetY: -200, // empirically adjusted
-     // スケールの中心点
-     centerX: 5000,
-     centerY: 5000,
-     // デバッグ表示
-     showGrid: false,
-     showDebugNodes: true
-   };
+    // === 座標変換設定 ===
+    // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
+    const MAP_COORDINATE_CONFIG = {
+      // データ座標の範囲 (world-map.svg の原始座標系)
+      width: 10000,
+      height: 10000,
+      // 反転
+      flipX: false,
+      flipY: false,
+      // スケール (1=等倍, >1で拡大, <1で縮小)
+      // 現在: 世界地図画像の形状と大陸位置を合わせるため、微調整中
+      scaleX: 0.95,  //  empirically adjusted to align continents horizontally
+      scaleY: 0.85,  //  empirically adjusted to align continents vertically
+      // オフセット
+      offsetX: -300, // empirically adjusted
+      offsetY: -200, // empirically adjusted
+      // スケールの中心点
+      centerX: 5000,
+      centerY: 5000,
+      // デバッグ表示
+      showGrid: false,
+      showDebugNodes: true
+    };
 
-   // データ座標の範囲 (変換前)
-   const DATA_BOUNDS = [[0, 0], [MAP_COORDINATE_CONFIG.dataWidth, MAP_COORDINATE_CONFIG.dataHeight]];
+    // データ座標の範囲 (変換前)
+    const WORLD_COORDINATE_BOUNDS = [[0, 0], [MAP_COORDINATE_CONFIG.width, MAP_COORDINATE_CONFIG.height]];
 
-   // 背景画像の表示範囲 (変換後座標系)
-   // 現在はデータ座標系と同一。必要に応じて画像の実効範囲に合わせて調整可。
-   const WORLD_IMAGE_BOUNDS = DATA_BOUNDS;
+    // 背景画像の表示範囲 (変換後座標系)
+    // 現在はデータ座標系と同一。必要に応じて画像の実効範囲に合わせて調整可。
+    const WORLD_IMAGE_BOUNDS = WORLD_COORDINATE_BOUNDS;
 
    const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
   const DEFAULT_NODE_STYLE = { radius: 6, fillColor: '#c18857', color: '#7d5130', weight: 1.8, fillOpacity: 0.9 };
@@ -67,30 +66,61 @@
     return div.innerHTML;
   }
 
-   function transformPosition(position) {
-     const config = MAP_COORDINATE_CONFIG;
-     let x = Number(position?.x ?? 0);
-     let y = Number(position?.y ?? 0);
+    function transformPosition(position) {
+      const config = MAP_COORDINATE_CONFIG;
+      let x = Number(position?.x ?? 0);
+      let y = Number(position?.y ?? 0);
 
-     // 反転
-     if (config.flipX) {
-       x = config.dataWidth - x;
-     }
-     if (config.flipY) {
-       y = config.dataHeight - y;
-     }
+      // 反転
+      if (config.flipX) {
+        x = config.width - x;
+      }
+      if (config.flipY) {
+        y = config.height - y;
+      }
 
-     // スケール・オフセット (中心からの相対)
-     x = config.centerX + (x - config.centerX) * config.scaleX + config.offsetX;
-     y = config.centerY + (y - config.centerY) * config.scaleY + config.offsetY;
+      // スケール・オフセット (中心からの相対)
+      x = config.centerX + (x - config.centerX) * config.scaleX + config.offsetX;
+      y = config.centerY + (y - config.centerY) * config.scaleY + config.offsetY;
 
-     return { x, y };
-   }
+      return { x, y };
+    }
 
-   function toLatLng(position) {
-     const transformed = transformPosition(position);
-     return [transformed.y, transformed.x];
-   }
+    function toLatLng(position) {
+      const transformed = transformPosition(position);
+      return [transformed.y, transformed.x];
+    }
+
+    function getAdjustedHazardRadius(hazard) {
+      const radius = Number(hazard?.radius ?? 0);
+      const scale = (MAP_COORDINATE_CONFIG.scaleX + MAP_COORDINATE_CONFIG.scaleY) / 2;
+      return radius * scale;
+    }
+
+    function createCoordinateGridLayer() {
+      const gridLayer = L.layerGroup();
+      const gridColor = '#8a6f42';
+      const gridWeight = 1;
+      const gridOpacity = 0.25;
+
+      // 縦線 (X = 一定)
+      for (let x = 0; x <= MAP_COORDINATE_CONFIG.width; x += 1000) {
+        L.polyline(
+          [toLatLng({ x, y: 0 }), toLatLng({ x, y: MAP_COORDINATE_CONFIG.height })],
+          { color: gridColor, weight: gridWeight, opacity: gridOpacity }
+        ).addTo(gridLayer);
+      }
+
+      // 横線 (Y = 一定)
+      for (let y = 0; y <= MAP_COORDINATE_CONFIG.height; y += 1000) {
+        L.polyline(
+          [toLatLng({ x: 0, y }), toLatLng({ x: MAP_COORDINATE_CONFIG.width, y })],
+          { color: gridColor, weight: gridWeight, opacity: gridOpacity }
+        ).addTo(gridLayer);
+      }
+
+      return gridLayer;
+    }
 
   function formatMonths(months) {
     return Array.isArray(months) && months.length > 0 ? months.join(', ') : 'なし';
@@ -240,34 +270,37 @@
          preferCanvas: true
        });
 
-       // 初期表示: データ座標範囲に合わせる
-       map.fitBounds(DATA_BOUNDS, { padding: [24, 24] });
-       // 表示可能範囲をデータ座標範囲に制限（余白を少し確保）
-       map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
+        // 初期表示: 画像boundsに合わせる
+        map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
+        // 表示可能範囲をデータ座標範囲に制限（余白を少し確保）
+        map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
 
-      const WORLD_MAP_IMAGE_URL = '../assets/images/maps/world/world-map.svg';
-      const worldMapLayer = L.imageOverlay(WORLD_MAP_IMAGE_URL, WORLD_BOUNDS, {
-        opacity: 0.82,
-        interactive: false,
-        zIndex: 0
-      }).addTo(map);
+       const WORLD_MAP_IMAGE_URL = '../assets/images/maps/world/world-map.svg';
+       const worldMapLayer = L.imageOverlay(WORLD_MAP_IMAGE_URL, WORLD_IMAGE_BOUNDS, {
+         opacity: 0.82,
+         interactive: false,
+         zIndex: 0
+       }).addTo(map);
 
       worldMapLayer.on('error', () => {
         console.warn('[LeafletTransportMap] World map background image failed to load.');
         showLeafletMessage('世界地図背景画像を読み込めませんでした。交通データのみ表示します。');
       });
 
-      const hazardLayer = L.layerGroup().addTo(map);
-      const roadLayer = L.layerGroup().addTo(map);
-      const railLayer = L.layerGroup().addTo(map);
-      const seaLayer = L.layerGroup().addTo(map);
-      const airLayer = L.layerGroup().addTo(map);
-      const specialLayer = L.layerGroup().addTo(map);
-      const nodeLayer = L.layerGroup().addTo(map);
+       const hazardLayer = L.layerGroup().addTo(map);
+       const roadLayer = L.layerGroup().addTo(map);
+       const railLayer = L.layerGroup().addTo(map);
+       const seaLayer = L.layerGroup().addTo(map);
+       const airLayer = L.layerGroup().addTo(map);
+       const specialLayer = L.layerGroup().addTo(map);
+       const nodeLayer = L.layerGroup().addTo(map);
 
-      // Highlight layers for search results (separate from base layers)
-      const routeHighlightLayer = L.layerGroup().addTo(map);
-      const nodeHighlightLayer = L.layerGroup().addTo(map);
+       // 座標グリッドレイヤー (デフォルト非表示)
+       const gridLayer = createCoordinateGridLayer();
+
+       // Highlight layers for search results (separate from base layers)
+       const routeHighlightLayer = L.layerGroup().addTo(map);
+       const nodeHighlightLayer = L.layerGroup().addTo(map);
       const routeHighlightPolylinesById = new Map();
       const nodeHighlightMarkersById = new Map();
 
@@ -509,16 +542,16 @@
       fitRouteBounds(result);
     }
 
-    (datasets.hazards || []).forEach(hazard => {
-      if (!hazard?.center || !isFiniteNumber(hazard.center.x) || !isFiniteNumber(hazard.center.y) || !isFiniteNumber(hazard.radius)) {
-        console.warn('[LeafletTransportMap] Hazard skipped due to missing center/radius:', hazard?.id || hazard);
-        return;
-      }
+     (datasets.hazards || []).forEach(hazard => {
+       if (!hazard?.center || !isFiniteNumber(hazard.center.x) || !isFiniteNumber(hazard.center.y) || !isFiniteNumber(hazard.radius)) {
+         console.warn('[LeafletTransportMap] Hazard skipped due to missing center/radius:', hazard?.id || hazard);
+         return;
+       }
 
-      const circle = L.circle(toLatLng(hazard.center), {
-        radius: Number(hazard.radius),
-        ...getHazardStyle(hazard)
-      }).addTo(hazardLayer);
+       const circle = L.circle(toLatLng(hazard.center), {
+         radius: getAdjustedHazardRadius(hazard),
+         ...getHazardStyle(hazard)
+       }).addTo(hazardLayer);
 
       bindPopupAndInteractions(circle, createPopupHtml(
         hazard.name || hazard.id || '危険区域',
@@ -601,7 +634,8 @@
         '海路': seaLayer,
         '空路': airLayer,
         '特殊交通': specialLayer,
-        '危険区域': hazardLayer
+        '危険区域': hazardLayer,
+        '座標グリッド': gridLayer
       }, { collapsed: window.matchMedia("(max-width: 720px)").matches }).addTo(map);
 
       // Responsive layer control collapse on resize
@@ -636,29 +670,34 @@
       * Consumers can access the raw Leaflet map instance, node/route layer maps,
       * reset the viewport, apply simple node/route highlighting, and control world map opacity.
       */
-        window.EternalArcadiaLeafletMap = {
-          isAvailable: true,
-          map,
-          routeLayerById,
-          nodeMarkerById,
-          worldMapLayer,
-          fitWorld() {
-            map.fitBounds(DATA_BOUNDS, { padding: [24, 24] });
-          },
-          setWorldMapOpacity(value) {
-            worldMapLayer.setOpacity(value);
-          },
-          clearHighlights,
-          highlightRouteIds(routeIds = []) {
-            highlightRoutes(routeIds);
-          },
-          highlightRoute,
-          clearRouteHighlight,
-          focusNodeIds(nodeIds = []) {
-            highlightNodes(nodeIds);
-            focusNodes(nodeIds);
-          }
-        };
+         window.EternalArcadiaLeafletMap = {
+           isAvailable: true,
+           map,
+           routeLayerById,
+           nodeMarkerById,
+           worldMapLayer,
+           MAP_COORDINATE_CONFIG,
+           transformPosition,
+           toLatLng,
+           WORLD_COORDINATE_BOUNDS,
+           WORLD_IMAGE_BOUNDS,
+           fitWorld() {
+             map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
+           },
+           setWorldMapOpacity(value) {
+             worldMapLayer.setOpacity(value);
+           },
+           clearHighlights,
+           highlightRouteIds(routeIds = []) {
+             highlightRoutes(routeIds);
+           },
+           highlightRoute,
+           clearRouteHighlight,
+           focusNodeIds(nodeIds = []) {
+             highlightNodes(nodeIds);
+             focusNodes(nodeIds);
+           }
+         };
 
       if (!datasets.nodes.length && !datasets.routes.length && !datasets.hazards.length) {
         showLeafletMessage(DEFAULT_MESSAGE);
