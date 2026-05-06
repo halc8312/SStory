@@ -4,7 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>インタラクティブ交通マップ v0.1 - エターナル・アルカディア設定資料館</title>
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260505c">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha512-o9N1jRV0MNDoAuSo2uNQl6bVQ+B4pLHwtxRsNMzatoNg5RoiE5wl6Bbu5ZGDG7r1grKeR+ocF+AA1sQ+EhuxQw=="
+    crossorigin=""
+  >
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260506a">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
 </head>
 <body>
@@ -27,10 +33,10 @@
       <h2>インタラクティブ交通マップ v0.1</h2>
       <p>
         このページは、エターナル・アルカディア世界の交通ネットワークをインタラクティブに探索できる地図です。
-        v0.1では、Map Data（JSON）を読み込み、SVG Based の描画を行います。
+        v0.1では、Map Data（JSON）を読み込み、Leaflet版とSVG版の両方を表示します。
       </p>
       <p>
-        ノード（拠点）、ルート（交通路）、危険区域を表示し、レイヤー切替や詳細情報確認ができます。
+        Leaflet版は操作用・閲覧用、SVG版はデータ確認・デバッグ用として利用できます。
       </p>
     </section>
 
@@ -46,8 +52,23 @@
       <div id="map-data-message" class="gallery-message" hidden></div>
     </section>
 
+    <section class="leaflet-map-section">
+      <h2>Leaflet版交通マップ</h2>
+      <p class="leaflet-map-note">
+        ドラッグで移動、ホイールやピンチでズーム、右上のレイヤー切替で表示内容を切り替えられます。
+      </p>
+      <div id="leaflet-transport-map-message" class="gallery-message" hidden></div>
+      <div
+        id="leaflet-transport-map"
+        class="leaflet-transport-map"
+        role="region"
+        aria-label="Leaflet版インタラクティブ交通マップ"
+      ></div>
+    </section>
+
     <section class="interactive-map-section">
-      <h2>交通マップ</h2>
+      <h2>SVG版交通ネットワーク</h2>
+      <p class="leaflet-map-note">データ確認・デバッグ・Leaflet版との比較用に従来のSVG版も残しています。</p>
 
       <div class="interactive-map-layout">
         <div class="interactive-map-stage">
@@ -231,7 +252,13 @@
     </p>
   </footer>
 
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha512-uM3jB8RMBJbW/D9QLp5rx0NOW8kodIQtVQ1H6buqmWrbEgKBV0WJG9oRHy3U6NMoVOmFwW52dufvIFnEkxYBFw=="
+    crossorigin=""
+  ></script>
   <script src="../assets/js/route-search.js?v=20260505c"></script>
+  <script src="../assets/js/leaflet-transport-map.js?v=20260506a"></script>
   <script src="../assets/js/interactive-map.js?v=20260505c"></script>
   <script src="../assets/js/main.js?v=20260505c"></script>
 </body>
