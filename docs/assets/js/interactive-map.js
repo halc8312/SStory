@@ -433,18 +433,29 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNodes(svgElement, nodes);
   }
 
-  function initializeRouteSearchModule() {
-    if (typeof window.initializeRouteSearch !== 'function') {
-      console.warn('[InteractiveMap] route-search.js is not available');
-      return;
-    }
+   function initializeRouteSearchModule() {
+     if (typeof window.initializeRouteSearch !== 'function') {
+       console.warn('[InteractiveMap] route-search.js is not available');
+       return;
+     }
 
-    window.initializeRouteSearch({
-      nodes: Array.isArray(mapData.nodes) ? mapData.nodes : [],
-      routes: Array.isArray(mapData.routes) ? mapData.routes : [],
-      svgElement
-    });
-  }
+     const nodes = Array.isArray(mapData.nodes) ? mapData.nodes : [];
+     const routes = Array.isArray(mapData.routes) ? mapData.routes : [];
+
+     const nodeById = {};
+     nodes.forEach(node => {
+       if (node.id) {
+         nodeById[node.id] = node;
+       }
+     });
+
+     window.initializeRouteSearch({
+       nodes,
+       routes,
+       svgElement,
+       nodeById
+     });
+   }
 
   function createBadge(text, className = 'detail-badge') {
     return `<span class="${className}">${escapeHtml(text)}</span>`;
