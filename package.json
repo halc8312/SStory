@@ -11,7 +11,8 @@
       "consistency": "node scripts/validate-consistency.js",
       "terminology": "python3 tools/terminology_check.py",
       "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency && npm run terminology",
-      "test": "npm run validate"
+      "test:unit": "node --test test/*.test.js && python3 -m unittest discover -s tests -p '*_test.py'",
+      "test": "npm run validate && npm run test:unit"
     },
   "keywords": [
     "worldbuilding",
