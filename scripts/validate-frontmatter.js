@@ -29,6 +29,16 @@ let errors = 0;
 let warnings = 0;
 let checked = 0;
 
+function resetStats() {
+  errors = 0;
+  warnings = 0;
+  checked = 0;
+}
+
+function getStats() {
+  return { errors, warnings, checked };
+}
+
 function log(message, type = 'INFO') {
   const colors = {
     INFO: '\x1b[36m',
@@ -151,6 +161,7 @@ function walkDir(dir, callback) {
 }
 
 function main() {
+  resetStats();
   log('SStory Frontmatter Validator starting...', 'INFO');
   console.log('');
 
@@ -210,12 +221,27 @@ function main() {
   }
 }
 
-// Check if yaml package is available, if not use simple regex parsing
-try {
-  require('yaml');
-} catch (e) {
-  // Fallback: simple regex parsing
-  console.log('Note: Install "yaml" package for full YAML validation');
+if (require.main === module) {
+  // Check if yaml package is available, if not use simple regex parsing
+  try {
+    require('yaml');
+  } catch (e) {
+    // Fallback: simple regex parsing
+    console.log('Note: Install "yaml" package for full YAML validation');
+  }
+
+  main();
 }
 
-main();
+module.exports = {
+  REQUIRED_FIELDS,
+  VALID_CATEGORIES,
+  VALID_STATUS,
+  checkFrontmatter,
+  checkLinks,
+  walkDir,
+  log,
+  main,
+  resetStats,
+  getStats
+};

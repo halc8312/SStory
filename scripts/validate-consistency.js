@@ -39,8 +39,8 @@ const CHECKS = [
 ];
 
 // Check for broken internal links
-function checkLinks() {
-  const mdFiles = getAllMarkdown(ROOT);
+function checkLinks(rootDir = ROOT) {
+  const mdFiles = getAllMarkdown(rootDir);
   const linkRegex = /\[.*?\]\((?!http)(.*?\.md)\)/g;
   let errors = [];
 
@@ -60,8 +60,8 @@ function checkLinks() {
 }
 
 // Check naming consistency for key terms
-function checkTerms() {
-  const files = getAllMarkdown(ROOT);
+function checkTerms(rootDir = ROOT) {
+  const files = getAllMarkdown(rootDir);
   const issues = [];
 
   // Earth spirit must be "グラン" only, not "ドリト"
@@ -116,7 +116,7 @@ function main() {
 
   // Check terms
   console.log('--- Term Consistency ---');
-  const termIssues = checkTerms();
+  const termIssues = checkTerms(ROOT);
   if (termIssues.length > 0) {
     hasErrors = true;
     termIssues.forEach(i => console.log(`❌ ${i}`));
@@ -126,7 +126,7 @@ function main() {
 
   // Check links
   console.log('\n--- Link Integrity ---');
-  const brokenLinks = checkLinks();
+  const brokenLinks = checkLinks(ROOT);
   if (brokenLinks.length > 0) {
     hasErrors = true;
     brokenLinks.forEach(l => console.log(`❌ ${l}`));
@@ -144,4 +144,15 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  CHECKS,
+  ROOT,
+  checkLinks,
+  checkTerms,
+  getAllMarkdown,
+  main
+};
