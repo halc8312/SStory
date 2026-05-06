@@ -157,6 +157,14 @@ The validator checks:
 - Value ranges (danger_level 0-5, severity 0-5, coordinates 0-10000)
 - Confidence levels valid
 
+## POI Design Guidance
+
+For future spot and POI expansion on the Leaflet-based world map, see
+[`poi-design-guidelines.md`](./poi-design-guidelines.md).
+
+This guideline defines lore-alignment rules, required evidence fields, category
+proposals, naming rules, and the planned path toward `pois.json`.
+
 ## Route Finder
 
 Find optimal routes between nodes:
