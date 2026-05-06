@@ -3,6 +3,31 @@
   const CACHE_BUSTER = '20260506a';
   const WORLD_BOUNDS = [[0, 0], [10000, 10000]];
   const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
+  const DEFAULT_NODE_STYLE = { radius: 6, fillColor: '#c18857', color: '#7d5130', weight: 1.8, fillOpacity: 0.9 };
+  const NODE_STYLE_BY_TYPE = {
+    capital: { radius: 9, fillColor: '#d5b34b', color: '#8c6a10', weight: 2.2, fillOpacity: 0.95 },
+    port: { radius: 7, fillColor: '#4f89cb', color: '#234f7f', weight: 2, fillOpacity: 0.92 },
+    seaport: { radius: 7, fillColor: '#4f89cb', color: '#234f7f', weight: 2, fillOpacity: 0.92 },
+    airport: { radius: 7.5, fillColor: '#9664cf', color: '#5e3794', weight: 2, fillOpacity: 0.92 },
+    air_terminal: { radius: 7.5, fillColor: '#9664cf', color: '#5e3794', weight: 2, fillOpacity: 0.92 },
+    oasis: { radius: 7, fillColor: '#57a36b', color: '#2f6d3f', weight: 2, fillOpacity: 0.92 },
+    forbidden_gate: { radius: 7.5, fillColor: '#a65190', color: '#692558', weight: 2, fillOpacity: 0.92 },
+    warp_gate: { radius: 7.5, fillColor: '#a65190', color: '#692558', weight: 2, fillOpacity: 0.92 },
+    warp_terminal: { radius: 7.5, fillColor: '#a65190', color: '#692558', weight: 2, fillOpacity: 0.92 }
+  };
+  const ROUTE_DEFINITION_BY_TYPE = {
+    road: { overlayName: '陸路', style: { color: '#9d5a31', weight: 4.5, opacity: 0.9 } },
+    caravan: { overlayName: '陸路', style: { color: '#bb8a43', weight: 4, opacity: 0.9, dashArray: '10 8 2 8' } },
+    ice_road: { overlayName: '陸路', style: { color: '#8aa7bf', weight: 4, opacity: 0.9, dashArray: '10 6' } },
+    rail: { overlayName: '鉄道', style: { color: '#4b4f5a', weight: 5.5, opacity: 0.9 } },
+    sea: { overlayName: '海路', style: { color: '#317fcb', weight: 4, opacity: 0.85, dashArray: '12 10' } },
+    air: { overlayName: '空路', style: { color: '#8558c7', weight: 4, opacity: 0.85, dashArray: '8 10' } },
+    submarine: { overlayName: '特殊交通', style: { color: '#1f9aa1', weight: 4, opacity: 0.85, dashArray: '8 6' } },
+    tunnel: { overlayName: '特殊交通', style: { color: '#67636a', weight: 4, opacity: 0.9, dashArray: '8 8' } },
+    underwater_tunnel: { overlayName: '特殊交通', style: { color: '#2389a8', weight: 4, opacity: 0.9, dashArray: '8 8' } },
+    forbidden_path: { overlayName: '特殊交通', style: { color: '#9b3441', weight: 4, opacity: 0.9, dashArray: '6 8 2 8' } },
+    default: { overlayName: '特殊交通', style: { color: '#9150b8', weight: 4, opacity: 0.88, dashArray: '6 10' } }
+  };
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -141,30 +166,25 @@
     const hazardLayer = L.layerGroup().addTo(map);
 
     function getNodeStyle(node) {
-      const type = node?.type || 'unknown';
-      if (type === 'capital') return { radius: 9, fillColor: '#d5b34b', color: '#8c6a10', weight: 2.2, fillOpacity: 0.95 };
-      if (type === 'port' || type === 'seaport') return { radius: 7, fillColor: '#4f89cb', color: '#234f7f', weight: 2, fillOpacity: 0.92 };
-      if (type === 'airport' || type === 'air_terminal') return { radius: 7.5, fillColor: '#9664cf', color: '#5e3794', weight: 2, fillOpacity: 0.92 };
-      if (type === 'oasis') return { radius: 7, fillColor: '#57a36b', color: '#2f6d3f', weight: 2, fillOpacity: 0.92 };
-      if (type === 'forbidden_gate' || type === 'warp_gate' || type === 'warp_terminal') {
-        return { radius: 7.5, fillColor: '#a65190', color: '#692558', weight: 2, fillOpacity: 0.92 };
-      }
-      return { radius: 6, fillColor: '#c18857', color: '#7d5130', weight: 1.8, fillOpacity: 0.9 };
+      return NODE_STYLE_BY_TYPE[node?.type] || DEFAULT_NODE_STYLE;
     }
 
     function getRouteDefinition(route) {
-      const type = route?.type || 'unknown';
-      if (type === 'road') return { group: roadLayer, label: '陸路', style: { color: '#9d5a31', weight: 4.5, opacity: 0.9 } };
-      if (type === 'caravan') return { group: roadLayer, label: '陸路', style: { color: '#bb8a43', weight: 4, opacity: 0.9, dashArray: '10 8 2 8' } };
-      if (type === 'ice_road') return { group: roadLayer, label: '陸路', style: { color: '#8aa7bf', weight: 4, opacity: 0.9, dashArray: '10 6' } };
-      if (type === 'rail') return { group: railLayer, label: '鉄道', style: { color: '#4b4f5a', weight: 5.5, opacity: 0.9 } };
-      if (type === 'sea') return { group: seaLayer, label: '海路', style: { color: '#317fcb', weight: 4, opacity: 0.85, dashArray: '12 10' } };
-      if (type === 'air') return { group: airLayer, label: '空路', style: { color: '#8558c7', weight: 4, opacity: 0.85, dashArray: '8 10' } };
-      if (type === 'submarine') return { group: specialLayer, label: '特殊交通', style: { color: '#1f9aa1', weight: 4, opacity: 0.85, dashArray: '8 6' } };
-      if (type === 'tunnel') return { group: specialLayer, label: '特殊交通', style: { color: '#67636a', weight: 4, opacity: 0.9, dashArray: '8 8' } };
-      if (type === 'underwater_tunnel') return { group: specialLayer, label: '特殊交通', style: { color: '#2389a8', weight: 4, opacity: 0.9, dashArray: '8 8' } };
-      if (type === 'forbidden_path') return { group: specialLayer, label: '特殊交通', style: { color: '#9b3441', weight: 4, opacity: 0.9, dashArray: '6 8 2 8' } };
-      return { group: specialLayer, label: '特殊交通', style: { color: '#9150b8', weight: 4, opacity: 0.88, dashArray: '6 10' } };
+      const type = route?.type || 'default';
+      const definition = ROUTE_DEFINITION_BY_TYPE[type] || ROUTE_DEFINITION_BY_TYPE.default;
+      const groupByOverlayName = {
+        陸路: roadLayer,
+        鉄道: railLayer,
+        海路: seaLayer,
+        空路: airLayer,
+        特殊交通: specialLayer
+      };
+
+      return {
+        group: groupByOverlayName[definition.overlayName] || specialLayer,
+        label: definition.overlayName,
+        style: { ...definition.style }
+      };
     }
 
     function getHazardStyle(hazard) {
@@ -345,13 +365,13 @@
     });
 
     L.control.layers(null, {
-      ノード: nodeLayer,
-      陸路: roadLayer,
-      鉄道: railLayer,
-      海路: seaLayer,
-      空路: airLayer,
-      特殊交通: specialLayer,
-      危険区域: hazardLayer
+      'ノード': nodeLayer,
+      '陸路': roadLayer,
+      '鉄道': railLayer,
+      '海路': seaLayer,
+      '空路': airLayer,
+      '特殊交通': specialLayer,
+      '危険区域': hazardLayer
     }, { collapsed: false }).addTo(map);
 
     /**
