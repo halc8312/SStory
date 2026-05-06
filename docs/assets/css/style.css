@@ -967,7 +967,7 @@ footer a {
   background: rgba(255, 252, 245, 0.9);
 }
 
-.route-search-placeholder,
+.route-search-empty,
 .route-search-message p {
   margin: 0;
   color: var(--text-brown-light);
