@@ -69,10 +69,12 @@
         POI（Point of Interest）データは、都市施設・商店・宿屋・市場・神殿・ギルド・
         観光名所・ダンジョン入口など、地図上の特定スポットを管理します。
       </p>
-      <p>
-        現在、<strong>POIデータ仕様 v0.1</strong> を策定中です。
-        大規模なPOI投入はまだ行っておらず、仕様確認用のサンプル（2件）のみ登録済みです。
-      </p>
+        <p>
+         現在、<strong>POIデータ仕様 v0.1</strong> に基づき、アストラリス首都圏への
+         試験投入（9件）を完了しています。すべて <code>status: "draft"</code> で、
+         ID は <code>astralis_</code> 接頭辞命名規則に従っています。
+         大規模なPOI投入はまだ行っておらず、仕様・Schemaの品質確認段階です。
+        </p>
       <ul>
         <li><strong>データファイル</strong>: <code>world/map-data/data/pois.json</code> （正史データ）</li>
         <li><strong>公開用コピー</strong>: <code>docs/data/map/pois.json</code> （GitHub Pages用）</li>
@@ -92,10 +94,11 @@
         特に <code>lore_basis</code>（世界観根拠）と <code>historical_reason</code>（歴史的理由）などの
         必須根拠フィールドを充実させる必要があります。
       </p>
-      <p class="note">
-        ※ 現段階では、アストラリス首都圏への試験投入（10〜15件）を準備中です。
-        大規模なPOI投入やLeaflet地図へのPOIレイヤー実装は、今後のフェーズで行います。
-      </p>
+       <p class="note">
+         ※ 現段階では、アストラリス首都圏への試験投入（9件）が完了しており、
+         JSON Schema 検証と品質修正を実施済みです。
+         大規模なPOI投入やLeaflet地図へのPOIレイヤー実装は、今後のフェーズで行います。
+       </p>
     </section>
 
     <section>

@@ -221,10 +221,10 @@ The schema enforces:
 
 **v0.1 — Specification draft, sample data only.**
 
-`pois.json` currently contains 0–3 sample entries with `status: "draft"` and `tags`
-including `sample`. No large-scale POI entry has been performed yet.
+`pois.json` currently contains 9 trial entries for the Astralis capital region, all with `status: "draft"`.
+IDs follow the `astralis_` prefix naming convention. No large-scale POI entry has been performed yet.
 
-Next step: trial entry of 10–15 POIs in the Astralis capital region.
+Next step: trial entry of 10–15 POIs in the Astralis capital region (in progress).
 
 ### GitHub Pages Copy
 
