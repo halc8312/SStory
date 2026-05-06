@@ -959,6 +959,14 @@ footer a {
   background: rgba(255, 249, 238, 0.92);
 }
 
+.route-search-message {
+  margin-top: 1rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid rgba(107, 83, 68, 0.14);
+  background: rgba(255, 252, 245, 0.9);
+}
+
 .route-search-placeholder,
 .route-search-message p {
   margin: 0;
