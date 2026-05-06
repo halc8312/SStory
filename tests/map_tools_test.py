@@ -70,9 +70,11 @@ class RouteFinderTests(unittest.TestCase):
             allow_sea=True,
             month=1,
         )
-        self.assertEqual(set(filtered.keys()), {"a", "b"})
+        self.assertEqual(set(filtered.keys()), {"a", "b", "d"})
         self.assertEqual(filtered["a"][0][0], "b")
         self.assertEqual(filtered["a"][0][1], 4)
+        self.assertEqual(filtered["b"][-1][0], "d")
+        self.assertNotIn("c", filtered)
 
         cost_graph = route_finder.build_graph(
             routes,
