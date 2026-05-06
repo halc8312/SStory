@@ -1,0 +1,269 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "title": "POI Schema",
+  "description": "Schema for validating POI (Point of Interest) and spot data",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "name",
+      "category",
+      "type",
+      "continent_id",
+      "region_id",
+      "nearest_node_id",
+      "position",
+      "importance",
+      "status",
+      "description",
+      "lore_basis",
+      "historical_reason",
+      "economic_role",
+      "cultural_role",
+      "transport_role",
+      "risk_context",
+      "tags"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "description": "Unique identifier in lowercase snake_case. Use region/city name as prefix."
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Display name in Japanese, matching regional culture and lore."
+      },
+      "category": {
+        "type": "string",
+        "enum": [
+          "government",
+          "military",
+          "transport",
+          "market",
+          "shop",
+          "inn",
+          "food",
+          "guild",
+          "academy",
+          "temple",
+          "culture",
+          "entertainment",
+          "industry",
+          "research",
+          "hazard_support",
+          "dungeon",
+          "landmark",
+          "residential",
+          "utility",
+          "restricted"
+        ],
+        "description": "Major category classification for POI grouping."
+      },
+      "type": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "description": "Subcategory or specific type in lowercase snake_case. Free-form but follow naming convention."
+      },
+      "continent_id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "description": "Reference to the continent this POI belongs to."
+      },
+      "region_id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "description": "Reference to the region this POI belongs to (optional but recommended)."
+      },
+      "nearest_node_id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "description": "ID of the nearest transport node (city, port, terminal, etc.)."
+      },
+      "position": {
+        "type": "object",
+        "required": ["x", "y", "z"],
+        "properties": {
+          "x": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10000,
+            "description": "X coordinate in Map Data coordinate system (0-10000)."
+          },
+          "y": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10000,
+            "description": "Y coordinate in Map Data coordinate system (0-10000)."
+          },
+          "z": {
+            "type": "number",
+            "description": "Z coordinate: 0=ground/sea level, positive=height/floating, negative=depth/underground."
+          }
+        }
+      },
+      "importance": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5,
+        "description": "Importance level: 1=local, 2=neighborhood, 3=regional, 4=continental, 5=world-significant."
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "active",
+          "historical",
+          "ruined",
+          "restricted",
+          "sealed",
+          "abandoned",
+          "seasonal",
+          "hidden"
+        ],
+        "description": "Current operational or historical status of the POI."
+      },
+      "description": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Brief description of the POI in Japanese."
+      },
+      "lore_basis": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "description": "List of existing lore/canon settings that justify this POI's existence."
+      },
+      "historical_reason": {
+        "type": "string",
+        "description": "Historical explanation for why this facility came into existence."
+      },
+      "economic_role": {
+        "type": "string",
+        "description": "Role played in the regional or global economy."
+      },
+      "cultural_role": {
+        "type": "string",
+        "description": "Role in religion, festivals, academia, arts, or local identity."
+      },
+      "transport_role": {
+        "type": "string",
+        "description": "Relationship to transportation networks (roads, ports, air routes, etc.)."
+      },
+      "risk_context": {
+        "type": "string",
+        "description": "Relation to hazards, disasters, monsters, seals, security, or checkpoints. Use 'none' or state clearly if no risks."
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "description": "Keywords for filtering and grouping POIs."
+      },
+      "aliases": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Alternative names for this POI."
+      },
+      "short_name": {
+        "type": "string",
+        "description": "Shortened display name for map labels."
+      },
+      "owner": {
+        "type": "string",
+        "description": "Owner or operating organization."
+      },
+      "faction_id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "description": "Reference to controlling faction (if applicable)."
+      },
+      "related_node_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "description": "Other nodes directly connected to this POI."
+      },
+      "related_route_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "description": "Routes that serve this POI directly."
+      },
+      "related_hazard_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "description": "Hazard zones affecting this POI."
+      },
+      "opening_hours": {
+        "type": "string",
+        "description": "Operating hours or seasonal availability description."
+      },
+      "access_rules": {
+        "type": "string",
+        "description": "Rules for accessing this location (permits, fees, restrictions)."
+      },
+      "security_level": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 5,
+        "description": "Security level 0=open, 5=heavily restricted."
+      },
+      "price_level": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5,
+        "description": "Price level for goods/services (1=cheap, 5=expensive)."
+      },
+      "services": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of services offered."
+      },
+      "products": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of products sold or available."
+      },
+      "linked_pages": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Paths to related setting pages or articles."
+      },
+      "image": {
+        "type": "string",
+        "description": "Path or URL to a representative image."
+      },
+      "icon": {
+        "type": "string",
+        "description": "Icon identifier for map display."
+      },
+      "notes": {
+        "type": "string",
+        "description": "Internal notes for editors and maintainers."
+      }
+    }
+  }
+}
