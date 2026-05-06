@@ -118,7 +118,7 @@
         showLeafletMessage('Leafletを読み込めませんでした。ページを再読み込みするか、時間をおいて再度お試しください。');
         window.EternalArcadiaLeafletMap = createLeafletUnavailableApi('Leaflet global `window.L` is missing.');
         console.error(
-          '[LeafletTransportMap] Leaflet is not available. Check Leaflet CSS/JS loading, CDN integrity, script order, cache state, or local vendor files.'
+          '[LeafletTransportMap] Leaflet is not available. Check local Leaflet CSS/JS loading, script order, cache state, or vendor file paths.'
         );
         return;
       }
