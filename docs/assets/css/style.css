@@ -1228,7 +1228,9 @@ footer a {
   --icon-border: #734824;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port {
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-marine_port,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-seaport {
   --icon-bg: #78a9c8;
   --icon-border: #2f5f8f;
 }
@@ -1240,9 +1242,20 @@ footer a {
   --icon-border: #5c4a8a;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city {
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-submarine_terminal {
   --icon-bg: #6eb8b3;
   --icon-border: #2e6f72;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-oasis {
+  --icon-bg: #74b886;
+  --icon-border: #2e6d44;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-fortress {
+  --icon-bg: #9a8a72;
+  --icon-border: #4e3d28;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate,
