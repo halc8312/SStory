@@ -1141,8 +1141,8 @@
           return;
         }
 
-        const ok = window.EternalArcadiaLeafletMap?.focusPoi?.(poiId);
-        if (ok) {
+        const focusSucceeded = window.EternalArcadiaLeafletMap?.focusPoi?.(poiId);
+        if (focusSucceeded) {
           setMessage('');
           return;
         }
