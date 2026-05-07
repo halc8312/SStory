@@ -59,6 +59,7 @@
     forbidden_path: { overlayName: '特殊交通', style: { color: '#9b3441', weight: 4, opacity: 0.9, dashArray: '6 8 2 8' } },
     default: { overlayName: '特殊交通', style: { color: '#9150b8', weight: 4, opacity: 0.88, dashArray: '6 10' } }
   };
+  const MOBILE_BREAKPOINT_WIDTH = 720;
   const POI_CATEGORY_STYLES = {
     government: { color: '#8e5a2a', fillColor: '#d8a15d' },
     military: { color: '#7d2e2e', fillColor: '#d86b5f' },
@@ -229,21 +230,45 @@
     return POI_CATEGORY_LABELS[category] ?? `POI: ${category ?? UNKNOWN_POI_CATEGORY}`;
   }
 
+  /**
+   * Returns the short Japanese category label used inside POI popups.
+   * @param {string | undefined} category
+   * @returns {string}
+   */
   function getPoiCategoryDisplayName(category) {
     return getPoiCategoryLabel(category).replace(/^POI:\s*/, '');
   }
 
+  /**
+   * Returns a user-facing Japanese status label for a POI.
+   * @param {string | undefined} status
+   * @returns {string}
+   */
   function getPoiStatusLabel(status) {
     return POI_STATUS_LABELS[status] ?? status ?? UNKNOWN_VALUE;
   }
 
+  /**
+   * Formats a POI importance value in the supported 1-5 range.
+   * @param {number | string | undefined} importance
+   * @returns {string}
+   */
   function formatPoiImportance(importance) {
     const level = Math.min(Math.max(Number(importance ?? 1) || 1, 1), 5);
     return `★${level}`;
   }
 
+  /**
+   * Converts snake_case POI types into a readable popup label.
+   * @param {string | undefined} type
+   * @returns {string}
+   */
   function formatPoiType(type) {
     return String(type ?? UNKNOWN_VALUE).replace(/_/g, ' ');
+  }
+
+  function isSmallScreenViewport() {
+    return window.innerWidth <= MOBILE_BREAKPOINT_WIDTH;
   }
 
   function getPoiRadius(poi) {
@@ -304,7 +329,7 @@
         </section>
         ${contextRows ? `
         <section class="poi-popup-section">
-          <h4>交通・経済・文化・危険文脈</h4>
+          <h4>主要文脈</h4>
           <dl class="poi-popup-context-list">${contextRows}</dl>
         </section>` : ''}
         ${poi.historical_reason ? `
@@ -444,25 +469,25 @@
     const nodeBaseStyleById = new Map();
     const routeBaseStyleById = new Map();
     let highlightedNodeIds = [];
-   let highlightedRouteIds = [];
+    let highlightedRouteIds = [];
 
-        const map = L.map(mapElement, {
-          crs: L.CRS.Simple,
-          minZoom: -4,
-         maxZoom: 4,
-         zoomSnap: 0.25,
-         wheelPxPerZoomLevel: 80,
-          attributionControl: false,
-          preferCanvas: true
-        });
+      const map = L.map(mapElement, {
+        crs: L.CRS.Simple,
+        minZoom: -4,
+        maxZoom: 4,
+        zoomSnap: 0.25,
+        wheelPxPerZoomLevel: 80,
+        attributionControl: false,
+        preferCanvas: true
+      });
 
-        map.createPane('poiPane');
-        map.getPane('poiPane').style.zIndex = '430';
-        map.createPane('nodePane');
-        map.getPane('nodePane').style.zIndex = '450';
-        map.on('popupopen', event => {
-          keepPopupInViewport(event.popup);
-        });
+      map.createPane('poiPane');
+      map.getPane('poiPane').style.zIndex = '430';
+      map.createPane('nodePane');
+      map.getPane('nodePane').style.zIndex = '450';
+      map.on('popupopen', event => {
+        keepPopupInViewport(event.popup);
+      });
 
         // 初期表示: 画像boundsに合わせる
         map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
@@ -735,7 +760,7 @@
       if (allCoords.length === 0) return;
 
       const bounds = L.latLngBounds(allCoords);
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
+      const isMobile = isSmallScreenViewport();
       const padding = isMobile ? [60, 60] : [40, 40];
       map.fitBounds(bounds, { padding });
     }
@@ -857,8 +882,12 @@
       ));
     });
 
+    /**
+     * Returns popup sizing and auto-pan settings tuned for the current viewport.
+     * @returns {{maxWidth: number, minWidth: number, maxHeight: number, keepInView: boolean, autoPanPaddingTopLeft: number[], autoPanPaddingBottomRight: number[]}}
+     */
     function getPoiPopupOptions() {
-      const isSmallScreen = window.matchMedia("(max-width: 720px)").matches;
+      const isSmallScreen = isSmallScreenViewport();
       return {
         maxWidth: isSmallScreen ? 300 : 360,
         minWidth: isSmallScreen ? 220 : 260,
@@ -888,6 +917,11 @@
       bindPopupAndInteractions(marker, createPoiPopupHtml(poi), undefined, getPoiPopupOptions());
     });
 
+    /**
+     * Resolves a POI identifier or registered alias to the canonical POI ID.
+     * @param {string | undefined} idOrAlias
+     * @returns {string | null}
+     */
     function resolvePoiId(idOrAlias) {
       if (poiById.has(idOrAlias)) {
         return idOrAlias;
@@ -913,11 +947,11 @@
           overlayLayers[getPoiCategoryLabel(category)] = poiLayersByCategory.get(category);
         });
 
-      const layersControl = L.control.layers(null, overlayLayers, { collapsed: window.matchMedia("(max-width: 720px)").matches }).addTo(map);
+      const layersControl = L.control.layers(null, overlayLayers, { collapsed: isSmallScreenViewport() }).addTo(map);
 
       // Responsive layer control collapse on resize
       const updateLayerControlCollapse = () => {
-        const isSmallScreen = window.matchMedia("(max-width: 720px)").matches;
+        const isSmallScreen = isSmallScreenViewport();
         const controlContainer = document.querySelector('.leaflet-control-layers');
         if (controlContainer) {
           if (isSmallScreen) {
@@ -992,7 +1026,7 @@
           }
           map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
           map.panInside(marker.getLatLng(), {
-            paddingTopLeft: [24, window.matchMedia("(max-width: 720px)").matches ? 180 : 220],
+            paddingTopLeft: [24, isSmallScreenViewport() ? 180 : 220],
             paddingBottomRight: [24, 40],
             animate: false
           });
