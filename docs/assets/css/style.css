@@ -869,6 +869,8 @@ footer a {
 
 .leaflet-transport-map .leaflet-control-layers-expanded {
   padding: 0.85rem 0.95rem;
+  max-height: min(58vh, 460px);
+  overflow-y: auto;
 }
 
 .leaflet-transport-map .leaflet-control-layers label {
@@ -888,7 +890,8 @@ footer a {
 .leaflet-popup-card {
   display: grid;
   gap: 0.45rem;
-  min-width: min(320px, 70vw);
+  min-width: min(280px, 68vw);
+  max-width: min(360px, 76vw);
 }
 
 .leaflet-popup-card h3 {
@@ -920,23 +923,28 @@ footer a {
   }
 
 .poi-popup {
-  min-width: min(320px, 72vw);
-  max-width: min(360px, 76vw);
-  line-height: 1.6;
+  min-width: min(260px, 68vw);
+  max-width: min(348px, 72vw);
+  max-height: min(52vh, 360px);
+  overflow-y: auto;
+  padding-right: 0.2rem;
+  line-height: 1.55;
+  scrollbar-gutter: stable;
 }
 
 .poi-popup h3 {
   margin-bottom: 0.35rem;
 }
 
-.poi-popup dl {
+.poi-popup-meta,
+.poi-popup-context-list {
   gap: 0.25rem 0.6rem;
   margin: 0.1rem 0 0.35rem;
 }
 
 .poi-popup-section {
   display: grid;
-  gap: 0.2rem;
+  gap: 0.25rem;
 }
 
 .poi-popup-section h4 {
@@ -947,6 +955,26 @@ footer a {
 
 .poi-popup-section p {
   margin: 0;
+  font-size: 0.88rem;
+}
+
+.poi-popup-context-list dt,
+.poi-popup-context-list dd {
+  font-size: 0.84rem;
+}
+
+.poi-popup-lore-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.18rem;
+  color: var(--text-brown-light);
+  font-size: 0.82rem;
+}
+
+.poi-popup-note {
+  font-size: 0.82rem;
+  color: var(--text-brown-light);
 }
 
 .poi-tags {
@@ -1914,6 +1942,17 @@ footer a {
   .detail-list dt {
     font-weight: 600;
     margin-top: 0.5rem;
+  }
+
+  .leaflet-popup-card {
+    min-width: min(240px, 72vw);
+    max-width: min(300px, 80vw);
+  }
+
+  .poi-popup {
+    min-width: min(232px, 70vw);
+    max-width: min(292px, 76vw);
+    max-height: min(48vh, 300px);
   }
 }
 
