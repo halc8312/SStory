@@ -8,8 +8,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4920,
-      "y": 5060,
+      "x": 4880,
+      "y": 5000,
       "z": 0
     },
     "importance": 5,
@@ -25,7 +25,13 @@
     "cultural_role": "王都市民の日常生活と祭礼市の中心。",
     "transport_role": "中央街道と王都交通網から徒歩圏内に位置する。",
     "risk_context": "王都内のため治安は比較的安定しているが、祭礼期は混雑対策が必要。",
-    "tags": ["trade", "capital", "market", "elysion", "sample"]
+    "tags": [
+      "trade",
+      "capital",
+      "market",
+      "elysion",
+      "sample"
+    ]
   },
   {
     "id": "astralis_royal_palace",
@@ -37,7 +43,7 @@
     "nearest_node_id": "astralis",
     "position": {
       "x": 5100,
-      "y": 4300,
+      "y": 4380,
       "z": 0
     },
     "importance": 5,
@@ -53,7 +59,13 @@
     "cultural_role": "国家儀礼、祝祭、騎士叙任、外交儀礼の中心。",
     "transport_role": "王都中心部に位置し、中央街道・行政区・市場区へ短時間で移動できる。",
     "risk_context": "警備は厳重であり、立入には身分確認や許可が必要。",
-    "tags": ["astralis", "elysion", "capital", "government", "royal"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "capital",
+      "government",
+      "royal"
+    ]
   },
   {
     "id": "astralis_admin_hall",
@@ -64,11 +76,10 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4950,
-      "y": 4420,
+      "x": 4930,
+      "y": 4510,
       "z": 0
     },
-    "aliases": ["astralis_administration_hall"],
     "importance": 4,
     "status": "draft",
     "description": "王都アストラリスの日常行政を司る中枢庁舎。市民登録、税務、許可発布などを取り扱う。",
@@ -82,7 +93,16 @@
     "cultural_role": "市民の権利義務手続きの中心として、日常生活に深く関わる。",
     "transport_role": "王宮から徒歩圏内にあり、主要道路からもアクセス良好。",
     "risk_context": "公的文書を取り扱うため、セキュリティは中程度。立入には身分証明が必要な区域あり。",
-    "tags": ["astralis", "elysion", "government", "administration", "capital"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "government",
+      "administration",
+      "capital"
+    ],
+    "aliases": [
+      "astralis_administration_hall"
+    ]
   },
   {
     "id": "astralis_carriage_plaza",
@@ -93,11 +113,10 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5050,
-      "y": 4990,
+      "x": 4700,
+      "y": 4940,
       "z": 0
     },
-    "aliases": ["astralis_central_coach_square"],
     "importance": 4,
     "status": "draft",
     "description": "王都の駅馬車ターミナル。全主要街道へ向かう便が発着し、中央大陸の交通結節点として機能する。",
@@ -111,7 +130,16 @@
     "cultural_role": "旅人や商人が集う情報交換の場として、王都の多様性を象徴する。",
     "transport_role": "中央街道、王都内各街区、港湾部への連絡が集中する。",
     "risk_context": "混雑時には置き引きや詐欺に注意。騎士団による巡回が定期的に行われる。",
-    "tags": ["astralis", "elysion", "transport", "carriage", "terminal"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "transport",
+      "carriage",
+      "terminal"
+    ],
+    "aliases": [
+      "astralis_central_coach_square"
+    ]
   },
   {
     "id": "astralis_west_gate",
@@ -122,11 +150,10 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4700,
-      "y": 5020,
+      "x": 4520,
+      "y": 4980,
       "z": 0
     },
-    "aliases": ["astralis_road_gate"],
     "importance": 3,
     "status": "draft",
     "description": "王都アストラリスの西側正面門。中央街道から直接王都内へ至る主要出入り口。",
@@ -140,7 +167,16 @@
     "cultural_role": "儀礼的行進や行列の出入り口として、国家的行事にも使用される。",
     "transport_role": "中央街道の終点に位置し、王都内道路網の起点となる。",
     "risk_context": "検問所のため治安は比較的安定。ただし、密輸や密入国への警戒が常時行われている。",
-    "tags": ["astralis", "elysion", "transport", "gate", "checkpoint"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "transport",
+      "gate",
+      "checkpoint"
+    ],
+    "aliases": [
+      "astralis_road_gate"
+    ]
   },
   {
     "id": "astralis_alchemist_row",
@@ -151,8 +187,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5120,
-      "y": 4740,
+      "x": 5310,
+      "y": 4840,
       "z": 0
     },
     "importance": 3,
@@ -168,7 +204,13 @@
     "cultural_role": "魔法技術の実用化と普及を担う場として、学術区と一体となった文化を形成。",
     "transport_role": "王立魔法学院と大市場の中間に位置し、徒歩でアクセス可能。",
     "risk_context": "危険な薬品や魔導具も扱うため、未成年者立入制限と販売規制あり。騎士団の抜き打ち検査が行われる。",
-    "tags": ["astralis", "elysion", "alchemy", "shop", "magic"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "alchemy",
+      "shop",
+      "magic"
+    ]
   },
   {
     "id": "astralis_laurel_inn",
@@ -179,8 +221,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4840,
-      "y": 5160,
+      "x": 4640,
+      "y": 5170,
       "z": 0
     },
     "importance": 2,
@@ -196,7 +238,13 @@
     "cultural_role": "旅人同士の情報交換の場として、王都の玄関口的役割を果たす。",
     "transport_role": "中央駅馬車広場から徒歩5分程度。",
     "risk_context": "王都内のため治安は良好。ただし、深夜の外出には注意。",
-    "tags": ["astralis", "elysion", "inn", "traveler", "coaching"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "inn",
+      "traveler",
+      "coaching"
+    ]
   },
   {
     "id": "astralis_silver_owl_tavern",
@@ -207,8 +255,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4860,
-      "y": 4930,
+      "x": 4940,
+      "y": 5210,
       "z": 0
     },
     "importance": 2,
@@ -224,7 +272,13 @@
     "cultural_role": "庶民の社交場として、職人や冒険者の情報ネットワークの一翼を担う。",
     "transport_role": "大市場と職人街の中間に位置し、徒歩アクセス良好。",
     "risk_context": "夜間は軽犯罪が多発するため、一人での外出は推奨されない。騎士団の夜間巡邏あり。",
-    "tags": ["astralis", "elysion", "tavern", "traveler", "guild"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "tavern",
+      "traveler",
+      "guild"
+    ]
   },
   {
     "id": "astralis_magic_academy",
@@ -235,25 +289,33 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5220,
-      "y": 4620,
+      "x": 5430,
+      "y": 4630,
       "z": 0
     },
-    "aliases": ["astralis_royal_academy"],
     "importance": 5,
     "status": "draft",
     "description": "エリュシオン最高峰の魔法教育機関。王都の学術・文化・魔術の中枢を成す。",
     "lore_basis": [
       "エリュシオンが秩序ある魔術制度を有すること",
       "アストラリスが王都として学術施設を保護していること",
-       "王都に高等教育機関が集中していること"
+      "王都に高等教育機関が集中していること"
     ],
     "historical_reason": "王国成立と同時に設立され、魔術師の育成と国家規模の魔法研究を目的とする。",
     "economic_role": "魔法士の育成、国家プロジェクトへの協力、魔導具の研究開発、技術指導。",
     "cultural_role": "魔法文化の保護と発展、学術誌発行、公開講座、王都の知的威信の象徴。",
     "transport_role": "学院専用馬車が王都各所から運行。王宮にも近接。",
     "risk_context": "危険な魔法実験区画は立入制限あり。学院警備隊が常駐。",
-    "tags": ["astralis", "elysion", "magic", "academy", "education"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "magic",
+      "academy",
+      "education"
+    ],
+    "aliases": [
+      "astralis_royal_academy"
+    ]
   },
   {
     "id": "astralis_central_archive",
@@ -264,8 +326,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5060,
-      "y": 4510,
+      "x": 5270,
+      "y": 4680,
       "z": 0
     },
     "importance": 4,
@@ -281,7 +343,13 @@
     "cultural_role": "王都の歴史と文化を継承する場。市民の学習拠点。",
     "transport_role": "王都中心部から徒歩圏内。",
     "risk_context": "貴重書庫は閉架式で、複写・複製には許可が必要。",
-    "tags": ["astralis", "elysion", "library", "archive", "culture"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "library",
+      "archive",
+      "culture"
+    ]
   },
   {
     "id": "astralis_star_cup_temple",
@@ -292,8 +360,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4990,
-      "y": 4590,
+      "x": 5000,
+      "y": 4620,
       "z": 0
     },
     "importance": 4,
@@ -309,7 +377,13 @@
     "cultural_role": "星杯の祭礼、結婚式、叙任式など、国家レベルの儀礼が行われる。",
     "transport_role": "王都中心部に位置し、主要道路からアクセス良好。巡礼者向け宿泊施設併設。",
     "risk_context": "聖地のため治安は極めて良好。ただし、異端審問局の監視下にある。",
-    "tags": ["astralis", "elysion", "temple", "cathedral", "faith"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "temple",
+      "cathedral",
+      "faith"
+    ]
   },
   {
     "id": "astralis_adventurer_guild_branch",
@@ -320,8 +394,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4770,
-      "y": 4970,
+      "x": 4540,
+      "y": 5090,
       "z": 0
     },
     "importance": 3,
@@ -337,7 +411,13 @@
     "cultural_role": "冒険者コミュニティの中心。情報交換とネットワーク構築の場。",
     "transport_role": "王都外郭部に位置し、城外への脱出経路に近い。",
     "risk_context": "危険なクエストが日常的に扱われるため、施設内には治療所と遺体安置所を併設。",
-    "tags": ["astralis", "elysion", "guild", "adventurer", "quest"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "guild",
+      "adventurer",
+      "quest"
+    ]
   },
   {
     "id": "astralis_knight_hq",
@@ -348,8 +428,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5230,
-      "y": 4420,
+      "x": 5290,
+      "y": 4490,
       "z": 0
     },
     "importance": 4,
@@ -365,7 +445,13 @@
     "cultural_role": "騎士の名誉と忠義の象徴。叙任式や表彰式も行われる。",
     "transport_role": "王宮に隣接し、各主要街道への緊急展開を想定した配置。",
     "risk_context": "軍事施設のため立入制限あり。有事には市民の避難誘導も担当。",
-    "tags": ["astralis", "elysion", "military", "knight", "security"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "military",
+      "knight",
+      "security"
+    ]
   },
   {
     "id": "astralis_star_cup_square",
@@ -376,8 +462,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4950,
-      "y": 4780,
+      "x": 4970,
+      "y": 4810,
       "z": 0
     },
     "importance": 3,
@@ -393,7 +479,13 @@
     "cultural_role": "星杯の祭礼、国王演説、市民祭、死刑宣告など公共行事の場。",
     "transport_role": "王都各主要施設から徒歩で集結可能な中心地点。",
     "risk_context": "大規模な群衆が集まるため、混乱時には騎士団が交通規制と秩序維持を行う。",
-    "tags": ["astralis", "elysion", "square", "landmark", "public"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "square",
+      "landmark",
+      "public"
+    ]
   },
   {
     "id": "astralis_royal_theater",
@@ -404,8 +496,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5310,
-      "y": 4560,
+      "x": 5170,
+      "y": 4820,
       "z": 0
     },
     "importance": 3,
@@ -421,7 +513,13 @@
     "cultural_role": "エリュシオンの芸術・音楽・演劇の発信地。貴族と市民の交流の場。",
     "transport_role": "王都北東部に位置し、主要道路からアクセス可能。",
     "risk_context": "貴族が多く訪れるため、警備が厳重。身分を問わず入場可能だが、貴族席区域は制限あり。",
-    "tags": ["astralis", "elysion", "theater", "culture", "noble"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "theater",
+      "culture",
+      "noble"
+    ]
   },
   {
     "id": "astralis_craftsmen_guildhall",
@@ -432,8 +530,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4800,
-      "y": 4880,
+      "x": 4770,
+      "y": 5250,
       "z": 0
     },
     "importance": 3,
@@ -449,6 +547,12 @@
     "cultural_role": "職人の技術継承と組合文化が根付く。祭礼時には出品会展も開催。",
     "transport_role": "大市場に近接し、資材搬入と製品出荷が容易。",
     "risk_context": "火災危険性が高いため、消防体制と区画整理が徹底されている。",
-    "tags": ["astralis", "elysion", "craftsmen", "industry", "workshop"]
+    "tags": [
+      "astralis",
+      "elysion",
+      "craftsmen",
+      "industry",
+      "workshop"
+    ]
   }
 ]
