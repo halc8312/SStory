@@ -460,6 +460,9 @@
         map.getPane('poiPane').style.zIndex = '430';
         map.createPane('nodePane');
         map.getPane('nodePane').style.zIndex = '450';
+        map.on('popupopen', event => {
+          keepPopupInViewport(event.popup);
+        });
 
         // 初期表示: 画像boundsに合わせる
         map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
@@ -541,6 +544,35 @@
       if (typeof detailCallback === 'function') {
         layer.on('click', detailCallback);
       }
+    }
+
+    function keepPopupInViewport(popup) {
+      window.requestAnimationFrame(() => {
+        const popupElement = popup?.getElement?.() || popup?._container;
+        if (!popupElement) {
+          return;
+        }
+        const rect = popupElement.getBoundingClientRect();
+        const margin = 16;
+        let deltaX = 0;
+        let deltaY = 0;
+
+        if (rect.left < margin) {
+          deltaX = margin - rect.left;
+        } else if (rect.right > window.innerWidth - margin) {
+          deltaX = (window.innerWidth - margin) - rect.right;
+        }
+
+        if (rect.top < margin) {
+          deltaY = margin - rect.top;
+        } else if (rect.bottom > window.innerHeight - margin) {
+          deltaY = (window.innerHeight - margin) - rect.bottom;
+        }
+
+        if (deltaX || deltaY) {
+          map.panBy([-deltaX, -deltaY], { animate: false });
+        }
+      });
     }
 
     function clearHighlights() {
