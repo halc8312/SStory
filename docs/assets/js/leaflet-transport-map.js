@@ -403,25 +403,26 @@
     return POI_GROUP_SYMBOLS[getPoiGroupForCategory(category)] ?? '•';
   }
 
-  function createPoiIcon(poi) {
-    const group = getPoiGroupForCategory(poi?.category);
-    const importance = normalizeImportance(poi?.importance);
-    const symbol = escapeHtml(getPoiSymbol(poi));
-    const size = getPoiIconSize(poi);
+   function createPoiIcon(poi) {
+     const group = getPoiGroupForCategory(poi?.category);
+     const importance = normalizeImportance(poi?.importance);
+     const symbol = escapeHtml(getPoiSymbol(poi));
+     const size = getPoiIconSize(poi);
+     const fontSize = Math.round(size[0] * 0.42);
 
-    return L.divIcon({
-      className: [
-        'fantasy-map-icon',
-        'fantasy-map-icon--poi',
-        `fantasy-map-icon--importance-${importance}`,
-        `fantasy-map-icon--${group}`
-      ].join(' '),
-      html: `<span class="fantasy-map-icon__symbol">${symbol}</span>`,
-      iconSize: size,
-      iconAnchor: getPoiIconAnchor(poi),
-      popupAnchor: [0, Math.round(-size[1] * 0.52)]
-    });
-  }
+     return L.divIcon({
+       className: [
+         'fantasy-map-icon',
+         'fantasy-map-icon--poi',
+         `fantasy-map-icon--importance-${importance}`,
+         `fantasy-map-icon--${group}`
+       ].join(' '),
+       html: `<span class="fantasy-map-icon__symbol" style="font-size:${fontSize}px;">${symbol}</span>`,
+       iconSize: size,
+       iconAnchor: getPoiIconAnchor(poi),
+       popupAnchor: [0, Math.round(-size[1] * 0.52)]
+     });
+   }
 
   function normalizeNodeType(type) {
     return (String(type ?? 'default').trim().toLowerCase().replace(/\s+/g, '_')) || 'default';
@@ -440,23 +441,24 @@
     return DEFAULT_NODE_ICON_SIZE + mobileAdjustment;
   }
 
-  function createNodeIcon(node) {
-    const type = normalizeNodeType(node?.type);
-    const symbol = escapeHtml(getNodeSymbol(node));
-    const size = getNodeIconPixelSize(node);
+   function createNodeIcon(node) {
+     const type = normalizeNodeType(node?.type);
+     const symbol = escapeHtml(getNodeSymbol(node));
+     const size = getNodeIconPixelSize(node);
+     const fontSize = Math.round(size * 0.4);
 
-    return L.divIcon({
-      className: [
-        'fantasy-map-icon',
-        'fantasy-map-icon--node',
-        `fantasy-map-icon--node-${type}`
-      ].join(' '),
-      html: `<span class="fantasy-map-icon__symbol">${symbol}</span>`,
-      iconSize: [size, size],
-      iconAnchor: [size / 2, size / 2],
-      popupAnchor: [0, Math.round(-size * 0.5)]
-    });
-  }
+     return L.divIcon({
+       className: [
+         'fantasy-map-icon',
+         'fantasy-map-icon--node',
+         `fantasy-map-icon--node-${type}`
+       ].join(' '),
+       html: `<span class="fantasy-map-icon__symbol" style="font-size:${fontSize}px;">${symbol}</span>`,
+       iconSize: [size, size],
+       iconAnchor: [size / 2, size / 2],
+       popupAnchor: [0, Math.round(-size * 0.5)]
+     });
+   }
 
   function toggleMarkerClass(marker, className, shouldAdd) {
     const element = marker?.getElement?.();

@@ -1264,8 +1264,90 @@ footer a {
   --icon-border: #5d2a5d;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--highlighted,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--focused,
+/* Responsive icon sizing for mobile */
+@media (max-width: 720px) {
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 22px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 24px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 26px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 30px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 34px; }
+
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital {
+    --icon-size: 38px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-city,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-town,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-carriage_terminal,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-checkpoint,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-inn,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-landmark {
+    --icon-size: 34px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-seaport,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-marine_port {
+    --icon-size: 32px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-airport,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-air_terminal,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-floating_island {
+    --icon-size: 32px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-submarine_terminal {
+    --icon-size: 32px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-forbidden_gate {
+    --icon-size: 32px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-fortress {
+    --icon-size: 34px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-oasis {
+    --icon-size: 32px;
+  }
+}
+
+/* POI search section */
+.poi-search-section {
+  margin: 2rem 0;
+}
+
+.poi-search-section-note {
+  margin: 0 0 1rem;
+  color: var(--text-brown-light);
+  font-size: 0.92rem;
+}
+
+/* Focused POI marker emphasis */
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--focused {
+  box-shadow:
+    0 0 0 4px rgba(255, 247, 192, 0.72),
+    0 0 0 8px rgba(120, 85, 45, 0.2),
+    0 6px 14px rgba(45, 27, 12, 0.42),
+    inset 0 0 0 1px rgba(255, 250, 220, 0.65);
+  animation: fantasy-map-icon-pulse 1.2s ease-out;
+}
+
+@keyframes fantasy-map-icon-pulse {
+  0% {
+    box-shadow:
+      0 0 0 4px rgba(255, 247, 192, 0.9),
+      0 0 0 8px rgba(120, 85, 45, 0.35),
+      0 6px 14px rgba(45, 27, 12, 0.42),
+      inset 0 0 0 1px rgba(255, 250, 220, 0.65);
+  }
+  100% {
+    box-shadow:
+      0 0 0 4px rgba(255, 247, 192, 0.72),
+      0 0 0 8px rgba(120, 85, 45, 0.2),
+      0 6px 14px rgba(45, 27, 12, 0.42),
+      inset 0 0 0 1px rgba(255, 250, 220, 0.65);
+  }
+}
+
+/* Hover/focus states for markers */
 .leaflet-marker-icon.fantasy-map-icon:hover,
 .leaflet-marker-icon.fantasy-map-icon:focus,
 .leaflet-marker-icon.fantasy-map-icon:focus-visible {
@@ -1273,19 +1355,12 @@ footer a {
   filter: brightness(1.06);
 }
 
+/* Highlighted route nodes */
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--highlighted {
   box-shadow:
     0 0 0 3px rgba(241, 194, 50, 0.52),
     0 5px 12px rgba(45, 27, 12, 0.4),
     inset 0 0 0 1px rgba(255, 250, 220, 0.62);
-}
-
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--focused {
-  box-shadow:
-    0 0 0 4px rgba(255, 247, 192, 0.72),
-    0 0 0 8px rgba(120, 85, 45, 0.2),
-    0 6px 14px rgba(45, 27, 12, 0.42),
-    inset 0 0 0 1px rgba(255, 250, 220, 0.65);
 }
 
 /* Leaflet Route & Node Highlighting */
