@@ -864,9 +864,14 @@
               focusNodes(nodeIds);
             },
             focusPoi(id) {
+              const poi = poiById.get(id);
               const marker = poiMarkerById.get(id);
-              if (!marker) {
+              if (!poi || !marker) {
                 return false;
+              }
+              const categoryLayer = poiLayersByCategory.get(poi.category || 'unknown');
+              if (categoryLayer && !map.hasLayer(categoryLayer)) {
+                categoryLayer.addTo(map);
               }
               map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
               marker.bringToFront();
