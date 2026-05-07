@@ -1149,6 +1149,7 @@ footer a {
 .leaflet-marker-icon.fantasy-map-icon .fantasy-map-icon__symbol {
   display: block;
   transform: translateY(-0.5px);
+  /* Keep single-character glyphs legible without crowding the marker frame. */
   font-size: calc(var(--icon-size) * 0.42);
 }
 

@@ -49,6 +49,7 @@
   };
   const MOBILE_BREAKPOINT_WIDTH = 720;
   const POI_ICON_SIZE_BY_IMPORTANCE = [20, 22, 24, 28, 32];
+  const DEFAULT_NODE_ICON_SIZE = 28;
   const POI_GROUP_SYMBOLS = {
     poi_civic: '♜',
     poi_transport_utility: '◆',
@@ -373,12 +374,12 @@
     return window.innerWidth <= MOBILE_BREAKPOINT_WIDTH;
   }
 
-  function clampImportance(importance) {
+  function normalizeImportance(importance) {
     return Math.min(Math.max(Number(importance ?? 1) || 1, 1), 5);
   }
 
   function getPoiIconPixelSize(poi) {
-    const baseSize = POI_ICON_SIZE_BY_IMPORTANCE[clampImportance(poi?.importance) - 1];
+    const baseSize = POI_ICON_SIZE_BY_IMPORTANCE[normalizeImportance(poi?.importance) - 1];
     return baseSize + (isSmallScreenViewport() ? 2 : 0);
   }
 
@@ -402,7 +403,7 @@
 
   function createPoiIcon(poi) {
     const group = getPoiGroupForCategory(poi?.category);
-    const importance = clampImportance(poi?.importance);
+    const importance = normalizeImportance(poi?.importance);
     const symbol = escapeHtml(getPoiSymbol(poi));
     const size = getPoiIconSize(poi);
 
@@ -421,7 +422,7 @@
   }
 
   function normalizeNodeType(type) {
-    return String(type ?? 'default').trim().toLowerCase().replace(/\s+/g, '_') || 'default';
+    return (String(type ?? 'default').trim().toLowerCase().replace(/\s+/g, '_')) || 'default';
   }
 
   function getNodeSymbol(node) {
@@ -434,7 +435,7 @@
     if (normalizedType === 'capital') return 36 + mobileAdjustment;
     if (['city', 'floating_island', 'underwater_city'].includes(normalizedType)) return 32 + mobileAdjustment;
     if (['port', 'seaport', 'airport', 'air_terminal', 'warp_gate', 'forbidden_gate'].includes(normalizedType)) return 30 + mobileAdjustment;
-    return 28 + mobileAdjustment;
+    return DEFAULT_NODE_ICON_SIZE + mobileAdjustment;
   }
 
   function createNodeIcon(node) {
@@ -888,24 +889,24 @@
         const marker = nodeMarkerById.get(nodeId);
         if (!node || !marker || !node.position) return;
 
-        const baseStyle = nodeBaseStyleById.get(nodeId) || { size: 28 };
+        const baseStyle = nodeBaseStyleById.get(nodeId) || { size: DEFAULT_NODE_ICON_SIZE };
         const type = nodeTypes[nodeId] || 'via';
         let fillColor, strokeColor, radius, className;
 
         if (type === 'start') {
           fillColor = '#4db67e';
           strokeColor = '#1d6e46';
-          radius = Math.round((baseStyle.size || 28) * 0.38);
+          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * 0.38);
           className = 'leaflet-route-start';
         } else if (type === 'goal') {
           fillColor = '#cf6d58';
           strokeColor = '#8d3024';
-          radius = Math.round((baseStyle.size || 28) * 0.38);
+          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * 0.38);
           className = 'leaflet-route-goal';
         } else {
           fillColor = '#f0c05a';
           strokeColor = '#9b6c14';
-          radius = Math.round((baseStyle.size || 28) * 0.34);
+          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * 0.34);
           className = 'leaflet-route-via';
         }
 
