@@ -830,6 +830,87 @@ footer a {
   color: var(--text-brown-light);
 }
 
+.poi-search-panel {
+  margin: 0 0 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(120, 85, 45, 0.28);
+  border-radius: 16px;
+  background: rgba(255, 248, 225, 0.74);
+}
+
+.poi-search-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.poi-search-panel-header h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.08rem;
+}
+
+.poi-search-panel-note {
+  margin: 0;
+  color: var(--text-brown-light);
+  font-size: 0.92rem;
+}
+
+.poi-search-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.poi-search-controls label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--accent-brown);
+}
+
+.poi-search-controls input,
+.poi-search-controls select,
+.poi-search-controls button {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(107, 83, 68, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 252, 244, 0.96);
+  color: var(--text-brown);
+  font: inherit;
+}
+
+.poi-search-controls button {
+  border: 1px solid rgba(107, 83, 68, 0.36);
+  background: linear-gradient(180deg, rgba(154, 118, 73, 0.96), rgba(125, 85, 45, 0.96));
+  color: #fffdf7;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.poi-search-controls button:hover,
+.poi-search-controls button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(61, 50, 38, 0.16);
+}
+
+.poi-search-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.poi-search-message {
+  margin: 0.75rem 0 0;
+  color: #7a3e2b;
+  font-size: 0.9rem;
+}
+
 .leaflet-transport-map {
   width: 100%;
   min-height: 640px;
@@ -2012,6 +2093,10 @@ footer a {
 }
 
 @media (max-width: 720px) {
+  .poi-search-controls {
+    grid-template-columns: 1fr;
+  }
+
   .leaflet-opacity-control {
     align-items: flex-start;
     flex-direction: column;

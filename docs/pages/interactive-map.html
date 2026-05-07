@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>インタラクティブ交通マップ v0.1 - エターナル・アルカディア設定資料館</title>
   <link rel="stylesheet" href="../vendor/leaflet/leaflet.css?v=20260506b">
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260507b">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260507c">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
 </head>
 <body>
@@ -56,6 +56,34 @@
       <p class="leaflet-map-note">
         ドラッグで移動、ホイールやピンチでズーム、右上のレイヤー切替で表示内容を切り替えられます。
       </p>
+      <section class="poi-search-panel" aria-labelledby="poi-search-title">
+        <div class="poi-search-panel-header">
+          <div>
+            <h3 id="poi-search-title">POI検索</h3>
+            <p class="poi-search-panel-note">POI名やカテゴリから目的の施設を探し、「地図で見る」でその場所へ移動できます。</p>
+          </div>
+        </div>
+        <div class="poi-search-controls">
+          <label>
+            <span>キーワード検索</span>
+            <input id="poi-search-input" type="search" placeholder="例: 王宮 / 大市場 / academy" autocomplete="off">
+          </label>
+          <label>
+            <span>カテゴリ</span>
+            <select id="poi-category-filter">
+              <option value="">読み込み中...</option>
+            </select>
+          </label>
+          <label>
+            <span>POI一覧</span>
+            <select id="poi-select">
+              <option value="">読み込み中...</option>
+            </select>
+          </label>
+          <button id="poi-focus-button" type="button">地図で見る</button>
+        </div>
+        <p id="poi-search-message" class="poi-search-message" aria-live="polite" hidden></p>
+      </section>
       <div id="leaflet-transport-map-message" class="gallery-message" hidden></div>
        <div
          id="leaflet-transport-map"
@@ -264,7 +292,7 @@
 
   <script src="../vendor/leaflet/leaflet.js?v=20260506b"></script>
   <script src="../assets/js/route-search.js?v=20260505c"></script>
-  <script src="../assets/js/leaflet-transport-map.js?v=20260507b"></script>
+  <script src="../assets/js/leaflet-transport-map.js?v=20260507c"></script>
   <script src="../assets/js/interactive-map.js?v=20260506b"></script>
   <script src="../assets/js/main.js?v=20260505c"></script>
 </body>
