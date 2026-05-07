@@ -143,7 +143,7 @@
   };
   const UNKNOWN_VALUE = 'unknown';
   const UNKNOWN_POI_CATEGORY = 'unknown';
-  const POI_OPTION_SEPARATOR = ' / ';
+  const POI_DISPLAY_SEPARATOR = ' / ';
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -1086,7 +1086,7 @@
             poi.name || poi.id,
             getPoiCategoryDisplayName(poi.category),
             formatPoiImportance(poi.importance)
-          ].join(POI_OPTION_SEPARATOR);
+          ].filter(Boolean).join(POI_DISPLAY_SEPARATOR);
           poiSelect.append(new Option(optionLabel, poi.id));
         });
 
