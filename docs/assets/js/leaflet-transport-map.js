@@ -104,6 +104,32 @@
     utility: 'POI: 公共設備',
     restricted: 'POI: 制限区域'
   };
+  const POI_GROUP_DEFINITIONS = {
+    poi_civic: {
+      label: 'POI: 行政・軍事',
+      categories: ['government', 'military']
+    },
+    poi_transport_utility: {
+      label: 'POI: 交通・公共',
+      categories: ['transport', 'utility', 'residential']
+    },
+    poi_commerce: {
+      label: 'POI: 商業・飲食・宿泊',
+      categories: ['market', 'shop', 'inn', 'food', 'industry']
+    },
+    poi_culture_magic: {
+      label: 'POI: 学術・宗教・文化',
+      categories: ['academy', 'temple', 'culture', 'entertainment', 'research', 'landmark']
+    },
+    poi_adventure_risk: {
+      label: 'POI: 冒険・危険・制限',
+      categories: ['guild', 'hazard_support', 'dungeon', 'restricted']
+    },
+    poi_other: {
+      label: 'POI: その他',
+      categories: []
+    }
+  };
   const POI_STATUS_LABELS = {
     draft: '試験',
     active: '稼働',
@@ -117,6 +143,7 @@
   };
   const UNKNOWN_VALUE = 'unknown';
   const UNKNOWN_POI_CATEGORY = 'unknown';
+  const POI_DISPLAY_SEPARATOR = ' / ';
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -240,6 +267,19 @@
   }
 
   /**
+   * Resolves a POI category to the configured overlay group ID.
+   * @param {string | undefined} category
+   * @returns {string}
+   */
+  function getPoiGroupForCategory(category) {
+    const normalizedCategory = category ?? UNKNOWN_POI_CATEGORY;
+    const matchedEntry = Object.entries(POI_GROUP_DEFINITIONS).find(([groupId, definition]) => (
+      groupId !== 'poi_other' && definition.categories.includes(normalizedCategory)
+    ));
+    return matchedEntry?.[0] ?? 'poi_other';
+  }
+
+  /**
    * Returns a user-facing Japanese status label for a POI.
    * @param {string | undefined} status
    * @returns {string}
@@ -265,6 +305,50 @@
    */
   function formatPoiType(type) {
     return String(type ?? UNKNOWN_VALUE).replace(/_/g, ' ');
+  }
+
+  function normalizePoiSearchValue(value) {
+    return String(value ?? '').trim().toLowerCase();
+  }
+
+  function comparePoiText(left, right) {
+    return String(left ?? '').localeCompare(String(right ?? ''), 'ja');
+  }
+
+  function comparePois(left, right) {
+    const continentComparison = comparePoiText(left?.continent_id, right?.continent_id);
+    if (continentComparison !== 0) {
+      return continentComparison;
+    }
+
+    const regionComparison = comparePoiText(left?.region_id, right?.region_id);
+    if (regionComparison !== 0) {
+      return regionComparison;
+    }
+
+    const categoryComparison = comparePoiText(left?.category, right?.category);
+    if (categoryComparison !== 0) {
+      return categoryComparison;
+    }
+
+    const importanceDifference = Number(right?.importance ?? 1) - Number(left?.importance ?? 1);
+    if (importanceDifference !== 0) {
+      return importanceDifference;
+    }
+
+    return comparePoiText(left?.name, right?.name);
+  }
+
+  function buildPoiSearchText(poi) {
+    return [
+      poi?.name,
+      poi?.id,
+      poi?.category,
+      getPoiCategoryDisplayName(poi?.category),
+      poi?.type,
+      poi?.description,
+      ...(Array.isArray(poi?.tags) ? poi.tags : [])
+    ].filter(Boolean).map(value => String(value).trim()).join(' ').toLowerCase();
   }
 
   function isSmallScreenViewport() {
@@ -359,6 +443,9 @@
       poiById: new Map(),
       poiMarkerById: new Map(),
       poiLayersByCategory: new Map(),
+      poiLayersByGroup: new Map(),
+      POI_GROUP_DEFINITIONS,
+      getPoiGroupForCategory,
       fitWorld() {},
       clearHighlights() {},
       highlightRouteIds() {},
@@ -465,6 +552,7 @@
     const poiById = new Map();
     const poiMarkerById = new Map();
     const poiLayersByCategory = new Map();
+    const poiLayersByGroup = new Map();
     const poiAliasToId = new Map();
     const nodeBaseStyleById = new Map();
     const routeBaseStyleById = new Map();
@@ -558,10 +646,21 @@
 
     function getPoiLayer(category) {
       if (!poiLayersByCategory.has(category)) {
-        const layer = L.layerGroup().addTo(map);
+        const layer = L.layerGroup();
+        const groupId = getPoiGroupForCategory(category);
+        const groupLayer = getPoiGroupLayer(groupId);
+        groupLayer.addLayer(layer);
         poiLayersByCategory.set(category, layer);
       }
       return poiLayersByCategory.get(category);
+    }
+
+    function getPoiGroupLayer(groupId) {
+      if (!poiLayersByGroup.has(groupId)) {
+        const layer = L.layerGroup().addTo(map);
+        poiLayersByGroup.set(groupId, layer);
+      }
+      return poiLayersByGroup.get(groupId);
     }
 
     function bindPopupAndInteractions(layer, html, detailCallback, popupOptions = {}) {
@@ -929,6 +1028,140 @@
       return poiAliasToId.get(idOrAlias) ?? null;
     }
 
+    function initializePoiSearchUi(pois) {
+      const searchInput = document.getElementById('poi-search-input');
+      const categoryFilter = document.getElementById('poi-category-filter');
+      const poiSelect = document.getElementById('poi-select');
+      const focusButton = document.getElementById('poi-focus-button');
+      const message = document.getElementById('poi-search-message');
+
+      if (!searchInput || !categoryFilter || !poiSelect || !focusButton) {
+        return;
+      }
+
+      const sortedPois = Array.isArray(pois)
+        ? pois.filter(poi => poi?.id).slice().sort(comparePois)
+        : [];
+
+      const setMessage = text => {
+        if (!message) {
+          return;
+        }
+        message.textContent = text;
+        message.hidden = !text;
+      };
+
+      const updateFocusButtonState = () => {
+        focusButton.disabled = !poiSelect.value;
+      };
+
+      const categoryValues = Array.from(new Set(sortedPois
+        .map(poi => poi?.category ?? UNKNOWN_POI_CATEGORY)))
+        .sort((left, right) => {
+          const leftLabel = getPoiCategoryDisplayName(left);
+          const rightLabel = getPoiCategoryDisplayName(right);
+          return comparePoiText(leftLabel, rightLabel);
+        });
+
+      categoryFilter.innerHTML = '';
+      categoryFilter.append(new Option('すべて', ''));
+      categoryValues.forEach(category => {
+        categoryFilter.append(new Option(getPoiCategoryDisplayName(category), category));
+      });
+
+      const renderPoiOptions = filteredPois => {
+        const previousValue = poiSelect.value;
+        poiSelect.innerHTML = '';
+
+        if (!filteredPois.length) {
+          poiSelect.append(new Option('条件に一致するPOIがありません', ''));
+          poiSelect.disabled = true;
+          updateFocusButtonState();
+          return;
+        }
+
+        poiSelect.append(new Option('POIを選択してください', ''));
+        filteredPois.forEach(poi => {
+          const optionLabel = [
+            poi.name || poi.id,
+            getPoiCategoryDisplayName(poi.category),
+            formatPoiImportance(poi.importance)
+          ].filter(Boolean).join(POI_DISPLAY_SEPARATOR);
+          poiSelect.append(new Option(optionLabel, poi.id));
+        });
+
+        poiSelect.disabled = false;
+        if (filteredPois.length === 1) {
+          poiSelect.value = filteredPois[0].id;
+        } else if (filteredPois.some(poi => poi.id === previousValue)) {
+          poiSelect.value = previousValue;
+        } else {
+          poiSelect.value = '';
+        }
+        updateFocusButtonState();
+      };
+
+      const applyFilters = () => {
+        const selectedCategory = categoryFilter.value;
+        const searchQuery = normalizePoiSearchValue(searchInput.value);
+        const filteredPois = sortedPois.filter(poi => {
+          if (selectedCategory && (poi?.category ?? UNKNOWN_POI_CATEGORY) !== selectedCategory) {
+            return false;
+          }
+          if (!searchQuery) {
+            return true;
+          }
+          return buildPoiSearchText(poi).includes(searchQuery);
+        });
+
+        renderPoiOptions(filteredPois);
+
+        if (!filteredPois.length) {
+          setMessage('条件に一致するPOIがありません。');
+        } else if (filteredPois.length === 1) {
+          setMessage('候補が1件のため、自動で選択しました。');
+        } else {
+          setMessage('');
+        }
+      };
+
+      searchInput.addEventListener('input', applyFilters);
+      categoryFilter.addEventListener('change', applyFilters);
+      poiSelect.addEventListener('change', () => {
+        updateFocusButtonState();
+        if (poiSelect.value) {
+          setMessage('');
+        }
+      });
+      focusButton.addEventListener('click', () => {
+        const poiId = poiSelect.value;
+        if (!poiId) {
+          setMessage('地図で見るPOIを選択してください。');
+          updateFocusButtonState();
+          return;
+        }
+
+        const focusSucceeded = window.EternalArcadiaLeafletMap?.focusPoi?.(poiId);
+        if (focusSucceeded) {
+          setMessage('');
+          return;
+        }
+
+        setMessage('選択したPOIへ移動できませんでした。');
+      });
+
+      if (!sortedPois.length) {
+        poiSelect.innerHTML = '';
+        poiSelect.append(new Option('表示できるPOIがありません', ''));
+        poiSelect.disabled = true;
+        updateFocusButtonState();
+        setMessage('表示できるPOIがありません。');
+        return;
+      }
+
+      applyFilters();
+    }
+
       const overlayLayers = {
         '世界地図背景': worldMapLayer,
         'ノード': nodeLayer,
@@ -941,11 +1174,14 @@
         '座標グリッド': gridLayer
       };
 
-      Array.from(poiLayersByCategory.keys())
-        .sort((left, right) => getPoiCategoryLabel(left).localeCompare(getPoiCategoryLabel(right), 'ja'))
-        .forEach(category => {
-          overlayLayers[getPoiCategoryLabel(category)] = poiLayersByCategory.get(category);
-        });
+      Object.keys(POI_GROUP_DEFINITIONS).forEach(groupId => {
+        const groupLayer = poiLayersByGroup.get(groupId);
+        if (groupLayer && groupLayer.getLayers().length > 0) {
+          overlayLayers[POI_GROUP_DEFINITIONS[groupId].label] = groupLayer;
+        }
+      });
+
+      initializePoiSearchUi(datasets.pois || []);
 
       const layersControl = L.control.layers(null, overlayLayers, { collapsed: isSmallScreenViewport() }).addTo(map);
 
@@ -989,7 +1225,10 @@
         poiById,
         poiMarkerById,
         poiLayersByCategory,
+        poiLayersByGroup,
         poiAliasToId,
+        POI_GROUP_DEFINITIONS,
+        getPoiGroupForCategory,
         worldMapLayer,
         MAP_COORDINATE_CONFIG,
         transformPosition,
@@ -1020,9 +1259,10 @@
           if (!poi || !marker) {
             return false;
           }
-          const categoryLayer = poiLayersByCategory.get(poi.category ?? UNKNOWN_POI_CATEGORY);
-          if (categoryLayer && !map.hasLayer(categoryLayer)) {
-            categoryLayer.addTo(map);
+          const groupId = getPoiGroupForCategory(poi.category);
+          const groupLayer = poiLayersByGroup.get(groupId);
+          if (groupLayer && !map.hasLayer(groupLayer)) {
+            groupLayer.addTo(map);
           }
           map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
           map.panInside(marker.getLatLng(), {
