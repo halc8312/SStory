@@ -103,6 +103,8 @@
     utility: 'POI: 公共設備',
     restricted: 'POI: 制限区域'
   };
+  const UNKNOWN_VALUE = 'unknown';
+  const UNKNOWN_POI_CATEGORY = 'unknown';
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -178,6 +180,13 @@
     if (!position || position.x === undefined || position.y === undefined) {
       return 'X: ?, Y: ?';
     }
+    return `X: ${position.x}, Y: ${position.y}`;
+  }
+
+  function formatPoiCoordinate(position) {
+    if (!position || position.x === undefined || position.y === undefined) {
+      return 'X: ?, Y: ?, Z: ?';
+    }
     const zValue = position.z ?? 0;
     return `X: ${position.x}, Y: ${position.y}, Z: ${zValue}`;
   }
@@ -206,7 +215,7 @@
   }
 
   function getPoiCategoryLabel(category) {
-    return POI_CATEGORY_LABELS[category] || `POI: ${category || 'unknown'}`;
+    return POI_CATEGORY_LABELS[category] || `POI: ${category || UNKNOWN_POI_CATEGORY}`;
   }
 
   function getPoiRadius(poi) {
@@ -227,14 +236,14 @@
 
   function createPoiPopupHtml(poi) {
     const metaRows = [
-      ['カテゴリ', poi.category || 'unknown'],
-      ['種別', poi.type || 'unknown'],
-      ['状態', poi.status || 'unknown'],
+      ['カテゴリ', poi.category || UNKNOWN_POI_CATEGORY],
+      ['種別', poi.type || UNKNOWN_VALUE],
+      ['状態', poi.status || UNKNOWN_VALUE],
       ['重要度', poi.importance ?? '不明'],
       ['大陸ID', poi.continent_id || '不明'],
       ['地域ID', poi.region_id || '不明'],
       ['最寄りノードID', poi.nearest_node_id || '不明'],
-      ['座標', formatCoordinate(poi.position)]
+      ['座標', formatPoiCoordinate(poi.position)]
     ].map(([term, value]) => `
       <dt>${escapeHtml(term)}</dt>
       <dd>${escapeHtml(value)}</dd>
@@ -773,7 +782,7 @@
         return;
       }
 
-      const category = poi.category || 'unknown';
+      const category = poi.category || UNKNOWN_POI_CATEGORY;
       const marker = L.circleMarker(toLatLng(poi.position), getPoiStyle(poi)).addTo(getPoiLayer(category));
       poiById.set(poi.id, poi);
       poiMarkerById.set(poi.id, marker);
@@ -869,7 +878,7 @@
               if (!poi || !marker) {
                 return false;
               }
-              const categoryLayer = poiLayersByCategory.get(poi.category || 'unknown');
+              const categoryLayer = poiLayersByCategory.get(poi.category || UNKNOWN_POI_CATEGORY);
               if (categoryLayer && !map.hasLayer(categoryLayer)) {
                 categoryLayer.addTo(map);
               }
