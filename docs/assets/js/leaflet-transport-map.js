@@ -50,6 +50,8 @@
   const MOBILE_BREAKPOINT_WIDTH = 720;
   const POI_ICON_SIZE_BY_IMPORTANCE = [20, 22, 24, 28, 32];
   const DEFAULT_NODE_ICON_SIZE = 28;
+  const START_GOAL_HIGHLIGHT_RADIUS_RATIO = 0.38;
+  const VIA_HIGHLIGHT_RADIUS_RATIO = 0.34;
   const POI_GROUP_SYMBOLS = {
     poi_civic: '♜',
     poi_transport_utility: '◆',
@@ -896,17 +898,17 @@
         if (type === 'start') {
           fillColor = '#4db67e';
           strokeColor = '#1d6e46';
-          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * 0.38);
+          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * START_GOAL_HIGHLIGHT_RADIUS_RATIO);
           className = 'leaflet-route-start';
         } else if (type === 'goal') {
           fillColor = '#cf6d58';
           strokeColor = '#8d3024';
-          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * 0.38);
+          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * START_GOAL_HIGHLIGHT_RADIUS_RATIO);
           className = 'leaflet-route-goal';
         } else {
           fillColor = '#f0c05a';
           strokeColor = '#9b6c14';
-          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * 0.34);
+          radius = Math.round((baseStyle.size || DEFAULT_NODE_ICON_SIZE) * VIA_HIGHLIGHT_RADIUS_RATIO);
           className = 'leaflet-route-via';
         }
 
