@@ -8,8 +8,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4980,
-      "y": 5020,
+      "x": 4920,
+      "y": 5060,
       "z": 0
     },
     "importance": 5,
@@ -64,10 +64,11 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4900,
-      "y": 4400,
+      "x": 4950,
+      "y": 4420,
       "z": 0
     },
+    "aliases": ["astralis_administration_hall"],
     "importance": 4,
     "status": "draft",
     "description": "王都アストラリスの日常行政を司る中枢庁舎。市民登録、税務、許可発布などを取り扱う。",
@@ -92,10 +93,11 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5020,
-      "y": 4980,
+      "x": 5050,
+      "y": 4990,
       "z": 0
     },
+    "aliases": ["astralis_central_coach_square"],
     "importance": 4,
     "status": "draft",
     "description": "王都の駅馬車ターミナル。全主要街道へ向かう便が発着し、中央大陸の交通結節点として機能する。",
@@ -120,10 +122,11 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4800,
-      "y": 5000,
+      "x": 4700,
+      "y": 5020,
       "z": 0
     },
+    "aliases": ["astralis_road_gate"],
     "importance": 3,
     "status": "draft",
     "description": "王都アストラリスの西側正面門。中央街道から直接王都内へ至る主要出入り口。",
@@ -148,8 +151,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5050,
-      "y": 4800,
+      "x": 5120,
+      "y": 4740,
       "z": 0
     },
     "importance": 3,
@@ -176,8 +179,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4900,
-      "y": 5100,
+      "x": 4840,
+      "y": 5160,
       "z": 0
     },
     "importance": 2,
@@ -204,8 +207,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5150,
-      "y": 4950,
+      "x": 4860,
+      "y": 4930,
       "z": 0
     },
     "importance": 2,
@@ -232,10 +235,11 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5200,
-      "y": 4700,
+      "x": 5220,
+      "y": 4620,
       "z": 0
     },
+    "aliases": ["astralis_royal_academy"],
     "importance": 5,
     "status": "draft",
     "description": "エリュシオン最高峰の魔法教育機関。王都の学術・文化・魔術の中枢を成す。",
@@ -260,8 +264,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4850,
-      "y": 5200,
+      "x": 5060,
+      "y": 4510,
       "z": 0
     },
     "importance": 4,
@@ -288,8 +292,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5000,
-      "y": 4600,
+      "x": 4990,
+      "y": 4590,
       "z": 0
     },
     "importance": 4,
@@ -316,8 +320,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4700,
-      "y": 4900,
+      "x": 4770,
+      "y": 4970,
       "z": 0
     },
     "importance": 3,
@@ -344,8 +348,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5300,
-      "y": 5100,
+      "x": 5230,
+      "y": 4420,
       "z": 0
     },
     "importance": 4,
@@ -373,7 +377,7 @@
     "nearest_node_id": "astralis",
     "position": {
       "x": 4950,
-      "y": 4850,
+      "y": 4780,
       "z": 0
     },
     "importance": 3,
@@ -400,8 +404,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 5250,
-      "y": 4550,
+      "x": 5310,
+      "y": 4560,
       "z": 0
     },
     "importance": 3,
@@ -428,8 +432,8 @@
     "region_id": "royal_capital_region",
     "nearest_node_id": "astralis",
     "position": {
-      "x": 4750,
-      "y": 4950,
+      "x": 4800,
+      "y": 4880,
       "z": 0
     },
     "importance": 3,

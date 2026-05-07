@@ -1,6 +1,6 @@
 (() => {
    const BASE_PATH = '../data/map/';
-   const CACHE_BUSTER = '20260507a';
+   const CACHE_BUSTER = '20260507b';
 
     // === 座標変換設定 ===
     // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
@@ -218,31 +218,39 @@
     return POI_CATEGORY_LABELS[category] ?? `POI: ${category ?? UNKNOWN_POI_CATEGORY}`;
   }
 
+  function normalizePoiLookupKey(value) {
+    return String(value ?? '').trim();
+  }
+
   function getPoiRadius(poi) {
     const importance = Math.min(Math.max(Number(poi?.importance ?? 1) || 1, 1), 5);
-    return [4, 5, 6, 8, 10][importance - 1];
+    return [3.5, 4.5, 5.5, 7, 8.5][importance - 1];
   }
 
   function getPoiStyle(poi) {
     const categoryStyle = POI_CATEGORY_STYLES[poi?.category] || { color: '#6f5a46', fillColor: '#c7ab88' };
     return {
+      pane: 'poiPane',
       radius: getPoiRadius(poi),
       color: categoryStyle.color,
       fillColor: categoryStyle.fillColor,
-      weight: 1.8,
-      fillOpacity: 0.92
+      weight: 1.4,
+      opacity: 0.9,
+      fillOpacity: 0.8,
+      className: 'leaflet-poi-marker'
     };
   }
 
   function createPoiPopupHtml(poi) {
-    const metaRows = [
-      ['カテゴリ', poi.category ?? UNKNOWN_POI_CATEGORY],
-      ['種別', poi.type ?? UNKNOWN_VALUE],
-      ['状態', poi.status ?? UNKNOWN_VALUE],
-      ['重要度', poi.importance ?? '不明'],
-      ['大陸ID', poi.continent_id ?? '不明'],
-      ['地域ID', poi.region_id ?? '不明'],
-      ['最寄りノードID', poi.nearest_node_id ?? '不明'],
+    const metaSummary = [
+      `カテゴリ: ${poi.category ?? UNKNOWN_POI_CATEGORY}`,
+      `種別: ${poi.type ?? UNKNOWN_VALUE}`,
+      `重要度: ${poi.importance ?? '不明'}`,
+      `状態: ${poi.status ?? UNKNOWN_VALUE}`
+    ].join(' / ');
+
+    const factRows = [
+      ['最寄りノード', poi.nearest_node_id ?? '不明'],
       ['座標', formatPoiCoordinate(poi.position)]
     ].map(([term, value]) => `
       <dt>${escapeHtml(term)}</dt>
@@ -250,19 +258,28 @@
     `).join('');
 
     const narrativeSections = [
-      ['概要', poi.description],
       ['交通上の役割', poi.transport_role],
       ['経済上の役割', poi.economic_role],
       ['文化上の役割', poi.cultural_role],
       ['危険文脈', poi.risk_context],
-      ['歴史的背景', poi.historical_reason],
-      ['設定根拠', formatList(poi.lore_basis)]
+      ['歴史的背景', poi.historical_reason]
     ].filter(([, value]) => value).map(([label, value]) => `
       <section class="poi-popup-section">
         <h4>${escapeHtml(label)}</h4>
         <p>${escapeHtml(value)}</p>
       </section>
     `).join('');
+
+    const loreBasis = Array.isArray(poi.lore_basis) && poi.lore_basis.length > 0
+      ? `
+        <section class="poi-popup-section poi-popup-section-secondary">
+          <h4>設定根拠</h4>
+          <ul class="poi-popup-list poi-popup-lore">
+            ${poi.lore_basis.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+          </ul>
+        </section>
+      `
+      : '';
 
     const tags = Array.isArray(poi.tags) && poi.tags.length > 0
       ? `<div class="poi-tags">${poi.tags.map(tag => `<span class="poi-tag">${escapeHtml(tag)}</span>`).join('')}</div>`
@@ -271,8 +288,11 @@
     return `
       <article class="leaflet-popup-card poi-popup">
         <h3>${escapeHtml(poi.name || poi.id || 'POI')}</h3>
-        <dl>${metaRows}</dl>
+        <p class="poi-popup-meta">${escapeHtml(metaSummary)}</p>
+        <p class="poi-popup-description">${escapeHtml(poi.description || '説明なし')}</p>
+        ${factRows ? `<dl class="poi-popup-facts">${factRows}</dl>` : ''}
         ${narrativeSections}
+        ${loreBasis}
         <section class="poi-popup-section">
           <h4>タグ</h4>
           ${tags}
@@ -397,12 +417,13 @@
     const poiById = new Map();
     const poiMarkerById = new Map();
     const poiLayersByCategory = new Map();
+    const poiAliasToId = new Map();
     const nodeBaseStyleById = new Map();
     const routeBaseStyleById = new Map();
     let highlightedNodeIds = [];
    let highlightedRouteIds = [];
 
-       const map = L.map(mapElement, {
+        const map = L.map(mapElement, {
          crs: L.CRS.Simple,
          minZoom: -4,
          maxZoom: 4,
@@ -417,8 +438,8 @@
         // 表示可能範囲をデータ座標範囲に制限（余白を少し確保）
         map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
 
-       const WORLD_MAP_IMAGE_URL = '../assets/images/maps/world/world-map.svg';
-       const worldMapLayer = L.imageOverlay(WORLD_MAP_IMAGE_URL, WORLD_IMAGE_BOUNDS, {
+        const WORLD_MAP_IMAGE_URL = '../assets/images/maps/world/world-map.svg';
+        const worldMapLayer = L.imageOverlay(WORLD_MAP_IMAGE_URL, WORLD_IMAGE_BOUNDS, {
          opacity: 0.82,
          interactive: false,
          zIndex: 0
@@ -429,7 +450,10 @@
         showLeafletMessage('世界地図背景画像を読み込めませんでした。交通データのみ表示します。');
       });
 
-       const hazardLayer = L.layerGroup().addTo(map);
+       const poiPane = map.createPane('poiPane');
+       poiPane.style.zIndex = '380';
+
+        const hazardLayer = L.layerGroup().addTo(map);
        const roadLayer = L.layerGroup().addTo(map);
        const railLayer = L.layerGroup().addTo(map);
        const seaLayer = L.layerGroup().addTo(map);
@@ -487,8 +511,8 @@
       return poiLayersByCategory.get(category);
     }
 
-    function bindPopupAndInteractions(layer, html, detailCallback) {
-      layer.bindPopup(html, { maxWidth: 360 });
+    function bindPopupAndInteractions(layer, html, detailCallback, popupOptions = { maxWidth: 360 }) {
+      layer.bindPopup(html, popupOptions);
       if (typeof detailCallback === 'function') {
         layer.on('click', detailCallback);
       }
@@ -786,8 +810,19 @@
       const marker = L.circleMarker(toLatLng(poi.position), getPoiStyle(poi)).addTo(getPoiLayer(category));
       poiById.set(poi.id, poi);
       poiMarkerById.set(poi.id, marker);
+      (poi.aliases || []).forEach(alias => {
+        const aliasKey = normalizePoiLookupKey(alias);
+        if (!aliasKey || aliasKey === poi.id) {
+          return;
+        }
+        if (poiAliasToId.has(aliasKey) && poiAliasToId.get(aliasKey) !== poi.id) {
+          console.warn('[LeafletTransportMap] Duplicate POI alias skipped:', aliasKey);
+          return;
+        }
+        poiAliasToId.set(aliasKey, poi.id);
+      });
 
-      bindPopupAndInteractions(marker, createPoiPopupHtml(poi));
+      bindPopupAndInteractions(marker, createPoiPopupHtml(poi), undefined, { maxWidth: 320 });
     });
 
       const overlayLayers = {
@@ -873,8 +908,10 @@
           focusNodes(nodeIds);
         },
         focusPoi(id) {
-          const poi = poiById.get(id);
-          const marker = poiMarkerById.get(id);
+          const lookupKey = normalizePoiLookupKey(id);
+          const resolvedId = poiById.has(lookupKey) ? lookupKey : poiAliasToId.get(lookupKey);
+          const poi = resolvedId ? poiById.get(resolvedId) : null;
+          const marker = resolvedId ? poiMarkerById.get(resolvedId) : null;
           if (!poi || !marker) {
             return false;
           }

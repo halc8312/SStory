@@ -867,8 +867,15 @@ footer a {
   box-shadow: 0 8px 20px rgba(61, 50, 38, 0.16);
 }
 
+.leaflet-transport-map .leaflet-control-layers-list {
+  max-height: min(42vh, 21rem);
+  overflow-y: auto;
+  padding-right: 0.2rem;
+}
+
 .leaflet-transport-map .leaflet-control-layers-expanded {
   padding: 0.85rem 0.95rem;
+  max-width: min(18rem, calc(100vw - 2rem));
 }
 
 .leaflet-transport-map .leaflet-control-layers label {
@@ -920,8 +927,8 @@ footer a {
   }
 
 .poi-popup {
-  min-width: min(320px, 72vw);
-  max-width: min(360px, 76vw);
+  min-width: min(280px, 68vw);
+  max-width: min(320px, 74vw);
   line-height: 1.6;
 }
 
@@ -929,14 +936,38 @@ footer a {
   margin-bottom: 0.35rem;
 }
 
-.poi-popup dl {
-  gap: 0.25rem 0.6rem;
+.poi-popup-meta {
+  font-size: 0.82rem;
+  color: var(--text-brown-light);
+}
+
+.poi-popup-description {
+  font-size: 0.92rem;
+}
+
+.poi-popup-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.6rem;
   margin: 0.1rem 0 0.35rem;
+}
+
+.poi-popup-facts dt {
+  font-weight: 700;
+}
+
+.poi-popup-facts dd {
+  margin: 0;
+  color: var(--text-brown-light);
 }
 
 .poi-popup-section {
   display: grid;
   gap: 0.2rem;
+}
+
+.poi-popup-section-secondary {
+  gap: 0.3rem;
 }
 
 .poi-popup-section h4 {
@@ -947,6 +978,18 @@ footer a {
 
 .poi-popup-section p {
   margin: 0;
+}
+
+.poi-popup-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.22rem;
+  color: var(--text-brown-light);
+}
+
+.poi-popup-lore {
+  font-size: 0.78rem;
 }
 
 .poi-tags {
@@ -1915,11 +1958,23 @@ footer a {
     font-weight: 600;
     margin-top: 0.5rem;
   }
+
+  .leaflet-transport-map .leaflet-control-layers-expanded {
+    max-width: min(15rem, calc(100vw - 1.5rem));
+  }
 }
 
 @media (max-width: 480px) {
   .leaflet-popup-card {
     min-width: 0;
+  }
+
+  .leaflet-transport-map .leaflet-popup-content {
+    margin: 0.75rem 0.85rem;
+  }
+
+  .leaflet-transport-map .leaflet-control-layers-list {
+    max-height: min(36vh, 14rem);
   }
 
   .transport-map-canvas {
@@ -1940,9 +1995,28 @@ footer a {
   }
 
  .map-controls label,
- .map-zoom-button {
-    width: 100%;
-    justify-content: center;
+  .map-zoom-button {
+     width: 100%;
+     justify-content: center;
+  }
+
+  .poi-popup {
+    min-width: 0;
+    max-width: min(260px, 76vw);
+  }
+
+  .poi-popup-facts {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .poi-popup-facts dt {
+    margin-top: 0.3rem;
+  }
+
+  .poi-popup-lore,
+  .poi-tag {
+    font-size: 0.74rem;
   }
 }
 
