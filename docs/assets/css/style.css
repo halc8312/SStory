@@ -1083,7 +1083,198 @@ footer a {
   font-size: 0.85rem;
 }
 
- /* Leaflet Route & Node Highlighting */
+.route-search-panel--primary {
+  margin: 2rem 0;
+}
+
+.legacy-svg-map {
+  margin-top: 1rem;
+  border: 1px solid rgba(107, 83, 68, 0.22);
+  border-radius: 16px;
+  background: rgba(255, 248, 225, 0.48);
+}
+
+.legacy-svg-map > summary {
+  cursor: pointer;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  color: var(--accent-brown);
+  list-style: none;
+}
+
+.legacy-svg-map > summary::-webkit-details-marker {
+  display: none;
+}
+
+.legacy-svg-map > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.legacy-svg-map[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.legacy-svg-map[open] > .interactive-map-layout {
+  padding: 0 1rem 1rem;
+}
+
+.leaflet-marker-icon.fantasy-map-icon {
+  --icon-size: 24px;
+  --icon-bg: #c9a167;
+  --icon-border: #704725;
+  --icon-shadow: 0 3px 8px rgba(45, 27, 12, 0.34);
+  width: var(--icon-size);
+  height: var(--icon-size);
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--icon-border);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 248, 210, 0.98), var(--icon-bg));
+  box-shadow:
+    var(--icon-shadow),
+    inset 0 0 0 1px rgba(255, 250, 220, 0.58);
+  color: #3c2412;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+  text-shadow: 0 1px 0 rgba(255, 252, 236, 0.7);
+  transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+}
+
+.leaflet-marker-icon.fantasy-map-icon .fantasy-map-icon__symbol {
+  display: block;
+  transform: translateY(-0.5px);
+  font-size: calc(var(--icon-size) * 0.42);
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi {
+  opacity: 0.94;
+  border-radius: 999px;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node {
+  --icon-size: 30px;
+  border-width: 2.5px;
+  border-radius: 10px;
+  opacity: 1;
+  box-shadow:
+    0 4px 10px rgba(45, 27, 12, 0.38),
+    inset 0 0 0 1px rgba(255, 250, 220, 0.62);
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node .fantasy-map-icon__symbol {
+  font-size: calc(var(--icon-size) * 0.4);
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 20px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 22px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 24px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 28px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 32px; }
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_civic {
+  --icon-bg: #d8a15d;
+  --icon-border: #7a4b23;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_transport_utility {
+  --icon-bg: #79a9c8;
+  --icon-border: #2f5f7a;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_commerce {
+  --icon-bg: #d8bd5f;
+  --icon-border: #8a6f2a;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_culture_magic {
+  --icon-bg: #b79ad8;
+  --icon-border: #5c4a8a;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_adventure_risk {
+  --icon-bg: #d8765f;
+  --icon-border: #8a3a2a;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_other {
+  --icon-bg: #b8a78d;
+  --icon-border: #6a5842;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital {
+  --icon-size: 36px;
+  --icon-bg: #e2c76f;
+  --icon-border: #6b3f1f;
+  box-shadow:
+    0 0 0 2px rgba(255, 232, 150, 0.58),
+    0 5px 12px rgba(45, 27, 12, 0.42),
+    inset 0 0 0 1px rgba(255, 250, 220, 0.65);
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-city,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-town,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-carriage_terminal,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-checkpoint,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-inn,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-landmark {
+  --icon-bg: #cfa56d;
+  --icon-border: #734824;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port {
+  --icon-bg: #78a9c8;
+  --icon-border: #2f5f8f;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-airport,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-air_terminal,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-floating_island {
+  --icon-bg: #a58bd8;
+  --icon-border: #5c4a8a;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city {
+  --icon-bg: #6eb8b3;
+  --icon-border: #2e6f72;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-forbidden_gate {
+  --icon-bg: #b06aa8;
+  --icon-border: #5d2a5d;
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--highlighted,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--focused,
+.leaflet-marker-icon.fantasy-map-icon:hover,
+.leaflet-marker-icon.fantasy-map-icon:focus,
+.leaflet-marker-icon.fantasy-map-icon:focus-visible {
+  transform: scale(1.08);
+  filter: brightness(1.06);
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--highlighted {
+  box-shadow:
+    0 0 0 3px rgba(241, 194, 50, 0.52),
+    0 5px 12px rgba(45, 27, 12, 0.4),
+    inset 0 0 0 1px rgba(255, 250, 220, 0.62);
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--focused {
+  box-shadow:
+    0 0 0 4px rgba(255, 247, 192, 0.72),
+    0 0 0 8px rgba(120, 85, 45, 0.2),
+    0 6px 14px rgba(45, 27, 12, 0.42),
+    inset 0 0 0 1px rgba(255, 250, 220, 0.65);
+}
+
+/* Leaflet Route & Node Highlighting */
  .leaflet-route-highlight {
    stroke-linecap: round;
    stroke-linejoin: round;
@@ -2096,6 +2287,14 @@ footer a {
   .poi-search-controls {
     grid-template-columns: 1fr;
   }
+
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 22px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 24px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 26px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 30px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 34px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node { --icon-size: 32px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital { --icon-size: 38px; }
 
   .leaflet-opacity-control {
     align-items: flex-start;

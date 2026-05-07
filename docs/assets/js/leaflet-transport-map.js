@@ -1,6 +1,6 @@
 (() => {
    const BASE_PATH = '../data/map/';
-   const CACHE_BUSTER = '20260507a';
+   const CACHE_BUSTER = '20260507d';
 
     // === 座標変換設定 ===
     // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
@@ -34,53 +34,71 @@
     const WORLD_IMAGE_BOUNDS = WORLD_COORDINATE_BOUNDS;
 
    const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
-  const DEFAULT_NODE_STYLE = { radius: 6, fillColor: '#c18857', color: '#7d5130', weight: 1.8, fillOpacity: 0.9 };
-  const NODE_STYLE_BY_TYPE = {
-    capital: { radius: 9, fillColor: '#d5b34b', color: '#8c6a10', weight: 2.2, fillOpacity: 0.95 },
-    port: { radius: 7, fillColor: '#4f89cb', color: '#234f7f', weight: 2, fillOpacity: 0.92 },
-    seaport: { radius: 7, fillColor: '#4f89cb', color: '#234f7f', weight: 2, fillOpacity: 0.92 },
-    airport: { radius: 7.5, fillColor: '#9664cf', color: '#5e3794', weight: 2, fillOpacity: 0.92 },
-    air_terminal: { radius: 7.5, fillColor: '#9664cf', color: '#5e3794', weight: 2, fillOpacity: 0.92 },
-    oasis: { radius: 7, fillColor: '#57a36b', color: '#2f6d3f', weight: 2, fillOpacity: 0.92 },
-    forbidden_gate: { radius: 7.5, fillColor: '#a65190', color: '#692558', weight: 2, fillOpacity: 0.92 },
-    warp_gate: { radius: 7.5, fillColor: '#a65190', color: '#692558', weight: 2, fillOpacity: 0.92 },
-    warp_terminal: { radius: 7.5, fillColor: '#a65190', color: '#692558', weight: 2, fillOpacity: 0.92 }
-  };
   const ROUTE_DEFINITION_BY_TYPE = {
-    road: { overlayName: '陸路', style: { color: '#9d5a31', weight: 4.5, opacity: 0.9 } },
-    caravan: { overlayName: '陸路', style: { color: '#bb8a43', weight: 4, opacity: 0.9, dashArray: '10 8 2 8' } },
-    ice_road: { overlayName: '陸路', style: { color: '#8aa7bf', weight: 4, opacity: 0.9, dashArray: '10 6' } },
-    rail: { overlayName: '鉄道', style: { color: '#4b4f5a', weight: 5.5, opacity: 0.9 } },
-    sea: { overlayName: '海路', style: { color: '#317fcb', weight: 4, opacity: 0.85, dashArray: '12 10' } },
-    air: { overlayName: '空路', style: { color: '#8558c7', weight: 4, opacity: 0.85, dashArray: '8 10' } },
-    submarine: { overlayName: '特殊交通', style: { color: '#1f9aa1', weight: 4, opacity: 0.85, dashArray: '8 6' } },
-    tunnel: { overlayName: '特殊交通', style: { color: '#67636a', weight: 4, opacity: 0.9, dashArray: '8 8' } },
-    underwater_tunnel: { overlayName: '特殊交通', style: { color: '#2389a8', weight: 4, opacity: 0.9, dashArray: '8 8' } },
-    forbidden_path: { overlayName: '特殊交通', style: { color: '#9b3441', weight: 4, opacity: 0.9, dashArray: '6 8 2 8' } },
-    default: { overlayName: '特殊交通', style: { color: '#9150b8', weight: 4, opacity: 0.88, dashArray: '6 10' } }
+    road: { overlayName: '陸路', style: { color: '#8f5f33', weight: 4.5, opacity: 0.88, lineCap: 'round', lineJoin: 'round' } },
+    caravan: { overlayName: '陸路', style: { color: '#b18449', weight: 4.25, opacity: 0.88, dashArray: '9 7 2 7', lineCap: 'round', lineJoin: 'round' } },
+    ice_road: { overlayName: '陸路', style: { color: '#87a1b4', weight: 4.1, opacity: 0.82, dashArray: '10 6', lineCap: 'round', lineJoin: 'round' } },
+    rail: { overlayName: '鉄道', style: { color: '#575046', weight: 5.25, opacity: 0.9, dashArray: '14 5 2 5', lineCap: 'round', lineJoin: 'round' } },
+    sea: { overlayName: '海路', style: { color: '#5f88a9', weight: 4.1, opacity: 0.82, dashArray: '11 9', lineCap: 'round', lineJoin: 'round' } },
+    air: { overlayName: '空路', style: { color: '#7b63ab', weight: 3.9, opacity: 0.8, dashArray: '4 10', lineCap: 'round', lineJoin: 'round' } },
+    submarine: { overlayName: '特殊交通', style: { color: '#3e8e94', weight: 4, opacity: 0.82, dashArray: '7 6', lineCap: 'round', lineJoin: 'round' } },
+    tunnel: { overlayName: '特殊交通', style: { color: '#5f5954', weight: 4, opacity: 0.84, dashArray: '8 8', lineCap: 'round', lineJoin: 'round' } },
+    underwater_tunnel: { overlayName: '特殊交通', style: { color: '#377f8f', weight: 4, opacity: 0.84, dashArray: '7 7', lineCap: 'round', lineJoin: 'round' } },
+    forbidden_path: { overlayName: '特殊交通', style: { color: '#822f38', weight: 4.1, opacity: 0.85, dashArray: '6 7 2 7', lineCap: 'round', lineJoin: 'round' } },
+    default: { overlayName: '特殊交通', style: { color: '#7f5b93', weight: 4, opacity: 0.82, dashArray: '6 9', lineCap: 'round', lineJoin: 'round' } }
   };
   const MOBILE_BREAKPOINT_WIDTH = 720;
-  const POI_CATEGORY_STYLES = {
-    government: { color: '#8e5a2a', fillColor: '#d8a15d' },
-    military: { color: '#7d2e2e', fillColor: '#d86b5f' },
-    transport: { color: '#2f5f8f', fillColor: '#6aa4d8' },
-    market: { color: '#8a6f2a', fillColor: '#d8bd5f' },
-    shop: { color: '#7a6a3a', fillColor: '#c9b06a' },
-    inn: { color: '#6a4b2d', fillColor: '#c58d5a' },
-    food: { color: '#8b4f2f', fillColor: '#d98a5a' },
-    guild: { color: '#4b5f7a', fillColor: '#8da6c8' },
-    academy: { color: '#5c4a8a', fillColor: '#a58bd8' },
-    temple: { color: '#8a7a3a', fillColor: '#e0cf76' },
-    culture: { color: '#7b4a7d', fillColor: '#c586c8' },
-    entertainment: { color: '#8a4f6a', fillColor: '#d486ac' },
-    industry: { color: '#5f5a4a', fillColor: '#aaa07d' },
-    research: { color: '#3f6f74', fillColor: '#79b8bd' },
-    hazard_support: { color: '#8a3a2a', fillColor: '#d8765f' },
-    dungeon: { color: '#4a3a3a', fillColor: '#8d7777' },
-    landmark: { color: '#4f7a4f', fillColor: '#8fc98f' },
-    residential: { color: '#6f6f6f', fillColor: '#b6b6b6' },
-    utility: { color: '#4f6f6f', fillColor: '#8fbaba' },
-    restricted: { color: '#5d2a5d', fillColor: '#a85ca8' }
+  const POI_ICON_SIZE_BY_IMPORTANCE = [20, 22, 24, 28, 32];
+  const POI_GROUP_SYMBOLS = {
+    poi_civic: '♜',
+    poi_transport_utility: '◆',
+    poi_commerce: '⚖',
+    poi_culture_magic: '✦',
+    poi_adventure_risk: '⚔',
+    poi_other: '•'
+  };
+  const POI_SYMBOLS_BY_CATEGORY = {
+    government: '♜',
+    military: '盾',
+    transport: '道',
+    market: '市',
+    shop: '店',
+    inn: '宿',
+    food: '杯',
+    guild: '剣',
+    academy: '書',
+    temple: '祈',
+    culture: '劇',
+    entertainment: '楽',
+    industry: '工',
+    research: '星',
+    hazard_support: '警',
+    dungeon: '門',
+    landmark: '碑',
+    residential: '家',
+    utility: '水',
+    restricted: '封'
+  };
+  const NODE_SYMBOLS_BY_TYPE = {
+    capital: '城',
+    city: '塔',
+    town: '町',
+    port: '錨',
+    seaport: '錨',
+    airport: '羽',
+    air_terminal: '羽',
+    carriage_terminal: '道',
+    checkpoint: '関',
+    oasis: '泉',
+    floating_island: '浮',
+    underwater_city: '貝',
+    marine_port: '港',
+    submarine_terminal: '潜',
+    warp_gate: '渦',
+    forbidden_gate: '封',
+    fortress: '砦',
+    inn: '宿',
+    landmark: '碑'
   };
   const POI_CATEGORY_LABELS = {
     government: 'POI: 行政',
@@ -355,22 +373,101 @@
     return window.innerWidth <= MOBILE_BREAKPOINT_WIDTH;
   }
 
-  function getPoiRadius(poi) {
-    const importance = Math.min(Math.max(Number(poi?.importance ?? 1) || 1, 1), 5);
-    return [3.5, 4.5, 5.5, 6.5, 8][importance - 1];
+  function clampImportance(importance) {
+    return Math.min(Math.max(Number(importance ?? 1) || 1, 1), 5);
   }
 
-  function getPoiStyle(poi) {
-    const categoryStyle = POI_CATEGORY_STYLES[poi?.category] || { color: '#6f5a46', fillColor: '#c7ab88' };
-    return {
-      radius: getPoiRadius(poi),
-      color: categoryStyle.color,
-      fillColor: categoryStyle.fillColor,
-      weight: 1.4,
-      opacity: 0.9,
-      fillOpacity: 0.78,
-      pane: 'poiPane'
-    };
+  function getPoiIconPixelSize(poi) {
+    const baseSize = POI_ICON_SIZE_BY_IMPORTANCE[clampImportance(poi?.importance) - 1];
+    return baseSize + (isSmallScreenViewport() ? 2 : 0);
+  }
+
+  function getPoiIconSize(poi) {
+    const size = getPoiIconPixelSize(poi);
+    return [size, size];
+  }
+
+  function getPoiIconAnchor(poi) {
+    const size = getPoiIconPixelSize(poi);
+    return [size / 2, size / 2];
+  }
+
+  function getPoiSymbol(poi) {
+    const category = poi?.category ?? UNKNOWN_POI_CATEGORY;
+    if (POI_SYMBOLS_BY_CATEGORY[category]) {
+      return POI_SYMBOLS_BY_CATEGORY[category];
+    }
+    return POI_GROUP_SYMBOLS[getPoiGroupForCategory(category)] ?? '•';
+  }
+
+  function createPoiIcon(poi) {
+    const group = getPoiGroupForCategory(poi?.category);
+    const importance = clampImportance(poi?.importance);
+    const symbol = escapeHtml(getPoiSymbol(poi));
+    const size = getPoiIconSize(poi);
+
+    return L.divIcon({
+      className: [
+        'fantasy-map-icon',
+        'fantasy-map-icon--poi',
+        `fantasy-map-icon--importance-${importance}`,
+        `fantasy-map-icon--${group}`
+      ].join(' '),
+      html: `<span class="fantasy-map-icon__symbol">${symbol}</span>`,
+      iconSize: size,
+      iconAnchor: getPoiIconAnchor(poi),
+      popupAnchor: [0, Math.round(-size[1] * 0.52)]
+    });
+  }
+
+  function normalizeNodeType(type) {
+    return String(type ?? 'default').trim().toLowerCase().replace(/\s+/g, '_') || 'default';
+  }
+
+  function getNodeSymbol(node) {
+    return NODE_SYMBOLS_BY_TYPE[normalizeNodeType(node?.type)] ?? '塔';
+  }
+
+  function getNodeIconPixelSize(node) {
+    const normalizedType = normalizeNodeType(node?.type);
+    const mobileAdjustment = isSmallScreenViewport() ? 2 : 0;
+    if (normalizedType === 'capital') return 36 + mobileAdjustment;
+    if (['city', 'floating_island', 'underwater_city'].includes(normalizedType)) return 32 + mobileAdjustment;
+    if (['port', 'seaport', 'airport', 'air_terminal', 'warp_gate', 'forbidden_gate'].includes(normalizedType)) return 30 + mobileAdjustment;
+    return 28 + mobileAdjustment;
+  }
+
+  function createNodeIcon(node) {
+    const type = normalizeNodeType(node?.type);
+    const symbol = escapeHtml(getNodeSymbol(node));
+    const size = getNodeIconPixelSize(node);
+
+    return L.divIcon({
+      className: [
+        'fantasy-map-icon',
+        'fantasy-map-icon--node',
+        `fantasy-map-icon--node-${type}`
+      ].join(' '),
+      html: `<span class="fantasy-map-icon__symbol">${symbol}</span>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+      popupAnchor: [0, Math.round(-size * 0.5)]
+    });
+  }
+
+  function toggleMarkerClass(marker, className, shouldAdd) {
+    const element = marker?.getElement?.();
+    if (!element || !className) {
+      return;
+    }
+    element.classList.toggle(className, Boolean(shouldAdd));
+  }
+
+  function emphasizeMarker(marker, className, duration = 1600) {
+    toggleMarkerClass(marker, className, true);
+    window.setTimeout(() => {
+      toggleMarkerClass(marker, className, false);
+    }, duration);
   }
 
   function createPoiPopupHtml(poi) {
@@ -449,6 +546,8 @@
       fitWorld() {},
       clearHighlights() {},
       highlightRouteIds() {},
+      highlightRoute() {},
+      clearRouteHighlight() {},
       focusNodeIds() {},
       focusPoi() {
         return false;
@@ -569,10 +668,16 @@
         preferCanvas: true
       });
 
+      map.createPane('hazardPane');
+      map.getPane('hazardPane').style.zIndex = '410';
+      map.createPane('routePane');
+      map.getPane('routePane').style.zIndex = '420';
       map.createPane('poiPane');
       map.getPane('poiPane').style.zIndex = '430';
       map.createPane('nodePane');
       map.getPane('nodePane').style.zIndex = '450';
+      map.createPane('highlightPane');
+      map.getPane('highlightPane').style.zIndex = '470';
       map.on('popupopen', event => {
         keepPopupInViewport(event.popup);
       });
@@ -611,10 +716,6 @@
       const routeHighlightPolylinesById = new Map();
       const nodeHighlightMarkersById = new Map();
 
-    function getNodeStyle(node) {
-      return NODE_STYLE_BY_TYPE[node?.type] || DEFAULT_NODE_STYLE;
-    }
-
     function getRouteDefinition(route) {
       const type = route?.type || 'default';
       const definition = ROUTE_DEFINITION_BY_TYPE[type] || ROUTE_DEFINITION_BY_TYPE.default;
@@ -629,19 +730,26 @@
       return {
         group: groupByOverlayName[definition.overlayName] || specialLayer,
         label: definition.overlayName,
-        style: { ...definition.style }
+        style: { ...definition.style, pane: 'routePane' }
       };
     }
 
     function getHazardStyle(hazard) {
       const severity = Math.min(Math.max(Number(hazard?.severity) || 1, 1), 5);
-      const opacity = 0.1 + severity * 0.05;
-      if (hazard?.type === 'ice_sea' || hazard?.type === 'ice') return { color: '#3a6f9a', fillColor: '#5f95c8', fillOpacity: opacity, weight: 2 };
-      if (hazard?.type === 'time_distortion') return { color: '#69328e', fillColor: '#8c56bf', fillOpacity: opacity, weight: 2 };
-      if (hazard?.type === 'forbidden_zone') return { color: '#6f202a', fillColor: '#9d3947', fillOpacity: opacity + 0.03, weight: 2 };
-      if (hazard?.type === 'pirate_sea' || hazard?.type === 'monster_sea') return { color: '#7d2c22', fillColor: '#a54c3d', fillOpacity: opacity, weight: 2 };
-      if (hazard?.type === 'storm') return { color: '#5c4575', fillColor: '#8567a8', fillOpacity: opacity, weight: 2 };
-      return { color: '#8c3b2c', fillColor: '#b86b44', fillOpacity: opacity, weight: 2 };
+      const fillOpacity = 0.08 + severity * 0.04;
+      const baseStyle = {
+        pane: 'hazardPane',
+        weight: 2.2,
+        opacity: 0.82,
+        dashArray: '10 6',
+        lineCap: 'round'
+      };
+      if (hazard?.type === 'ice_sea' || hazard?.type === 'ice') return { ...baseStyle, color: '#4d7390', fillColor: '#88accb', fillOpacity };
+      if (hazard?.type === 'time_distortion') return { ...baseStyle, color: '#6f4a8e', fillColor: '#9b76b6', fillOpacity: fillOpacity + 0.01 };
+      if (hazard?.type === 'forbidden_zone') return { ...baseStyle, color: '#6a2530', fillColor: '#9e4c5a', fillOpacity: fillOpacity + 0.02, dashArray: '7 5 2 5' };
+      if (hazard?.type === 'pirate_sea' || hazard?.type === 'monster_sea') return { ...baseStyle, color: '#7b4236', fillColor: '#ab6954', fillOpacity };
+      if (hazard?.type === 'storm') return { ...baseStyle, color: '#685579', fillColor: '#8d77a2', fillOpacity };
+      return { ...baseStyle, color: '#87523d', fillColor: '#b98868', fillOpacity };
     }
 
     function getPoiLayer(category) {
@@ -709,9 +817,8 @@
       });
       highlightedNodeIds.forEach(nodeId => {
         const marker = nodeMarkerById.get(nodeId);
-        const baseStyle = nodeBaseStyleById.get(nodeId);
-        if (marker && baseStyle) {
-          marker.setStyle(baseStyle);
+        if (marker) {
+          toggleMarkerClass(marker, 'fantasy-map-icon--highlighted', false);
         }
       });
       highlightedRouteIds = [];
@@ -738,20 +845,19 @@
     }
 
     function highlightNodes(nodeIds = []) {
+      highlightedNodeIds.forEach(nodeId => {
+        const marker = nodeMarkerById.get(nodeId);
+        if (marker) {
+          toggleMarkerClass(marker, 'fantasy-map-icon--highlighted', false);
+        }
+      });
       highlightedNodeIds = nodeIds.filter(nodeId => nodeMarkerById.has(nodeId));
       highlightedNodeIds.forEach(nodeId => {
         const marker = nodeMarkerById.get(nodeId);
-        const baseStyle = nodeBaseStyleById.get(nodeId);
-        if (!marker || !baseStyle) {
+        if (!marker) {
           return;
         }
-        marker.setStyle({
-          ...baseStyle,
-          radius: (baseStyle.radius || 6) + 2,
-          color: '#f1c232',
-          weight: (baseStyle.weight || 2) + 1,
-          fillOpacity: 1
-        });
+        toggleMarkerClass(marker, 'fantasy-map-icon--highlighted', true);
         marker.bringToFront();
       });
     }
@@ -782,24 +888,24 @@
         const marker = nodeMarkerById.get(nodeId);
         if (!node || !marker || !node.position) return;
 
-        const baseStyle = nodeBaseStyleById.get(nodeId) || DEFAULT_NODE_STYLE;
+        const baseStyle = nodeBaseStyleById.get(nodeId) || { size: 28 };
         const type = nodeTypes[nodeId] || 'via';
         let fillColor, strokeColor, radius, className;
 
         if (type === 'start') {
           fillColor = '#4db67e';
           strokeColor = '#1d6e46';
-          radius = (baseStyle.radius || 6) + 4;
+          radius = Math.round((baseStyle.size || 28) * 0.38);
           className = 'leaflet-route-start';
         } else if (type === 'goal') {
           fillColor = '#cf6d58';
           strokeColor = '#8d3024';
-          radius = (baseStyle.radius || 6) + 4;
+          radius = Math.round((baseStyle.size || 28) * 0.38);
           className = 'leaflet-route-goal';
         } else {
           fillColor = '#f0c05a';
           strokeColor = '#9b6c14';
-          radius = (baseStyle.radius || 6) + 3;
+          radius = Math.round((baseStyle.size || 28) * 0.34);
           className = 'leaflet-route-via';
         }
 
@@ -810,6 +916,7 @@
           weight: 4,
           fillOpacity: 0.95,
           className,
+          pane: 'highlightPane',
           interactive: false
         }).addTo(nodeHighlightLayer);
 
@@ -832,6 +939,7 @@
           opacity: 1,
           dashArray: baseStyle.dashArray || undefined,
           className: 'leaflet-route-highlight',
+          pane: 'highlightPane',
           interactive: false
         }).addTo(routeHighlightLayer);
 
@@ -963,10 +1071,15 @@
         return;
       }
 
-      const style = getNodeStyle(node);
-      const marker = L.circleMarker(toLatLng(node.position), { ...style, pane: 'nodePane' }).addTo(nodeLayer);
+      const size = getNodeIconPixelSize(node);
+      const marker = L.marker(toLatLng(node.position), {
+        icon: createNodeIcon(node),
+        pane: 'nodePane',
+        keyboard: true,
+        riseOnHover: true
+      }).addTo(nodeLayer);
       nodeMarkerById.set(node.id, marker);
-      nodeBaseStyleById.set(node.id, { ...style });
+      nodeBaseStyleById.set(node.id, { size, type: normalizeNodeType(node.type) });
 
       bindPopupAndInteractions(marker, createPopupHtml(
         node.name || node.id || 'ノード',
@@ -1004,7 +1117,12 @@
       }
 
       const category = poi.category ?? UNKNOWN_POI_CATEGORY;
-      const marker = L.circleMarker(toLatLng(poi.position), getPoiStyle(poi)).addTo(getPoiLayer(category));
+      const marker = L.marker(toLatLng(poi.position), {
+        icon: createPoiIcon(poi),
+        pane: 'poiPane',
+        keyboard: true,
+        riseOnHover: true
+      }).addTo(getPoiLayer(category));
       poiById.set(poi.id, poi);
       poiMarkerById.set(poi.id, marker);
       (poi.aliases || []).forEach(alias => {
@@ -1271,6 +1389,7 @@
             animate: false
           });
           marker.bringToFront();
+          emphasizeMarker(marker, 'fantasy-map-icon--focused');
           marker.openPopup();
           return true;
         }
