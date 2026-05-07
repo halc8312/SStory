@@ -1,6 +1,6 @@
 (() => {
    const BASE_PATH = '../data/map/';
-   const CACHE_BUSTER = '20260506a';
+   const CACHE_BUSTER = '20260507a';
 
     // === 座標変換設定 ===
     // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
@@ -59,6 +59,52 @@
     forbidden_path: { overlayName: '特殊交通', style: { color: '#9b3441', weight: 4, opacity: 0.9, dashArray: '6 8 2 8' } },
     default: { overlayName: '特殊交通', style: { color: '#9150b8', weight: 4, opacity: 0.88, dashArray: '6 10' } }
   };
+  const POI_CATEGORY_STYLES = {
+    government: { color: '#8e5a2a', fillColor: '#d8a15d' },
+    military: { color: '#7d2e2e', fillColor: '#d86b5f' },
+    transport: { color: '#2f5f8f', fillColor: '#6aa4d8' },
+    market: { color: '#8a6f2a', fillColor: '#d8bd5f' },
+    shop: { color: '#7a6a3a', fillColor: '#c9b06a' },
+    inn: { color: '#6a4b2d', fillColor: '#c58d5a' },
+    food: { color: '#8b4f2f', fillColor: '#d98a5a' },
+    guild: { color: '#4b5f7a', fillColor: '#8da6c8' },
+    academy: { color: '#5c4a8a', fillColor: '#a58bd8' },
+    temple: { color: '#8a7a3a', fillColor: '#e0cf76' },
+    culture: { color: '#7b4a7d', fillColor: '#c586c8' },
+    entertainment: { color: '#8a4f6a', fillColor: '#d486ac' },
+    industry: { color: '#5f5a4a', fillColor: '#aaa07d' },
+    research: { color: '#3f6f74', fillColor: '#79b8bd' },
+    hazard_support: { color: '#8a3a2a', fillColor: '#d8765f' },
+    dungeon: { color: '#4a3a3a', fillColor: '#8d7777' },
+    landmark: { color: '#4f7a4f', fillColor: '#8fc98f' },
+    residential: { color: '#6f6f6f', fillColor: '#b6b6b6' },
+    utility: { color: '#4f6f6f', fillColor: '#8fbaba' },
+    restricted: { color: '#5d2a5d', fillColor: '#a85ca8' }
+  };
+  const POI_CATEGORY_LABELS = {
+    government: 'POI: 行政',
+    military: 'POI: 軍事',
+    transport: 'POI: 交通施設',
+    market: 'POI: 市場',
+    shop: 'POI: 商店',
+    inn: 'POI: 宿泊',
+    food: 'POI: 飲食',
+    guild: 'POI: ギルド',
+    academy: 'POI: 学院',
+    temple: 'POI: 神殿',
+    culture: 'POI: 文化',
+    entertainment: 'POI: 娯楽',
+    industry: 'POI: 工業',
+    research: 'POI: 研究',
+    hazard_support: 'POI: 危険対応',
+    dungeon: 'POI: ダンジョン',
+    landmark: 'POI: 名所',
+    residential: 'POI: 居住',
+    utility: 'POI: 公共設備',
+    restricted: 'POI: 制限区域'
+  };
+  const UNKNOWN_VALUE = 'unknown';
+  const UNKNOWN_POI_CATEGORY = 'unknown';
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -126,11 +172,23 @@
     return Array.isArray(months) && months.length > 0 ? months.join(', ') : 'なし';
   }
 
+  function formatList(items) {
+    return Array.isArray(items) && items.length > 0 ? items.join(' / ') : 'なし';
+  }
+
   function formatCoordinate(position) {
     if (!position || position.x === undefined || position.y === undefined) {
       return 'X: ?, Y: ?';
     }
     return `X: ${position.x}, Y: ${position.y}`;
+  }
+
+  function formatPoiCoordinate(position) {
+    if (!position || position.x === undefined || position.y === undefined) {
+      return 'X: ?, Y: ?, Z: ?';
+    }
+    const zValue = position.z ?? 0;
+    return `X: ${position.x}, Y: ${position.y}, Z: ${zValue}`;
   }
 
   function isFiniteNumber(value) {
@@ -156,6 +214,73 @@
     `;
   }
 
+  function getPoiCategoryLabel(category) {
+    return POI_CATEGORY_LABELS[category] ?? `POI: ${category ?? UNKNOWN_POI_CATEGORY}`;
+  }
+
+  function getPoiRadius(poi) {
+    const importance = Math.min(Math.max(Number(poi?.importance ?? 1) || 1, 1), 5);
+    return [4, 5, 6, 8, 10][importance - 1];
+  }
+
+  function getPoiStyle(poi) {
+    const categoryStyle = POI_CATEGORY_STYLES[poi?.category] || { color: '#6f5a46', fillColor: '#c7ab88' };
+    return {
+      radius: getPoiRadius(poi),
+      color: categoryStyle.color,
+      fillColor: categoryStyle.fillColor,
+      weight: 1.8,
+      fillOpacity: 0.92
+    };
+  }
+
+  function createPoiPopupHtml(poi) {
+    const metaRows = [
+      ['カテゴリ', poi.category ?? UNKNOWN_POI_CATEGORY],
+      ['種別', poi.type ?? UNKNOWN_VALUE],
+      ['状態', poi.status ?? UNKNOWN_VALUE],
+      ['重要度', poi.importance ?? '不明'],
+      ['大陸ID', poi.continent_id ?? '不明'],
+      ['地域ID', poi.region_id ?? '不明'],
+      ['最寄りノードID', poi.nearest_node_id ?? '不明'],
+      ['座標', formatPoiCoordinate(poi.position)]
+    ].map(([term, value]) => `
+      <dt>${escapeHtml(term)}</dt>
+      <dd>${escapeHtml(value)}</dd>
+    `).join('');
+
+    const narrativeSections = [
+      ['概要', poi.description],
+      ['交通上の役割', poi.transport_role],
+      ['経済上の役割', poi.economic_role],
+      ['文化上の役割', poi.cultural_role],
+      ['危険文脈', poi.risk_context],
+      ['歴史的背景', poi.historical_reason],
+      ['設定根拠', formatList(poi.lore_basis)]
+    ].filter(([, value]) => value).map(([label, value]) => `
+      <section class="poi-popup-section">
+        <h4>${escapeHtml(label)}</h4>
+        <p>${escapeHtml(value)}</p>
+      </section>
+    `).join('');
+
+    const tags = Array.isArray(poi.tags) && poi.tags.length > 0
+      ? `<div class="poi-tags">${poi.tags.map(tag => `<span class="poi-tag">${escapeHtml(tag)}</span>`).join('')}</div>`
+      : '<p class="poi-tags-empty">タグなし</p>';
+
+    return `
+      <article class="leaflet-popup-card poi-popup">
+        <h3>${escapeHtml(poi.name || poi.id || 'POI')}</h3>
+        <dl>${metaRows}</dl>
+        ${narrativeSections}
+        <section class="poi-popup-section">
+          <h4>タグ</h4>
+          ${tags}
+        </section>
+      </article>
+    `;
+  }
+
   function createLeafletUnavailableApi(reason = 'Leaflet unavailable') {
     return {
       isAvailable: false,
@@ -163,10 +288,16 @@
       map: null,
       routeLayerById: new Map(),
       nodeMarkerById: new Map(),
+      poiById: new Map(),
+      poiMarkerById: new Map(),
+      poiLayersByCategory: new Map(),
       fitWorld() {},
       clearHighlights() {},
       highlightRouteIds() {},
-      focusNodeIds() {}
+      focusNodeIds() {},
+      focusPoi() {
+        return false;
+      }
     };
   }
 
@@ -253,11 +384,22 @@
       const regionsById = buildLookupById(datasets.regions);
       const nodeById = buildLookupById(datasets.nodes);
 
-   const nodeMarkerById = new Map();
-   const routeLayerById = new Map();
-   const nodeBaseStyleById = new Map();
-   const routeBaseStyleById = new Map();
-   let highlightedNodeIds = [];
+      try {
+        const pois = await fetchJson('pois.json');
+        datasets.pois = Array.isArray(pois) ? pois : [];
+      } catch (error) {
+        datasets.pois = [];
+        console.warn('POI data could not be loaded. Leaflet POI layers are skipped.', error);
+      }
+
+    const nodeMarkerById = new Map();
+    const routeLayerById = new Map();
+    const poiById = new Map();
+    const poiMarkerById = new Map();
+    const poiLayersByCategory = new Map();
+    const nodeBaseStyleById = new Map();
+    const routeBaseStyleById = new Map();
+    let highlightedNodeIds = [];
    let highlightedRouteIds = [];
 
        const map = L.map(mapElement, {
@@ -335,6 +477,14 @@
       if (hazard?.type === 'pirate_sea' || hazard?.type === 'monster_sea') return { color: '#7d2c22', fillColor: '#a54c3d', fillOpacity: opacity, weight: 2 };
       if (hazard?.type === 'storm') return { color: '#5c4575', fillColor: '#8567a8', fillOpacity: opacity, weight: 2 };
       return { color: '#8c3b2c', fillColor: '#b86b44', fillOpacity: opacity, weight: 2 };
+    }
+
+    function getPoiLayer(category) {
+      if (!poiLayersByCategory.has(category)) {
+        const layer = L.layerGroup().addTo(map);
+        poiLayersByCategory.set(category, layer);
+      }
+      return poiLayersByCategory.get(category);
     }
 
     function bindPopupAndInteractions(layer, html, detailCallback) {
@@ -626,7 +776,21 @@
       ));
     });
 
-      const layersControl = L.control.layers(null, {
+    (datasets.pois || []).forEach(poi => {
+      if (!poi?.id || !poi?.position || !isFiniteNumber(poi.position.x) || !isFiniteNumber(poi.position.y)) {
+        console.warn('[LeafletTransportMap] POI skipped due to missing id/position:', poi?.id || poi);
+        return;
+      }
+
+      const category = poi.category ?? UNKNOWN_POI_CATEGORY;
+      const marker = L.circleMarker(toLatLng(poi.position), getPoiStyle(poi)).addTo(getPoiLayer(category));
+      poiById.set(poi.id, poi);
+      poiMarkerById.set(poi.id, marker);
+
+      bindPopupAndInteractions(marker, createPoiPopupHtml(poi));
+    });
+
+      const overlayLayers = {
         '世界地図背景': worldMapLayer,
         'ノード': nodeLayer,
         '陸路': roadLayer,
@@ -636,7 +800,15 @@
         '特殊交通': specialLayer,
         '危険区域': hazardLayer,
         '座標グリッド': gridLayer
-      }, { collapsed: window.matchMedia("(max-width: 720px)").matches }).addTo(map);
+      };
+
+      Array.from(poiLayersByCategory.keys())
+        .sort((left, right) => getPoiCategoryLabel(left).localeCompare(getPoiCategoryLabel(right), 'ja'))
+        .forEach(category => {
+          overlayLayers[getPoiCategoryLabel(category)] = poiLayersByCategory.get(category);
+        });
+
+      const layersControl = L.control.layers(null, overlayLayers, { collapsed: window.matchMedia("(max-width: 720px)").matches }).addTo(map);
 
       // Responsive layer control collapse on resize
       const updateLayerControlCollapse = () => {
@@ -670,34 +842,52 @@
       * Consumers can access the raw Leaflet map instance, node/route layer maps,
       * reset the viewport, apply simple node/route highlighting, and control world map opacity.
       */
-         window.EternalArcadiaLeafletMap = {
-           isAvailable: true,
-           map,
-           routeLayerById,
-           nodeMarkerById,
-           worldMapLayer,
-           MAP_COORDINATE_CONFIG,
-           transformPosition,
-           toLatLng,
-           WORLD_COORDINATE_BOUNDS,
-           WORLD_IMAGE_BOUNDS,
-           fitWorld() {
-             map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
-           },
-           setWorldMapOpacity(value) {
-             worldMapLayer.setOpacity(value);
-           },
-           clearHighlights,
-           highlightRouteIds(routeIds = []) {
-             highlightRoutes(routeIds);
-           },
-           highlightRoute,
-           clearRouteHighlight,
-           focusNodeIds(nodeIds = []) {
-             highlightNodes(nodeIds);
-             focusNodes(nodeIds);
-           }
-         };
+      window.EternalArcadiaLeafletMap = {
+        isAvailable: true,
+        map,
+        routeLayerById,
+        nodeMarkerById,
+        poiById,
+        poiMarkerById,
+        poiLayersByCategory,
+        worldMapLayer,
+        MAP_COORDINATE_CONFIG,
+        transformPosition,
+        toLatLng,
+        WORLD_COORDINATE_BOUNDS,
+        WORLD_IMAGE_BOUNDS,
+        fitWorld() {
+          map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
+        },
+        setWorldMapOpacity(value) {
+          worldMapLayer.setOpacity(value);
+        },
+        clearHighlights,
+        highlightRouteIds(routeIds = []) {
+          highlightRoutes(routeIds);
+        },
+        highlightRoute,
+        clearRouteHighlight,
+        focusNodeIds(nodeIds = []) {
+          highlightNodes(nodeIds);
+          focusNodes(nodeIds);
+        },
+        focusPoi(id) {
+          const poi = poiById.get(id);
+          const marker = poiMarkerById.get(id);
+          if (!poi || !marker) {
+            return false;
+          }
+          const categoryLayer = poiLayersByCategory.get(poi.category ?? UNKNOWN_POI_CATEGORY);
+          if (categoryLayer && !map.hasLayer(categoryLayer)) {
+            categoryLayer.addTo(map);
+          }
+          map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
+          marker.bringToFront();
+          marker.openPopup();
+          return true;
+        }
+      };
 
       if (!datasets.nodes.length && !datasets.routes.length && !datasets.hazards.length) {
         showLeafletMessage(DEFAULT_MESSAGE);
