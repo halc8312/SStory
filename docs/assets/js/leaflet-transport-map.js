@@ -10,7 +10,7 @@
       height: 10000,
       // 反転
       flipX: false,
-      flipY: false,
+      flipY: true,
       // スケール (1=等倍, >1で拡大, <1で縮小)
       // 現状の world-map.svg は元データ座標系と概ね一致するため、
       // 追加の全体補正は行わない。
