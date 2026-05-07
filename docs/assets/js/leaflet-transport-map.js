@@ -1,6 +1,6 @@
 (() => {
    const BASE_PATH = '../data/map/';
-    const CACHE_BUSTER = '20260507e';
+    const CACHE_BUSTER = '20260507f';
 
     // === 座標変換設定 ===
     // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
@@ -12,12 +12,13 @@
       flipX: false,
       flipY: false,
       // スケール (1=等倍, >1で拡大, <1で縮小)
-      // 現在: 世界地図画像の形状と大陸位置を合わせるため、微調整中
-      scaleX: 0.95,  //  empirically adjusted to align continents horizontally
-      scaleY: 0.85,  //  empirically adjusted to align continents vertically
+      // 現状の world-map.svg は元データ座標系と概ね一致するため、
+      // 追加の全体補正は行わない。
+      scaleX: 1,
+      scaleY: 1,
       // オフセット
-      offsetX: -300, // empirically adjusted
-      offsetY: -200, // empirically adjusted
+      offsetX: 0,
+      offsetY: 0,
       // スケールの中心点
       centerX: 5000,
       centerY: 5000,
