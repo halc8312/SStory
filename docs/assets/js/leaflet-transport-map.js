@@ -842,52 +842,52 @@
       * Consumers can access the raw Leaflet map instance, node/route layer maps,
       * reset the viewport, apply simple node/route highlighting, and control world map opacity.
       */
-         window.EternalArcadiaLeafletMap = {
-           isAvailable: true,
-           map,
-            routeLayerById,
-            nodeMarkerById,
-            poiById,
-            poiMarkerById,
-            poiLayersByCategory,
-            worldMapLayer,
-            MAP_COORDINATE_CONFIG,
-            transformPosition,
-           toLatLng,
-           WORLD_COORDINATE_BOUNDS,
-           WORLD_IMAGE_BOUNDS,
-           fitWorld() {
-             map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
-           },
-           setWorldMapOpacity(value) {
-             worldMapLayer.setOpacity(value);
-           },
-           clearHighlights,
-           highlightRouteIds(routeIds = []) {
-             highlightRoutes(routeIds);
-           },
-           highlightRoute,
-            clearRouteHighlight,
-            focusNodeIds(nodeIds = []) {
-              highlightNodes(nodeIds);
-              focusNodes(nodeIds);
-            },
-            focusPoi(id) {
-              const poi = poiById.get(id);
-              const marker = poiMarkerById.get(id);
-              if (!poi || !marker) {
-                return false;
-              }
-              const categoryLayer = poiLayersByCategory.get(poi.category || UNKNOWN_POI_CATEGORY);
-              if (categoryLayer && !map.hasLayer(categoryLayer)) {
-                categoryLayer.addTo(map);
-              }
-              map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
-              marker.bringToFront();
-              marker.openPopup();
-              return true;
-            }
-          };
+      window.EternalArcadiaLeafletMap = {
+        isAvailable: true,
+        map,
+        routeLayerById,
+        nodeMarkerById,
+        poiById,
+        poiMarkerById,
+        poiLayersByCategory,
+        worldMapLayer,
+        MAP_COORDINATE_CONFIG,
+        transformPosition,
+        toLatLng,
+        WORLD_COORDINATE_BOUNDS,
+        WORLD_IMAGE_BOUNDS,
+        fitWorld() {
+          map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
+        },
+        setWorldMapOpacity(value) {
+          worldMapLayer.setOpacity(value);
+        },
+        clearHighlights,
+        highlightRouteIds(routeIds = []) {
+          highlightRoutes(routeIds);
+        },
+        highlightRoute,
+        clearRouteHighlight,
+        focusNodeIds(nodeIds = []) {
+          highlightNodes(nodeIds);
+          focusNodes(nodeIds);
+        },
+        focusPoi(id) {
+          const poi = poiById.get(id);
+          const marker = poiMarkerById.get(id);
+          if (!poi || !marker) {
+            return false;
+          }
+          const categoryLayer = poiLayersByCategory.get(poi.category || UNKNOWN_POI_CATEGORY);
+          if (categoryLayer && !map.hasLayer(categoryLayer)) {
+            categoryLayer.addTo(map);
+          }
+          map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
+          marker.bringToFront();
+          marker.openPopup();
+          return true;
+        }
+      };
 
       if (!datasets.nodes.length && !datasets.routes.length && !datasets.hazards.length) {
         showLeafletMessage(DEFAULT_MESSAGE);
