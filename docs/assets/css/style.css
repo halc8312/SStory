@@ -1124,7 +1124,7 @@ footer a {
 .leaflet-marker-icon.fantasy-map-icon {
   --icon-size: 24px;
   --icon-bg: #c9a167;
-  --icon-border: #704725;
+  --icon-border: #704825;
   --icon-shadow: 0 3px 8px rgba(45, 27, 12, 0.34);
   width: var(--icon-size);
   height: var(--icon-size);
@@ -1133,16 +1133,18 @@ footer a {
   border: 2px solid var(--icon-border);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 25%, rgba(255, 248, 210, 0.98), var(--icon-bg));
+    radial-gradient(circle at 35% 25%, rgba(255, 248, 210, 0.98) 0%, rgba(191, 145, 78, 0.88) 100%),
+    radial-gradient(circle at 70% 70%, rgba(255, 252, 240, 0.3) 0%, transparent 50%);
   box-shadow:
     var(--icon-shadow),
-    inset 0 0 0 1px rgba(255, 250, 220, 0.58);
+    inset 0 0 0 1px rgba(255, 250, 220, 0.62),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.08);
   color: #3c2412;
   font-weight: 700;
   line-height: 1;
   text-align: center;
   user-select: none;
-  text-shadow: 0 1px 0 rgba(255, 252, 236, 0.7);
+  text-shadow: 0 1px 0 rgba(255, 252, 236, 0.7), 0 -1px 0 rgba(0, 0, 0, 0.1);
   transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
 }
 
@@ -1160,6 +1162,8 @@ footer a {
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node {
   --icon-size: 30px;
+  --node-stroke: #704825;
+  --node-fill: #c9a167;
   border-width: 2.5px;
   border-radius: 10px;
   opacity: 1;
@@ -1216,6 +1220,11 @@ footer a {
     0 0 0 2px rgba(255, 232, 150, 0.58),
     0 5px 12px rgba(45, 27, 12, 0.42),
     inset 0 0 0 1px rgba(255, 250, 220, 0.65);
+}
+
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-default {
+  --icon-bg: #c9a167;
+  --icon-border: #704825;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-city,

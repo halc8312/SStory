@@ -1,6 +1,6 @@
 (() => {
    const BASE_PATH = '../data/map/';
-   const CACHE_BUSTER = '20260507d';
+    const CACHE_BUSTER = '20260507e';
 
     // === 座標変換設定 ===
     // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
@@ -35,17 +35,17 @@
 
    const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
   const ROUTE_DEFINITION_BY_TYPE = {
-    road: { overlayName: '陸路', style: { color: '#8f5f33', weight: 4.5, opacity: 0.88, lineCap: 'round', lineJoin: 'round' } },
-    caravan: { overlayName: '陸路', style: { color: '#b18449', weight: 4.25, opacity: 0.88, dashArray: '9 7 2 7', lineCap: 'round', lineJoin: 'round' } },
-    ice_road: { overlayName: '陸路', style: { color: '#87a1b4', weight: 4.1, opacity: 0.82, dashArray: '10 6', lineCap: 'round', lineJoin: 'round' } },
-    rail: { overlayName: '鉄道', style: { color: '#575046', weight: 5.25, opacity: 0.9, dashArray: '14 5 2 5', lineCap: 'round', lineJoin: 'round' } },
-    sea: { overlayName: '海路', style: { color: '#5f88a9', weight: 4.1, opacity: 0.82, dashArray: '11 9', lineCap: 'round', lineJoin: 'round' } },
-    air: { overlayName: '空路', style: { color: '#7b63ab', weight: 3.9, opacity: 0.8, dashArray: '4 10', lineCap: 'round', lineJoin: 'round' } },
-    submarine: { overlayName: '特殊交通', style: { color: '#3e8e94', weight: 4, opacity: 0.82, dashArray: '7 6', lineCap: 'round', lineJoin: 'round' } },
-    tunnel: { overlayName: '特殊交通', style: { color: '#5f5954', weight: 4, opacity: 0.84, dashArray: '8 8', lineCap: 'round', lineJoin: 'round' } },
-    underwater_tunnel: { overlayName: '特殊交通', style: { color: '#377f8f', weight: 4, opacity: 0.84, dashArray: '7 7', lineCap: 'round', lineJoin: 'round' } },
-    forbidden_path: { overlayName: '特殊交通', style: { color: '#822f38', weight: 4.1, opacity: 0.85, dashArray: '6 7 2 7', lineCap: 'round', lineJoin: 'round' } },
-    default: { overlayName: '特殊交通', style: { color: '#7f5b93', weight: 4, opacity: 0.82, dashArray: '6 9', lineCap: 'round', lineJoin: 'round' } }
+    road: { overlayName: '陸路', style: { color: '#8b5a2e', weight: 4.0, opacity: 0.78, lineCap: 'round', lineJoin: 'round' } },
+    caravan: { overlayName: '陸路', style: { color: '#a67c52', weight: 3.8, opacity: 0.78, dashArray: '10 8', lineCap: 'round', lineJoin: 'round' } },
+    ice_road: { overlayName: '陸路', style: { color: '#7a91a8', weight: 3.6, opacity: 0.72, dashArray: '11 7', lineCap: 'round', lineJoin: 'round' } },
+    rail: { overlayName: '鉄道', style: { color: '#4a4a45', weight: 4.5, opacity: 0.82, dashArray: '16 6', lineCap: 'round', lineJoin: 'round' } },
+    sea: { overlayName: '海路', style: { color: '#527894', weight: 3.6, opacity: 0.74, dashArray: '12 10', lineCap: 'round', lineJoin: 'round' } },
+    air: { overlayName: '空路', style: { color: '#6b5a9b', weight: 3.4, opacity: 0.72, dashArray: '5 12', lineCap: 'round', lineJoin: 'round' } },
+    submarine: { overlayName: '特殊交通', style: { color: '#2c7878', weight: 3.6, opacity: 0.72, dashArray: '8 7', lineCap: 'round', lineJoin: 'round' } },
+    tunnel: { overlayName: '特殊交通', style: { color: '#4a4a45', weight: 3.6, opacity: 0.76, dashArray: '9 9', lineCap: 'round', lineJoin: 'round' } },
+    underwater_tunnel: { overlayName: '特殊交通', style: { color: '#2c6a76', weight: 3.6, opacity: 0.76, dashArray: '8 8', lineCap: 'round', lineJoin: 'round' } },
+    forbidden_path: { overlayName: '特殊交通', style: { color: '#7a2a33', weight: 3.8, opacity: 0.78, dashArray: '7 8 2 8', lineCap: 'round', lineJoin: 'round' } },
+    default: { overlayName: '特殊交通', style: { color: '#6a4d7a', weight: 3.6, opacity: 0.74, dashArray: '7 10', lineCap: 'round', lineJoin: 'round' } }
   };
   const MOBILE_BREAKPOINT_WIDTH = 720;
   const POI_ICON_SIZE_BY_IMPORTANCE = [20, 22, 24, 28, 32];
@@ -739,20 +739,20 @@
 
     function getHazardStyle(hazard) {
       const severity = Math.min(Math.max(Number(hazard?.severity) || 1, 1), 5);
-      const fillOpacity = 0.08 + severity * 0.04;
+      const fillOpacity = 0.06 + severity * 0.03;
       const baseStyle = {
         pane: 'hazardPane',
-        weight: 2.2,
-        opacity: 0.82,
-        dashArray: '10 6',
+        weight: 1.8,
+        opacity: 0.68,
+        dashArray: '8 7',
         lineCap: 'round'
       };
-      if (hazard?.type === 'ice_sea' || hazard?.type === 'ice') return { ...baseStyle, color: '#4d7390', fillColor: '#88accb', fillOpacity };
-      if (hazard?.type === 'time_distortion') return { ...baseStyle, color: '#6f4a8e', fillColor: '#9b76b6', fillOpacity: fillOpacity + 0.01 };
-      if (hazard?.type === 'forbidden_zone') return { ...baseStyle, color: '#6a2530', fillColor: '#9e4c5a', fillOpacity: fillOpacity + 0.02, dashArray: '7 5 2 5' };
-      if (hazard?.type === 'pirate_sea' || hazard?.type === 'monster_sea') return { ...baseStyle, color: '#7b4236', fillColor: '#ab6954', fillOpacity };
-      if (hazard?.type === 'storm') return { ...baseStyle, color: '#685579', fillColor: '#8d77a2', fillOpacity };
-      return { ...baseStyle, color: '#87523d', fillColor: '#b98868', fillOpacity };
+      if (hazard?.type === 'ice_sea' || hazard?.type === 'ice') return { ...baseStyle, color: '#3a6270', fillColor: '#5e8ca0', fillOpacity: Math.min(fillOpacity, 0.18) };
+      if (hazard?.type === 'time_distortion') return { ...baseStyle, color: '#5a3a72', fillColor: '#7a5a90', fillOpacity: Math.min(fillOpacity, 0.18) };
+      if (hazard?.type === 'forbidden_zone') return { ...baseStyle, color: '#5a2028', fillColor: '#7a3545', fillOpacity: Math.min(fillOpacity + 0.02, 0.2), dashArray: '6 6 2 6' };
+      if (hazard?.type === 'pirate_sea' || hazard?.type === 'monster_sea') return { ...baseStyle, color: '#6a3428', fillColor: '#8a4a3a', fillOpacity: Math.min(fillOpacity, 0.18) };
+      if (hazard?.type === 'storm') return { ...baseStyle, color: '#524568', fillColor: '#6a5a80', fillOpacity: Math.min(fillOpacity, 0.18) };
+      return { ...baseStyle, color: '#6a4228', fillColor: '#8a6040', fillOpacity: Math.min(fillOpacity, 0.18) };
     }
 
     function getPoiLayer(category) {
