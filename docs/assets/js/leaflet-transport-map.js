@@ -215,7 +215,7 @@
   }
 
   function getPoiCategoryLabel(category) {
-    return POI_CATEGORY_LABELS[category] || `POI: ${category || UNKNOWN_POI_CATEGORY}`;
+    return POI_CATEGORY_LABELS[category] ?? `POI: ${category ?? UNKNOWN_POI_CATEGORY}`;
   }
 
   function getPoiRadius(poi) {
@@ -236,13 +236,13 @@
 
   function createPoiPopupHtml(poi) {
     const metaRows = [
-      ['カテゴリ', poi.category || UNKNOWN_POI_CATEGORY],
-      ['種別', poi.type || UNKNOWN_VALUE],
-      ['状態', poi.status || UNKNOWN_VALUE],
+      ['カテゴリ', poi.category ?? UNKNOWN_POI_CATEGORY],
+      ['種別', poi.type ?? UNKNOWN_VALUE],
+      ['状態', poi.status ?? UNKNOWN_VALUE],
       ['重要度', poi.importance ?? '不明'],
-      ['大陸ID', poi.continent_id || '不明'],
-      ['地域ID', poi.region_id || '不明'],
-      ['最寄りノードID', poi.nearest_node_id || '不明'],
+      ['大陸ID', poi.continent_id ?? '不明'],
+      ['地域ID', poi.region_id ?? '不明'],
+      ['最寄りノードID', poi.nearest_node_id ?? '不明'],
       ['座標', formatPoiCoordinate(poi.position)]
     ].map(([term, value]) => `
       <dt>${escapeHtml(term)}</dt>
@@ -782,7 +782,7 @@
         return;
       }
 
-      const category = poi.category || UNKNOWN_POI_CATEGORY;
+      const category = poi.category ?? UNKNOWN_POI_CATEGORY;
       const marker = L.circleMarker(toLatLng(poi.position), getPoiStyle(poi)).addTo(getPoiLayer(category));
       poiById.set(poi.id, poi);
       poiMarkerById.set(poi.id, marker);
@@ -878,7 +878,7 @@
           if (!poi || !marker) {
             return false;
           }
-          const categoryLayer = poiLayersByCategory.get(poi.category || UNKNOWN_POI_CATEGORY);
+          const categoryLayer = poiLayersByCategory.get(poi.category ?? UNKNOWN_POI_CATEGORY);
           if (categoryLayer && !map.hasLayer(categoryLayer)) {
             categoryLayer.addTo(map);
           }
