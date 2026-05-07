@@ -143,6 +143,7 @@
   };
   const UNKNOWN_VALUE = 'unknown';
   const UNKNOWN_POI_CATEGORY = 'unknown';
+  const POI_OPTION_SEPARATOR = ' / ';
 
   function escapeHtml(text) {
     const div = document.createElement('div');
@@ -347,7 +348,7 @@
       poi?.type,
       poi?.description,
       ...(Array.isArray(poi?.tags) ? poi.tags : [])
-    ].filter(Boolean).join(' ').toLowerCase();
+    ].filter(Boolean).map(value => String(value).trim()).join(' ').toLowerCase();
   }
 
   function isSmallScreenViewport() {
@@ -1056,7 +1057,11 @@
 
       const categoryValues = Array.from(new Set(sortedPois
         .map(poi => poi?.category ?? UNKNOWN_POI_CATEGORY)))
-        .sort((left, right) => comparePoiText(getPoiCategoryDisplayName(left), getPoiCategoryDisplayName(right)));
+        .sort((left, right) => {
+          const leftLabel = getPoiCategoryDisplayName(left);
+          const rightLabel = getPoiCategoryDisplayName(right);
+          return comparePoiText(leftLabel, rightLabel);
+        });
 
       categoryFilter.innerHTML = '';
       categoryFilter.append(new Option('すべて', ''));
@@ -1077,7 +1082,11 @@
 
         poiSelect.append(new Option('POIを選択してください', ''));
         filteredPois.forEach(poi => {
-          const optionLabel = `${poi.name || poi.id} / ${getPoiCategoryDisplayName(poi.category)} / ${formatPoiImportance(poi.importance)}`;
+          const optionLabel = [
+            poi.name || poi.id,
+            getPoiCategoryDisplayName(poi.category),
+            formatPoiImportance(poi.importance)
+          ].join(POI_OPTION_SEPARATOR);
           poiSelect.append(new Option(optionLabel, poi.id));
         });
 
