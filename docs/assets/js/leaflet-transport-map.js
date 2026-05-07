@@ -1055,8 +1055,7 @@
       };
 
       const categoryValues = Array.from(new Set(sortedPois
-        .map(poi => poi?.category ?? UNKNOWN_POI_CATEGORY)
-        .filter(Boolean)))
+        .map(poi => poi?.category ?? UNKNOWN_POI_CATEGORY)))
         .sort((left, right) => comparePoiText(getPoiCategoryDisplayName(left), getPoiCategoryDisplayName(right)));
 
       categoryFilter.innerHTML = '';
@@ -1175,12 +1174,6 @@
 
       initializePoiSearchUi(datasets.pois || []);
 
-      Object.keys(overlayLayers).forEach(label => {
-        if (overlayLayers[label] === undefined) {
-          delete overlayLayers[label];
-        }
-        });
-
       const layersControl = L.control.layers(null, overlayLayers, { collapsed: isSmallScreenViewport() }).addTo(map);
 
       // Responsive layer control collapse on resize
@@ -1261,11 +1254,6 @@
           const groupLayer = poiLayersByGroup.get(groupId);
           if (groupLayer && !map.hasLayer(groupLayer)) {
             groupLayer.addTo(map);
-          } else if (!groupLayer) {
-            const categoryLayer = poiLayersByCategory.get(poi.category ?? UNKNOWN_POI_CATEGORY);
-            if (categoryLayer && !map.hasLayer(categoryLayer)) {
-              categoryLayer.addTo(map);
-            }
           }
           map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
           map.panInside(marker.getLatLng(), {
