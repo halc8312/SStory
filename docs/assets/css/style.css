@@ -22,6 +22,16 @@
   --border-color: #d4c8a8;
   --shadow: 0 2px 8px rgba(61, 50, 38, 0.12);
   --shadow-hover: 0 4px 16px rgba(61, 50, 38, 0.18);
+  --fantasy-poi-icon-size-1: 20px;
+  --fantasy-poi-icon-size-2: 22px;
+  --fantasy-poi-icon-size-3: 24px;
+  --fantasy-poi-icon-size-4: 28px;
+  --fantasy-poi-icon-size-5: 32px;
+  --fantasy-poi-icon-size-1-mobile: 25px;
+  --fantasy-poi-icon-size-2-mobile: 27px;
+  --fantasy-poi-icon-size-3-mobile: 29px;
+  --fantasy-poi-icon-size-4-mobile: 33px;
+  --fantasy-poi-icon-size-5-mobile: 37px;
 }
 
 html {
@@ -1193,11 +1203,11 @@ footer a {
   font-size: calc(var(--icon-size) * 0.42);
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 20px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 22px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 24px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 28px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 32px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: var(--fantasy-poi-icon-size-1); }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: var(--fantasy-poi-icon-size-2); }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: var(--fantasy-poi-icon-size-3); }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: var(--fantasy-poi-icon-size-4); }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: var(--fantasy-poi-icon-size-5); }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_civic {
   --icon-bg: #d8a15d;
@@ -1330,11 +1340,11 @@ footer a {
     min-width: 30px;
     min-height: 30px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 25px; }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 27px; }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 29px; }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 33px; }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 37px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: var(--fantasy-poi-icon-size-1-mobile); }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: var(--fantasy-poi-icon-size-2-mobile); }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: var(--fantasy-poi-icon-size-3-mobile); }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: var(--fantasy-poi-icon-size-4-mobile); }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: var(--fantasy-poi-icon-size-5-mobile); }
 
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital {
     --icon-size: 38px;

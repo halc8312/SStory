@@ -51,6 +51,20 @@
   const MOBILE_BREAKPOINT_WIDTH = 720;
   const POI_ICON_SIZE_BY_IMPORTANCE = [20, 22, 24, 28, 32];
   const MOBILE_POI_ICON_SIZE_BY_IMPORTANCE = [25, 27, 29, 33, 37];
+  const POI_ICON_SIZE_VARIABLES = [
+    '--fantasy-poi-icon-size-1',
+    '--fantasy-poi-icon-size-2',
+    '--fantasy-poi-icon-size-3',
+    '--fantasy-poi-icon-size-4',
+    '--fantasy-poi-icon-size-5'
+  ];
+  const MOBILE_POI_ICON_SIZE_VARIABLES = [
+    '--fantasy-poi-icon-size-1-mobile',
+    '--fantasy-poi-icon-size-2-mobile',
+    '--fantasy-poi-icon-size-3-mobile',
+    '--fantasy-poi-icon-size-4-mobile',
+    '--fantasy-poi-icon-size-5-mobile'
+  ];
   const DEFAULT_NODE_ICON_SIZE = 30;
   const DEFAULT_FOCUS_Z_INDEX_OFFSET = 2000;
   const START_GOAL_HIGHLIGHT_RADIUS_RATIO = 0.38;
@@ -383,12 +397,25 @@
     return Math.min(Math.max(Number(importance ?? 1) || 1, 1), 5);
   }
 
+  function getCssPixelVariable(name, fallbackValue) {
+    const root = document?.documentElement;
+    if (!root || typeof window?.getComputedStyle !== 'function') {
+      return fallbackValue;
+    }
+    const rawValue = window.getComputedStyle(root).getPropertyValue(name).trim();
+    const parsedValue = Number.parseFloat(rawValue);
+    return Number.isFinite(parsedValue) ? parsedValue : fallbackValue;
+  }
+
   function getPoiIconPixelSize(poi) {
     const importanceIndex = normalizeImportance(poi?.importance) - 1;
-    const sizes = isSmallScreenViewport()
+    const fallbackSizes = isSmallScreenViewport()
       ? MOBILE_POI_ICON_SIZE_BY_IMPORTANCE
       : POI_ICON_SIZE_BY_IMPORTANCE;
-    return sizes[importanceIndex];
+    const sizeVariables = isSmallScreenViewport()
+      ? MOBILE_POI_ICON_SIZE_VARIABLES
+      : POI_ICON_SIZE_VARIABLES;
+    return getCssPixelVariable(sizeVariables[importanceIndex], fallbackSizes[importanceIndex]);
   }
 
   function getPoiIconSize(poi) {
