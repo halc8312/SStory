@@ -1144,7 +1144,12 @@ footer a {
   padding: 0 1rem 1rem;
 }
 
-.leaflet-marker-icon.fantasy-map-icon {
+.leaflet-div-icon.fantasy-map-icon {
+  background: transparent;
+  border: 0;
+}
+
+.fantasy-map-icon {
   --icon-size: 24px;
   --icon-bg: #d8a15d;
   --icon-border: #6e4522;
@@ -1177,19 +1182,19 @@ footer a {
   transition: filter 0.18s ease, box-shadow 0.18s ease;
 }
 
-.leaflet-marker-icon.fantasy-map-icon .fantasy-map-icon__symbol {
+.fantasy-map-icon .fantasy-map-icon__symbol {
   display: block;
   transform: translateY(-0.5px);
   /* Keep single-character glyphs legible without crowding the marker frame. */
   font-size: calc(var(--icon-size) * 0.44);
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi {
+.fantasy-map-icon--poi {
   opacity: 0.92;
   border-radius: 999px;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node {
+.fantasy-map-icon--node {
   --icon-size: 30px;
   border-width: 2.5px;
   border-radius: 9px;
@@ -1199,47 +1204,47 @@ footer a {
     inset 0 0 0 1px rgba(255, 250, 220, 0.62);
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node .fantasy-map-icon__symbol {
+.fantasy-map-icon--node .fantasy-map-icon__symbol {
   font-size: calc(var(--icon-size) * 0.42);
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: var(--fantasy-poi-icon-size-1); }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: var(--fantasy-poi-icon-size-2); }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: var(--fantasy-poi-icon-size-3); }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: var(--fantasy-poi-icon-size-4); }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: var(--fantasy-poi-icon-size-5); }
+.fantasy-map-icon--importance-1 { --icon-size: var(--fantasy-poi-icon-size-1); }
+.fantasy-map-icon--importance-2 { --icon-size: var(--fantasy-poi-icon-size-2); }
+.fantasy-map-icon--importance-3 { --icon-size: var(--fantasy-poi-icon-size-3); }
+.fantasy-map-icon--importance-4 { --icon-size: var(--fantasy-poi-icon-size-4); }
+.fantasy-map-icon--importance-5 { --icon-size: var(--fantasy-poi-icon-size-5); }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_civic {
+.fantasy-map-icon--poi_civic {
   --icon-bg: #d8a15d;
   --icon-border: #7a4b23;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_transport_utility {
+.fantasy-map-icon--poi_transport_utility {
   --icon-bg: #79a9c8;
   --icon-border: #2f5f7a;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_commerce {
+.fantasy-map-icon--poi_commerce {
   --icon-bg: #d8bd5f;
   --icon-border: #8a6f2a;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_culture_magic {
+.fantasy-map-icon--poi_culture_magic {
   --icon-bg: #b79ad8;
   --icon-border: #5c4a8a;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_adventure_risk {
+.fantasy-map-icon--poi_adventure_risk {
   --icon-bg: #d8765f;
   --icon-border: #8a3a2a;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_other {
+.fantasy-map-icon--poi_other {
   --icon-bg: #b8a78d;
   --icon-border: #6a5842;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital {
+.fantasy-map-icon--node-capital {
   --icon-size: 36px;
   --icon-bg: #e2c76f;
   --icon-border: #6b3f1f;
@@ -1250,57 +1255,57 @@ footer a {
     inset 0 0 0 1px rgba(255, 250, 220, 0.65);
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-default {
+.fantasy-map-icon--node-default {
   --icon-bg: #c9a167;
   --icon-border: #704825;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-city,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-town,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-carriage_terminal,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-checkpoint,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-inn,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-landmark {
+.fantasy-map-icon--node-city,
+.fantasy-map-icon--node-town,
+.fantasy-map-icon--node-carriage_terminal,
+.fantasy-map-icon--node-checkpoint,
+.fantasy-map-icon--node-inn,
+.fantasy-map-icon--node-landmark {
   --icon-bg: #cfa56d;
   --icon-border: #734824;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-marine_port,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-seaport {
+.fantasy-map-icon--node-port,
+.fantasy-map-icon--node-marine_port,
+.fantasy-map-icon--node-seaport {
   --icon-bg: #78a9c8;
   --icon-border: #2f5f8f;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-airport,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-air_terminal,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-floating_island {
+.fantasy-map-icon--node-airport,
+.fantasy-map-icon--node-air_terminal,
+.fantasy-map-icon--node-floating_island {
   --icon-bg: #a58bd8;
   --icon-border: #5c4a8a;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city,
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-submarine_terminal {
+.fantasy-map-icon--node-underwater_city,
+.fantasy-map-icon--node-submarine_terminal {
   --icon-bg: #6eb8b3;
   --icon-border: #2e6f72;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-oasis {
+.fantasy-map-icon--node-oasis {
   --icon-bg: #74b886;
   --icon-border: #2e6d44;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-fortress {
+.fantasy-map-icon--node-fortress {
   --icon-bg: #9a8a72;
   --icon-border: #4e3d28;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate {
+.fantasy-map-icon--node-warp_gate {
   --icon-bg: #b06aa8;
   --icon-border: #5d2a5d;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-forbidden_gate {
+.fantasy-map-icon--node-forbidden_gate {
   --icon-bg: #b06aa8;
   --icon-border: #5d2a5d;
 }
@@ -1326,7 +1331,7 @@ footer a {
     min-height: 2.9rem;
   }
 
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi {
+  .fantasy-map-icon--poi {
     --icon-size: 25px;
     min-width: 24px;
     min-height: 24px;
@@ -1335,48 +1340,48 @@ footer a {
       inset 0 0 0 1px rgba(255, 250, 220, 0.62),
       inset 0 -1px 2px rgba(0, 0, 0, 0.08);
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node {
+  .fantasy-map-icon--node {
     --icon-size: 32px;
     min-width: 30px;
     min-height: 30px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: var(--fantasy-poi-icon-size-1-mobile); }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: var(--fantasy-poi-icon-size-2-mobile); }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: var(--fantasy-poi-icon-size-3-mobile); }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: var(--fantasy-poi-icon-size-4-mobile); }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: var(--fantasy-poi-icon-size-5-mobile); }
+  .fantasy-map-icon--importance-1 { --icon-size: var(--fantasy-poi-icon-size-1-mobile); }
+  .fantasy-map-icon--importance-2 { --icon-size: var(--fantasy-poi-icon-size-2-mobile); }
+  .fantasy-map-icon--importance-3 { --icon-size: var(--fantasy-poi-icon-size-3-mobile); }
+  .fantasy-map-icon--importance-4 { --icon-size: var(--fantasy-poi-icon-size-4-mobile); }
+  .fantasy-map-icon--importance-5 { --icon-size: var(--fantasy-poi-icon-size-5-mobile); }
 
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital {
+  .fantasy-map-icon--node-capital {
     --icon-size: 38px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-city,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-town,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-carriage_terminal,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-checkpoint,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-inn,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-landmark,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-fortress,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city {
+  .fantasy-map-icon--node-city,
+  .fantasy-map-icon--node-town,
+  .fantasy-map-icon--node-carriage_terminal,
+  .fantasy-map-icon--node-checkpoint,
+  .fantasy-map-icon--node-inn,
+  .fantasy-map-icon--node-landmark,
+  .fantasy-map-icon--node-fortress,
+  .fantasy-map-icon--node-underwater_city {
     --icon-size: 36px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-seaport,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-marine_port {
+  .fantasy-map-icon--node-port,
+  .fantasy-map-icon--node-seaport,
+  .fantasy-map-icon--node-marine_port {
     --icon-size: 34px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-airport,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-air_terminal,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-floating_island {
+  .fantasy-map-icon--node-airport,
+  .fantasy-map-icon--node-air_terminal,
+  .fantasy-map-icon--node-floating_island {
     --icon-size: 34px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-submarine_terminal {
+  .fantasy-map-icon--node-submarine_terminal {
     --icon-size: 34px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-forbidden_gate {
+  .fantasy-map-icon--node-warp_gate,
+  .fantasy-map-icon--node-forbidden_gate {
     --icon-size: 34px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-oasis {
+  .fantasy-map-icon--node-oasis {
     --icon-size: 34px;
   }
 }
@@ -1393,7 +1398,7 @@ footer a {
 }
 
 /* Focused POI marker emphasis */
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--focused {
+.fantasy-map-icon--focused {
   box-shadow:
     0 0 0 4px rgba(255, 247, 192, 0.72),
     0 0 0 8px rgba(120, 85, 45, 0.2),
@@ -1420,9 +1425,9 @@ footer a {
 }
 
 /* Hover/focus states for markers */
-.leaflet-marker-icon.fantasy-map-icon:hover,
-.leaflet-marker-icon.fantasy-map-icon:focus,
-.leaflet-marker-icon.fantasy-map-icon:focus-visible {
+.fantasy-map-icon:hover,
+.fantasy-map-icon:focus,
+.fantasy-map-icon:focus-visible {
   filter: brightness(1.08);
   box-shadow:
     0 5px 12px rgba(45, 27, 12, 0.42),
@@ -1430,7 +1435,7 @@ footer a {
 }
 
 /* Highlighted route nodes */
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--highlighted {
+.fantasy-map-icon--highlighted {
   box-shadow:
     0 0 0 3px rgba(241, 194, 50, 0.52),
     0 5px 12px rgba(45, 27, 12, 0.4),
