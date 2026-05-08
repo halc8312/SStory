@@ -468,9 +468,10 @@ print("POI schema validation passed.")
 PY
 ```
 
-### Schema Validation (Future)
+### Schema Validation
 
-A validation script will be added to `tools/map/validate_map_data.py` in a future update.
+`tools/map/validate_map_data.py` does not yet validate POIs, so run the schema
+check separately for `pois.json`.
 
 The schema enforces:
 
@@ -551,6 +552,7 @@ Before adding any POI, verify:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 0.1.1 | 2026-05-08 | Added authoring/review workflow guidance and current Astralis dataset notes |
 | 0.1.0 | 2026-05-06 | Initial specification draft; schema and sample data created |
 
 ## Related Documents

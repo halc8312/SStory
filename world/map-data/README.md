@@ -1,3 +1,13 @@
+---
+title: "map-data-readme"
+version: "0.1.1"
+created: "2026-05-06"
+last_updated: "2026-05-08"
+author: "halc8312"
+category: "readme"
+status: "draft"
+---
+
 # Map Data - Eternal Arcadia
 
 ## Purpose
