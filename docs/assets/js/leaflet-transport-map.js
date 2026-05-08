@@ -49,8 +49,10 @@
     default: { overlayName: '特殊交通', style: { color: '#6a4d7a', weight: 3.6, opacity: 0.74, dashArray: '7 10', lineCap: 'round', lineJoin: 'round' } }
   };
   const MOBILE_BREAKPOINT_WIDTH = 720;
-  const POI_ICON_SIZE_BY_IMPORTANCE = [20, 22, 24, 28, 32];
-  const DEFAULT_NODE_ICON_SIZE = 28;
+  const POI_ICON_SIZE_BY_IMPORTANCE = [19, 21, 23, 26, 29];
+  const DEFAULT_NODE_ICON_SIZE = 30;
+  const MOBILE_POI_ICON_SIZE_BONUS = 4;
+  const DEFAULT_FOCUS_Z_INDEX_OFFSET = 2000;
   const START_GOAL_HIGHLIGHT_RADIUS_RATIO = 0.38;
   const VIA_HIGHLIGHT_RADIUS_RATIO = 0.34;
   const POI_GROUP_SYMBOLS = {
@@ -383,7 +385,7 @@
 
   function getPoiIconPixelSize(poi) {
     const baseSize = POI_ICON_SIZE_BY_IMPORTANCE[normalizeImportance(poi?.importance) - 1];
-    return baseSize + (isSmallScreenViewport() ? 2 : 0);
+    return baseSize + (isSmallScreenViewport() ? MOBILE_POI_ICON_SIZE_BONUS : 0);
   }
 
   function getPoiIconSize(poi) {
@@ -409,7 +411,7 @@
      const importance = normalizeImportance(poi?.importance);
      const symbol = escapeHtml(getPoiSymbol(poi));
      const size = getPoiIconSize(poi);
-     const fontSize = Math.round(size[0] * 0.42);
+      const fontSize = Math.round(size[0] * 0.44);
 
      return L.divIcon({
        className: [
@@ -436,9 +438,9 @@
   function getNodeIconPixelSize(node) {
     const normalizedType = normalizeNodeType(node?.type);
     const mobileAdjustment = isSmallScreenViewport() ? 2 : 0;
-    if (normalizedType === 'capital') return 36 + mobileAdjustment;
-    if (['city', 'floating_island', 'underwater_city'].includes(normalizedType)) return 32 + mobileAdjustment;
-    if (['port', 'seaport', 'airport', 'air_terminal', 'warp_gate', 'forbidden_gate'].includes(normalizedType)) return 30 + mobileAdjustment;
+    if (normalizedType === 'capital') return 38 + mobileAdjustment;
+    if (['city', 'floating_island', 'underwater_city', 'fortress'].includes(normalizedType)) return 34 + mobileAdjustment;
+    if (['port', 'seaport', 'marine_port', 'airport', 'air_terminal', 'warp_gate', 'forbidden_gate'].includes(normalizedType)) return 32 + mobileAdjustment;
     return DEFAULT_NODE_ICON_SIZE + mobileAdjustment;
   }
 
@@ -446,7 +448,7 @@
      const type = normalizeNodeType(node?.type);
      const symbol = escapeHtml(getNodeSymbol(node));
      const size = getNodeIconPixelSize(node);
-     const fontSize = Math.round(size * 0.4);
+      const fontSize = Math.round(size * 0.42);
 
      return L.divIcon({
        className: [
@@ -469,10 +471,36 @@
     element.classList.toggle(className, Boolean(shouldAdd));
   }
 
+  function getMarkerBaseZIndexOffset(marker) {
+    if (!marker) {
+      return 0;
+    }
+    if (!Object.prototype.hasOwnProperty.call(marker, '__baseZIndexOffset')) {
+      marker.__baseZIndexOffset = Number(marker?.options?.zIndexOffset) || 0;
+    }
+    return marker.__baseZIndexOffset;
+  }
+
+  function setMarkerPriority(marker, zIndexOffset = DEFAULT_FOCUS_Z_INDEX_OFFSET) {
+    if (typeof marker?.setZIndexOffset !== 'function') {
+      return;
+    }
+    marker.setZIndexOffset(getMarkerBaseZIndexOffset(marker) + zIndexOffset);
+  }
+
+  function resetMarkerPriority(marker) {
+    if (typeof marker?.setZIndexOffset !== 'function') {
+      return;
+    }
+    marker.setZIndexOffset(getMarkerBaseZIndexOffset(marker));
+  }
+
   function emphasizeMarker(marker, className, duration = 1600) {
+    setMarkerPriority(marker);
     toggleMarkerClass(marker, className, true);
     window.setTimeout(() => {
       toggleMarkerClass(marker, className, false);
+      resetMarkerPriority(marker);
     }, duration);
   }
 
@@ -825,6 +853,7 @@
         const marker = nodeMarkerById.get(nodeId);
         if (marker) {
           toggleMarkerClass(marker, 'fantasy-map-icon--highlighted', false);
+          resetMarkerPriority(marker);
         }
       });
       highlightedRouteIds = [];
@@ -864,7 +893,7 @@
           return;
         }
         toggleMarkerClass(marker, 'fantasy-map-icon--highlighted', true);
-        marker.bringToFront();
+        setMarkerPriority(marker, 1200);
       });
     }
 
@@ -879,7 +908,7 @@
       }
 
       if (latLngs.length === 1) {
-        map.setView(latLngs[0], Math.max(map.getZoom(), 1));
+        map.setView(latLngs[0], Math.max(map.getZoom(), 2));
         return;
       }
 
@@ -1388,13 +1417,12 @@
           if (groupLayer && !map.hasLayer(groupLayer)) {
             groupLayer.addTo(map);
           }
-          map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1));
+          map.setView(marker.getLatLng(), Math.max(map.getZoom(), 2));
           map.panInside(marker.getLatLng(), {
             paddingTopLeft: [24, isSmallScreenViewport() ? 180 : 220],
             paddingBottomRight: [24, 40],
             animate: false
           });
-          marker.bringToFront();
           emphasizeMarker(marker, 'fantasy-map-icon--focused');
           marker.openPopup();
           return true;

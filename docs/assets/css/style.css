@@ -1125,7 +1125,7 @@ footer a {
   --icon-size: 24px;
   --icon-bg: #c9a167;
   --icon-border: #704825;
-  --icon-shadow: 0 3px 8px rgba(45, 27, 12, 0.34);
+  --icon-shadow: 0 4px 10px rgba(45, 27, 12, 0.3);
   width: var(--icon-size);
   height: var(--icon-size);
   display: grid;
@@ -1136,6 +1136,7 @@ footer a {
     radial-gradient(circle at 35% 25%, rgba(255, 248, 210, 0.98) 0%, rgba(191, 145, 78, 0.88) 100%),
     radial-gradient(circle at 70% 70%, rgba(255, 252, 240, 0.3) 0%, transparent 50%);
   box-shadow:
+    0 0 0 2px rgba(248, 241, 220, 0.56),
     var(--icon-shadow),
     inset 0 0 0 1px rgba(255, 250, 220, 0.62),
     inset 0 -1px 2px rgba(0, 0, 0, 0.08);
@@ -1152,11 +1153,11 @@ footer a {
   display: block;
   transform: translateY(-0.5px);
   /* Keep single-character glyphs legible without crowding the marker frame. */
-  font-size: calc(var(--icon-size) * 0.42);
+  font-size: calc(var(--icon-size) * 0.44);
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi {
-  opacity: 0.94;
+  opacity: 0.92;
   border-radius: 999px;
 }
 
@@ -1168,43 +1169,44 @@ footer a {
   border-radius: 10px;
   opacity: 1;
   box-shadow:
+    0 0 0 2.5px rgba(248, 241, 220, 0.68),
     0 4px 10px rgba(45, 27, 12, 0.38),
     inset 0 0 0 1px rgba(255, 250, 220, 0.62);
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node .fantasy-map-icon__symbol {
-  font-size: calc(var(--icon-size) * 0.4);
+  font-size: calc(var(--icon-size) * 0.42);
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 20px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 22px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 24px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 28px; }
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 32px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 19px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 21px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 23px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 26px; }
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 29px; }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_civic {
-  --icon-bg: #d8a15d;
-  --icon-border: #7a4b23;
+  --icon-bg: #cd9961;
+  --icon-border: #754721;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_transport_utility {
-  --icon-bg: #79a9c8;
-  --icon-border: #2f5f7a;
+  --icon-bg: #84a4b6;
+  --icon-border: #385a6e;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_commerce {
-  --icon-bg: #d8bd5f;
-  --icon-border: #8a6f2a;
+  --icon-bg: #cdb46a;
+  --icon-border: #82692d;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_culture_magic {
-  --icon-bg: #b79ad8;
-  --icon-border: #5c4a8a;
+  --icon-bg: #ac93c8;
+  --icon-border: #584778;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_adventure_risk {
-  --icon-bg: #d8765f;
-  --icon-border: #8a3a2a;
+  --icon-bg: #c66f5f;
+  --icon-border: #7d3729;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi_other {
@@ -1213,9 +1215,9 @@ footer a {
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital {
-  --icon-size: 36px;
-  --icon-bg: #e2c76f;
-  --icon-border: #6b3f1f;
+  --icon-size: 38px;
+  --icon-bg: #dcc578;
+  --icon-border: #643d1e;
   box-shadow:
     0 0 0 2px rgba(255, 232, 150, 0.58),
     0 5px 12px rgba(45, 27, 12, 0.42),
@@ -1240,21 +1242,21 @@ footer a {
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port,
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-marine_port,
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-seaport {
-  --icon-bg: #78a9c8;
-  --icon-border: #2f5f8f;
+  --icon-bg: #73a2bb;
+  --icon-border: #2f5875;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-airport,
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-air_terminal,
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-floating_island {
-  --icon-bg: #a58bd8;
-  --icon-border: #5c4a8a;
+  --icon-bg: #9a86c6;
+  --icon-border: #544477;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city,
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-submarine_terminal {
-  --icon-bg: #6eb8b3;
-  --icon-border: #2e6f72;
+  --icon-bg: #6ba9a4;
+  --icon-border: #2d6668;
 }
 
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-oasis {
@@ -1267,54 +1269,66 @@ footer a {
   --icon-border: #4e3d28;
 }
 
-.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate,
+.leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate {
+  --icon-bg: #a46f9d;
+  --icon-border: #5d305e;
+}
+
 .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-forbidden_gate {
-  --icon-bg: #b06aa8;
-  --icon-border: #5d2a5d;
+  --icon-bg: #9f657b;
+  --icon-border: #5f2d41;
 }
 
 /* Responsive icon sizing for mobile */
 @media (max-width: 720px) {
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 22px; }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 24px; }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 26px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--poi {
+    box-shadow:
+      0 0 0 2.5px rgba(248, 241, 220, 0.62),
+      0 5px 12px rgba(45, 27, 12, 0.34),
+      inset 0 0 0 1px rgba(255, 250, 220, 0.62),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.08);
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node {
+    --icon-size: 32px;
+  }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-1 { --icon-size: 23px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-2 { --icon-size: 25px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-3 { --icon-size: 27px; }
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-4 { --icon-size: 30px; }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 34px; }
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--importance-5 { --icon-size: 33px; }
 
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-capital {
-    --icon-size: 38px;
+    --icon-size: 40px;
   }
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-city,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-town,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-carriage_terminal,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-checkpoint,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-inn,
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-landmark {
-    --icon-size: 34px;
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-landmark,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-fortress,
+  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city {
+    --icon-size: 36px;
   }
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-port,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-seaport,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-marine_port {
-    --icon-size: 32px;
+    --icon-size: 34px;
   }
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-airport,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-air_terminal,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-floating_island {
-    --icon-size: 32px;
+    --icon-size: 34px;
   }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-underwater_city,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-submarine_terminal {
-    --icon-size: 32px;
+    --icon-size: 34px;
   }
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-warp_gate,
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-forbidden_gate {
-    --icon-size: 32px;
-  }
-  .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-fortress {
     --icon-size: 34px;
   }
   .leaflet-marker-icon.fantasy-map-icon.fantasy-map-icon--node-oasis {
-    --icon-size: 32px;
+    --icon-size: 34px;
   }
 }
 
