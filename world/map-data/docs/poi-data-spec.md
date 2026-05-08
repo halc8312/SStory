@@ -2,9 +2,9 @@
 type: "canon-document"
 category: "maps"
 title: "POI Data Specification v0.1"
-version: "0.1.0"
+version: "0.1.1"
 created: "2026-05-06"
-last_updated: "2026-05-06"
+last_updated: "2026-05-08"
 author: "halc8312"
 contributors: []
 tags: ["map-data", "poi", "specification", "v0.1"]
@@ -446,14 +446,32 @@ All `pois.json` entries must validate against `world/map-data/schemas/poi.schema
 ```bash
 # Validate JSON syntax
 python -m json.tool world/map-data/data/pois.json > /dev/null
+python -m json.tool docs/data/map/pois.json > /dev/null
+python -m json.tool world/map-data/schemas/poi.schema.json > /dev/null
 
 # Copy to GitHub Pages location
 cp world/map-data/data/pois.json docs/data/map/pois.json
+
+# Schema validation
+python - <<'PY'
+import json
+from jsonschema import validate
+
+with open("world/map-data/schemas/poi.schema.json", encoding="utf-8") as f:
+    schema = json.load(f)
+
+with open("world/map-data/data/pois.json", encoding="utf-8") as f:
+    data = json.load(f)
+
+validate(instance=data, schema=schema)
+print("POI schema validation passed.")
+PY
 ```
 
-### Schema Validation (Future)
+### Schema Validation
 
-A validation script will be added to `tools/map/validate_map_data.py` in a future update.
+`tools/map/validate_map_data.py` does not yet validate POIs, so run the schema
+check separately for `pois.json`.
 
 The schema enforces:
 
@@ -470,21 +488,16 @@ The schema enforces:
 
 ## Sample Entries
 
-Two sample entries are provided in `pois.json`:
+`pois.json` now contains a reviewed Astralis capital-region starter set.
 
-1. **Astralis Grand Market** (`astralis_grand_market`)
-   - Category: `market`, Type: `commercial`
-   - Importance: 5 (world-significant)
-   - Status: `draft`
-   - Demonstrates full field usage with rich justification
-
-2. **Moonshadow Observatory** (`moonshadow_observatory`)
-   - Category: `research`, Type: `observatory`
-   - Importance: 3 (regional)
-   - Status: `draft`
-   - Located on floating island in Lumiera with positive Z coordinate
-
-These are template examples; replace with real data in future issues.
+- Core facilities such as `astralis_royal_palace`, `astralis_grand_market`,
+  `astralis_carriage_plaza`, `astralis_magic_academy`, and
+  `astralis_star_cup_temple` may use `status: "active"` when their lore basis is
+  already stable.
+- Experimental or flavor-layer facilities can remain `status: "draft"` until
+  placement, naming, or supporting lore is reviewed.
+- Aliases such as `astralis_royal_academy` and `astralis_central_coach_square`
+  may be used to preserve future naming flexibility without breaking lookups.
 
 ## Relationship to POI Design Guidelines
 
@@ -539,6 +552,7 @@ Before adding any POI, verify:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 0.1.1 | 2026-05-08 | Added authoring/review workflow guidance and current Astralis dataset notes |
 | 0.1.0 | 2026-05-06 | Initial specification draft; schema and sample data created |
 
 ## Related Documents
@@ -547,6 +561,8 @@ Before adding any POI, verify:
 - [`world/map-data/schemas/poi.schema.json`](../schemas/poi.schema.json) — Machine-readable validation
 - [`world/map-data/data/pois.json`](../data/pois.json) — Current POI dataset
 - [`docs/data/map/pois.json`](../../docs/data/map/pois.json) — GitHub Pages copy
+- [`world/map-data/docs/poi-authoring-template.md`](./poi-authoring-template.md) — AI request template
+- [`world/map-data/docs/poi-review-checklist.md`](./poi-review-checklist.md) — Review checklist
 - [`world/map-data/README.md`](../README.md) — Map Data overview
 
 <!-- cspell:enable -->
