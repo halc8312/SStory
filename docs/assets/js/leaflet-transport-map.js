@@ -475,8 +475,8 @@
     if (!marker) {
       return 0;
     }
-    if (!Object.prototype.hasOwnProperty.call(marker, '__baseZIndexOffset')) {
-      marker.__baseZIndexOffset = Number(marker?.options?.zIndexOffset) || 0;
+    if (!Object.hasOwn(marker, '__baseZIndexOffset')) {
+      marker.__baseZIndexOffset = Number(marker?.options?.zIndexOffset ?? 0);
     }
     return marker.__baseZIndexOffset;
   }

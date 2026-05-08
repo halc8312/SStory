@@ -948,6 +948,15 @@ footer a {
   box-shadow: 0 8px 20px rgba(61, 50, 38, 0.16);
 }
 
+.leaflet-transport-map .leaflet-control-layers-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='7' width='20' height='6' rx='2' fill='%23785a35' fill-opacity='.92'/%3E%3Crect x='6' y='14' width='20' height='6' rx='2' fill='%23c9a167'/%3E%3Crect x='6' y='21' width='20' height='4' rx='2' fill='%2385a7b8'/%3E%3C/svg%3E");
+  background-size: 22px 22px;
+  background-position: center;
+}
+
 .leaflet-transport-map .leaflet-control-layers-expanded {
   padding: 0.85rem 0.95rem;
   max-height: min(58vh, 460px);
