@@ -13,7 +13,7 @@
       "z": 0
     },
     "importance": 5,
-    "status": "draft",
+    "status": "active",
     "description": "王都アストラリス最大の市場。中央街道と王都交通網の結節点として、各大陸からの交易品が集まる。",
     "lore_basis": [
       "王都アストラリスが政治・交通の中心であること",
@@ -47,7 +47,7 @@
       "z": 0
     },
     "importance": 5,
-    "status": "draft",
+    "status": "active",
     "description": "エリュシオン王権の中枢であり、王都アストラリスの政治・儀礼・外交の中心となる宮殿。",
     "lore_basis": [
       "アストラリスがエリュシオンの王都であること",
@@ -118,7 +118,7 @@
       "z": 0
     },
     "importance": 4,
-    "status": "draft",
+    "status": "active",
     "description": "王都の駅馬車ターミナル。全主要街道へ向かう便が発着し、中央大陸の交通結節点として機能する。",
     "lore_basis": [
       "アストラリスが中央街道の起点として設定されていること",
@@ -294,7 +294,7 @@
       "z": 0
     },
     "importance": 5,
-    "status": "draft",
+    "status": "active",
     "description": "エリュシオン最高峰の魔法教育機関。王都の学術・文化・魔術の中枢を成す。",
     "lore_basis": [
       "エリュシオンが秩序ある魔術制度を有すること",
@@ -365,7 +365,7 @@
       "z": 0
     },
     "importance": 4,
-    "status": "draft",
+    "status": "active",
     "description": "エリュシオン全土で信仰される星杯教の総本山。王都の精神的中枢を成す大聖堂。",
     "lore_basis": [
       "エリュシオンに星杯教の信仰が広く浸透していること",

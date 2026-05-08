@@ -219,17 +219,35 @@ The schema enforces:
 
 ### Current Status
 
-**v0.1 — Specification draft, sample data only.**
+**v0.1 — Astralis starter dataset under review.**
 
-`pois.json` currently contains 9 trial entries for the Astralis capital region, all with `status: "draft"`.
-IDs follow the `astralis_` prefix naming convention. No large-scale POI entry has been performed yet.
+`pois.json` currently contains 14 Astralis capital-region entries.
+Core facilities such as the royal palace, grand market, carriage plaza, magic
+academy, and star-cup temple can be treated as `active`, while flavor or
+placement-sensitive facilities remain `draft`.
 
-Next step: trial entry of 10–15 POIs in the Astralis capital region (in progress).
+IDs follow the `astralis_` prefix naming convention. The dataset remains scoped
+to Astralis so later continent-by-continent expansion can build on a reviewed
+baseline.
 
 ### GitHub Pages Copy
 
 GitHub Pages uses the copy at [`docs/data/map/pois.json`](../../docs/data/map/pois.json).
 Update both files manually when adding data. Future automation may be considered.
+
+### POI Addition Flow
+
+When adding or reviewing POIs:
+
+1. Read [`poi-design-guidelines.md`](./poi-design-guidelines.md)
+2. Read [`docs/poi-data-spec.md`](./docs/poi-data-spec.md)
+3. Draft the request with [`docs/poi-authoring-template.md`](./docs/poi-authoring-template.md)
+4. Edit [`data/pois.json`](./data/pois.json)
+5. Sync [`docs/data/map/pois.json`](../../docs/data/map/pois.json)
+6. Run `python -m json.tool` for both POI files and the schema
+7. Run schema validation against `schemas/poi.schema.json`
+8. Check the result on Leaflet and confirm `focusPoi()` works
+9. Review with [`docs/poi-review-checklist.md`](./docs/poi-review-checklist.md)
 
 ## POI Design Guidance
 

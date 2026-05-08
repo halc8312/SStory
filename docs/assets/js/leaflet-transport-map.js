@@ -1,6 +1,6 @@
 (() => {
    const BASE_PATH = '../data/map/';
-    const CACHE_BUSTER = '20260507f';
+    const CACHE_BUSTER = '20260508a';
 
     // === 座標変換設定 ===
     // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
@@ -49,9 +49,9 @@
     default: { overlayName: '特殊交通', style: { color: '#6a4d7a', weight: 3.6, opacity: 0.74, dashArray: '7 10', lineCap: 'round', lineJoin: 'round' } }
   };
   const MOBILE_BREAKPOINT_WIDTH = 720;
-  const POI_ICON_SIZE_BY_IMPORTANCE = [19, 21, 23, 26, 29];
+  const POI_ICON_SIZE_BY_IMPORTANCE = [20, 22, 24, 28, 32];
+  const MOBILE_POI_ICON_SIZE_BY_IMPORTANCE = [25, 27, 29, 33, 37];
   const DEFAULT_NODE_ICON_SIZE = 30;
-  const MOBILE_POI_ICON_SIZE_BONUS = 4;
   const DEFAULT_FOCUS_Z_INDEX_OFFSET = 2000;
   const START_GOAL_HIGHLIGHT_RADIUS_RATIO = 0.38;
   const VIA_HIGHLIGHT_RADIUS_RATIO = 0.34;
@@ -384,8 +384,11 @@
   }
 
   function getPoiIconPixelSize(poi) {
-    const baseSize = POI_ICON_SIZE_BY_IMPORTANCE[normalizeImportance(poi?.importance) - 1];
-    return baseSize + (isSmallScreenViewport() ? MOBILE_POI_ICON_SIZE_BONUS : 0);
+    const importanceIndex = normalizeImportance(poi?.importance) - 1;
+    const sizes = isSmallScreenViewport()
+      ? MOBILE_POI_ICON_SIZE_BY_IMPORTANCE
+      : POI_ICON_SIZE_BY_IMPORTANCE;
+    return sizes[importanceIndex];
   }
 
   function getPoiIconSize(poi) {
@@ -438,7 +441,7 @@
   function getNodeIconPixelSize(node) {
     const normalizedType = normalizeNodeType(node?.type);
     const mobileAdjustment = isSmallScreenViewport() ? 2 : 0;
-    if (normalizedType === 'capital') return 38 + mobileAdjustment;
+    if (normalizedType === 'capital') return 36 + mobileAdjustment;
     if (['city', 'floating_island', 'underwater_city', 'fortress'].includes(normalizedType)) return 34 + mobileAdjustment;
     if (['port', 'seaport', 'marine_port', 'airport', 'air_terminal', 'warp_gate', 'forbidden_gate'].includes(normalizedType)) return 32 + mobileAdjustment;
     return DEFAULT_NODE_ICON_SIZE + mobileAdjustment;

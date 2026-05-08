@@ -2,9 +2,9 @@
 type: "canon-document"
 category: "maps"
 title: "POI / Spot Design Guidelines"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-06"
-last_updated: "2026-05-06"
+last_updated: "2026-05-08"
 author: "halc8312"
 contributors: []
 tags: ["map-data", "poi", "guidelines"]
@@ -21,6 +21,12 @@ Leaflet-based world map.
 The goal is to ensure that future POI additions remain consistent with canon
 lore, map data, geography, transportation, religion, politics, economics,
 magic systems, and hazard settings.
+
+For AI-assisted additions, use
+[`docs/poi-authoring-template.md`](./docs/poi-authoring-template.md) to draft
+requests and
+[`docs/poi-review-checklist.md`](./docs/poi-review-checklist.md) to review the
+result before merge.
 
 This guideline is a preparation step for future `pois.json` design, trial data
 entry, and Leaflet display work.
