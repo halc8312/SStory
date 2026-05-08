@@ -868,6 +868,7 @@ footer a {
 .poi-search-controls label {
   display: grid;
   gap: 0.35rem;
+  /* Allow long field content to shrink inside the responsive grid on narrow screens. */
   min-width: 0;
   font-weight: 600;
   color: var(--accent-brown);
