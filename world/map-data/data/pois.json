@@ -554,5 +554,277 @@
       "industry",
       "workshop"
     ]
+  },
+  {
+    "id": "port_zephia_customs_house",
+    "name": "ポートゼフィア税関庁舎",
+    "category": "government",
+    "type": "customs_house",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5185,
+      "y": 4795,
+      "z": 0
+    },
+    "importance": 4,
+    "status": "active",
+    "description": "ポートゼフィアに入出港する船荷と旅券を審査する税関庁舎。王都圏と海上交易圏を結ぶ法的な玄関口。",
+    "lore_basis": [
+      "ポートゼフィアがエリュシオンの国際港湾であり、海上交通の中心であること",
+      "エリュシオンが秩序ある交易圏であり、法と行政に基づく港湾運営を行うこと",
+      "アストラリス港湾部が王都圏の物流と接続していること"
+    ],
+    "historical_reason": "王都への海上物流が急増した時期に、関税徴収と密輸監視を一元化するため港湾入口に設置された。",
+    "economic_role": "関税徴収、輸入申告、積荷検査を担い、王都市場と国際交易の収支管理を支える。",
+    "cultural_role": "異国船員と王都官吏が接触する窓口であり、港湾儀礼と入港慣習の基準点になっている。",
+    "transport_role": "港湾桟橋と倉庫街の間に位置し、船舶貨物を陸送網へ切り替える最初の結節点となる。",
+    "risk_context": "密輸、偽造旅券、危険物持ち込みへの警戒が常時行われ、入港遅延が発生しやすい。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "customs",
+      "government",
+      "trade"
+    ]
+  },
+  {
+    "id": "port_zephia_warehouse_quarter",
+    "name": "ポートゼフィア倉庫街",
+    "category": "industry",
+    "type": "warehouse_district",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5240,
+      "y": 4780,
+      "z": 0
+    },
+    "importance": 4,
+    "status": "active",
+    "description": "海上貨物を一時保管し、王都と街道方面へ再仕分けする大型倉庫群。港湾商会と荷運び組が常駐する。",
+    "lore_basis": [
+      "ポートゼフィアの施設に warehouse が含まれていること",
+      "ポートゼフィアが国際港湾として広域交易を担うこと",
+      "中央街道と港湾交易が接続していること"
+    ],
+    "historical_reason": "王都向け輸入貨物の滞留を防ぐため、桟橋拡張と同時期に石造倉庫を集中的に整備した。",
+    "economic_role": "積荷保管、再梱包、保険付き保管、街道商隊向け引き渡しの中核を担う。",
+    "cultural_role": "港湾労働者と商会書記の職能文化が育ち、荷印や帳簿管理の慣行が定着している。",
+    "transport_role": "埠頭から直接荷車道へ接続し、税関通過後の貨物を最短で王都・街道方面へ流す。",
+    "risk_context": "火災、盗難、潮風による劣化対策が必須で、夜間は港湾警備隊が巡回する。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "warehouse",
+      "industry",
+      "logistics"
+    ]
+  },
+  {
+    "id": "port_zephia_tidewind_inn",
+    "name": "潮風亭",
+    "category": "inn",
+    "type": "sailors_inn",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5165,
+      "y": 4840,
+      "z": 0
+    },
+    "importance": 2,
+    "status": "active",
+    "description": "船員と街道旅人の双方に利用される港湾宿。早朝出港組向けの食堂と荷物預かり所を備える。",
+    "lore_basis": [
+      "港ノード周辺の典型POIとして船員宿が挙げられていること",
+      "ポートゼフィアが国際港湾であり常時旅客と船員が往来すること",
+      "エリュシオンで街道宿と秩序ある旅客支援施設が発達していること"
+    ],
+    "historical_reason": "港の宿不足を解消するため、荷役組合の休泊所を改装して一般旅客も泊まれる宿へ発展した。",
+    "economic_role": "宿泊、食事、荷物預かり、乗船待ち客の滞留需要を受け止める。",
+    "cultural_role": "外洋帰りの船員と王都行き旅人が情報交換する、港町らしい噂話の集積地となっている。",
+    "transport_role": "埠頭徒歩圏にあり、早朝便の船客と王都方面の荷車便の双方が利用しやすい。",
+    "risk_context": "酒席の口論や置き引きが起きやすく、深夜は港湾巡回兵が見回る。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "inn",
+      "sailor",
+      "harbor"
+    ]
+  },
+  {
+    "id": "port_zephia_fish_market",
+    "name": "ポートゼフィア魚市場",
+    "category": "market",
+    "type": "fish_market",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5210,
+      "y": 4845,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "active",
+    "description": "夜明けと同時に水揚げ品が並ぶ港湾市場。王都飲食店向けの鮮魚と塩蔵品の競りが行われる。",
+    "lore_basis": [
+      "港ノード周辺の典型POIとして魚市場が挙げられていること",
+      "ポートゼフィアが海上交通と交易の中心であること",
+      "王都アストラリスが巨大な消費市場を抱えること"
+    ],
+    "historical_reason": "港湾拡張に伴い、漁船荷揚げ場の周囲に仲買人と保存加工業者が集まり定着した。",
+    "economic_role": "鮮魚、干物、塩蔵品、遠征船向け保存食の供給を通じて王都と船団の食料経済を支える。",
+    "cultural_role": "海の幸を祝う朝市文化と、船乗り言葉が混ざる港湾特有の生活文化を形づくる。",
+    "transport_role": "漁船桟橋に隣接し、競り後すぐに荷車で王都飲食街や保存倉へ運び込まれる。",
+    "risk_context": "生鮮品の腐敗、海獣混入、早朝の混雑事故に備えた衛生管理と動線整理が必要。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "market",
+      "fish",
+      "food_supply"
+    ]
+  },
+  {
+    "id": "port_zephia_harbor_guildhall",
+    "name": "ポートゼフィア港湾組合会館",
+    "category": "guild",
+    "type": "harbor_guildhall",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5235,
+      "y": 4820,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "active",
+    "description": "船主、荷役頭、航路仲介人が集う港湾組合の本部会館。入港枠と荷役人員の調整を担う。",
+    "lore_basis": [
+      "港ノード周辺の典型POIとして港湾組合が挙げられていること",
+      "エリュシオンで職能組合制度が発達していること",
+      "ポートゼフィアが国際港湾として多様な船団を受け入れること"
+    ],
+    "historical_reason": "港湾労働争議を抑え、船舶の入港順と荷役契約を調停するため商会連合が設立した。",
+    "economic_role": "荷役割当、入港手数料調整、船員雇用仲介、保険付き航海契約の窓口となる。",
+    "cultural_role": "港湾独自の職人気質と相互扶助文化をまとめる会合の場であり、祭港日の主催者でもある。",
+    "transport_role": "埠頭・税関・倉庫街の中間にあり、港内の人員と船舶回転を調整する司令塔となる。",
+    "risk_context": "荷役権益を巡る対立や、嵐の前後に起きる船席不足で緊張が高まりやすい。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "guild",
+      "harbor",
+      "logistics"
+    ]
+  },
+  {
+    "id": "port_zephia_white_sail_lighthouse",
+    "name": "白帆灯台",
+    "category": "landmark",
+    "type": "lighthouse",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5285,
+      "y": 4725,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "active",
+    "description": "外洋からポートゼフィアへ入る船を導く白亜の灯台。夜間は魔導灯と反射鏡で航路を示す。",
+    "lore_basis": [
+      "港ノード周辺の典型POIとして灯台が挙げられていること",
+      "ポートゼフィアが国際港湾であり夜間入港需要を持つこと",
+      "人間社会が技術と魔法の融合を推進していること"
+    ],
+    "historical_reason": "難破事故が相次いだ外海岬に、王都港湾局が魔導反射灯を備えた塔を築いた。",
+    "economic_role": "夜間航行の安全を高め、入港可能時間を延ばすことで港湾回転率と保険信頼を改善する。",
+    "cultural_role": "帰港を待つ家族と船員にとって無事の象徴であり、港町の景観を代表する目印でもある。",
+    "transport_role": "外洋航路から港口への進入角を示し、悪天候時でも主要航路の基準点となる。",
+    "risk_context": "濃霧、暴風、魔導灯障害が発生すると座礁危険が高まり、緊急信号運用に切り替わる。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "lighthouse",
+      "landmark",
+      "navigation"
+    ]
+  },
+  {
+    "id": "port_zephia_sea_temple",
+    "name": "潮路の祈祷殿",
+    "category": "temple",
+    "type": "sea_temple",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5145,
+      "y": 4765,
+      "z": 0
+    },
+    "importance": 2,
+    "status": "active",
+    "description": "出港前の祈願と遭難者供養を行う港湾の祈祷殿。風の精霊への感謝と安全祈願が捧げられる。",
+    "lore_basis": [
+      "港ノード周辺の典型POIとして海神殿が挙げられていること",
+      "人間が風の精霊ゼフと契約する社会であること",
+      "ポートゼフィアが継続的な海上航行を支える港であること"
+    ],
+    "historical_reason": "航海安全を願う船乗りの祭壇が、港湾拡張とともに公認祈祷殿へ整備された。",
+    "economic_role": "出港祈祷、供養、寄進を通じて港湾共同体の相互扶助と船団支援資金を生む。",
+    "cultural_role": "船出の祝詞、帰港感謝祭、遭難者追悼など港湾共同体の精神的中心を担う。",
+    "transport_role": "出港桟橋に近く、長期航海の船員が乗船前に立ち寄る慣習が定着している。",
+    "risk_context": "海難事故の報が入ると混雑しやすく、災害時は救援祈願と避難者支援の場にもなる。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "temple",
+      "zephyr",
+      "sailors"
+    ]
+  },
+  {
+    "id": "port_zephia_quarantine_station",
+    "name": "ポートゼフィア検疫所",
+    "category": "utility",
+    "type": "quarantine_station",
+    "continent_id": "elysion",
+    "region_id": "port_zephia_region",
+    "nearest_node_id": "port_zephia",
+    "position": {
+      "x": 5310,
+      "y": 4695,
+      "z": 0
+    },
+    "importance": 3,
+    "status": "active",
+    "description": "外洋船の乗員と積荷を隔離検査する港湾検疫所。疫病、呪詛汚染、害獣混入の持ち込みを防ぐ。",
+    "lore_basis": [
+      "港ノード周辺の典型POIとして検疫所が挙げられていること",
+      "ポートゼフィアが国際港湾であり外来の人員と物資が集中すること",
+      "エリュシオンが秩序維持と公共安全を重視すること"
+    ],
+    "historical_reason": "外来疫病と呪物混入の被害を受けた後、王都保健局と港湾当局が共同で設置した。",
+    "economic_role": "感染症と積荷汚染の流入を抑え、王都市場と港湾物流の安定稼働を守る。",
+    "cultural_role": "衛生観念と公衆安全の象徴であり、遠洋航海後の清祓い慣習とも結びついている。",
+    "transport_role": "外洋埠頭の端に置かれ、入港船を本港へ入れる前に検査・隔離できる配置となっている。",
+    "risk_context": "疫病疑い、呪詛汚染、検査待ち停泊による港湾混雑が発生しうる高緊張地点。",
+    "tags": [
+      "port_zephia",
+      "elysion",
+      "quarantine",
+      "utility",
+      "public_health"
+    ]
   }
 ]
