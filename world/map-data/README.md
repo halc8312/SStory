@@ -231,14 +231,17 @@ The schema enforces:
 
 **v0.1 — Astralis starter dataset under review.**
 
-`pois.json` currently contains 14 Astralis capital-region entries.
+`pois.json` currently contains 22 reviewed trial entries: 14 Astralis
+capital-region facilities and 8 Port Zephia harbor facilities.
 Core facilities such as the royal palace, grand market, carriage plaza, magic
-academy, and star-cup temple can be treated as `active`, while flavor or
-placement-sensitive facilities remain `draft`.
+academy, star-cup temple, and Port Zephia customs / warehouse functions can be
+treated as `active`, while flavor or placement-sensitive facilities remain
+`draft`.
 
-IDs follow the `astralis_` prefix naming convention. The dataset remains scoped
-to Astralis so later continent-by-continent expansion can build on a reviewed
-baseline.
+IDs currently follow the `astralis_` and `port_zephia_` prefix naming
+conventions. The dataset remains intentionally limited to an Elysion capital /
+harbor baseline so later continent-by-continent expansion can build on a
+reviewed foundation.
 
 ### GitHub Pages Copy
 
