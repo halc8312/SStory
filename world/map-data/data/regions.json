@@ -90,6 +90,24 @@
     "confidence": "canon"
   },
   {
+    "id": "port_zephia_region",
+    "name": "ポートゼフィア港湾圏",
+    "continent_id": "elysion",
+    "type": "coastal_region",
+    "center": {
+      "x": 5200,
+      "y": 4790,
+      "z": 0
+    },
+    "description": "ポートゼフィア港とその周辺街道・海路を束ねる港湾交易圏。",
+    "tags": [
+      "coastal",
+      "port",
+      "trade_hub"
+    ],
+    "confidence": "estimated"
+  },
+  {
     "id": "lumiera_arch_region",
     "name": "リュミエラ・アーチ",
     "continent_id": "lumiera",
