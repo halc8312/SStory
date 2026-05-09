@@ -70,10 +70,12 @@
         観光名所・ダンジョン入口など、地図上の特定スポットを管理します。
       </p>
         <p>
-         現在、<strong>POIデータ仕様 v0.1</strong> に基づき、アストラリス首都圏への
-         試験投入（16件）を完了しています。ID は <code>astralis_</code> 接頭辞命名規則に従い、
-         <code>active</code> と <code>draft</code> を使い分けながら検証を進めています。
-         大規模なPOI投入はまだ行っておらず、仕様・Schema・運用フローの品質確認段階です。
+         現在、<strong>POIデータ仕様 v0.1</strong> に基づき、アストラリス首都圏・
+         王都港路・ポートゼフィア港湾圏への試験投入（31件）を実施しています。
+         中核POIは <code>status: "active"</code>、補助・拡張候補POIは
+         <code>status: "draft"</code> とし、ID は <code>astralis_</code>、
+         <code>astralis_zephia_road_</code>、<code>port_zephia_</code>
+         の接頭辞命名規則に従っています。引き続き仕様・Schema・運用フロー・地図表示の整合確認を継続中です。
         </p>
       <ul>
         <li><strong>データファイル</strong>: <code>world/map-data/data/pois.json</code> （正史データ）</li>
@@ -107,9 +109,9 @@
         <code>docs/data/map/pois.json</code> との同期を必須とします。
       </p>
        <p class="note">
-         ※ 現段階では、アストラリス首都圏への試験投入（16件）が完了しており、
-         JSON Schema 検証と品質修正を実施済みです。
-         大規模なPOI投入やLeaflet地図へのPOIレイヤー実装は、今後のフェーズで行います。
+         ※ 現段階では、アストラリス首都圏・王都港路・ポートゼフィア港湾圏への試験投入（31件）が完了しており、
+         JSON Schema 検証と公開用コピー同期を実施済みです。
+         Leaflet地図は <code>docs/data/map/pois.json</code> を読み込み、<code>focusPoi()</code> から各POIを開けます。
         </p>
     </section>
 

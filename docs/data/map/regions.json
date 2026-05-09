@@ -250,5 +250,24 @@
       "sacred"
     ],
     "confidence": "canon"
+  },
+  {
+    "id": "port_zephia_region",
+    "name": "ポートゼフィア港湾圏",
+    "continent_id": "elysion",
+    "type": "coastal_region",
+    "center": {
+      "x": 5200,
+      "y": 4790,
+      "z": 0
+    },
+    "description": "アストラリス港湾部を担う国際海上交易圏。税関・倉庫・港湾施設が集積する。",
+    "tags": [
+      "coastal",
+      "port",
+      "trade",
+      "harbor"
+    ],
+    "confidence": "canon"
   }
 ]
