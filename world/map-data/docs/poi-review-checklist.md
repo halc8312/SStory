@@ -9,6 +9,7 @@ status: "draft"
 ---
 
 <!-- cspell:disable -->
+<!-- markdownlint-disable MD025 -->
 
 # POIレビュー用チェックリスト
 

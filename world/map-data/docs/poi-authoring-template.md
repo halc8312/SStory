@@ -9,6 +9,7 @@ status: "draft"
 ---
 
 <!-- cspell:disable -->
+<!-- markdownlint-disable MD025 -->
 
 # POI追加依頼テンプレート
 
@@ -24,7 +25,7 @@ GitHub Issue Form を使って、対象地域・件数・参照設定・禁止�
 
 ## 依頼テンプレート
 
-```md
+```markdown
 ## POI追加依頼
 
 対象地域:

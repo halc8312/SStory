@@ -9,6 +9,7 @@ status: "draft"
 ---
 
 <!-- cspell:disable -->
+<!-- markdownlint-disable MD025 -->
 
 # AI向けPOI追加ワークフロー
 

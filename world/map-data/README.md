@@ -237,7 +237,7 @@ The schema enforces:
 
 **v0.1 — Astralis starter dataset under review.**
 
-`pois.json` currently contains 14 Astralis capital-region entries.
+`pois.json` currently contains 16 Astralis capital-region entries.
 Core facilities such as the royal palace, grand market, carriage plaza, magic
 academy, and star-cup temple can be treated as `active`, while flavor or
 placement-sensitive facilities remain `draft`.
