@@ -23,7 +23,6 @@ status: "draft"
 ## データ構造
 
 - [ ] `id` は lowercase snake_case か
-- [ ] 地域 prefix が付いているか
 - [ ] POI IDに地域prefixがあるか
 - [ ] `name` は自然な日本語か
 - [ ] `category` は許可カテゴリか
@@ -64,10 +63,8 @@ status: "draft"
 ## 地図表示
 
 - [ ] 座標が対象地域にあるか
-- [ ] POIが密集しすぎていないか
-- [ ] 同じ座標に密集しすぎていないか
-- [ ] Leaflet上で見えるか
-- [ ] Leafletで表示できるか
+- [ ] POIが同じ座標や近接座標に密集しすぎていないか
+- [ ] Leaflet上で表示でき、視認性に問題がないか
 - [ ] `focusPoi()` で開けるか
 
 ## 検証

@@ -93,19 +93,25 @@ def main() -> int:
             )
 
         nearest_node_id = poi.get("nearest_node_id")
-        if nearest_node_id not in node_ids:
+        if "nearest_node_id" not in poi:
+            pass
+        elif nearest_node_id not in node_ids:
             errors.append(
                 f"POI {poi_id}: nearest_node_id '{nearest_node_id}' does not exist."
             )
 
         continent_id = poi.get("continent_id")
-        if continent_id not in continent_ids:
+        if "continent_id" not in poi:
+            pass
+        elif continent_id not in continent_ids:
             errors.append(
                 f"POI {poi_id}: continent_id '{continent_id}' does not exist."
             )
 
         region_id = poi.get("region_id")
-        if region_id not in region_ids:
+        if "region_id" not in poi:
+            pass
+        elif region_id not in region_ids:
             errors.append(f"POI {poi_id}: region_id '{region_id}' does not exist.")
 
     try:
