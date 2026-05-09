@@ -71,9 +71,9 @@
       </p>
         <p>
          現在、<strong>POIデータ仕様 v0.1</strong> に基づき、アストラリス首都圏への
-         試験投入（9件）を完了しています。すべて <code>status: "draft"</code> で、
-         ID は <code>astralis_</code> 接頭辞命名規則に従っています。
-         大規模なPOI投入はまだ行っておらず、仕様・Schemaの品質確認段階です。
+         試験投入（16件）を完了しています。ID は <code>astralis_</code> 接頭辞命名規則に従い、
+         <code>active</code> と <code>draft</code> を使い分けながら検証を進めています。
+         大規模なPOI投入はまだ行っておらず、仕様・Schema・運用フローの品質確認段階です。
         </p>
       <ul>
         <li><strong>データファイル</strong>: <code>world/map-data/data/pois.json</code> （正史データ）</li>
@@ -94,11 +94,23 @@
         特に <code>lore_basis</code>（世界観根拠）と <code>historical_reason</code>（歴史的理由）などの
         必須根拠フィールドを充実させる必要があります。
       </p>
+      <p>
+        AIにPOI追加を依頼する場合は
+        <a href="../../world/map-data/docs/poi-authoring-template.md" target="_blank">
+          poi-authoring-template.md
+        </a>
+        を使い、追加後は <code>python world/map-data/scripts/sync_pois_to_docs.py</code> で同期し、
+        <code>python world/map-data/scripts/validate_pois.py</code> で検証してください。
+      </p>
+      <p>
+        POI追加時は <code>world/map-data/data/pois.json</code> を正とし、
+        <code>docs/data/map/pois.json</code> との同期を必須とします。
+      </p>
        <p class="note">
-         ※ 現段階では、アストラリス首都圏への試験投入（9件）が完了しており、
+         ※ 現段階では、アストラリス首都圏への試験投入（16件）が完了しており、
          JSON Schema 検証と品質修正を実施済みです。
          大規模なPOI投入やLeaflet地図へのPOIレイヤー実装は、今後のフェーズで行います。
-       </p>
+        </p>
     </section>
 
     <section>
@@ -160,8 +172,9 @@
         <li><strong>公開用コピー</strong>: <code>docs/data/map/</code> （GitHub Pages 上から Fetch 可能）</li>
       </ul>
       <p>
-        更新時は <code>world/map-data/data/</code> から手動で同期してください。
-        将来的には GitHub Actions による自動同期を検討中です。
+        更新時は <code>world/map-data/data/</code> を正として、
+        <code>python world/map-data/scripts/sync_pois_to_docs.py</code> で同期してください。
+        その後 <code>python world/map-data/scripts/validate_pois.py</code> で world / docs の整合を確認できます。
       </p>
     </section>
 
