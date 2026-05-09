@@ -1,0 +1,121 @@
+name: "🗺️ POI Addition Request"
+description: "世界観・歴史・交通設定と整合するPOI追加依頼を提出する"
+title: "[POI] "
+labels:
+  - worldbuilding
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        POI追加依頼では、雰囲気だけでなく対象地域・交通・参照設定・禁止事項を明確にしてください。
+        AIエージェントに依頼する場合も、このフォームの内容がそのまま作業条件になります。
+
+  - type: input
+    id: target_region
+    attributes:
+      label: 対象地域
+      description: POIを追加したい地域を、continent_id / region_id / nearest_node_id を推定できる粒度で記入してください。
+      placeholder: 例: アストラリス首都圏 / エリュシオン中央街道沿い / ポートゼフィア港湾区
+    validations:
+      required: true
+
+  - type: input
+    id: addition_count
+    attributes:
+      label: 追加件数
+      description: 1回の依頼で追加したいPOI件数を記入してください。
+      placeholder: 例: 5件
+    validations:
+      required: true
+
+  - type: textarea
+    id: categories
+    attributes:
+      label: 追加したいカテゴリ
+      description: 希望カテゴリを列挙してください。
+      placeholder: |
+        例:
+        - 宿屋
+        - 飲食店
+        - 市場
+        - 神殿
+        - ギルド
+    validations:
+      required: true
+
+  - type: textarea
+    id: atmosphere_and_role
+    attributes:
+      label: 追加したい雰囲気・役割
+      description: その地域でPOIが果たす役割や、期待する雰囲気を書いてください。
+      placeholder: |
+        例:
+        中央街道を往来する旅人・巡礼者・商人向けの施設。
+        王都近郊らしく秩序があり、交通と交易に接続した施設を希望。
+    validations:
+      required: true
+
+  - type: textarea
+    id: required_references
+    attributes:
+      label: 必ず参照する既存設定
+      description: AIエージェントや作業者が必ず読むべきファイルを列挙してください。
+      value: |
+        - world/map-data/poi-design-guidelines.md
+        - world/map-data/docs/poi-data-spec.md
+        - world/map-data/data/nodes.json
+        - world/map-data/data/regions.json
+        - world/map-data/data/continents.json
+      render: markdown
+    validations:
+      required: true
+
+  - type: input
+    id: nearby_transport_node
+    attributes:
+      label: 近くの交通ノード
+      description: 関連する nearest_node_id 候補や交通拠点名を書いてください。
+      placeholder: 例: astralis / astralis_carriage_plaza / 中央街道西門
+    validations:
+      required: true
+
+  - type: textarea
+    id: prohibited_items
+    attributes:
+      label: 追加してはいけないもの
+      description: 地域設定と矛盾する施設や避けたい案を明示してください。
+      value: |
+        - 既存設定と矛盾する施設
+        - なんとなくRPGっぽいだけの施設
+        - 地域の歴史・交通と無関係な大型施設
+      render: markdown
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: expected_validation
+    attributes:
+      label: 期待する検証
+      description: 作業完了時に期待する確認項目を選択してください。
+      options:
+        - label: world/map-data/data/pois.json を更新する
+        - label: docs/data/map/pois.json へ同期する
+        - label: python -m json.tool で JSON 構文を確認する
+        - label: python world/map-data/scripts/validate_pois.py を実行する
+        - label: Leaflet で focusPoi() を確認する
+        - label: poi-review-checklist.md でレビューする
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 備考
+      description: 補足条件、参照したい設定、避けたい方向性などがあれば記入してください。
+      placeholder: |
+        例:
+        - アストラリスの秩序ある交易圏という設定を優先
+        - 王宮近辺の治安・検問設定を崩さない
+        - 今回は新規POI 5件まで
+

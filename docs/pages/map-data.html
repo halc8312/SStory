@@ -70,12 +70,12 @@
         観光名所・ダンジョン入口など、地図上の特定スポットを管理します。
       </p>
         <p>
-         現在、<strong>POIデータ仕様 v0.1</strong> に基づき、アストラリス首都圏と
-         ポートゼフィア港湾圏への試験投入（22件）を実施しています。
+         現在、<strong>POIデータ仕様 v0.1</strong> に基づき、アストラリス首都圏・
+         王都港路・ポートゼフィア港湾圏への試験投入（31件）を実施しています。
          中核POIは <code>status: "active"</code>、補助・拡張候補POIは
-         <code>status: "draft"</code> とし、ID は <code>astralis_</code> /
-         <code>port_zephia_</code> 接頭辞命名規則に従っています。
-         引き続き仕様・Schema・地図表示の整合確認を継続中です。
+         <code>status: "draft"</code> とし、ID は <code>astralis_</code>、
+         <code>astralis_zephia_road_</code>、<code>port_zephia_</code>
+         の接頭辞命名規則に従っています。引き続き仕様・Schema・運用フロー・地図表示の整合確認を継続中です。
         </p>
       <ul>
         <li><strong>データファイル</strong>: <code>world/map-data/data/pois.json</code> （正史データ）</li>
@@ -96,11 +96,23 @@
         特に <code>lore_basis</code>（世界観根拠）と <code>historical_reason</code>（歴史的理由）などの
         必須根拠フィールドを充実させる必要があります。
       </p>
+      <p>
+        AIにPOI追加を依頼する場合は
+        <a href="../../world/map-data/docs/poi-authoring-template.md" target="_blank">
+          poi-authoring-template.md
+        </a>
+        を使い、追加後は <code>python world/map-data/scripts/sync_pois_to_docs.py</code> で同期し、
+        <code>python world/map-data/scripts/validate_pois.py</code> で検証してください。
+      </p>
+      <p>
+        POI追加時は <code>world/map-data/data/pois.json</code> を正とし、
+        <code>docs/data/map/pois.json</code> との同期を必須とします。
+      </p>
        <p class="note">
-         ※ 現段階では、アストラリス首都圏とポートゼフィア港湾圏への試験投入（22件）が完了しており、
+         ※ 現段階では、アストラリス首都圏・王都港路・ポートゼフィア港湾圏への試験投入（31件）が完了しており、
          JSON Schema 検証と公開用コピー同期を実施済みです。
-         Leaflet地図は <code>docs/data/map/pois.json</code> を読み込んでPOIレイヤーを表示します。
-       </p>
+         Leaflet地図は <code>docs/data/map/pois.json</code> を読み込み、<code>focusPoi()</code> から各POIを開けます。
+        </p>
     </section>
 
     <section>
@@ -162,8 +174,9 @@
         <li><strong>公開用コピー</strong>: <code>docs/data/map/</code> （GitHub Pages 上から Fetch 可能）</li>
       </ul>
       <p>
-        更新時は <code>world/map-data/data/</code> から手動で同期してください。
-        将来的には GitHub Actions による自動同期を検討中です。
+        更新時は <code>world/map-data/data/</code> を正として、
+        <code>python world/map-data/scripts/sync_pois_to_docs.py</code> で同期してください。
+        その後 <code>python world/map-data/scripts/validate_pois.py</code> で world / docs の整合を確認できます。
       </p>
     </section>
 

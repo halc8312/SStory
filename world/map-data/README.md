@@ -1,8 +1,8 @@
 ---
 title: "map-data-readme"
-version: "0.1.1"
+version: "0.2.0"
 created: "2026-05-06"
-last_updated: "2026-05-08"
+last_updated: "2026-05-09"
 author: "halc8312"
 category: "readme"
 status: "draft"
@@ -37,6 +37,12 @@ world/map-data/
     poi.schema.json      # POI schema (v0.1)
   docs/
     poi-data-spec.md     # POI data specification v0.1
+    poi-authoring-template.md
+    poi-review-checklist.md
+    poi-ai-addition-workflow.md
+  scripts/
+    sync_pois_to_docs.py
+    validate_pois.py
   examples/
     route_astralis_to_jade_port.json   # Example route output
     route_astralis_to_marineport.json
@@ -231,22 +237,24 @@ The schema enforces:
 
 **v0.1 — Astralis starter dataset under review.**
 
-`pois.json` currently contains 22 reviewed trial entries: 14 Astralis
-capital-region facilities and 8 Port Zephia harbor facilities.
+`pois.json` currently contains 31 reviewed Elysion trial entries: 16 Astralis
+capital-region facilities, 7 Astralis–Port Zephia road-corridor facilities, and
+8 Port Zephia harbor facilities.
 Core facilities such as the royal palace, grand market, carriage plaza, magic
 academy, star-cup temple, and Port Zephia customs / warehouse functions can be
 treated as `active`, while flavor or placement-sensitive facilities remain
 `draft`.
 
-IDs currently follow the `astralis_` and `port_zephia_` prefix naming
-conventions. The dataset remains intentionally limited to an Elysion capital /
-harbor baseline so later continent-by-continent expansion can build on a
-reviewed foundation.
+IDs currently follow the `astralis_`, `astralis_zephia_road_`, and
+`port_zephia_` prefix naming conventions. The dataset remains intentionally
+limited to an Elysion capital / road / harbor baseline so later
+continent-by-continent expansion can build on a reviewed foundation.
 
 ### GitHub Pages Copy
 
 GitHub Pages uses the copy at [`docs/data/map/pois.json`](../../docs/data/map/pois.json).
-Update both files manually when adding data. Future automation may be considered.
+Use `python world/map-data/scripts/sync_pois_to_docs.py` to copy the canonical
+data from `world/map-data/data/pois.json`.
 
 ### POI Addition Flow
 
@@ -258,9 +266,21 @@ When adding or reviewing POIs:
 4. Edit [`data/pois.json`](./data/pois.json)
 5. Sync [`docs/data/map/pois.json`](../../docs/data/map/pois.json)
 6. Run `python -m json.tool` for both POI files and the schema
-7. Run schema validation against `schemas/poi.schema.json`
+7. Run `python world/map-data/scripts/validate_pois.py`
 8. Check the result on Leaflet and confirm `focusPoi()` works
 9. Review with [`docs/poi-review-checklist.md`](./docs/poi-review-checklist.md)
+
+## POI追加の標準手順
+
+1. IssueテンプレートからPOI追加依頼を作成する
+2. `poi-design-guidelines.md` を確認する
+3. `poi-data-spec.md` を確認する
+4. `poi-authoring-template.md` に沿って内容を作る
+5. `world/map-data/data/pois.json` を編集する
+6. `sync_pois_to_docs.py` で docs 側へ同期する
+7. `validate_pois.py` で検証する
+8. Leaflet上で `focusPoi()` を確認する
+9. `poi-review-checklist.md` でレビューする
 
 ## POI Design Guidance
 
