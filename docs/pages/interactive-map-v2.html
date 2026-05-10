@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leaflet v2 試験版 - エターナル・アルカディア インタラクティブ世界地図</title>
+  <title>Leaflet v2 試験版 — エターナル・アルカディア インタラクティブ世界地図</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
   <style>
@@ -947,12 +947,6 @@
         font-size: 11px;
         padding: 5px 12px;
       }
-
-      .evaluation-panel {
-        top: 88px;
-        width: calc(100% - 16px);
-        padding: 12px 14px;
-      }
     }
 
     .evaluation-panel {
@@ -1095,8 +1089,8 @@
     <button class="beta-badge-close" id="betaBadgeClose">×</button>
   </div>
 
-  <section class="evaluation-panel" aria-label="Leaflet v2 試験版の説明">
-    <div class="evaluation-panel-kicker">Leaflet v2 Beta / Experimental</div>
+  <section class="evaluation-panel" aria-labelledby="evaluation-panel-title">
+    <h2 class="evaluation-panel-kicker" id="evaluation-panel-title">Leaflet v2 Beta / Experimental</h2>
     <p>
       このページは、Google Maps 風 UI を検証する次世代インタラクティブマップの正式評価用ページです。
       現在の安定版は <a href="./interactive-map.html">interactive-map.html</a> で、
