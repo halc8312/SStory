@@ -1,19 +1,20 @@
 (() => {
   const BASE_PATH = '../data/map/';
-    const CACHE_BUSTER = '20260510a';
-    const WORLD_MAP_SOURCE_DIMENSIONS = {
-      width: 1000,
-      height: 800
-    };
-    const WORLD_MAX_BOUNDS_PADDING = 1200;
+  const CACHE_BUSTER = '20260510a';
+  const WORLD_MAP_SOURCE_DIMENSIONS = {
+    width: 1000,
+    height: 800
+  };
+  const WORLD_COORDINATE_HEIGHT = Math.round(10000 * (WORLD_MAP_SOURCE_DIMENSIONS.height / WORLD_MAP_SOURCE_DIMENSIONS.width));
+  const WORLD_MAX_BOUNDS_PADDING = 1200;
 
     // === 座標変換設定 ===
     // Map Data座標系 (world-map.svg の viewBox を 10 倍した値) を
     // Leaflet表示座標に変換する設定
-    const MAP_COORDINATE_CONFIG = {
+  const MAP_COORDINATE_CONFIG = {
       // データ座標の範囲 (world-map.svg: 1000x800 -> 10000x8000)
       width: 10000,
-      height: Math.round(10000 * (WORLD_MAP_SOURCE_DIMENSIONS.height / WORLD_MAP_SOURCE_DIMENSIONS.width)),
+      height: WORLD_COORDINATE_HEIGHT,
       // 反転
       flipX: false,
       flipY: true,
@@ -27,26 +28,26 @@
       offsetY: 0,
       // スケールの中心点
       centerX: 5000,
-      centerY: Math.round((10000 * (WORLD_MAP_SOURCE_DIMENSIONS.height / WORLD_MAP_SOURCE_DIMENSIONS.width)) / 2),
+      centerY: Math.round(WORLD_COORDINATE_HEIGHT / 2),
       // デバッグ表示
       showGrid: false,
       showDebugNodes: true
     };
 
     // データ座標の範囲 (変換前)
-    const WORLD_COORDINATE_BOUNDS = [[0, 0], [MAP_COORDINATE_CONFIG.width, MAP_COORDINATE_CONFIG.height]];
+  const WORLD_COORDINATE_BOUNDS = [[0, 0], [MAP_COORDINATE_CONFIG.width, MAP_COORDINATE_CONFIG.height]];
 
     // 背景画像の表示範囲 (変換後座標系)
     // 現在はデータ座標系と同一。必要に応じて画像の実効範囲に合わせて調整可。
-    const WORLD_IMAGE_BOUNDS = WORLD_COORDINATE_BOUNDS;
+  const WORLD_IMAGE_BOUNDS = WORLD_COORDINATE_BOUNDS;
 
-    function expandBounds(bounds, padding) {
-      const [[minY, minX], [maxY, maxX]] = bounds;
-      return [
-        [minY - padding, minX - padding],
-        [maxY + padding, maxX + padding]
-      ];
-    }
+  function expandBounds(bounds, padding) {
+    const [[minY, minX], [maxY, maxX]] = bounds;
+    return [
+      [minY - padding, minX - padding],
+      [maxY + padding, maxX + padding]
+    ];
+  }
 
    const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
   const ROUTE_DEFINITION_BY_TYPE = {
