@@ -1,13 +1,19 @@
 (() => {
-   const BASE_PATH = '../data/map/';
-    const CACHE_BUSTER = '20260508a';
+  const BASE_PATH = '../data/map/';
+    const CACHE_BUSTER = '20260510a';
+    const WORLD_MAP_SOURCE_DIMENSIONS = {
+      width: 1000,
+      height: 800
+    };
+    const WORLD_MAX_BOUNDS_PADDING = 1200;
 
     // === 座標変換設定 ===
-    // Map Data座標系 (0-10000) を Leaflet表示座標に変換する設定
+    // Map Data座標系 (world-map.svg の viewBox を 10 倍した値) を
+    // Leaflet表示座標に変換する設定
     const MAP_COORDINATE_CONFIG = {
-      // データ座標の範囲 (world-map.svg の原始座標系)
+      // データ座標の範囲 (world-map.svg: 1000x800 -> 10000x8000)
       width: 10000,
-      height: 10000,
+      height: Math.round(10000 * (WORLD_MAP_SOURCE_DIMENSIONS.height / WORLD_MAP_SOURCE_DIMENSIONS.width)),
       // 反転
       flipX: false,
       flipY: true,
@@ -21,7 +27,7 @@
       offsetY: 0,
       // スケールの中心点
       centerX: 5000,
-      centerY: 5000,
+      centerY: Math.round((10000 * (WORLD_MAP_SOURCE_DIMENSIONS.height / WORLD_MAP_SOURCE_DIMENSIONS.width)) / 2),
       // デバッグ表示
       showGrid: false,
       showDebugNodes: true
@@ -33,6 +39,14 @@
     // 背景画像の表示範囲 (変換後座標系)
     // 現在はデータ座標系と同一。必要に応じて画像の実効範囲に合わせて調整可。
     const WORLD_IMAGE_BOUNDS = WORLD_COORDINATE_BOUNDS;
+
+    function expandBounds(bounds, padding) {
+      const [[minY, minX], [maxY, maxX]] = bounds;
+      return [
+        [minY - padding, minX - padding],
+        [maxY + padding, maxX + padding]
+      ];
+    }
 
    const DEFAULT_MESSAGE = 'Leaflet版交通マップを読み込めませんでした。';
   const ROUTE_DEFINITION_BY_TYPE = {
@@ -729,8 +743,28 @@
         zoomSnap: 0.25,
         wheelPxPerZoomLevel: 80,
         attributionControl: false,
-        preferCanvas: true
+        preferCanvas: true,
+        maxBoundsViscosity: 1.0
       });
+
+      const fitWorldBounds = (options = {}) => {
+        map.fitBounds(WORLD_IMAGE_BOUNDS, {
+          padding: [24, 24],
+          animate: false,
+          ...options
+        });
+      };
+
+      let pendingInvalidateFrame = null;
+      const invalidateMapSize = () => {
+        if (pendingInvalidateFrame !== null) {
+          window.cancelAnimationFrame(pendingInvalidateFrame);
+        }
+        pendingInvalidateFrame = window.requestAnimationFrame(() => {
+          pendingInvalidateFrame = null;
+          map.invalidateSize({ pan: false, debounceMoveend: true });
+        });
+      };
 
       map.createPane('hazardPane');
       map.getPane('hazardPane').style.zIndex = '410';
@@ -747,9 +781,9 @@
       });
 
         // 初期表示: 画像boundsに合わせる
-        map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
-        // 表示可能範囲をデータ座標範囲に制限（余白を少し確保）
-        map.setMaxBounds([[-1200, -1200], [11200, 11200]]);
+        fitWorldBounds();
+        // 表示可能範囲を背景画像 bounds ベースで制限（余白を少し確保）
+        map.setMaxBounds(expandBounds(WORLD_IMAGE_BOUNDS, WORLD_MAX_BOUNDS_PADDING));
 
        const WORLD_MAP_IMAGE_URL = '../assets/images/maps/world/world-map.svg';
        const worldMapLayer = L.imageOverlay(WORLD_MAP_IMAGE_URL, WORLD_IMAGE_BOUNDS, {
@@ -1382,8 +1416,22 @@
       };
       // Run after a short delay to ensure Leaflet has added its classes
       setTimeout(updateLayerControlCollapse, 0);
-      window.addEventListener('resize', () => {
+      const handleViewportResize = () => {
         updateLayerControlCollapse();
+        invalidateMapSize();
+      };
+      window.addEventListener('resize', handleViewportResize, { passive: true });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', invalidateMapSize, { passive: true });
+      }
+      if (typeof window.ResizeObserver === 'function') {
+        const resizeObserver = new window.ResizeObserver(() => {
+          invalidateMapSize();
+        });
+        resizeObserver.observe(mapElement);
+      }
+      map.whenReady(() => {
+        invalidateMapSize();
       });
 
      const opacityInput = document.getElementById('world-map-opacity');
@@ -1420,7 +1468,7 @@
         WORLD_IMAGE_BOUNDS,
         resolvePoiId,
         fitWorld() {
-          map.fitBounds(WORLD_IMAGE_BOUNDS, { padding: [24, 24] });
+          fitWorldBounds();
         },
         setWorldMapOpacity(value) {
           worldMapLayer.setOpacity(value);
