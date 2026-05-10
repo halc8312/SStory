@@ -1179,7 +1179,7 @@
       <label class="layer-item"><input type="checkbox" checked data-layer="hazards">危険区域</label>
       <label class="layer-item"><input type="checkbox" data-layer="continentLabels">大陸名</label>
       <label class="layer-item"><input type="checkbox" data-layer="grid">座標グリッド</label>
-      <label class="layer-item"><input type="checkbox" id="deepZoomToggle">詳細マップ (β)</label>
+      <label class="layer-item"><input type="checkbox" id="deepZoomToggle">詳細マップ (ベータ)</label>
     </div>
   </div>
 
@@ -1359,7 +1359,7 @@
     ]);
 
     const nodeById = Object.fromEntries(nodes.filter(n => n?.id).map(n => [n.id, n]));
-    const continentById = Object.fromEntries(continents.filter(continent => continent?.id).map(continent => [continent.id, continent]));
+    const continentById = Object.fromEntries(continents.filter(item => item?.id).map(item => [item.id, item]));
 
     function normalizeWorldPosition(position) {
       const x = Number(position?.x);
@@ -1874,7 +1874,7 @@
           iconAnchor: [0, 0]
         }),
         interactive: false
-        }).addTo(layers.continentLabels);
+      }).addTo(layers.continentLabels);
     });
 
     // --- Grid ---
@@ -2257,7 +2257,7 @@
       // Estimate km from center
       const kmX = ((worldX - WORLD_COORDINATE_WIDTH / 2) * KM_PER_WORLD_UNIT).toFixed(0);
       const kmY = ((WORLD_COORDINATE_HEIGHT / 2 - worldY) * KM_PER_WORLD_UNIT).toFixed(0);
-      document.getElementById('coordDisplay').textContent = `${Math.round(worldX)}, ${Math.round(worldY)} wu | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
+      document.getElementById('coordDisplay').textContent = `${Math.round(worldX)}, ${Math.round(worldY)} world | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
     });
 
     // --- Scale bar ---
