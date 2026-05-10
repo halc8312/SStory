@@ -207,18 +207,22 @@
       pointer-events: none;
     }
 
-    .layer-panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border-color);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+     .layer-panel-header {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       padding: 12px 14px;
+       border-bottom: 1px solid var(--border-color);
+       font-size: 13px;
+       font-weight: 600;
+       color: var(--text-secondary);
+       text-transform: uppercase;
+       letter-spacing: 0.5px;
+       position: sticky;
+       top: 0;
+       z-index: 1;
+       background: var(--bg-panel);
+     }
 
     .layer-panel-close {
       background: none;
@@ -417,13 +421,17 @@
       overflow: hidden;
     }
 
-    .route-panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border-color);
-    }
+     .route-panel-header {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       padding: 10px 16px;
+       border-bottom: 1px solid var(--border-color);
+       position: sticky;
+       top: 0;
+       z-index: 1;
+       background: var(--bg-panel);
+     }
 
     .route-panel-title {
       font-size: 13px;
@@ -1012,17 +1020,40 @@
       text-decoration: none;
     }
 
-    .evaluation-links a:hover {
-      text-decoration: underline;
-    }
+     .evaluation-links a:hover {
+       text-decoration: underline;
+     }
 
-    @media (max-width: 768px) {
-      .evaluation-panel {
-        top: 88px;
-        width: calc(100% - 16px);
-        padding: 12px 14px;
-      }
-    }
+     .evaluation-panel-close {
+       position: sticky;
+       top: 0;
+       display: block;
+       text-align: right;
+       background: var(--bg-panel);
+       border: none;
+       color: var(--text-muted);
+       cursor: pointer;
+       font-size: 20px;
+       line-height: 1;
+       padding: 4px 0;
+       z-index: 2;
+     }
+     .evaluation-panel-close:hover {
+       color: var(--text-primary);
+     }
+     .evaluation-panel.hidden {
+       display: none;
+     }
+
+     @media (max-width: 768px) {
+       .evaluation-panel {
+         top: 88px;
+         width: calc(100% - 16px);
+         padding: 12px 14px;
+         max-height: calc(100vh - 100px);
+         overflow-y: auto;
+       }
+     }
 
     .loading-overlay {
       position: absolute;
@@ -1090,6 +1121,7 @@
   </div>
 
   <section class="evaluation-panel" aria-labelledby="evaluation-panel-title">
+    <button class="evaluation-panel-close" id="evaluationPanelClose" title="評価パネルを非表示">×</button>
     <h2 class="evaluation-panel-kicker" id="evaluation-panel-title">Leaflet v2 Beta / Experimental</h2>
     <p>
       このページは、Google Maps 風 UI を検証する次世代インタラクティブマップの正式評価用ページです。
@@ -1687,22 +1719,35 @@
 
       const type = (node.type || 'city').toLowerCase().replace(/\s+/g, '_');
       const color = MARKER_COLORS[type] || '#a3b1c6';
-      const sizeClass = type === 'capital' ? 'capital' : (['city','floating_island','underwater_city'].includes(type) ? 'city' : '');
-      const typeLabel = TYPE_LABELS[type] || type;
+       const sizeClass = type === 'capital' ? 'capital' : (['city','floating_island','underwater_city'].includes(type) ? 'city' : '');
+       const typeLabel = TYPE_LABELS[type] || type;
 
-      // Create marker with dot icon
-      const marker = L.marker(pos, {
-        icon: L.divIcon({
-          className: 'map-marker',
-          html: `<div class="map-marker-dot ${sizeClass}" style="background:${color};"></div>
-                 <div class="map-marker-label" data-node-id="${node.id}">${esc(node.name)}</div>`,
-          iconSize: [0, 0],
-          iconAnchor: [0, 0]
-        }),
-        pane: 'nodePane',
-        interactive: true,
-        riseOnHover: true
-      }).addTo(layers.nodes);
+       // Determine dot size and anchor for proper positioning
+       let dotSize, iconAnchor;
+       if (sizeClass === 'capital') {
+         dotSize = 16;
+         iconAnchor = [8, 8];
+       } else if (sizeClass === 'city') {
+         dotSize = 13;
+         iconAnchor = [6.5, 6.5];
+       } else {
+         dotSize = 12;
+         iconAnchor = [6, 6];
+       }
+
+       // Create marker with properly sized and anchored icon
+       const marker = L.marker(pos, {
+         icon: L.divIcon({
+           className: 'map-marker',
+           html: `<div class="map-marker-dot ${sizeClass}" style="background:${color};"></div>
+                  <div class="map-marker-label" data-node-id="${node.id}">${esc(node.name)}</div>`,
+           iconSize: [dotSize, dotSize],
+           iconAnchor: iconAnchor
+         }),
+         pane: 'nodePane',
+         interactive: true,
+         riseOnHover: true
+       }).addTo(layers.nodes);
 
       nodeMarkerById.set(node.id, marker);
 
@@ -2297,6 +2342,20 @@
           badge.classList.add('hidden');
         }
       }, 8000);
+    })();
+
+    // Evaluation panel dismiss
+    (() => {
+      const panel = document.getElementById('evaluationPanelClose')?.closest('.evaluation-panel');
+      const closeBtn = document.getElementById('evaluationPanelClose');
+      if (!panel || !closeBtn) return;
+      if (sessionStorage.getItem('v2EvaluationDismissed')) {
+        panel.classList.add('hidden');
+      }
+      closeBtn.addEventListener('click', () => {
+        panel.classList.add('hidden');
+        sessionStorage.setItem('v2EvaluationDismissed', '1');
+      });
     })();
 
     // Expose API
