@@ -847,18 +847,41 @@
 
     /* ---- Responsive ---- */
     @media (max-width: 768px) {
+      .top-bar { padding: 6px 10px; gap: 8px; }
       .info-panel {
         width: 100%;
         left: 0;
-        top: 0;
+        top: auto;
         bottom: 0;
-        border-radius: 0;
+        max-height: 55vh;
+        border-radius: 16px 16px 0 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
-      .layer-panel { width: 200px; right: 8px; top: 56px; }
-      .route-panel { width: calc(100% - 16px); bottom: 8px; }
-      .search-container { max-width: 300px; }
+      .info-panel .panel-header { position: sticky; top: 0; z-index: 1; background: var(--bg-panel); }
+      .layer-panel { width: 200px; right: 8px; top: 50px; max-height: 60vh; overflow-y: auto; }
+      .route-panel {
+        width: calc(100% - 16px);
+        bottom: 8px;
+        left: 8px;
+        max-height: 40vh;
+        overflow-y: auto;
+      }
+      .search-container { max-width: calc(100% - 120px); }
+      .search-input { font-size: 16px; /* prevent iOS zoom on focus */ }
       .minimap { display: none; }
       .logo span { display: none; }
+      .zoom-controls { bottom: auto; top: 60px; }
+      .zoom-btn { width: 40px; height: 40px; font-size: 20px; }
+      .compass { width: 36px; height: 36px; }
+      /* Bigger touch targets for markers */
+      .leaflet-marker-icon { min-width: 12px; min-height: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .search-container { max-width: calc(100% - 90px); }
+      .info-panel { max-height: 50vh; }
+      .route-panel { max-height: 35vh; }
     }
 
     /* ---- Loading overlay ---- */
@@ -1152,18 +1175,29 @@
 
     // --- Initialize map ---
     const bounds = [[0, 0], [IMG_H, IMG_W]];
+    // Detect mobile
+    const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+
     const map = L.map('map', {
       crs: L.CRS.Simple,
-      minZoom: -2,
-      maxZoom: 3,
-      zoomSnap: 0.25,
-      zoomDelta: 0.5,
-      wheelPxPerZoomLevel: 100,
+      minZoom: -4,
+      maxZoom: 4,
+      zoomSnap: isMobile ? 0.1 : 0.25,
+      zoomDelta: isMobile ? 0.3 : 0.5,
+      wheelPxPerZoomLevel: 80,
       attributionControl: false,
       zoomControl: false,
       preferCanvas: true,
-      maxBounds: [[-200, -200], [IMG_H + 200, IMG_W + 200]],
-      maxBoundsViscosity: 0.8
+      maxBounds: [[-500, -500], [IMG_H + 500, IMG_W + 500]],
+      maxBoundsViscosity: 0.5,
+      bounceAtZoomLimits: false,
+      touchZoom: true,
+      tap: true,
+      tapTolerance: 20,
+      inertia: true,
+      inertiaDeceleration: isMobile ? 2000 : 3000,
+      inertiaMaxSpeed: isMobile ? 1200 : Infinity,
+      worldCopyJump: false
     });
 
     // Background
@@ -1172,7 +1206,11 @@
       interactive: false
     }).addTo(map);
 
-    map.fitBounds(bounds, { padding: [20, 20] });
+    map.fitBounds(bounds, { padding: isMobile ? [10, 10] : [20, 20] });
+
+    // Set minZoom dynamically so user can always see the full map
+    const fitZoom = map.getBoundsZoom(bounds, false, isMobile ? [10, 10] : [20, 20]);
+    map.setMinZoom(Math.min(fitZoom - 1, -3));
 
     // --- Create layer groups ---
     const layers = {
@@ -1810,7 +1848,7 @@
     // --- Zoom controls ---
     document.getElementById('zoomIn').addEventListener('click', () => map.zoomIn());
     document.getElementById('zoomOut').addEventListener('click', () => map.zoomOut());
-    document.getElementById('zoomFit').addEventListener('click', () => map.fitBounds(bounds, { padding: [20, 20] }));
+    document.getElementById('zoomFit').addEventListener('click', () => map.fitBounds(bounds, { padding: isMobile ? [10, 10] : [20, 20] }));
 
     // --- Coordinate display ---
     map.on('mousemove', e => {
