@@ -605,6 +605,10 @@
     .leaflet-control-attribution { display: none !important; }
 
     /* Custom markers */
+    .deep-zoom-overlay {
+      transition: opacity 0.3s ease;
+      image-rendering: auto;
+    }
     .map-marker {
       position: relative;
       display: flex;
@@ -982,6 +986,7 @@
       <label class="layer-item"><input type="checkbox" checked data-layer="hazards">危険区域</label>
       <label class="layer-item"><input type="checkbox" data-layer="continentLabels">大陸名</label>
       <label class="layer-item"><input type="checkbox" data-layer="grid">座標グリッド</label>
+      <label class="layer-item"><input type="checkbox" checked id="deepZoomToggle">詳細マップ</label>
     </div>
   </div>
 
@@ -1031,6 +1036,7 @@
       <div class="scale-bar-text" id="scaleBarText">500 km</div>
     </div>
     <div class="coord-display" id="coordDisplay">---</div>
+    <div class="coord-display" id="zoomLevelDisplay" style="margin-left:8px;color:#ffd700;font-weight:bold;"></div>
     <div class="zoom-controls">
       <button class="zoom-btn" id="zoomIn">+</button>
       <button class="zoom-btn" id="zoomOut">−</button>
@@ -1057,7 +1063,7 @@
     const IMG_H = 2730;
     const BASE_PATH = '../data/map/';
     const HIRES_IMG = '../assets/images/maps/world/world-map-hires.jpg';
-    const CACHE = '20260510a';
+    const CACHE = '20260510c';
 
     // World scale: the map image represents ~4000km wide (from scale bar in image)
     // At zoom level showing the full map, ~80px = 500km
@@ -1235,6 +1241,179 @@
     map.createPane('nodePane').style.zIndex = '450';
     map.createPane('labelPane').style.zIndex = '455';
     map.createPane('highlightPane').style.zIndex = '470';
+
+    // --- Deep Zoom: Multi-level image overlays ---
+    map.createPane('deepZoomPane').style.zIndex = '405'; // Below routes, above background
+
+    const DEEP_ZOOM_CONFIG = {
+      continents: {
+        elysion: {
+          image: '../assets/images/maps/continents/elysion-continent.jpg',
+          // Pixel bounds on world map: [southWest, northEast] in Leaflet coords [IMG_H-y, x]
+          bounds: [[IMG_H - 1600, 1100], [IMG_H - 650, 2150]],
+          minZoom: -0.5,
+          maxZoom: 1.2
+        }
+      },
+      regions: {
+        'astralis-region': {
+          image: '../assets/images/maps/regions/astralis-region.png',
+          // Centered on Astralis capital (px 1701,1026)
+          bounds: [[IMG_H - 1220, 1480], [IMG_H - 870, 1980]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'moonshadow-forest': {
+          image: '../assets/images/maps/regions/moonshadow-forest.png',
+          // NW of Astralis, dense forest
+          bounds: [[IMG_H - 1080, 1130], [IMG_H - 730, 1550]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'silver-plains': {
+          image: '../assets/images/maps/regions/silver-plains.png',
+          // South Elysion, rolling plains
+          bounds: [[IMG_H - 1450, 1400], [IMG_H - 1120, 1870]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'tensho-mountains': {
+          image: '../assets/images/maps/regions/tensho-mountains.png',
+          // NE mountains, includes Granrock area
+          bounds: [[IMG_H - 1000, 1680], [IMG_H - 680, 2120]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'iron-mountains': {
+          image: '../assets/images/maps/regions/iron-mountains.png',
+          // Western border with Atlantis
+          bounds: [[IMG_H - 1180, 980], [IMG_H - 860, 1400]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'emerald-belt': {
+          image: '../assets/images/maps/regions/emerald-belt.png',
+          // Lumiera continent
+          bounds: [[IMG_H - 1130, 2850], [IMG_H - 810, 3280]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'lumiera-arch': {
+          image: '../assets/images/maps/regions/lumiera-arch.png',
+          // Lumiera continent, east side
+          bounds: [[IMG_H - 1180, 3250], [IMG_H - 860, 3680]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'red-sea-desert': {
+          image: '../assets/images/maps/regions/red-sea-desert.png',
+          // Chaos Ria, northern desert
+          bounds: [[IMG_H - 1850, 1380], [IMG_H - 1530, 1820]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'lands-of-fire': {
+          image: '../assets/images/maps/regions/lands-of-fire.png',
+          // Chaos Ria, southern volcanic
+          bounds: [[IMG_H - 2150, 1420], [IMG_H - 1830, 1860]],
+          minZoom: 1.2,
+          maxZoom: 4
+        },
+        'labyrinth-of-time': {
+          image: '../assets/images/maps/regions/labyrinth-of-time.png',
+          // Grimoire continent
+          bounds: [[IMG_H - 550, 1580], [IMG_H - 230, 2020]],
+          minZoom: 1.2,
+          maxZoom: 4
+        }
+      }
+    };
+
+    // Create overlay layers (not added to map yet)
+    const deepZoomOverlays = {};
+
+    function createDeepZoomOverlay(key, config) {
+      const overlay = L.imageOverlay(config.image, config.bounds, {
+        opacity: 0,
+        interactive: false,
+        pane: 'deepZoomPane',
+        className: 'deep-zoom-overlay'
+      });
+      deepZoomOverlays[key] = { overlay, config, active: false };
+      return overlay;
+    }
+
+    // Init all overlays
+    for (const [key, config] of Object.entries(DEEP_ZOOM_CONFIG.continents)) {
+      createDeepZoomOverlay(`continent_${key}`, config);
+    }
+    for (const [key, config] of Object.entries(DEEP_ZOOM_CONFIG.regions)) {
+      createDeepZoomOverlay(`region_${key}`, config);
+    }
+
+    // Zoom-dependent overlay visibility
+    function updateDeepZoomOverlays() {
+      if (!deepZoomEnabled) return;
+      const zoom = map.getZoom();
+      const mapBounds = map.getBounds();
+
+      for (const [key, data] of Object.entries(deepZoomOverlays)) {
+        const { overlay, config } = data;
+        const inZoomRange = zoom >= config.minZoom && zoom <= config.maxZoom;
+        const inView = mapBounds.intersects(config.bounds);
+        const shouldShow = inZoomRange && inView;
+
+        if (shouldShow && !data.active) {
+          // Fade in
+          overlay.addTo(map);
+          data.active = true;
+          // Animate opacity
+          let opacity = 0;
+          const fadeIn = () => {
+            opacity = Math.min(1, opacity + 0.1);
+            overlay.setOpacity(opacity);
+            if (opacity < 1) requestAnimationFrame(fadeIn);
+          };
+          requestAnimationFrame(fadeIn);
+        } else if (!shouldShow && data.active) {
+          // Fade out
+          let opacity = overlay.options.opacity || 1;
+          const fadeOut = () => {
+            opacity = Math.max(0, opacity - 0.1);
+            overlay.setOpacity(opacity);
+            if (opacity > 0) {
+              requestAnimationFrame(fadeOut);
+            } else {
+              map.removeLayer(overlay);
+              data.active = false;
+            }
+          };
+          requestAnimationFrame(fadeOut);
+        }
+      }
+    }
+
+    let deepZoomEnabled = true;
+
+    map.on('zoomend', updateDeepZoomOverlays);
+    map.on('moveend', updateDeepZoomOverlays);
+
+    // Deep zoom toggle
+    document.getElementById('deepZoomToggle').addEventListener('change', e => {
+      deepZoomEnabled = e.target.checked;
+      if (!deepZoomEnabled) {
+        // Remove all deep zoom overlays
+        for (const [key, data] of Object.entries(deepZoomOverlays)) {
+          if (data.active) {
+            map.removeLayer(data.overlay);
+            data.overlay.setOpacity(0);
+            data.active = false;
+          }
+        }
+      } else {
+        updateDeepZoomOverlays();
+      }
+    });
 
     // --- Render routes ---
     const routeLayerById = new Map();
@@ -1883,8 +2062,21 @@
       document.getElementById('scaleBarText').textContent = `${bestKm.toLocaleString()} km`;
     }
 
+    function updateZoomLevelDisplay() {
+      const zoom = map.getZoom();
+      const el = document.getElementById('zoomLevelDisplay');
+      let label = '';
+      if (zoom < -0.5) label = '世界'; // World
+      else if (zoom < 1.2) label = '大陸'; // Continent
+      else if (zoom < 3.5) label = '地域'; // Region
+      else label = '詳細'; // Detail
+      el.textContent = label;
+    }
+
     map.on('zoomend', updateScaleBar);
+    map.on('zoomend', updateZoomLevelDisplay);
     updateScaleBar();
+    updateZoomLevelDisplay();
 
     // --- Minimap ---
     function updateMinimap() {

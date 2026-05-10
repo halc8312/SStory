@@ -32,3 +32,4 @@ world/map-data/exports/*.svg
 .DS_Store
 Thumbs.db
 .env
+docs/assets/images/maps/world/tiles/

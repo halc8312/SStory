@@ -1,37 +1,41 @@
-# Interactive Map V2 - Progress
+# Deep Zoom Implementation Progress
 
-## Status: Working ✓
+## Current Phase: Implementing overlay switching for Elysion
 
-### What Works
-- [x] Map loads with hi-res fantasy world image overlay
-- [x] 37 node markers rendering with colored dots + labels
-- [x] 33 route polylines rendering (visible on map)
-- [x] Popup cards on node click (name, type, description, tags)
-- [x] Route search with Dijkstra pathfinding
-- [x] Route results with distance, time, segments, step-by-step
-- [x] Yellow highlighted route overlay on map
-- [x] Layer controls (toggle transport types, markers, hazards)
-- [x] Weight options: shortest time, shortest distance, safest
-- [x] Minimap in corner
-- [x] Compass rose
-- [x] Coordinate display at bottom
-- [x] Dark UI theme
-- [x] Search bar in header
-- [x] Route search panel collapsible
+## Bounds Mapping (world map pixel coords, 4096x2730)
 
-### What Needs Testing
-- [ ] Search bar autocomplete
-- [ ] "詳細を見る" detail panel
-- [ ] Layer toggle checkboxes
-- [ ] Zoom/pan performance
-- [ ] Continent labels overlay
-- [ ] Grid overlay
+### Elysion Continent Overlay (L1, zoom 0~1)
+- Bounds: x=[1050, 2150], y=[600, 1700] (with ocean padding)
+- Image: continents/elysion-continent.jpg (generated, 1264x848)
 
-### Known Issues
-- POI positions are approximate (offset from parent node)
-- Node positions are estimated from visual inspection
-- Routes are straight lines (no curved waypoints)
+### Elysion Region Overlays (L2, zoom 2~3)
+Region images are 1536x1024, aspect ratio 3:2
+Need to map each to its world-map position:
 
-### Future (User Mentioned)
-- ルート案内機能 (turn-by-turn navigation)
-- ストリートビュー的なもの (street view-like feature)
+| Region | File | Approx pixel bounds (x1,y1,x2,y2) |
+|--------|------|-------------------------------------|
+| astralis-region | Astralis & surrounds | 1550,850,1950,1120 |
+| moonshadow-forest | NW Elysion forest | 1200,750,1600,1020 |
+| silver-plains | South Elysion | 1400,1150,1800,1420 |
+| tensho-mountains | East mountains | 1700,750,2100,1020 |
+| iron-mountains | West border | 1050,850,1450,1120 |
+
+### Other Continent Regions (for later)
+| Region | Continent |
+|--------|-----------|
+| emerald-belt | Lumiera |
+| lumiera-arch | Lumiera |
+| red-sea-desert | Chaos Ria |
+| lands-of-fire | Chaos Ria |
+| labyrinth-of-time | Grimoire |
+
+## Done
+- [x] Generate Elysion continent map image
+- [x] Convert to JPG
+- [x] Analyze world map pixel bounds
+
+## Next
+- [ ] Implement zoom-level overlay switching in HTML
+- [ ] Test overlay positioning
+- [ ] Refine bounds by visual testing
+- [ ] Push to GitHub
