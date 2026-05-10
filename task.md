@@ -1,41 +1,40 @@
 # Deep Zoom Implementation Progress
 
-## Current Phase: Implementing overlay switching for Elysion
+## Status: Phase 1 COMPLETE, Phase 2 in progress
 
-## Bounds Mapping (world map pixel coords, 4096x2730)
+## Completed
+- [x] Analyze existing map art style
+- [x] Generate Elysion continent overview map
+- [x] Implement deep zoom overlay system (ImageOverlay switching)
+- [x] Map all 10 existing region maps to world coordinates
+- [x] Fade in/out animation between zoom levels
+- [x] "詳細マップ" toggle in layer panel
+- [x] Zoom level indicator (世界/大陸/地域/詳細)
+- [x] Push to GitHub (commit 28361d0)
+- [x] Write ChatGPT image-2 prompts for remaining maps
 
-### Elysion Continent Overlay (L1, zoom 0~1)
-- Bounds: x=[1050, 2150], y=[600, 1700] (with ocean padding)
-- Image: continents/elysion-continent.jpg (generated, 1264x848)
+## Zoom Levels Working
+- L0 (zoom -3 to -0.5): World map only
+- L1 (zoom -0.5 to 1.2): Elysion continent overlay
+- L2 (zoom 1.2+): 10 region overlays (all mapped)
 
-### Elysion Region Overlays (L2, zoom 2~3)
-Region images are 1536x1024, aspect ratio 3:2
-Need to map each to its world-map position:
+## Images Still Needed
+### L1 Continent Maps (4 remaining)
+- [ ] Atlantis (アトランティス大陸)
+- [ ] Grimoire (グリモワール大陸)
+- [ ] Lumiera (リュミエラ大陸)
+- [ ] Chaos Ria (カオス・リア大陸)
 
-| Region | File | Approx pixel bounds (x1,y1,x2,y2) |
-|--------|------|-------------------------------------|
-| astralis-region | Astralis & surrounds | 1550,850,1950,1120 |
-| moonshadow-forest | NW Elysion forest | 1200,750,1600,1020 |
-| silver-plains | South Elysion | 1400,1150,1800,1420 |
-| tensho-mountains | East mountains | 1700,750,2100,1020 |
-| iron-mountains | West border | 1050,850,1450,1120 |
+### L3 City Maps (3 priority)
+- [ ] Astralis city (アストラリス市街図)
+- [ ] Granrock city (グランロック市街図)
+- [ ] Port Zephia (ポートゼフィア市街図)
 
-### Other Continent Regions (for later)
-| Region | Continent |
-|--------|-----------|
-| emerald-belt | Lumiera |
-| lumiera-arch | Lumiera |
-| red-sea-desert | Chaos Ria |
-| lands-of-fire | Chaos Ria |
-| labyrinth-of-time | Grimoire |
+## Prompts saved at
+`docs/data/map/image-prompts.md`
 
-## Done
-- [x] Generate Elysion continent map image
-- [x] Convert to JPG
-- [x] Analyze world map pixel bounds
-
-## Next
-- [ ] Implement zoom-level overlay switching in HTML
-- [ ] Test overlay positioning
-- [ ] Refine bounds by visual testing
-- [ ] Push to GitHub
+## Known Issues
+1. Region overlay bounds are approximate — need visual refinement
+2. Region maps have decorative borders that look odd when overlapping
+3. Node pixel positions still approximate
+4. No city-level (L3) zoom yet

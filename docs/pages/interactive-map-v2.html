@@ -889,6 +889,66 @@
     }
 
     /* ---- Loading overlay ---- */
+    /* ---- Beta badge ---- */
+    .beta-badge {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(26, 29, 35, 0.92);
+      border: 1px solid var(--accent-gold);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent-gold);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+      animation: betaSlideIn 0.4s ease-out;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .beta-badge.hidden {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-10px);
+      pointer-events: none;
+    }
+    .beta-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      animation: betaPulse 2s ease-in-out infinite;
+    }
+    .beta-badge-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0 0 0 4px;
+      line-height: 1;
+    }
+    .beta-badge-close:hover { color: var(--text-primary); }
+    @keyframes betaPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    @keyframes betaSlideIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .beta-badge {
+        top: 52px;
+        font-size: 11px;
+        padding: 5px 12px;
+      }
+    }
+
     .loading-overlay {
       position: absolute;
       inset: 0;
@@ -946,6 +1006,13 @@
 
   <!-- Map container -->
   <div id="map"></div>
+
+  <!-- Beta badge -->
+  <div class="beta-badge" id="betaBadge" title="クリックで非表示">
+    <span class="beta-badge-dot"></span>
+    v2 試験版 — 次世代UI検証中
+    <button class="beta-badge-close" id="betaBadgeClose">×</button>
+  </div>
 
   <!-- Top bar -->
   <div class="top-bar">
@@ -2118,6 +2185,25 @@
       loading.classList.add('fade-out');
       setTimeout(() => loading.remove(), 600);
     }, 300);
+
+    // Beta badge dismiss
+    (() => {
+      const badge = document.getElementById('betaBadge');
+      const closeBtn = document.getElementById('betaBadgeClose');
+      if (sessionStorage.getItem('v2BetaDismissed')) {
+        badge.classList.add('hidden');
+      }
+      closeBtn.addEventListener('click', () => {
+        badge.classList.add('hidden');
+        sessionStorage.setItem('v2BetaDismissed', '1');
+      });
+      // Auto-hide after 8 seconds
+      setTimeout(() => {
+        if (!badge.classList.contains('hidden')) {
+          badge.classList.add('hidden');
+        }
+      }, 8000);
+    })();
 
     // Expose API
     window.EternalArcadiaMap = {
