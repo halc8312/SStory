@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>エターナル・アルカディア — インタラクティブ世界地図</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+  <style>
+    /* ============================================
+       ETERNAL ARCADIA — INTERACTIVE MAP v2
+       Google Maps-quality fantasy world map
+       ============================================ */
+
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #1a1d23;
+      --bg-secondary: #22262e;
+      --bg-tertiary: #2a2f38;
+      --bg-panel: rgba(26, 29, 35, 0.95);
+      --text-primary: #e8e6e3;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-gold: #d4a854;
+      --accent-blue: #5b9bd5;
+      --accent-green: #6bc77a;
+      --accent-red: #e06c6c;
+      --accent-purple: #9b7ed8;
+      --border-color: rgba(255,255,255,0.08);
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Marker colors */
+      --marker-capital: #ffd700;
+      --marker-city: #e8e6e3;
+      --marker-town: #a3b1c6;
+      --marker-port: #5b9bd5;
+      --marker-airport: #9b7ed8;
+      --marker-special: #e06c6c;
+      --marker-landmark: #6bc77a;
+      --marker-floating: #d4a854;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: var(--font);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    /* ---- Full-screen map ---- */
+    #map {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: #1a2233;
+    }
+
+    /* ---- Top bar ---- */
+    .top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: linear-gradient(180deg, rgba(26,29,35,0.92) 0%, rgba(26,29,35,0.75) 80%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .top-bar > * { pointer-events: auto; }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-gold);
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--accent-gold);
+      color: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* ---- Search bar ---- */
+    .search-container {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      background: var(--bg-panel);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-input:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px rgba(212,168,84,0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-height: 360px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .search-results.active { display: block; }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: var(--bg-tertiary); }
+
+    .search-result-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .search-result-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .search-result-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ---- Layer panel (right side) ---- */
+    .layer-panel {
+      position: absolute;
+      top: 60px;
+      right: 16px;
+      z-index: 1000;
+      width: 220px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .layer-panel.collapsed {
+      transform: translateX(calc(100% + 20px));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .layer-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .layer-panel-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      padding: 2px;
+    }
+
+    .layer-group {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .layer-group:last-child { border-bottom: none; }
+
+    .layer-group-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 14px;
+    }
+
+    .layer-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-size: 13px;
+    }
+
+    .layer-item:hover { background: var(--bg-tertiary); }
+
+    .layer-item input[type="checkbox"] {
+      accent-color: var(--accent-gold);
+      width: 15px;
+      height: 15px;
+    }
+
+    .layer-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ---- Layer toggle button ---- */
+    .layer-toggle-btn {
+      position: absolute;
+      top: 60px;
+      right: 16px;
+      z-index: 999;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: var(--shadow);
+      transition: opacity 0.3s;
+    }
+
+    .layer-toggle-btn.hidden { opacity: 0; pointer-events: none; }
+
+    /* ---- Info panel (left side, Google Maps style) ---- */
+    .info-panel {
+      position: absolute;
+      top: 60px;
+      left: 16px;
+      bottom: 60px;
+      z-index: 1000;
+      width: 340px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: none;
+      scrollbar-width: thin;
+      scrollbar-color: var(--bg-tertiary) transparent;
+    }
+
+    .info-panel.active { display: block; }
+
+    .info-panel-close {
+      position: sticky;
+      top: 0;
+      right: 0;
+      float: right;
+      background: var(--bg-panel);
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 22px;
+      padding: 10px 14px;
+      z-index: 2;
+      line-height: 1;
+    }
+
+    .info-panel-close:hover { color: var(--text-primary); }
+
+    .info-header {
+      padding: 16px 18px 12px;
+    }
+
+    .info-type-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .info-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .info-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .info-section {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 8px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      font-size: 13px;
+    }
+
+    .info-row-label { color: var(--text-secondary); }
+    .info-row-value { color: var(--text-primary); font-weight: 500; }
+
+    .info-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .info-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .info-tag {
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* ---- Route search panel ---- */
+    .route-panel {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(600px, calc(100% - 32px));
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .route-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .route-panel-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-gold);
+    }
+
+    .route-panel-toggle {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .route-panel-toggle:hover { background: var(--bg-tertiary); }
+
+    .route-panel-body {
+      padding: 12px 16px;
+      transition: max-height 0.3s ease;
+      overflow: hidden;
+    }
+
+    .route-panel-body.collapsed {
+      max-height: 0;
+      padding: 0 16px;
+    }
+
+    .route-form-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .route-field {
+      flex: 1;
+    }
+
+    .route-field label {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .route-field select, .route-field input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: var(--font);
+      outline: none;
+    }
+
+    .route-field select:focus, .route-field input:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .route-btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--accent-gold);
+      color: var(--bg-primary);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .route-btn:hover { opacity: 0.85; }
+
+    .route-btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+
+    .route-result {
+      margin-top: 8px;
+      padding: 10px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .route-result.active { display: block; }
+
+    .route-result-summary {
+      display: flex;
+      gap: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .route-result-summary span {
+      color: var(--accent-gold);
+    }
+
+    .route-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 0;
+      color: var(--text-secondary);
+    }
+
+    .route-step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .route-step-arrow {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    /* ---- Bottom bar ---- */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 16px;
+      background: linear-gradient(0deg, rgba(26,29,35,0.85) 0%, transparent 100%);
+      pointer-events: none;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .bottom-bar > * { pointer-events: auto; }
+
+    .coord-display {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .zoom-controls {
+      display: flex;
+      gap: 4px;
+    }
+
+    .zoom-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--bg-panel);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .zoom-btn:hover { background: var(--bg-tertiary); }
+
+    /* ---- Leaflet overrides ---- */
+    .leaflet-control-zoom { display: none !important; }
+    .leaflet-control-attribution { display: none !important; }
+
+    /* Custom markers */
+    .map-marker {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-marker-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.9);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 0 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .map-marker:hover .map-marker-dot {
+      transform: scale(1.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 0 16px rgba(0,0,0,0.4);
+    }
+
+    .map-marker-dot.capital { width: 16px; height: 16px; }
+    .map-marker-dot.city { width: 13px; height: 13px; }
+
+    .map-marker-label {
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.5);
+      pointer-events: none;
+      text-align: center;
+    }
+
+    .map-marker-label.hidden { display: none; }
+
+    /* Continent labels */
+    .continent-label {
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .continent-label-jp {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 4px;
+      margin-top: 2px;
+      opacity: 0.8;
+    }
+
+    /* Route lines */
+    .route-line-highlight {
+      stroke: var(--accent-gold);
+      stroke-width: 4;
+      stroke-opacity: 1;
+    }
+
+    /* POI markers */
+    .poi-marker-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.7);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .poi-marker-dot:hover { transform: scale(1.4); }
+
+    /* Hazard zones */
+    .hazard-tooltip {
+      background: rgba(26,29,35,0.9) !important;
+      border: 1px solid var(--border-color) !important;
+      color: var(--text-primary) !important;
+      font-family: var(--font) !important;
+      font-size: 12px !important;
+      border-radius: 6px !important;
+      padding: 4px 8px !important;
+    }
+
+    /* ---- Leaflet popup overrides ---- */
+    .leaflet-popup-content-wrapper {
+      background: var(--bg-panel) !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: var(--radius) !important;
+      box-shadow: var(--shadow) !important;
+      color: var(--text-primary) !important;
+      padding: 0 !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 0 !important;
+      font-family: var(--font) !important;
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+    }
+
+    .leaflet-popup-tip {
+      background: var(--bg-panel) !important;
+      border: 1px solid var(--border-color) !important;
+    }
+
+    .leaflet-popup-close-button {
+      color: var(--text-muted) !important;
+      font-size: 20px !important;
+      padding: 6px 10px !important;
+    }
+
+    .leaflet-popup-close-button:hover {
+      color: var(--text-primary) !important;
+    }
+
+    /* Popup card content */
+    .popup-card {
+      padding: 14px 16px;
+      min-width: 200px;
+      max-width: 280px;
+    }
+
+    .popup-card-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .popup-card-type {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+    }
+
+    .popup-card-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .popup-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .popup-card-tag {
+      padding: 2px 6px;
+      background: var(--bg-tertiary);
+      border-radius: 4px;
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+
+    .popup-card-btn {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--accent-gold);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font);
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+    }
+
+    .popup-card-btn:hover { background: var(--bg-secondary); }
+
+    /* ---- Minimap ---- */
+    .minimap {
+      position: absolute;
+      bottom: 40px;
+      right: 16px;
+      z-index: 999;
+      width: 150px;
+      height: 100px;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-primary);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    .minimap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+
+    .minimap-viewport {
+      position: absolute;
+      border: 2px solid var(--accent-gold);
+      background: rgba(212,168,84,0.1);
+      pointer-events: none;
+    }
+
+    /* ---- Scale bar ---- */
+    .scale-bar {
+      position: absolute;
+      bottom: 36px;
+      left: 16px;
+      z-index: 999;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      pointer-events: none;
+    }
+
+    .scale-bar-line {
+      height: 6px;
+      border: 1px solid var(--text-muted);
+      border-top: none;
+      min-width: 60px;
+    }
+
+    .scale-bar-text {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'SF Mono', monospace;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      .info-panel {
+        width: 100%;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 0;
+      }
+      .layer-panel { width: 200px; right: 8px; top: 56px; }
+      .route-panel { width: calc(100% - 16px); bottom: 8px; }
+      .search-container { max-width: 300px; }
+      .minimap { display: none; }
+      .logo span { display: none; }
+    }
+
+    /* ---- Loading overlay ---- */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2000;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading-overlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* Distance tooltip on hover */
+    .distance-label {
+      background: rgba(26,29,35,0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-family: var(--font);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay" id="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">世界地図を読み込んでいます...</div>
+  </div>
+
+  <!-- Map container -->
+  <div id="map"></div>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="logo">
+      <div class="logo-icon">EA</div>
+      <span>Eternal Arcadia</span>
+    </div>
+    <div class="search-container">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" id="searchInput" type="text" placeholder="場所を検索 — アストラリス、グランロック、ムーンライト..." autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- Layer panel -->
+  <button class="layer-toggle-btn hidden" id="layerToggleBtn" title="レイヤー">◫</button>
+  <div class="layer-panel" id="layerPanel">
+    <div class="layer-panel-header">
+      レイヤー
+      <button class="layer-panel-close" id="layerPanelClose">×</button>
+    </div>
+    <div class="layer-group">
+      <div class="layer-group-title">交通路</div>
+      <label class="layer-item"><input type="checkbox" checked data-layer="roads"><span class="layer-swatch" style="background:#8b5a2e;"></span>陸路・キャラバン</label>
+      <label class="layer-item"><input type="checkbox" checked data-layer="rail"><span class="layer-swatch" style="background:#4a4a45;"></span>鉄道</label>
+      <label class="layer-item"><input type="checkbox" checked data-layer="sea"><span class="layer-swatch" style="background:#527894;"></span>海路</label>
+      <label class="layer-item"><input type="checkbox" checked data-layer="air"><span class="layer-swatch" style="background:#9b7ed8;"></span>空路</label>
+      <label class="layer-item"><input type="checkbox" checked data-layer="special"><span class="layer-swatch" style="background:#2c7878;"></span>特殊交通</label>
+    </div>
+    <div class="layer-group">
+      <div class="layer-group-title">マーカー</div>
+      <label class="layer-item"><input type="checkbox" checked data-layer="nodes">拠点ノード</label>
+      <label class="layer-item"><input type="checkbox" checked data-layer="pois">施設 (POI)</label>
+      <label class="layer-item"><input type="checkbox" checked data-layer="labels">地名ラベル</label>
+    </div>
+    <div class="layer-group">
+      <div class="layer-group-title">オーバーレイ</div>
+      <label class="layer-item"><input type="checkbox" checked data-layer="hazards">危険区域</label>
+      <label class="layer-item"><input type="checkbox" data-layer="continentLabels">大陸名</label>
+      <label class="layer-item"><input type="checkbox" data-layer="grid">座標グリッド</label>
+    </div>
+  </div>
+
+  <!-- Info panel (populated by JS) -->
+  <div class="info-panel" id="infoPanel">
+    <button class="info-panel-close" id="infoPanelClose">×</button>
+    <div id="infoPanelContent"></div>
+  </div>
+
+  <!-- Route search panel -->
+  <div class="route-panel" id="routePanel">
+    <div class="route-panel-header">
+      <span class="route-panel-title">🧭 ルート検索</span>
+      <button class="route-panel-toggle" id="routePanelToggle">▾</button>
+    </div>
+    <div class="route-panel-body" id="routePanelBody">
+      <div class="route-form-row">
+        <div class="route-field">
+          <label>出発地</label>
+          <select id="routeFrom"><option value="">選択...</option></select>
+        </div>
+        <div class="route-field">
+          <label>目的地</label>
+          <select id="routeTo"><option value="">選択...</option></select>
+        </div>
+        <div class="route-field">
+          <label>条件</label>
+          <select id="routeWeight">
+            <option value="time">最短時間</option>
+            <option value="distance">最短距離</option>
+            <option value="safety">安全優先</option>
+          </select>
+        </div>
+      </div>
+      <div class="route-form-row" style="justify-content: flex-end; gap: 8px;">
+        <button class="route-btn route-btn-secondary" id="routeClear">クリア</button>
+        <button class="route-btn" id="routeSearch">検索</button>
+      </div>
+      <div class="route-result" id="routeResult"></div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="scale-bar" id="scaleBar">
+      <div class="scale-bar-line" id="scaleBarLine" style="width:80px;"></div>
+      <div class="scale-bar-text" id="scaleBarText">500 km</div>
+    </div>
+    <div class="coord-display" id="coordDisplay">---</div>
+    <div class="zoom-controls">
+      <button class="zoom-btn" id="zoomIn">+</button>
+      <button class="zoom-btn" id="zoomOut">−</button>
+      <button class="zoom-btn" id="zoomFit" title="全体表示">⊡</button>
+    </div>
+  </div>
+
+  <!-- Minimap -->
+  <div class="minimap" id="minimap">
+    <img src="../assets/images/maps/world/world-map-medium.jpg" alt="minimap">
+    <div class="minimap-viewport" id="minimapViewport"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+  // ============================================
+  // ETERNAL ARCADIA — Interactive Map Engine v2
+  // ============================================
+  (async () => {
+    'use strict';
+
+    // --- Configuration ---
+    const IMG_W = 4096;
+    const IMG_H = 2730;
+    const BASE_PATH = '../data/map/';
+    const HIRES_IMG = '../assets/images/maps/world/world-map-hires.jpg';
+    const CACHE = '20260510a';
+
+    // World scale: the map image represents ~4000km wide (from scale bar in image)
+    // At zoom level showing the full map, ~80px = 500km
+    const KM_PER_PIXEL = 4000 / IMG_W; // ≈ 0.977 km/pixel
+
+    // Marker colors by type
+    const MARKER_COLORS = {
+      capital: '#ffd700',
+      city: '#e8e6e3',
+      town: '#a3b1c6',
+      port: '#5b9bd5',
+      seaport: '#5b9bd5',
+      airport: '#9b7ed8',
+      air_terminal: '#9b7ed8',
+      carriage_terminal: '#c09a6b',
+      checkpoint: '#e06c6c',
+      oasis: '#6bc77a',
+      floating_island: '#d4a854',
+      underwater_city: '#3aafb9',
+      marine_port: '#5b9bd5',
+      submarine_terminal: '#3aafb9',
+      warp_gate: '#e06c6c',
+      forbidden_gate: '#8b3040',
+      fortress: '#c09a6b',
+      inn: '#c09a6b',
+      landmark: '#6bc77a'
+    };
+
+    const TYPE_LABELS = {
+      capital: '王都',
+      city: '都市',
+      town: '町',
+      port: '港',
+      seaport: '港',
+      airport: '空港',
+      air_terminal: '空中ターミナル',
+      carriage_terminal: '駅馬車ターミナル',
+      checkpoint: '検問所',
+      oasis: 'オアシス',
+      floating_island: '浮島',
+      underwater_city: '海底都市',
+      marine_port: '海港',
+      submarine_terminal: '潜水ターミナル',
+      warp_gate: 'ワープゲート',
+      forbidden_gate: '封印門',
+      fortress: '砦',
+      inn: '宿場',
+      landmark: '名所'
+    };
+
+    const ROUTE_STYLES = {
+      road:    { color: '#a07040', weight: 2.5, opacity: 0.7, dashArray: null },
+      caravan: { color: '#a07040', weight: 2, opacity: 0.6, dashArray: '6 4' },
+      rail:    { color: '#888', weight: 3, opacity: 0.8, dashArray: '10 4' },
+      sea:     { color: '#5b8fad', weight: 2, opacity: 0.6, dashArray: '8 6' },
+      air:     { color: '#9b7ed8', weight: 2, opacity: 0.5, dashArray: '4 8' },
+      submarine: { color: '#3aafb9', weight: 2, opacity: 0.5, dashArray: '6 4' },
+      tunnel:  { color: '#666', weight: 2, opacity: 0.5, dashArray: '4 4' },
+      underwater_tunnel: { color: '#3a8e96', weight: 2, opacity: 0.5, dashArray: '4 4' },
+      warp:    { color: '#e06c6c', weight: 2, opacity: 0.6, dashArray: '3 6' },
+      forbidden_path: { color: '#8b3040', weight: 2, opacity: 0.5, dashArray: '3 4 1 4' }
+    };
+
+    const ROUTE_LAYER_MAP = {
+      road: 'roads', caravan: 'roads', ice_road: 'roads',
+      rail: 'rail',
+      sea: 'sea',
+      air: 'air',
+      submarine: 'special', tunnel: 'special', underwater_tunnel: 'special',
+      warp: 'special', forbidden_path: 'special'
+    };
+
+    const CONTINENT_NAMES = {
+      elysion: { en: 'Elysion', ja: 'エリュシオン' },
+      lumiera: { en: 'Lumiera', ja: 'リュミエラ' },
+      chaos_ria: { en: 'Chaos Ria', ja: 'カオス・リア' },
+      atlantis: { en: 'Atlantis', ja: 'アトランティス' },
+      grimoire: { en: 'Grimoire', ja: 'グリモワール' }
+    };
+
+    // --- Helpers ---
+    const esc = t => { const d = document.createElement('div'); d.textContent = String(t ?? ''); return d.innerHTML; };
+    const fetchJson = async name => {
+      const r = await fetch(`${BASE_PATH}${name}?v=${CACHE}`);
+      if (!r.ok) throw new Error(`${name}: ${r.status}`);
+      return r.json();
+    };
+
+    // --- Load data ---
+    const [nodes, routes, hazards, continents, regions, pois, pixelMapping] = await Promise.all([
+      fetchJson('nodes.json'),
+      fetchJson('routes.json'),
+      fetchJson('hazards.json'),
+      fetchJson('continents.json'),
+      fetchJson('regions.json'),
+      fetchJson('pois.json').catch(() => []),
+      fetchJson('pixel-mapping.json')
+    ]);
+
+    const nodeById = Object.fromEntries(nodes.filter(n => n?.id).map(n => [n.id, n]));
+    const pixelNodes = pixelMapping.nodes || {};
+    const pixelContinents = pixelMapping.continents || {};
+    const pixelHazards = pixelMapping.hazards || {};
+
+    // Convert to Leaflet coords: [y, x] where y is from bottom (Leaflet CRS.Simple flips)
+    function toLatLng(nodeId) {
+      const px = pixelNodes[nodeId];
+      if (!px) return null;
+      return [IMG_H - px.y, px.x];
+    }
+
+    function pixelToLatLng(x, y) {
+      return [IMG_H - y, x];
+    }
+
+    // --- Initialize map ---
+    const bounds = [[0, 0], [IMG_H, IMG_W]];
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -2,
+      maxZoom: 3,
+      zoomSnap: 0.25,
+      zoomDelta: 0.5,
+      wheelPxPerZoomLevel: 100,
+      attributionControl: false,
+      zoomControl: false,
+      preferCanvas: true,
+      maxBounds: [[-200, -200], [IMG_H + 200, IMG_W + 200]],
+      maxBoundsViscosity: 0.8
+    });
+
+    // Background
+    const bgOverlay = L.imageOverlay(HIRES_IMG, bounds, {
+      opacity: 1,
+      interactive: false
+    }).addTo(map);
+
+    map.fitBounds(bounds, { padding: [20, 20] });
+
+    // --- Create layer groups ---
+    const layers = {
+      roads: L.layerGroup().addTo(map),
+      rail: L.layerGroup().addTo(map),
+      sea: L.layerGroup().addTo(map),
+      air: L.layerGroup().addTo(map),
+      special: L.layerGroup().addTo(map),
+      hazards: L.layerGroup().addTo(map),
+      nodes: L.layerGroup().addTo(map),
+      pois: L.layerGroup().addTo(map),
+      labels: L.layerGroup().addTo(map),
+      continentLabels: L.layerGroup(),
+      grid: L.layerGroup(),
+      routeHighlight: L.layerGroup().addTo(map)
+    };
+
+    // Pane ordering
+    map.createPane('routePane').style.zIndex = '420';
+    map.createPane('hazardPane').style.zIndex = '410';
+    map.createPane('poiPane').style.zIndex = '430';
+    map.createPane('nodePane').style.zIndex = '450';
+    map.createPane('labelPane').style.zIndex = '455';
+    map.createPane('highlightPane').style.zIndex = '470';
+
+    // --- Render routes ---
+    const routeLayerById = new Map();
+
+    routes.forEach(route => {
+      const fromPos = toLatLng(route.from);
+      const toPos = toLatLng(route.to);
+      if (!fromPos || !toPos) return;
+
+      const style = ROUTE_STYLES[route.type] || { color: '#666', weight: 2, opacity: 0.5, dashArray: '4 6' };
+      const polyline = L.polyline([fromPos, toPos], {
+        ...style,
+        pane: 'routePane',
+        interactive: true
+      });
+
+      const layerName = ROUTE_LAYER_MAP[route.type] || 'special';
+      polyline.addTo(layers[layerName]);
+      routeLayerById.set(route.id, polyline);
+
+      // Route popup
+      const fromNode = nodeById[route.from];
+      const toNode = nodeById[route.to];
+      polyline.bindPopup(`
+        <div class="popup-card">
+          <div class="popup-card-name">${esc(route.name || route.id)}</div>
+          <div class="popup-card-type">${esc(route.type)} — ${esc(route.distance_km ?? '?')} km</div>
+          <div class="popup-card-desc">${esc(fromNode?.name || route.from)} → ${esc(toNode?.name || route.to)}</div>
+          <div class="popup-card-meta">
+            ${route.estimated_time_hours ? `<span class="popup-card-tag">⏱ ${route.estimated_time_hours}h</span>` : ''}
+            ${route.danger_level ? `<span class="popup-card-tag">⚠ 危険度 ${route.danger_level}</span>` : ''}
+            ${route.status ? `<span class="popup-card-tag">${esc(route.status)}</span>` : ''}
+          </div>
+        </div>
+      `, { maxWidth: 280 });
+
+      // Distance label at midpoint
+      if (route.distance_km) {
+        const mid = [(fromPos[0]+toPos[0])/2, (fromPos[1]+toPos[1])/2];
+        L.marker(mid, {
+          icon: L.divIcon({
+            className: 'distance-label',
+            html: `${route.distance_km}km`,
+            iconSize: [50, 16],
+            iconAnchor: [25, 8]
+          }),
+          pane: 'labelPane',
+          interactive: false
+        }).addTo(layers.labels);
+      }
+    });
+
+    // --- Render hazard zones ---
+    hazards.forEach(hazard => {
+      const px = pixelHazards[hazard.id];
+      if (!px) return;
+
+      const pos = pixelToLatLng(px.x, px.y);
+      const radius = hazard.radius * (pixelMapping.hazard_radius_scale || 0.4);
+      const severity = Math.min(Math.max(hazard.severity || 1, 1), 5);
+
+      let color = '#8a6040';
+      let fillColor = '#8a6040';
+      if (hazard.type === 'ice_sea') { color = '#3a6270'; fillColor = '#5e8ca0'; }
+      else if (hazard.type === 'time_distortion') { color = '#5a3a72'; fillColor = '#7a5a90'; }
+      else if (hazard.type === 'forbidden_zone') { color = '#5a2028'; fillColor = '#7a3545'; }
+      else if (hazard.type === 'pirate_sea') { color = '#6a3428'; fillColor = '#8a4a3a'; }
+      else if (hazard.type === 'storm') { color = '#524568'; fillColor = '#6a5a80'; }
+      else if (hazard.type === 'sandstorm') { color = '#8a6040'; fillColor = '#a07848'; }
+      else if (hazard.type === 'avalanche') { color = '#5a7080'; fillColor = '#7a90a0'; }
+      else if (hazard.type === 'monster_sea') { color = '#6a3428'; fillColor = '#8a4a3a'; }
+
+      const circle = L.circle(pos, {
+        radius: radius,
+        color: color,
+        fillColor: fillColor,
+        fillOpacity: 0.08 + severity * 0.02,
+        weight: 1.5,
+        opacity: 0.5,
+        dashArray: '6 4',
+        pane: 'hazardPane',
+        interactive: true
+      }).addTo(layers.hazards);
+
+      circle.bindTooltip(hazard.name || hazard.id, {
+        className: 'hazard-tooltip',
+        direction: 'center'
+      });
+
+      circle.bindPopup(`
+        <div class="popup-card">
+          <div class="popup-card-name">${esc(hazard.name)}</div>
+          <div class="popup-card-type">${esc(hazard.type)} — 危険度 ${severity}/5</div>
+          <div class="popup-card-desc">${esc(hazard.description)}</div>
+          <div class="popup-card-meta">
+            ${hazard.seasonal ? `<span class="popup-card-tag">季節: ${(hazard.active_months||[]).join(',')}月</span>` : '<span class="popup-card-tag">通年</span>'}
+            <span class="popup-card-tag">半径 ${hazard.radius}単位</span>
+          </div>
+        </div>
+      `, { maxWidth: 280 });
+    });
+
+    // --- Render nodes (the main markers) ---
+    const nodeMarkerById = new Map();
+    const allSearchableItems = [];
+
+    nodes.forEach(node => {
+      const pos = toLatLng(node.id);
+      if (!pos) return;
+
+      const type = (node.type || 'city').toLowerCase().replace(/\s+/g, '_');
+      const color = MARKER_COLORS[type] || '#a3b1c6';
+      const sizeClass = type === 'capital' ? 'capital' : (['city','floating_island','underwater_city'].includes(type) ? 'city' : '');
+      const typeLabel = TYPE_LABELS[type] || type;
+
+      // Create marker with dot icon
+      const marker = L.marker(pos, {
+        icon: L.divIcon({
+          className: 'map-marker',
+          html: `<div class="map-marker-dot ${sizeClass}" style="background:${color};"></div>
+                 <div class="map-marker-label" data-node-id="${node.id}">${esc(node.name)}</div>`,
+          iconSize: [0, 0],
+          iconAnchor: [0, 0]
+        }),
+        pane: 'nodePane',
+        interactive: true,
+        riseOnHover: true
+      }).addTo(layers.nodes);
+
+      nodeMarkerById.set(node.id, marker);
+
+      // Popup
+      marker.bindPopup(`
+        <div class="popup-card">
+          <div class="popup-card-name">${esc(node.name)}</div>
+          <div class="popup-card-type">${esc(typeLabel)} — ${esc(CONTINENT_NAMES[node.continent_id]?.ja || node.continent_id)}</div>
+          <div class="popup-card-desc">${esc(node.description || '')}</div>
+          <div class="popup-card-meta">
+            ${(node.tags || []).map(t => `<span class="popup-card-tag">${esc(t)}</span>`).join('')}
+          </div>
+          <button class="popup-card-btn" onclick="window._showNodeDetail('${node.id}')">詳細を見る</button>
+        </div>
+      `, { maxWidth: 280 });
+
+      allSearchableItems.push({
+        id: node.id,
+        name: node.name,
+        type: type,
+        typeLabel: typeLabel,
+        color: color,
+        continent: node.continent_id,
+        description: node.description,
+        tags: node.tags || [],
+        pos: pos,
+        kind: 'node'
+      });
+    });
+
+    // --- Render POIs ---
+    const POI_COLORS = {
+      government: '#d4a854', military: '#e06c6c', transport: '#a3b1c6',
+      market: '#6bc77a', shop: '#6bc77a', inn: '#c09a6b', food: '#c09a6b',
+      guild: '#e06c6c', academy: '#5b9bd5', temple: '#9b7ed8', culture: '#9b7ed8',
+      entertainment: '#d4a854', industry: '#a3b1c6', research: '#5b9bd5',
+      hazard_support: '#e06c6c', dungeon: '#8b3040', landmark: '#6bc77a',
+      residential: '#a3b1c6', utility: '#a3b1c6', restricted: '#8b3040'
+    };
+
+    pois.forEach(poi => {
+      if (!poi?.position?.x || !poi?.position?.y) return;
+
+      // POIs use the old coordinate system — need to convert
+      // For now, check if pixel mapping has them; otherwise approximate
+      const px = pixelNodes[poi.nearest_node_id || ''];
+      if (!px) return; // Skip POIs without a nearby mapped node
+
+      // Offset POI position slightly from parent node
+      const parentNode = nodeById[poi.nearest_node_id];
+      if (!parentNode) return;
+
+      const parentPx = pixelNodes[poi.nearest_node_id];
+      const offsetScale = 0.4; // km to pixel rough scale
+      const dx = (poi.position.x - parentNode.position.x) * offsetScale;
+      const dy = (poi.position.y - parentNode.position.y) * offsetScale;
+
+      const poiX = parentPx.x + dx;
+      const poiY = parentPx.y + dy;
+      const pos = pixelToLatLng(poiX, poiY);
+
+      const color = POI_COLORS[poi.category] || '#a3b1c6';
+      const marker = L.marker(pos, {
+        icon: L.divIcon({
+          className: '',
+          html: `<div class="poi-marker-dot" style="background:${color};"></div>`,
+          iconSize: [8, 8],
+          iconAnchor: [4, 4]
+        }),
+        pane: 'poiPane',
+        interactive: true
+      }).addTo(layers.pois);
+
+      marker.bindPopup(`
+        <div class="popup-card">
+          <div class="popup-card-name">${esc(poi.name)}</div>
+          <div class="popup-card-type">${esc(poi.category)} — ${esc(poi.type)}</div>
+          <div class="popup-card-desc">${esc(poi.description || '')}</div>
+          <div class="popup-card-meta">
+            ${poi.importance ? `<span class="popup-card-tag">★${poi.importance}</span>` : ''}
+            ${poi.status ? `<span class="popup-card-tag">${esc(poi.status)}</span>` : ''}
+          </div>
+        </div>
+      `, { maxWidth: 260 });
+
+      allSearchableItems.push({
+        id: poi.id,
+        name: poi.name,
+        type: poi.category,
+        typeLabel: poi.category,
+        color: color,
+        continent: poi.continent_id,
+        description: poi.description,
+        tags: poi.tags || [],
+        pos: pos,
+        kind: 'poi'
+      });
+    });
+
+    // --- Continent labels ---
+    Object.entries(CONTINENT_NAMES).forEach(([id, names]) => {
+      const px = pixelContinents[id];
+      if (!px) return;
+      const pos = pixelToLatLng(px.x, px.y);
+
+      L.marker(pos, {
+        icon: L.divIcon({
+          className: 'continent-label',
+          html: `${names.en}<span class="continent-label-jp">${names.ja}</span>`,
+          iconSize: [0, 0],
+          iconAnchor: [0, 0]
+        }),
+        interactive: false
+      }).addTo(layers.continentLabels);
+    });
+
+    // --- Grid ---
+    for (let x = 0; x <= IMG_W; x += 400) {
+      L.polyline([[0, x], [IMG_H, x]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
+    }
+    for (let y = 0; y <= IMG_H; y += 400) {
+      L.polyline([[y, 0], [y, IMG_W]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
+    }
+
+    // --- Zoom-dependent label visibility ---
+    function updateLabelVisibility() {
+      const zoom = map.getZoom();
+      document.querySelectorAll('.map-marker-label').forEach(el => {
+        const nodeId = el.dataset.nodeId;
+        const node = nodeById[nodeId];
+        if (!node) return;
+
+        const type = (node.type || '').toLowerCase();
+        // Show capitals always, cities at zoom >= -1, others at zoom >= 0
+        if (type === 'capital') {
+          el.classList.remove('hidden');
+        } else if (['city', 'port', 'floating_island', 'underwater_city'].includes(type)) {
+          el.classList.toggle('hidden', zoom < -0.5);
+        } else {
+          el.classList.toggle('hidden', zoom < 0.5);
+        }
+      });
+
+      // Distance labels only at medium zoom
+      const showDist = zoom >= 0 && zoom <= 2;
+      document.querySelectorAll('.distance-label').forEach(el => {
+        el.style.display = showDist ? '' : 'none';
+      });
+
+      // POI markers only at close zoom
+      if (zoom < 0.5) {
+        map.removeLayer(layers.pois);
+      } else {
+        map.addLayer(layers.pois);
+      }
+    }
+
+    map.on('zoomend', updateLabelVisibility);
+    updateLabelVisibility();
+
+    // --- Search ---
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    function buildSearchText(item) {
+      return [item.name, item.id, item.typeLabel, item.description, ...(item.tags || [])].filter(Boolean).join(' ').toLowerCase();
+    }
+
+    allSearchableItems.forEach(item => {
+      item._searchText = buildSearchText(item);
+    });
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) {
+        searchResults.classList.remove('active');
+        return;
+      }
+
+      const matches = allSearchableItems.filter(item => item._searchText.includes(q)).slice(0, 12);
+
+      if (matches.length === 0) {
+        searchResults.innerHTML = '<div style="padding:12px;color:var(--text-muted);font-size:13px;">見つかりません</div>';
+      } else {
+        searchResults.innerHTML = matches.map(item => `
+          <div class="search-result-item" data-id="${item.id}" data-kind="${item.kind}">
+            <div class="search-result-dot" style="background:${item.color};"></div>
+            <div>
+              <div class="search-result-name">${esc(item.name)}</div>
+              <div class="search-result-meta">${esc(item.typeLabel)} — ${esc(CONTINENT_NAMES[item.continent]?.ja || item.continent || '')}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+      searchResults.classList.add('active');
+    });
+
+    searchResults.addEventListener('click', e => {
+      const item = e.target.closest('.search-result-item');
+      if (!item) return;
+      const id = item.dataset.id;
+      const match = allSearchableItems.find(i => i.id === id);
+      if (match) {
+        map.setView(match.pos, 1.5, { animate: true });
+        const marker = nodeMarkerById.get(id);
+        if (marker) marker.openPopup();
+      }
+      searchResults.classList.remove('active');
+      searchInput.value = '';
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-container')) {
+        searchResults.classList.remove('active');
+      }
+    });
+
+    // --- Layer controls ---
+    document.querySelectorAll('[data-layer]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const layerName = cb.dataset.layer;
+        const layer = layers[layerName];
+        if (!layer) return;
+        if (cb.checked) map.addLayer(layer);
+        else map.removeLayer(layer);
+      });
+    });
+
+    // Layer panel toggle
+    const layerPanel = document.getElementById('layerPanel');
+    const layerToggleBtn = document.getElementById('layerToggleBtn');
+
+    document.getElementById('layerPanelClose').addEventListener('click', () => {
+      layerPanel.classList.add('collapsed');
+      layerToggleBtn.classList.remove('hidden');
+    });
+
+    layerToggleBtn.addEventListener('click', () => {
+      layerPanel.classList.remove('collapsed');
+      layerToggleBtn.classList.add('hidden');
+    });
+
+    // --- Info panel ---
+    const infoPanel = document.getElementById('infoPanel');
+    const infoPanelContent = document.getElementById('infoPanelContent');
+
+    document.getElementById('infoPanelClose').addEventListener('click', () => {
+      infoPanel.classList.remove('active');
+    });
+
+    window._showNodeDetail = function(nodeId) {
+      const node = nodeById[nodeId];
+      if (!node) return;
+
+      const type = (node.type || 'city').toLowerCase().replace(/\s+/g, '_');
+      const color = MARKER_COLORS[type] || '#a3b1c6';
+      const typeLabel = TYPE_LABELS[type] || type;
+
+      // Find connected routes
+      const connectedRoutes = routes.filter(r => r.from === nodeId || r.to === nodeId);
+
+      infoPanelContent.innerHTML = `
+        <div class="info-header">
+          <div class="info-type-badge" style="background:${color};color:#1a1d23;">${esc(typeLabel)}</div>
+          <div class="info-name">${esc(node.name)}</div>
+          <div class="info-subtitle">${esc(CONTINENT_NAMES[node.continent_id]?.ja || '')} · ${esc(node.continent_id)}</div>
+        </div>
+        <div class="info-section">
+          <div class="info-section-title">概要</div>
+          <div class="info-desc">${esc(node.description || '説明なし')}</div>
+        </div>
+        <div class="info-section">
+          <div class="info-section-title">情報</div>
+          ${[
+            ['種別', typeLabel],
+            ['大陸', CONTINENT_NAMES[node.continent_id]?.ja || node.continent_id],
+            ['地域', node.region_id || '不明'],
+            ['交通機能', (node.transport_roles || []).join(', ') || 'なし'],
+            ['施設', (node.facilities || []).join(', ') || 'なし']
+          ].map(([l,v]) => `<div class="info-row"><span class="info-row-label">${esc(l)}</span><span class="info-row-value">${esc(v)}</span></div>`).join('')}
+        </div>
+        ${connectedRoutes.length > 0 ? `
+        <div class="info-section">
+          <div class="info-section-title">接続ルート (${connectedRoutes.length})</div>
+          ${connectedRoutes.map(r => {
+            const other = r.from === nodeId ? nodeById[r.to] : nodeById[r.from];
+            return `<div class="info-row">
+              <span class="info-row-label">${esc(r.type)}</span>
+              <span class="info-row-value">${esc(other?.name || '?')} (${r.distance_km || '?'}km)</span>
+            </div>`;
+          }).join('')}
+        </div>` : ''}
+        <div class="info-section">
+          <div class="info-section-title">タグ</div>
+          <div class="info-tags">${(node.tags || []).map(t => `<span class="info-tag">${esc(t)}</span>`).join('') || '<span class="info-desc">なし</span>'}</div>
+        </div>
+      `;
+
+      infoPanel.classList.add('active');
+      map.closePopup();
+    };
+
+    // --- Route search ---
+    const routeFromSelect = document.getElementById('routeFrom');
+    const routeToSelect = document.getElementById('routeTo');
+
+    // Populate route selects
+    const sortedNodes = nodes.filter(n => pixelNodes[n.id]).sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ja'));
+    sortedNodes.forEach(node => {
+      const opt1 = new Option(`${node.name} (${TYPE_LABELS[node.type] || node.type})`, node.id);
+      const opt2 = new Option(`${node.name} (${TYPE_LABELS[node.type] || node.type})`, node.id);
+      routeFromSelect.add(opt1);
+      routeToSelect.add(opt2);
+    });
+
+    // Route panel toggle
+    const routePanelBody = document.getElementById('routePanelBody');
+    document.getElementById('routePanelToggle').addEventListener('click', () => {
+      routePanelBody.classList.toggle('collapsed');
+      document.getElementById('routePanelToggle').textContent = routePanelBody.classList.contains('collapsed') ? '▸' : '▾';
+    });
+
+    // Dijkstra
+    function buildGraph(weightMode) {
+      const graph = {};
+      routes.forEach(r => {
+        if (!pixelNodes[r.from] || !pixelNodes[r.to]) return;
+        if (r.status === 'restricted') return;
+
+        let w = r.distance_km || 100;
+        if (weightMode === 'time') w = r.estimated_time_hours || (w / 50);
+        else if (weightMode === 'safety') w = w * (1 + (r.danger_level || 0) * 0.5);
+
+        if (!graph[r.from]) graph[r.from] = [];
+        if (!graph[r.to]) graph[r.to] = [];
+        graph[r.from].push({ to: r.to, weight: w, route: r });
+        graph[r.to].push({ to: r.from, weight: w, route: r });
+      });
+      return graph;
+    }
+
+    function dijkstra(graph, start, end) {
+      const dist = {};
+      const prev = {};
+      const prevRoute = {};
+      const visited = new Set();
+      const queue = [[0, start]];
+      dist[start] = 0;
+
+      while (queue.length > 0) {
+        queue.sort((a, b) => a[0] - b[0]);
+        const [d, u] = queue.shift();
+        if (visited.has(u)) continue;
+        visited.add(u);
+        if (u === end) break;
+
+        for (const edge of (graph[u] || [])) {
+          const nd = d + edge.weight;
+          if (nd < (dist[edge.to] ?? Infinity)) {
+            dist[edge.to] = nd;
+            prev[edge.to] = u;
+            prevRoute[edge.to] = edge.route;
+            queue.push([nd, edge.to]);
+          }
+        }
+      }
+
+      if (dist[end] === undefined) return null;
+
+      const path = [];
+      const pathRoutes = [];
+      let cur = end;
+      while (cur !== start) {
+        path.unshift(cur);
+        pathRoutes.unshift(prevRoute[cur]);
+        cur = prev[cur];
+      }
+      path.unshift(start);
+
+      return { path, routes: pathRoutes, totalWeight: dist[end] };
+    }
+
+    // Search handler
+    document.getElementById('routeSearch').addEventListener('click', () => {
+      const from = routeFromSelect.value;
+      const to = routeToSelect.value;
+      const weight = document.getElementById('routeWeight').value;
+      const resultDiv = document.getElementById('routeResult');
+
+      // Clear previous highlight
+      layers.routeHighlight.clearLayers();
+
+      if (!from || !to) {
+        resultDiv.innerHTML = '<div style="color:var(--text-muted);">出発地と目的地を選択してください。</div>';
+        resultDiv.classList.add('active');
+        return;
+      }
+
+      if (from === to) {
+        resultDiv.innerHTML = '<div style="color:var(--text-muted);">出発地と目的地が同じです。</div>';
+        resultDiv.classList.add('active');
+        return;
+      }
+
+      const graph = buildGraph(weight);
+      const result = dijkstra(graph, from, to);
+
+      if (!result) {
+        resultDiv.innerHTML = '<div style="color:var(--accent-red);">ルートが見つかりませんでした。</div>';
+        resultDiv.classList.add('active');
+        return;
+      }
+
+      // Calculate total distance and time
+      let totalKm = 0;
+      let totalHours = 0;
+      result.routes.forEach(r => {
+        totalKm += r.distance_km || 0;
+        totalHours += r.estimated_time_hours || 0;
+      });
+
+      // Highlight route on map
+      const allLatLngs = [];
+      result.routes.forEach(r => {
+        const fromPos = toLatLng(r.from);
+        const toPos = toLatLng(r.to);
+        if (!fromPos || !toPos) return;
+        allLatLngs.push(fromPos, toPos);
+
+        L.polyline([fromPos, toPos], {
+          color: '#ffd700',
+          weight: 5,
+          opacity: 0.9,
+          pane: 'highlightPane'
+        }).addTo(layers.routeHighlight);
+      });
+
+      // Highlight start/end
+      const startPos = toLatLng(from);
+      const endPos = toLatLng(to);
+      if (startPos) {
+        L.circleMarker(startPos, { radius: 10, color: '#4db67e', fillColor: '#4db67e', fillOpacity: 0.8, weight: 3, pane: 'highlightPane' }).addTo(layers.routeHighlight);
+      }
+      if (endPos) {
+        L.circleMarker(endPos, { radius: 10, color: '#cf6d58', fillColor: '#cf6d58', fillOpacity: 0.8, weight: 3, pane: 'highlightPane' }).addTo(layers.routeHighlight);
+      }
+
+      // Fit bounds
+      if (allLatLngs.length > 0) {
+        map.fitBounds(L.latLngBounds(allLatLngs), { padding: [60, 60] });
+      }
+
+      // Show result
+      resultDiv.innerHTML = `
+        <div class="route-result-summary">
+          <span>📏 ${totalKm.toLocaleString()} km</span>
+          ${totalHours > 0 ? `<span>⏱ ${totalHours.toFixed(1)}時間</span>` : ''}
+          <span>🔄 ${result.path.length - 1}区間</span>
+        </div>
+        ${result.path.map((nodeId, i) => {
+          const node = nodeById[nodeId];
+          const color = MARKER_COLORS[(node?.type || 'city').toLowerCase()] || '#a3b1c6';
+          const route = result.routes[i];
+          return `
+            <div class="route-step">
+              <div class="route-step-dot" style="background:${color};"></div>
+              <span>${esc(node?.name || nodeId)}</span>
+              ${route ? `<span class="route-step-arrow">→ ${route.distance_km || '?'}km (${esc(route.type)})</span>` : ''}
+            </div>
+          `;
+        }).join('')}
+      `;
+      resultDiv.classList.add('active');
+    });
+
+    document.getElementById('routeClear').addEventListener('click', () => {
+      layers.routeHighlight.clearLayers();
+      routeFromSelect.value = '';
+      routeToSelect.value = '';
+      document.getElementById('routeResult').classList.remove('active');
+    });
+
+    // --- Zoom controls ---
+    document.getElementById('zoomIn').addEventListener('click', () => map.zoomIn());
+    document.getElementById('zoomOut').addEventListener('click', () => map.zoomOut());
+    document.getElementById('zoomFit').addEventListener('click', () => map.fitBounds(bounds, { padding: [20, 20] }));
+
+    // --- Coordinate display ---
+    map.on('mousemove', e => {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      // Convert back to pixel coords
+      const px = lng;
+      const py = IMG_H - lat;
+      // Estimate km from center
+      const kmX = ((px - IMG_W/2) * KM_PER_PIXEL).toFixed(0);
+      const kmY = ((IMG_H/2 - py) * KM_PER_PIXEL).toFixed(0);
+      document.getElementById('coordDisplay').textContent = `${Math.round(px)}, ${Math.round(py)} px | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
+    });
+
+    // --- Scale bar ---
+    function updateScaleBar() {
+      const zoom = map.getZoom();
+      const metersPerPixel = KM_PER_PIXEL; // Already in km/pixel at zoom 0
+      const scale = Math.pow(2, zoom);
+      const kmPerScreenPixel = KM_PER_PIXEL / scale;
+
+      // Choose nice round number
+      const targets = [50, 100, 200, 500, 1000, 2000, 5000];
+      let bestKm = 500;
+      for (const t of targets) {
+        const px = t / kmPerScreenPixel;
+        if (px >= 40 && px <= 150) { bestKm = t; break; }
+      }
+
+      const barPx = bestKm / kmPerScreenPixel;
+      document.getElementById('scaleBarLine').style.width = `${Math.round(barPx)}px`;
+      document.getElementById('scaleBarText').textContent = `${bestKm.toLocaleString()} km`;
+    }
+
+    map.on('zoomend', updateScaleBar);
+    updateScaleBar();
+
+    // --- Minimap ---
+    function updateMinimap() {
+      const mapBounds = map.getBounds();
+      const minimapEl = document.getElementById('minimap');
+      const viewportEl = document.getElementById('minimapViewport');
+      const mw = minimapEl.clientWidth;
+      const mh = minimapEl.clientHeight;
+
+      // Convert map bounds to percentage of full bounds
+      const x1 = Math.max(0, mapBounds.getWest() / IMG_W);
+      const y1 = Math.max(0, 1 - mapBounds.getNorth() / IMG_H);
+      const x2 = Math.min(1, mapBounds.getEast() / IMG_W);
+      const y2 = Math.min(1, 1 - mapBounds.getSouth() / IMG_H);
+
+      viewportEl.style.left = `${x1 * mw}px`;
+      viewportEl.style.top = `${y1 * mh}px`;
+      viewportEl.style.width = `${(x2 - x1) * mw}px`;
+      viewportEl.style.height = `${(y2 - y1) * mh}px`;
+    }
+
+    map.on('moveend', updateMinimap);
+    map.on('zoomend', updateMinimap);
+    updateMinimap();
+
+    // Click minimap to navigate
+    document.getElementById('minimap').addEventListener('click', e => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const xPct = (e.clientX - rect.left) / rect.width;
+      const yPct = (e.clientY - rect.top) / rect.height;
+      const lng = xPct * IMG_W;
+      const lat = (1 - yPct) * IMG_H;
+      map.setView([lat, lng], map.getZoom(), { animate: true });
+    });
+
+    // --- Loading complete ---
+    setTimeout(() => {
+      const loading = document.getElementById('loading');
+      loading.classList.add('fade-out');
+      setTimeout(() => loading.remove(), 600);
+    }, 300);
+
+    // Expose API
+    window.EternalArcadiaMap = {
+      map, layers, nodeMarkerById, routeLayerById, nodeById, allSearchableItems,
+      toLatLng, pixelToLatLng
+    };
+
+  })().catch(err => {
+    console.error('Map init failed:', err);
+    document.getElementById('loading').innerHTML = `
+      <div style="color:#e06c6c;font-size:16px;">地図の読み込みに失敗しました</div>
+      <div style="color:#9ca3af;font-size:13px;">${err.message}</div>
+    `;
+  });
+  </script>
+</body>
+</html>

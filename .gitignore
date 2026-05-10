@@ -31,3 +31,4 @@ world/map-data/exports/*.svg
 # OS
 .DS_Store
 Thumbs.db
+.env
