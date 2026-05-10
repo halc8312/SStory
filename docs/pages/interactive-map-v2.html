@@ -2257,7 +2257,7 @@
       // Estimate km from center
       const kmX = ((worldX - WORLD_COORDINATE_WIDTH / 2) * KM_PER_WORLD_UNIT).toFixed(0);
       const kmY = ((WORLD_COORDINATE_HEIGHT / 2 - worldY) * KM_PER_WORLD_UNIT).toFixed(0);
-      document.getElementById('coordDisplay').textContent = `${Math.round(worldX)}, ${Math.round(worldY)} | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
+      document.getElementById('coordDisplay').textContent = `${Math.round(worldX)}, ${Math.round(worldY)} wu | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
     });
 
     // --- Scale bar ---
