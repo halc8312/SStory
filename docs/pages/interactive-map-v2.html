@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>エターナル・アルカディア — インタラクティブ世界地図</title>
+  <title>Leaflet v2 試験版 - エターナル・アルカディア インタラクティブ世界地図</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
   <style>
@@ -947,6 +947,87 @@
         font-size: 11px;
         padding: 5px 12px;
       }
+
+      .evaluation-panel {
+        top: 88px;
+        width: calc(100% - 16px);
+        padding: 12px 14px;
+      }
+    }
+
+    .evaluation-panel {
+      position: absolute;
+      top: 102px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100% - 32px));
+      padding: 14px 18px;
+      background: rgba(26, 29, 35, 0.94);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .evaluation-panel-kicker {
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+
+    .evaluation-panel p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .evaluation-panel p a {
+      color: var(--accent-gold);
+    }
+
+    .evaluation-role-list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .evaluation-role-list strong {
+      color: var(--text-primary);
+    }
+
+    .evaluation-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      list-style: none;
+      margin: 12px 0 0;
+      padding: 0;
+    }
+
+    .evaluation-links a {
+      color: var(--accent-gold);
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .evaluation-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .evaluation-panel {
+        top: 88px;
+        width: calc(100% - 16px);
+        padding: 12px 14px;
+      }
     }
 
     .loading-overlay {
@@ -1013,6 +1094,25 @@
     v2 試験版 — 次世代UI検証中
     <button class="beta-badge-close" id="betaBadgeClose">×</button>
   </div>
+
+  <section class="evaluation-panel" aria-label="Leaflet v2 試験版の説明">
+    <div class="evaluation-panel-kicker">Leaflet v2 Beta / Experimental</div>
+    <p>
+      このページは、Google Maps 風 UI を検証する次世代インタラクティブマップの正式評価用ページです。
+      現在の安定版は <a href="./interactive-map.html">interactive-map.html</a> で、
+      v2 はフルスクリーン地図・レイヤーパネル・ミニマップ・統合検索バーの評価候補として維持します。
+    </p>
+    <ul class="evaluation-role-list">
+      <li><strong>v1 / interactive-map.html:</strong> 現行安定版。既存のルート検索、POI focus、旧SVGデバッグ表示、公開APIを維持します。</li>
+      <li><strong>v2 / interactive-map-v2.html:</strong> 試験版。より Google Maps 風の操作感と、次世代 UI の見やすさを評価します。</li>
+    </ul>
+    <ul class="evaluation-links">
+      <li><a href="./interactive-map.html">現行安定版 v1 を開く</a></li>
+      <li><a href="./maps.html">地図ページで v1 / v2 の使い分けを見る</a></li>
+      <li><a href="./roadmap.html">ロードマップで評価方針を見る</a></li>
+      <li><a href="../notes/interactive-map-v2-evaluation.md">v2 評価メモを見る</a></li>
+    </ul>
+  </section>
 
   <!-- Top bar -->
   <div class="top-bar">
