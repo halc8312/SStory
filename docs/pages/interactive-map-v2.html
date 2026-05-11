@@ -1179,7 +1179,7 @@
       <label class="layer-item"><input type="checkbox" checked data-layer="hazards">危険区域</label>
       <label class="layer-item"><input type="checkbox" data-layer="continentLabels">大陸名</label>
       <label class="layer-item"><input type="checkbox" data-layer="grid">座標グリッド</label>
-      <label class="layer-item"><input type="checkbox" checked id="deepZoomToggle">詳細マップ</label>
+      <label class="layer-item"><input type="checkbox" id="deepZoomToggle">詳細マップ (ベータ)</label>
     </div>
   </div>
 
@@ -1239,7 +1239,7 @@
 
   <!-- Minimap -->
   <div class="minimap" id="minimap">
-    <img src="../assets/images/maps/world/world-map-medium.jpg" alt="minimap">
+    <img src="../assets/images/maps/world/world-map.svg" alt="minimap">
     <div class="minimap-viewport" id="minimapViewport"></div>
   </div>
 
@@ -1252,15 +1252,18 @@
     'use strict';
 
     // --- Configuration ---
-    const IMG_W = 4096;
-    const IMG_H = 2730;
+    const LEGACY_WORLD_IMAGE_W = 4096;
+    const LEGACY_WORLD_IMAGE_H = 2730;
+    const WORLD_MAP_SOURCE_DIMENSIONS = { width: 1000, height: 800 };
+    const WORLD_COORDINATE_WIDTH = WORLD_MAP_SOURCE_DIMENSIONS.width * 10;
+    const WORLD_COORDINATE_HEIGHT = WORLD_MAP_SOURCE_DIMENSIONS.height * 10;
     const BASE_PATH = '../data/map/';
-    const HIRES_IMG = '../assets/images/maps/world/world-map-hires.jpg';
-    const CACHE = '20260510c';
+    const WORLD_MAP_IMG = '../assets/images/maps/world/world-map.svg';
+    const CACHE = '20260510d';
 
     // World scale: the map image represents ~4000km wide (from scale bar in image)
     // At zoom level showing the full map, ~80px = 500km
-    const KM_PER_PIXEL = 4000 / IMG_W; // ≈ 0.977 km/pixel
+    const KM_PER_WORLD_UNIT = 4000 / WORLD_COORDINATE_WIDTH;
 
     // Marker colors by type
     const MARKER_COLORS = {
@@ -1346,34 +1349,59 @@
     };
 
     // --- Load data ---
-    const [nodes, routes, hazards, continents, regions, pois, pixelMapping] = await Promise.all([
+    const [nodes, routes, hazards, continents, regions, pois] = await Promise.all([
       fetchJson('nodes.json'),
       fetchJson('routes.json'),
       fetchJson('hazards.json'),
       fetchJson('continents.json'),
       fetchJson('regions.json'),
-      fetchJson('pois.json').catch(() => []),
-      fetchJson('pixel-mapping.json')
+      fetchJson('pois.json').catch(() => [])
     ]);
 
     const nodeById = Object.fromEntries(nodes.filter(n => n?.id).map(n => [n.id, n]));
-    const pixelNodes = pixelMapping.nodes || {};
-    const pixelContinents = pixelMapping.continents || {};
-    const pixelHazards = pixelMapping.hazards || {};
+    const continentById = Object.fromEntries(continents.filter(item => item?.id).map(item => [item.id, item]));
 
-    // Convert to Leaflet coords: [y, x] where y is from bottom (Leaflet CRS.Simple flips)
-    function toLatLng(nodeId) {
-      const px = pixelNodes[nodeId];
-      if (!px) return null;
-      return [IMG_H - px.y, px.x];
+    function normalizeWorldPosition(position) {
+      const x = Number(position?.x);
+      const y = Number(position?.y);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        return null;
+      }
+      if (x < 0 || x > WORLD_COORDINATE_WIDTH || y < 0 || y > WORLD_COORDINATE_HEIGHT) {
+        console.warn('[InteractiveMapV2] Position is outside world bounds and was skipped:', position);
+        return null;
+      }
+      return { x, y };
     }
 
-    function pixelToLatLng(x, y) {
-      return [IMG_H - y, x];
+    function worldToLatLng(position) {
+      const normalized = normalizeWorldPosition(position);
+      if (!normalized) {
+        return null;
+      }
+      return [WORLD_COORDINATE_HEIGHT - normalized.y, normalized.x];
+    }
+
+    function toLatLng(nodeId) {
+      return worldToLatLng(nodeById[nodeId]?.position);
+    }
+
+    function legacyPixelToWorldPosition(x, y) {
+      return {
+        x: (x / LEGACY_WORLD_IMAGE_W) * WORLD_COORDINATE_WIDTH,
+        y: (y / LEGACY_WORLD_IMAGE_H) * WORLD_COORDINATE_HEIGHT
+      };
+    }
+
+    function legacyBoundsToWorldBounds(bounds) {
+      const [southWest, northEast] = bounds;
+      const southWestWorld = legacyPixelToWorldPosition(southWest[1], LEGACY_WORLD_IMAGE_H - southWest[0]);
+      const northEastWorld = legacyPixelToWorldPosition(northEast[1], LEGACY_WORLD_IMAGE_H - northEast[0]);
+      return [worldToLatLng(southWestWorld), worldToLatLng(northEastWorld)];
     }
 
     // --- Initialize map ---
-    const bounds = [[0, 0], [IMG_H, IMG_W]];
+    const bounds = [[0, 0], [WORLD_COORDINATE_HEIGHT, WORLD_COORDINATE_WIDTH]];
     // Detect mobile
     const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
 
@@ -1387,7 +1415,7 @@
       attributionControl: false,
       zoomControl: false,
       preferCanvas: true,
-      maxBounds: [[-500, -500], [IMG_H + 500, IMG_W + 500]],
+      maxBounds: [[-600, -600], [WORLD_COORDINATE_HEIGHT + 600, WORLD_COORDINATE_WIDTH + 600]],
       maxBoundsViscosity: 0.5,
       bounceAtZoomLimits: false,
       touchZoom: true,
@@ -1400,7 +1428,7 @@
     });
 
     // Background
-    const bgOverlay = L.imageOverlay(HIRES_IMG, bounds, {
+    const bgOverlay = L.imageOverlay(WORLD_MAP_IMG, bounds, {
       opacity: 1,
       interactive: false
     }).addTo(map);
@@ -1442,8 +1470,8 @@
       continents: {
         elysion: {
           image: '../assets/images/maps/continents/elysion-continent.jpg',
-          // Pixel bounds on world map: [southWest, northEast] in Leaflet coords [IMG_H-y, x]
-          bounds: [[IMG_H - 1600, 1100], [IMG_H - 650, 2150]],
+          // Legacy image bounds on world map: [southWest, northEast] in Leaflet coords [LEGACY_WORLD_IMAGE_H-y, x]
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1600, 1100], [LEGACY_WORLD_IMAGE_H - 650, 2150]],
           minZoom: -0.5,
           maxZoom: 1.2
         }
@@ -1452,70 +1480,70 @@
         'astralis-region': {
           image: '../assets/images/maps/regions/astralis-region.png',
           // Centered on Astralis capital (px 1701,1026)
-          bounds: [[IMG_H - 1220, 1480], [IMG_H - 870, 1980]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1220, 1480], [LEGACY_WORLD_IMAGE_H - 870, 1980]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'moonshadow-forest': {
           image: '../assets/images/maps/regions/moonshadow-forest.png',
           // NW of Astralis, dense forest
-          bounds: [[IMG_H - 1080, 1130], [IMG_H - 730, 1550]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1080, 1130], [LEGACY_WORLD_IMAGE_H - 730, 1550]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'silver-plains': {
           image: '../assets/images/maps/regions/silver-plains.png',
           // South Elysion, rolling plains
-          bounds: [[IMG_H - 1450, 1400], [IMG_H - 1120, 1870]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1450, 1400], [LEGACY_WORLD_IMAGE_H - 1120, 1870]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'tensho-mountains': {
           image: '../assets/images/maps/regions/tensho-mountains.png',
           // NE mountains, includes Granrock area
-          bounds: [[IMG_H - 1000, 1680], [IMG_H - 680, 2120]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1000, 1680], [LEGACY_WORLD_IMAGE_H - 680, 2120]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'iron-mountains': {
           image: '../assets/images/maps/regions/iron-mountains.png',
           // Western border with Atlantis
-          bounds: [[IMG_H - 1180, 980], [IMG_H - 860, 1400]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1180, 980], [LEGACY_WORLD_IMAGE_H - 860, 1400]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'emerald-belt': {
           image: '../assets/images/maps/regions/emerald-belt.png',
           // Lumiera continent
-          bounds: [[IMG_H - 1130, 2850], [IMG_H - 810, 3280]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1130, 2850], [LEGACY_WORLD_IMAGE_H - 810, 3280]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'lumiera-arch': {
           image: '../assets/images/maps/regions/lumiera-arch.png',
           // Lumiera continent, east side
-          bounds: [[IMG_H - 1180, 3250], [IMG_H - 860, 3680]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1180, 3250], [LEGACY_WORLD_IMAGE_H - 860, 3680]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'red-sea-desert': {
           image: '../assets/images/maps/regions/red-sea-desert.png',
           // Chaos Ria, northern desert
-          bounds: [[IMG_H - 1850, 1380], [IMG_H - 1530, 1820]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 1850, 1380], [LEGACY_WORLD_IMAGE_H - 1530, 1820]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'lands-of-fire': {
           image: '../assets/images/maps/regions/lands-of-fire.png',
           // Chaos Ria, southern volcanic
-          bounds: [[IMG_H - 2150, 1420], [IMG_H - 1830, 1860]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 2150, 1420], [LEGACY_WORLD_IMAGE_H - 1830, 1860]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'labyrinth-of-time': {
           image: '../assets/images/maps/regions/labyrinth-of-time.png',
           // Grimoire continent
-          bounds: [[IMG_H - 550, 1580], [IMG_H - 230, 2020]],
+          bounds: [[LEGACY_WORLD_IMAGE_H - 550, 1580], [LEGACY_WORLD_IMAGE_H - 230, 2020]],
           minZoom: 1.2,
           maxZoom: 4
         }
@@ -1526,13 +1554,17 @@
     const deepZoomOverlays = {};
 
     function createDeepZoomOverlay(key, config) {
-      const overlay = L.imageOverlay(config.image, config.bounds, {
+      const normalizedConfig = {
+        ...config,
+        bounds: legacyBoundsToWorldBounds(config.bounds)
+      };
+      const overlay = L.imageOverlay(config.image, normalizedConfig.bounds, {
         opacity: 0,
         interactive: false,
         pane: 'deepZoomPane',
         className: 'deep-zoom-overlay'
       });
-      deepZoomOverlays[key] = { overlay, config, active: false };
+      deepZoomOverlays[key] = { overlay, config: normalizedConfig, active: false };
       return overlay;
     }
 
@@ -1586,7 +1618,7 @@
       }
     }
 
-    let deepZoomEnabled = true;
+    let deepZoomEnabled = document.getElementById('deepZoomToggle').checked;
 
     map.on('zoomend', updateDeepZoomOverlays);
     map.on('moveend', updateDeepZoomOverlays);
@@ -1661,11 +1693,9 @@
 
     // --- Render hazard zones ---
     hazards.forEach(hazard => {
-      const px = pixelHazards[hazard.id];
-      if (!px) return;
-
-      const pos = pixelToLatLng(px.x, px.y);
-      const radius = hazard.radius * (pixelMapping.hazard_radius_scale || 0.4);
+      const pos = worldToLatLng(hazard.center);
+      const radius = Number(hazard.radius) || 0;
+      if (!pos || radius <= 0) return;
       const severity = Math.min(Math.max(hazard.severity || 1, 1), 5);
 
       let color = '#8a6040';
@@ -1714,7 +1744,7 @@
     const allSearchableItems = [];
 
     nodes.forEach(node => {
-      const pos = toLatLng(node.id);
+      const pos = worldToLatLng(node.position);
       if (!pos) return;
 
       const type = (node.type || 'city').toLowerCase().replace(/\s+/g, '_');
@@ -1789,25 +1819,8 @@
     };
 
     pois.forEach(poi => {
-      if (!poi?.position?.x || !poi?.position?.y) return;
-
-      // POIs use the old coordinate system — need to convert
-      // For now, check if pixel mapping has them; otherwise approximate
-      const px = pixelNodes[poi.nearest_node_id || ''];
-      if (!px) return; // Skip POIs without a nearby mapped node
-
-      // Offset POI position slightly from parent node
-      const parentNode = nodeById[poi.nearest_node_id];
-      if (!parentNode) return;
-
-      const parentPx = pixelNodes[poi.nearest_node_id];
-      const offsetScale = 0.4; // km to pixel rough scale
-      const dx = (poi.position.x - parentNode.position.x) * offsetScale;
-      const dy = (poi.position.y - parentNode.position.y) * offsetScale;
-
-      const poiX = parentPx.x + dx;
-      const poiY = parentPx.y + dy;
-      const pos = pixelToLatLng(poiX, poiY);
+      const pos = worldToLatLng(poi.position);
+      if (!pos) return;
 
       const color = POI_COLORS[poi.category] || '#a3b1c6';
       const marker = L.marker(pos, {
@@ -1848,10 +1861,10 @@
     });
 
     // --- Continent labels ---
-    Object.entries(CONTINENT_NAMES).forEach(([id, names]) => {
-      const px = pixelContinents[id];
-      if (!px) return;
-      const pos = pixelToLatLng(px.x, px.y);
+    continents.forEach(continent => {
+      const pos = worldToLatLng(continent.center);
+      if (!pos) return;
+      const names = CONTINENT_NAMES[continent.id] || { en: continent.name, ja: continent.name };
 
       L.marker(pos, {
         icon: L.divIcon({
@@ -1865,11 +1878,11 @@
     });
 
     // --- Grid ---
-    for (let x = 0; x <= IMG_W; x += 400) {
-      L.polyline([[0, x], [IMG_H, x]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
+    for (let x = 0; x <= WORLD_COORDINATE_WIDTH; x += 1000) {
+      L.polyline([[0, x], [WORLD_COORDINATE_HEIGHT, x]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
     }
-    for (let y = 0; y <= IMG_H; y += 400) {
-      L.polyline([[y, 0], [y, IMG_W]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
+    for (let y = 0; y <= WORLD_COORDINATE_HEIGHT; y += 1000) {
+      L.polyline([[y, 0], [y, WORLD_COORDINATE_WIDTH]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
     }
 
     // --- Zoom-dependent label visibility ---
@@ -2055,7 +2068,7 @@
     const routeToSelect = document.getElementById('routeTo');
 
     // Populate route selects
-    const sortedNodes = nodes.filter(n => pixelNodes[n.id]).sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ja'));
+    const sortedNodes = nodes.filter(n => worldToLatLng(n.position)).sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ja'));
     sortedNodes.forEach(node => {
       const opt1 = new Option(`${node.name} (${TYPE_LABELS[node.type] || node.type})`, node.id);
       const opt2 = new Option(`${node.name} (${TYPE_LABELS[node.type] || node.type})`, node.id);
@@ -2074,7 +2087,7 @@
     function buildGraph(weightMode) {
       const graph = {};
       routes.forEach(r => {
-        if (!pixelNodes[r.from] || !pixelNodes[r.to]) return;
+        if (!nodeById[r.from]?.position || !nodeById[r.to]?.position) return;
         if (r.status === 'restricted') return;
 
         let w = r.distance_km || 100;
@@ -2239,21 +2252,19 @@
     map.on('mousemove', e => {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
-      // Convert back to pixel coords
-      const px = lng;
-      const py = IMG_H - lat;
+      const worldX = lng;
+      const worldY = WORLD_COORDINATE_HEIGHT - lat;
       // Estimate km from center
-      const kmX = ((px - IMG_W/2) * KM_PER_PIXEL).toFixed(0);
-      const kmY = ((IMG_H/2 - py) * KM_PER_PIXEL).toFixed(0);
-      document.getElementById('coordDisplay').textContent = `${Math.round(px)}, ${Math.round(py)} px | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
+      const kmX = ((worldX - WORLD_COORDINATE_WIDTH / 2) * KM_PER_WORLD_UNIT).toFixed(0);
+      const kmY = ((WORLD_COORDINATE_HEIGHT / 2 - worldY) * KM_PER_WORLD_UNIT).toFixed(0);
+      document.getElementById('coordDisplay').textContent = `${Math.round(worldX)}, ${Math.round(worldY)} world | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
     });
 
     // --- Scale bar ---
     function updateScaleBar() {
       const zoom = map.getZoom();
-      const metersPerPixel = KM_PER_PIXEL; // Already in km/pixel at zoom 0
       const scale = Math.pow(2, zoom);
-      const kmPerScreenPixel = KM_PER_PIXEL / scale;
+      const kmPerScreenPixel = KM_PER_WORLD_UNIT / scale;
 
       // Choose nice round number
       const targets = [50, 100, 200, 500, 1000, 2000, 5000];
@@ -2293,10 +2304,10 @@
       const mh = minimapEl.clientHeight;
 
       // Convert map bounds to percentage of full bounds
-      const x1 = Math.max(0, mapBounds.getWest() / IMG_W);
-      const y1 = Math.max(0, 1 - mapBounds.getNorth() / IMG_H);
-      const x2 = Math.min(1, mapBounds.getEast() / IMG_W);
-      const y2 = Math.min(1, 1 - mapBounds.getSouth() / IMG_H);
+      const x1 = Math.max(0, mapBounds.getWest() / WORLD_COORDINATE_WIDTH);
+      const y1 = Math.max(0, 1 - mapBounds.getNorth() / WORLD_COORDINATE_HEIGHT);
+      const x2 = Math.min(1, mapBounds.getEast() / WORLD_COORDINATE_WIDTH);
+      const y2 = Math.min(1, 1 - mapBounds.getSouth() / WORLD_COORDINATE_HEIGHT);
 
       viewportEl.style.left = `${x1 * mw}px`;
       viewportEl.style.top = `${y1 * mh}px`;
@@ -2313,8 +2324,8 @@
       const rect = e.currentTarget.getBoundingClientRect();
       const xPct = (e.clientX - rect.left) / rect.width;
       const yPct = (e.clientY - rect.top) / rect.height;
-      const lng = xPct * IMG_W;
-      const lat = (1 - yPct) * IMG_H;
+      const lng = xPct * WORLD_COORDINATE_WIDTH;
+      const lat = (1 - yPct) * WORLD_COORDINATE_HEIGHT;
       map.setView([lat, lng], map.getZoom(), { animate: true });
     });
 
@@ -2361,7 +2372,7 @@
     // Expose API
     window.EternalArcadiaMap = {
       map, layers, nodeMarkerById, routeLayerById, nodeById, allSearchableItems,
-      toLatLng, pixelToLatLng
+      continentById, toLatLng, worldToLatLng
     };
 
   })().catch(err => {
