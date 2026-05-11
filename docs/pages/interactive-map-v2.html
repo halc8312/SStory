@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leaflet v2 試験版 — エターナル・アルカディア インタラクティブ世界地図</title>
+  <title>エターナル・アルカディア — インタラクティブ世界地図</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
   <style>
@@ -207,22 +207,18 @@
       pointer-events: none;
     }
 
-     .layer-panel-header {
-       display: flex;
-       align-items: center;
-       justify-content: space-between;
-       padding: 12px 14px;
-       border-bottom: 1px solid var(--border-color);
-       font-size: 13px;
-       font-weight: 600;
-       color: var(--text-secondary);
-       text-transform: uppercase;
-       letter-spacing: 0.5px;
-       position: sticky;
-       top: 0;
-       z-index: 1;
-       background: var(--bg-panel);
-     }
+    .layer-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
     .layer-panel-close {
       background: none;
@@ -421,17 +417,13 @@
       overflow: hidden;
     }
 
-     .route-panel-header {
-       display: flex;
-       align-items: center;
-       justify-content: space-between;
-       padding: 10px 16px;
-       border-bottom: 1px solid var(--border-color);
-       position: sticky;
-       top: 0;
-       z-index: 1;
-       background: var(--bg-panel);
-     }
+    .route-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
 
     .route-panel-title {
       font-size: 13px;
@@ -886,8 +878,7 @@
       .zoom-controls { bottom: auto; top: 60px; }
       .zoom-btn { width: 40px; height: 40px; font-size: 20px; }
       .compass { width: 36px; height: 36px; }
-      /* Bigger touch targets for markers */
-      .leaflet-marker-icon { min-width: 12px; min-height: 12px; }
+      /* Note: do NOT set min-width/min-height on leaflet-marker-icon — it breaks flow layout positioning */
     }
 
     @media (max-width: 480px) {
@@ -897,164 +888,6 @@
     }
 
     /* ---- Loading overlay ---- */
-    /* ---- Beta badge ---- */
-    .beta-badge {
-      position: absolute;
-      top: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1001;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
-      background: rgba(26, 29, 35, 0.92);
-      border: 1px solid var(--accent-gold);
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--accent-gold);
-      backdrop-filter: blur(8px);
-      white-space: nowrap;
-      animation: betaSlideIn 0.4s ease-out;
-      transition: opacity 0.3s, transform 0.3s;
-    }
-    .beta-badge.hidden {
-      opacity: 0;
-      transform: translateX(-50%) translateY(-10px);
-      pointer-events: none;
-    }
-    .beta-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-gold);
-      animation: betaPulse 2s ease-in-out infinite;
-    }
-    .beta-badge-close {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 14px;
-      cursor: pointer;
-      padding: 0 0 0 4px;
-      line-height: 1;
-    }
-    .beta-badge-close:hover { color: var(--text-primary); }
-    @keyframes betaPulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-    @keyframes betaSlideIn {
-      from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-    @media (max-width: 768px) {
-      .beta-badge {
-        top: 52px;
-        font-size: 11px;
-        padding: 5px 12px;
-      }
-    }
-
-    .evaluation-panel {
-      position: absolute;
-      top: 102px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      width: min(760px, calc(100% - 32px));
-      padding: 14px 18px;
-      background: rgba(26, 29, 35, 0.94);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
-
-    .evaluation-panel-kicker {
-      margin-bottom: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-    }
-
-    .evaluation-panel p {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.6;
-      color: var(--text-secondary);
-    }
-
-    .evaluation-panel p a {
-      color: var(--accent-gold);
-    }
-
-    .evaluation-role-list {
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: var(--text-secondary);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .evaluation-role-list strong {
-      color: var(--text-primary);
-    }
-
-    .evaluation-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      list-style: none;
-      margin: 12px 0 0;
-      padding: 0;
-    }
-
-    .evaluation-links a {
-      color: var(--accent-gold);
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-     .evaluation-links a:hover {
-       text-decoration: underline;
-     }
-
-     .evaluation-panel-close {
-       position: sticky;
-       top: 0;
-       display: block;
-       text-align: right;
-       background: var(--bg-panel);
-       border: none;
-       color: var(--text-muted);
-       cursor: pointer;
-       font-size: 20px;
-       line-height: 1;
-       padding: 4px 0;
-       z-index: 2;
-     }
-     .evaluation-panel-close:hover {
-       color: var(--text-primary);
-     }
-     .evaluation-panel.hidden {
-       display: none;
-     }
-
-     @media (max-width: 768px) {
-       .evaluation-panel {
-         top: 88px;
-         width: calc(100% - 16px);
-         padding: 12px 14px;
-         max-height: calc(100vh - 100px);
-         overflow-y: auto;
-       }
-     }
-
     .loading-overlay {
       position: absolute;
       inset: 0;
@@ -1100,6 +933,81 @@
       color: var(--text-secondary);
       white-space: nowrap;
     }
+    /* ---- Beta badge ---- */
+    .beta-badge {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3000;
+      background: linear-gradient(135deg, #d4a854, #b8912e);
+      color: #1a1d23;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 20px;
+      box-shadow: 0 2px 12px rgba(212, 168, 84, 0.4);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      opacity: 1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: auto;
+    }
+    .beta-badge.hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-20px); }
+    @media (max-width: 768px) {
+      .beta-badge { font-size: 10px; padding: 4px 12px; top: 46px; }
+    }
+    @media (max-width: 480px) {
+      .beta-badge { top: 42px; font-size: 9px; padding: 3px 10px; }
+    }
+
+    /* ---- Mobile layout fixes ---- */
+    @media (max-width: 768px) {
+      /* Route panel: collapsed by default, full width bottom sheet */
+      .route-panel {
+        border-radius: 16px 16px 0 0;
+      }
+      /* Layer panel: don't overlap top-bar, limit width */
+      .layer-panel {
+        top: 56px;
+        right: 4px;
+        width: 180px;
+        max-height: 50vh;
+      }
+      /* Info panel: drag handle hint */
+      .info-panel::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: var(--text-muted);
+        border-radius: 2px;
+        margin: 6px auto 0;
+      }
+      /* Popup cards: smaller on mobile */
+      .leaflet-popup-content-wrapper {
+        max-width: 240px !important;
+      }
+      .leaflet-popup-content {
+        margin: 10px !important;
+        font-size: 13px !important;
+      }
+      /* Top bar: prevent overflow */
+      .top-bar {
+        flex-wrap: nowrap;
+        overflow: hidden;
+      }
+      .logo-icon { width: 28px; height: 28px; font-size: 11px; }
+      /* Zoom controls: tighter positioning */
+      .zoom-controls { right: 8px; }
+    }
+    @media (max-width: 480px) {
+      .layer-panel { width: 160px; }
+      .route-panel { max-height: 30vh; }
+      .info-panel { max-height: 45vh; }
+      .top-bar { padding: 4px 8px; gap: 6px; }
+    }
   </style>
 </head>
 <body>
@@ -1114,31 +1022,7 @@
   <div id="map"></div>
 
   <!-- Beta badge -->
-  <div class="beta-badge" id="betaBadge" title="クリックで非表示">
-    <span class="beta-badge-dot"></span>
-    v2 試験版 — 次世代UI検証中
-    <button class="beta-badge-close" id="betaBadgeClose">×</button>
-  </div>
-
-  <section class="evaluation-panel" aria-labelledby="evaluation-panel-title">
-    <button class="evaluation-panel-close" id="evaluationPanelClose" title="評価パネルを非表示">×</button>
-    <h2 class="evaluation-panel-kicker" id="evaluation-panel-title">Leaflet v2 Beta / Experimental</h2>
-    <p>
-      このページは、Google Maps 風 UI を検証する次世代インタラクティブマップの正式評価用ページです。
-      現在の安定版は <a href="./interactive-map.html">interactive-map.html</a> で、
-      v2 はフルスクリーン地図・レイヤーパネル・ミニマップ・統合検索バーの評価候補として維持します。
-    </p>
-    <ul class="evaluation-role-list">
-      <li><strong>v1 / interactive-map.html:</strong> 現行安定版。既存のルート検索、POI focus、旧SVGデバッグ表示、公開APIを維持します。</li>
-      <li><strong>v2 / interactive-map-v2.html:</strong> 試験版。より Google Maps 風の操作感と、次世代 UI の見やすさを評価します。</li>
-    </ul>
-    <ul class="evaluation-links">
-      <li><a href="./interactive-map.html">現行安定版 v1 を開く</a></li>
-      <li><a href="./maps.html">地図ページで v1 / v2 の使い分けを見る</a></li>
-      <li><a href="./roadmap.html">ロードマップで評価方針を見る</a></li>
-      <li><a href="../notes/interactive-map-v2-evaluation.md">v2 評価メモを見る</a></li>
-    </ul>
-  </section>
+  <div class="beta-badge" id="betaBadge" title="クリックで非表示">🧪 試験版 — フィードバック歓迎</div>
 
   <!-- Top bar -->
   <div class="top-bar">
@@ -1179,7 +1063,7 @@
       <label class="layer-item"><input type="checkbox" checked data-layer="hazards">危険区域</label>
       <label class="layer-item"><input type="checkbox" data-layer="continentLabels">大陸名</label>
       <label class="layer-item"><input type="checkbox" data-layer="grid">座標グリッド</label>
-      <label class="layer-item"><input type="checkbox" id="deepZoomToggle">詳細マップ (ベータ)</label>
+      <label class="layer-item"><input type="checkbox" checked id="deepZoomToggle">詳細マップ</label>
     </div>
   </div>
 
@@ -1239,7 +1123,7 @@
 
   <!-- Minimap -->
   <div class="minimap" id="minimap">
-    <img src="../assets/images/maps/world/world-map.svg" alt="minimap">
+    <img src="../assets/images/maps/world/world-map-medium.jpg" alt="minimap">
     <div class="minimap-viewport" id="minimapViewport"></div>
   </div>
 
@@ -1252,18 +1136,15 @@
     'use strict';
 
     // --- Configuration ---
-    const LEGACY_WORLD_IMAGE_W = 4096;
-    const LEGACY_WORLD_IMAGE_H = 2730;
-    const WORLD_MAP_SOURCE_DIMENSIONS = { width: 1000, height: 800 };
-    const WORLD_COORDINATE_WIDTH = WORLD_MAP_SOURCE_DIMENSIONS.width * 10;
-    const WORLD_COORDINATE_HEIGHT = WORLD_MAP_SOURCE_DIMENSIONS.height * 10;
+    const IMG_W = 4096;
+    const IMG_H = 2730;
     const BASE_PATH = '../data/map/';
-    const WORLD_MAP_IMG = '../assets/images/maps/world/world-map.svg';
-    const CACHE = '20260510d';
+    const HIRES_IMG = '../assets/images/maps/world/world-map-hires.jpg';
+    const CACHE = '20260510c';
 
     // World scale: the map image represents ~4000km wide (from scale bar in image)
     // At zoom level showing the full map, ~80px = 500km
-    const KM_PER_WORLD_UNIT = 4000 / WORLD_COORDINATE_WIDTH;
+    const KM_PER_PIXEL = 4000 / IMG_W; // ≈ 0.977 km/pixel
 
     // Marker colors by type
     const MARKER_COLORS = {
@@ -1349,59 +1230,34 @@
     };
 
     // --- Load data ---
-    const [nodes, routes, hazards, continents, regions, pois] = await Promise.all([
+    const [nodes, routes, hazards, continents, regions, pois, pixelMapping] = await Promise.all([
       fetchJson('nodes.json'),
       fetchJson('routes.json'),
       fetchJson('hazards.json'),
       fetchJson('continents.json'),
       fetchJson('regions.json'),
-      fetchJson('pois.json').catch(() => [])
+      fetchJson('pois.json').catch(() => []),
+      fetchJson('pixel-mapping.json')
     ]);
 
     const nodeById = Object.fromEntries(nodes.filter(n => n?.id).map(n => [n.id, n]));
-    const continentById = Object.fromEntries(continents.filter(item => item?.id).map(item => [item.id, item]));
+    const pixelNodes = pixelMapping.nodes || {};
+    const pixelContinents = pixelMapping.continents || {};
+    const pixelHazards = pixelMapping.hazards || {};
 
-    function normalizeWorldPosition(position) {
-      const x = Number(position?.x);
-      const y = Number(position?.y);
-      if (!Number.isFinite(x) || !Number.isFinite(y)) {
-        return null;
-      }
-      if (x < 0 || x > WORLD_COORDINATE_WIDTH || y < 0 || y > WORLD_COORDINATE_HEIGHT) {
-        console.warn('[InteractiveMapV2] Position is outside world bounds and was skipped:', position);
-        return null;
-      }
-      return { x, y };
-    }
-
-    function worldToLatLng(position) {
-      const normalized = normalizeWorldPosition(position);
-      if (!normalized) {
-        return null;
-      }
-      return [WORLD_COORDINATE_HEIGHT - normalized.y, normalized.x];
-    }
-
+    // Convert to Leaflet coords: [y, x] where y is from bottom (Leaflet CRS.Simple flips)
     function toLatLng(nodeId) {
-      return worldToLatLng(nodeById[nodeId]?.position);
+      const px = pixelNodes[nodeId];
+      if (!px) return null;
+      return [IMG_H - px.y, px.x];
     }
 
-    function legacyPixelToWorldPosition(x, y) {
-      return {
-        x: (x / LEGACY_WORLD_IMAGE_W) * WORLD_COORDINATE_WIDTH,
-        y: (y / LEGACY_WORLD_IMAGE_H) * WORLD_COORDINATE_HEIGHT
-      };
-    }
-
-    function legacyBoundsToWorldBounds(bounds) {
-      const [southWest, northEast] = bounds;
-      const southWestWorld = legacyPixelToWorldPosition(southWest[1], LEGACY_WORLD_IMAGE_H - southWest[0]);
-      const northEastWorld = legacyPixelToWorldPosition(northEast[1], LEGACY_WORLD_IMAGE_H - northEast[0]);
-      return [worldToLatLng(southWestWorld), worldToLatLng(northEastWorld)];
+    function pixelToLatLng(x, y) {
+      return [IMG_H - y, x];
     }
 
     // --- Initialize map ---
-    const bounds = [[0, 0], [WORLD_COORDINATE_HEIGHT, WORLD_COORDINATE_WIDTH]];
+    const bounds = [[0, 0], [IMG_H, IMG_W]];
     // Detect mobile
     const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
 
@@ -1415,8 +1271,8 @@
       attributionControl: false,
       zoomControl: false,
       preferCanvas: true,
-      maxBounds: [[-600, -600], [WORLD_COORDINATE_HEIGHT + 600, WORLD_COORDINATE_WIDTH + 600]],
-      maxBoundsViscosity: 0.5,
+      maxBounds: isMobile ? [[-200, -100], [IMG_H + 200, IMG_W + 100]] : [[-500, -500], [IMG_H + 500, IMG_W + 500]],
+      maxBoundsViscosity: isMobile ? 0.8 : 0.5,
       bounceAtZoomLimits: false,
       touchZoom: true,
       tap: true,
@@ -1428,16 +1284,25 @@
     });
 
     // Background
-    const bgOverlay = L.imageOverlay(WORLD_MAP_IMG, bounds, {
+    const bgOverlay = L.imageOverlay(HIRES_IMG, bounds, {
       opacity: 1,
       interactive: false
     }).addTo(map);
 
-    map.fitBounds(bounds, { padding: isMobile ? [10, 10] : [20, 20] });
-
-    // Set minZoom dynamically so user can always see the full map
-    const fitZoom = map.getBoundsZoom(bounds, false, isMobile ? [10, 10] : [20, 20]);
-    map.setMinZoom(Math.min(fitZoom - 1, -3));
+    if (isMobile) {
+      // On mobile portrait: fit to width so map image fills horizontally
+      // getBoundsZoom with 'inside=true' gives zoom where entire bounds fits
+      // We want the zoom where width fills, ignoring height
+      const widthBounds = [[0, 0], [1, IMG_W]]; // just width
+      const wZoom = map.getBoundsZoom(widthBounds, false, [0, 0]);
+      map.setView([IMG_H / 2, IMG_W / 2], wZoom);
+      // minZoom = this level so user can't zoom out past the image width
+      map.setMinZoom(wZoom);
+    } else {
+      map.fitBounds(bounds, { padding: [20, 20] });
+      const fitZoom = map.getBoundsZoom(bounds, false, [20, 20]);
+      map.setMinZoom(Math.min(fitZoom - 0.5, -3));
+    }
 
     // --- Create layer groups ---
     const layers = {
@@ -1470,8 +1335,8 @@
       continents: {
         elysion: {
           image: '../assets/images/maps/continents/elysion-continent.jpg',
-          // Legacy image bounds on world map: [southWest, northEast] in Leaflet coords [LEGACY_WORLD_IMAGE_H-y, x]
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1600, 1100], [LEGACY_WORLD_IMAGE_H - 650, 2150]],
+          // Pixel bounds on world map: [southWest, northEast] in Leaflet coords [IMG_H-y, x]
+          bounds: [[IMG_H - 1600, 1100], [IMG_H - 650, 2150]],
           minZoom: -0.5,
           maxZoom: 1.2
         }
@@ -1480,70 +1345,70 @@
         'astralis-region': {
           image: '../assets/images/maps/regions/astralis-region.png',
           // Centered on Astralis capital (px 1701,1026)
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1220, 1480], [LEGACY_WORLD_IMAGE_H - 870, 1980]],
+          bounds: [[IMG_H - 1220, 1480], [IMG_H - 870, 1980]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'moonshadow-forest': {
           image: '../assets/images/maps/regions/moonshadow-forest.png',
           // NW of Astralis, dense forest
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1080, 1130], [LEGACY_WORLD_IMAGE_H - 730, 1550]],
+          bounds: [[IMG_H - 1080, 1130], [IMG_H - 730, 1550]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'silver-plains': {
           image: '../assets/images/maps/regions/silver-plains.png',
           // South Elysion, rolling plains
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1450, 1400], [LEGACY_WORLD_IMAGE_H - 1120, 1870]],
+          bounds: [[IMG_H - 1450, 1400], [IMG_H - 1120, 1870]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'tensho-mountains': {
           image: '../assets/images/maps/regions/tensho-mountains.png',
           // NE mountains, includes Granrock area
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1000, 1680], [LEGACY_WORLD_IMAGE_H - 680, 2120]],
+          bounds: [[IMG_H - 1000, 1680], [IMG_H - 680, 2120]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'iron-mountains': {
           image: '../assets/images/maps/regions/iron-mountains.png',
           // Western border with Atlantis
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1180, 980], [LEGACY_WORLD_IMAGE_H - 860, 1400]],
+          bounds: [[IMG_H - 1180, 980], [IMG_H - 860, 1400]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'emerald-belt': {
           image: '../assets/images/maps/regions/emerald-belt.png',
           // Lumiera continent
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1130, 2850], [LEGACY_WORLD_IMAGE_H - 810, 3280]],
+          bounds: [[IMG_H - 1130, 2850], [IMG_H - 810, 3280]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'lumiera-arch': {
           image: '../assets/images/maps/regions/lumiera-arch.png',
           // Lumiera continent, east side
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1180, 3250], [LEGACY_WORLD_IMAGE_H - 860, 3680]],
+          bounds: [[IMG_H - 1180, 3250], [IMG_H - 860, 3680]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'red-sea-desert': {
           image: '../assets/images/maps/regions/red-sea-desert.png',
           // Chaos Ria, northern desert
-          bounds: [[LEGACY_WORLD_IMAGE_H - 1850, 1380], [LEGACY_WORLD_IMAGE_H - 1530, 1820]],
+          bounds: [[IMG_H - 1850, 1380], [IMG_H - 1530, 1820]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'lands-of-fire': {
           image: '../assets/images/maps/regions/lands-of-fire.png',
           // Chaos Ria, southern volcanic
-          bounds: [[LEGACY_WORLD_IMAGE_H - 2150, 1420], [LEGACY_WORLD_IMAGE_H - 1830, 1860]],
+          bounds: [[IMG_H - 2150, 1420], [IMG_H - 1830, 1860]],
           minZoom: 1.2,
           maxZoom: 4
         },
         'labyrinth-of-time': {
           image: '../assets/images/maps/regions/labyrinth-of-time.png',
           // Grimoire continent
-          bounds: [[LEGACY_WORLD_IMAGE_H - 550, 1580], [LEGACY_WORLD_IMAGE_H - 230, 2020]],
+          bounds: [[IMG_H - 550, 1580], [IMG_H - 230, 2020]],
           minZoom: 1.2,
           maxZoom: 4
         }
@@ -1554,17 +1419,13 @@
     const deepZoomOverlays = {};
 
     function createDeepZoomOverlay(key, config) {
-      const normalizedConfig = {
-        ...config,
-        bounds: legacyBoundsToWorldBounds(config.bounds)
-      };
-      const overlay = L.imageOverlay(config.image, normalizedConfig.bounds, {
+      const overlay = L.imageOverlay(config.image, config.bounds, {
         opacity: 0,
         interactive: false,
         pane: 'deepZoomPane',
         className: 'deep-zoom-overlay'
       });
-      deepZoomOverlays[key] = { overlay, config: normalizedConfig, active: false };
+      deepZoomOverlays[key] = { overlay, config, active: false };
       return overlay;
     }
 
@@ -1618,7 +1479,7 @@
       }
     }
 
-    let deepZoomEnabled = document.getElementById('deepZoomToggle').checked;
+    let deepZoomEnabled = true;
 
     map.on('zoomend', updateDeepZoomOverlays);
     map.on('moveend', updateDeepZoomOverlays);
@@ -1693,9 +1554,11 @@
 
     // --- Render hazard zones ---
     hazards.forEach(hazard => {
-      const pos = worldToLatLng(hazard.center);
-      const radius = Number(hazard.radius) || 0;
-      if (!pos || radius <= 0) return;
+      const px = pixelHazards[hazard.id];
+      if (!px) return;
+
+      const pos = pixelToLatLng(px.x, px.y);
+      const radius = hazard.radius * (pixelMapping.hazard_radius_scale || 0.4);
       const severity = Math.min(Math.max(hazard.severity || 1, 1), 5);
 
       let color = '#8a6040';
@@ -1744,40 +1607,27 @@
     const allSearchableItems = [];
 
     nodes.forEach(node => {
-      const pos = worldToLatLng(node.position);
+      const pos = toLatLng(node.id);
       if (!pos) return;
 
       const type = (node.type || 'city').toLowerCase().replace(/\s+/g, '_');
       const color = MARKER_COLORS[type] || '#a3b1c6';
-       const sizeClass = type === 'capital' ? 'capital' : (['city','floating_island','underwater_city'].includes(type) ? 'city' : '');
-       const typeLabel = TYPE_LABELS[type] || type;
+      const sizeClass = type === 'capital' ? 'capital' : (['city','floating_island','underwater_city'].includes(type) ? 'city' : '');
+      const typeLabel = TYPE_LABELS[type] || type;
 
-       // Determine dot size and anchor for proper positioning
-       let dotSize, iconAnchor;
-       if (sizeClass === 'capital') {
-         dotSize = 16;
-         iconAnchor = [8, 8];
-       } else if (sizeClass === 'city') {
-         dotSize = 13;
-         iconAnchor = [6.5, 6.5];
-       } else {
-         dotSize = 12;
-         iconAnchor = [6, 6];
-       }
-
-       // Create marker with properly sized and anchored icon
-       const marker = L.marker(pos, {
-         icon: L.divIcon({
-           className: 'map-marker',
-           html: `<div class="map-marker-dot ${sizeClass}" style="background:${color};"></div>
-                  <div class="map-marker-label" data-node-id="${node.id}">${esc(node.name)}</div>`,
-           iconSize: [dotSize, dotSize],
-           iconAnchor: iconAnchor
-         }),
-         pane: 'nodePane',
-         interactive: true,
-         riseOnHover: true
-       }).addTo(layers.nodes);
+      // Create marker with dot icon
+      const marker = L.marker(pos, {
+        icon: L.divIcon({
+          className: 'map-marker',
+          html: `<div class="map-marker-dot ${sizeClass}" style="background:${color};"></div>
+                 <div class="map-marker-label" data-node-id="${node.id}">${esc(node.name)}</div>`,
+          iconSize: [0, 0],
+          iconAnchor: [0, 0]
+        }),
+        pane: 'nodePane',
+        interactive: true,
+        riseOnHover: true
+      }).addTo(layers.nodes);
 
       nodeMarkerById.set(node.id, marker);
 
@@ -1819,8 +1669,25 @@
     };
 
     pois.forEach(poi => {
-      const pos = worldToLatLng(poi.position);
-      if (!pos) return;
+      if (!poi?.position?.x || !poi?.position?.y) return;
+
+      // POIs use the old coordinate system — need to convert
+      // For now, check if pixel mapping has them; otherwise approximate
+      const px = pixelNodes[poi.nearest_node_id || ''];
+      if (!px) return; // Skip POIs without a nearby mapped node
+
+      // Offset POI position slightly from parent node
+      const parentNode = nodeById[poi.nearest_node_id];
+      if (!parentNode) return;
+
+      const parentPx = pixelNodes[poi.nearest_node_id];
+      const offsetScale = 0.4; // km to pixel rough scale
+      const dx = (poi.position.x - parentNode.position.x) * offsetScale;
+      const dy = (poi.position.y - parentNode.position.y) * offsetScale;
+
+      const poiX = parentPx.x + dx;
+      const poiY = parentPx.y + dy;
+      const pos = pixelToLatLng(poiX, poiY);
 
       const color = POI_COLORS[poi.category] || '#a3b1c6';
       const marker = L.marker(pos, {
@@ -1861,10 +1728,10 @@
     });
 
     // --- Continent labels ---
-    continents.forEach(continent => {
-      const pos = worldToLatLng(continent.center);
-      if (!pos) return;
-      const names = CONTINENT_NAMES[continent.id] || { en: continent.name, ja: continent.name };
+    Object.entries(CONTINENT_NAMES).forEach(([id, names]) => {
+      const px = pixelContinents[id];
+      if (!px) return;
+      const pos = pixelToLatLng(px.x, px.y);
 
       L.marker(pos, {
         icon: L.divIcon({
@@ -1878,11 +1745,11 @@
     });
 
     // --- Grid ---
-    for (let x = 0; x <= WORLD_COORDINATE_WIDTH; x += 1000) {
-      L.polyline([[0, x], [WORLD_COORDINATE_HEIGHT, x]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
+    for (let x = 0; x <= IMG_W; x += 400) {
+      L.polyline([[0, x], [IMG_H, x]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
     }
-    for (let y = 0; y <= WORLD_COORDINATE_HEIGHT; y += 1000) {
-      L.polyline([[y, 0], [y, WORLD_COORDINATE_WIDTH]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
+    for (let y = 0; y <= IMG_H; y += 400) {
+      L.polyline([[y, 0], [y, IMG_W]], { color: '#fff', weight: 0.3, opacity: 0.15 }).addTo(layers.grid);
     }
 
     // --- Zoom-dependent label visibility ---
@@ -2003,6 +1870,19 @@
       layerToggleBtn.classList.add('hidden');
     });
 
+    // Auto-collapse panels on mobile
+    if (window.innerWidth <= 768) {
+      layerPanel.classList.add('collapsed');
+      layerToggleBtn.classList.remove('hidden');
+      // Also collapse route panel body
+      const rpBody = document.getElementById('routePanelBody');
+      if (rpBody) {
+        rpBody.classList.add('collapsed');
+        const rpToggle = document.getElementById('routePanelToggle');
+        if (rpToggle) rpToggle.textContent = '▸';
+      }
+    }
+
     // --- Info panel ---
     const infoPanel = document.getElementById('infoPanel');
     const infoPanelContent = document.getElementById('infoPanelContent');
@@ -2068,7 +1948,7 @@
     const routeToSelect = document.getElementById('routeTo');
 
     // Populate route selects
-    const sortedNodes = nodes.filter(n => worldToLatLng(n.position)).sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ja'));
+    const sortedNodes = nodes.filter(n => pixelNodes[n.id]).sort((a, b) => (a.name || '').localeCompare(b.name || '', 'ja'));
     sortedNodes.forEach(node => {
       const opt1 = new Option(`${node.name} (${TYPE_LABELS[node.type] || node.type})`, node.id);
       const opt2 = new Option(`${node.name} (${TYPE_LABELS[node.type] || node.type})`, node.id);
@@ -2087,7 +1967,7 @@
     function buildGraph(weightMode) {
       const graph = {};
       routes.forEach(r => {
-        if (!nodeById[r.from]?.position || !nodeById[r.to]?.position) return;
+        if (!pixelNodes[r.from] || !pixelNodes[r.to]) return;
         if (r.status === 'restricted') return;
 
         let w = r.distance_km || 100;
@@ -2246,25 +2126,33 @@
     // --- Zoom controls ---
     document.getElementById('zoomIn').addEventListener('click', () => map.zoomIn());
     document.getElementById('zoomOut').addEventListener('click', () => map.zoomOut());
-    document.getElementById('zoomFit').addEventListener('click', () => map.fitBounds(bounds, { padding: isMobile ? [10, 10] : [20, 20] }));
+    document.getElementById('zoomFit').addEventListener('click', () => {
+      if (isMobile) {
+        map.setView([IMG_H / 2, IMG_W / 2], map.getMinZoom(), { animate: true });
+      } else {
+        map.fitBounds(bounds, { padding: [20, 20] });
+      }
+    });
 
     // --- Coordinate display ---
     map.on('mousemove', e => {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
-      const worldX = lng;
-      const worldY = WORLD_COORDINATE_HEIGHT - lat;
+      // Convert back to pixel coords
+      const px = lng;
+      const py = IMG_H - lat;
       // Estimate km from center
-      const kmX = ((worldX - WORLD_COORDINATE_WIDTH / 2) * KM_PER_WORLD_UNIT).toFixed(0);
-      const kmY = ((WORLD_COORDINATE_HEIGHT / 2 - worldY) * KM_PER_WORLD_UNIT).toFixed(0);
-      document.getElementById('coordDisplay').textContent = `${Math.round(worldX)}, ${Math.round(worldY)} world | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
+      const kmX = ((px - IMG_W/2) * KM_PER_PIXEL).toFixed(0);
+      const kmY = ((IMG_H/2 - py) * KM_PER_PIXEL).toFixed(0);
+      document.getElementById('coordDisplay').textContent = `${Math.round(px)}, ${Math.round(py)} px | ${kmX > 0 ? '+' : ''}${kmX}, ${kmY > 0 ? '+' : ''}${kmY} km`;
     });
 
     // --- Scale bar ---
     function updateScaleBar() {
       const zoom = map.getZoom();
+      const metersPerPixel = KM_PER_PIXEL; // Already in km/pixel at zoom 0
       const scale = Math.pow(2, zoom);
-      const kmPerScreenPixel = KM_PER_WORLD_UNIT / scale;
+      const kmPerScreenPixel = KM_PER_PIXEL / scale;
 
       // Choose nice round number
       const targets = [50, 100, 200, 500, 1000, 2000, 5000];
@@ -2304,10 +2192,10 @@
       const mh = minimapEl.clientHeight;
 
       // Convert map bounds to percentage of full bounds
-      const x1 = Math.max(0, mapBounds.getWest() / WORLD_COORDINATE_WIDTH);
-      const y1 = Math.max(0, 1 - mapBounds.getNorth() / WORLD_COORDINATE_HEIGHT);
-      const x2 = Math.min(1, mapBounds.getEast() / WORLD_COORDINATE_WIDTH);
-      const y2 = Math.min(1, 1 - mapBounds.getSouth() / WORLD_COORDINATE_HEIGHT);
+      const x1 = Math.max(0, mapBounds.getWest() / IMG_W);
+      const y1 = Math.max(0, 1 - mapBounds.getNorth() / IMG_H);
+      const x2 = Math.min(1, mapBounds.getEast() / IMG_W);
+      const y2 = Math.min(1, 1 - mapBounds.getSouth() / IMG_H);
 
       viewportEl.style.left = `${x1 * mw}px`;
       viewportEl.style.top = `${y1 * mh}px`;
@@ -2324,8 +2212,8 @@
       const rect = e.currentTarget.getBoundingClientRect();
       const xPct = (e.clientX - rect.left) / rect.width;
       const yPct = (e.clientY - rect.top) / rect.height;
-      const lng = xPct * WORLD_COORDINATE_WIDTH;
-      const lat = (1 - yPct) * WORLD_COORDINATE_HEIGHT;
+      const lng = xPct * IMG_W;
+      const lat = (1 - yPct) * IMG_H;
       map.setView([lat, lng], map.getZoom(), { animate: true });
     });
 
@@ -2336,43 +2224,10 @@
       setTimeout(() => loading.remove(), 600);
     }, 300);
 
-    // Beta badge dismiss
-    (() => {
-      const badge = document.getElementById('betaBadge');
-      const closeBtn = document.getElementById('betaBadgeClose');
-      if (sessionStorage.getItem('v2BetaDismissed')) {
-        badge.classList.add('hidden');
-      }
-      closeBtn.addEventListener('click', () => {
-        badge.classList.add('hidden');
-        sessionStorage.setItem('v2BetaDismissed', '1');
-      });
-      // Auto-hide after 8 seconds
-      setTimeout(() => {
-        if (!badge.classList.contains('hidden')) {
-          badge.classList.add('hidden');
-        }
-      }, 8000);
-    })();
-
-    // Evaluation panel dismiss
-    (() => {
-      const panel = document.getElementById('evaluationPanelClose')?.closest('.evaluation-panel');
-      const closeBtn = document.getElementById('evaluationPanelClose');
-      if (!panel || !closeBtn) return;
-      if (sessionStorage.getItem('v2EvaluationDismissed')) {
-        panel.classList.add('hidden');
-      }
-      closeBtn.addEventListener('click', () => {
-        panel.classList.add('hidden');
-        sessionStorage.setItem('v2EvaluationDismissed', '1');
-      });
-    })();
-
     // Expose API
     window.EternalArcadiaMap = {
       map, layers, nodeMarkerById, routeLayerById, nodeById, allSearchableItems,
-      continentById, toLatLng, worldToLatLng
+      toLatLng, pixelToLatLng
     };
 
   })().catch(err => {
@@ -2382,6 +2237,28 @@
       <div style="color:#9ca3af;font-size:13px;">${err.message}</div>
     `;
   });
+  </script>
+
+  <!-- Beta badge logic -->
+  <script>
+  (function() {
+    const badge = document.getElementById('betaBadge');
+    if (!badge) return;
+    if (sessionStorage.getItem('betaDismissed')) {
+      badge.classList.add('hidden');
+      return;
+    }
+    badge.addEventListener('click', function() {
+      badge.classList.add('hidden');
+      sessionStorage.setItem('betaDismissed', '1');
+    });
+    setTimeout(function() {
+      if (!badge.classList.contains('hidden')) {
+        badge.classList.add('hidden');
+        sessionStorage.setItem('betaDismissed', '1');
+      }
+    }, 8000);
+  })();
   </script>
 </body>
 </html>
