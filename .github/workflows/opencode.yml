@@ -56,5 +56,5 @@ jobs:
         env:
           STEPFUN_API_KEY: ${{ secrets.STEPFUN_API_KEY }}
         with:
-          model: stepfun/step-3.5-flash-2603
+          model: stepfun/step-3.7-flash
           share: false
