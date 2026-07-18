@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "セレネア・ムーンフェル (ルナリア帝国最後の女王)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "elf", "queen", "lunar-empire"]
@@ -14,6 +14,7 @@ race: "elf"
 age: 850
 alignment: "lawful-neutral"
 class: "Mage (Enchanter) 20"
+spirit_contract: {}
 ---
 
 # セレネア・ムーンフェル (Selenia Moonfell)
@@ -50,6 +51,7 @@ class: "Mage (Enchanter) 20"
 | CHA | 20 | +5 |
 
 **防御**:
+
 - **AC**: 18 ( mage armor +  dex)
 - **HP**: 180 (20d6+40) (Mage 20)
 - **速度**: 30フィート, 暗視60フィート
@@ -61,17 +63,20 @@ class: "Mage (Enchanter) 20"
 **戦闘能力**:
 
 **攻撃**:
+
 - **月の光線 (Moonbeam)**: 120フィート, DC20, 6d10 moon damage + 盲目.
 - **エンチャント: 支配 (Enslave)**: 意志セーブ DC20, 失敗で支配 (1日).
 
 **特殊能力**:
-- ** 呪文発動 (Mage 20)**: 全学派, DC21, +13 命中.
-- ** Archmage**: 伝説の魔法使い, 2呪文無成分.
-- ** Immortality Quest**: 永遠の命を求め, 時間魔法研究.
-- ** Moon Affinity**: 月魔法+2レベル, 夜間に+2 AC.
-- ** Spell Mastery**: 毎日2呪文準備不要.
+
+- **呪文発動 (Mage 20)**: 全学派, DC21, +13 命中.
+- **Archmage**: 伝説の魔法使い, 2呪文無成分.
+- **Immortality Quest**: 永遠の命を求め, 時間魔法研究.
+- **Moon Affinity**: 月魔法+2レベル, 夜間に+2 AC.
+- **Spell Mastery**: 毎日2呪文準備不要.
 
 **精霊契約**:
+
 - 月: 99%
 - 風: 20%
 - 地: 10%
@@ -79,6 +84,7 @@ class: "Mage (Enchanter) 20"
 - 水: 15%
 
 **装備**:
+
 - 月の王冠 (魔導器, 月魔法強化)
 - 禁断の書 (forbidden tome)
 - エターナル・ジュエル (不老の鍵)
@@ -109,6 +115,7 @@ class: "Mage (Enchanter) 20"
 ---
 
 **関連項目**:
-- [ルナリア帝国](../lore/ancient-civilizations.md)
-- [月の精霊](../magic/system.md#五大元素精霊)
-- [精霊契約](../races/races-overview.md)
+
+- [ルナリア帝国](../../lore/ancient-civilizations.md)
+- [月の精霊](../../magic/system.md#五大元素精霊)
+- [精霊契約](../../races/races-overview.md)

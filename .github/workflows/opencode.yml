@@ -22,16 +22,23 @@ jobs:
       (
         (github.event_name == 'issue_comment' || github.event_name == 'pull_request_review_comment') &&
         (
-          startsWith(github.event.comment.body, '/oc') ||
-          startsWith(github.event.comment.body, '/opencode') ||
-          contains(github.event.comment.body, ' /oc') ||
-          contains(github.event.comment.body, ' /opencode') ||
-          contains(github.event.comment.body, '\n/oc') ||
-          contains(github.event.comment.body, '\n/opencode')
+          github.event.comment.author_association == 'OWNER' ||
+          github.event.comment.author_association == 'MEMBER' ||
+          github.event.comment.author_association == 'COLLABORATOR'
+        ) &&
+        (
+          github.event.comment.body == '/oc' ||
+          startsWith(github.event.comment.body, '/oc ') ||
+          github.event.comment.body == '/opencode' ||
+          startsWith(github.event.comment.body, '/opencode ')
         )
       )
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 30
+
+    concurrency:
+      group: opencode-${{ github.event.issue.number || github.event.pull_request.number || github.run_id }}
+      cancel-in-progress: false
 
     permissions:
       contents: read
@@ -41,18 +48,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 1
           persist-credentials: false
 
       - name: Configure git author
+        env:
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config user.name "$GIT_AUTHOR_NAME"
+          git config user.email "$GIT_AUTHOR_EMAIL"
 
       - name: Run opencode
-        uses: anomalyco/opencode/github@v1.14.31
+        uses: anomalyco/opencode/github@557734bd130a68188454bc691e153f9f3731830e # v1.14.31
         env:
           STEPFUN_API_KEY: ${{ secrets.STEPFUN_API_KEY }}
         with:

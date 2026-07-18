@@ -7,6 +7,7 @@ Python command-line tools for working with Eternal Arcadia map data.
 These tools provide validation, route finding, data export, and visualization capabilities for the structured map data system.
 
 **Requirements:**
+
 - Python 3.10+ (standard library only, no external dependencies)
 
 ## Tools
@@ -20,6 +21,7 @@ python tools/map/validate_map_data.py
 ```
 
 **Checks:**
+
 - All IDs are unique across datasets
 - Required fields present in every record
 - All foreign key references exist (continent_id, region_id, node references)
@@ -28,6 +30,7 @@ python tools/map/validate_map_data.py
 - Confidence levels are valid
 
 **Exit codes:**
+
 - 0 = success
 - 1 = validation failed (errors printed to stderr)
 
@@ -42,11 +45,13 @@ python tools/map/route_finder.py --from <node_id> --to <node_id> [options]
 ```
 
 **Arguments:**
+
 - `--from NODE_ID` - Starting node ID (required)
 - `--to NODE_ID` - Destination node ID (required)
 - `--weight {time,distance,safety,cost}` - Optimization metric (default: time)
 
 **Filtering options:**
+
 - `--avoid-danger-level N` - Exclude routes with danger >= N (e.g., 4 = avoid very dangerous)
 - `--no-air` - Exclude air routes (default: air routes included)
 - `--no-sea` - Exclude sea routes (default: sea routes included)
@@ -54,6 +59,7 @@ python tools/map/route_finder.py --from <node_id> --to <node_id> [options]
 - `--month N` - Travel month (1-12); seasonal routes only operate in their active months. If not specified, seasonal routes are included without month-based filtering (availability uncertain).
 
 **Route status:**
+
 - `active` - Regularly operating
 - `seasonal` - Seasonal operation (controlled by `--month` and `active_months`)
 - `restricted` - Permits required (requires `--allow-restricted`)
@@ -80,6 +86,7 @@ python tools/map/route_finder.py --from port_zephia --to time_port --weight safe
 ```
 
 **Output:**
+
 - Route name and total optimized metric
 - Segments with route names, types, modes, times, distances, danger levels
 - Overall danger summary
@@ -95,6 +102,7 @@ python tools/map/export_geojson.py
 ```
 
 **Outputs** (to `world/map-data/exports/`):
+
 - `world_transport.geojson` - Combined FeatureCollection (nodes + routes + hazards)
 - `nodes.geojson` - Point features for all nodes
 - `routes.geojson` - LineString features for all routes
@@ -115,12 +123,14 @@ python tools/map/render_static_network.py
 **Output:** `world/map-data/exports/world_transport_network.svg`
 
 **Features:**
+
 - Routes drawn as colored lines by type
 - Nodes drawn as circles sized/colored by importance
 - Labels for major nodes
 - Hover tooltips (in browser/vector viewer)
 
 **Color scheme:**
+
 - Roads: brown
 - Sea: blue
 - Air: pink
@@ -135,6 +145,7 @@ python tools/map/render_static_network.py
 All data stored in `world/map-data/data/` as JSON. See `world/map-data/README.md` for detailed schema documentation.
 
 **Key files:**
+
 - `continents.json` - 5 major continents
 - `regions.json` - 13 regions
 - `nodes.json` - locations (cities, ports, airports, etc.); count varies with data updates
@@ -144,21 +155,25 @@ All data stored in `world/map-data/data/` as JSON. See `world/map-data/README.md
 ## Common Tasks
 
 ### Validate everything before committing
+
 ```bash
 python tools/map/validate_map_data.py
 ```
 
 ### Test route connectivity
+
 ```bash
 python tools/map/route_finder.py --from astralis --to jade_port --weight time
 ```
 
 ### Generate exports for web use
+
 ```bash
 python tools/map/export_geojson.py
 ```
 
 ### Create a preview image
+
 ```bash
 python tools/map/render_static_network.py
 ```

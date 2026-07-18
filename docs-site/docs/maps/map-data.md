@@ -49,6 +49,7 @@
 ```
 
 **主要フィールド**:
+
 - `id`: ノードID
 - `name`: 名称
 - `type`: タイプ（city, village, station, ruin, natural など）
@@ -96,6 +97,7 @@
 ```
 
 **主要フィールド**:
+
 - `id`: ルートID
 - `name`: ルート名
 - `type`: タイプ（land_road, sea_route, air_route, railway）
@@ -146,6 +148,7 @@
 ```
 
 **主要フィールド**:
+
 - `id`: ハザードID
 - `name`: 区域名
 - `type`: タイプ（monster_territory, disaster_zone, forbidden, magical_hazard）
@@ -341,22 +344,26 @@ Map Data は**正史設定資料の構造化版**です。
 ## 将来のWebマップ実装計画
 
 ### v0.1 (現在)
+
 - Map Data 紹介ページ作成（本ページ）
 - データファイルの整備
 - 将来実装のプレースホルダー
 
 ### v0.2 (予定)
+
 - 簡易HTMLビューア（Leaflet導入）
 - nodes の表示
 - routes の表示
 - クリックでプロパティ表示
 
 ### v0.3 (予定)
+
 - ルート検索UI（JavaScript実装）
 - レイヤー切り替え（nodes, routes, hazards）
 - ズーム・パン操作
 
 ### v1.0 (将来)
+
 - 地図画像オーバーレイ
 - タイルマップ対応
 - 詳細情報ポップアップ
@@ -392,15 +399,19 @@ Map Data は**正史設定資料の構造化版**です。
 ## よくある質問 (FAQ)
 
 ### Q: Map Data と world/ のMarkdown、どちらが正しい？
+
 **A**: 両方が正史です。Markdownが**記述**、Map Dataが**構造化データ**です。矛盾がある場合はMarkdownが優先。
 
 ### Q: 新しいノードを追加するには？
+
 **A**: `nodes.json` にエントリを追加し、`validate_map_data.py` で検証後、コミット。
 
 ### Q: Webマップはいつ使えるようになる？
+
 **A**: v0.2で簡易ビューア、v0.3でルート検索、v1.0でフル機能を予定。詳細はロードマップ参照。
 
 ### Q: 座標の基準は？
+
 **A**: WGS84（GPSと同じ）。地図画像と重ねる際は座標変換が必要な場合あり。
 
 ---

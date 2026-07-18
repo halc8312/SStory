@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "バルドル・アイアンフィスト (鉄山脉ドワーフ国王)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "dwarf", "king", "ironridge"]
@@ -14,6 +14,7 @@ race: "dwarf"
 age: 180
 alignment: "lawful-good"
 class: "Fighter (Champion) 15 / Artificer 3"
+spirit_contract: {}
 ---
 
 # バルドル・アイアンフィスト (Baldur Ironfist)
@@ -35,7 +36,7 @@ class: "Fighter (Champion) 15 / Artificer 3"
 ## 性格
 
 - **主要特性**: 堅実、名誉を重んじる、技術愛好家
-- **価値観**:  craフィートsmanship, 家族, 忠義
+- **価値観**: 職人技、家族、忠義
 - **目標**: ドワーフ技術の更なる発展、国家の繁栄
 - **欠点**: 頑固、変化を好まない
 
@@ -51,6 +52,7 @@ class: "Fighter (Champion) 15 / Artificer 3"
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 20 ( plate armor + shield)
 - **HP**: 145 (15d10+45 from Fighter 15 + 3d8+9 from Artificer 3)
 - **速度**: 25フィート (heavy armor)
@@ -62,19 +64,22 @@ class: "Fighter (Champion) 15 / Artificer 3"
 **戦闘能力**:
 
 **攻撃**:
+
 - **戦斧 (Greataxe)**: +10 命中, 1d12+6 斬撃 + 2d6 fire (magic)
 - **盾撃 (Shield Bash)**: +9 命中, 1d6+4 打撃, ターゲットを prone (CON save DC17).
 
 **特殊能力**:
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** アクションサージ**: 1戦闘中、追加アクション.
-- ** Indomitable (Fighter)**: セーブ再 roll (1回/長休憩).
-- ** Artificer Infusions**: 装備に魔法効果付与 (例: Enhanced Defense).
-- ** Dwarven Resilience**: 毒セーブにadvantage, 毒耐性.
-- ** Dwarven Combat Training**: 戦闘兵器に proficiency.
-- ** Stone's Endurance**: 被ダメージ時、1d12+5 軽減 (1回/短休憩).
+
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **アクションサージ**: 1戦闘中、追加アクション.
+- **Indomitable (Fighter)**: セーブ再 roll (1回/長休憩).
+- **Artificer Infusions**: 装備に魔法効果付与 (例: Enhanced Defense).
+- **Dwarven Resilience**: 毒セーブにadvantage, 毒耐性.
+- **Dwarven Combat Training**: 戦闘兵器に proficiency.
+- **Stone's Endurance**: 被ダメージ時、1d12+5 軽減 (1回/短休憩).
 
 **精霊契約**:
+
 - 地: 92% (強契約)
 - 風: 15%
 - 火: 25%
@@ -82,6 +87,7 @@ class: "Fighter (Champion) 15 / Artificer 3"
 - 月: 8%
 
 **装備**:
+
 - 伝説の戦斧 "グランクラッシャー" (2d6+6 fire damage)
 - 鉄のplate armor (AC18, 耐性: 非魔法)
 - 盾 (+2 AC)
@@ -117,6 +123,7 @@ class: "Fighter (Champion) 15 / Artificer 3"
 ---
 
 **関連項目**:
-- [鉄山脉ドワーフ王国](../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
-- [資源](../economy/resources.md)
-- [精霊契約](../races/races-overview.md)
+
+- [鉄山脉ドワーフ王国](../../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
+- [資源](../../economy/resources.md)
+- [精霊契約](../../races/races-overview.md)

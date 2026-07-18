@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "マリン・マリーン (アトランティス海兵隊司令官)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "triton", "military", "atlantis"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 20 ( scale armor + 水の加護)
 - **HP**: 210 (12d10+36 from Fighter 12 + 3d8+6 from Cleric 3)
 - **速度**: 30フィート, swim 60フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **三叉槍 (Trident)**: +9 命中, 1d8+4 刺突 + 1d6 電撃.
 - **海流の一撃 (Hydraulic Push)**: 60フィート, DC17, 20フィート吹き飛ばし.
 
 **特殊能力**:
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Action Surge**: 追加アクション.
-- ** Divine Strike (Cleric)**: 攻撃に追加 1d8 lightning.
-- ** 水呼吸 (Triton)**: 永遠の水呼吸.
-- ** 海水操作**: 水魔法+1レベル.
-- ** 海兵の指揮**: 水中戦闘で味方に +1 AC.
+
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **アクションサージ**: 追加アクション.
+- **Divine Strike (Cleric)**: 攻撃に追加 1d8 lightning.
+- **水呼吸 (Triton)**: 永遠の水呼吸.
+- **海水操作**: 水魔法+1レベル.
+- **海兵の指揮**: 水中戦闘で味方に +1 AC.
 
 **精霊契約**: 水95% (極強), 風40%, 月30%
 
 **装備**:
+
 - 王妃贈与の三叉槍 (+2)
 - 鱗鎧 (AC+2, 水耐性)
 - 海兵隊の指揮証
@@ -127,15 +131,16 @@ spirit_contract:
 
 ## シナリオフック
 
-- 密輸船を拿捕 → 尋問 or 奪還
+- 密輸船を拿捕 → 尋問または奪還
 - 海底に沈んだ古代の兵器を発見 → 引き上げるか
 - 姉の暗殺未遂 → 容疑者は誰？
-- 海上での大規模海盗団の遭遇 → 戦闘 or 交渉
-- 地上からのスパイを発見 → 摘発 or 利用
+- 海上での大規模海盗団の遭遇 → 戦闘または交渉
+- 地上からのスパイを発見 → 摘発または利用
 
 ---
 
 **関連項目**:
-- [アトランティス](../politics/kingdoms.md#7-アトランティス)
-- [海洋](../world/geography/continents.md)
-- [ Triton 種族](../races/races-overview.md)
+
+- [アトランティス](../../politics/kingdoms.md#7-アトランティス)
+- [海洋](../../geography/continents.md)
+- [Triton 種族](../../races/races-overview.md)

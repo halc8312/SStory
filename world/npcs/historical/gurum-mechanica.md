@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "グルム・メカニカ (グランドリア王国 技術王)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "dwarf", "artificer", "king"]
@@ -14,6 +14,7 @@ race: "dwarf"
 age: 210
 alignment: "lawful-neutral"
 class: "Artificer (Artillerist) 18 / Wizard 2"
+spirit_contract: {}
 ---
 
 # グルム・メカニカ (Gurum Mechanica)
@@ -50,6 +51,7 @@ class: "Artificer (Artillerist) 18 / Wizard 2"
 | CHA | 10 | +0 |
 
 **防御**:
+
 - **AC**: 18 ( artificial armor)
 - **HP**: 200 (18d8+90 from Artificer 18 + 2d6+2)
 - **速度**: 25フィート
@@ -61,18 +63,21 @@ class: "Artificer (Artillerist) 18 / Wizard 2"
 **戦闘能力**:
 
 **攻撃**:
+
 - **地脈砲 (Earth-cannon)**: 120フィート range, 8d10 force, area effect.
 - **自動防衛システム (Auto-turret)**: 1ラウンドで設置, 毎ターン攻撃.
 
 **特殊能力**:
-- ** 呪文発動 (Artificer 18)**: 人造魔法, DC19, +11.
-- ** Infuse Item**: 装備に永久魔法効果付与.
-- ** Tool Expertise**: 工具判定双倍.
-- ** Mechanic's Intuition**: 機械触ると即理解.
-- ** Forge Master**: 鍛冶場で超高速製作.
-- ** Wizard 呪文発動 (2)**: 補助呪文.
+
+- **呪文発動 (Artificer 18)**: 人造魔法, DC19, +11.
+- **Infuse Item**: 装備に永久魔法効果付与.
+- **Tool Expertise**: 工具判定双倍.
+- **Mechanic's Intuition**: 機械触ると即理解.
+- **Forge Master**: 鍛冶場で超高速製作.
+- **Wizard 呪文発動 (2)**: 補助呪文.
 
 **精霊契約**:
+
 - 地: 95% (極強)
 - 風: 20%
 - 火: 30%
@@ -80,6 +85,7 @@ class: "Artificer (Artillerist) 18 / Wizard 2"
 - 月: 5%
 
 **装備**:
+
 - 万能ツール (any tool at +5)
 - 地脈コア (魔導器, energy source)
 - 自動鎧 (AC20, STR16必要)
@@ -113,6 +119,7 @@ class: "Artificer (Artillerist) 18 / Wizard 2"
 ---
 
 **関連項目**:
-- [グランドリア王国](../politics/kingdoms.md#3-鉄山脉ドワーフ王国-一部参照)
-- [魔法技術](../magic/system.md)
-- [資源](../economy/resources.md)
+
+- [グランドリア王国](../../politics/kingdoms.md#3-鉄山脉ドワーフ王国-一部参照)
+- [魔法技術](../../magic/system.md)
+- [資源](../../economy/resources.md)

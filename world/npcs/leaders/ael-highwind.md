@@ -2,17 +2,18 @@
 type: "npc"
 category: "npcs"
 title: "エイル・ハイタッチ (嵐の都風騎士団長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "sky-knight", "stormhold"]
 status: "stable"
 npc_type: "leader"
-race: "human (wind-blooded)"
+race: "human"
+subrace: "wind-blooded"
 age: 110
-alignment: "neutral"
+alignment: "true-neutral"
 class: "Sorcerer (Storm Sorcery) 12 / Fighter 3"
 spirit_contract:
   wind: 90
@@ -67,6 +68,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 17 ( mage armor + 敏捷 + 風の護符)
 - **HP**: 155 (12d6+24 from Sorcerer 12 + 3d10+6 from Fighter 3)
 - **速度**: 30フィート, fly 50フィート (風魔法)
@@ -78,19 +80,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **雷の槍 (Lightning Lance)**: +8 命中, 3d8 lightning, range 60フィート.
 - **風の斬撃 (Gust of Wind)**: 直線60フィート, 吹き飛ばし.
 
 **特殊能力**:
-- ** 呪文発動 (Sorcerer 12)**: 気象・風魔法, DC16, +10.
-- ** Storm Sorcery**: 風の翼 (常時飛行), 雨天時ボーナス.
-- ** Spell Bombardment**: 呪文ダイス追加.
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** 風の加護**: 空中戦で AC+2.
+
+- **呪文発動 (Sorcerer 12)**: 気象・風魔法, DC16, +10.
+- **Storm Sorcery**: 風の翼 (常時飛行), 雨天時ボーナス.
+- **Spell Bombardment**: 呪文ダイス追加.
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **風の加護**: 空中戦で AC+2.
 
 **精霊契約**: 風90% (極強), 月35%
 
 **装備**:
+
 - 風の槍 (Wind Spear, +2 attack)
 - 風鎧 (AC+2, 飛行時)
 - 騎士団の印章
@@ -133,6 +138,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [嵐の都](../politics/kingdoms.md#9-嵐の都)
-- [空国家](../world/geography/continents.md)
-- [風魔法](../magic/system.md)
+
+- [嵐の都](../../politics/kingdoms.md#9-嵐の都)
+- [空国家](../../geography/continents.md)
+- [風魔法](../../magic/system.md)

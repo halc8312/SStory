@@ -2,12 +2,12 @@
 type: "canon-document"
 category: "magic"
 title: "魔導器"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
- tags: ["artifacts", "items", "equipment", "magic"]
+tags: ["artifacts", "items", "equipment", "magic"]
 status: "stable"
 ---
 

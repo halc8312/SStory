@@ -4,7 +4,7 @@
 
 type: "object"
 allOf:
-  - "$ref": "common.yaml#/properties"
+  - "$ref": "common.yaml"
 required:
   - type
   - category
@@ -132,8 +132,6 @@ properties:
     additionalProperties:
       type: "string"
     description: "補足資料・付録データ（自由形式）"
-
-additionalProperties: false
 
 description: |
   **analysis** タイプは、世界観やリポジトリの分析・評価レポートです。

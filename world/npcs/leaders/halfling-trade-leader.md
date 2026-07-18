@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ハーフリング交易連合 理事長"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "halfling", "trade"]
@@ -77,12 +77,14 @@ spirit_contract:
 **速度**: 25 フィート.
 
 **攻撃**:
+
 - **近接**: 短剣 (1d4-1 piercing, +3 命中)
 - **遠隔**: スリング (1d4-1 bludgeoning, range 80/320)
 - **特殊**: 言葉の斬撃 (barding, 攻撃ロール-1d8)
 - **支援**: Help action が無料 (Mastermind feature)
 
 **特殊能力**:
+
 - **Sneak Attack** (3d6): 位置優位時
 - **Cunning Action**: ターン中 ボーナスアクション で hide/disengage/dash
 - **Master of Intrigue**: 欺瞞・ disguise にadvantage
@@ -105,6 +107,7 @@ spirit_contract:
 - **52歳**: 理事長就任 (最年少記録)
 
 **実績**:
+
 - エリュシオンとリュミエラ間の新航路開拓
 - ゼフィアとグリモワール間の魔法物品取引契約
 - ドワーフの鉱物とエルフの織物の交換ルート確立
@@ -146,10 +149,11 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [ハーフリング交易連合](../politics/kingdoms.md)
-- [通貨と交易](../economy/trade.md)
-- [水の精霊ハイドロ](../magic/system.md)
-- [ハーフリング種族](../races/races-overview.md)
+
+- [ハーフリング交易連合](../../politics/kingdoms.md)
+- [通貨と交易](../../economy/trade.md)
+- [水の精霊ハイドロ](../../magic/system.md)
+- [ハーフリング種族](../../races/races-overview.md)
 
 ---
 

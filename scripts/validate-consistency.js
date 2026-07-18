@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { checkLinks: findBrokenMarkdownLinks } = require('./validate-frontmatter');
 
 const ROOT = path.join(__dirname, '..', 'world');
 
@@ -41,19 +42,12 @@ const CHECKS = [
 // Check for broken internal links
 function checkLinks(rootDir = ROOT) {
   const mdFiles = getAllMarkdown(rootDir);
-  const linkRegex = /\[.*?\]\((?!http)(.*?\.md)\)/g;
-  let errors = [];
+  const errors = [];
 
   mdFiles.forEach(file => {
     const content = fs.readFileSync(file, 'utf8');
-    const dir = path.dirname(file);
-    let match;
-    while ((match = linkRegex.exec(content)) !== null) {
-      const target = match[1];
-      const targetPath = path.resolve(dir, target);
-      if (!fs.existsSync(targetPath)) {
-        errors.push(`${file}: broken link -> ${target}`);
-      }
+    for (const brokenLink of findBrokenMarkdownLinks(content, file)) {
+      errors.push(`${file}: broken link -> ${brokenLink.link}`);
     }
   });
   return errors;

@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ミヤ・ジェイド (翡翠王国女王)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "queen", "jade-kingdom"]
@@ -14,6 +14,7 @@ race: "human"
 age: 26
 alignment: "lawful-good"
 class: "Bard (College of Glamour) 10 / Paladin 2"
+spirit_contract: {}
 ---
 
 # ミヤ・ジェイド (Miya Jade)
@@ -51,6 +52,7 @@ class: "Bard (College of Glamour) 10 / Paladin 2"
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 16 ( mundane dress with magic)
 - **HP**: 95 (10d8+30 from Bard 10 + 2d10+2 from Paladin 2)
 - **速度**: 30フィート
@@ -62,18 +64,21 @@ class: "Bard (College of Glamour) 10 / Paladin 2"
 **戦闘能力**:
 
 **攻撃**:
+
 - **翡翠の杖 (Jade Staff)**: +8 命中, 1d6+2 打撃 + 1d6 光ダメージ.
 - **恵みの言葉 (Word of Healing)**: ボーナスアクション、味方1体 2d8+4 HP回復.
 
 **特殊能力**:
-- ** 音楽・演説による支援 (d8)**: 3回/長休憩, 60フィート.
-- ** 多芸の才**: 技能判定に半修正.
-- ** Countercharm (Bard)**: 魅了に対して自動成功.
-- ** Paladin's Divine Sense**: 邪悪な存在を感知.
-- ** Lay on Hands**: 15 HP回復/日.
-- ** 呪文発動**: Bard & Paladin 呪文 (治癒・支援中心).
+
+- **音楽・演説による支援 (d8)**: 3回/長休憩, 60フィート.
+- **多芸の才**: 技能判定に半修正.
+- **Countercharm (Bard)**: 魅了に対して自動成功.
+- **Paladin's Divine Sense**: 邪悪な存在を感知.
+- **Lay on Hands**: 15 HP回復/日.
+- **呪文発動**: Bard & Paladin 呪文 (治癒・支援中心).
 
 **精霊契約**:
+
 - 地: 70% (主契約)
 - 水: 65%
 - 風: 30%
@@ -81,6 +86,7 @@ class: "Bard (College of Glamour) 10 / Paladin 2"
 - 火: 10%
 
 **装備**:
+
 - 翡翠の杖 (治癒魔法強化)
 - 王妃のローブ (CHI+2,  AC+1)
 - 平和の首飾り (魅了耐性)
@@ -115,6 +121,7 @@ class: "Bard (College of Glamour) 10 / Paladin 2"
 ---
 
 **関連項目**:
-- [翡翠王国](../politics/kingdoms.md#5-翡翠王国)
-- [魔法系統](../magic/system.md)
-- [精霊契約](../races/races-overview.md)
+
+- [翡翠王国](../../politics/kingdoms.md#5-翡翠王国)
+- [魔法系統](../../magic/system.md)
+- [精霊契約](../../races/races-overview.md)

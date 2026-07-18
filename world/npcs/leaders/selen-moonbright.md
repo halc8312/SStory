@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "セレン・ムーンブライト (月影エルフ王国王室研究員・学者)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "scholar", "elf", "ancient", "moon-elf"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 13 (通常の服)
 - **HP**: 85 (8d6+8 from Wizard 8 + 5d6+5 from Scholar)
 - **速度**: 30フィート
@@ -78,18 +79,21 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **魔法弾 (Fire Bolt)**: +8 命中, 3d10+4 fire.
 - **学者の知識 (Scholar's Insight)**: 敵の弱点を突き、攻撃に advantage.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 8)**: スロット 3/3/2/1, DC15, +8.
-- ** 研究家の直感**: 歴史・考古学に関する判定に advantage.
-- ** 言語習得**: 古代言語を読解可能.
-- ** 発見者の幸運**: 探索で追加情報を得られる.
+
+- **呪文発動 (Wizard 8)**: スロット 3/3/2/1, DC15, +8.
+- **研究家の直感**: 歴史・考古学に関する判定に advantage.
+- **言語習得**: 古代言語を読解可能.
+- **発見者の幸運**: 探索で追加情報を得られる.
 
 **精霊契約**: 月75% (学者タイプ), 風20%
 
 **装備**:
+
 - 研究用のローブ
 - 古代文字の解読書
 - 魔法の筆記用具 (自動記録)
@@ -108,7 +112,7 @@ spirit_contract:
 
 ## 関係者
 
-- **祖父**: エルロンド女王 (祖母) - 尊敬 but secret tension
+- **祖母**: エルロンド女王 - 尊敬しているが、密かな緊張関係にある
 - **同僚**: エラーナ・アンシエント (精霊協会研究者)
 - **師**: ルナリア・ムーンブライト (月影学院長)
 - **友人**: ドゥリン・ディープマインド (ドワーフ考古学者)
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [月影エルフ王国](../politics/kingdoms.md#2-月影エルフ王国)
-- [古代文明](../lore/ancient-civilizations.md)
-- [ルナリア帝国](../lore/ancient-civilizations.md#1-ルナリア帝国)
+
+- [月影エルフ王国](../../politics/kingdoms.md#2-月影エルフ王国)
+- [古代文明](../../lore/ancient-civilizations.md)
+- [ルナリア帝国](../../lore/ancient-civilizations.md#1-ルナリア帝国)

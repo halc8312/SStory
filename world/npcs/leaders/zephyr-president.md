@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ライル・グレイソン (ゼフィア連合共和国大統領)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "president", "zephyr"]
@@ -14,6 +14,7 @@ race: "human"
 age: 55
 alignment: "lawful-good"
 class: "Bard (Lore) 12 / Fighter 3"
+spirit_contract: {}
 ---
 
 # ライル・グレイソン (Lyle Grayson)
@@ -51,6 +52,7 @@ class: "Bard (Lore) 12 / Fighter 3"
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 15 (魔法防護服)
 - **HP**: 85 (12d8+24 from Bard 12 + 3d10+6 from Fighter 3)
 - **速度**: 30フィート
@@ -62,10 +64,12 @@ class: "Bard (Lore) 12 / Fighter 3"
 **戦闘能力**:
 
 **攻撃**:
+
 - **+1 レイピア (Rapier)**: +8 命中, 1d6+3 刺突 + 1d6 魔力 (特性)
 - **_commanders_word_ (バードの激励)**: 範囲30フィート、味方の攻撃/セーブに +1d6 (3回/日)
 
 **特殊能力**:
+
 - **音楽・演説による支援 (d8)**: 1 ボーナスアクション, 60フィート, 1ターン有効, 3回/長休憩.
 - **多芸の才**: 技能判定に半修正 (+1) 追加.
 - **休息の歌**: 短休憩中のヒール量 +1d8.
@@ -74,6 +78,7 @@ class: "Bard (Lore) 12 / Fighter 3"
 - **セカンドウインド (戦士)**: 1回/短休憩、HP回復 1d10+3.
 
 **精霊契約**:
+
 - 風: 45%
 - 地: 42%
 - 火: 38%
@@ -81,6 +86,7 @@ class: "Bard (Lore) 12 / Fighter 3"
 - 月: 50% (バランス型)
 
 **装備**:
+
 - +1 レイピア (魔法剣)
 - 知力の頭巾 (INT +2)
 - 保護のクローク (AC+1)
@@ -115,6 +121,7 @@ class: "Bard (Lore) 12 / Fighter 3"
 ---
 
 **関連項目**:
-- [ゼフィア連合共和国](../politics/kingdoms.md#1-ゼフィア連合共和国)
-- [精霊協会](../religion/pantheon.md)
-- [政治体制](../politics/alliances.md)
+
+- [ゼフィア連合共和国](../../politics/kingdoms.md#1-ゼフィア連合共和国)
+- [精霊協会](../../religion/pantheon.md)
+- [政治体制](../../politics/alliances.md)

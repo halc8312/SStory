@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ゼフ (Zeph) - 風の大精霊"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elemental", "wind", "elemental-council"]
@@ -12,7 +12,7 @@ status: "stable"
 npc_type: "leader"
 race: "elemental"
 age: "12000+"
-alignment: "neutral"
+alignment: "true-neutral"
 class: "Primordial Deity (Wind Aspect)"
 spirit_contract:
   wind: 100
@@ -65,6 +65,7 @@ spirit_contract:
 | CHA | 24 | +7 |
 
 **防御**:
+
 - **AC**: 24 ( swirling winds )
 - **HP**: 1,300
 - **速度**: fly 無制限
@@ -74,19 +75,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 竜巻 (Tornado)**: 範囲内のものを吹き飛ばす.
-- ** 雷雲 (Lightning Storm)**: 複数目標に雷撃.
-- ** 風の刃 (Wind Blade)**: 真空の刃で切断.
+
+- **竜巻 (Tornado)**: 範囲内のものを吹き飛ばす.
+- **雷雲 (Lightning Storm)**: 複数目標に雷撃.
+- **風の刃 (Wind Blade)**: 真空の刃で切断.
 
 **特殊能力**:
-- ** 風支配**: 全ての風を操る.
-- ** 瞬間移動**: 風とともに anywhere.
-- ** 声の拡散**: 世界中に声を届けられる.
-- ** 神格**: 不死, 物理攻撃無効 (魔法のみ有効).
+
+- **風支配**: 全ての風を操る.
+- **瞬間移動**: 風とともに anywhere.
+- **声の拡散**: 世界中に声を届けられる.
+- **神格**: 不死, 物理攻撃無効 (魔法のみ有効).
 
 **精霊契約**: 風100%, 月60%, 水50%, 地40%, 火20%
 
 **所有アイテム**:
+
 - 風の王冠: 嵐の制御
 - 空の地図: 全浮島の位置
 
@@ -105,6 +109,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [嵐の都](../politics/kingdoms.md#9-嵐の都)
-- [ゼフィア連合](../politics/kingdoms.md#1-ゼフィア連合共和国)
-- [風魔法](../magic/system.md)
+
+- [嵐の都](../../politics/kingdoms.md#9-嵐の都)
+- [ゼフィア連合](../../politics/kingdoms.md#1-ゼフィア連合共和国)
+- [風魔法](../../magic/system.md)

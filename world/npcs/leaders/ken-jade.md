@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ケン・ジェイド (翡翠王国軍大将・王弟)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "military", "jade-kingdom"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 19 ( plate armor + shield + 地の護符)
 - **HP**: 185 (10d10+30 from Fighter 10 + 5d6+15 from Wizard 5)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **魔法剣 (Enchanted Longsword)**: +9 命中, 1d8+5 斬撃 + 1d6 force (魔法).
 - **弓 (Longbow)**: +7 命中, 1d8+2 刺突.
 
 **特殊能力**:
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Action Surge**: 追加アクション.
-- ** War Magic (Wizard)**: 攻撃後、防御呪文を1つ.
-- ** 呪文発動 (Wizard 5)**: 防衛・ combat 呪文, DC14, +8.
-- ** 盾と剣の達人**: 盾使用時 AC+1.
+
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **アクションサージ**: 追加アクション.
+- **War Magic (Wizard)**: 攻撃後、防御呪文を1つ.
+- **呪文発動 (Wizard 5)**: 防衛・ combat 呪文, DC14, +8.
+- **盾と剣の達人**: 盾使用時 AC+1.
 
 **精霊契約**: 地80% (防衛), 風40%, 水30%, 月20%, 火10%
 
 **装備**:
+
 - 翡翠の魔法剣 (王国の伝統的武器)
 - 強化plate armor (地の精霊の加護)
 - 盾 (翡翠の紋章)
@@ -136,6 +140,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [翡翠王国](../politics/kingdoms.md#5-翡翠王国)
-- [軍事](../rules/combat.md)
-- [外交関係](../politics/alliances.md)
+
+- [翡翠王国](../../politics/kingdoms.md#5-翡翠王国)
+- [軍事](../../rules/combat.md)
+- [外交関係](../../politics/alliances.md)

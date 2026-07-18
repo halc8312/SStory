@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ライラ・ミスティック (翡翠王国宮廷魔法顧問)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elf", "magic-advisor", "jade-kingdom"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 15 ( mage armor + DEX)
 - **HP**: 130 (12d6+24 from Wizard 12 + 3d8+6 from Cleric 3)
 - **速度**: 30フィート
@@ -78,21 +79,24 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 触れる死 (Chill Touch)**: +10 命中, 1d8+5 necrotic, 治癒無効.
-- ** 弱点突出 ( Grave Cleric)**: 攻撃ロールに +1d8 radiant (weak target).
+
+- **触れる死 (Chill Touch)**: +10 命中, 1d8+5 necrotic, 治癒無効.
+- **弱点突出 ( Grave Cleric)**: 攻撃ロールに +1d8 radiant (weak target).
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 12)**: 死霊・保護呪文, DC18, +12.
-- ** Grim Harvest**: 死霊呪文で HP 回復.
-- ** Channel Divinity (Grave)**: Path to the Grave (target vulnerable).
-- ** 多芸の才**: 技能判定に半修正.
+
+- **呪文発動 (Wizard 12)**: 死霊・保護呪文, DC18, +12.
+- **Grim Harvest**: 死霊呪文で HP 回復.
+- **Channel Divinity (Grave)**: Path to the Grave (target vulnerable).
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**: 月70%, 水60%
 
 **装備**:
+
 - 魔法のローブ (AC+1)
 - 生命の珠 (妹の写真入り)
--  Necronomicon の写本 (秘密)
+- Necronomicon の写本 (秘密)
 - 護符 (王妃から賜った)
 
 **所持金**: 300金貨 (個人), 王室予算別
@@ -125,7 +129,7 @@ spirit_contract:
 ## シナリオフック
 
 - 妹の病の原因が実は呪いだった → 解除依頼
-- 禁忌魔法の使用が露見 → 逃亡 or 弁明
+- 禁忌魔法の使用が露見 → 逃亡または弁明
 - 王妃の命で「王妃を救う薬」を作るよう依頼 (実は自分が使う薬)
 - 死者からのメッセージ: 妹の過去生の記憶
 - 精霊協会の査察が入る → 研究資料の隠蔽
@@ -133,6 +137,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [翡翠王国](../politics/kingdoms.md#5-翡翠王国)
-- [魔法系統](../magic/system.md#禁忌魔法)
-- [死霊魔法](../magic/system.md)
+
+- [翡翠王国](../../politics/kingdoms.md#5-翡翠王国)
+- [魔法系統](../../magic/system.md#禁忌魔法)
+- [死霊魔法](../../magic/system.md)

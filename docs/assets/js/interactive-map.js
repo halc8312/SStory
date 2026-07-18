@@ -1,5 +1,5 @@
 /**
- * Interactive Map v0.1
+ * Interactive Map v1 (stable)
  * SVG描画・表示制御・詳細パネル担当
  */
 
@@ -700,15 +700,20 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(count => ({ key: file.key, count }))
       .catch(error => {
         console.error(`Failed to load ${file.key}:`, error);
-        setErrorCount(file.key);
-        return { key: file.key, count: 0 };
+        return { key: file.key, error };
       }));
 
-    try {
-      const results = await Promise.all(promises);
-      results.forEach(({ key, count }) => updateCount(key, count));
-    } catch (error) {
-      showError('データ読み込み中にエラーが発生しました。');
+    const results = await Promise.all(promises);
+    const failures = results.filter(result => result.error);
+    results.forEach(({ key, count, error }) => {
+      if (error) {
+        setErrorCount(key);
+      } else {
+        updateCount(key, count);
+      }
+    });
+    if (failures.length > 0) {
+      showError(`地図データの読み込みに失敗しました: ${failures.map(result => result.key).join(', ')}`);
     }
 
     if (Array.isArray(mapData.nodes)) renderNodesPreview(mapData.nodes);

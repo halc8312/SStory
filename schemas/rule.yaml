@@ -4,7 +4,7 @@
 
 type: "object"
 allOf:
-  - "$ref": "common.yaml#/properties"
+  - "$ref": "common.yaml"
 required:
   - type
   - category
@@ -13,8 +13,13 @@ required:
   - created
   - last_updated
   - author
+  - contributors
   - tags
   - status
+  - rule_type
+  - system
+  - complexity
+  - related_rules
 properties:
   type:
     const: "rule"
@@ -81,8 +86,6 @@ properties:
           type: "string"
     description: "正誤表・既知の問題"
 
-additionalProperties: false
-
 description: |
   **rule** タイプは、TRPG（テーブルトークRPG）のルール文書です。
 
@@ -109,6 +112,7 @@ description: |
   created: "2026-05-01"
   last_updated: "2026-05-01"
   author: "halc8312"
+  contributors: []
   tags: ["core-mechanics", "rules", "system", "basics"]
   status: "stable"
   rule_type: "core"

@@ -1,7 +1,14 @@
 {
   "version": "0.2",
-  "language": "ja",
-  "dictionaries": ["ja", "en"],
+  "language": "en,ja",
+  "dictionaryDefinitions": [
+    {
+      "name": "sstory-project",
+      "path": "./terminology/cspell-project-words.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["ja", "en", "sstory-project"],
   "words": [
     "SStory",
     "エターナル",
@@ -398,6 +405,7 @@
     "dist/**",
     "build/**",
     "evaluation/**",
+    "Language/Evaluation/**",
     "*.pdf",
     "*.png",
     "*.jpg",
@@ -409,12 +417,18 @@
     "yarn.lock",
     "pnpm-lock.yaml"
   ],
+  "overrides": [
+    {
+      "filename": "Language/{Ancient_Languages,Fairy_And_Beastkin,Secret_Systems}/**/*.md",
+      "enabled": false
+    }
+  ],
   "maxDuplicateProblems": 10,
   "minWordLength": 3,
   "minCompoundWordLength": 3,
   "includeRegExpList": [],
   "excludeRegExpList": [],
   "ignoreRegExpList": [],
-  "locale": ["ja", "en-US"],
+  "locale": "ja,en-US",
   "languageId": "markdown"
 }

@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ゼフィア連合共和国 建国者"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "founder", "zephyr"]
@@ -75,11 +75,13 @@ spirit_contract:
 **速度**: 30 フィート.
 
 **攻撃**:
+
 - **近接**: 聖剣ゼフィア (2d8+5 radiant, +1, 対邪恶extra damage)
 - **遠隔**: 風の矢 (spell, 3d6 force)
 - **特殊**: Divine Smite (5d8 radiant), Lay on Hands (100HP pool)
 
 **主な呪文/能力**:
+
 - **Divine Smite**: 攻撃時に光ダメージ追加
 - **Aura of Protection**: 10フィート radius, CHA+5 to saves
 - **Aura of Courage**: 10フィート, fear無効
@@ -94,21 +96,25 @@ spirit_contract:
 ## 経歴 (歴史)
 
 ### 幼少期 (-1000年)
+
 - 貧しい農家に生まれる
 - 12歳で風の精霊と契約、優れた才能を示す
 - 15歳で村の守衛長
 
 ### 青年期 (-985年〜-950年)
+
 - 各地を旅し、異種族と交流
 - オークとの初の和平交渉に成功
 - ドワーフの鉱山都市を訪問、技術を学ぶ
 
 ### 成年期 (-950年〜-900年)
+
 - 「十二の誓言」を提唱
 - 各大陸の代表を集め、十二国同盟の枠組みを提案
 - 10年間の交渉の末、-900年に十二国同盟成立
 
 ### 晩年 (-900年〜0年)
+
 - 初代大統領に選出 (任期20年)
 - 国内の法整備、精霊協会設立
 - 0年、平和裏に引退、102歳で死去 (自然死)
@@ -127,6 +133,7 @@ spirit_contract:
 ---
 
 **伝説の要素**:
+
 - 風の精霊ゼフと直接会話したとされる
 - 一度も戦場で殺人をしていない (全ては和平交渉で解決)
 - 死後、身体が風とともに消え「昇天」したという伝承
@@ -134,10 +141,11 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [ゼフィア連合共和国](../politics/kingdoms.md)
-- [十二国同盟](../politics/alliances.md)
-- [風の精霊ゼフ](../magic/system.md)
-- [精霊協会](../religion/pantheon.md)
+
+- [ゼフィア連合共和国](../../politics/kingdoms.md)
+- [十二国同盟](../../politics/alliances.md)
+- [風の精霊ゼフ](../../magic/system.md)
+- [精霊協会](../../religion/pantheon.md)
 
 ---
 

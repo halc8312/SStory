@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ザンダー・スペルバインダー (マジック・タウン管理人)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "merchant", "free-city"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 13 (布の服 + 回避)
 - **HP**: 135 (12d6+24 from Wizard 12 + 3d8+3 from Rogue 3)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 魔法弾 (Fire Bolt)**: +11 命中, 4d10+5 fire.
-- ** 罠 (Rogue Sneak Attack)**: 位置優位時 2d6.
+
+- **魔法弾 (Fire Bolt)**: +11 命中, 4d10+5 fire.
+- **罠 (Rogue Sneak Attack)**: 位置優位時 2d6.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 12)**: 変容・幻惑呪文, DC18, +11.
-- ** Cunning Action**: 隠密/脱退.
-- ** 多芸の才**: 技能判定に半修正.
-- ** 罠解除**: 道具判定にadvantage.
-- ** 財宝の隠蔽**: アイテムを隠すのにadvantage.
+
+- **呪文発動 (Wizard 12)**: 変容・幻惑呪文, DC18, +11.
+- **Cunning Action**: 隠密/脱退.
+- **多芸の才**: 技能判定に半修正.
+- **罠解除**: 道具判定にadvantage.
+- **財宝の隠蔽**: アイテムを隠すのにadvantage.
 
 **精霊契約**: 風50%, 水45%, 地40%, 月35%, 火30%
 
 **装備**:
+
 - 魔法のステッキ (+2 spell)
 - 変容の石 (袋に追加容量)
 - 偽造許可証 (多数)
@@ -133,6 +137,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [自由都市国家群](../politics/kingdoms.md#12-自由都市国家群)
-- [魔法アイテム](../magic/artifacts.md)
-- [経済](../economy/trade.md)
+
+- [自由都市国家群](../../politics/kingdoms.md#12-自由都市国家群)
+- [魔法アイテム](../../magic/artifacts.md)
+- [経済](../../economy/trade.md)

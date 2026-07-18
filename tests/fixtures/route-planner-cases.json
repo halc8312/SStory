@@ -1,0 +1,47 @@
+{
+  "nodes": [
+    { "id": "a", "name": "A" },
+    { "id": "b", "name": "B" },
+    { "id": "c", "name": "C" },
+    { "id": "d", "name": "D" },
+    { "id": "e", "name": "E" }
+  ],
+  "routes": [
+    {
+      "id": "active_ab", "name": "Active AB", "from": "a", "to": "b",
+      "type": "road", "status": "active", "estimated_time_hours": 4,
+      "distance_km": 40, "cost_gold": 10, "danger_level": 1
+    },
+    {
+      "id": "seasonal_bc", "name": "Seasonal BC", "from": "b", "to": "c",
+      "type": "sea", "status": "seasonal", "seasonal": false,
+      "active_months": [6, 7], "estimated_time_hours": 2,
+      "distance_km": 25, "cost_gold": 20, "danger_level": 0
+    },
+    {
+      "id": "restricted_bd", "name": "Restricted BD", "from": "b", "to": "d",
+      "type": "road", "status": "restricted", "estimated_time_hours": 1,
+      "distance_km": 10, "cost_gold": 5, "danger_level": 0
+    },
+    {
+      "id": "forbidden_ac", "name": "Forbidden AC", "from": "a", "to": "c",
+      "type": "warp", "status": "forbidden", "estimated_time_hours": 0.1,
+      "distance_km": 1, "cost_gold": 1, "danger_level": 5
+    },
+    {
+      "id": "experimental_ad", "name": "Experimental AD", "from": "a", "to": "d",
+      "type": "rail", "status": "experimental", "estimated_time_hours": 0.1,
+      "distance_km": 1, "cost_gold": 1, "danger_level": 0
+    },
+    {
+      "id": "dangerous_ae", "name": "Dangerous AE", "from": "a", "to": "e",
+      "type": "road", "status": "dangerous", "estimated_time_hours": 1,
+      "distance_km": 1, "cost_gold": 1, "danger_level": 4
+    },
+    {
+      "id": "closed_ce", "name": "Closed CE", "from": "c", "to": "e",
+      "type": "road", "status": "closed", "estimated_time_hours": 1,
+      "distance_km": 1, "cost_gold": 1, "danger_level": 0
+    }
+  ]
+}

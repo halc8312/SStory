@@ -4,7 +4,7 @@
 
 type: "object"
 allOf:
-  - "$ref": "common.yaml#/properties"
+  - "$ref": "common.yaml"
 required:
   - type
   - category

@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "カイン・ユニオン (ゼフィア連合初代大統領)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "human", "president", "founder"]
@@ -14,6 +14,7 @@ race: "human"
 age: 78
 alignment: "lawful-good"
 class: "Fighter (Champion) 10 / Bard 5"
+spirit_contract: {}
 ---
 
 # カイン・ユニオン (Cain Union)
@@ -51,6 +52,7 @@ class: "Fighter (Champion) 10 / Bard 5"
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 18 ( plate + shield)
 - **HP**: 165 (10d10+30 from Fighter 10 + 5d8+15 from Bard 5)
 - **速度**: 30フィート
@@ -62,18 +64,21 @@ class: "Fighter (Champion) 10 / Bard 5"
 **戦闘能力**:
 
 **攻撃**:
+
 - **長剣 (Longsword)**: +8 命中, 1d8+3 斬撃 + 1d6 執念.
 - **率いの号令 (Inspiring Leader)**: 周囲10フィートの味方に一時HP+5.
 
 **特殊能力**:
-- ** Fighting Style (Champion)**: クリティカル範囲拡大 (19-20).
-- ** アクションサージ (Fighter)**: 追加アクション.
-- ** セカンドウインド (Fighter)**: HP回復.
-- ** 音楽・演説による支援 (d6)**: 3回/長休憩.
-- ** Leadership (Bard)**: 味方のセーブ +1d4 (10フィート).
+
+- **Fighting Style (Champion)**: クリティカル範囲拡大 (19-20).
+- **アクションサージ (Fighter)**: 追加アクション.
+- **セカンドウインド (Fighter)**: HP回復.
+- **音楽・演説による支援 (d6)**: 3回/長休憩.
+- **Leadership (Bard)**: 味方のセーブ +1d4 (10フィート).
 - **アンデッド退散 (Bard)**: 不死を退散.
 
 **精霊契約**:
+
 - 風: 80% (人間の主契約)
 - 水: 50%
 - 地: 45%
@@ -81,6 +86,7 @@ class: "Fighter (Champion) 10 / Bard 5"
 - 月: 40%
 
 **装備**:
+
 - 伝説の剣 "Unity Blade" (国家の象徴)
 - プレートアーマー (国営)
 - 盟約の指輪 (十二国同盟の原稿)
@@ -115,6 +121,7 @@ class: "Fighter (Champion) 10 / Bard 5"
 ---
 
 **関連項目**:
-- [ゼフィア連合](../politics/kingdoms.md#1-ゼフィア連合共和国)
-- [精霊協会設立](../politics/kingdoms.md#11-精霊協会)
-- [歴史年表](../lore/timelines/main-timeline.md)
+
+- [ゼフィア連合](../../politics/kingdoms.md#1-ゼフィア連合共和国)
+- [精霊協会設立](../../politics/kingdoms.md#11-精霊協会)
+- [歴史年表](../../lore/timelines/main-timeline.md)

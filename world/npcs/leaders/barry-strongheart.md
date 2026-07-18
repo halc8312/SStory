@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "バリー・ストロングハート (ハーフリング郷士国家連合警備隊長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "halfling", "military", "security"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 17 ( leather armor + shield + DEX)
 - **HP**: 130 (10d10+20 from Fighter 10 + 2d8+2 from Ranger 2)
 - **速度**: 25フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **長槍 (Glaive)**: +7 命中, 1d10+2 斬撃 (reach).
 - **短弓 (Shortbow)**: +6 命中, 1d6+3 刺突.
 
 **特殊能力**:
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Action Surge**: 追加アクション.
-- ** 自然探索者 (Ranger)**: 地形優位, 追跡.
-- ** 警戒**: 不意打ちに against を無効.
-- ** 集団戦闘**: 味方と隣接時に攻撃ロール+1.
+
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **アクションサージ**: 追加アクション.
+- **自然探索者 (Ranger)**: 地形優位, 追跡.
+- **警戒**: 不意打ちに against を無効.
+- **集団戦闘**: 味方と隣接時に攻撃ロール+1.
 
 **精霊契約**: 地80%, 水70%
 
 **装備**:
+
 - ハーフリング製の軽装鎧 (AC+2)
 - 長槍 (reach weapon)
 - 警備隊の腕章
@@ -134,6 +138,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [ハーフリング郷士国家連合](../politics/kingdoms.md#8-ハーフリング郷士国家連合)
-- [経済](../economy/trade.md)
-- [戦闘](../rules/combat.md)
+
+- [ハーフリング郷士国家連合](../../politics/kingdoms.md#8-ハーフリング郷士国家連合)
+- [経済](../../economy/trade.md)
+- [戦闘](../../rules/combat.md)

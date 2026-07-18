@@ -1,29 +1,64 @@
 #!/usr/bin/env node
 
 /**
- * SStory Frontmatter Validator
+ * Validate YAML frontmatter and internal links in world/ Markdown documents.
  *
- * Checks all markdown files for:
- * - Presence of YAML frontmatter
- * - Required fields (title, version, created, last_updated, author, category, status)
- * - Valid category values
- * - File naming conventions
- * - Cross-reference validation
+ * Common frontmatter rules are loaded from schemas/common.yaml. Keeping the
+ * schema as the single source of truth prevents the validator from drifting
+ * away from the documented metadata contract.
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
+const Ajv = require('ajv');
+const addFormats = require('ajv-formats');
+const YAML = require('yaml');
 
-const WORLD_DIR = path.join(__dirname, '..', 'world');
-const ROOT = __dirname.replace('/scripts', '');
+const REPO_ROOT = path.join(__dirname, '..');
+const WORLD_DIR = path.join(REPO_ROOT, 'world');
+const SCHEMA_DIR = path.join(REPO_ROOT, 'schemas');
+const COMMON_SCHEMA_PATH = path.join(SCHEMA_DIR, 'common.yaml');
+const SCHEMA_BASE_URI = 'https://sstory.local/schemas/';
+const TYPE_SCHEMA_FILES = Object.freeze({
+  'canon-document': 'canon-document.yaml',
+  npc: 'npc.yaml',
+  rule: 'rule.yaml',
+  asset: 'asset.yaml',
+  analysis: 'analysis.yaml',
+  overview: 'overview.yaml'
+});
 
-const REQUIRED_FIELDS = ['title', 'version', 'created', 'last_updated', 'author', 'category', 'status'];
-const VALID_CATEGORIES = [
-  'lore', 'geography', 'races', 'magic', 'politics',
-  'creatures', 'culture', 'economy', 'religion', 'maps',
-  'rules', 'npcs', 'glossary', 'index', 'readme'
-];
-const VALID_STATUS = ['draft', 'review', 'stable'];
+const commonSchema = YAML.parse(fs.readFileSync(COMMON_SCHEMA_PATH, 'utf8'));
+const REQUIRED_FIELDS = Object.freeze([...(commonSchema.required || [])]);
+const VALID_TYPES = Object.freeze([...(commonSchema.properties?.type?.enum || [])]);
+const VALID_CATEGORIES = Object.freeze([...(commonSchema.properties?.category?.enum || [])]);
+const VALID_STATUS = Object.freeze([...(commonSchema.properties?.status?.enum || [])]);
+
+function loadSchema(schemaFile) {
+  const schemaPath = path.join(SCHEMA_DIR, schemaFile);
+  const schema = YAML.parse(fs.readFileSync(schemaPath, 'utf8'));
+  return { ...schema, $id: `${SCHEMA_BASE_URI}${schemaFile}` };
+}
+
+function createSchemaValidators() {
+  const schemaAjv = new Ajv({ allErrors: true, strict: false });
+  addFormats(schemaAjv);
+  const schemas = new Map();
+
+  for (const schemaFile of ['common.yaml', ...Object.values(TYPE_SCHEMA_FILES)]) {
+    const schema = loadSchema(schemaFile);
+    schemas.set(schemaFile, schema);
+    schemaAjv.addSchema(schema, schema.$id);
+  }
+
+  const validators = new Map();
+  for (const schemaFile of schemas.keys()) {
+    validators.set(schemaFile, schemaAjv.getSchema(`${SCHEMA_BASE_URI}${schemaFile}`));
+  }
+  return validators;
+}
+
+const schemaValidators = createSchemaValidators();
 
 let errors = 0;
 let warnings = 0;
@@ -50,92 +85,115 @@ function log(message, type = 'INFO') {
   console.log(`${colors[type] || ''}[${type}]${colors.RESET} ${message}`);
 }
 
+function extractFrontmatter(content) {
+  const match = content.match(/^---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/);
+  return match?.[1];
+}
+
+function formatSchemaError(schemaError) {
+  const location = schemaError.instancePath || '/';
+  return `${location} ${schemaError.message}`;
+}
+
 function checkFrontmatter(filePath, content) {
   checked++;
 
-  // Check if file starts with ---
-  if (!content.startsWith('---')) {
-    log(`Missing frontmatter: ${filePath}`, 'ERROR');
+  const frontmatterText = extractFrontmatter(content);
+  if (frontmatterText === undefined) {
+    log(`Missing or invalid frontmatter: ${filePath}`, 'ERROR');
     errors++;
-    return;
+    return undefined;
   }
 
-  // Extract frontmatter
-  const frontmatterEnd = content.indexOf('---', 3);
-  if (frontmatterEnd === -1) {
-    log(`Invalid frontmatter (no closing ---): ${filePath}`, 'ERROR');
-    errors++;
-    return;
-  }
-
-  const frontmatterStr = content.substring(3, frontmatterEnd);
   let frontmatter;
   try {
-    frontmatter = require('yaml').parse(frontmatterStr);
-  } catch (e) {
-    log(`YAML parse error in ${filePath}: ${e.message}`, 'ERROR');
+    frontmatter = YAML.parse(frontmatterText);
+  } catch (error) {
+    log(`YAML parse error in ${filePath}: ${error.message}`, 'ERROR');
     errors++;
-    return;
+    return undefined;
   }
 
-  // Check required fields
-  REQUIRED_FIELDS.forEach(field => {
-    if (!frontmatter[field]) {
-      log(`Missing required field '${field}' in ${filePath}`, 'ERROR');
+  if (!frontmatter || typeof frontmatter !== 'object' || Array.isArray(frontmatter)) {
+    log(`Frontmatter must be a YAML mapping: ${filePath}`, 'ERROR');
+    errors++;
+    return frontmatter;
+  }
+
+  const schemaFile = TYPE_SCHEMA_FILES[frontmatter.type] || 'common.yaml';
+  const validateFrontmatter = schemaValidators.get(schemaFile);
+  if (!validateFrontmatter(frontmatter)) {
+    for (const schemaError of validateFrontmatter.errors || []) {
+      log(`Schema violation in ${filePath}: ${formatSchemaError(schemaError)}`, 'ERROR');
       errors++;
     }
-  });
-
-  // Validate category
-  if (frontmatter.category && !VALID_CATEGORIES.includes(frontmatter.category)) {
-    log(`Invalid category '${frontmatter.category}' in ${filePath}. Valid: ${VALID_CATEGORIES.join(', ')}`, 'WARN');
-    warnings++;
-  }
-
-  // Validate status
-  if (frontmatter.status && !VALID_STATUS.includes(frontmatter.status)) {
-    log(`Invalid status '${frontmatter.status}' in ${filePath}. Valid: ${VALID_STATUS.join(', ')}`, 'WARN');
-    warnings++;
-  }
-
-  // Check file name matches title (rough check)
-  const fileName = path.basename(filePath, '.md');
-  const expectedSlug = frontmatter.title
-    ?.toLowerCase()
-    .replace(/[^\w\sー\-ぁ-んア-ン一-龥]/g, '')
-    .replace(/\s+/g, '-')
-    .substring(0, 50);
-
-  if (expectedSlug && !fileName.includes(expectedSlug.substring(0, 10))) {
-    log(`Title may not match filename: ${filePath} (title: ${frontmatter.title})`, 'WARN');
-    warnings++;
   }
 
   return frontmatter;
 }
 
+function markdownDestination(rawDestination) {
+  let destination = rawDestination.trim();
+  if (destination.startsWith('<')) {
+    const closingBracket = destination.indexOf('>');
+    if (closingBracket !== -1) {
+      return destination.slice(1, closingBracket);
+    }
+  }
+
+  // Strip an optional Markdown link title while preserving URL-encoded spaces.
+  const titleMatch = destination.match(/^(\S+)(?:\s+["'].*["'])?$/);
+  return titleMatch ? titleMatch[1] : destination;
+}
+
+function resolveInternalLink(link, filePath) {
+  if (
+    !link ||
+    link.startsWith('#') ||
+    /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(link)
+  ) {
+    return null;
+  }
+
+  const pathOnly = link.split(/[?#]/, 1)[0];
+  if (!pathOnly) {
+    return null;
+  }
+
+  let decodedPath;
+  try {
+    decodedPath = decodeURIComponent(pathOnly);
+  } catch {
+    decodedPath = pathOnly;
+  }
+
+  const targetPath = decodedPath.startsWith('/')
+    ? path.resolve(REPO_ROOT, decodedPath.replace(/^[/\\]+/, ''))
+    : path.resolve(path.dirname(filePath), decodedPath);
+  const candidates = [targetPath];
+
+  if (!path.extname(targetPath)) {
+    candidates.push(`${targetPath}.md`);
+    candidates.push(path.join(targetPath, 'index.md'));
+    candidates.push(path.join(targetPath, 'README.md'));
+  }
+
+  return {
+    exists: candidates.some(candidate => fs.existsSync(candidate)),
+    target: candidates[1] || candidates[0]
+  };
+}
+
 function checkLinks(content, filePath) {
-  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-  let match;
+  const linkRegex = /!?\[([^\]]*)\]\(([^)]+)\)/g;
   const brokenLinks = [];
+  let match;
 
   while ((match = linkRegex.exec(content)) !== null) {
-    const [full, text, link] = match;
-
-    // Skip external links
-    if (link.startsWith('http://') || link.startsWith('https://') || link.startsWith('mailto:')) {
-      continue;
-    }
-
-    // Resolve relative path
-    const dir = path.dirname(filePath);
-    const targetPath = path.resolve(dir, link);
-
-    // Remove .md extension if exists
-    const finalPath = targetPath.endsWith('.md') ? targetPath : targetPath + '.md';
-
-    if (!fs.existsSync(finalPath)) {
-      brokenLinks.push({ link, target: finalPath, file: filePath });
+    const link = markdownDestination(match[2]);
+    const resolved = resolveInternalLink(link, filePath);
+    if (resolved && !resolved.exists) {
+      brokenLinks.push({ link, target: resolved.target, file: filePath });
     }
   }
 
@@ -143,18 +201,17 @@ function checkLinks(content, filePath) {
 }
 
 function walkDir(dir, callback) {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const entries = fs.readdirSync(dir, { withFileTypes: true })
+    .sort((left, right) => left.name.localeCompare(right.name));
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      // Skip node_modules, .git, evaluation, etc.
-      if (['node_modules', '.git', 'evaluation', 'dist', 'build'].includes(entry.name)) {
-        continue;
+      if (!['node_modules', '.git', 'evaluation', 'dist', 'build'].includes(entry.name)) {
+        walkDir(fullPath, callback);
       }
-      walkDir(fullPath, callback);
-    } else if (entry.isFile() && entry.name.endsWith('.md')) {
+    } else if (entry.isFile() && entry.name.toLowerCase().endsWith('.md')) {
       callback(fullPath, entry.name);
     }
   }
@@ -163,85 +220,66 @@ function walkDir(dir, callback) {
 function main() {
   resetStats();
   log('SStory Frontmatter Validator starting...', 'INFO');
-  console.log('');
 
-  // Check all markdown files under world/
   const allFiles = [];
-  walkDir(WORLD_DIR, (filePath, fileName) => {
-    allFiles.push({ filePath, fileName });
-  });
-
+  walkDir(WORLD_DIR, (filePath, fileName) => allFiles.push({ filePath, fileName }));
   log(`Found ${allFiles.length} markdown files to check`, 'INFO');
-  console.log('');
 
   const brokenLinks = [];
-
-  allFiles.forEach(({ filePath, fileName }) => {
+  for (const { filePath } of allFiles) {
     try {
-      const content = fs.readFileSync(filePath, 'utf-8');
-
-      // Check frontmatter
+      const content = fs.readFileSync(filePath, 'utf8');
       checkFrontmatter(filePath, content);
-
-      // Check links (only in world/ directory)
-      if (filePath.includes('/world/')) {
-        const fileBrokenLinks = checkLinks(content, filePath);
-        brokenLinks.push(...fileBrokenLinks);
-      }
-    } catch (err) {
-      log(`Error reading ${filePath}: ${err.message}`, 'ERROR');
+      brokenLinks.push(...checkLinks(content, filePath));
+    } catch (error) {
+      log(`Error reading ${filePath}: ${error.message}`, 'ERROR');
       errors++;
     }
-  });
+  }
 
-  console.log('');
   log('=== Validation Summary ===', 'INFO');
   log(`Files checked: ${checked}`, 'INFO');
-  log(`Errors: ${errors}`, errors > 0 ? 'ERROR' : 'SUCCESS');
+  log(`Frontmatter errors: ${errors}`, errors > 0 ? 'ERROR' : 'SUCCESS');
   log(`Warnings: ${warnings}`, warnings > 0 ? 'WARN' : 'SUCCESS');
 
   if (brokenLinks.length > 0) {
     log(`Broken links found: ${brokenLinks.length}`, 'ERROR');
-    brokenLinks.forEach(({ link, target, file }) => {
+    for (const { link, target, file } of brokenLinks) {
       log(`  ${file}: ${link} -> ${target} (not found)`, 'ERROR');
-    });
+    }
     errors += brokenLinks.length;
   } else {
     log('Broken links: 0', 'SUCCESS');
   }
 
-  console.log('');
-
   if (errors > 0) {
     log('Validation FAILED', 'ERROR');
     process.exit(1);
-  } else {
-    log('Validation PASSED', 'SUCCESS');
-    process.exit(0);
   }
+
+  log('Validation PASSED', 'SUCCESS');
 }
 
 if (require.main === module) {
-  // Check if yaml package is available, if not use simple regex parsing
-  try {
-    require('yaml');
-  } catch (e) {
-    // Fallback: simple regex parsing
-    console.log('Note: Install "yaml" package for full YAML validation');
-  }
-
   main();
 }
 
 module.exports = {
   REQUIRED_FIELDS,
+  TYPE_SCHEMA_FILES,
+  VALID_TYPES,
   VALID_CATEGORIES,
   VALID_STATUS,
   checkFrontmatter,
   checkLinks,
-  walkDir,
+  createSchemaValidators,
+  extractFrontmatter,
+  formatSchemaError,
   log,
   main,
+  markdownDestination,
   resetStats,
-  getStats
+  resolveInternalLink,
+  getStats,
+  walkDir
 };

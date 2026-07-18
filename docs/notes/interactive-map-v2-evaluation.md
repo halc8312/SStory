@@ -1,6 +1,6 @@
 # Leaflet v2 インタラクティブマップ評価メモ
 
-最終更新: 2026-05-10
+最終更新: 2026-07-18
 
 ---
 
@@ -42,7 +42,7 @@
 | `continents.json` | 大陸情報 | ✅ |
 | `regions.json` | 地域情報 | ✅ |
 | `pois.json` | POI 表示、検索候補 | ✅ |
-| `pixel-mapping.json` | v2 独自のピクセル座標対応表 | ❌ |
+| `pixel-mapping.json` | 世界地図のピクセル座標対応表 | ✅ |
 
 ### 3.2 背景地図・詳細地図
 
@@ -53,7 +53,7 @@
 
 ### 3.3 v2 固有の仮実装 / ハードコード
 
-- `pixel-mapping.json` にノード・大陸・危険区域の表示座標を持つ
+- `world/map-data/data/pixel-mapping.json` にノード・大陸・危険区域の表示座標を持ち、公開コピーへ同期する
 - 深度ズーム用オーバーレイの画像パスと bounds は HTML 内にハードコード
 - 大陸名ラベル、色、UI テキスト、ズーム閾値も HTML 内にハードコード
 - POI 位置は `pois.json` の座標を直接使わず、`nearest_node_id` のピクセル座標から
@@ -62,7 +62,7 @@
 補足:
 
 - v1 / v2 とも、GitHub Pages 上で参照する公開用コピーは `docs/data/map/`
-- 正史データ本体は `world/map-data/data/` にあり、手動同期が前提
+- 正典データ本体は `world/map-data/data/` にあり、`sync_map_data.py` が7ファイルを同期・検査する
 
 ---
 
@@ -106,8 +106,8 @@
 | POI focus | ✅ | ⚠️ | v2 は検索結果クリックで移動するが、v1 の専用 focus API ほど明示的ではない |
 | ルート検索 | ✅ | ✅ | どちらも Dijkstra |
 | ルート検索結果ハイライト | ✅ | ✅ | どちらも fitBounds 相当あり |
-| 月指定 | ✅ | ❌ | v2 未対応 |
-| 空路なし / 海路なし / restricted 含む | ✅ | ❌ | v2 未対応 |
+| 月指定 | ✅ | ✅ | 共通ルート計算規則を使用 |
+| 空路なし / 海路なし / restricted 含む | ✅ | ✅ | 共通ルート計算規則を使用 |
 | レイヤー切替 | ✅ | ✅ | v2 はパネル UI |
 | 座標グリッド | ✅ | ✅ | v2 は初期 OFF |
 | 大陸名ラベル | ❌ | ✅ | v2 独自 |
@@ -147,19 +147,20 @@
 
 実装状況:
 
-- v2 でも `routes.json` を元に Dijkstra を実装済み
-- 条件は `time` / `distance` / `safety` の 3 種
+- v1 / v2 は `route-planner.js` の同じ Dijkstra 実装を使用
+- 条件は `time` / `distance` / `safety` / `cost` の 4 種
+- `forbidden` / `experimental` / `dangerous` / `closed` は常時除外し、`restricted` は明示許可時のみ使用
+- 季節ルートは月未指定なら警告付きで候補、月指定時は `active_months` に含まれる場合だけ使用
 - 検索結果は地図上でゴールドのハイライトを描き、fitBounds で全体表示する
 
 v1 との差分:
 
-- v1 にある月指定、空路なし、海路なし、restricted route を含める設定は未移植
-- v2 はノードが `pixel-mapping.json` にない経路を検索グラフに入れない
+- 表示UIとハイライト方式は異なるが、経路の可否・季節・重み計算は同じ共通モジュールを使う
+- `pixel-mapping.json` は正典IDを全件含むことを Map Data validator で検査する
 
 後続 Issue 候補:
 
-- v1 相当の検索オプション移植
-- v1 / v2 の検索結果差分確認
+- v1 / v2 の画面上の検索結果差分確認
 - 代表ケースのスクリーンショット付き検証
 
 ---
@@ -190,7 +191,7 @@ v1 との差分:
 - [x] `nodes` / `routes` / `hazards` / `pois` を表示できる
 - [x] ルート検索と地図ハイライトが動く
 - [x] Y 軸反転が v1 と整合する
-- [ ] v1 相当の検索オプションを揃える
+- [x] v1 相当の検索オプションを揃える
 - [ ] POI の位置精度を改善する
 - [ ] 代表ノード・代表 POI・代表ルートの実ブラウザ確認を完了する
 - [ ] スマホ実機で操作確認する
@@ -216,9 +217,9 @@ docs/assets/js/interactive-map-v2.js
 
 現時点の判断:
 
-- この Issue では単体 HTML のまま維持する
-- 理由は、まだ評価用の試験版で、UI とロジックの変更頻度が高いため
-- 主表示化の判断後に、v1 との共通化も含めて分離を再検討する
+- 経路探索規則は `docs/assets/js/route-planner.js` に分離し、v1 / v2 で共有済み
+- v2 固有の地図描画とスタイルは、評価中のため引き続き単体 HTML に置く
+- 主表示化の判断後に、v2 固有CSSと描画エンジンも外部ファイルへ分離する
 
 ---
 

@@ -1,11 +1,15 @@
 ---
-title: "poi-authoring-template"
-version: "0.2.0"
-created: "2026-05-08"
-last_updated: "2026-05-09"
-author: "halc8312"
+type: "overview"
 category: "maps"
+title: "POI Authoring Template"
+version: "0.2.1"
+created: "2026-05-08"
+last_updated: "2026-07-18"
+author: "halc8312"
+tags: ["map-data", "poi", "template", "authoring"]
 status: "draft"
+document_kind: "navigation"
+summary: "POI追加依頼に必要な根拠・対象・制約を明示するテンプレートです。"
 ---
 
 <!-- cspell:disable -->

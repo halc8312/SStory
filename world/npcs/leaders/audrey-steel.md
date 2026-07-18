@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "オードリー・スティール (銀盟共和国防衛長官)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "dwarf", "defense", "silver-confederation"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 18 ( custom armor + shield)
 - **HP**: 190 (12d10+36 from Fighter 12 + 3d8+3 from Artificer 3)
 - **速度**: 25フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **魔法のライフル (Enchanted Rifle)**: 射程150フィート, +9 命中, 1d12+3 piercing + 1d6 force.
 - **近接斧 (Hand Axe)**: +7 命中, 1d6+3 slashing.
 
 **特殊能力**:
-- ** Extra Attack**: 2回攻撃/ターン.
-- ** Action Surge**: 追加アクション.
-- ** Infuse Item (Artificer)**: 装備に魔法付与.
-- ** 戦闘分析**: 敵の弱点を発見, 次の攻撃に advantage.
-- ** 銃器の名手**: 遠隔攻撃のクリティカル範囲拡大.
+
+- **Extra Attack**: 2回攻撃/ターン.
+- **アクションサージ**: 追加アクション.
+- **Infuse Item (Artificer)**: 装備に魔法付与.
+- **戦闘分析**: 敵の弱点を発見, 次の攻撃に advantage.
+- **銃器の名手**: 遠隔攻撃のクリティカル範囲拡大.
 
 **精霊契約**: 地60%, 風50%, 水30%, 月25%, 火20%
 
 **装備**:
+
 - カスタム魔法ライフル (range 150ft, +1)
 - 軽量装甲 (AC+2)
 - 爆弾数種 (alchemical grenades)
@@ -136,6 +140,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [銀盟共和国](../politics/kingdoms.md#6-銀盟共和国)
-- [技術](../magic/artifacts.md)
-- [戦闘](../rules/combat.md)
+
+- [銀盟共和国](../../politics/kingdoms.md#6-銀盟共和国)
+- [技術](../../magic/artifacts.md)
+- [戦闘](../../rules/combat.md)

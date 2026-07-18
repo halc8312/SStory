@@ -1,8 +1,8 @@
 ---
 title: "SStory - エターナル・アルカディア世界構築プロジェクト"
-version: "1.0.0"
+version: "1.1.0"
 created: "2026-05-01"
-last_updated: "2026-05-02"
+last_updated: "2026-07-18"
 author: "halc8312"
 category: "project"
 tags: ["project", "worldbuilding", "introduction"]
@@ -36,8 +36,8 @@ cat world/lore/creation-myth.md
 cat world/geography/continents.md
 
 # 世界設定ポータル（GitHub Pages）をローカルで起動
-cd docs-site
-mkdocs serve
+node scripts/run-python.js -m http.server 8000 --directory docs
+# http://localhost:8000/ を開く
 ```
 
 ---
@@ -61,6 +61,7 @@ mkdocs serve
 このリポジトリでは、`main` ブランチの `/docs` フォルダを公開元にしています。
 
 **設定手順**:
+
 1. GitHub のリポジトリページを開く
 2. **Settings** → **Pages** を開く
 3. **Build and deployment** を `Deploy from a branch` に変更
@@ -72,6 +73,7 @@ mkdocs serve
 ### 現在の実装方式
 
 **v0.1 静的HTMLポータル**（本リリース）:
+
 - ビルド不要の静的HTML/CSS/JS
 - `docs/` フォルダを GitHub Pages の公開元として直接配置
 - MkDocs / GitHub Actions は使用せず
@@ -108,9 +110,8 @@ docs/
 ### ローカルでの確認
 
 ```bash
-cd docs
-python -m http.server 8000
-# ブラウザで http://localhost:8000 を開く
+node scripts/run-python.js -m http.server 8000 --directory docs
+# ブラウザで http://localhost:8000/ を開く
 ```
 
 ### 採用技術（v0.1）
@@ -121,19 +122,18 @@ python -m http.server 8000
 
 ### 現在のステータス
 
-- ✅ **v0.1**: 静的ポータル基本構築（本Issueで実装）
-- ⏳ **v0.2**: 既存Markdown整理とリンク充実
-- ⏳ **v0.3**: インタラクティブ交通マップ v0.1 (Leaflet)
-- ⏳ **v1.0**: Web版ルート検索 (JavaScript実装)
-- ⏳ **v2.0**: 世界設定データベース化
+- ✅ **ポータル基盤**: 静的HTMLポータル、地図ギャラリー、Map Data公開コピー
+- ✅ **インタラクティブマップ v1**: 現行安定版（Leaflet、POI、Web版ルート検索）
+- 🧪 **インタラクティブマップ v2**: 試験版・次世代候補（v1は引き続き現行）
+- ⏳ **今後**: Markdown閲覧導線の強化、タイルマップ、世界設定データベース化
 
-詳細な開発ロードマップ: [docs/pages/roadmap.html](./pages/roadmap.html)
+詳細な開発ロードマップ: [docs/pages/roadmap.html](./docs/pages/roadmap.html)
 
 ### 正史資料との関係
 
-- **本ポータル**は `world/` 配下の**正史Markdownへのナビゲーション**です
+- **本ポータル**は `world/` 配下の世界設定Markdownへのナビゲーションです。カノンは `CANON_POLICY.md` の条件を満たす文書に限ります
 - 詳細な設定は `world/` 以下のファイルを直接参照してください
-- Map Data は `world/map-data/data/` のJSONを参照
+- Map Data は `world/map-data/data/` の編集上の正本JSONを参照します。JSON自体が独立したカノンという意味ではありません
 
 ---
 

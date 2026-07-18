@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "グルグ・スピリットカー (赤砂オーク連合大シャーマン)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "orc", "shaman", "red-sand"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 14 (ローブ + 自然の加護)
 - **HP**: 150 (12d8+36 from Druid 12 + 3d8+3 from Cleric 3)
 - **速度**: 30フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **精霊の光 (Sacred Flame)**: DC18, 1d8 radiant.
 - **火の玉 (Fireball)**: 20フィート sphere, DC17, 8d6 fire.
 
 **特殊能力**:
-- ** 呪文発動 (Druid 12)**: 自然・死霊呪文, DC18, +10.
-- ** Wild Shape (Druid)**: 1日2回, 植物・獣に変身.
-- ** Spore Spawn (Circle of Spores)**: 範囲にspore, 追加 damage.
-- ** Channel Divinity (Cleric)**: Knowledge domain の効果.
-- ** 精霊会話**: 火・地・水の精霊と会話可能.
-- ** 自然の回復**: 短休憩でスロット一部回復.
+
+- **呪文発動 (Druid 12)**: 自然・死霊呪文, DC18, +10.
+- **Wild Shape (Druid)**: 1日2回, 植物・獣に変身.
+- **Spore Spawn (Circle of Spores)**: 範囲にspore, 追加 damage.
+- **Channel Divinity (Cleric)**: Knowledge domain の効果.
+- **精霊会話**: 火・地・水の精霊と会話可能.
+- **自然の回復**: 短休憩でスロット一部回復.
 
 **精霊契約**: 火85%, 地60%, 水40%, 風30%, 月15%
 
 **装備**:
+
 - シャーマンの杖 (火の精霊宿る)
 - 精霊の骨牌 (占い用)
 - 砂漠の薬草袋
@@ -129,13 +133,14 @@ spirit_contract:
 
 - 火の精霊の怒りを買い、干旱が発生 → 原因究明と鎮撫
 - 若手戦士たちがシャーマンの教えを無視して暴走 → 止められるか
-- 水の精霊との秘密契約がバレる → 追放 or 支持拡大
+- 水の精霊との秘密契約がバレる → 追放または支持拡大
 - 部族の elders から伝承の回復を依頼
 - 盟主の暗殺未遂事件で容疑者に → 真犯人を暴く
 
 ---
 
 **関連項目**:
-- [赤砂オーク連合](../politics/kingdoms.md#4-赤砂オーク連合)
-- [精霊契約](../races/races-overview.md)
-- [ピュロス](../religion/pantheon.md#4-ピュロス)
+
+- [赤砂オーク連合](../../politics/kingdoms.md#4-赤砂オーク連合)
+- [精霊契約](../../races/races-overview.md)
+- [ピュロス](../../religion/pantheon.md#4-ピュロス)

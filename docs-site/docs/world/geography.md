@@ -81,19 +81,19 @@
 
 各地域ごとの詳細は、`world/geography/regions/` 配下のMarkdownファイルを参照してください。
 
-- **中央地域**（エリュシオン）: [詳細](world/geography/regions/central-region.md)
-- **月影地域**（リュミエラ）: [詳細](world/geography/regions/moon-shadow-region.md)
-- **赤砂地域**（カオス・リア）: [詳細](world/geography/regions/red-sand-region.md)
-- **氷海域**（アトランティス）: [詳細](world/geography/regions/frozen-sea-region.md)
-- **時空地域**（グリモワール）: [詳細](world/geography/regions/chrono-region.md)
+- **中央地域**（エリュシオン）: [詳細](https://github.com/halc8312/SStory/blob/main/world/geography/regions/central-region.md)
+- **月影地域**（リュミエラ）: [地域資料一覧](https://github.com/halc8312/SStory/tree/main/world/geography/regions)
+- **赤砂地域**（カオス・リア）: [地域資料一覧](https://github.com/halc8312/SStory/tree/main/world/geography/regions)
+- **氷海域**（アトランティス）: [地域資料一覧](https://github.com/halc8312/SStory/tree/main/world/geography/regions)
+- **時空地域**（グリモワール）: [地域資料一覧](https://github.com/halc8312/SStory/tree/main/world/geography/regions)
 
 ## 気候と生態系
 
-世界全体の気候帯と特徴的な生態系については、[気候と生態系](world/geography/climate.md)を参照してください。
+世界全体の気候帯と特徴的な生態系については、[気候と生態系](https://github.com/halc8312/SStory/blob/main/world/geography/climate.md)を参照してください。
 
 ## 地図ギャラリー
 
-各種地図は [地図ギャラリー](maps/gallery.md) で閲覧できます。
+各種地図は [地図ギャラリー](../maps/gallery.md) で閲覧できます。
 
 - **世界地図**: 五大陸の全体図
 - **大陸地図**: 各大陸の詳細地図
@@ -110,7 +110,7 @@
 - **continents.json**: 大陸のメタデータ
 - **regions.json**: 地域のメタデータ
 
-詳細: [Map Data 紹介ページ](maps/map-data.md)
+詳細: [Map Data 紹介ページ](../maps/map-data.md)
 
 ## 関連ページ
 
@@ -118,7 +118,7 @@
 - [交通](transportation.md) - 各地域への移動手段
 - [歴史](history.md) - 地理形成の歴史的背景
 - [種族](races.md) - 各地域に住む種族
-- [地図ギャラリー](maps/gallery.md) - 視覚的な地図
+- [地図ギャラリー](../maps/gallery.md) - 視覚的な地図
 
 ## 正史資料
 
@@ -139,4 +139,4 @@ world/geography/
 
 ---
 
-**次のステップ**: [交通体系を学ぶ](transportation.md) | [地図で視覚化](maps/gallery.md)
+**次のステップ**: [交通体系を学ぶ](transportation.md) | [地図で視覚化](../maps/gallery.md)

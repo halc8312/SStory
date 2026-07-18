@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "カオス・マスター (異端宗教「混沌教」教祖)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "cult", "chaos"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 20 | +5 |
 
 **防御**:
+
 - **AC**: 12 (布の服 + 回避)
 - **HP**: 140 (12d6+24 from Warlock 12 + 3d4+3 from Sorcerer 3)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 混沌の矢 (Eldritch Blast)**: +8 命中, 2d10 force.
-- ** 運命の捻じ曲げ (Wild Magic Surge)**: ランダム効果.
+
+- **混沌の矢 (Eldritch Blast)**: +8 命中, 2d10 force.
+- **運命の捻じ曲げ (Wild Magic Surge)**: ランダム効果.
 
 **特殊能力**:
-- ** 呪文発動 (Warlock 12)**: 混沌・暗黒呪文, DC15, +8.
-- ** 邪悪の不死 (Undying)**: 致命的ダメージで1HP残る (1日1回).
-- ** 混沌変異 (Wild Magic)**: 呪文発動時にランダム効果.
-- ** カリスマ**: 話術で群衆を操る.
-- ** 禁断知識**: 禁忌魔法の知識.
+
+- **呪文発動 (Warlock 12)**: 混沌・暗黒呪文, DC15, +8.
+- **邪悪の不死 (Undying)**: 致命的ダメージで1HP残る (1日1回).
+- **混沌変異 (Wild Magic)**: 呪文発動時にランダム効果.
+- **カリスマ**: 話術で群衆を操る.
+- **禁断知識**: 禁忌魔法の知識.
 
 **精霊契約**: 虚無80% (実際は精霊ではない), 火40%
 
 **装備**:
+
 - 混沌の杖
 - 黒い聖典 (禁断の魔導書)
 - 秘密の通信石 (教団 network)
@@ -125,7 +129,7 @@ spirit_contract:
 
 ## シナリオフック
 
-- 教団の集会が発覚 → 潜入 or 強制捜査
+- 教団の集会が発覚 → 潜入または強制捜査
 - 誰かを混沌に導く言葉巧みな勧誘
 - 過去の実験現場が再現される →  disaster?
 - 精霊協会の機密が漏洩 → 調査
@@ -134,6 +138,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [異端宗教](../religion/pantheon.md#異端と禁じられた信仰)
-- [禁忌魔法](../magic/system.md)
-- [精霊協会](../politics/kingdoms.md#11-精霊協会)
+
+- [異端宗教](../../religion/pantheon.md#異端と禁じられた信仰)
+- [禁忌魔法](../../magic/system.md)
+- [精霊協会](../../politics/kingdoms.md#11-精霊協会)

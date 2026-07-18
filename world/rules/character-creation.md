@@ -2,9 +2,9 @@
 type: "rule"
 category: "rules"
 title: "キャラクター作成ガイド"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["character-creation", "rules", "pc", "guide"]
@@ -49,6 +49,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 | **ハーフリング** | 幸運 (+2 DEX/CHA), 回避 | 盗賊, 吟遊詩人, 旅行者 |
 
 **種族ごとの契約度初期値** (例):
+
 - 人間: 風40%, 地40%, 火40%, 水40%, 月40% (バランス)
 - エルフ: 月90%, 風30%, 地20%, 火10%, 水20%
 - ドワーフ: 地90%, 風20%, 火30%, 水10%, 月10%
@@ -64,6 +65,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: STRまたはDEX
 **ヒットダイス**: d10
 **主な特徴**:
+
 - 攻撃ボーナス +2 (戦闘訓練)
 - 追加攻撃 (レベル5)
 - 不屈の精神 (セーブボーナス)
@@ -76,6 +78,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: INT（学術系）またはWIS（自然系）またはCHA（契約系）
 **ヒットダイス**: d6
 **主な特徴**:
+
 - 呪文唱え (呪文発動)
 - 精霊契約: 選択元素の契約度を上げやすい
 - 魔法探知 (Detect Magic)
@@ -88,6 +91,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: DEX
 **ヒットダイス**: d8
 **主な特徴**:
+
 - 隠密とスリ
 - 隠密攻撃 (1d6, レベルで増加)
 - 回避 (Evasion)
@@ -100,6 +104,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: WIS
 **ヒットダイス**: d8
 **主な特徴**:
+
 - 治癒魔法 (Healing)
 - 精霊との対話
 - 祝福・呪い
@@ -112,6 +117,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: DEXまたはSTR
 **ヒットダイス**: d10
 **主な特徴**:
+
 - 自然環境での優位性
 - 追跡 (Track)
 - 動物仲間 (Animal Companion)
@@ -124,6 +130,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: CHA
 **ヒットダイス**: d8
 **主な特徴**:
+
 - 音楽・演説による支援 (音楽・演説による支援)
 - 知識全般
 - 魔法 (秘術寄り)
@@ -136,6 +143,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: STR
 **ヒットダイス**: d12
 **主な特徴**:
+
 - 狂暴 (Rage): 戦闘中ダメージボーナス、ダメージ耐性
 - 危険感知
 - 無防備な移動也能
@@ -147,6 +155,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 **主能力**: CHAまたはINT
 **ヒットダイス**: d8
 **主な特徴**:
+
 - 精霊召喚 (Summon Spirit)
 - 契約精霊と一体化
 - 支援と戦闘
@@ -162,6 +171,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 ### 4.2 ポイント購入
 
 27ポイントで購入：
+
 - 8: 0 pt
 - 9: 1 pt
 - 10: 2 pt
@@ -186,24 +196,24 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 
 | 技能 | 関連能力 | 説明 |
 |------|----------|------|
-| ** Athletics** | STR | 運動、攀登、跳躍 |
-| ** Acrobatics** | DEX | 回避、バランス |
-| ** Sleight of Hand** | DEX | 手品、隠し |
-| ** Stealth** | DEX | 隠密 |
-| ** Arcana** | INT | 魔法知識 |
-| ** History** | INT | 歴史知識 |
-| ** Investigation** | INT | 調査、推理 |
-| ** Nature** | INT | 自然知識 |
-| ** Religion** | INT | 宗教知識 |
-| ** Animal Handling** | WIS | 動物制御 |
-| ** Insight** | WIS | 人心読解 |
-| ** Medicine** | WIS | 治療 |
-| ** Perception** | WIS | 知覚 |
-| ** Survival** | WIS | 生存技術 |
-| ** Deception** | CHA | 嘘、偽装 |
-| ** Intimidation** | CHA | 脅迫 |
-| ** Performance** | CHA | 演奏、演技 |
-| ** Persuasion** | CHA | 交渉、説得 |
+| **Athletics** | STR | 運動、攀登、跳躍 |
+| **Acrobatics** | DEX | 回避、バランス |
+| **Sleight of Hand** | DEX | 手品、隠し |
+| **Stealth** | DEX | 隠密 |
+| **Arcana** | INT | 魔法知識 |
+| **History** | INT | 歴史知識 |
+| **Investigation** | INT | 調査、推理 |
+| **Nature** | INT | 自然知識 |
+| **Religion** | INT | 宗教知識 |
+| **Animal Handling** | WIS | 動物制御 |
+| **Insight** | WIS | 人心読解 |
+| **Medicine** | WIS | 治療 |
+| **Perception** | WIS | 知覚 |
+| **Survival** | WIS | 生存技術 |
+| **Deception** | CHA | 嘘、偽装 |
+| **Intimidation** | CHA | 脅迫 |
+| **Performance** | CHA | 演奏、演技 |
+| **Persuasion** | CHA | 交渉、説得 |
 
 **技能修得**: クラスに応じた数の技能に proficiency を得る (通常 2-4つ)。
 
@@ -234,7 +244,7 @@ related_rules: ["core-mechanics.md", "combat.md", "magic-casting.md", "bestiary-
 
 クラスにより異なる：
 
-| クラス | 所持金 (GP) |
+| クラス | 所持金（金貨） |
 |--------|------------|
 | 戦士 | 50 |
 | 魔導士 | 25 |
@@ -327,7 +337,8 @@ INT 18 (+4), WIS 14 (+2), CHA 10 (+0)
 ---
 
 **関連項目**:
-- [コアルール](../core-mechanics.md)
+
+- [コアルール](core-mechanics.md)
 - [戦闘ルール](combat.md)
 - [魔法発動](magic-casting.md)
 - [種族概要](../races/races-overview.md)

@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "マーリン・エルダー (アストラリス魔法学院校長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "academy", "zephyr"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 16 (mage armor + 敏捷)
 - **HP**: 120 (20d6+40 from Wizard 20)
 - **速度**: 30フィート
@@ -78,18 +79,21 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **魔法弾 (Fire Bolt)**: +11 命中, 4d10+5 fire, range 120フィート.
 - **変容の矢 (Magic Missile)**: 自動命中, 3d4+3 force.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 20)**: 全学派, DC21, +13.
-- ** Spell Mastery**: 2つの1級呪文をいつでも発動.
-- ** Signature Spells**: 2つの2級呪文を追加効果付きで発動.
-- ** 多芸の才**: 技能判定に半修正.
+
+- **呪文発動 (Wizard 20)**: 全学派, DC21, +13.
+- **Spell Mastery**: 2つの1級呪文をいつでも発動.
+- **Signature Spells**: 2つの2級呪文を追加効果付きで発動.
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**: 風60%, 地50%, 火40%, 水45%, 月55% (バランス型)
 
 **装備**:
+
 - 校長の杖 (+2 to spell attacks)
 - 知力の頭巾 (INT+2)
 - 変容の石 (Transmuter's Stone)
@@ -124,7 +128,7 @@ spirit_contract:
 ## シナリオフック
 
 - 学生が禁断の図書館に入り込んだ → 鎮圧/救出を依頼
-- 古代魔法の復元に必要な artifact を探す依頼
+- 古代魔法の復元に必要な魔導器を探す依頼
 - 精霊協会の監査が入り、秘密の研究がバレる危険 → 隠蔽工作
 - 学院内で発生する異変（魔法の暴走）の調査
 - 校長の暗殺未遂事件 → 犯人は誰？
@@ -132,6 +136,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [アストラリス魔法学院](../magic/schools.md)
-- [精霊協会](../politics/kingdoms.md#11-精霊協会)
-- [魔法系統](../magic/system.md)
+
+- [アストラリス魔法学院](../../magic/schools.md)
+- [精霊協会](../../politics/kingdoms.md#11-精霊協会)
+- [魔法系統](../../magic/system.md)

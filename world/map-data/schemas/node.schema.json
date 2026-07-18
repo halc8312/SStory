@@ -73,24 +73,10 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": [
-          "road_hub",
-          "sea_hub",
-          "air_hub",
-          "political_hub",
-          "trade_center",
-          "mining_hub",
-          "mountain_city",
-          "caravan_hub",
-          "terminal",
-          "checkpoint",
-          "customs",
-          "refueling_station",
-          "waypoint",
-          "restricted",
-          "forbidden_zone"
-        ]
-      }
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "uniqueItems": true,
+      "description": "Searchable transport and operational roles in lowercase snake_case"
     },
     "facilities": {
       "type": "array",

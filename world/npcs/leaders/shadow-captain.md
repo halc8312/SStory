@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "シャドウ・キャプテン (密輸組織「黒い航路」首領)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "half-orc", "smuggler", "criminal"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 17 ( leather armor + DEX)
 - **HP**: 190 (12d8+24 from Rogue 12 + 2d10+4 from Fighter 2)
 - **速度**: 30フィート, swim 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **短剣 (Rapier)**: +9 命中, 1d6+4 刺突 + 3d6 sneak.
 - **クロスボウ (Hand Crossbow)**: +8 命中, 1d6+4 piercing.
 
 **特殊能力**:
-- ** Sneak Attack**: 3d6.
-- ** Cunning Action**: 隠密/脱退.
-- ** Assassinate**: 不意打ち時自動critical.
-- ** 二刀流**: 両手に武器, 追加攻撃.
-- ** 海上の达人**: 船上戦闘でadvantage.
+
+- **Sneak Attack**: 3d6.
+- **Cunning Action**: 隠密/脱退.
+- **Assassinate**: 不意打ち時自動critical.
+- **二刀流**: 両手に武器, 追加攻撃.
+- **海上の达人**: 船上戦闘でadvantage.
 
 **精霊契約**: 風55%, 水50%
 
 **装備**:
+
 - 魔法の短剣 (+2)
 - 黒いマント (shadow camouflage)
 - 秘密の通信石 (組織用)
@@ -126,14 +130,15 @@ spirit_contract:
 ## シナリオフック
 
 - プレイヤーが密輸品を運ぶ依頼 (危険だが高報酬)
-- 組織のメンバーが逮捕 → 救出 or 口封じ
+- 組織のメンバーが逮捕 → 救出または口封じ
 - 競合組織との戦争 → どちらにつく？
 - シャドウ・キャプテンがプレイヤーをスカウト
-- 正体がバレて賞金首に → 逃走 or 戦闘
+- 正体がバレて賞金首に → 逃走または戦闘
 
 ---
 
 **関連項目**:
-- [海運](../world/transportation/sea-transportation.md)
-- [犯罪](../world/lore/timelines/modern-crisis-timeline.md)
-- [経済](../economy/trade.md)
+
+- [海運](../../transportation/sea-transportation.md)
+- [犯罪](../../lore/timelines/modern-crisis-timeline.md)
+- [経済](../../economy/trade.md)

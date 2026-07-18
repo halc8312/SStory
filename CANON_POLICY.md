@@ -21,13 +21,30 @@
 5. **場所**: `world/` ディレクトリ以下に配置されている
 
 **例**:
+
 - `world/lore/creation-myth.md` (stable, reviewed) → カノン ✅
 - `world/geography/continents.md` (stable) → カノン ✅
 - `world/npcs/leaders/xxx.md` → `type: "npc"` のためカノンではない（NPC設定はカノン文書ではないが公式文書）
 - `world/rules/core-mechanics.md` → `type: "rule"` のためカノンではない（ルール文書は別管理）
 - `world/images/README.md` → `type: "asset"` のためカノンではない
 
-### 3. カノンの階層
+### 3. 構造化データ・作業領域との境界
+
+#### Map Data
+
+- `world/map-data/data/*.json` は、地図機能が参照する**機械可読データの編集上の正本**です。公開用の `docs/data/map/*.json` は同期スクリプトで生成する複製であり、直接編集しません。
+- 「編集上の正本」は、JSON内の全レコードが自動的に世界観カノンになるという意味ではありません。`confidence: "canon"` は、stableなカノン文書に根拠があることを示す出典区分です。
+- `confidence` が `estimated`, `inferred`, `placeholder` の値、および `status: "draft"` のPOIは、表示・経路計算・試作に利用できる補助データであり、カノンではありません。
+- JSONとstableなカノン文書が矛盾する場合は、カノン文書を優先し、`world/map-data/data/` を修正してから公開用コピーを再同期します。
+- `world/map-data/schemas/`, `world/map-data/docs/`, `world/map-data/examples/` は仕様・手順・例示であり、それ自体は世界観カノンではありません。
+
+#### Language
+
+- ルート直下の `Language/` は架空言語の**設計・実験領域**であり、カノンではありません。そこにある話者数、語彙、歴史、ロードマップは、stableなカノン文書へ採用されるまで提案として扱います。
+- 言語設定をカノンへ昇格する場合は、内容を `world/culture/languages.md` などの `type: "canon-document"` へ反映し、レビュー後に `status: "stable"` とします。
+- `Language/` とstableなカノン文書が矛盾する場合は、stableなカノン文書を優先します。
+
+### 4. カノンの階層
 
 本プロジェクトでは、カノンに以下の階層区分は設けません。すべての `stable` 状態の `canon-document` は**同等に公式**です。
 
@@ -92,7 +109,7 @@
 
 - カノン文書の削除は原則禁止です
 - 代わりに `status: "deprecated"` を設定し、非推奨としてマーク
-- `deprecated` 文書は引き続き参照可能ですが、新規利用は推奨されません
+- `deprecated` 文書は履歴参照用に保持しますが、現在のカノンとしては扱いません
 - 代替文書へのリンクを記載してください
 
 ## カノンと二次創作
@@ -115,7 +132,7 @@
 | `draft` | 草案 | ❌ | 作業中、公式ではない |
 | `review` | レビュー中 | ❌ | レビュー待ち、公式ではない |
 | `stable` | 安定 | ✅ | 公式カノンとして確定 |
-| `deprecated` | 非推奨 | ⚠️ | 旧カノンだが保持、非推奨 |
+| `deprecated` | 非推奨 | ❌ | 履歴参照用に保持された旧カノン。現在の設定根拠には使用しない |
 
 ## メンテナンス
 
@@ -132,6 +149,6 @@
 
 ---
 
-**最終更新**: 2026-05-02  
-**バージョン**: 1.0.0  
+**最終更新**: 2026-07-18
+**バージョン**: 1.1.0
 **著者**: halc8312

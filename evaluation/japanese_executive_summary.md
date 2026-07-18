@@ -1,3 +1,22 @@
+---
+type: "analysis"
+category: "analysis"
+title: "リポジトリ分析評価報告書"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-07-18"
+author: "opencode AI Assistant"
+tags: ["evaluation", "executive-summary", "historical-snapshot"]
+status: "deprecated"
+analysis_type: "repository-analysis"
+snapshot: true
+as_of_commit: "c0549e11c1736b8892e7d492e66ff189cc80c28a"
+superseded: true
+superseded_by: "current repository state and automated validation"
+---
+
+> **履歴スナップショット**: 本文は上記 `as_of_commit` 時点の記録です。現在の状態・件数・評価には、作業ツリーと自動検証結果を使用してください。
+
 # リポジトリ分析評価報告書
 
 ##  Executive Summary (要約)

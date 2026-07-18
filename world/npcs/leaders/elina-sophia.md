@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "エリナ・ソフィア (ゼフィア連合外務大臣)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "diplomat", "zephyr"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 20 | +5 |
 
 **防御**:
+
 - **AC**: 15 ( leather armor + DEX)
 - **HP**: 90 (10d8+10 from Bard 10 + 2d8+2 from Rogue 2)
 - **速度**: 30フィート
@@ -78,23 +79,26 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **短剣 (Rapier)**: +8 命中, 1d6+3 刺突 + 1d6 ( sneak attack 2d6).
-- **言葉の斬撃 (Cutting Words)**: 敵の攻撃ロールにペナルティ.
+- **言葉の斬撃**: 敵の攻撃ロールにペナルティ.
 
 **特殊能力**:
-- ** 音楽・演説による支援 (d8)**: 3回/長休憩.
-- ** 多芸の才**: 技能判定に半修正.
-- ** 欺きの達人 (Master of Intrigue)**: 欺きにadvantage.
-- ** Sneak Attack**: 位置優位時 2d6追加.
-- ** Cunning Action**: 隠密/脱退アクション可能.
+
+- **音楽・演説による支援 (d8)**: 3回/長休憩.
+- **多芸の才**: 技能判定に半修正.
+- **欺きの達人 (Master of Intrigue)**: 欺きにadvantage.
+- **Sneak Attack**: 位置優位時 2d6追加.
+- **Cunning Action**: 隠密/脱退アクション可能.
 
 **精霊契約**: 風55%, 水50%, 月45%, 地30%, 火20%
 
 **装備**:
+
 - 外交用の短剣 (masterwork, 飾り)
 - 変身のcloak (disguise)
 - 魔法の通信石 (同僚と通信)
--  numerous 偽の文書
+- numerous 偽の文書
 
 **所持金**: 800金貨 (個人), 外務省予算別
 
@@ -133,6 +137,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [ゼフィア連合共和国](../politics/kingdoms.md#1-ゼフィア連合共和国)
-- [外交関係](../politics/alliances.md)
-- [通貨と交易](../economy/trade.md)
+
+- [ゼフィア連合共和国](../../politics/kingdoms.md#1-ゼフィア連合共和国)
+- [外交関係](../../politics/alliances.md)
+- [通貨と交易](../../economy/trade.md)

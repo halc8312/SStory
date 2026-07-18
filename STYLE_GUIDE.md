@@ -269,6 +269,7 @@ status: "draft|review|stable"
 ```
 
 **項目説明**:
+
 - `type`: 文書タイプ（構造・目的）。[詳細](schemas/README.md)
 - `category`: 内容カテゴリ（主題）。下記「カテゴリ一覧」参照
 - `title`: ファイルのタイトル（日本語、プロジェクト名含まない）
@@ -304,6 +305,7 @@ status: "draft|review|stable"
 各文書タイプに応じて、以下の追加フィールドが必要です。完全な定義は [`schemas/`](schemas/README.md) を参照。
 
 **canon-document**（正統世界観文書）:
+
 ```yaml
 type: "canon-document"
 contributors: []  # 貢献者GitHub usernameリスト（必須）
@@ -314,6 +316,7 @@ reviewed_by: []  # (任意) レビュー担当者GitHub usernameリスト
 ```
 
 **npc**（NPCキャラクターシート）:
+
 ```yaml
 type: "npc"
 npc_type: "leader|historical|adventurer|commoner|deity|monster-npc"
@@ -330,6 +333,7 @@ spirit_contract:
 ```
 
 **rule**（ルール文書）:
+
 ```yaml
 type: "rule"
 rule_type: "core|combat|magic|character|bestiary|equipment|setting"
@@ -339,6 +343,7 @@ related_rules: ["character-creation.md", "combat.md"]
 ```
 
 **asset**（アセット参照）:
+
 ```yaml
 type: "asset"
 asset_type: "image|audio|video|3d-model|font|other"
@@ -350,6 +355,7 @@ items:
 ```
 
 **analysis**（分析レポート）:
+
 ```yaml
 type: "analysis"
 analysis_type: "world-analysis|repository-analysis|data-consistency|content-audit"
@@ -360,6 +366,7 @@ ratings:
 ```
 
 **overview**（概要・目次）:
+
 ```yaml
 type: "overview"
 document_kind: "index|readme|toc|navigation|landing"
@@ -394,6 +401,7 @@ summary: "短い概要（1-2文）"
 | overview | overview | world/ | index.md, README.md |
 
 **ルール**:
+
 - 正統世界観文書は `type: canon-document`, `category` はそのテーマ
 - NPCは `type: npc`, `category: npcs`（ファイルは world/npcs/ に配置）
 - ルールは `type: rule`, `category: rules`（ファイルは world/rules/ に配置）

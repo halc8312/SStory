@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "マーカス・フリーポート (自由都市国家群 代表)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "free-cities"]
@@ -14,6 +14,7 @@ race: "human"
 age: 58
 alignment: "chaotic-good"
 class: "Rogue (Mastermind) 12 / Bard 2"
+spirit_contract: {}
 ---
 
 # マーカス・フリーポート (Marcus Freeport)
@@ -51,6 +52,7 @@ class: "Rogue (Mastermind) 12 / Bard 2"
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 15 ( leather armor + 敏捷)
 - **HP**: 125 (12d8+36 from Rogue 12 + 2d8+2 from Bard 2)
 - **速度**: 30フィート
@@ -62,17 +64,20 @@ class: "Rogue (Mastermind) 12 / Bard 2"
 **戦闘能力**:
 
 **攻撃**:
+
 - **短剣 (Rapier)**: +8 命中, 1d6+3 刺突 + 1d6 ( sneak attack 3d6)
 - **投げナイフ (Dagger)**: +8 命中, 1d4+3 刺突,  ranged (20/60).
 
 **特殊能力**:
-- ** Sneak Attack (Rogue)**: 1ターン1回、advantage時または味方隣接時 追加 3d6.
-- ** Cunning Action (Rogue)**: ターンに隠密/脱出アクション可能.
-- ** Master of Intrigue (Mastermind)**: 欺きにadvantage, 言語習得容易.
-- ** 音楽・演説による支援 (d6)**: 2回/長休憩.
-- ** 多芸の才**: 技能判定に半修正.
+
+- **Sneak Attack (Rogue)**: 1ターン1回、advantage時または味方隣接時 追加 3d6.
+- **Cunning Action (Rogue)**: ターンに隠密/脱出アクション可能.
+- **Master of Intrigue (Mastermind)**: 欺きにadvantage, 言語習得容易.
+- **音楽・演説による支援 (d6)**: 2回/長休憩.
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**:
+
 - 風: 60% (自由, 通信)
 - 水: 55% (貿易, 流動)
 - 月: 30%
@@ -80,6 +85,7 @@ class: "Rogue (Mastermind) 12 / Bard 2"
 - 火: 15%
 
 **装備**:
+
 - 細身の剣 (masterwork)
 - 商人の服 (disguise kit)
 - 交易许可证 (全都市共通)
@@ -113,6 +119,7 @@ class: "Rogue (Mastermind) 12 / Bard 2"
 ---
 
 **関連項目**:
-- [自由都市国家群](../politics/kingdoms.md#12-自由都市国家群)
-- [経済システム](../economy/trade.md)
-- [同盟と戦争](../politics/alliances.md)
+
+- [自由都市国家群](../../politics/kingdoms.md#12-自由都市国家群)
+- [経済システム](../../economy/trade.md)
+- [同盟と戦争](../../politics/alliances.md)

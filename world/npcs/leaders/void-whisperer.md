@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ヴォイド・ウィスパラー (異端宗教「虚無教」教祖)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elf", "cult", "void"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 13 (布の服 + 回避)
 - **HP**: 130 (15d6+15 from Wizard 15 + 5d8+5 from Warlock 5)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 虚無の光 (Void Beam)**: +10 命中, 4d10 necrotic, 生命吸収.
-- ** 精神破壊 (Psychic Scream)**: DC18,  stunned.
+
+- **虚無の光 (Void Beam)**: +10 命中, 4d10 necrotic, 生命吸収.
+- **精神破壊 (Psychic Scream)**: DC18,  stunned.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 15)**: 死霊・幻惑, DC18, +12.
-- ** 虚無の契約 (Warlock)**: 大いなる旧き存在の力, 不死に近い.
-- ** 精神支配**: 弱者を操る.
-- ** 時間の歪み**: 局所的に時間を停止 (短時間).
-- ** 透明化**: いつでも invisible.
+
+- **呪文発動 (Wizard 15)**: 死霊・幻惑, DC18, +12.
+- **虚無の契約 (Warlock)**: 大いなる旧き存在の力, 不死に近い.
+- **精神支配**: 弱者を操る.
+- **時間の歪み**: 局所的に時間を停止 (短時間).
+- **透明化**: いつでも invisible.
 
 **精霊契約**: 虚無90% (実際は精霊ではない), 月20%
 
 **装備**:
+
 - 虚無の杖
 - 黒い聖典 (Void Gospel)
 - 時空の番人の旧制服 (潜入時代の)
@@ -133,6 +137,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [時空の番人](../politics/kingdoms.md#10-時空の番人)
-- [異端宗教](../religion/pantheon.md#異端と禁じられた信仰)
-- [虚無](../lore/creation-myth.md)
+
+- [時空の番人](../../politics/kingdoms.md#10-時空の番人)
+- [異端宗教](../../religion/pantheon.md#異端と禁じられた信仰)
+- [虚無](../../lore/creation-myth.md)

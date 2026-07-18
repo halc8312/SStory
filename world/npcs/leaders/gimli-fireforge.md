@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ギムリ・ファイアフォージ (鉄山脉ドワーフ王国鉱山工業相)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "dwarf", "industry", "ironridge"]
@@ -24,7 +24,7 @@ spirit_contract:
 
 # ギムリ・ファイアフォージ (Gimli Fireforge)
 
-**肩書き**: 鉄山脉ドワーフ王国 鉱山工業相 (Minister of Mining and Industry)
+**肩書き**: 鉄山脉ドワーフ王国 鉱山工業相
 **所属**: 鉄山脉ドワーフ王国
 **種族**: ドワーフ
 **年齢**: 125歳
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 18 ( leather armor + DEX)
 - **HP**: 160 (10d8+30 from Artificer 10 + 5d8+15 from Rogue 5)
 - **速度**: 25フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **ハンマー (Warhammer)**: +8 命中, 1d8+3 bludgeoning.
 - **罠 (Rogue Sneak Attack)**: 位置優位時 3d6追加.
 - **魔法の道具 (Artificer Infusion)**: 装備に魔法効果付与.
 
 **特殊能力**:
-- ** Extra Attack (Artificer)**: 2回攻撃/ターン.
-- ** Cunning Action**: 隠密/脱退アクション可能.
-- ** Infusions**: 装備に魔法付与 (例: Enhanced Defense, Returning Weapon).
-- ** Tool Expertise**: 工具判定に倍修正.
-- ** Dwarven Resilience**: 毒耐性.
+
+- **Extra Attack (Artificer)**: 2回攻撃/ターン.
+- **Cunning Action**: 隠密/脱退アクション可能.
+- **Infusions**: 装備に魔法付与 (例: Enhanced Defense, Returning Weapon).
+- **Tool Expertise**: 工具判定に倍修正.
+- **Dwarven Resilience**: 毒耐性.
 
 **精霊契約**: 地70%, 火55%
 
 **装備**:
+
 - 魔法のハンマー (+1)
 - 鉱山用のツールセット (罠解除用)
 - 闇取引の証の数々 (密封した文書)
@@ -126,7 +130,7 @@ spirit_contract:
 
 ## シナリオフック
 
-- 闇取引の現場を目撃 → 口封じ or 告発
+- 闇取引の現場を目撃 → 口封じまたは告発
 - 密輸船が襲撃される → 犯人探しと奪還
 - 王国の財政不正調査が入る → 隠蔽工作
 - 反体制組織からの協力要請 → リスクと利益
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [鉄山脉ドワーフ王国](../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
-- [経済システム](../economy/trade.md)
-- [密輸組織](../creatures/bestiary.md#モンスター対策)
+
+- [鉄山脉ドワーフ王国](../../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
+- [経済システム](../../economy/trade.md)
+- [密輸組織](../../creatures/bestiary.md#モンスター対策)

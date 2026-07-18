@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ロベルト・シーアングラー (自由都市ポートロイヤル市長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "mayor", "free-city"]
@@ -36,7 +36,7 @@ spirit_contract:
 - **体重**: 80kg
 - **髪**: 茶色, 白髪混じり, 短髪
 - **瞳**: 青灰色, 海のよう
-- **特徴**: 船長風の服装, 海図を常に携帯, 笑顔 but  cunning
+- **特徴**: 船長風の服装, 海図を常に携帯, 笑顔の裏で抜け目がない
 
 ## 性格
 
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 15 ( leather armor + DEX)
 - **HP**: 130 (10d8+20 from Rogue 10 + 2d8+2 from Bard 2)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **短剣 (Rapier)**: +8 命中, 1d6+3 刺突 + 1d6 sneak.
 - **投げナイフ (Dagger)**: +8 命中, 1d4+3.
 
 **特殊能力**:
-- ** Sneak Attack**: 3d6追加.
-- ** Cunning Action**: 隠密/脱退.
-- ** Master of Intrigue**: 欺きにadvantage.
-- ** 音楽・演説**: 支援 (d6).
-- ** 多芸の才**: 技能判定に半修正.
+
+- **Sneak Attack**: 3d6追加.
+- **Cunning Action**: 隠密/脱退.
+- **Master of Intrigue**: 欺きにadvantage.
+- **音楽・演説**: 支援 (d6).
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**: 水70%, 風65%
 
 **装備**:
+
 - 海賊時代の短剣 (愛着)
 - 市長のバッジ (権威)
 - 魔法の海図 (密航路記載)
@@ -125,15 +129,16 @@ spirit_contract:
 
 ## シナリオフック
 
-- 密輸が発覚 → 証拠隠滅 or 自首
+- 密輸が発覚 → 証拠隠滅または自首
 - 海賊時代の仲間が現れ、過去の罪を問う
-- 市長選でライバルが暗殺されそう → 守護 or 利用
+- 市長選でライバルが暗殺されそう → 守護または利用
 - 港に謎の沈没船 → 調査と引き上げ
 - 十二国同盟からの圧力 → 抵抗か屈服か
 
 ---
 
 **関連項目**:
-- [自由都市国家群](../politics/kingdoms.md#12-自由都市国家群)
-- [貿易](../economy/trade.md)
-- [海運](../world/transportation/sea-transportation.md)
+
+- [自由都市国家群](../../politics/kingdoms.md#12-自由都市国家群)
+- [貿易](../../economy/trade.md)
+- [海運](../../transportation/sea-transportation.md)

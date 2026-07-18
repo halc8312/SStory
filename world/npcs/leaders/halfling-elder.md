@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "エバリスト・ミスリルパイ (ハーフリング郷士国家連合 長老会議議長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "halfling", "elder", "council"]
@@ -14,6 +14,7 @@ race: "halfling"
 age: 80
 alignment: "lawful-good"
 class: "Druid (Circle of Land) 12 / Bard 3"
+spirit_contract: {}
 ---
 
 # エバリスト・ミスリルパイ (Everlist Mislipe)
@@ -51,6 +52,7 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 14 (通常の服 + 敏捷)
 - **HP**: 112 (12d8+24 from Druid 12 + 3d6+3 from Bard 3)
 - **速度**: 25フィート
@@ -62,18 +64,21 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 **戦闘能力**:
 
 **攻撃**:
+
 - **長老の杖 (Staff)**: +7 命中, 1d6+2 打撃 + 1d4 自然ダメージ.
 - **自然の怒り (Entangle)**: エリア制御、敵を拘束.
 
 **特殊能力**:
-- ** 呪文発動 (Druid 12)**: 自然・治癒呪文, DC17, +9.
-- ** Wild Shape (Druid)**: 1日2回、小型動物に変身.
-- ** 音楽・演説による支援 (d6)**: 2回/長休憩.
-- ** Land's Stride (Druid Circle)**:  difficult terrain 無視.
-- ** Natural Recovery**: スロット一部回復 (短休憩).
-- ** Halflingの幸運**: セーブに再 roll (1回/日).
+
+- **呪文発動 (Druid 12)**: 自然・治癒呪文, DC17, +9.
+- **Wild Shape (Druid)**: 1日2回、小型動物に変身.
+- **音楽・演説による支援 (d6)**: 2回/長休憩.
+- **Land's Stride (Druid Circle)**:  difficult terrain 無視.
+- **Natural Recovery**: スロット一部回復 (短休憩).
+- **Halflingの幸運**: セーブに再 roll (1回/日).
 
 **精霊契約**:
+
 - 地: 65% (主)
 - 水: 60%
 - 風: 25%
@@ -81,6 +86,7 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 - 火: 5%
 
 **装備**:
+
 - 長老の杖 (木製、治癒魔法増幅)
 - 農夫の帽子 (CHI+1)
 - 美食のレシピ帳 (宝物)
@@ -115,6 +121,7 @@ class: "Druid (Circle of Land) 12 / Bard 3"
 ---
 
 **関連項目**:
-- [ハーフリング郷士国家連合](../politics/kingdoms.md#8-ハーフリング郷士国家連合)
-- [精霊契約](../races/races-overview.md)
-- [経済システム](../economy/trade.md)
+
+- [ハーフリング郷士国家連合](../../politics/kingdoms.md#8-ハーフリング郷士国家連合)
+- [精霊契約](../../races/races-overview.md)
+- [経済システム](../../economy/trade.md)

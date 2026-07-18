@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "アクア・マリーン (アトランティス女王)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "aquatic-elf", "queen", "atlantis"]
@@ -14,6 +14,7 @@ race: "aquatic-elf"
 age: 120
 alignment: "neutral-good"
 class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
+spirit_contract: {}
 ---
 
 # アクア・マリーン (Aqua Marine)
@@ -51,6 +52,7 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 18 ( natural scale + magic)
 - **HP**: 110 (12d8+36 from Cleric 12 + 3d6+3 from Sorcerer 3)
 - **速度**: 30フィート, swim 60フィート
@@ -62,18 +64,21 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 **戦闘能力**:
 
 **攻撃**:
+
 - **三叉槍 (Trident)**: +8 命中, 1d8+2 刺突 + 1d6 電撃.
 - **水流圧迫 (Hydraulic Push)**: 射程60フィート, DC17 STR saveまたは pushed 20フィート + 2d6 bludgeoning.
 
 **特殊能力**:
-- ** 呪文発動 (Cleric 12)**: 治癒・Storm呪文, DC17, +9.
-- ** Font of Life (Cleric)**: 治癒魔法の効果+1レベル.
-- ** Sea Sorcery**: 水中での魔法+1レベル, 水耐性.
-- ** Tempest Domain**: 雷・風魔法得意.
-- ** Tritonの特性**: 水呼吸, 圧力耐性, 言语 (Aquan).
-- ** Water Breathing (always)**: 水中呼吸可能.
+
+- **呪文発動 (Cleric 12)**: 治癒・Storm呪文, DC17, +9.
+- **Font of Life (Cleric)**: 治癒魔法の効果+1レベル.
+- **Sea Sorcery**: 水中での魔法+1レベル, 水耐性.
+- **Tempest Domain**: 雷・風魔法得意.
+- **Tritonの特性**: 水呼吸, 圧力耐性, 言语 (Aquan).
+- **Water Breathing (always)**: 水中呼吸可能.
 
 **精霊契約**:
+
 - 水: 95% (極めて強い)
 - 月: 40%
 - 風: 25%
@@ -81,6 +86,7 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 - 火: 5%
 
 **装備**:
+
 - 真珠の三叉槍 (pearl trident, +2 attack, water control)
 - 海神のローブ (AC+1, water resistance)
 - 精霊の涙 (healing item, 1回/週)
@@ -115,6 +121,7 @@ class: "Cleric (Tempest) 12 / Sorcerer (Sea) 3"
 ---
 
 **関連項目**:
-- [アトランティス](../politics/kingdoms.md#7-アトランティス)
-- [精霊契約](../races/races-overview.md)
-- [魔法系統](../magic/system.md)
+
+- [アトランティス](../../politics/kingdoms.md#7-アトランティス)
+- [精霊契約](../../races/races-overview.md)
+- [魔法系統](../../magic/system.md)

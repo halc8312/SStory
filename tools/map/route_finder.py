@@ -15,6 +15,34 @@ try:
 except ImportError:  # run as a script from tools/map
     from common import DATA_DIR, load_json
 
+
+BLOCKED_ROUTE_STATUSES = {"forbidden", "experimental", "dangerous", "closed"}
+DEFAULT_ROUTE_COST = 9999
+MINIMUM_EDGE_COST = 0.1
+
+
+def _metric_value(route, priority_keys):
+    """Return the first finite numeric metric used by the browser planner too."""
+    for key in priority_keys:
+        value = route.get(key)
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            return value
+    return DEFAULT_ROUTE_COST
+
+
+def compute_route_cost(route, weight="time"):
+    """Compute an edge cost using the cross-client route-planning contract."""
+    if weight == "distance":
+        return _metric_value(route, ("distance_km", "estimated_time_hours"))
+    if weight == "safety":
+        base_cost = _metric_value(route, ("estimated_time_hours", "distance_km"))
+        danger = max(0, route.get("danger_level", 0))
+        return base_cost * (danger + 1) ** 2
+    if weight == "cost":
+        return _metric_value(route, ("cost_gold", "estimated_time_hours", "distance_km"))
+    return _metric_value(route, ("estimated_time_hours", "distance_km"))
+
+
 def build_graph(routes, weight="time", avoid_danger_level=None, allow_restricted=False,
                 allow_air=True, allow_sea=True, month=None):
     """
@@ -26,15 +54,20 @@ def build_graph(routes, weight="time", avoid_danger_level=None, allow_restricted
     for route in routes:
         # Filter by status
         status = route.get("status", "active")
-        if status == "forbidden":
+        if status in BLOCKED_ROUTE_STATUSES:
             continue
         if status == "restricted" and not allow_restricted:
             continue
-        if status in {"closed", "dangerous"}:
-            continue
 
-        # Seasonal filter: routes with seasonal=true OR active_months field are considered seasonal
-        is_seasonal = route.get("seasonal", False) or "active_months" in route
+        # A seasonal status, flag, or active_months declaration all opt into
+        # seasonal availability. With a requested month, fail closed unless it
+        # is explicitly listed. Without a month, retain the route but report
+        # the unresolved availability in the formatted result.
+        is_seasonal = (
+            status == "seasonal"
+            or route.get("seasonal", False)
+            or "active_months" in route
+        )
         if is_seasonal and month is not None:
             active_months = route.get("active_months", [])
             if month not in active_months:
@@ -55,23 +88,10 @@ def build_graph(routes, weight="time", avoid_danger_level=None, allow_restricted
         from_node = route["from"]
         to_node = route["to"]
 
-        # Compute weight based on chosen metric
-        if weight == "time":
-            w = route.get("estimated_time_hours", 1)
-        elif weight == "distance":
-            w = route.get("distance_km", 1)
-        elif weight == "safety":
-            # Higher danger => higher penalty
-            danger_penalty = (danger + 1) ** 2  # quadratic penalty
-            w = danger_penalty * route.get("estimated_time_hours", 1)
-        elif weight == "cost":
-            w = route.get("cost_gold", 1)
-        else:
-            w = route.get("estimated_time_hours", 1)
-
-        # Ensure positive weight
-        if w <= 0:
-            w = 0.1
+        # Dijkstra requires non-negative edge weights. Use the same lower bound
+        # as the browser planner so sub-hour/sub-gold routes produce identical
+        # paths in both clients.
+        w = max(MINIMUM_EDGE_COST, compute_route_cost(route, weight))
 
         # Bidirectional edges
         for src, dst in [(from_node, to_node), (to_node, from_node)]:
@@ -127,12 +147,29 @@ def dijkstra(graph, start, goal):
 def load_node_names(nodes):
     return {n['id']: n['name'] for n in nodes}
 
+
+def oriented_route_nodes(current_node, route):
+    """Return a bidirectional route in the direction it is being traversed."""
+    if route.get("from") == current_node:
+        return current_node, route.get("to")
+    if route.get("to") == current_node:
+        return current_node, route.get("from")
+    raise ValueError(f"Route {route.get('id', '<unknown>')} is not connected to {current_node}")
+
+
 def format_time(hours):
-    days = int(hours // 24)
-    h = int(hours % 24)
-    if days > 0:
-        return f"{days}日{h}時間"
-    return f"{h}時間"
+    total_minutes = round(hours * 60)
+    days, remaining_minutes = divmod(total_minutes, 24 * 60)
+    whole_hours, minutes = divmod(remaining_minutes, 60)
+    parts = []
+    if days:
+        parts.append(f"{days}日")
+    if whole_hours or (not days and not minutes):
+        parts.append(f"{whole_hours}時間")
+    if minutes:
+        parts.append(f"{minutes}分")
+    return "".join(parts)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Find optimal routes in Eternal Arcadia")
@@ -162,6 +199,9 @@ def main():
         sys.exit(1)
     if args.dst not in node_ids:
         print(f"Error: destination node '{args.dst}' not found", file=sys.stderr)
+        sys.exit(1)
+    if args.src == args.dst:
+        print("Error: source and destination must be different", file=sys.stderr)
         sys.exit(1)
 
     # Resolve air/sea allowances with backward compatibility
@@ -224,8 +264,12 @@ def main():
         rmode = route.get("mode", "?")
         danger = route.get("danger_level", 0)
         danger_levels.append(danger)
-        from_node_name = node_names.get(route['from'], route['from'])
-        to_node_name = node_names.get(route['to'], route['to'])
+        # Routes are bidirectional. Use the reconstructed path node rather than
+        # the route's declaration order so a reverse traversal is not printed
+        # in the wrong direction.
+        current_node, next_node = oriented_route_nodes(node, route)
+        from_node_name = node_names.get(current_node, current_node)
+        to_node_name = node_names.get(next_node, next_node)
         time_h = route.get("estimated_time_hours", 0)
         
         # Build extra info line: status and seasonal info
@@ -234,7 +278,7 @@ def main():
         seasonal = route.get("seasonal", False)
         active_months = route.get("active_months", [])
         extra_parts.append(f"status: {status}")
-        if seasonal or active_months:
+        if status == "seasonal" or seasonal or active_months:
             months_str = ",".join(str(m) for m in active_months) if active_months else "none"
             note = ""
             if args.month is None:

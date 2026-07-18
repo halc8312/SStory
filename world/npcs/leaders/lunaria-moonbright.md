@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ルナリア・ムーンブライト (月影精霊学院校長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elf", "academy", "moon-elf"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 17 (mage armor + 月の加護)
 - **HP**: 180 (15d6+45 from Wizard 15 + 5d8+15 from Cleric 5)
 - **速度**: 30フィート, 暗視60フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **月の光弾 (Moonbeam)**: DC19, 4d10 radiant + 混乱.
 - **時間の停止 (Slow)**: 複数ターゲットの行動を遅く.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 15)**: 月・予言学派, DC21, +13.
-- ** 神聖呪文 (Cleric 5)**: 知識の守護.
-- ** 月の加護**: 夜間に +2 AC, 月魔法+1.
-- ** 精霊会話**: 月の精霊と直接対話.
-- ** 多芸の才**: 技能判定に半修正.
+
+- **呪文発動 (Wizard 15)**: 月・予言学派, DC21, +13.
+- **神聖呪文 (Cleric 5)**: 知識の守護.
+- **月の加護**: 夜間に +2 AC, 月魔法+1.
+- **精霊会話**: 月の精霊と直接対話.
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**: 月98% (ほぼ完全), 風30%
 
 **装備**:
+
 - 月の杖 (Moon Staff, +2 spell attack)
 - 古の月の書 (Luna Grimoire)
 - 校長の印章
@@ -125,7 +129,7 @@ spirit_contract:
 
 ## シナリオフック
 
-- 学生が禁断の時間魔法を使う → 処罰 or 保護？
+- 学生が禁断の時間魔法を使う → 処罰または保護？
 - 月の精霊から新たな命令 → 実行か拒否か
 - 古代の月魔法の遺物発見 → 回収と研究
 - 学院内で陰謀が発覚 → 摘発
@@ -134,6 +138,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [月影精霊学院](../magic/schools.md#2-月影精霊学院)
-- [ルナリア帝国](../lore/ancient-civilizations.md#1-ルナリア帝国)
-- [月魔法](../magic/system.md)
+
+- [月影精霊学院](../../magic/schools.md#2-月影精霊学院)
+- [ルナリア帝国](../../lore/ancient-civilizations.md#1-ルナリア帝国)
+- [月魔法](../../magic/system.md)

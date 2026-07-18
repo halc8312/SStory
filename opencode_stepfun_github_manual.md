@@ -393,8 +393,8 @@ Git上では llama.cpp がsubmodule扱いになっている
 
 ```ini
 [submodule "llama.cpp"]
-	path = llama.cpp
-	url = https://github.com/ggerganov/llama.cpp.git
+ path = llama.cpp
+ url = https://github.com/ggerganov/llama.cpp.git
 ```
 
 これで `actions/checkout` が通るようになりました。

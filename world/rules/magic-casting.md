@@ -2,12 +2,12 @@
 type: "rule"
 category: "rules"
 title: "魔法発動ルール"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
- tags: ["magic", "呪文発動", "rules", "system"]
+tags: ["magic", "呪文発動", "rules", "system"]
 status: "stable"
 rule_type: "magic"
 system: "custom"
@@ -69,7 +69,8 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 - **M (Material)**: 素材アイテム。特殊な材料が必要な呪文あり。
 
 **成分省略**:
--  featやアイテムで一部省略可能。
+
+- featやアイテムで一部省略可能。
 - 一部呪文はV/S不要 (テレパシーなど)。
 
 ### 2.4 呪文スロット (Spell Slots)
@@ -111,10 +112,12 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 各元素魔法を使用するには、その元素の精霊との契約度が必要。
 
 **成功率計算**:
+
 - 基礎成功率 = 契約度%
 - 追加ボーナス: 契約度80%以上で判定+2、90%以上で+5。
 
 **失敗時の反動**:
+
 - 契約度30%未満: 50%で反動 (呪文失敗 + 疲労)
 - 契約度30-60%: 25%で反動
 - 契約度60%以上: 5%で反動
@@ -134,6 +137,7 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 クラスベースのスロット方式を採用。ただし、強力な呪文連続使用で**疲労**が蓄積。
 
 **疲労ルール**:
+
 - 1日にSランク以上の呪文を3回以上使用 → 疲労1 (CONセーブ DC15 で回避)
 - 疲労: 全能力値 -2、速度半減。短休憩で軽減 (1レベル)。
 - 疲労3で倒れ、長休憩が必要。
@@ -269,7 +273,8 @@ related_rules: ["core-mechanics.md", "magic/system.md"]
 ---
 
 **関連項目**:
-- [コアルール](../core-mechanics.md)
+
+- [コアルール](core-mechanics.md)
 - [キャラクター作成](character-creation.md)
 - [魔法系統](../magic/system.md)
 - [精霊契約](../races/races-overview.md#精霊契約)

@@ -10,7 +10,7 @@
 <body>
   <header>
     <h1>エターナル・アルカディア設定資料館</h1>
-    <p class="subtitle">SStory 世界設定ポータル v0.1</p>
+    <p class="subtitle">SStory 世界設定ポータル — v1 現行安定版 / v2 試験版</p>
   </header>
 
   <nav>
@@ -30,7 +30,8 @@
 
     <p>
       SStory 世界設定ポータルの開発は、以下のフェーズで進めていきます。<br>
-      現在は <strong>Phase 1 (v0.1)</strong> の実装が完了した段階です。
+      現在は <strong>Phase 5（v1のルート検索）まで完了</strong>し、
+      Phase 5.5 のインタラクティブマップ v2 を試験評価しています。
     </p>
 
     <section>
@@ -83,11 +84,11 @@
     <section>
       <h3>Phase 3.5: Map Data 公開コピー ✅ 完了</h3>
       <p>
-        <code>world/map-data/data/</code> の正史JSONを <code>docs/data/map/</code> にコピーし、
+        <code>world/map-data/data/</code> の編集上の正本JSONを <code>docs/data/map/</code> にコピーし、
         GitHub Pages 上で JavaScript から Fetch 可能な状態にしました。
       </p>
       <ul>
-        <li>continents.json, regions.json, nodes.json, routes.json, hazards.json をコピー</li>
+        <li>continents.json, regions.json, nodes.json, routes.json, hazards.json, pois.json, pixel-mapping.json を同期</li>
         <li>README.md で位置づけと同期方法を明記</li>
         <li>インタラクティブマップ準備ページ（interactive-map.html）を追加</li>
         <li>interactive-map.js で5ファイルの読み込み・件数表示・先頭10件一覧を実装</li>
@@ -95,8 +96,7 @@
         <li>各ページからインタラクティブマップへの導線を設置</li>
       </ul>
       <p>
-        <strong>実装済み機能:</strong> Map Data のブラウザ読み込み確認、件数表示、簡易一覧表示。<br>
-        <strong>次のステップ:</strong> 実際の地図描画（ノード点・ルート線・危険区域表示）。
+        <strong>実装済み機能:</strong> Map Data のブラウザ読み込み、同期検査、件数表示、地図描画、POI・ルート検索。
       </p>
     </section>
 
@@ -107,7 +107,7 @@
         バリデーションルールを整備しました。
       </p>
       <ul>
-        <li>✅ <code>world/map-data/data/pois.json</code> 作成（アストラリス首都圏へ9件の試験データ投入）</li>
+        <li>✅ <code>world/map-data/data/pois.json</code> 作成（エリュシオン試験データ31件）</li>
         <li>✅ <code>docs/data/map/pois.json</code> 作成（GitHub Pages公開用コピー、同期済み）</li>
         <li>✅ <code>world/map-data/schemas/poi.schema.json</code> 作成（JSON Schemaバリデーション）</li>
         <li>✅ <code>world/map-data/docs/poi-data-spec.md</code> 作成（詳細仕様書）</li>
@@ -132,7 +132,7 @@
         <li>既存のMap DataやLeaflet交通マップを一切破壊していない</li>
       </ul>
         <p>
-          <strong>次のステップ:</strong> Leaflet POI レイヤー実装（Phase 4 へ進捗）。
+          <strong>実装済み:</strong> Leaflet POI レイヤー、検索、カテゴリフィルタ。
         </p>
         <p>
           <strong>次Issueメモ:</strong>
@@ -145,23 +145,21 @@
     </section>
 
     <section>
-      <h3>Phase 4: インタラクティブ交通マップ v0.1 - 描画実装 (予定)</h3>
+      <h3>Phase 4: インタラクティブ交通マップ v1 - 描画実装 ✅ 完了</h3>
       <p>
         Map Data を読み込んで、Web地図上にノード・ルート・危険区域を描画します。
         Phase 3.5 でデータ読み込み基盤は整いました。
       </p>
       <ul>
-        <li>Leaflet 等の地図ライブラリ導入</li>
-        <li>ノードを点として表示</li>
-        <li>ルートを線として表示</li>
-        <li>危険区域をポリゴンとして表示</li>
-        <li>交通種別フィルタ機能</li>
-        <li>ノードクリックで詳細情報表示</li>
-        <li>背景地図画像オーバーレイ（オプション）</li>
+        <li>✅ vendored Leaflet を導入</li>
+        <li>✅ ノード・ルート・危険区域・POIを表示</li>
+        <li>✅ 交通種別フィルタ機能</li>
+        <li>✅ ノードクリックで詳細情報表示</li>
+        <li>✅ 背景地図画像オーバーレイ</li>
       </ul>
       <p>
         将来のPOI追加は
-        <a href="../../world/map-data/poi-design-guidelines.md" target="_blank">
+        <a href="https://github.com/halc8312/SStory/blob/main/world/map-data/poi-design-guidelines.md" target="_blank" rel="noopener">
           POI / Spot Design Guidelines
         </a>
         に沿って進めます。
@@ -175,16 +173,16 @@
     </section>
 
     <section>
-      <h3>Phase 5: Web版ルート検索 (予定)</h3>
+      <h3>Phase 5: Web版ルート検索 ✅ 完了</h3>
       <p>
-        Python 版 route_finder.py のロジックを JavaScript へ移植。
+        Python版とv1/v2が同じ経路可否・季節・重み規則を使うよう統一しました。
       </p>
       <ul>
-        <li>出発地・目的地選択UI</li>
-        <li>陸路/海路/空路フィルタ</li>
-        <li>季節運行判定</li>
-        <li>最短経路計算（Dijkstra法）</li>
-        <li>所要時間・距離の表示</li>
+        <li>✅ 出発地・目的地選択UI</li>
+        <li>✅ 空路/海路/restrictedフィルタ</li>
+        <li>✅ 季節運行判定</li>
+        <li>✅ Dijkstra法による time/distance/safety/cost 最適化</li>
+        <li>✅ 所要時間・距離・費用・警告の表示</li>
       </ul>
     </section>
 
@@ -208,7 +206,8 @@
         <li>✅ ミニマップ・スケールバー・座標グリッド</li>
         <li>⬜ 全大陸の大陸マップ画像生成</li>
         <li>⬜ 都市マップ（L3）実装</li>
-        <li>⬜ v1との機能完全一致 → 主表示化判断</li>
+        <li>✅ v1とのルート検索規則・オプション一致</li>
+        <li>⬜ POI位置精度と実機レビュー後に主表示化判断</li>
       </ul>
       <p>
         <a href="./interactive-map-v2.html" style="font-weight:bold;">🗺️ v2 試験版マップを開く &rarr;</a>
@@ -283,25 +282,27 @@
     </section>
 
     <section>
-      <h3>フォローアップ Issue</h3>
+      <h3>フォローアップ</h3>
       <p>
-        この Issue 完了後、以下の機能を別 Issue として作成予定です：
+        完了済みの基盤を維持しながら、次の項目を継続します。
       </p>
       <ul>
-        <li><a href="#">地図ギャラリーに生成済み地図画像を追加</a></li>
-        <li><a href="interactive-map.html">インタラクティブ交通マップ v0.1 描画実装</a> ← 次段階</li>
+        <li>✅ 地図ギャラリーに生成済み地図画像を追加</li>
+        <li>✅ <a href="interactive-map.html">インタラクティブ交通マップ v1 描画実装</a></li>
         <li>
-          <a href="../../world/map-data/poi-design-guidelines.md" target="_blank">
+          <a href="https://github.com/halc8312/SStory/blob/main/world/map-data/poi-design-guidelines.md" target="_blank" rel="noopener">
             POI設計ガイドラインに基づく pois.json 仕様策定
           </a>
           <strong>（完了：v0.1 策定済み）</strong>
         </li>
-         <li><a href="#">アストラリス首都圏 POI 試験データ品質修正</a> ← 完了</li>
-        <li><a href="#">Leaflet POI レイヤー実装</a></li>
-        <li><a href="#">Web版ルート検索実装</a></li>
-        <li><a href="#">既存 world/ 配下Markdownをポータル内で整理</a></li>
-        <li><a href="#">タイルマップ試作</a></li>
+        <li>✅ アストラリス首都圏 POI 試験データ品質修正</li>
+        <li>✅ Leaflet POI レイヤー実装</li>
+        <li>✅ Web版ルート検索実装</li>
+        <li>🧪 <a href="interactive-map-v2.html">インタラクティブマップ v2 の評価</a></li>
+        <li>⏳ 既存 <code>world/</code> 配下Markdownへの閲覧導線を強化</li>
+        <li>⏳ タイルマップ試作</li>
       </ul>
+      <p><a href="https://github.com/halc8312/SStory/issues" target="_blank" rel="noopener">最新の作業項目をGitHub Issuesで確認する</a></p>
     </section>
   </main>
 

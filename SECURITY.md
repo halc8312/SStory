@@ -21,7 +21,7 @@ Instead, please report them via private reporting channels.
 
 ### For Security Researchers
 
-Please email your security report to: **halc8312@github.com** (or the maintainer's preferred contact if updated)
+Please email your security report to: **<halc8312@github.com>** (or the maintainer's preferred contact if updated)
 
 Include the following information in your report:
 
@@ -79,7 +79,7 @@ Security fixes will be released as patch versions (x.y.Z) and will be noted in t
 
 ## Contact
 
-For security issues only: **halc8312@github.com** (replace with actual email if available)
+For security issues only: **<halc8312@github.com>** (replace with actual email if available)
 
 For general questions: Use [GitHub Issues](https://github.com/halc8312/SStory/issues)
 

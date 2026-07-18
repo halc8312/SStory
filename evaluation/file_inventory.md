@@ -1,3 +1,22 @@
+---
+type: "analysis"
+category: "analysis"
+title: "SStory Repository - ファイル構造詳細"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-07-18"
+author: "opencode AI Assistant"
+tags: ["evaluation", "inventory", "historical-snapshot"]
+status: "deprecated"
+analysis_type: "content-audit"
+snapshot: true
+as_of_commit: "c0549e11c1736b8892e7d492e66ff189cc80c28a"
+superseded: true
+superseded_by: "current repository state and automated validation"
+---
+
+> **履歴スナップショット**: 本文は上記 `as_of_commit` 時点の記録です。「リンク切れ0」などの件数は現在値ではありません。現在の状態には自動検証結果を使用してください。
+
 # SStory Repository - ファイル構造詳細
 
 ## ディレクトリツリー (2026-05-01 更新)

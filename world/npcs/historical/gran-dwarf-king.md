@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "偉大なるドワーフ王 グランキング1世"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "dwarf", "king"]
@@ -51,7 +51,7 @@ spirit_contract:
 - **主要特性**: 頑固、勤勉、正義感、創造的
 - **価値観**: 労働、技術、家族、国家
 - **目標**: ドワーフの独立国家建設、地下都市の発展
-- **弱点**: 頑な、変化を嫌う、時 asingle-minded
+- **弱点**: 頑な、変化を嫌う、時に一途すぎる
 
 ---
 
@@ -77,11 +77,13 @@ spirit_contract:
 **速度**: 25 フィート.
 
 **攻撃**:
+
 - **近接**: 戦鎚グランハンマー (2d8+6 bludgeoning, 1d6 fire追加)
 - **範囲**: 地震の一撃 (Recharge 5-6): 10フィート radius、3d6 bludgeoning + knock prone
 - **支援**: Bless (3 targets, 1d4 to attack/saves)
 
 **特殊能力**:
+
 - **アクションサージ** (1/戦闘)
 - **セカンドウインド** (1/休憩)
 - **Aura of Protection** (10フィート, WIS+3 to saves)
@@ -104,6 +106,7 @@ spirit_contract:
 - **-3450年**: 50歳で崩御 (過労と火山活動による災害で死亡)
 
 **業績**:
+
 - グランドリア鉱山連邦の基礎を築く
 - ドワーフの冶金技術を飛躍的に向上
 - 地下都市建築技術を確立
@@ -145,10 +148,11 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [グランドリア鉱山連邦](../politics/kingdoms.md)
-- [地の精霊グラン](../magic/system.md)
-- [ドワーフ種族](../races/races-overview.md)
-- [古代文明](../lore/ancient-civilizations.md)
+
+- [グランドリア鉱山連邦](../../politics/kingdoms.md)
+- [地の精霊グラン](../../magic/system.md)
+- [ドワーフ種族](../../races/races-overview.md)
+- [古代文明](../../lore/ancient-civilizations.md)
 
 ---
 

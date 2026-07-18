@@ -115,7 +115,6 @@ schemas/                           # メタデータスキーマ定義
   - 各スキーマYAMLファイルを参照してfrontmatter作成
   - `schemas/README.md`に使用法を記載
 
-
 ### メタデータ (YAML Frontmatter)
 
 すべてのMarkdownファイルには、先頭にYAML frontmatterの記述が必須です。文書タイプに応じたスキーマは `schemas/` ディレクトリで定義されています。詳細な説明と全タイプの完全な仕様は [`STYLE_GUIDE.md`](STYLE_GUIDE.md#9-メタデータ-yaml-frontmatter) を参照してください。
@@ -137,6 +136,7 @@ status: "draft|review|stable"
 ```
 
 **各項目の意味**:
+
 - `type`: 文書の構造・目的（`canon-document`=世界観文書, `npc`=NPC, `rule`=ルール, `asset`=アセット, `analysis`=分析, `overview`=概要）
 - `category`: 内容カテゴリ（歴史・地理・種族など）
 - `title`: ファイルタイトル（日本語、プロジェクト名含まない）
@@ -216,18 +216,22 @@ PRを作成する前に、以下を確認してください：
 ## よくある間違いと回避法
 
 ### 1. データ不整合
+
 - **問題**: 同じ精霊・種族・国家の名称がファイル間で不一致
 - **回避**: 変更前に `grep` で全ファイル検索、統一する
 
 ### 2. リンク切れ
+
 - **問題**: 相対パスが間違っている
 - **回避**: ローカルでリンクをクリックして確認、CIチェックを待つ
 
 ### 3. メタデータ漏れ
+
 - **問題**: frontmatter未記入または項目不足
 - **回避**: テンプレートをコピペしてから記入
 
 ### 4. 年号・単位の統一
+
 - **問題**: 「アールディー」と「AD」が混在、単位「kmkm²」など
 - **回避**: 用語集とスタイルガイドを参照
 
@@ -246,6 +250,7 @@ PRを作成する前に、以下を確認してください：
 すべてのチェックが合格しないとマージできません。詳細は [`.github/workflows/lint.yml`](.github/workflows/lint.yml) を参照してください。
 
 ローカルでも同じコマンドで実行可能です：
+
 ```bash
 npm run validate
 ```
@@ -268,11 +273,11 @@ CIパイプラインでは、外部GitHub Actionのバージョンをピン留�
 
 CC BY-SA 4.0 - 商用利用可、クレジット表示必須、継承義務あり
 
-詳細: https://creativecommons.org/licenses/by-sa/4.0/
+詳細: <https://creativecommons.org/licenses/by-sa/4.0/>
 
 ## 連絡先
 
-- リポジトリ: https://github.com/halc8312/SStory
+- リポジトリ: <https://github.com/halc8312/SStory>
 - メンテナー: @halc8312
 
 ---

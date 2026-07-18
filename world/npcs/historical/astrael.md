@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "アストラエル (創世神)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "deity", "primordial"]
@@ -14,6 +14,7 @@ race: "deity"
 age: "eternal"
 alignment: "neutral-good"
 class: "Primordial Deity (God of StarsかつMagic)"
+spirit_contract: {}
 ---
 
 # アストラエル (Astrael)
@@ -50,6 +51,7 @@ class: "Primordial Deity (God of StarsかつMagic)"
 | CHA | 30 | +10 |
 
 **防御**:
+
 - **AC**: 35 ( divine armor)
 - **HP**: 5,000 (神格)
 - **速度**:  teleport, 飛行無制限
@@ -60,16 +62,18 @@ class: "Primordial Deity (God of StarsかつMagic)"
 **戦闘能力**:
 
 **攻撃**:
+
 - **星の Creation (Star Blast)**: 1ラウンドで 20d10 force damage, 範囲1mile.
 - **魔法の破壊 (Disintegrate)**: 自動失敗セーブ, 即死.
 - **時空操作 (Time Warp)**: 時間停止, 年龄操作.
 
 **特殊能力**:
-- ** Divine Form**: 物理攻撃無効, 魔法耐性99%.
-- ** Creation**: 新たな魔法・生命を創造可能.
-- ** Omniscience**: 世界の全知識を知る.
-- ** Prophet's Vision**: 未来を断片的に予見.
-- ** Celestial Host**: 天使・精霊を召喚可能.
+
+- **Divine Form**: 物理攻撃無効, 魔法耐性99%.
+- **Creation**: 新たな魔法・生命を創造可能.
+- **Omniscience**: 世界の全知識を知る.
+- **Prophet's Vision**: 未来を断片的に予見.
+- **Celestial Host**: 天使・精霊を召喚可能.
 
 **精霊契約**: 全元素100%, 全精霊を創りし存在.
 
@@ -98,6 +102,7 @@ class: "Primordial Deity (God of StarsかつMagic)"
 ---
 
 **関連項目**:
-- [創世神話](../lore/creation-myth.md)
-- [精霊協会](../politics/kingdoms.md)
-- [魔法系統](../magic/system.md)
+
+- [創世神話](../../lore/creation-myth.md)
+- [精霊協会](../../politics/kingdoms.md)
+- [魔法系統](../../magic/system.md)

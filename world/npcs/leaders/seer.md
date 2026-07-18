@@ -2,17 +2,18 @@
 type: "npc"
 category: "npcs"
 title: "シーカー (時空の番人予言室長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "seer", "chrono-guardian"]
 status: "stable"
 npc_type: "leader"
-race: "human (time-affected)"
+race: "human"
+subrace: "time-affected"
 age: 150 (外見60)
-alignment: "neutral"
+alignment: "true-neutral"
 class: "Wizard (School of Divination) 18"
 spirit_contract:
   moon: 90
@@ -47,7 +48,7 @@ spirit_contract:
 
 ## 本音と欲望
 
-- 未来に迫る「大いなる危機」（精霊喰い or 古代兵器復活）を阻止したい。
+- 未来に迫る「大いなる危機」（精霊喰いまたは古代兵器復活）を阻止したい。
 - しかし、運命は変えられるのかという哲学的葛藤がある。
 
 ## 秘密
@@ -67,6 +68,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 13 (布の服)
 - **HP**: 130 (18d6+36 from Wizard 18)
 - **速度**: 30フィート
@@ -78,19 +80,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 時の矢 (Shatter)**: DC19, 8d6 force.
-- ** 未来の一撃 (Chronological Targeting)**: 敵の未来を変える (特殊).
+
+- **時の矢 (Shatter)**: DC19, 8d6 force.
+- **未来の一撃 (Chronological Targeting)**: 敵の未来を変える (特殊).
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 18)**: 予言学派, DC21, +13.
-- ** Portent**: 毎日3回, 未来の判定を操作.
-- ** 時空の目**: 透明視, 心読み.
-- ** 運命の操作**: 1日1回, 攻撃ロール/セーブを強制成功 or 失敗.
-- ** 未来視**: 短い未来の断片を視る (1日1回).
+
+- **呪文発動 (Wizard 18)**: 予言学派, DC21, +13.
+- **Portent**: 毎日3回, 未来の判定を操作.
+- **時空の目**: 透明視, 心読み.
+- **運命の操作**: 1日1回, 攻撃ロール/セーブを強制成功または失敗.
+- **未来視**: 短い未来の断片を視る (1日1回).
 
 **精霊契約**: 月90% (極強)
 
 **装備**:
+
 - 予言の水晶玉
 - 過去の記録の書
 - 時間の呪文集
@@ -134,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [時空の番人](../politics/kingdoms.md#10-時空の番人)
-- [予言](../lore/creation-myth.md#未来予言)
-- [時間魔法](../magic/system.md)
+
+- [時空の番人](../../politics/kingdoms.md#10-時空の番人)
+- [予言](../../lore/creation-myth.md#未来予言)
+- [時間魔法](../../magic/system.md)

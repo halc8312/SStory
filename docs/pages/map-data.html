@@ -56,7 +56,7 @@
       </ul>
       <p>
         将来のスポット追加に向けた設計方針は
-        <a href="../../world/map-data/poi-design-guidelines.md" target="_blank">
+        <a href="https://github.com/halc8312/SStory/blob/main/world/map-data/poi-design-guidelines.md" target="_blank" rel="noopener">
           POI / Spot Design Guidelines
         </a>
         に整理しています。
@@ -78,18 +78,18 @@
          の接頭辞命名規則に従っています。引き続き仕様・Schema・運用フロー・地図表示の整合確認を継続中です。
         </p>
       <ul>
-        <li><strong>データファイル</strong>: <code>world/map-data/data/pois.json</code> （正史データ）</li>
+        <li><strong>データファイル</strong>: <code>world/map-data/data/pois.json</code> （編集上の正本）</li>
         <li><strong>公開用コピー</strong>: <code>docs/data/map/pois.json</code> （GitHub Pages用）</li>
         <li><strong>JSON Schema</strong>: <code>world/map-data/schemas/poi.schema.json</code></li>
         <li><strong>仕様書</strong>: <code>world/map-data/docs/poi-data-spec.md</code></li>
       </ul>
       <p>
         POIの追加・編集は、必ず
-        <a href="../../world/map-data/poi-design-guidelines.md" target="_blank">
+        <a href="https://github.com/halc8312/SStory/blob/main/world/map-data/poi-design-guidelines.md" target="_blank" rel="noopener">
           POI設計ガイドライン
         </a>
         と
-        <a href="../../world/map-data/docs/poi-data-spec.md" target="_blank">
+        <a href="https://github.com/halc8312/SStory/blob/main/world/map-data/docs/poi-data-spec.md" target="_blank" rel="noopener">
           POIデータ仕様 v0.1
         </a>
         に従ってください。
@@ -98,10 +98,10 @@
       </p>
       <p>
         AIにPOI追加を依頼する場合は
-        <a href="../../world/map-data/docs/poi-authoring-template.md" target="_blank">
+        <a href="https://github.com/halc8312/SStory/blob/main/world/map-data/docs/poi-authoring-template.md" target="_blank" rel="noopener">
           poi-authoring-template.md
         </a>
-        を使い、追加後は <code>python world/map-data/scripts/sync_pois_to_docs.py</code> で同期し、
+        を使い、追加後は <code>python world/map-data/scripts/sync_map_data.py</code> で同期し、
         <code>python world/map-data/scripts/validate_pois.py</code> で検証してください。
       </p>
       <p>
@@ -167,10 +167,11 @@
       <h3>GitHub Pages 公開用コピー</h3>
       <p>
         GitHub Pages 上でブラウザが直接 JSON を読み込めるように、
-        <code>world/map-data/data/</code> の正史データを <code>docs/data/map/</code> にコピーしています。
+        <code>world/map-data/data/</code> の編集上の正本データを <code>docs/data/map/</code> にコピーしています。
+        JSON自体が独立した世界観カノンという意味ではなく、stableなカノン文書と矛盾する場合は文書を優先します。
       </p>
       <ul>
-        <li><strong>正史データ本体</strong>: <code>world/map-data/data/</code> （Python ツールや設定管理用）</li>
+        <li><strong>編集上の正本</strong>: <code>world/map-data/data/</code> （Python ツールや設定管理用）</li>
         <li><strong>公開用コピー</strong>: <code>docs/data/map/</code> （GitHub Pages 上から Fetch 可能）</li>
       </ul>
       <p>
@@ -199,14 +200,14 @@
         Map Data 関連の設定資料は以下の場所にあります：
       </p>
       <ul>
-        <li><a href="../../world/map-data/" target="_blank">world/map-data/ フォルダ</a> - Map Data 仕様・データ定義</li>
+        <li><a href="https://github.com/halc8312/SStory/tree/main/world/map-data" target="_blank" rel="noopener">world/map-data/ フォルダ</a> - Map Data 仕様・データ定義</li>
         <li>
-          <a href="../../world/map-data/poi-design-guidelines.md" target="_blank">
+          <a href="https://github.com/halc8312/SStory/blob/main/world/map-data/poi-design-guidelines.md" target="_blank" rel="noopener">
             POI / Spot Design Guidelines
           </a>
           - POI追加時の世界観整合ルール
         </li>
-        <li><a href="../../tools/map/" target="_blank">tools/map/ フォルダ</a> - ルート検索ツール・データ生成スクリプト</li>
+        <li><a href="https://github.com/halc8312/SStory/tree/main/tools/map" target="_blank" rel="noopener">tools/map/ フォルダ</a> - ルート検索ツール・データ生成スクリプト</li>
       </ul>
       <p class="note">
         ※ 現時点では、GitHub Pages 上で JSON ファイルを直接ブラウザ表示することはできません。<br>

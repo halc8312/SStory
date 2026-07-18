@@ -4,16 +4,19 @@
 
 type: "object"
 allOf:
-  - "$ref": "common.yaml#/properties"
+  - "$ref": "common.yaml"
 required:
   - type
   - category
   - title
   - status
+  - contributors
+  - npc_type
   - race
   - age
   - alignment
   - class
+  - spirit_contract
 properties:
   type:
     const: "npc"
@@ -23,18 +26,20 @@ properties:
     description: "Fixed to 'npcs' for all NPC documents"
   npc_type:
     type: "string"
-    enum: ["leader", "historical", "adventurer", "commoner", "deity", "monster-npc"]
+    enum: ["leader", "historical", "adventurer", "scholar", "unique", "commoner", "deity", "monster-npc"]
     description: |
       NPCの種別:
       - leader: 現役の指導者（国家首脳、ギルドマスターなど）
       - historical: 歴史的人物（故人）
       - adventurer: 冒険者
+      - scholar: 研究者・学者
+      - unique: 既存分類に収まらない固有NPC
       - commoner: 一般市民
       - deity: 精霊・神格
       - monster-npc: モンスターだが個体名を持つもの
   race:
     type: "string"
-    enum: ["human", "elf", "dwarf", "orc", "halfling", "aquatic-elf", "half-elf", "half-orc", "elemental", "deity", "other"]
+    enum: ["human", "elf", "dwarf", "orc", "halfling", "aquatic-elf", "triton", "half-elf", "half-orc", "elemental", "deity", "other"]
     description: "種族名"
   subrace:
     type: "string"
@@ -126,9 +131,6 @@ properties:
     type: "string"
     description: "その他メモ・GM向け補足"
 
-# 共通フィールドも必須
-additionalProperties: false
-
 # 説明
 description: |
   **npc** タイプは、非プレイヤーキャラクター（NPC）のキャラクターシートです。
@@ -153,6 +155,7 @@ description: |
   created: "2026-05-01"
   last_updated: "2026-05-01"
   author: "halc8312"
+  contributors: []
   tags: ["npc", "leader", "human", "president"]
   status: "stable"
   npc_type: "leader"

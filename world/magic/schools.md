@@ -2,9 +2,9 @@
 type: "canon-document"
 category: "magic"
 title: "魔法学校"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["magic", "education", "schools"]
@@ -290,7 +290,7 @@ status: "stable"
 
 ---
 
-## 魔法学校ランキング（2026年版）
+## 魔法学校ランキング（アールディー1026年版）
 
 | 順位 | 学校名 | 総合評価 | 強み | 弱み |
 |------|--------|----------|------|------|

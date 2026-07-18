@@ -1,13 +1,18 @@
 # エターナル・アルカディア設定資料館へようこそ
 
-> これは、**エターナル・アルカディア**というファンタジー世界の公式設定資料ポータルです。
+!!! warning "Legacy prototype"
+
+    この文書群は採用されなかった MkDocs 版の履歴資料です。現行ポータルは
+    [`docs/` の静的サイト](https://halc8312.github.io/SStory/)です。
+
+> これは、**エターナル・アルカディア**の設定資料ポータルとして当時作成した試作です。現在の公開サイトではありません。
 
 ## このサイトについて
 
 このサイトは、SStoryプロジェクトが構築する**エターナル・アルカディア世界**の設定資料を、体系的に閲覧・活用いただくためのポータルです。
 
 - **世界観**: 魔法と技術が融合した中世ファンタジー世界
-- ** five continents**: 五大陸と無数の浮島が広がる広大な世界
+- **five continents**: 五大陸と無数の浮島が広がる広大な世界
 - **精霊契約**: すべての生命が精霊と魔法契約を結ぶ独自システム
 - **十種族**: 人間、エルフ、ドワーフ、オーク、ハーフリングなど多種族社会
 - **10,000年の歴史**: 三つの大文明の興亡を経た深みある世界観
@@ -71,9 +76,9 @@
 このGitHub Pagesサイトは、以下のリポジトリから自動的に構築・公開されます。
 
 - **リポジトリ**: [halc8312/SStory](https://github.com/halc8312/SStory)
-- **正史データ**: `world/` ディレクトリ内のMarkdownファイル
+- **世界設定資料**: `world/` ディレクトリ内のMarkdownファイル（カノン条件は `CANON_POLICY.md` を参照）
 - **地図データ**: `world/map-data/data/` のJSONファイル
-- **開発ロードマップ**: [ROADMAP.md](../ROADMAP.md)
+- **開発ロードマップ**: [ROADMAP.md](https://github.com/halc8312/SStory/blob/main/ROADMAP.md)
 
 ## 利用ガイドライン
 
@@ -84,7 +89,7 @@
 - **クレジット表示必須**: 出典を明記してください
 - **継承**: 改変した内容は同じライセンスで公開
 
-詳細は [USAGE_POLICY.md](../USAGE_POLICY.md) と [LICENSE](../LICENSE) をご覧ください。
+詳細は [USAGE_POLICY.md](https://github.com/halc8312/SStory/blob/main/USAGE_POLICY.md) と [LICENSE](https://github.com/halc8312/SStory/blob/main/LICENSE) をご覧ください。
 
 ## クイックアクセス
 
@@ -98,7 +103,7 @@
 | 地図を見る | [地図ギャラリー](maps/gallery.md) |
 | Map Dataを使う | [Map Data紹介](maps/map-data.md) |
 | 今後の計画を知る | [ロードマップ](roadmap/index.md) |
-| 正史データを読む | [`world/` ディレクトリ](../../tree/main/world/) |
+| 世界設定資料を読む | [`world/` ディレクトリ](https://github.com/halc8312/SStory/tree/main/world) |
 
 </div>
 

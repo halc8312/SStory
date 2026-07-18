@@ -2,18 +2,20 @@
 type: "npc"
 category: "npcs"
 title: "ゼファー・ウインドストーカー (嵐の都 風導師)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "stormhold", "wind"]
 status: "stable"
 npc_type: "leader"
-race: "human (wind-blooded)"
+race: "human"
+subrace: "wind-blooded"
 age: 120
-alignment: "neutral"
+alignment: "true-neutral"
 class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
+spirit_contract: {}
 ---
 
 # ゼファー・ウインドストーカー (Zephyr Windstoker)
@@ -51,6 +53,7 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 15 ( mage armor + 敏捷)
 - **HP**: 115 (15d6+30 from Sorcerer 15 + 3d8+3 from Druid 3)
 - **速度**: 30フィート, fly 40フィート (wind walk)
@@ -62,17 +65,20 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 **戦闘能力**:
 
 **攻撃**:
+
 - **雷の矢 (Lightning Bolt)**: 線状100フィート, DC18 DEX save, 8d6 lightning.
 - **風の鎌 (Gust of Wind)**: 60フィート 直線、押し退け、吹き飛ばし.
 
 **特殊能力**:
-- ** 呪文発動 (Sorcerer 15)**: 気象・風魔法, DC18, +10.
-- ** Storm Sorcery**: 雨天時+1レベル, 飞行常時 (30フィート).
-- ** Spell Bombardment (Sorcerer)**: 呪文ダイス追加.
-- ** Druidic Focus**: 自然との調和.
-- ** Wind Guide**: 風を読む、天候予知.
+
+- **呪文発動 (Sorcerer 15)**: 気象・風魔法, DC18, +10.
+- **Storm Sorcery**: 雨天時+1レベル, 飞行常時 (30フィート).
+- **Spell Bombardment (Sorcerer)**: 呪文ダイス追加.
+- **Druidic Focus**: 自然との調和.
+- **Wind Guide**: 風を読む、天候予知.
 
 **精霊契約**:
+
 - 風: 95% (極強)
 - 月: 30%
 - 水: 25%
@@ -80,6 +86,7 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 - 火: 5%
 
 **装備**:
+
 - 風の杖 (Wind Staff, 風魔法+2レベル)
 - 雲の外套 (飛行時に invisibility against storms)
 - 嵐の pearl (気象予報)
@@ -114,6 +121,7 @@ class: "Sorcerer (Storm Sorcery) 15 / Druid 3"
 ---
 
 **関連項目**:
-- [嵐の都](../politics/kingdoms.md#9-嵐の都)
-- [精霊契約](../races/races-overview.md)
-- [浮島群](../geography/continents.md#浮島群)
+
+- [嵐の都](../../politics/kingdoms.md#9-嵐の都)
+- [精霊契約](../../races/races-overview.md)
+- [浮島群](../../geography/continents.md#浮島群)

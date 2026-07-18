@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "マーカス・ヴァレリウス (ゼフィア連合最高司令官)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "military", "zephyr"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 20 ( plate armor + shield)
 - **HP**: 180 (12d10+36 from Fighter 12 + 3d10+3 from Paladin 3)
 - **速度**: 25フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **+2 長剣 (Longsword)**: +9 命中, 1d8+6 斬撃 + 1d6 radiant (paladin).
 - **指揮の一言 (Commanding Strike)**: ボーナスアクション, 攻撃ロールに +1d8.
 
 **特殊能力**:
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Action Surge**: 1戦闘中、追加アクション.
-- ** Aura of Protection (Paladin)**: 10フィート半径, 味方のセーブに +3.
-- ** Divine Smite**: 攻撃時に追加 radiant damage.
-- ** リーダーシップ (Leadership)**: 味方1体に temporary HP 10 (1回/戦闘).
+
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **アクションサージ**: 1戦闘中、追加アクション.
+- **Aura of Protection (Paladin)**: 10フィート半径, 味方のセーブに +3.
+- **Divine Smite**: 攻撃時に追加 radiant damage.
+- **リーダーシップ (Leadership)**: 味方1体に temporary HP 10 (1回/戦闘).
 
 **精霊契約**: 風70% (速さと情報), 地60% (防衛), 水40% ( healing), 月50% (予知), 火30% (攻撃)
 
 **装備**:
+
 - アストラリスの長剣 (+2, radiant damage)
 - 元帥のplate armor (AC18, 国家の守護)
 - 最高司令官の盾 (国章, AC+2)
@@ -112,7 +116,7 @@ spirit_contract:
 - **友好**: ゼフィア大統領 (信頼するが政治は別), 月影エルフ女王 (安全保障協力)
 - **協力**: 冒険者ギルド (モンスター対策), ドワーフ国王 (技術供与)
 - **対立**: オーク盟主 (軍事的対立), アトランティス女王 (領空・領海の問題)
-- **過去の仲間**: ガルフ・ストロングアーム (ギルドマスター), リリandra・ムーンブレイズ (エルフ騎士団長)
+- **過去の仲間**: ガルフ・ストロングアーム (ギルドマスター), リランドラ・ムーンブレイズ (エルフ騎士団長)
 
 ## 所有アイテム
 
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [ゼフィア連合共和国](../politics/kingdoms.md#1-ゼフィア連合共和国)
-- [十二国同盟](../politics/alliances.md)
-- [戦闘システム](../rules/combat.md)
+
+- [ゼフィア連合共和国](../../politics/kingdoms.md#1-ゼフィア連合共和国)
+- [十二国同盟](../../politics/alliances.md)
+- [戦闘システム](../../rules/combat.md)

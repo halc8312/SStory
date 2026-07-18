@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "冒険者ギルド ギルドマスター"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "adventurer", "guild-master", "human"]
@@ -51,7 +51,7 @@ spirit_contract:
 - **主要特性**: 厳格、公平、戦略家、责任感強
 - **価値観**: ギルドの掟、仲間の信頼、実力主義
 - **目標**: ギルドの秩序維持、モンスター被害の最小化
-- **弱点**: 時 asingle-minded、感情を表に出さない
+- **弱点**: 時に一途すぎる、感情を表に出さない
 
 ---
 
@@ -77,16 +77,19 @@ spirit_contract:
 **速度**: 30 フィート.
 
 **攻撃**:
+
 - **近接**: 魔法の大剣 (2d6+4 slashing, +1, fire damage 1d6)
 - **遠隔**: 投げ斧 (1d6+4, range 30/90)
 - **特殊**: Divine Smite (1-5d8 radiant), Eldritch Blast (if Eldritch Knight spells)
 - **判定**: Vow of Enmity (advantage on attack vs sworn enemy, 1/day)
 
 **主な呪文** (Eldritch Knight / Paladin):
+
 - **Eldritch Knight**: Shield, Magic Weapon, Thunderwave, Mirror Image
 - **Paladin**: Bless, Cure Wounds, Shield of Faith, Branding Smite
 
 **特殊能力**:
+
 - **アクションサージ** (1/戦闘)
 - **セカンドウインド** (1/休憩)
 - **Lay on Hands** (30HP pool)
@@ -109,6 +112,7 @@ spirit_contract:
 - **現在**: 55歳、後継者育成中
 
 **実績**:
+
 - モンスター討伐数: 300+ (S-rank 5, A-rank 20, B-rank 100)
 - クエスト成功率: 99.5%
 - ギルドメンバー育成: 100人以上が独立
@@ -150,10 +154,11 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [冒険者ギルド](../culture/languages.md) (どこかに含まれる？)
-- [モンスター図鑑](../creatures/bestiary.md)
-- [国家間関係](../politics/alliances.md)
-- [戦闘システム](combat.md)
+
+- [冒険者ギルド](../../culture/languages.md) (どこかに含まれる？)
+- [モンスター図鑑](../../creatures/bestiary.md)
+- [国家間関係](../../politics/alliances.md)
+- [戦闘システム](../../rules/combat.md)
 
 ---
 

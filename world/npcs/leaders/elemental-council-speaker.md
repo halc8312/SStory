@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "グラン (Granus) - 地の大精霊、精霊協会現議長"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elemental", "earth", "elemental-council"]
@@ -14,6 +14,7 @@ race: "elemental"
 age: "10000+"
 alignment: "neutral-good"
 class: "Primordial Deity (Earth Aspect)"
+spirit_contract: {}
 ---
 
 # グラン (Granus) - 地の大精霊
@@ -50,6 +51,7 @@ class: "Primordial Deity (Earth Aspect)"
 | CHA | 22 | +6 |
 
 **防御**:
+
 - **AC**: 25 ( natural stone armor)
 - **HP**: 1,200 (100d20+500) (godly)
 - **速度**: 20フィート, burrow 100フィート
@@ -62,20 +64,23 @@ class: "Primordial Deity (Earth Aspect)"
 **戦闘能力**:
 
 **攻撃**:
+
 - **岩石落とし (Rock Fall)**: 1ラウンドで 10d10 bludgeoning, 範囲30フィート.
 - **地脈波 (Earth Pulse)**: 全大陸の地脈を刺激, 地震発生 (regional).
 - **精霊召喚 (Summon Earth Elementals)**: 5体まで召喚.
 
 **特殊能力**:
-- ** Godly Presence**: 半径1mile内の全生物が WIS save (DC25) 失敗 → 恐怖または従順
-- ** Earth Mastery**: 地中・岩場で無敵
-- ** Immortality**:  death しない, 消滅しても数世紀で復活
-- ** Elemental Form**: 任意の大きさに変化, 元素状態
-- ** 呪文発動 (Deity Level)**: 全元素呪文無制限, DC25.
+
+- **Godly Presence**: 半径1mile内の全生物が WIS save (DC25) 失敗 → 恐怖または従順
+- **Earth Mastery**: 地中・岩場で無敵
+- **Immortality**:  death しない, 消滅しても数世紀で復活
+- **Elemental Form**: 任意の大きさに変化, 元素状態
+- **呪文発動 (Deity Level)**: 全元素呪文無制限, DC25.
 
 **精霊契約**: 地: 100% (神格), 他元素: 80% each (協調)
 
 **装備**:
+
 - 大地の心臓 (Heart of the World) - 魔導器
 - 精霊協会の印章
 
@@ -105,7 +110,8 @@ class: "Primordial Deity (Earth Aspect)"
 ---
 
 **関連項目**:
-- [精霊協会](../politics/kingdoms.md#11-精霊協会)
-- [神々の pantheon](../religion/pantheon.md)
-- [五大精霊](../magic/system.md#五元素精霊)
-- [地の精霊契約](../races/races-overview.md)
+
+- [精霊協会](../../politics/kingdoms.md#11-精霊協会)
+- [神々の pantheon](../../religion/pantheon.md)
+- [五大精霊](../../magic/system.md#五元素精霊)
+- [地の精霊契約](../../races/races-overview.md)

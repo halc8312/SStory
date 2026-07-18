@@ -15,27 +15,32 @@
 ## 五大陸
 
 ### 1. エリュシオン（中央大陸）
+
 - **特徴**: 政治・経済の中心
 - **首都**: アストラリス（ゼフィア連合共和国）
 - **主要都市**: ゼフィア、リュミエラ、カオス・リア
 - **気候**: 温暖湿潤
 
 ### 2. リュミエラ（東大陸）
+
 - **特徴**: 神秘と月魔法の大地
 - **主要都市**: 月影エルフ王国
 - **気候**: 亜熱帯
 
 ### 3. カオス・リア（南大陸）
+
 - **特徴**: 砂漠と炎の大地
 - **主要都市**: 赤砂オーク連合
 - **気候**: 砂漠気候
 
 ### 4. アトランティス（西大陸）
+
 - **特徴**: 氷と海の大陸
 - **主要都市**: アトランティス女王領
 - **気候**: 冷涼湿潤
 
 ### 5. グリモワール（北大陸）
+
 - **特徴**: 時空と禁忌の大地
 - **主要都市**: 時空番人会
 - **気候**: 寒帯
@@ -43,57 +48,69 @@
 ## 世界の特徴
 
 ### 🌙 二重月
+
 - **セレーネ（青月）**と**ルナ（白月）**が夜空を照らす
 - 月の満ち欠けが魔法力に影響
 
 ### ⚡ 元素脈動
+
 - 大地から元素のエネルギーが定期的に噴出
 - 各地に「元素結節点」が存在
 
 ### ⏳ 時空の歪み
+
 - グリモワールなど特定地域では時間の流れが異なる
 - タイムラグ现象が発生することも
 
 ### 🤝 精霊共存
+
 - すべての生命が**精霊と契約**によって魔法能力を発揮
 - 五元素（風・地・火・水・月）の精霊が存在
 
 ## 主要設定リンク
 
 ### 地理・環境
+
 - [大陸概要（詳細）](geography.md)
-- [地域詳細](world/geography/regions/)
-- [気候と生態系](world/geography/climate.md)
+- [地域詳細](https://github.com/halc8312/SStory/tree/main/world/geography/regions)
+- [気候と生態系](https://github.com/halc8312/SStory/blob/main/world/geography/climate.md)
 
 ### 歴史
-- [創世神話](world/lore/creation-myth.md)
-- [歴史年表](world/lore/timelines/main-timeline.md)
-- [古代文明](world/lore/ancient-civilizations.md)
+
+- [創世神話](https://github.com/halc8312/SStory/blob/main/world/lore/creation-myth.md)
+- [歴史年表](https://github.com/halc8312/SStory/blob/main/world/lore/timelines/main-timeline.md)
+- [古代文明](https://github.com/halc8312/SStory/blob/main/world/lore/ancient-civilizations.md)
 
 ### 種族
+
 - [五大種族の詳細](races.md)
-- [各NPCプロフィール](world/npcs/)
+- [各NPCプロフィール](https://github.com/halc8312/SStory/tree/main/world/npcs)
 
 ### 魔法
+
 - [魔法系統と体系](magic.md)
-- [魔法学校](world/magic/schools.md)
-- [魔導器アイテム](world/magic/artifacts.md)
+- [魔法学校](https://github.com/halc8312/SStory/blob/main/world/magic/schools.md)
+- [魔導器アイテム](https://github.com/halc8312/SStory/blob/main/world/magic/artifacts.md)
 
 ### 政治
+
 - [国家一覧](politics.md)
-- [同盟と戦争](world/politics/alliances.md)
+- [同盟と戦争](https://github.com/halc8312/SStory/blob/main/world/politics/alliances.md)
 
 ### 経済
+
 - [通貨と交易](economy.md)
-- [資源分布](world/economy/resources.md)
+- [資源分布](https://github.com/halc8312/SStory/blob/main/world/economy/resources.md)
 
 ### 交通
+
 - [交通網全体](transportation.md)
-- [街道・航路詳細](world/transportation/)
+- [街道・航路詳細](https://github.com/halc8312/SStory/tree/main/world/transportation)
 
 ### 地図
-- [世界地図](world/maps/world-map.md)
-- [各大陸地図](world/maps/continents/)
+
+- [世界地図](https://github.com/halc8312/SStory/blob/main/world/maps/world-map.md)
+- [各大陸地図](https://github.com/halc8312/SStory/tree/main/world/maps/continents)
 
 ## 正史資料へのアクセス
 
@@ -123,7 +140,7 @@ world/
 
 この世界の地理情報は、**Map Data**として機械可読なJSON形式でも管理されています。
 
-- [Map Data について詳しく](maps/map-data.md)
+- [Map Data について詳しく](../maps/map-data.md)
 - データファイル: `world/map-data/data/`
   - `nodes.json` - ノード（地点）データ
   - `routes.json` - ルート（経路）データ
@@ -142,8 +159,8 @@ world/
 - クレジット表示必須
 - 継承義務あり
 
-詳細: [USAGE_POLICY.md](../USAGE_POLICY.md), [LICENSE](../LICENSE)
+詳細: [USAGE_POLICY.md](https://github.com/halc8312/SStory/blob/main/USAGE_POLICY.md), [LICENSE](https://github.com/halc8312/SStory/blob/main/LICENSE)
 
 ---
 
-**次に読む**: [地理](geography.md) | [交通](transportation.md) | [地図ギャラリー](maps/gallery.md)
+**次に読む**: [地理](geography.md) | [交通](transportation.md) | [地図ギャラリー](../maps/gallery.md)

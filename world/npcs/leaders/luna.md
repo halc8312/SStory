@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ルナ (Luna) - 月の大精霊"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elemental", "moon", "elemental-council"]
@@ -65,6 +65,7 @@ spirit_contract:
 | CHA | 26 | +8 |
 
 **防御**:
+
 - **AC**: 26 ( moonlight barrier )
 - **HP**: 1,600
 - **速度**: 無制限 (夜空)
@@ -74,19 +75,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 月光線 (Moon Beam)**: 範囲 wide, 8d10 radiant + 混乱.
-- ** 時間停止 (Time Stop)**: 数ラウンド時間を止める.
-- ** 夢侵入 (Dream Invasion)**: 対象の夢を操作.
+
+- **月光線 (Moon Beam)**: 範囲 wide, 8d10 radiant + 混乱.
+- **時間停止 (Time Stop)**: 数ラウンド時間を止める.
+- **夢侵入 (Dream Invasion)**: 対象の夢を操作.
 
 **特殊能力**:
-- ** 月支配**: 月の位相を操る.
-- ** 予言**: 未来の断片を視る.
-- ** 精神接触**: 夢通貨で全世界と通信.
-- ** 不老不死**: 破壊不可能 (月が破壊されない限り).
+
+- **月支配**: 月の位相を操る.
+- **予言**: 未来の断片を視る.
+- **精神接触**: 夢通貨で全世界と通信.
+- **不老不死**: 破壊不可能 (月が破壊されない限り).
 
 **精霊契約**: 月100%, 風55%, 水45%, 地30%, 火20%
 
 **所有アイテム**:
+
 - 月の王冠: 月の権威
 - ルナ・グリモワール: 月魔法の源
 
@@ -105,6 +109,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [月影エルフ王国](../politics/kingdoms.md#2-月影エルフ王国)
-- [創世神話](../lore/creation-myth.md)
-- [月魔法](../magic/system.md)
+
+- [月影エルフ王国](../../politics/kingdoms.md#2-月影エルフ王国)
+- [創世神話](../../lore/creation-myth.md)
+- [月魔法](../../magic/system.md)
