@@ -1,11 +1,15 @@
 ---
-title: "map-data-readme"
-version: "0.2.0"
+type: "overview"
+category: "maps"
+title: "Map Data"
+version: "0.2.1"
 created: "2026-05-06"
-last_updated: "2026-05-09"
+last_updated: "2026-07-18"
 author: "halc8312"
-category: "readme"
+tags: ["map-data", "geography", "transportation", "json"]
 status: "draft"
+document_kind: "readme"
+summary: "世界地図の機械可読データ、スキーマ、同期・検証手順の案内です。"
 ---
 
 # Map Data - Eternal Arcadia
@@ -14,7 +18,16 @@ status: "draft"
 
 This directory contains structured, machine-readable map data for the world of **Eternal Arcadia**. The data represents the geographical layout, transportation network, nodes (cities, ports, airports), routes (roads, sea lanes, air routes, special paths), and hazard zones.
 
-This is **Map Data v0.1** — a prototype foundation for future web maps, tile maps, and game integration.
+The current data format is **Map Data v0.1**; the frontmatter `version` tracks revisions to this README. The dataset remains a prototype foundation for future web maps, tile maps, and game integration.
+
+## Canon Boundary
+
+- `world/map-data/data/*.json` is the authoritative editing source for machine-readable map data. The copies under `docs/data/map/` are generated publication artifacts and must not be edited directly.
+- This source-of-truth role does not make every JSON value canon. `confidence: "canon"` means that a value is supported by a stable canon document; `estimated`, `inferred`, and `placeholder` values remain tooling aids or proposals.
+- POIs with `status: "draft"` are proposals, even when they are usable in the map viewer. Stable canon documents take precedence whenever prose and structured data disagree.
+- Files under `schemas/`, `docs/`, and `examples/` define formats, workflows, or examples; they are technical project documentation rather than facts about the world.
+
+See [`CANON_POLICY.md`](../../CANON_POLICY.md) for the repository-wide policy.
 
 ## File Structure
 
@@ -28,6 +41,7 @@ world/map-data/
     routes.json          # Transportation paths (25+)
     hazards.json         # Danger zones (6+)
     pois.json            # POI and spots data (planned)
+    pixel-mapping.json   # Canonical ID-to-world-image pixel coordinates
   schemas/
     continent.schema.json
     region.schema.json
@@ -35,6 +49,7 @@ world/map-data/
     route.schema.json
     hazard.schema.json
     poi.schema.json      # POI schema (v0.1)
+    pixel-mapping.schema.json
   docs/
     poi-data-spec.md     # POI data specification v0.1
     poi-authoring-template.md
@@ -63,6 +78,7 @@ world/map-data/
 - **Z-axis**: Vertical layer (0 = ground/sea level, positive = air/floating, negative = underwater/underground)
 
 Approximate continent centers:
+
 | Continent | Center (X, Y) |
 |-----------|---------------|
 | Elysion   | (5000, 5000)  |
@@ -80,6 +96,7 @@ Coordinates are approximate in v0.1. Precision will improve in future versions.
 Nodes represent locations: cities, ports, airports, terminals, landmarks, etc.
 
 Available types:
+
 - `capital` - National/continental capital
 - `city` - Major city
 - `town` - Town
@@ -104,6 +121,7 @@ Available types:
 Routes connect nodes and represent transportation paths.
 
 **Route types:**
+
 - `road` - Road/highway
 - `rail` - Railway/magical train
 - `sea` - Sea route
@@ -117,6 +135,7 @@ Routes connect nodes and represent transportation paths.
 - `forbidden_path` - Forbidden path
 
 **Modes** (transportation method):
+
 - `stagecoach`, `express_carriage`, `magic_train`
 - `wind_magic_ship`, `sailing_ship`
 - `airship`, `griffin`
@@ -125,6 +144,7 @@ Routes connect nodes and represent transportation paths.
 - `walking`, `spirit_warp`, `chrono_tunnel`
 
 **Status:**
+
 - `active` - Regularly operating
 - `seasonal` - Seasonal operation
 - `restricted` - Permits required
@@ -159,6 +179,7 @@ python tools/map/validate_map_data.py
 ```
 
 Example output (counts may vary):
+
 ```
 Map data validation passed.
   Continents: <count>
@@ -167,9 +188,11 @@ Map data validation passed.
   Routes: <count>
   Hazards: <count>
 ```
+
 The actual counts reflect the current dataset and may change over time. Run the validator for the latest numbers.
 
 The validator checks:
+
 - Unique IDs across all datasets
 - All required fields present
 - Reference integrity (IDs exist, continent/region/node references valid)
@@ -253,8 +276,8 @@ continent-by-continent expansion can build on a reviewed foundation.
 ### GitHub Pages Copy
 
 GitHub Pages uses the copy at [`docs/data/map/pois.json`](../../docs/data/map/pois.json).
-Use `python world/map-data/scripts/sync_map_data.py` to copy all canonical map
-data files (continents, regions, nodes, routes, hazards, POIs) from
+Use `python world/map-data/scripts/sync_map_data.py` to copy all authoritative source map
+data files (continents, regions, nodes, routes, hazards, POIs, pixel mapping) from
 `world/map-data/data/` to `docs/data/map/`. Pass `--check` to verify the copies
 without writing (used in CI).
 
@@ -302,8 +325,6 @@ This guideline defines:
 
 ## Route Finder
 
-## Route Finder
-
 Find optimal routes between nodes:
 
 ```bash
@@ -324,12 +345,14 @@ python tools/map/route_finder.py --from port_zephia --to time_port --weight safe
 ```
 
 **Weight options:**
+
 - `time` - Minimize travel time (hours)
 - `distance` - Minimize distance (km)
-- `safety` - Maximize safety (penalizes danger level)
+- `safety` - Minimize `estimated_time_hours × (danger_level + 1)²`
 - `cost` - Minimize gold cost
 
 **Filters:**
+
 - `--avoid-danger-level N` - Skip routes with danger >= N
 - `--no-air` - Exclude air routes (default: air routes are included)
 - `--no-sea` - Exclude sea routes (default: sea routes are included)
@@ -337,8 +360,9 @@ python tools/map/route_finder.py --from port_zephia --to time_port --weight safe
 - `--month N` - Travel month (1-12); seasonal routes only operate in their active months. If omitted, seasonal routes are included but their seasonal availability is not evaluated.
 
 **Route status handling (v0.1):**
+
 - `active` - always included
-- `seasonal` - included if `--month` matches `active_months`; if `--month` omitted, included without evaluation
+- `seasonal` - included if `--month` matches `active_months`; if `--month` is omitted, included with unresolved availability; if months are missing while a month is requested, excluded
 - `restricted` - excluded unless `--allow-restricted` is given
 - `forbidden` - always excluded (no option to include)
 - `experimental`, `dangerous`, `closed` - always excluded
@@ -352,6 +376,7 @@ python tools/map/export_geojson.py
 ```
 
 Outputs in `world/map-data/exports/`:
+
 - `world_transport.geojson` - Combined features
 - `nodes.geojson` - Points
 - `routes.geojson` - LineStrings
@@ -370,6 +395,7 @@ python tools/map/render_static_network.py
 Output: `world/map-data/exports/world_transport_network.svg`
 
 Features:
+
 - Lines colored by route type (brown=road, blue=sea, pink=air, green=rail, gold=caravan, purple=special)
 - Nodes sized/colored by type (red=capital, blue=port, pink=airport, purple=floating)
 - Labels for major nodes
@@ -380,6 +406,7 @@ Open the SVG file in any browser or vector graphics editor.
 ## Data Sources
 
 Canon data extracted from:
+
 - `world/geography/continents.md`
 - `world/geography/regions/central-region.md`
 - `world/transportation/land-transportation.md`
@@ -391,6 +418,7 @@ Canon data extracted from:
 ## Roadmap (Future)
 
 **v0.2 Goals:**
+
 - Expand node count to 100+
 - Add more regional routes
 - Include precise distance/time data
@@ -399,6 +427,7 @@ Canon data extracted from:
 - Add tilemap support for regional areas
 
 **Long-term:**
+
 - Interactive web map with Leaflet/OpenLayers
 - Real-time route planning with constraints
 - Integration with game engine
@@ -407,6 +436,7 @@ Canon data extracted from:
 ## Contributing
 
 When adding data:
+
 1. Follow the JSON schemas strictly
 2. Use lowercase snake_case for all IDs
 3. Preserve Japanese names in `name` field

@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "最後の月帝国女皇"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "empress", "lunar-empire"]
@@ -76,12 +76,14 @@ spirit_contract:
 **速度**: 30 フィート.
 
 **攻撃**:
+
 - **遠隔**: 月の光線 (spell, 6d6 radiant, DC23)
 - **範囲**: Moonbeam (3d10 radiant, 移動で追加ダメージ)
 - **支配**: Mass Suggestion (全ターゲット CHA save DC21)
 - **未来視**: Portent (Divination feature, 2/day 判定を強制成功/失敗)
 
 **主な呪文** (9th-level slots ×3):
+
 - **Time Stop** (9th): 時を止める (1d4+1 rounds)
 - **Meteor Swarm** (9th): 隕石召喚 (40フィート radius, 20d6 fire+bludgeoning)
 - **Gate** (9th): 精霊召喚 (月精霊)
@@ -90,6 +92,7 @@ spirit_contract:
 - **Divination** (4th): 神託
 
 **特殊能力**:
+
 - **Portent**: 1日2回、未来視で任意のd20ロールを指定値に変更
 - **Expert Divination**: 予言系呪文の回復
 - **Third Eye**: 常に true sight 30フィート
@@ -109,6 +112,7 @@ spirit_contract:
 - **-5170年**: 60歳で崩御 (自然死か、月の精霊と一体化か)
 
 **死後**:
+
 - 月帝国は10年で崩壊、各国家へ分裂
 - 彼女の教えはエルフに深く根付く
 - 現在、月妖精王国は彼女を崇敬
@@ -131,10 +135,11 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [ルナリア帝国 (古代文明)](../lore/ancient-civilizations.md)
-- [月の精霊ルナ](../magic/system.md)
-- [精霊協会](../religion/pantheon.md)
-- [月妖精月光王国](../politics/kingdoms.md)
+
+- [ルナリア帝国 (古代文明)](../../lore/ancient-civilizations.md)
+- [月の精霊ルナ](../../magic/system.md)
+- [精霊協会](../../religion/pantheon.md)
+- [月妖精月光王国](../../politics/kingdoms.md)
 
 ---
 

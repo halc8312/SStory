@@ -6,14 +6,16 @@ Included files:
 
 - `leaflet.css`
 - `leaflet.js`
+- `images/layers.png`
+- `images/layers-2x.png`
 - `images/marker-icon.png`
 - `images/marker-icon-2x.png`
 - `images/marker-shadow.png`
 
 Upstream project:
 
-- https://leafletjs.com/
-- https://github.com/Leaflet/Leaflet
+- <https://leafletjs.com/>
+- <https://github.com/Leaflet/Leaflet>
 
 License:
 

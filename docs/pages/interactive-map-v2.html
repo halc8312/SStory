@@ -4,15 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>エターナル・アルカディア — インタラクティブ世界地図</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="../vendor/leaflet/leaflet.css?v=1.9.4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
   <style>
     /* ============================================
        ETERNAL ARCADIA — INTERACTIVE MAP v2
        Google Maps-quality fantasy world map
        ============================================ */
-
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -90,6 +88,7 @@
       letter-spacing: 0.5px;
       white-space: nowrap;
       text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      text-decoration: none;
     }
 
     .logo-icon {
@@ -293,6 +292,9 @@
     }
 
     .layer-toggle-btn.hidden { opacity: 0; pointer-events: none; }
+    .layer-toggle-btn[hidden],
+    .layer-panel[hidden],
+    .route-panel-body[hidden] { display: none !important; }
 
     /* ---- Info panel (left side, Google Maps style) ---- */
     .info-panel {
@@ -456,12 +458,13 @@
 
     .route-form-row {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 10px;
     }
 
     .route-field {
-      flex: 1;
+      flex: 1 1 150px;
     }
 
     .route-field label {
@@ -486,6 +489,38 @@
 
     .route-field select:focus, .route-field input:focus {
       border-color: var(--accent-gold);
+    }
+
+    .route-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-bottom: 10px;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .route-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    :where(button, input, select, [tabindex]):focus-visible {
+      outline: 3px solid var(--accent-gold);
+      outline-offset: 2px;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
     }
 
     .route-btn {
@@ -955,6 +990,7 @@
       pointer-events: auto;
     }
     .beta-badge.hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-20px); }
+    .beta-badge[hidden] { display: none !important; }
     @media (max-width: 768px) {
       .beta-badge { font-size: 10px; padding: 4px 12px; top: 46px; }
     }
@@ -1013,36 +1049,37 @@
 <body>
 
   <!-- Loading overlay -->
-  <div class="loading-overlay" id="loading">
+  <div class="loading-overlay" id="loading" role="status" aria-live="polite" aria-label="地図を読み込み中">
     <div class="loading-spinner"></div>
     <div class="loading-text">世界地図を読み込んでいます...</div>
   </div>
 
   <!-- Map container -->
-  <div id="map"></div>
+  <div id="map" role="region" aria-label="エターナル・アルカディアのインタラクティブ世界地図"></div>
 
   <!-- Beta badge -->
-  <div class="beta-badge" id="betaBadge" title="クリックで非表示">🧪 試験版 — フィードバック歓迎</div>
+  <button type="button" class="beta-badge" id="betaBadge" title="クリックで非表示" aria-label="試験版のお知らせを閉じる">🧪 試験版 — フィードバック歓迎</button>
 
   <!-- Top bar -->
   <div class="top-bar">
-    <div class="logo">
+    <a class="logo" href="../index.html" aria-label="設定資料館トップへ戻る">
       <div class="logo-icon">EA</div>
       <span>Eternal Arcadia</span>
-    </div>
+    </a>
     <div class="search-container">
-      <span class="search-icon">⌕</span>
-      <input class="search-input" id="searchInput" type="text" placeholder="場所を検索 — アストラリス、グランロック、ムーンライト..." autocomplete="off">
-      <div class="search-results" id="searchResults"></div>
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <label class="visually-hidden" for="searchInput">場所を検索</label>
+      <input class="search-input" id="searchInput" type="search" placeholder="場所を検索 — アストラリス、グランロック、ムーンライト..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false">
+      <div class="search-results" id="searchResults" role="listbox" aria-label="検索候補"></div>
     </div>
   </div>
 
   <!-- Layer panel -->
-  <button class="layer-toggle-btn hidden" id="layerToggleBtn" title="レイヤー">◫</button>
-  <div class="layer-panel" id="layerPanel">
+  <button type="button" class="layer-toggle-btn hidden" id="layerToggleBtn" title="レイヤー" aria-label="レイヤーパネルを開く" aria-controls="layerPanel" aria-expanded="false">◫</button>
+  <section class="layer-panel" id="layerPanel" aria-labelledby="layerPanelTitle">
     <div class="layer-panel-header">
-      レイヤー
-      <button class="layer-panel-close" id="layerPanelClose">×</button>
+      <span id="layerPanelTitle">レイヤー</span>
+      <button type="button" class="layer-panel-close" id="layerPanelClose" aria-label="レイヤーパネルを閉じる">×</button>
     </div>
     <div class="layer-group">
       <div class="layer-group-title">交通路</div>
@@ -1065,46 +1102,62 @@
       <label class="layer-item"><input type="checkbox" data-layer="grid">座標グリッド</label>
       <label class="layer-item"><input type="checkbox" checked id="deepZoomToggle">詳細マップ</label>
     </div>
-  </div>
+  </section>
 
   <!-- Info panel (populated by JS) -->
-  <div class="info-panel" id="infoPanel">
-    <button class="info-panel-close" id="infoPanelClose">×</button>
+  <aside class="info-panel" id="infoPanel" aria-label="地点の詳細" aria-hidden="true" inert>
+    <button type="button" class="info-panel-close" id="infoPanelClose" aria-label="詳細を閉じる">×</button>
     <div id="infoPanelContent"></div>
-  </div>
+  </aside>
 
   <!-- Route search panel -->
-  <div class="route-panel" id="routePanel">
+  <section class="route-panel" id="routePanel" aria-labelledby="routePanelTitle">
     <div class="route-panel-header">
-      <span class="route-panel-title">🧭 ルート検索</span>
-      <button class="route-panel-toggle" id="routePanelToggle">▾</button>
+      <span class="route-panel-title" id="routePanelTitle">🧭 ルート検索</span>
+      <button type="button" class="route-panel-toggle" id="routePanelToggle" aria-label="ルート検索パネルを折りたたむ" aria-controls="routePanelBody" aria-expanded="true">▾</button>
     </div>
     <div class="route-panel-body" id="routePanelBody">
       <div class="route-form-row">
         <div class="route-field">
-          <label>出発地</label>
+          <label for="routeFrom">出発地</label>
           <select id="routeFrom"><option value="">選択...</option></select>
         </div>
         <div class="route-field">
-          <label>目的地</label>
+          <label for="routeTo">目的地</label>
           <select id="routeTo"><option value="">選択...</option></select>
         </div>
         <div class="route-field">
-          <label>条件</label>
+          <label for="routeWeight">条件</label>
           <select id="routeWeight">
             <option value="time">最短時間</option>
             <option value="distance">最短距離</option>
             <option value="safety">安全優先</option>
+            <option value="cost">最安費用</option>
+          </select>
+        </div>
+        <div class="route-field">
+          <label for="routeMonth">月指定</label>
+          <select id="routeMonth">
+            <option value="">指定なし</option>
+            <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+            <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+            <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+            <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
           </select>
         </div>
       </div>
-      <div class="route-form-row" style="justify-content: flex-end; gap: 8px;">
-        <button class="route-btn route-btn-secondary" id="routeClear">クリア</button>
-        <button class="route-btn" id="routeSearch">検索</button>
+      <div class="route-options" role="group" aria-label="ルート検索オプション">
+        <label><input id="routeNoAir" type="checkbox"> 空路なし</label>
+        <label><input id="routeNoSea" type="checkbox"> 海路なし</label>
+        <label><input id="routeAllowRestricted" type="checkbox"> restricted route を含める</label>
       </div>
-      <div class="route-result" id="routeResult"></div>
+      <div class="route-form-row" style="justify-content: flex-end; gap: 8px;">
+        <button type="button" class="route-btn route-btn-secondary" id="routeClear">クリア</button>
+        <button type="button" class="route-btn" id="routeSearch">検索</button>
+      </div>
+      <div class="route-result" id="routeResult" role="status" aria-live="polite"></div>
     </div>
-  </div>
+  </section>
 
   <!-- Bottom bar -->
   <div class="bottom-bar">
@@ -1115,19 +1168,20 @@
     <div class="coord-display" id="coordDisplay">---</div>
     <div class="coord-display" id="zoomLevelDisplay" style="margin-left:8px;color:#ffd700;font-weight:bold;"></div>
     <div class="zoom-controls">
-      <button class="zoom-btn" id="zoomIn">+</button>
-      <button class="zoom-btn" id="zoomOut">−</button>
-      <button class="zoom-btn" id="zoomFit" title="全体表示">⊡</button>
+      <button type="button" class="zoom-btn" id="zoomIn" aria-label="拡大">+</button>
+      <button type="button" class="zoom-btn" id="zoomOut" aria-label="縮小">−</button>
+      <button type="button" class="zoom-btn" id="zoomFit" title="全体表示" aria-label="地図全体を表示">⊡</button>
     </div>
   </div>
 
   <!-- Minimap -->
-  <div class="minimap" id="minimap">
-    <img src="../assets/images/maps/world/world-map-medium.jpg" alt="minimap">
+  <div class="minimap" id="minimap" role="button" tabindex="0" aria-label="ミニマップ。クリックまたはEnterキーで表示位置を移動">
+    <img src="../assets/images/maps/world/world-map-medium.jpg" alt="世界全体のミニマップ">
     <div class="minimap-viewport" id="minimapViewport"></div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="../vendor/leaflet/leaflet.js?v=1.9.4"></script>
+  <script src="../assets/js/route-planner.js?v=20260718a"></script>
   <script>
   // ============================================
   // ETERNAL ARCADIA — Interactive Map Engine v2
@@ -1136,15 +1190,17 @@
     'use strict';
 
     // --- Configuration ---
-    const IMG_W = 4096;
-    const IMG_H = 2730;
     const BASE_PATH = '../data/map/';
     const HIRES_IMG = '../assets/images/maps/world/world-map-hires.jpg';
     const CACHE = '20260510c';
+    const RoutePlanner = window.EternalArcadiaRoutePlanner;
+    if (!RoutePlanner) {
+      throw new Error('route-planner.js の読み込みに失敗しました。');
+    }
 
     // World scale: the map image represents ~4000km wide (from scale bar in image)
     // At zoom level showing the full map, ~80px = 500km
-    const KM_PER_PIXEL = 4000 / IMG_W; // ≈ 0.977 km/pixel
+    const WORLD_WIDTH_KM = 4000;
 
     // Marker colors by type
     const MARKER_COLORS = {
@@ -1229,6 +1285,21 @@
       return r.json();
     };
 
+    function makeLayerKeyboardAccessible(layer, label) {
+      const element = layer?.getElement?.();
+      if (!element || element.dataset.keyboardAccessible === 'true') return;
+      element.dataset.keyboardAccessible = 'true';
+      element.setAttribute('role', 'button');
+      element.setAttribute('tabindex', '0');
+      element.setAttribute('aria-label', String(label));
+      element.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          layer.openPopup?.();
+        }
+      });
+    }
+
     // --- Load data ---
     const [nodes, routes, hazards, continents, regions, pois, pixelMapping] = await Promise.all([
       fetchJson('nodes.json'),
@@ -1241,6 +1312,12 @@
     ]);
 
     const nodeById = Object.fromEntries(nodes.filter(n => n?.id).map(n => [n.id, n]));
+    const IMG_W = Number(pixelMapping.image_width);
+    const IMG_H = Number(pixelMapping.image_height);
+    if (!Number.isFinite(IMG_W) || IMG_W <= 0 || !Number.isFinite(IMG_H) || IMG_H <= 0) {
+      throw new Error('pixel-mapping.json の画像サイズが不正です。');
+    }
+    const KM_PER_PIXEL = WORLD_WIDTH_KM / IMG_W;
     const pixelNodes = pixelMapping.nodes || {};
     const pixelContinents = pixelMapping.continents || {};
     const pixelHazards = pixelMapping.hazards || {};
@@ -1529,26 +1606,29 @@
           <div class="popup-card-type">${esc(route.type)} — ${esc(route.distance_km ?? '?')} km</div>
           <div class="popup-card-desc">${esc(fromNode?.name || route.from)} → ${esc(toNode?.name || route.to)}</div>
           <div class="popup-card-meta">
-            ${route.estimated_time_hours ? `<span class="popup-card-tag">⏱ ${route.estimated_time_hours}h</span>` : ''}
-            ${route.danger_level ? `<span class="popup-card-tag">⚠ 危険度 ${route.danger_level}</span>` : ''}
+            ${route.estimated_time_hours ? `<span class="popup-card-tag">⏱ ${esc(route.estimated_time_hours)}h</span>` : ''}
+            ${route.danger_level ? `<span class="popup-card-tag">⚠ 危険度 ${esc(route.danger_level)}</span>` : ''}
             ${route.status ? `<span class="popup-card-tag">${esc(route.status)}</span>` : ''}
           </div>
         </div>
       `, { maxWidth: 280 });
+      makeLayerKeyboardAccessible(polyline, `${route.name || route.id} の詳細を表示`);
 
       // Distance label at midpoint
       if (route.distance_km) {
         const mid = [(fromPos[0]+toPos[0])/2, (fromPos[1]+toPos[1])/2];
-        L.marker(mid, {
+        const distanceMarker = L.marker(mid, {
           icon: L.divIcon({
             className: 'distance-label',
-            html: `${route.distance_km}km`,
+            html: `${esc(route.distance_km)}km`,
             iconSize: [50, 16],
             iconAnchor: [25, 8]
           }),
           pane: 'labelPane',
-          interactive: false
+          interactive: false,
+          keyboard: false
         }).addTo(layers.labels);
+        distanceMarker.getElement()?.setAttribute('aria-hidden', 'true');
       }
     });
 
@@ -1584,7 +1664,7 @@
         interactive: true
       }).addTo(layers.hazards);
 
-      circle.bindTooltip(hazard.name || hazard.id, {
+      circle.bindTooltip(esc(hazard.name || hazard.id), {
         className: 'hazard-tooltip',
         direction: 'center'
       });
@@ -1595,11 +1675,12 @@
           <div class="popup-card-type">${esc(hazard.type)} — 危険度 ${severity}/5</div>
           <div class="popup-card-desc">${esc(hazard.description)}</div>
           <div class="popup-card-meta">
-            ${hazard.seasonal ? `<span class="popup-card-tag">季節: ${(hazard.active_months||[]).join(',')}月</span>` : '<span class="popup-card-tag">通年</span>'}
-            <span class="popup-card-tag">半径 ${hazard.radius}単位</span>
+            ${hazard.seasonal ? `<span class="popup-card-tag">季節: ${esc((hazard.active_months||[]).join(','))}月</span>` : '<span class="popup-card-tag">通年</span>'}
+            <span class="popup-card-tag">半径 ${esc(hazard.radius)}単位</span>
           </div>
         </div>
       `, { maxWidth: 280 });
+      makeLayerKeyboardAccessible(circle, `${hazard.name || hazard.id} の詳細を表示`);
     });
 
     // --- Render nodes (the main markers) ---
@@ -1620,13 +1701,15 @@
         icon: L.divIcon({
           className: 'map-marker',
           html: `<div class="map-marker-dot ${sizeClass}" style="background:${color};"></div>
-                 <div class="map-marker-label" data-node-id="${node.id}">${esc(node.name)}</div>`,
+                 <div class="map-marker-label" data-node-id="${esc(node.id)}">${esc(node.name)}</div>`,
           iconSize: [0, 0],
           iconAnchor: [0, 0]
         }),
         pane: 'nodePane',
         interactive: true,
-        riseOnHover: true
+        riseOnHover: true,
+        title: String(node.name || node.id),
+        alt: `${node.name || node.id}（${typeLabel}）`
       }).addTo(layers.nodes);
 
       nodeMarkerById.set(node.id, marker);
@@ -1640,9 +1723,10 @@
           <div class="popup-card-meta">
             ${(node.tags || []).map(t => `<span class="popup-card-tag">${esc(t)}</span>`).join('')}
           </div>
-          <button class="popup-card-btn" onclick="window._showNodeDetail('${node.id}')">詳細を見る</button>
+          <button type="button" class="popup-card-btn" data-node-id="${esc(node.id)}">詳細を見る</button>
         </div>
       `, { maxWidth: 280 });
+      makeLayerKeyboardAccessible(marker, `${node.name || node.id} の詳細を表示`);
 
       allSearchableItems.push({
         id: node.id,
@@ -1669,7 +1753,7 @@
     };
 
     pois.forEach(poi => {
-      if (!poi?.position?.x || !poi?.position?.y) return;
+      if (!Number.isFinite(Number(poi?.position?.x)) || !Number.isFinite(Number(poi?.position?.y))) return;
 
       // POIs use the old coordinate system — need to convert
       // For now, check if pixel mapping has them; otherwise approximate
@@ -1698,7 +1782,9 @@
           iconAnchor: [4, 4]
         }),
         pane: 'poiPane',
-        interactive: true
+        interactive: true,
+        title: String(poi.name || poi.id),
+        alt: `${poi.name || poi.id}（POI）`
       }).addTo(layers.pois);
 
       marker.bindPopup(`
@@ -1707,11 +1793,12 @@
           <div class="popup-card-type">${esc(poi.category)} — ${esc(poi.type)}</div>
           <div class="popup-card-desc">${esc(poi.description || '')}</div>
           <div class="popup-card-meta">
-            ${poi.importance ? `<span class="popup-card-tag">★${poi.importance}</span>` : ''}
+            ${poi.importance ? `<span class="popup-card-tag">★${esc(poi.importance)}</span>` : ''}
             ${poi.status ? `<span class="popup-card-tag">${esc(poi.status)}</span>` : ''}
           </div>
         </div>
       `, { maxWidth: 260 });
+      makeLayerKeyboardAccessible(marker, `${poi.name || poi.id} の詳細を表示`);
 
       allSearchableItems.push({
         id: poi.id,
@@ -1804,6 +1891,7 @@
       const q = searchInput.value.trim().toLowerCase();
       if (!q) {
         searchResults.classList.remove('active');
+        searchInput.setAttribute('aria-expanded', 'false');
         return;
       }
 
@@ -1813,7 +1901,7 @@
         searchResults.innerHTML = '<div style="padding:12px;color:var(--text-muted);font-size:13px;">見つかりません</div>';
       } else {
         searchResults.innerHTML = matches.map(item => `
-          <div class="search-result-item" data-id="${item.id}" data-kind="${item.kind}">
+          <div class="search-result-item" data-id="${esc(item.id)}" data-kind="${esc(item.kind)}" role="option" tabindex="-1">
             <div class="search-result-dot" style="background:${item.color};"></div>
             <div>
               <div class="search-result-name">${esc(item.name)}</div>
@@ -1823,11 +1911,10 @@
         `).join('');
       }
       searchResults.classList.add('active');
+      searchInput.setAttribute('aria-expanded', 'true');
     });
 
-    searchResults.addEventListener('click', e => {
-      const item = e.target.closest('.search-result-item');
-      if (!item) return;
+    function selectSearchResult(item) {
       const id = item.dataset.id;
       const match = allSearchableItems.find(i => i.id === id);
       if (match) {
@@ -1836,12 +1923,45 @@
         if (marker) marker.openPopup();
       }
       searchResults.classList.remove('active');
+      searchInput.setAttribute('aria-expanded', 'false');
       searchInput.value = '';
+    }
+
+    searchResults.addEventListener('click', e => {
+      const item = e.target.closest('.search-result-item');
+      if (item) selectSearchResult(item);
+    });
+
+    searchInput.addEventListener('keydown', e => {
+      const options = [...searchResults.querySelectorAll('.search-result-item')];
+      if (e.key === 'Escape') {
+        searchResults.classList.remove('active');
+        searchInput.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      if (!options.length || !['ArrowDown', 'ArrowUp', 'Enter'].includes(e.key)) return;
+
+      const currentIndex = options.findIndex(option => option.getAttribute('aria-selected') === 'true');
+      if (e.key === 'Enter') {
+        if (currentIndex >= 0) {
+          e.preventDefault();
+          selectSearchResult(options[currentIndex]);
+        }
+        return;
+      }
+
+      e.preventDefault();
+      const nextIndex = e.key === 'ArrowDown'
+        ? (currentIndex + 1) % options.length
+        : (currentIndex <= 0 ? options.length - 1 : currentIndex - 1);
+      options.forEach((option, index) => option.setAttribute('aria-selected', String(index === nextIndex)));
+      options[nextIndex].scrollIntoView({ block: 'nearest' });
     });
 
     document.addEventListener('click', e => {
       if (!e.target.closest('.search-container')) {
         searchResults.classList.remove('active');
+        searchInput.setAttribute('aria-expanded', 'false');
       }
     });
 
@@ -1859,28 +1979,48 @@
     // Layer panel toggle
     const layerPanel = document.getElementById('layerPanel');
     const layerToggleBtn = document.getElementById('layerToggleBtn');
+    const routePanelBody = document.getElementById('routePanelBody');
+    const routePanelToggle = document.getElementById('routePanelToggle');
+
+    function setLayerPanelExpanded(expanded) {
+      layerPanel.classList.toggle('collapsed', !expanded);
+      layerPanel.hidden = !expanded;
+      layerPanel.toggleAttribute('inert', !expanded);
+      layerPanel.setAttribute('aria-hidden', String(!expanded));
+      layerToggleBtn.classList.toggle('hidden', expanded);
+      layerToggleBtn.hidden = expanded;
+      layerToggleBtn.toggleAttribute('inert', expanded);
+      layerToggleBtn.setAttribute('aria-hidden', String(expanded));
+      layerToggleBtn.setAttribute('aria-expanded', String(expanded));
+    }
+
+    function setRoutePanelExpanded(expanded) {
+      routePanelBody.classList.toggle('collapsed', !expanded);
+      routePanelBody.hidden = !expanded;
+      routePanelBody.toggleAttribute('inert', !expanded);
+      routePanelBody.setAttribute('aria-hidden', String(!expanded));
+      routePanelToggle.textContent = expanded ? '▾' : '▸';
+      routePanelToggle.setAttribute('aria-expanded', String(expanded));
+      routePanelToggle.setAttribute('aria-label', expanded ? 'ルート検索パネルを折りたたむ' : 'ルート検索パネルを開く');
+    }
 
     document.getElementById('layerPanelClose').addEventListener('click', () => {
-      layerPanel.classList.add('collapsed');
-      layerToggleBtn.classList.remove('hidden');
+      setLayerPanelExpanded(false);
+      layerToggleBtn.focus();
     });
 
     layerToggleBtn.addEventListener('click', () => {
-      layerPanel.classList.remove('collapsed');
-      layerToggleBtn.classList.add('hidden');
+      setLayerPanelExpanded(true);
+      document.getElementById('layerPanelClose').focus();
     });
 
     // Auto-collapse panels on mobile
     if (window.innerWidth <= 768) {
-      layerPanel.classList.add('collapsed');
-      layerToggleBtn.classList.remove('hidden');
-      // Also collapse route panel body
-      const rpBody = document.getElementById('routePanelBody');
-      if (rpBody) {
-        rpBody.classList.add('collapsed');
-        const rpToggle = document.getElementById('routePanelToggle');
-        if (rpToggle) rpToggle.textContent = '▸';
-      }
+      setLayerPanelExpanded(false);
+      setRoutePanelExpanded(false);
+    } else {
+      setLayerPanelExpanded(true);
+      setRoutePanelExpanded(true);
     }
 
     // --- Info panel ---
@@ -1889,6 +2029,8 @@
 
     document.getElementById('infoPanelClose').addEventListener('click', () => {
       infoPanel.classList.remove('active');
+      infoPanel.setAttribute('aria-hidden', 'true');
+      infoPanel.setAttribute('inert', '');
     });
 
     window._showNodeDetail = function(nodeId) {
@@ -1929,7 +2071,7 @@
             const other = r.from === nodeId ? nodeById[r.to] : nodeById[r.from];
             return `<div class="info-row">
               <span class="info-row-label">${esc(r.type)}</span>
-              <span class="info-row-value">${esc(other?.name || '?')} (${r.distance_km || '?'}km)</span>
+              <span class="info-row-value">${esc(other?.name || '?')} (${esc(r.distance_km ?? '?')}km)</span>
             </div>`;
           }).join('')}
         </div>` : ''}
@@ -1940,8 +2082,16 @@
       `;
 
       infoPanel.classList.add('active');
+      infoPanel.setAttribute('aria-hidden', 'false');
+      infoPanel.removeAttribute('inert');
+      document.getElementById('infoPanelClose').focus();
       map.closePopup();
     };
+
+    document.addEventListener('click', event => {
+      const detailButton = event.target.closest('.popup-card-btn[data-node-id]');
+      if (detailButton) window._showNodeDetail(detailButton.dataset.nodeId);
+    });
 
     // --- Route search ---
     const routeFromSelect = document.getElementById('routeFrom');
@@ -1957,77 +2107,17 @@
     });
 
     // Route panel toggle
-    const routePanelBody = document.getElementById('routePanelBody');
-    document.getElementById('routePanelToggle').addEventListener('click', () => {
-      routePanelBody.classList.toggle('collapsed');
-      document.getElementById('routePanelToggle').textContent = routePanelBody.classList.contains('collapsed') ? '▸' : '▾';
+    routePanelToggle.addEventListener('click', () => {
+      const expanded = !routePanelBody.classList.contains('collapsed');
+      setRoutePanelExpanded(!expanded);
     });
-
-    // Dijkstra
-    function buildGraph(weightMode) {
-      const graph = {};
-      routes.forEach(r => {
-        if (!pixelNodes[r.from] || !pixelNodes[r.to]) return;
-        if (r.status === 'restricted') return;
-
-        let w = r.distance_km || 100;
-        if (weightMode === 'time') w = r.estimated_time_hours || (w / 50);
-        else if (weightMode === 'safety') w = w * (1 + (r.danger_level || 0) * 0.5);
-
-        if (!graph[r.from]) graph[r.from] = [];
-        if (!graph[r.to]) graph[r.to] = [];
-        graph[r.from].push({ to: r.to, weight: w, route: r });
-        graph[r.to].push({ to: r.from, weight: w, route: r });
-      });
-      return graph;
-    }
-
-    function dijkstra(graph, start, end) {
-      const dist = {};
-      const prev = {};
-      const prevRoute = {};
-      const visited = new Set();
-      const queue = [[0, start]];
-      dist[start] = 0;
-
-      while (queue.length > 0) {
-        queue.sort((a, b) => a[0] - b[0]);
-        const [d, u] = queue.shift();
-        if (visited.has(u)) continue;
-        visited.add(u);
-        if (u === end) break;
-
-        for (const edge of (graph[u] || [])) {
-          const nd = d + edge.weight;
-          if (nd < (dist[edge.to] ?? Infinity)) {
-            dist[edge.to] = nd;
-            prev[edge.to] = u;
-            prevRoute[edge.to] = edge.route;
-            queue.push([nd, edge.to]);
-          }
-        }
-      }
-
-      if (dist[end] === undefined) return null;
-
-      const path = [];
-      const pathRoutes = [];
-      let cur = end;
-      while (cur !== start) {
-        path.unshift(cur);
-        pathRoutes.unshift(prevRoute[cur]);
-        cur = prev[cur];
-      }
-      path.unshift(start);
-
-      return { path, routes: pathRoutes, totalWeight: dist[end] };
-    }
 
     // Search handler
     document.getElementById('routeSearch').addEventListener('click', () => {
       const from = routeFromSelect.value;
       const to = routeToSelect.value;
       const weight = document.getElementById('routeWeight').value;
+      const monthValue = Number(document.getElementById('routeMonth').value);
       const resultDiv = document.getElementById('routeResult');
 
       // Clear previous highlight
@@ -2045,26 +2135,27 @@
         return;
       }
 
-      const graph = buildGraph(weight);
-      const result = dijkstra(graph, from, to);
+      const result = RoutePlanner.findRoute({
+        nodes,
+        routes,
+        fromId: from,
+        toId: to,
+        weight,
+        month: Number.isInteger(monthValue) && monthValue >= 1 && monthValue <= 12 ? monthValue : null,
+        noAir: document.getElementById('routeNoAir').checked,
+        noSea: document.getElementById('routeNoSea').checked,
+        allowRestricted: document.getElementById('routeAllowRestricted').checked
+      });
 
-      if (!result) {
-        resultDiv.innerHTML = '<div style="color:var(--accent-red);">ルートが見つかりませんでした。</div>';
+      if (!result.found) {
+        resultDiv.innerHTML = `<div style="color:var(--accent-red);">${esc(result.message)}</div>`;
         resultDiv.classList.add('active');
         return;
       }
 
-      // Calculate total distance and time
-      let totalKm = 0;
-      let totalHours = 0;
-      result.routes.forEach(r => {
-        totalKm += r.distance_km || 0;
-        totalHours += r.estimated_time_hours || 0;
-      });
-
       // Highlight route on map
       const allLatLngs = [];
-      result.routes.forEach(r => {
+      result.segments.forEach(({ route: r }) => {
         const fromPos = toLatLng(r.from);
         const toPos = toLatLng(r.to);
         if (!fromPos || !toPos) return;
@@ -2096,22 +2187,28 @@
       // Show result
       resultDiv.innerHTML = `
         <div class="route-result-summary">
-          <span>📏 ${totalKm.toLocaleString()} km</span>
-          ${totalHours > 0 ? `<span>⏱ ${totalHours.toFixed(1)}時間</span>` : ''}
-          <span>🔄 ${result.path.length - 1}区間</span>
+          <span>📏 ${result.totalDistanceKm.toLocaleString()} km</span>
+          ${result.totalTimeHours > 0 ? `<span>⏱ ${result.totalTimeHours.toFixed(1)}時間</span>` : ''}
+          ${weight === 'cost' ? `<span>💰 ${result.totalCostGold.toLocaleString()} gold</span>` : ''}
+          <span>🔄 ${result.segments.length}区間</span>
         </div>
-        ${result.path.map((nodeId, i) => {
-          const node = nodeById[nodeId];
+        ${result.segments.map((segment, i) => {
+          const node = segment.fromNode;
           const color = MARKER_COLORS[(node?.type || 'city').toLowerCase()] || '#a3b1c6';
-          const route = result.routes[i];
+          const route = segment.route;
           return `
             <div class="route-step">
               <div class="route-step-dot" style="background:${color};"></div>
-              <span>${esc(node?.name || nodeId)}</span>
-              ${route ? `<span class="route-step-arrow">→ ${route.distance_km || '?'}km (${esc(route.type)})</span>` : ''}
+              <span>${esc(node?.name || route.from)}</span>
+              <span class="route-step-arrow">→ ${esc(route.distance_km ?? '?')}km (${esc(route.type)})</span>
             </div>
           `;
         }).join('')}
+        <div class="route-step">
+          <div class="route-step-dot" style="background:${MARKER_COLORS[(result.segments.at(-1)?.toNode?.type || 'city').toLowerCase()] || '#a3b1c6'};"></div>
+          <span>${esc(result.segments.at(-1)?.toNode?.name || to)}</span>
+        </div>
+        ${result.warnings.length ? `<ul>${result.warnings.map(warning => `<li>${esc(warning)}</li>`).join('')}</ul>` : ''}
       `;
       resultDiv.classList.add('active');
     });
@@ -2120,7 +2217,12 @@
       layers.routeHighlight.clearLayers();
       routeFromSelect.value = '';
       routeToSelect.value = '';
+      document.getElementById('routeMonth').value = '';
+      document.getElementById('routeNoAir').checked = false;
+      document.getElementById('routeNoSea').checked = false;
+      document.getElementById('routeAllowRestricted').checked = false;
       document.getElementById('routeResult').classList.remove('active');
+      document.getElementById('routeResult').replaceChildren();
     });
 
     // --- Zoom controls ---
@@ -2217,6 +2319,13 @@
       map.setView([lat, lng], map.getZoom(), { animate: true });
     });
 
+    document.getElementById('minimap').addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        map.fitBounds(bounds, { padding: [20, 20] });
+      }
+    });
+
     // --- Loading complete ---
     setTimeout(() => {
       const loading = document.getElementById('loading');
@@ -2232,10 +2341,14 @@
 
   })().catch(err => {
     console.error('Map init failed:', err);
-    document.getElementById('loading').innerHTML = `
-      <div style="color:#e06c6c;font-size:16px;">地図の読み込みに失敗しました</div>
-      <div style="color:#9ca3af;font-size:13px;">${err.message}</div>
-    `;
+    const loading = document.getElementById('loading');
+    const title = document.createElement('div');
+    const detail = document.createElement('div');
+    title.style.cssText = 'color:#e06c6c;font-size:16px;';
+    detail.style.cssText = 'color:#9ca3af;font-size:13px;';
+    title.textContent = '地図の読み込みに失敗しました';
+    detail.textContent = String(err?.message || '不明なエラー');
+    loading.replaceChildren(title, detail);
   });
   </script>
 
@@ -2244,18 +2357,19 @@
   (function() {
     const badge = document.getElementById('betaBadge');
     if (!badge) return;
-    if (sessionStorage.getItem('betaDismissed')) {
+    const dismissBadge = () => {
       badge.classList.add('hidden');
+      badge.hidden = true;
+      sessionStorage.setItem('betaDismissed', '1');
+    };
+    if (sessionStorage.getItem('betaDismissed')) {
+      dismissBadge();
       return;
     }
-    badge.addEventListener('click', function() {
-      badge.classList.add('hidden');
-      sessionStorage.setItem('betaDismissed', '1');
-    });
+    badge.addEventListener('click', dismissBadge);
     setTimeout(function() {
       if (!badge.classList.contains('hidden')) {
-        badge.classList.add('hidden');
-        sessionStorage.setItem('betaDismissed', '1');
+        dismissBadge();
       }
     }, 8000);
   })();

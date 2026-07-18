@@ -2,18 +2,20 @@
 type: "npc"
 category: "npcs"
 title: "クロノス・タイムウォッチャー (時空の番人 時空監視長官)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "time", "chrono-guardian"]
 status: "stable"
 npc_type: "leader"
-race: "human (time-affected)"
+race: "human"
+subrace: "time-affected"
 age: 200
 alignment: "lawful-neutral"
 class: "Wizard (School of Divination) 18"
+spirit_contract: {}
 ---
 
 # クロノス・タイムウォッチャー (Chronos Timewatcher)
@@ -51,6 +53,7 @@ class: "Wizard (School of Divination) 18"
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 17 ( mage armor + 時空の盾)
 - **HP**: 150 (18d6+36 from Wizard 18)
 - **速度**: 30フィート
@@ -62,18 +65,21 @@ class: "Wizard (School of Divination) 18"
 **戦闘能力**:
 
 **攻撃**:
+
 - **時空の矢 (Shatter)**: 60フィート sphere, DC18 CON save, 8d6 force.
 - **時間停止 (Time Stop)**: 伝説級, 1日1回, 数ラウンド時間停止 (制限あり).
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 18)**: 全学派, DC21, +13.
-- ** Portent (Divination)**: 毎日2回、未来の判定結果を20または1に設定可能.
-- ** The Third Eye (Divination)**: 透明視, 心読み.
-- ** Timeless Body**: 老化せず, 時間の歪み耐性.
-- ** Chrono Shield**: 反応で時間をずらし, 攻撃回避 (1回/日).
-- ** Forbidden Knowledge**: 禁忌魔法の知識 (非使用).
+
+- **呪文発動 (Wizard 18)**: 全学派, DC21, +13.
+- **Portent (Divination)**: 毎日2回、未来の判定結果を20または1に設定可能.
+- **The Third Eye (Divination)**: 透明視, 心読み.
+- **Timeless Body**: 老化せず, 時間の歪み耐性.
+- **Chrono Shield**: 反応で時間をずらし, 攻撃回避 (1回/日).
+- **Forbidden Knowledge**: 禁忌魔法の知識 (非使用).
 
 **精霊契約**:
+
 - 月: 80% (時間の精霊と親和)
 - 地: 30%
 - 風: 25%
@@ -81,6 +87,7 @@ class: "Wizard (School of Divination) 18"
 - 火: 10%
 
 **装備**:
+
 - 時の砂時計 (timekeeping 魔導器)
 - 予言の眼鏡 (未来透視)
 - 時間封印の杖 (Forbidden magic seal)
@@ -116,6 +123,7 @@ class: "Wizard (School of Divination) 18"
 ---
 
 **関連項目**:
-- [時空の番人](../politics/kingdoms.md#10-時空の番人)
-- [歴史年表](../lore/timelines/main-timeline.md)
-- [予言](../lore/creation-myth.md#未来予言)
+
+- [時空の番人](../../politics/kingdoms.md#10-時空の番人)
+- [歴史年表](../../lore/timelines/main-timeline.md)
+- [予言](../../lore/creation-myth.md#未来予言)

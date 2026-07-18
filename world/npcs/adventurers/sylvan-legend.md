@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "冒険者ギルド 伝説の冒険者"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "adventurer", "hero", "legend"]
@@ -76,18 +76,21 @@ spirit_contract:
 **速度**: 35 フィート. (elf)
 
 **攻撃**:
-- **遠隔**: ロングボウ+2 (1d8+5 piercing, +2 enh, range 150/600)
+
+- **遠隔**: ロングボウ+2 (1d8+5 piercing, 強化+2, range 150/600)
 - **近接**: 短剣 (1d4+2, 2 simultaneous)
 - **特殊**: Dread Ambusher (追加攻撃 +1d8 damage on first turn)
 - **隠密**: Stealth +9, 攻撃時にadvantage (from ambush)
 
 **主な呪文/能力** (Ranger spells):
+
 - Hunter's Mark (1d6 extra damage, concentration)
 - Pass without Trace (+10 to Stealth)
 - Conjure Animals (召喚狼)
 - Cure Wounds (healing)
 
 **特殊能力**:
+
 - **Favored Enemy**: Monstrosity +2d6 damage
 - **Natural Explorer**: 森・荒野で不利地形無視、警戒半減睡眠
 - **Rogue Cunning Action**: ボーナスアクション hide/disengage/dash
@@ -109,6 +112,7 @@ spirit_contract:
 - **現在**: 50代半ば、後進の指導に専念しつつ、最後の大任務待つ
 
 **主な戦績**:
+
 - Sランク討伐: 12体 (世界最多記録)
 - Aランク: 50体以上
 - クエスト成功率: 98%
@@ -151,10 +155,11 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [冒険者ギルド](../culture/calendar.md) (暦・行事で言及)
-- [モンスター図鑑](../creatures/bestiary.md)
-- [エルフ種族](../races/races-overview.md)
-- [風の精霊ゼフ](../magic/system.md)
+
+- [冒険者ギルド](../../culture/calendar.md) (暦・行事で言及)
+- [モンスター図鑑](../../creatures/bestiary.md)
+- [エルフ種族](../../races/races-overview.md)
+- [風の精霊ゼフ](../../magic/system.md)
 
 ---
 

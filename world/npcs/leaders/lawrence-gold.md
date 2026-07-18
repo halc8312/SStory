@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ローレンス・ゴールド (銀盟共和国銀行総裁)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "finance", "silver-confederation"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 13 (布の服)
 - **HP**: 115 (12d8+24 from Rogue 12 + 3d6+3 from Wizard 3)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 欺瞣の言葉 (Vicious Mockery)**: DC18, 1d4 psychic + 弱点.
-- ** 幻影 (Minor Illusion)**: 欺瞞用.
+
+- **欺瞣の言葉 (Vicious Mockery)**: DC18, 1d4 psychic + 弱点.
+- **幻影 (Minor Illusion)**: 欺瞞用.
 
 **特殊能力**:
-- ** Sneak Attack**: 3d6 (位置優位時)
-- ** Cunning Action**: 隠密/脱退アクション.
-- ** Master of Intrigue**: 欺きにadvantage.
-- ** 幻術呪文 (Illusion spells)**: DC18, +10.
-- ** 財産の隠蔽**: 財宝を隠すのにadvantage.
+
+- **Sneak Attack**: 3d6 (位置優位時)
+- **Cunning Action**: 隠密/脱退アクション.
+- **Master of Intrigue**: 欺きにadvantage.
+- **幻術呪文 (Illusion spells)**: DC18, +10.
+- **財産の隠蔽**: 財宝を隠すのにadvantage.
 
 **精霊契約**: 水60%, 風55%, 月40%
 
 **装備**:
+
 - 金の時計 (財産の一部)
 - 魔法の財布 (Bag of Holding)
 - 秘密の鍵 (金庫)
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [銀盟共和国](../politics/kingdoms.md#6-銀盟共和国)
-- [経済システム](../economy/trade.md)
-- [通貨](../economy/trade.md#通貨システム)
+
+- [銀盟共和国](../../politics/kingdoms.md#6-銀盟共和国)
+- [経済システム](../../economy/trade.md)
+- [通貨](../../economy/trade.md#通貨システム)

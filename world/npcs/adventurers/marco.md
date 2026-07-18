@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "マルコ (冒険者ギルド副ギルドマスター)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "adventurer", "guild-officer", "human"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 16 ( leather armor + DEX)
 - **HP**: 150 (8d8+16 from Rogue 8 + 2d10+4 from Fighter 2)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **短剣 (Rapier)**: +8 命中, 1d6+3 刺突 + 2d6 sneak.
 - **投げナイフ (Dagger)**: +8 命中, 1d4+3.
 
 **特殊能力**:
-- ** Sneak Attack (Rogue)**: 3d6.
-- ** Cunning Action**: 隠密/脱退.
-- ** Master of Intrigue**: 欺きにadvantage.
-- ** Action Surge (Fighter)**: 追加アクション (1回/戦闘).
-- ** Second-Story Work**: climbing speed.
+
+- **Sneak Attack (Rogue)**: 3d6.
+- **Cunning Action**: 隠密/脱退.
+- **Master of Intrigue**: 欺きにadvantage.
+- **アクションサージ（戦士）**: 追加アクション (1回/戦闘).
+- **Second-Story Work**: climbing speed.
 
 **精霊契約**: 風40%, 地35%, 水30%, 火25%, 月20%
 
 **装備**:
+
 - ギルド副官の指輪 (権限)
 - 魔法の通信石 (本部・支部間)
 - 賄賂の金貨袋
@@ -129,11 +133,12 @@ spirit_contract:
 - マルコがプレイヤーに密命: 「ある依頼をこっそり処理してほしい」
 - ガルフがマルコの汚職に気づく → 粛清か
 - 副官たちの派閥争い → どちらにつく？
-- マルコが謎の失踪 → 誘拐 or 逃亡？
+- マルコが謎の失踪 → 誘拐または逃亡？
 
 ---
 
 **関連項目**:
-- [冒険者ギルド](../culture/languages.md)
-- [モンスター図鑑](../creatures/bestiary.md)
-- [経済](../economy/trade.md)
+
+- [冒険者ギルド](../../culture/languages.md)
+- [モンスター図鑑](../../creatures/bestiary.md)
+- [経済](../../economy/trade.md)

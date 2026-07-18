@@ -2,9 +2,9 @@
 type: "canon-document"
 category: "culture"
 title: "言語"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["languages", "culture", "communication"]
@@ -300,7 +300,7 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 ### 統一语の可能性
 
 - 共通語がさらに普及
-- 2050年までに90%が共通語を理解という予測
+- アールディー1050年までに90%が共通語を理解という予測
 
 ### 新しい言語
 

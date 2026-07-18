@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "レイエン・シルバーレイン (月影エルフ王国王子・軍司令官)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elf", "prince", "military", "moon-elf"]
@@ -53,7 +53,7 @@ spirit_contract:
 ## 秘密
 
 - 密かに時間魔法の研究をしており、未来の戦争の予知を試みている（禁忌に近い）。
-- 騎士団長リリandraとは恋愛関係にあるが、身分差から公にできない。
+- 騎士団長リランドラとは恋愛関係にあるが、身分差から公にできない。
 
 ## 能力値 (TRPG用)
 
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 21 ( plate armor + shield + 月の加護)
 - **HP**: 190 (10d10+30 from Fighter 10 + 5d10+15 from Paladin 5)
 - **速度**: 30フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **月の刃 (Moon Blade)**: +8 命中, 1d8+5 斬撃 + 1d8 月ダメージ.
 - **月の光弾 (Moonbeam)**: 射程60フィート, DC15, 4d10 radiant.
 
 **特殊能力**:
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Action Surge**: 1戦闘中、追加アクション.
-- ** Eldritch Knight Spells**: Shield, Magic Weapon, etc.
-- ** Divine Smite (Paladin)**: 攻撃に追加 radiant damage.
-- ** 月の加護**: 夜間戦闘で +2 AC.
-- ** 戦術指導**: 味方1体に攻撃ロール+1 (1回/戦闘).
+
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **アクションサージ**: 1戦闘中、追加アクション.
+- **Eldritch Knight Spells**: Shield, Magic Weapon, etc.
+- **Divine Smite (Paladin)**: 攻撃に追加 radiant damage.
+- **月の加護**: 夜間戦闘で +2 AC.
+- **戦術指導**: 味方1体に攻撃ロール+1 (1回/戦闘).
 
 **精霊契約**: 月85%, 風35%
 
 **装備**:
+
 - 王家伝来の月の剣 (Moonlit Blade)
 - 精霊強化鎧 (AC+2)
 - 司令官の指令書
@@ -109,7 +113,7 @@ spirit_contract:
 ## 関係者
 
 - **母**: エルロンド女王 (尊敬だが政策では対立)
-- **恋愛**: リリandra・ムーンブレイズ (騎士団長, 秘密)
+- **恋愛**: リランドラ・ムーンブレイズ (騎士団長, 秘密)
 - **協力**: ガルフ・ストロングアーム (ギルドマスター, 共同訓練)
 - **対立**: ガルガッシュ・ブラッドサイズ (オーク盟主)
 - **部下**: 多くの将校たち
@@ -122,7 +126,7 @@ spirit_contract:
 
 ## 現在の状況
 
-現在、国境のオーク軍の動きが活発化しているため、監視を強化。母への進言を続けている。リリandraとの関係が噂にならないよう注意。
+現在、国境のオーク軍の動きが活発化しているため、監視を強化。母への進言を続けている。リランドラとの関係が噂にならないよう注意。
 
 ## シナリオフック
 
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [月影エルフ王国](../politics/kingdoms.md#2-月影エルフ王国)
-- [精霊騎士団](../creatures/bestiary.md#精霊系生物)
-- [月魔法](../magic/system.md)
+
+- [月影エルフ王国](../../politics/kingdoms.md#2-月影エルフ王国)
+- [精霊騎士団](../../creatures/bestiary.md#精霊系生物)
+- [月魔法](../../magic/system.md)

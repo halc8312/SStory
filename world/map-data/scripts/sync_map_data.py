@@ -23,6 +23,7 @@ SYNCED_FILES = (
     "routes.json",
     "hazards.json",
     "pois.json",
+    "pixel-mapping.json",
 )
 
 

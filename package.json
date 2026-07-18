@@ -2,18 +2,20 @@
   "name": "sstory-worldbuilding",
   "version": "1.0.0",
   "description": "SStory - Eternal Arcadia Worldbuilding Project",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
-    "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
-    "spell": "cspell '**/*.md' --language=ja --ignore-paths '**/node_modules/**' --ignore-paths '**/evaluation/**' --ignore-paths '**/Language/**'",
+    "lint": "markdownlint \"**/*.md\" --ignore node_modules --ignore evaluation --ignore Language/Evaluation",
+    "links": "node scripts/run-markdown-link-check.js",
+    "spell": "cspell \"**/*.md\" --no-progress",
     "frontmatter": "node scripts/validate-frontmatter.js",
     "consistency": "node scripts/validate-consistency.js",
-    "terminology": "python3 tools/terminology_check.py",
-    "map:sync": "python3 world/map-data/scripts/sync_map_data.py",
-    "map:validate": "python3 tools/map/validate_map_data.py && python3 world/map-data/scripts/validate_pois.py && python3 world/map-data/scripts/sync_map_data.py --check",
-    "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency && npm run terminology",
-    "test:unit": "node --test test/*.test.js && python3 -m unittest discover -s tests -p '*_test.py'",
+    "terminology": "node scripts/run-python.js tools/terminology_check.py",
+    "map:sync": "node scripts/run-python.js world/map-data/scripts/sync_map_data.py",
+    "map:validate": "node scripts/run-python.js tools/map/validate_map_data.py && node scripts/run-python.js world/map-data/scripts/validate_pois.py && node scripts/run-python.js world/map-data/scripts/sync_map_data.py --check",
+    "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency && npm run terminology && npm run map:validate",
+    "test:node": "node --test test/*.test.js",
+    "test:python": "node scripts/run-python.js -m unittest discover -s tests -p \"*_test.py\"",
+    "test:unit": "npm run test:node && npm run test:python",
     "test": "npm run validate && npm run test:unit"
   },
   "keywords": [
@@ -25,8 +27,18 @@
   ],
   "author": "halc8312",
   "license": "CC-BY-SA-4.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "overrides": {
+    "run-con": {
+      "ini": "6.0.0"
+    }
+  },
   "devDependencies": {
-    "markdownlint-cli": "^0.40.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "markdownlint-cli": "^0.49.1",
     "markdown-link-check": "^3.10.0",
     "cspell": "^8.0.0",
     "yaml": "^2.6.0"

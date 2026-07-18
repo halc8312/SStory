@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>インタラクティブ交通マップ v0.1 - エターナル・アルカディア設定資料館</title>
+  <title>インタラクティブ交通マップ v1（現行安定版）- エターナル・アルカディア設定資料館</title>
   <link rel="stylesheet" href="../vendor/leaflet/leaflet.css?v=20260506b">
   <link rel="stylesheet" href="../assets/css/style.css?v=20260508a">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
@@ -25,10 +25,10 @@
 
   <main>
     <section class="intro">
-      <h2>インタラクティブ交通マップ v0.1</h2>
+      <h2>インタラクティブ交通マップ v1（現行安定版）</h2>
       <p>
         このページは、エターナル・アルカディア世界の交通ネットワークをインタラクティブに探索できる地図です。
-        v0.1では、Map Data（JSON）を読み込み、Leaflet版を主表示として、補助的にSVG版も利用できます。
+        v1では、Map Data（JSON）を読み込み、Leaflet版を主表示として、補助的にSVG版も利用できます。
       </p>
       <p>
         Leaflet版交通マップが現在の主表示です。世界地図背景、交通ノード、ルート、危険区域、POI、ルート検索結果を統合して表示します。
@@ -81,6 +81,7 @@
               <option value="time">最短時間</option>
               <option value="distance">最短距離</option>
               <option value="safety">安全優先</option>
+              <option value="cost">最安費用</option>
             </select>
           </label>
 
@@ -315,6 +316,7 @@
 
   <script src="../vendor/leaflet/leaflet.js?v=20260506b"></script>
   <script src="../assets/js/map-common.js?v=20260718a"></script>
+  <script src="../assets/js/route-planner.js?v=20260718a"></script>
   <script src="../assets/js/route-search.js?v=20260718a"></script>
   <script src="../assets/js/leaflet-transport-map.js?v=20260718a"></script>
   <script src="../assets/js/interactive-map.js?v=20260718a"></script>

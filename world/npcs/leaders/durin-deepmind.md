@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ドゥリン・ディープマインド (グランロック大学古代史教授)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "scholar", "dwarf", "archaeology", "ancient"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 12 (布の服)
 - **HP**: 120 (10d6+20 from Wizard 10 + 2d10+4 from Fighter 2)
 - **速度**: 25フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 知識の一撃 (Shillelagh)**: +7 命中, 1d8+1 bludgeoning (magic).
-- ** 古代の光 (Light)**: 敵を眩ます.
+
+- **知識の一撃 (Shillelagh)**: +7 命中, 1d8+1 bludgeoning (magic).
+- **古代の光 (Light)**: 敵を眩ます.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 10)**:  lore 学派, DC18, +10.
-- ** Tool Expertise**: 考古道具に倍修正.
-- ** 古代語理解**: 古代ドワーフ文字を読解.
-- ** 地下の感覚**: 地下で感知にadvantage.
-- ** Second-Story Work**: climbing speed.
+
+- **呪文発動 (Wizard 10)**:  lore 学派, DC18, +10.
+- **Tool Expertise**: 考古道具に倍修正.
+- **古代語理解**: 古代ドワーフ文字を読解.
+- **地下の感覚**: 地下で感知にadvantage.
+- **Second-Story Work**: climbing speed.
 
 **精霊契約**: 地75%
 
 **装備**:
+
 - 教授のローブ
 - 石板 (重要記録)
 - 義足 (強化済)
@@ -134,6 +138,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [グランドリア王国](../lore/ancient-civilizations.md#2-グランドリア王国)
-- [歴史](../lore/timelines/main-timeline.md)
-- [ドワーフ](../races/races-overview.md)
+
+- [グランドリア王国](../../lore/ancient-civilizations.md#2-グランドリア王国)
+- [歴史](../../lore/timelines/main-timeline.md)
+- [ドワーフ](../../races/races-overview.md)

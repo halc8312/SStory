@@ -4,7 +4,7 @@
 
 ## 概要
 
-SStoryの文書は5つの主要タイプに分類され、それぞれに必須・推奨フィールドが定義されています：
+SStoryの文書は6つの主要タイプに分類され、それぞれに必須・推奨フィールドが定義されています：
 
 | タイプ | 説明 | 使用例 |
 |--------|------|--------|
@@ -13,18 +13,17 @@ SStoryの文書は5つの主要タイプに分類され、それぞれに必須�
 | `rule` | TRPGルールブックのルール文書 | rules/ |
 | `asset` | アセット（画像・音声・動画）の参照・管理文書 | images/ |
 | `analysis` | 世界観やリポジトリの分析・評価レポート | evaluation/, analysis/ |
+| `overview` | 概要・目次・案内文書 | index.md, README.md, 関係索引 |
 
 ## スキーマ構造
 
-各スキーマファイルはYAML形式で、以下の要素を定義します：
+各スキーマファイルはYAML形式のJSON Schemaで、主に以下の要素を定義します：
 
-- `type`: 文書タイプ名
-- `description`: タイプの説明
-- `required_fields`: 必須フィールド一覧
-- `recommended_fields`: 推奨フィールド一覧
-- `optional_fields`: 任意フィールド一覧
-- `field_descriptions`: 各フィールドの詳細説明
-- `examples`: 使用例
+- `type`: frontmatter全体のデータ型
+- `allOf` / `$ref`: 共通スキーマの継承
+- `required`: 必須フィールド一覧
+- `properties`: 各フィールドの型、列挙値、説明
+- `description`: タイプの説明と使用例
 
 ## 共通フィールド（全タイプ共通）
 
@@ -32,14 +31,15 @@ SStoryの文書は5つの主要タイプに分類され、それぞれに必須�
 
 | フィールド | 必須 | 説明 |
 |------------|------|------|
-| `type` | ○ | 文書タイプ（`canon-document`, `npc`, `rule`, `asset`, `analysis`のいずれか） |
+| `type` | ○ | 文書タイプ（`canon-document`, `npc`, `rule`, `asset`, `analysis`, `overview`のいずれか） |
 | `category` | ○ | 文書の内容カテゴリ（下記「カテゴリ一覧」参照） |
 | `title` | ○ | 文書タイトル（日本語） |
-| `status` | ○ | ステータス（`draft`, `review`, `stable`） |
+| `status` | ○ | ステータス（`draft`, `review`, `stable`, `deprecated`） |
 | `version` | ○ | セマンティックバージョン（例: `1.0.0`） |
 | `created` | ○ | 作成日（`YYYY-MM-DD`） |
 | `last_updated` | ○ | 最終更新日（`YYYY-MM-DD`） |
 | `author` | ○ | 主な作成者（GitHub username） |
+| `contributors` | 条件付き | 貢献者リスト（`canon-document`, `npc`, `rule` では必須） |
 | `tags` | ○ | タグリスト（5〜10個程度） |
 
 ## カテゴリ一覧
@@ -65,7 +65,8 @@ SStoryの文書は5つの主要タイプに分類され、それぞれに必須�
 | `assets` | 画像・音声・動画アセット | images/README.md |
 | `analysis` | 分析・評価・調査レポート | evaluation/analysis_report.md |
 
-**注意**: 
+**注意**:
+
 - `category` は「内容の主題」を表します
 - `type` は「文書の形式・構造」を表します
 - 例: `world/npcs/leaders/halfling-trade-leader.md` は `category: "npcs"`, `type: "npc"`
@@ -86,6 +87,7 @@ version: "1.0.0"
 created: "YYYY-MM-DD"
 last_updated: "YYYY-MM-DD"
 author: "GitHub username"
+contributors: []
 tags: ["tag1", "tag2", "tag3"]
 status: "draft|review|stable"
 ---
@@ -107,6 +109,7 @@ status: "draft|review|stable"
 - [`rule.yaml`](rule.yaml) - ルール文書用
 - [`asset.yaml`](asset.yaml) - アセット参照文書用
 - [`analysis.yaml`](analysis.yaml) - 分析レポート用
+- [`overview.yaml`](overview.yaml) - 概要・目次・案内文書用
 
 ## バリデーション
 
@@ -119,6 +122,6 @@ CI/CDパイプラインでスキーマバリデーションを実施すること
 
 ---
 
-**最終更新**: 2026-05-02
-**バージョン**: 1.0.0
+**最終更新**: 2026-07-18
+**バージョン**: 1.1.0
 **著者**: opencode AI Assistant

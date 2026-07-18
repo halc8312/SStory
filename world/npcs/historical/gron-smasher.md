@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "グロン・スマッシャー (伝説のオーク戦士)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "orc", "warrior", "legend"]
@@ -14,6 +14,7 @@ race: "orc"
 age: 65
 alignment: "chaotic-good"
 class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
+spirit_contract: {}
 ---
 
 # グロン・スマッシャー (Gron Smasher)
@@ -51,6 +52,7 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 18 ( heavy armor)
 - **HP**: 240 (16d12+48 from Barbarian 16 + 4d10+8 from Fighter 4)
 - **速度**: 30フィート
@@ -62,19 +64,22 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 **戦闘能力**:
 
 **攻撃**:
+
 - **クラッシャー (Giant Axe)**: +11 命中, 2d12+6 斬撃 + 2d6 (rage).
 - **盾撃**: ターゲットを prone.
 
 **特殊能力**:
-- ** Rage (Barbarian)**: 無制限? 6回/長休憩, STR+6, CON+6, 物理耐性.
-- ** Reckless Attack**: 攻撃advantage, 被攻撃disadvantage.
-- ** Danger Sense**: 危険感知.
-- ** Brutal Critical**: 追加 3d12.
-- ** Extra Attack (Fighter)**: 2回攻撃.
-- ** アクションサージ (Fighter)**: 追加アクション.
-- ** Indomitable (Fighter)**: セーブ再 roll.
+
+- **Rage (Barbarian)**: 無制限? 6回/長休憩, STR+6, CON+6, 物理耐性.
+- **Reckless Attack**: 攻撃advantage, 被攻撃disadvantage.
+- **Danger Sense**: 危険感知.
+- **Brutal Critical**: 追加 3d12.
+- **Extra Attack (Fighter)**: 2回攻撃.
+- **アクションサージ (Fighter)**: 追加アクション.
+- **Indomitable (Fighter)**: セーブ再 roll.
 
 **精霊契約**:
+
 - 火: 85% (戦いの精霊)
 - 地: 40%
 - 風: 15%
@@ -82,6 +87,7 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 - 月: 5%
 
 **装備**:
+
 - 巨斧 "クラッシャー" (2d12+6, クリティカル x3)
 - 鋼のplate armor (AC18)
 - 戦士の牙 (首飾り)
@@ -115,6 +121,7 @@ class: "Barbarian (Path of the Berserker) 16 / Fighter 4"
 ---
 
 **関連項目**:
-- [赤砂オーク連合](../politics/kingdoms.md#4-赤砂オーク連合)
-- [精霊契約](../races/races-overview.md)
-- [歴史年表](../lore/timelines/main-timeline.md)
+
+- [赤砂オーク連合](../../politics/kingdoms.md#4-赤砂オーク連合)
+- [精霊契約](../../races/races-overview.md)
+- [歴史年表](../../lore/timelines/main-timeline.md)

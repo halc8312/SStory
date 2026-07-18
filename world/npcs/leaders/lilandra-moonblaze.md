@@ -1,10 +1,10 @@
 ---
 type: "npc"
 category: "npcs"
-title: "リリandra・ムーンブレイズ (月影エルフ王国精霊騎士団長)"
-version: "1.0.0"
+title: "リランドラ・ムーンブレイズ (月影エルフ王国精霊騎士団長)"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elf", "military", "moon-elf"]
@@ -22,7 +22,7 @@ spirit_contract:
   water: 25
 ---
 
-# リリandra・ムーンブレイズ (Lilandra Moonblaze)
+# リランドラ・ムーンブレイズ (Lilandra Moonblaze)
 
 **肩書き**: 月影エルフ王国 精霊騎士団長 (Commander of the Spirit Knights)
 **所属**: 月影エルフ王国
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 22 ( plate armor + shield + moon blessing)
 - **HP**: 165 (12d10+36 from Paladin 12 + 3d8+6 from Ranger 3)
 - **速度**: 30フィート, 暗視60フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **月の長剣 (Moon Blade)**: +9 命中, 1d8+5 斬撃 + 1d6 月ダメージ.
 - **精霊の矢 (Spirit Arrow)**: 射程120フィート, DC16, 3d6 radiant.
 
 **特殊能力**:
-- ** 攻撃セービングスロー (Paladin)**: 攻撃ロールに +1.
-- **  Divine Smite**: 1-5d8 radiant damage.
-- **  Lay on Hands**: 45 HP 回復/日.
-- ** Favored Enemy (Ranger)**: 人間 (反体制) に +2d6 damage.
-- ** Natural Explorer**: 森での戦闘で優位.
-- ** 月の加護**: 夜間に +2 AC.
+
+- **攻撃セービングスロー (Paladin)**: 攻撃ロールに +1.
+- **Divine Smite**: 1-5d8 radiant damage.
+- **Lay on Hands**: 45 HP 回復/日.
+- **Favored Enemy (Ranger)**: 人間 (反体制) に +2d6 damage.
+- **Natural Explorer**: 森での戦闘で優位.
+- **月の加護**: 夜間に +2 AC.
 
 **精霊契約**: 月90% (強契約), 風40%
 
 **装備**:
+
 - 月の鎧 (AC+2, 月ダメージ耐性)
 - 月の盾 (AC+2, 反射耐性)
 - 精霊騎士団の長剣 (魔法)
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [月影エルフ王国](../politics/kingdoms.md#2-月影エルフ王国)
-- [精霊騎士団](../creatures/bestiary.md#精霊系生物)
-- [月魔法](../magic/system.md)
+
+- [月影エルフ王国](../../politics/kingdoms.md#2-月影エルフ王国)
+- [精霊騎士団](../../creatures/bestiary.md#精霊系生物)
+- [月魔法](../../magic/system.md)

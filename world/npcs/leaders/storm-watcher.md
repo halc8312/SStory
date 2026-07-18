@@ -2,15 +2,16 @@
 type: "npc"
 category: "npcs"
 title: "ストーム・ウォッチャー (嵐の都気象予報士長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "meteorologist", "stormhold"]
 status: "stable"
 npc_type: "leader"
-race: "human (wind-blooded)"
+race: "human"
+subrace: "wind-blooded"
 age: 85
 alignment: "neutral-good"
 class: "Druid (Circle of Land) 10 / Wizard 2"
@@ -67,6 +68,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 13 (布の服)
 - **HP**: 110 (10d8+20 from Druid 10 + 2d6+2 from Wizard 2)
 - **速度**: 30フィート
@@ -78,19 +80,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 風の召喚 (Gust)**: 1d4 bludgeoning, push.
-- ** 霧 (Fog Cloud)**: 視界遮断.
+
+- **風の召喚 (Gust)**: 1d4 bludgeoning, push.
+- **霧 (Fog Cloud)**: 視界遮断.
 
 **特殊能力**:
-- ** 呪文発動 (Druid 10)**: 気象・自然呪文, DC16, +8.
-- ** Wild Shape**: 鳥に変身 (空の観察).
-- ** Land's Stride**: difficult terrain 無視.
-- ** Natural Recovery**: 短休憩でスロット回復.
-- ** 気象読解**: 天候変化を事前に察知.
+
+- **呪文発動 (Druid 10)**: 気象・自然呪文, DC16, +8.
+- **Wild Shape**: 鳥に変身 (空の観察).
+- **Land's Stride**: difficult terrain 無視.
+- **Natural Recovery**: 短休憩でスロット回復.
+- **気象読解**: 天候変化を事前に察知.
 
 **精霊契約**: 風85%, 月40%, 水30%
 
 **装備**:
+
 - 魔法の風向計 (予報精度向上)
 - 観測ノート (50年分)
 - 緊急時の避難標識
@@ -133,6 +138,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [嵐の都](../politics/kingdoms.md#9-嵐の都)
-- [気象](../world/geography/climate.md)
-- [風魔法](../magic/system.md)
+
+- [嵐の都](../../politics/kingdoms.md#9-嵐の都)
+- [気象](../../geography/climate.md)
+- [風魔法](../../magic/system.md)

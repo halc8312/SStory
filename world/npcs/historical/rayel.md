@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "レイエル (精霊協会創設者・エルフの祭司)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "elf", "priest", "founder"]
@@ -14,6 +14,7 @@ race: "elf"
 age: 1500
 alignment: "lawful-good"
 class: "Cleric (Nature Domain) 15 / Druid 5"
+spirit_contract: {}
 ---
 
 # レイエル (Rayel)
@@ -50,6 +51,7 @@ class: "Cleric (Nature Domain) 15 / Druid 5"
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 15 (布の服 + 回避)
 - **HP**: 130 (15d8+15 from Cleric 15 + 5d6+5 from Druid 5)
 - **速度**: 30フィート
@@ -61,17 +63,20 @@ class: "Cleric (Nature Domain) 15 / Druid 5"
 **戦闘能力**:
 
 **攻撃**:
+
 - **平和の杖 (Staff)**: +7 命中, 1d6+2 打撃 + 1d4 光.
 - **治癒の光 (Healing Word)**: ボーナスアクション, 2d8+5 HP.
 
 **特殊能力**:
-- ** 呪文発動 (Cleric 15/Druid 5)**: 治癒・保護魔法, DC18, +10.
-- ** Channel Divinity (Cleric)**: 1/休憩, 精霊の力発動.
-- ** Wild Shape (Druid)**: 小型動物に変身.
-- ** Nature's Sanctuary**: 動物が敵対しない.
-- ** Divine Intervention (Cleric)**: 年1回, 精霊の介入.
+
+- **呪文発動 (Cleric 15/Druid 5)**: 治癒・保護魔法, DC18, +10.
+- **Channel Divinity (Cleric)**: 1/休憩, 精霊の力発動.
+- **Wild Shape (Druid)**: 小型動物に変身.
+- **Nature's Sanctuary**: 動物が敵対しない.
+- **Divine Intervention (Cleric)**: 年1回, 精霊の介入.
 
 **精霊契約**:
+
 - 月: 85% (エルフとして)
 - 風: 60%
 - 地: 55%
@@ -79,6 +84,7 @@ class: "Cleric (Nature Domain) 15 / Druid 5"
 - 火: 20%
 
 **装備**:
+
 - 平和の杖 (治癒魔法増幅)
 - 精霊のローブ (AC+2,  element resistance)
 - 契約の指輪 (全精霊と軽度契約)
@@ -113,6 +119,7 @@ class: "Cleric (Nature Domain) 15 / Druid 5"
 ---
 
 **関連項目**:
-- [精霊協会](../politics/kingdoms.md#11-精霊協会)
-- [精霊契約](../races/races-overview.md)
-- [創世神話](../lore/creation-myth.md)
+
+- [精霊協会](../../politics/kingdoms.md#11-精霊協会)
+- [精霊契約](../../races/races-overview.md)
+- [創世神話](../../lore/creation-myth.md)

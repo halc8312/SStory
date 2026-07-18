@@ -1,3 +1,23 @@
+---
+type: "analysis"
+category: "analysis"
+title: "Map Coordinate Notes"
+version: "1.0.0"
+created: "2026-05-07"
+last_updated: "2026-07-18"
+author: "halc8312"
+tags: ["map-data", "coordinates", "leaflet", "data-consistency"]
+status: "stable"
+analysis_type: "data-consistency"
+scope: "Map Data座標系とLeaflet背景地図の座標変換"
+base_files: ["world/map-data/data/nodes.json", "docs/assets/js/leaflet-transport-map.js"]
+methodology: "代表ノードの期待座標と表示座標を比較し、Y軸変換を検証"
+findings: []
+metrics: {}
+ratings: {}
+recommendations: []
+---
+
 # Map Coordinate Notes
 
 Leaflet版交通マップのノード座標と背景世界地図の整合確認メモ。

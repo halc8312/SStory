@@ -24,26 +24,55 @@ test('checkFrontmatter reports missing frontmatter', () => {
   assert.deepEqual(validator.getStats(), { errors: 1, warnings: 0, checked: 1 });
 });
 
-test('checkFrontmatter returns parsed data and records warnings', () => {
+test('checkFrontmatter validates data against schemas/common.yaml', () => {
   validator.resetStats();
 
   const result = validator.checkFrontmatter(
     '/tmp/unexpected-name.md',
     `---
+type: unknown
 title: Mystic Archive
-version: 1
+version: 1.0.0
 created: 2026-01-01
 last_updated: 2026-01-02
 author: Tester
-category: invalid
+category: lore
 status: unstable
+tags: [archive]
 ---
 Body
 `
   );
 
   assert.equal(result.title, 'Mystic Archive');
-  assert.deepEqual(validator.getStats(), { errors: 0, warnings: 3, checked: 1 });
+  assert.deepEqual(validator.getStats(), { errors: 2, warnings: 0, checked: 1 });
+});
+
+test('checkFrontmatter applies the schema selected by document type', () => {
+  validator.resetStats();
+
+  validator.checkFrontmatter(
+    '/tmp/npc.md',
+    `---
+type: npc
+category: npcs
+title: Test NPC
+version: 1.0.0
+created: 2026-01-01
+last_updated: 2026-01-02
+author: Tester
+tags: [npc]
+status: draft
+contributors: []
+npc_type: commoner
+spirit_contract: {}
+---
+Body
+`
+  );
+
+  // npc.yaml additionally requires race, age, alignment, and class.
+  assert.deepEqual(validator.getStats(), { errors: 4, warnings: 0, checked: 1 });
 });
 
 test('checkLinks resolves relative markdown links and ignores external links', () => {
@@ -84,6 +113,6 @@ test('walkDir recurses through markdown files and skips ignored directories', ()
     const found = [];
     validator.walkDir(dir, (filePath) => found.push(path.relative(dir, filePath)));
 
-    assert.deepEqual(found, ['notes/kept.md']);
+    assert.deepEqual(found, [path.join('notes', 'kept.md')]);
   });
 });

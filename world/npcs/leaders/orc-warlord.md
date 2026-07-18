@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ガルガッシュ・ブラッドサイズ (赤砂オーク連合盟主)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "orc", "warlord", "red-sand"]
@@ -14,6 +14,7 @@ race: "orc"
 age: 45
 alignment: "chaotic-neutral"
 class: "Barbarian (Berserker) 15 / Fighter 5"
+spirit_contract: {}
 ---
 
 # ガルガッシュ・ブラッドサイズ (Galgash Bloodsize)
@@ -51,6 +52,7 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 18 (重装鎧 + 盾)
 - **HP**: 210 (15d12+45 from Barbarian 15 + 5d10+15 from Fighter 5)
 - **速度**: 30フィート (重装でも)
@@ -62,19 +64,22 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 **戦闘能力**:
 
 **攻撃**:
+
 - **巨斧 (Giant Axe)**: +10 命中, 1d12+5 斬撃 + 2d6 rage (熱血).
 - **盾撃 (Shield Bash)**: +9 命中, 1d8+4 打撃, ターゲット stunned (CON save DC17).
 
 **特殊能力**:
-- ** Rage (Barbarian)**: 1戦闘あたり2回、STR+4, CON+4, 物理ダメージ耐性, 耐性なし.
-- ** Reckless Attack**: 攻撃ロールにadvantage、代わりに敵の攻撃ロールにadvantage.
-- ** Danger Sense**: 危険感知、エリア効果セーブにadvantage.
-- ** Brutal Critical**: クリティカル時の追加ダイス 2d12.
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** アクションサージ (Fighter)**: 追加アクション1回.
-- ** Indomitable (Fighter)**: セーブ再 roll.
+
+- **Rage (Barbarian)**: 1戦闘あたり2回、STR+4, CON+4, 物理ダメージ耐性, 耐性なし.
+- **Reckless Attack**: 攻撃ロールにadvantage、代わりに敵の攻撃ロールにadvantage.
+- **Danger Sense**: 危険感知、エリア効果セーブにadvantage.
+- **Brutal Critical**: クリティカル時の追加ダイス 2d12.
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **アクションサージ (Fighter)**: 追加アクション1回.
+- **Indomitable (Fighter)**: セーブ再 roll.
 
 **精霊契約**:
+
 - 火: 88% (強)
 - 風: 15%
 - 地: 35%
@@ -82,6 +87,7 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 - 月: 5%
 
 **装備**:
+
 - 伝説の巨斧 "血の牙" (2d6+5, クリティカル x3)
 - 鉄のplate armor (AC18)
 - 大盾 (+2 AC)
@@ -116,6 +122,7 @@ class: "Barbarian (Berserker) 15 / Fighter 5"
 ---
 
 **関連項目**:
-- [赤砂オーク連合](../politics/kingdoms.md#4-赤砂オーク連合)
-- [精霊契約](../races/races-overview.md)
-- [戦闘ルール](../rules/combat.md)
+
+- [赤砂オーク連合](../../politics/kingdoms.md#4-赤砂オーク連合)
+- [精霊契約](../../races/races-overview.md)
+- [戦闘ルール](../../rules/combat.md)

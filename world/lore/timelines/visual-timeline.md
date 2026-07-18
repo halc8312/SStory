@@ -2,9 +2,9 @@
 type: "canon-document"
 category: "lore"
 title: "可視化歴史年表"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["timeline", "visual", "history"]
@@ -130,6 +130,7 @@ graph TD
 ---
 
 **関連項目**:
+
 - [歴史年表 (テキスト版)](main-timeline.md)
-- [創世神話](../lore/creation-myth.md)
-- [古代文明](../lore/ancient-civilizations.md)
+- [創世神話](../../lore/creation-myth.md)
+- [古代文明](../../lore/ancient-civilizations.md)

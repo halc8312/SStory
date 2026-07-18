@@ -1,3 +1,22 @@
+---
+type: "analysis"
+category: "analysis"
+title: "SStory Repository Analysis Report"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-07-18"
+author: "opencode AI Assistant"
+tags: ["evaluation", "repository-analysis", "historical-snapshot"]
+status: "deprecated"
+analysis_type: "repository-analysis"
+snapshot: true
+as_of_commit: "c0549e11c1736b8892e7d492e66ff189cc80c28a"
+superseded: true
+superseded_by: "current repository state and automated validation"
+---
+
+> **Historical snapshot**: This report describes the repository at `as_of_commit`. Use the current worktree and automated validation for present-day counts and completion claims.
+
 # SStory Repository Analysis Report
 
 ## Executive Summary

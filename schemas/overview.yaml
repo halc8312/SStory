@@ -4,7 +4,7 @@
 
 type: "object"
 allOf:
-  - "$ref": "common.yaml#/properties"
+  - "$ref": "common.yaml"
 required:
   - type
   - category
@@ -20,8 +20,8 @@ properties:
     const: "overview"
     description: "概要・目次・案内文書"
   category:
-    const: "overview"
-    description: "Fixed to 'overview' for overview documents"
+    enum: ["overview", "maps", "npcs"]
+    description: "案内対象の主題。全体案内はoverview、主題別索引は対応するカテゴリを使用"
   document_kind:
     type: "string"
     enum: ["index", "readme", "toc", "navigation", "landing"]
@@ -68,8 +68,6 @@ properties:
     items:
       type: "string"
     description: "関連プロジェクト・参考リソース"
-
-additionalProperties: false
 
 description: |
   **overview** タイプは、プロジェクトやディレクトリの概要・目次・案内文書です。

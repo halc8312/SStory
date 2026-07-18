@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ハイドロ (Hydros) - 水の大精霊、精霊協会現議長 (次期)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elemental", "water", "elemental-council"]
@@ -66,6 +66,7 @@ spirit_contract:
 | CHA | 20 | +5 |
 
 **防御**:
+
 - **AC**: 23 ( natural water armor)
 - **HP**: 1,500 (godly)
 - **速度**: swim 無制限, teleport 水域間
@@ -76,20 +77,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 大津波 (Tsunami)**: 全域, 20d6 bludgeoning, 押し流す.
-- ** 洪水制御 (Flood)**: 一帯を水没.
-- ** 精霊召喚**: 水の大精霊を5体召喚.
+
+- **大津波 (Tsunami)**: 全域, 20d6 bludgeoning, 押し流す.
+- **洪水制御 (Flood)**: 一帯を水没.
+- **精霊召喚**: 水の大精霊を5体召喚.
 
 **特殊能力**:
-- ** Godly Presence**: 半径1mile, WIS save DC24 失敗 → 畏怖 or 従順.
-- ** 水支配**: 全ての水を操作可能.
-- ** Immortality**: 消滅しても復活.
-- ** 海の嘆き**: 歌うだけで生物を感情紊乱.
-- ** Elemental Form**: 任意の水形態に変化.
+
+- **Godly Presence**: 半径1mile, WIS save DC24 失敗 → 畏怖または従順.
+- **水支配**: 全ての水を操作可能.
+- **Immortality**: 消滅しても復活.
+- **海の嘆き**: 歌うだけで生物を感情紊乱.
+- **Elemental Form**: 任意の水形態に変化.
 
 **精霊契約**: 水100% (神格), 他70%
 
 **装備**:
+
 - 海神の三叉槍 (legendary)
 - 精霊協会の印章 (次期議長として)
 
@@ -127,6 +131,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [精霊協会](../politics/kingdoms.md#11-精霊協会)
-- [ハイドロス](../religion/pantheon.md#3-ハイドロス)
-- [海洋](../world/geography/continents.md)
+
+- [精霊協会](../../politics/kingdoms.md#11-精霊協会)
+- [ハイドロス](../../religion/pantheon.md#3-ハイドロス)
+- [海洋](../../geography/continents.md)

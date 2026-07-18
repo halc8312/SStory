@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "エラーナ・アンシエント (精霊協会古代技術部主任)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "scholar", "elf", "ancient", "elemental-council"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 13 (布の服)
 - **HP**: 110 (10d6+10 from Wizard 12 + 3d8+3 from Artificer 3)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 魔法弾 (Fire Bolt)**: +11 命中, 4d10+5 fire.
-- ** 古代装置起動 (Artificer)**: 古代兵器を起動.
+
+- **魔法弾 (Fire Bolt)**: +11 命中, 4d10+5 fire.
+- **古代装置起動 (Artificer)**: 古代兵器を起動.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 12)**:  lore 学派, DC18, +11.
-- ** Infuse Item**: 古代アイテムに魔法付与.
-- ** Tool Expertise**: 工具判定に倍修正.
-- ** 多芸の才**: 技能判定に半修正.
-- ** 古代語理解**: 古代文字を読解.
+
+- **呪文発動 (Wizard 12)**:  lore 学派, DC18, +11.
+- **Infuse Item**: 古代アイテムに魔法付与.
+- **Tool Expertise**: 工具判定に倍修正.
+- **多芸の才**: 技能判定に半修正.
+- **古代語理解**: 古代文字を読解.
 
 **精霊契約**: 月80%, 地60%
 
 **装備**:
+
 - 魔法の眼鏡 (INT+2)
 - 古代文字解読器
 - 発掘用小道具
@@ -125,15 +129,16 @@ spirit_contract:
 
 ## シナリオフック
 
-- 遺跡で危険な古代兵器が作動 → 停止 or 利用？
+- 遺跡で危険な古代兵器が作動 → 停止または利用？
 - 研究データが盗まれる → 犯人は内部の者？
 - 精霊協会から中止命令 → 無視か従うか
-- 古代AIの声が聞こえる → 対話 or 破壊
-- 発掘現場で怪物出現 → 戦闘 or 交渉
+- 古代AIの声が聞こえる → 対話または破壊
+- 発掘現場で怪物出現 → 戦闘または交渉
 
 ---
 
 **関連項目**:
-- [古代文明](../lore/ancient-civilizations.md#1-ルナリア帝国)
-- [精霊協会](../politics/kingdoms.md#11-精霊協会)
-- [魔法技術](../magic/artifacts.md)
+
+- [古代文明](../../lore/ancient-civilizations.md#1-ルナリア帝国)
+- [精霊協会](../../politics/kingdoms.md#11-精霊協会)
+- [魔法技術](../../magic/artifacts.md)

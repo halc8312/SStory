@@ -2,15 +2,16 @@
 type: "npc"
 category: "npcs"
 title: "タイム・キーパー (時空の番人時間監視者)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "time", "chrono-guardian"]
 status: "stable"
 npc_type: "leader"
-race: "human (time-affected)"
+race: "human"
+subrace: "time-affected"
 age: 180 (外見70)
 alignment: "lawful-neutral"
 class: "Wizard (School of Divination) 15"
@@ -67,6 +68,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 15 ( mage armor + 時空の盾)
 - **HP**: 140 (15d6+30 from Wizard 15)
 - **速度**: 30フィート
@@ -78,19 +80,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 時の歪み (Slow)**: ターゲットの行動を遅く.
-- ** 未来の一撃 (Shatter)**: 時間エネルギー.
+
+- **時の歪み (Slow)**: ターゲットの行動を遅く.
+- **未来の一撃 (Shatter)**: 時間エネルギー.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 15)**: 予言・時間学派, DC18, +12.
-- ** Portent**: 毎日2回, 未来の判定を19-20 or 1-2 に操作.
-- ** 時空耐性**: 時間変化に対する耐性.
-- ** 時間の目**: 過去の出来事を視覚化.
-- ** emporal Stability**: 時間の影響を受けにくい.
+
+- **呪文発動 (Wizard 15)**: 予言・時間学派, DC18, +12.
+- **Portent**: 毎日2回, 未来の判定を19-20または1-2 に操作.
+- **時空耐性**: 時間変化に対する耐性.
+- **時間の目**: 過去の出来事を視覚化.
+- **時間安定性 (Temporal Stability)**: 時間の影響を受けにくい。
 
 **精霊契約**: 月85% (時間精霊), 地20%
 
 **装備**:
+
 - 時の砂時計 (監視用)
 - 予言の眼鏡
 - 時間封印の杖 (軽量)
@@ -134,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [時空の番人](../politics/kingdoms.md#10-時空の番人)
-- [時間魔法](../magic/system.md)
-- [歴史年表](../lore/timelines/main-timeline.md)
+
+- [時空の番人](../../politics/kingdoms.md#10-時空の番人)
+- [時間魔法](../../magic/system.md)
+- [歴史年表](../../lore/timelines/main-timeline.md)

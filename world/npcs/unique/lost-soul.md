@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ロスト・ソウル (精霊喰いの宿主)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "unique", "human", "spirit-eater-host", "cursed"]
@@ -14,7 +14,7 @@ race: "human"
 age:  appears 25, actual unknown
 alignment: "chaotic-neutral"
 class: "Monster (Possessed) - Spirit Eater Symbiote"
-spirit_contract: null
+spirit_contract: {}
 ---
 
 # ロスト・ソウル (Lost Soul)
@@ -62,6 +62,7 @@ spirit_contract: null
 | CHA | 8 | -1 |
 
 **防御**:
+
 - **AC**: 14 ( 布の服 + 影の護符)
 - **HP**: 200 (特殊: 精霊喰いの再生)
 - **速度**: 30フィート
@@ -69,15 +70,17 @@ spirit_contract: null
 **セービングスロー**: CON +4, WIS +2, CHA +2
 
 **特殊能力**:
-- ** 精霊喰いの宿主**: ダメージを受けても再生 (1日1回).
-- ** 精霊の力**: 1日1回、 elemental ability (火・水・風・地) を1つ発動.
-- ** 精神支配**: 精霊喰いが宿主を制御 (週に1回, DC15 WIS save 失敗).
-- ** 透明化**: 常に blurred (視界に影響).
-- ** 精霊感知**: 精霊の存在を感じ取れる.
+
+- **精霊喰いの宿主**: ダメージを受けても再生 (1日1回).
+- **精霊の力**: 1日1回、 elemental ability (火・水・風・地) を1つ発動.
+- **精神支配**: 精霊喰いが宿主を制御 (週に1回, DC15 WIS save 失敗).
+- **透明化**: 常に blurred (視界に影響).
+- **精霊感知**: 精霊の存在を感じ取れる.
 
 **精霊契約**: 無し (代わりに精霊喰い)
 
 **装備**:
+
 - フード付きローブ
 - 精霊喰いの核 (胸に埋め込み)
 - 旅の荷物
@@ -119,6 +122,7 @@ spirit_contract: null
 ---
 
 **関連項目**:
-- [精霊喰い](../creatures/bestiary.md#精霊系生物)
-- [モンスター](../creatures/bestiary.md)
-- [精霊契約](../races/races-overview.md)
+
+- [精霊喰い](../../creatures/bestiary.md#精霊系生物)
+- [モンスター](../../creatures/bestiary.md)
+- [精霊契約](../../races/races-overview.md)

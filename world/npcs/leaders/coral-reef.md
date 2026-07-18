@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "コーラル・リーフ (アトランティス海底都市市長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "triton", "mayor", "atlantis"]
@@ -24,7 +24,7 @@ spirit_contract:
 
 # コーラル・リーフ (Coral Reef)
 
-**肩書き**: アトランティス 海底都市市長 (Mayor of Atlantia)
+**肩書き**: アトランティス海底都市市長 (Mayor of Atlantis)
 **所属**: アトランティス
 **種族**: Triton
 **年齢**: 85歳
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 16 ( natural scale + 敏捷)
 - **HP**: 110 (8d8+16 from Bard 8 + 2d8+2 from Druid 2)
 - **速度**: 30フィート, swim 60フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 水の鞭 (Produce Flame)**: +7 命中, 1d8 fire.
-- ** 自然の導き (Druidcraft)**: 小自然現象.
+
+- **水の鞭 (Produce Flame)**: +7 命中, 1d8 fire.
+- **自然の導き (Druidcraft)**: 小自然現象.
 
 **特殊能力**:
-- ** 音楽・演説による支援 (d8)**: 3回/長休憩.
-- ** 多芸の才**: 技能判定に半修正.
-- ** 動物会話 (Aquatic)**: 海洋生物と会話.
-- ** Wild Shape (Druid)**: 小型水生生物に変身.
-- ** Tritonの特性**: 水呼吸, 圧力耐性.
+
+- **音楽・演説による支援 (d8)**: 3回/長休憩.
+- **多芸の才**: 技能判定に半修正.
+- **動物会話 (Aquatic)**: 海洋生物と会話.
+- **Wild Shape (Druid)**: 小型水生生物に変身.
+- **Tritonの特性**: 水呼吸, 圧力耐性.
 
 **精霊契約**: 水80%, 月25%
 
 **装備**:
+
 - 市長のバッジ (権威)
 - 魔法の貝 (通信)
 - 珊瑚の首饰り (CHI+1)
@@ -126,15 +130,16 @@ spirit_contract:
 
 ## シナリオフック
 
-- 港での密輸が発覚 → 調査 or 隠蔽
+- 港での密輸が発覚 → 調査または隠蔽
 - 地上からの大使が暗殺されそう → 守護
-- 環境保護団体から港建設の抗議 → 説得 or 弾圧
+- 環境保護団体から港建設の抗議 → 説得または弾圧
 - 女王の命令と市民の要望の板挟み
 - 市長の不正が漏洩 → スキャンダル
 
 ---
 
 **関連項目**:
-- [アトランティス](../politics/kingdoms.md#7-アトランティス)
-- [貿易](../economy/trade.md)
-- [ Triton 種族](../races/races-overview.md)
+
+- [アトランティス](../../politics/kingdoms.md#7-アトランティス)
+- [貿易](../../economy/trade.md)
+- [Triton 種族](../../races/races-overview.md)

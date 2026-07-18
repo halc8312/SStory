@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "セレン・ダブルバウンド (二重精霊契約者)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "unique", "human", "double-contractor", "outcast"]
@@ -12,7 +12,7 @@ status: "stable"
 npc_type: "unique"
 race: "human"
 age: 35
-alignment: "neutral"
+alignment: "true-neutral"
 class: "Sorcerer (Wild Magic) 10 / Warlock 2"
 spirit_contract:
   fire: 70
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 14 (布の服 + 回避)
 - **HP**: 155 (10d6+30 from Sorcerer 10 + 2d8+4 from Warlock 2)
 - **速度**: 30フィート
@@ -78,18 +79,21 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 火の矢 (Fire Bolt)**: +6 命中, 3d10 fire.
-- ** 水流 (Water Whip)**: 30フィート, 2d6 bludgeoning, pull.
-- ** 混沌の闪光 (Wild Magic Surge)**: ランダム.
+
+- **火の矢 (Fire Bolt)**: +6 命中, 3d10 fire.
+- **水流 (Water Whip)**: 30フィート, 2d6 bludgeoning, pull.
+- **混沌の闪光 (Wild Magic Surge)**: ランダム.
 
 **特殊能力**:
-- ** 二重契約**: 火と水の魔法を両方発動可能, ただしDC+2.
-- ** 元素の対立**: 両方の精霊が同時に力を与えるが、時折反発 (1日1回ランダム効果).
-- ** 自然治癒**: 火と水の治癒魔法両方使える.
-- ** Wild Magic Surge**: 呪文時にランダム.
-- ** 精霊の声**: 火と水の精霊が常に囁く (精神的負担).
+
+- **二重契約**: 火と水の魔法を両方発動可能, ただしDC+2.
+- **元素の対立**: 両方の精霊が同時に力を与えるが、時折反発 (1日1回ランダム効果).
+- **自然治癒**: 火と水の治癒魔法両方使える.
+- **Wild Magic Surge**: 呪文時にランダム.
+- **精霊の声**: 火と水の精霊が常に囁く (精神的負担).
 
 **装備**:
+
 - 魔法の杖 (両属性対応)
 - 契約のペンダント (二つの精霊の象徴)
 - 回復薬 (多数)
@@ -132,6 +136,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [精霊契約](../races/races-overview.md)
-- [禁忌](../magic/system.md#禁忌魔法)
-- [精霊協会](../politics/kingdoms.md#11-精霊協会)
+
+- [精霊契約](../../races/races-overview.md)
+- [禁忌](../../magic/system.md#禁忌魔法)
+- [精霊協会](../../politics/kingdoms.md#11-精霊協会)

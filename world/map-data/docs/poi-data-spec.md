@@ -2,9 +2,9 @@
 type: "canon-document"
 category: "maps"
 title: "POI Data Specification v0.1"
-version: "0.1.1"
+version: "0.1.2"
 created: "2026-05-06"
-last_updated: "2026-05-08"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["map-data", "poi", "specification", "v0.1"]
@@ -225,6 +225,7 @@ Examples:
 ```
 
 `type` values are free-form but must:
+
 - Be lowercase alphanumeric + underscores only (no spaces, no Japanese)
 - Be descriptive and consistent across similar POIs
 - Prefer existing type values when available
@@ -560,7 +561,7 @@ Before adding any POI, verify:
 - [`world/map-data/poi-design-guidelines.md`](../poi-design-guidelines.md) — Design philosophy and rules
 - [`world/map-data/schemas/poi.schema.json`](../schemas/poi.schema.json) — Machine-readable validation
 - [`world/map-data/data/pois.json`](../data/pois.json) — Current POI dataset
-- [`docs/data/map/pois.json`](../../docs/data/map/pois.json) — GitHub Pages copy
+- [`docs/data/map/pois.json`](../data/pois.json) — GitHub Pages copy
 - [`world/map-data/docs/poi-authoring-template.md`](./poi-authoring-template.md) — AI request template
 - [`world/map-data/docs/poi-review-checklist.md`](./poi-review-checklist.md) — Review checklist
 - [`world/map-data/README.md`](../README.md) — Map Data overview

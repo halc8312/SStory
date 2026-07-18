@@ -91,7 +91,7 @@ SStory世界設定ポータルとインタラクティブマップの開発計�
 ### 機能
 
 - [ ] 出発地・目的地の選択UI（ドロップダウン or 地図クリック）
-- [ ] 交通種別フィルタ（陸路/海路/空路/ kombinace）
+- [ ] 交通種別フィルタ（陸路/海路/空路/組み合わせ）
 - [ ] ルート計算（Python版 route_finder.py のロジックを JavaScript 移植）
 - [ ] 複数経路の提示（最短距離、最短時間、最安全）
 - [ ] 季節運行判定（季節によって通行不可ルートを除外）
@@ -300,10 +300,10 @@ Phase 1 (v0.1) → 必須 → Phase 2 (v0.2) → Phase 3 (v0.3)
 
 ## 参照
 
-- [SStory ROADMAP.md](../ROADMAP.md) - プロジェクト全体のロードマップ
-- [世界設定ポータル v0.1 要求仕様](https://github.com/halc8312/SStory/issues/XXX)
-- [Map Data 仕様](map-data.md)
-- [インタラクティブマップ計画](interactive-map-plan.md)
+- [SStory ROADMAP.md](https://github.com/halc8312/SStory/blob/main/ROADMAP.md) - プロジェクト全体のロードマップ
+- [SStory Issues](https://github.com/halc8312/SStory/issues) - 現在の課題一覧
+- [Map Data 仕様](../maps/map-data.md)
+- [インタラクティブマップ計画](../maps/interactive-map-plan.md)
 
 ---
 

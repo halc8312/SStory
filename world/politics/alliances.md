@@ -2,9 +2,9 @@
 type: "canon-document"
 category: "politics"
 title: "同盟と戦争"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["alliances", "wars", "diplomacy", "politics"]
@@ -225,7 +225,7 @@ status: "stable"
 
 ## 軍事事項
 
-### 軍事力比較（2026年現在）
+### 軍事力比較（アールディー1026年現在）
 
 | 国家 | 正規軍 | 予備軍 | 主力装備 | 特徴 |
 |------|--------|--------|----------|------|

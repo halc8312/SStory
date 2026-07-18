@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "トーリグ・ストーンフィスト (鉄山脉ドワーフ王国軍司令官)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "dwarf", "military", "ironridge"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 12 | +1 |
 
 **防御**:
+
 - **AC**: 22 ( plate armor + shield + 地の加護)
 - **HP**: 210 (12d10+36 from Fighter 12 + 3d10+3 from Eldritch Knight 3)
 - **速度**: 25フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **戦斧 (Greataxe)**: +11 命中, 1d12+5 斬撃 + 1d6 fire (magic).
 - **盾撃 (Shield Bash)**: +10 命中, 1d8+4 打撃, CON save DC17 または prone.
 
 **特殊能力**:
-- ** Extra Attack**: 2回攻撃/ターン.
-- ** Action Surge**: 追加アクション.
-- ** Eldritch Knight Spells**: Shield, Magic Weapon, Thunderwave.
-- ** Dwarven Resilience**: 毒耐性, poison save advantage.
-- ** Stone's Endurance**: 被ダメージ軽減 (1d12+5).
-- ** 地脈の直感**: 地下で警戒半減.
+
+- **Extra Attack**: 2回攻撃/ターン.
+- **アクションサージ**: 追加アクション.
+- **Eldritch Knight Spells**: Shield, Magic Weapon, Thunderwave.
+- **Dwarven Resilience**: 毒耐性, poison save advantage.
+- **Stone's Endurance**: 被ダメージ軽減 (1d12+5).
+- **地脈の直感**: 地下で警戒半減.
 
 **精霊契約**: 地85% (強), 火40%
 
 **装備**:
+
 - 鉄山の戦斧 (+2, fire damage)
 - 国王贈与のplate armor (AC+2)
 - 指揮官の盾 (王国の紋章)
@@ -136,6 +140,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [鉄山脉ドワーフ王国](../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
-- [グランドリア王国](../lore/ancient-civilizations.md#2-グランドリア王国)
-- [戦闘システム](../rules/combat.md)
+
+- [鉄山脉ドワーフ王国](../../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
+- [グランドリア王国](../../lore/ancient-civilizations.md#2-グランドリア王国)
+- [戦闘システム](../../rules/combat.md)

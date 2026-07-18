@@ -45,6 +45,7 @@ Webブラウザ上で動作する**インタラクティブ地図**の実装計�
 **決定**: **Leaflet** を第一候補とする。
 
 **理由**:
+
 - 軽量でGitHub Pages（静的ホスティング）との相性が良い
 - プラグインが豊富でカスタマイズしやすい
 - 学習コスト低、ドキュメント豊富
@@ -77,6 +78,7 @@ Webブラウザ上で動作する**インタラクティブ地図**の実装計�
 **目標**: 地図上に nodes と routes を表示する最小実装。
 
 #### 機能
+
 - [ ] Leaflet の導入
 - [ ] 世界地図画像をタイルレイヤーとして表示
 - [ ] nodes.json を読み込み、マーカー表示
@@ -99,6 +101,7 @@ docs-site/docs/maps/
 **目標**: 表示するデータを選択可能にする。
 
 #### 機能
+
 - [ ] レイヤー切り替え（nodes, routes, hazards の表示/非表示）
 - [ ] 交通種別フィルタ（陸路、海路、空路）
 - [ ] 危険区域の色分け表示
@@ -111,14 +114,16 @@ docs-site/docs/maps/
 **目標**: 出発地から目的地までの経路を検索・表示。
 
 #### 機能
+
 - [ ] 出発地・目的地の選択UI
-- [ ] 交通種別フィルタ（陸路/海路/空路/ kombinace）
+- [ ] 交通種別フィルタ（陸路/海路/空路/組み合わせ）
 - [ ] ルート計算（JavaScript版 route_finder.py の移植）
 - [ ] 複数経路の提示（最短、最速、安全など）
 - [ ] 季節運行判定（季節によって通行不可ルート）
 - [ ] ルートの地図上への描画
 
 **技術**:
+
 - Pythonの `route_finder.py` のロジックを JavaScript へ移植
 - ブラウザ上での計算（クライアントサイド）
 
@@ -129,6 +134,7 @@ docs-site/docs/maps/
 **目標**: 生成済みの静的地図画像を背景として利用。
 
 #### 機能
+
 - [ ] 世界地図画像（world-map.png）をベースレイヤーとして表示
 - [ ] 大陸地図画像への切り替え
 - [ ] 地図画像とMap Data（ノード・ルート）の位置合わせ（キャリブレーション）
@@ -143,6 +149,7 @@ docs-site/docs/maps/
 **目標**: 大規模なタイル地図をスムーズに表示。
 
 #### 機能
+
 - [ ] タイルレイヤーの導入（高ズームレベル）
 - [ ] 特定地域の詳細タイルマップ生成（アストラリス首都圏など）
 - [ ] タイルキャッシュによる高速表示
@@ -154,6 +161,7 @@ docs-site/docs/maps/
 **目標**: よりリッチな体験。
 
 #### 機能候補
+
 - [ ] ノード詳細情報パネル（人口、政治、経済）
 - [ ] タイムライン表示（歴史 event を時系列で）
 - [ ] 種族・文化分布のヒートマップ
@@ -192,6 +200,7 @@ console.log("Interactive map will be implemented in v0.2+");
 **問題**: 地図画像とGeoJSONデータの座標系が一致するか。
 
 **解決策**:
+
 - 地図画像作成時にGeoJSON座標を考慮して描画
 - 必要に応じて座標変換（アフィン変換）
 - キャリブレーション用ツール作成（将来）
@@ -203,6 +212,7 @@ console.log("Interactive map will be implemented in v0.2+");
 **問題**: nodes.json が今後数千～数万ノードに増加する可能性。
 
 **解決策**:
+
 - クラスタリング（ズームアウト時はクラスタ表示）
 - データのLazy Load（必要部分のみ読込）
 - タイルマップ化で効率化
@@ -214,6 +224,7 @@ console.log("Interactive map will be implemented in v0.2+");
 **問題**: 単純な最短距離ではなく、交通種別・季節・危険度を考慮したルート計算が必要。
 
 **解決策**:
+
 - 重み付きグラフとして扱う
 - A* アルゴリズムや Dijkstra をベースにカスタム関数
 - 季節判定ロジックを別関数として実装
@@ -225,6 +236,7 @@ console.log("Interactive map will be implemented in v0.2+");
 **問題**: サーバーサイドPythonが使えないため、既存のPythonツールは直接実行不可。
 
 **解決策**:
+
 - Pythonツールはビルド時（GitHub Actions）用に限定
 - 本番サイトではJavaScriptで同等機能を実装
 - データ生成はローカル/CIで、結果を静的JSONとして配置
@@ -238,6 +250,7 @@ console.log("Interactive map will be implemented in v0.2+");
 `world/map-data/schemas/` にスキーマ定義があるので、それに従う。
 
 #### node-schema.json 主要ルール
+
 - `id`: 一意な文字列（node_で始まる）
 - `type`: Feature 固定
 - `geometry.type`: Point 固定
@@ -245,6 +258,7 @@ console.log("Interactive map will be implemented in v0.2+");
 - `properties.type`: city/village/station/ruin/natural いずれか
 
 #### route-schema.json 主要ルール
+
 - `geometry.type`: LineString または MultiLineString
 - `properties.start_node`, `properties.end_node`: `nodes.json` に存在するID
 
@@ -295,21 +309,25 @@ console.log("Interactive map will be implemented in v0.2+");
 ## よくある質問
 
 ### Q: なぜPythonではなくJavaScriptなのか？
+
 **A**: GitHub Pagesは静的ホスティングのため、サーバーサイドコードを実行できません。すべてブラウザ側で処理する必要があるため、JavaScript（またはWebAssembly）が必須。
 
 ---
 
 ### Q: いつから実際に使えるようになりますか？
+
 **A**: v0.2で最小実装、v0.3で实用レベル、v1.0でルート検索完成を予定。詳細はロードマップ参照。
 
 ---
 
 ### Q: スマートフォンでも使えますか？
+
 **A**: Leafletはレスポンシブ対応なので、モバイルブラウザでも利用可能。v0.2以降でタッチ操作対応予定。
 
 ---
 
 ### Q: Map Data の更新は自動で反映されますか？
+
 **A**: GitHub Pagesは静的ファイルなので、 `world/map-data/data/` が更新されたら、`docs-site/docs/data/map/` へのコピーが必要（現在は手動、将来的にCI自動化予定）。
 
 ---
@@ -317,7 +335,7 @@ console.log("Interactive map will be implemented in v0.2+");
 ## 関連ページ
 
 - [Map Data 紹介](map-data.md)
-- [地図ギャラリー](../gallery.md)
+- [地図ギャラリー](gallery.md)
 - [ロードマップ](../index.md) - 全体の開発ロードマップ
 - [交通](../world/transportation.md) - ルート検索の基礎情報
 

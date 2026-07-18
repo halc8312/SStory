@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ロージー・フットスター (ハーフリング郷士学校校長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "halfling", "academy"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 13 (布の服)
 - **HP**: 120 (10d8+20 from Druid 10 + 5d8+5 from Bard 5)
 - **速度**: 25フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 自然の鞭 (Druidcraft)**: 小自然現象.
-- ** 癒しの言葉 (Healing Word)**: ボーナスアクション, 1d4+4 HP.
+
+- **自然の鞭 (Druidcraft)**: 小自然現象.
+- **癒しの言葉 (Healing Word)**: ボーナスアクション, 1d4+4 HP.
 
 **特殊能力**:
-- ** 呪文発動 (Druid 10)**: 自然・治癒呪文, DC15, +8.
-- ** Wild Shape**: 小型動物に変身.
-- ** 音楽・演説による支援 (d8)**: 5回/長休憩.
-- ** 多芸の才**: 技能判定に半修正.
-- ** 自然の回復**: 短休憩でスロット一部回復.
-- ** Halflingの幸運**: セーブ再 roll (1回/日).
+
+- **呪文発動 (Druid 10)**: 自然・治癒呪文, DC15, +8.
+- **Wild Shape**: 小型動物に変身.
+- **音楽・演説による支援 (d8)**: 5回/長休憩.
+- **多芸の才**: 技能判定に半修正.
+- **自然の回復**: 短休憩でスロット一部回復.
+- **Halflingの幸運**: セーブ再 roll (1回/日).
 
 **精霊契約**: 地80%, 水75%
 
 **装備**:
+
 - 魔法の調理器具 (実は戦闘用もあり)
 - 学校の鍵
 - レシピ帳 (魔導器)
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [ハーフリング郷士学校](../magic/schools.md#5-ハーフリング郷士学校)
-- [ハーフリング](../races/races-overview.md)
-- [教育](../world/rules/character-creation.md)
+
+- [ハーフリング郷士学校](../../magic/schools.md#5-ハーフリング郷士学校)
+- [ハーフリング](../../races/races-overview.md)
+- [教育](../../rules/character-creation.md)

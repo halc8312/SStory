@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "スーザン・グリーン (翡翠王国農業大臣)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "agriculture", "jade-kingdom"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 14 (通常の服)
 - **HP**: 105 (8d8+8 from Rogue 8 + 2d8+2 from Bard 2)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **短剣 (Dagger)**: +5 命中, 1d4+2 刺突.
-- **欺瞞の言葉 (Cutting Words)**: 敵の士気を低下.
+- **欺瞞の言葉**: 敵の士気を低下.
 
 **特殊能力**:
-- ** Sneak Attack (Rogue)**: 1ターン1回 3d6追加.
-- ** Cunning Action**: 隠密/脱退アクション.
-- ** Master of Intrigue**: 欺きにadvantage.
-- ** 音楽・演説**: 支援効果 (d6).
-- ** 多芸の才**: 技能判定に半修正.
+
+- **Sneak Attack (Rogue)**: 1ターン1回 3d6追加.
+- **Cunning Action**: 隠密/脱退アクション.
+- **Master of Intrigue**: 欺きにadvantage.
+- **音楽・演説**: 支援効果 (d6).
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**: 地75%, 水65%
 
 **装備**:
+
 - 魔法の農具 (実は戦闘用)
 - 多くの宝石 (賄賂用)
 - 秘密の文書 (不正の証拠)
@@ -125,14 +129,15 @@ spirit_contract:
 ## シナリオフック
 
 - 違法魔法使用の内部告発 → 口封じか暴露か
-- 農場での異常な生育 → 調査を依頼 or 隠蔽
-- 反体制組織との接触が発覚 → 逮捕 or 逃亡
+- 農場での異常な生育 → 調査を依頼または隠蔽
+- 反体制組織との接触が発覚 → 逮捕または逃亡
 - 王妃に真実がバレる → 更迭か、反逆か
-- 農民たちの不満が暴動に → 鎮圧 or 参加
+- 農民たちの不満が暴動に → 鎮圧または参加
 
 ---
 
 **関連項目**:
-- [翡翠王国](../politics/kingdoms.md#5-翡翠王国)
-- [経済](../economy/trade.md)
-- [魔法](../magic/system.md)
+
+- [翡翠王国](../../politics/kingdoms.md#5-翡翠王国)
+- [経済](../../economy/trade.md)
+- [魔法](../../magic/system.md)

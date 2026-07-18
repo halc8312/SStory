@@ -1,3 +1,22 @@
+---
+type: "analysis"
+category: "analysis"
+title: "全変更概要 - 分析・改善タスク完了"
+version: "1.0.0"
+created: "2026-05-01"
+last_updated: "2026-07-18"
+author: "opencode AI Assistant"
+tags: ["evaluation", "changes", "historical-snapshot"]
+status: "deprecated"
+analysis_type: "repository-analysis"
+snapshot: true
+as_of_commit: "c0549e11c1736b8892e7d492e66ff189cc80c28a"
+superseded: true
+superseded_by: "current repository state and git history"
+---
+
+> **履歴スナップショット**: 本文は上記 `as_of_commit` 時点の変更記録です。現在の変更内容にはGit履歴と作業ツリーを使用してください。
+
 # 全変更概要 - 分析・改善タスク完了
 
 ## 📦 追加された新規ファイル (合計: 65+ ファイル)

@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ピュロス (Pyros) - 火の大精霊"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elemental", "fire", "elemental-council"]
@@ -66,6 +66,7 @@ spirit_contract:
 | CHA | 22 | +6 |
 
 **防御**:
+
 - **AC**: 22 ( molten rock )
 - **HP**: 1,400
 - **速度**: 30フィート, 熔岩移動可
@@ -75,19 +76,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** 火山噴火 (Eruption)**: 範囲30d6 fire damage.
-- ** 火球 (Meteor Swarm)**: 大規模破壊.
-- ** 灰の雲 (Ash Cloud)**: 視界不良, 窒息.
+
+- **火山噴火 (Eruption)**: 範囲30d6 fire damage.
+- **火球 (Meteor Swarm)**: 大規模破壊.
+- **灰の雲 (Ash Cloud)**: 視界不良, 窒息.
 
 **特殊能力**:
-- ** 火支配**: 全ての火を操る.
-- ** 再生**: 熔岩から无限再生.
-- ** 破壊の化身**: 攻撃が必然的にクリティカル.
-- ** 精霊召喚**: 火の精霊を召喚.
+
+- **火支配**: 全ての火を操る.
+- **再生**: 熔岩から无限再生.
+- **破壊の化身**: 攻撃が必然的にクリティカル.
+- **精霊召喚**: 火の精霊を召喚.
 
 **精霊契約**: 火100%, 地65%, 風30%
 
 **所有アイテム**:
+
 - 炎帝の剣: 火山を制御
 - 火山の心臓: 火の源
 
@@ -106,6 +110,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [赤砂オーク連合](../politics/kingdoms.md#4-赤砂オーク連合)
-- [炎の大地](../world/geography/continents.md)
-- [火魔法](../magic/system.md)
+
+- [赤砂オーク連合](../../politics/kingdoms.md#4-赤砂オーク連合)
+- [炎の大地](../../geography/continents.md)
+- [火魔法](../../magic/system.md)

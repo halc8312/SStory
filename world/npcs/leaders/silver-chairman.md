@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ヴィクター・シルバーストーン (銀盟共和国議長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "silver-confederation"]
@@ -14,6 +14,7 @@ race: "human"
 age: 62
 alignment: "neutral-good"
 class: "Wizard (School of Transmutation) 14 / Rogue 2"
+spirit_contract: {}
 ---
 
 # ヴィクター・シルバーストーン (Victor Silverstone)
@@ -51,6 +52,7 @@ class: "Wizard (School of Transmutation) 14 / Rogue 2"
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 13 (布の服 + 回避)
 - **HP**: 120 (14d6+28 from Wizard 14 + 2d8+2 from Rogue 2)
 - **速度**: 30フィート
@@ -62,17 +64,20 @@ class: "Wizard (School of Transmutation) 14 / Rogue 2"
 **戦闘能力**:
 
 **攻撃**:
+
 - **魔法弾 (Fire Bolt)**: +11 命中, 4d10+5 fire, range 120フィート.
 - **変容の触手 (Transmuter's Touch)**: melee, 2d6 force + 状態異常.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 14)**: スロット 4/3/3/3/2/2/1, DC19, +11.
-- ** Transmuter's Stone**: 特定の耐性/能力を付与 (1日1回変更).
-- ** Arcane Recovery**: 1日1回、スロット回復 (LV1-5).
-- ** Expert Sneak (Rogue)**: 隠密にadvantage.
-- ** 多芸の才**: 技能判定に半修正.
+
+- **呪文発動 (Wizard 14)**: スロット 4/3/3/3/2/2/1, DC19, +11.
+- **Transmuter's Stone**: 特定の耐性/能力を付与 (1日1回変更).
+- **Arcane Recovery**: 1日1回、スロット回復 (LV1-5).
+- **Expert Sneak (Rogue)**: 隠密にadvantage.
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**:
+
 - 風: 55% (情報通信)
 - 水: 50% (金融流動)
 - 地: 45%
@@ -80,6 +85,7 @@ class: "Wizard (School of Transmutation) 14 / Rogue 2"
 - 月: 35%
 
 **装備**:
+
 - 魔法の杖 ( +2 to spell attacks)
 - 知力の頭巾 (INT+2)
 - 変容の石 (Transmuter's Stone) (選択効果)
@@ -114,6 +120,7 @@ class: "Wizard (School of Transmutation) 14 / Rogue 2"
 ---
 
 **関連項目**:
-- [銀盟共和国](../politics/kingdoms.md#6-銀盟共和国)
-- [魔法系統](../magic/system.md)
-- [経済システム](../economy/trade.md)
+
+- [銀盟共和国](../../politics/kingdoms.md#6-銀盟共和国)
+- [魔法系統](../../magic/system.md)
+- [経済システム](../../economy/trade.md)

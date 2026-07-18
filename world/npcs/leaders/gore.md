@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ゴア (赤砂オーク連合戦士団長)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "orc", "military", "red-sand"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 18 (重装鎧 + 盾)
 - **HP**: 255 (15d12+45 from Barbarian 15 + 3d10+15 from Fighter 3)
 - **速度**: 30フィート
@@ -78,20 +79,23 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **巨斧 (Giant Axe)**: +12 命中, 1d12+6 斬撃 + 2d6 rage.
 - **盾撃 (Shield Bash)**: +11 命中, 1d8+4 打撃, DC17 CON save または stunned.
 
 **特殊能力**:
-- ** Rage (Barbarian)**: 2回/戦闘, STR+4, CON+4, 物理ダメージ耐性.
-- ** Reckless Attack**: advantage と代償.
-- ** Brutal Critical**: クリティカル時追加 2d12.
-- ** Extra Attack (Fighter)**: 2回攻撃/ターン.
-- ** Indomitable**: セーブ再 roll.
-- ** Frenzy (Berserker)**: 追加攻撃 (ボーナスアクション),  exhaustion 後に.
+
+- **Rage (Barbarian)**: 2回/戦闘, STR+4, CON+4, 物理ダメージ耐性.
+- **Reckless Attack**: advantage と代償.
+- **Brutal Critical**: クリティカル時追加 2d12.
+- **Extra Attack (Fighter)**: 2回攻撃/ターン.
+- **Indomitable**: セーブ再 roll.
+- **Frenzy (Berserker)**: 追加攻撃 (ボーナスアクション),  exhaustion 後に.
 
 **精霊契約**: 火90% (極強), 地50%
 
 **装備**:
+
 - 血の牙 (伝説の巨斧, +3, fire damage)
 - 重装鎧 (plate, AC18)
 - 大盾 (+2 AC)
@@ -127,7 +131,7 @@ spirit_contract:
 ## シナリオフック
 
 - シルヴァンへの再戦を望み、決闘を申し込む
-- 若手戦士たちの暴走を止めるか、 or 利用するか
+- 若手戦士たちの暴走を止めるか、または利用するか
 - 盟主への反逆を企んでいるか、それを阻止する依頼
 - 国境での大規模戦闘の引き金になるか
 - 過去の戦いで失った名誉の回復を賭けた任務
@@ -135,6 +139,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [赤砂オーク連合](../politics/kingdoms.md#4-赤砂オーク連合)
-- [戦闘システム](../rules/combat.md)
-- [精霊契約](../races/races-overview.md)
+
+- [赤砂オーク連合](../../politics/kingdoms.md#4-赤砂オーク連合)
+- [戦闘システム](../../rules/combat.md)
+- [精霊契約](../../races/races-overview.md)

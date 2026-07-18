@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ブロック・アイアンハート (精霊協会創設者・ドワーフの錬金術師)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "historical", "dwarf", "artificer", "founder"]
@@ -14,6 +14,7 @@ race: "dwarf"
 age: 195
 alignment: "lawful-neutral"
 class: "Artificer (Alchemist) 17 / Wizard 3"
+spirit_contract: {}
 ---
 
 # ブロック・アイアンハート (Brock Ironheart)
@@ -50,6 +51,7 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 | CHA | 8 | -1 |
 
 **防御**:
+
 - **AC**: 16 ( artificer armor)
 - **HP**: 210 (17d8+85 from Artificer 17 + 3d6+3)
 - **速度**: 25フィート
@@ -61,18 +63,21 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 **戦闘能力**:
 
 **攻撃**:
+
 - **酸のflask (Acid Flask)**: 投擲, 20フィート, 2d6 acid + 1d6 next turn.
 - **火薬爆弾 (Alchemist's Fire)**: 2d8 fire, 継続ダメージ.
 
 **特殊能力**:
-- ** 呪文発動 (Artificer 17)**: 道具強化, 治療,  elemental.
-- ** Alchemical Savant (Alchemist)**: 薬品効果+1d8.
-- ** Tool Expertise**: 工具判定双倍.
-- ** Magic Item Infusion**: アイテムに魔法付与 (5種同時).
-- ** Restorative Reagent**: 回復薬品効果向上.
-- ** Alchemist's Supplies**: 薬品作成無料.
+
+- **呪文発動 (Artificer 17)**: 道具強化, 治療,  elemental.
+- **Alchemical Savant (Alchemist)**: 薬品効果+1d8.
+- **Tool Expertise**: 工具判定双倍.
+- **Magic Item Infusion**: アイテムに魔法付与 (5種同時).
+- **Restorative Reagent**: 回復薬品効果向上.
+- **Alchemist's Supplies**: 薬品作成無料.
 
 **精霊契約**:
+
 - 地: 90% (技術と鉱物)
 - 火: 60% (錬金術の炎)
 - 風: 20%
@@ -80,6 +85,7 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 - 月: 10%
 
 **装備**:
+
 - 万能工具 (any tool)
 - 薬品ベルト (acid, fire, healing flasks 多数)
 - 実験用エプロン (AC+1)
@@ -115,6 +121,7 @@ class: "Artificer (Alchemist) 17 / Wizard 3"
 ---
 
 **関連項目**:
+
 - [グランドリア王国 (参考)]../politics/kingdoms.md
-- [魔法技術](../magic/system.md)
-- [資源](../economy/resources.md)
+- [魔法技術](../../magic/system.md)
+- [資源](../../economy/resources.md)

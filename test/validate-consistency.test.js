@@ -24,7 +24,7 @@ test('getAllMarkdown collects nested markdown files only', () => {
 
     const files = validator.getAllMarkdown(dir).map((file) => path.relative(dir, file)).sort();
 
-    assert.deepEqual(files, ['nested/child.md', 'root.md']);
+    assert.deepEqual(files, [path.join('nested', 'child.md'), 'root.md']);
   });
 });
 

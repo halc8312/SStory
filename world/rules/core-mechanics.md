@@ -69,6 +69,7 @@ related_rules: ["character-creation.md", "combat.md", "magic-casting.md"]
 `d20 + 能力修正 + 技能修得 + その他ボーナス`
 
 DC（難易度）:
+
 - 易しい: 10
 - 普通: 15
 - 難しい: 20
@@ -267,6 +268,7 @@ DC（難易度）:
 ---
 
 **関連項目**:
+
 - [キャラクター作成](character-creation.md)
 - [戦闘詳細](combat.md)
 - [魔法発動](magic-casting.md)

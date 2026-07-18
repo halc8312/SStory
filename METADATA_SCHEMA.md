@@ -1,7 +1,7 @@
 # メタデータスキーマ定義書
 
-**バージョン**: 2.0.0  
-**最終更新**: 2026-05-02  
+**バージョン**: 2.1.0
+**最終更新**: 2026-07-18
 **著者**: opencode AI Assistant
 
 ## 概要
@@ -25,14 +25,17 @@
   - `npcs`, `rules`, `overview`, `assets`, `analysis`（これらはタイプと一致しない場合もある）
 
 **例**:
+
 - `world/lore/creation-myth.md`: `type: canon-document`, `category: lore`
 - `world/npcs/leaders/halfling-trade-leader.md`: `type: npc`, `category: npcs`
 - `world/geography/geographical-analysis-report.md`（移動後）: `type: analysis`, `category: analysis`
 
 ### 正本境界（Canon Boundary）
 
-- **正統文書（Canon）**: `type: canon-document` のファイルのみが世界観の公式設定
-- **非正統文書**: NPC, ルール, アセット, 分析, 概要は公式ではあるが「世界観の事実」としては扱われない
+- **正統文書（Canon）**: `world/` 配下で `type: canon-document` かつ `status: stable` の文書のみが、現在の世界観の公式設定
+- **非正統文書**: `draft` / `review` の文書、および NPC、ルール、アセット、分析、概要はプロジェクト資料ではあるが「世界観の事実」としては扱われない
+- **Map Data**: `world/map-data/data/*.json` は機械可読データの編集上の正本。`confidence: canon` はstableなカノン文書に根拠があることを示し、JSON自体を独立したカノンにはしない。`docs/data/map/*.json` は生成された公開用コピー
+- **Language**: ルート直下の `Language/` は言語設計の実験領域で非カノン。採用する設定は `world/culture/languages.md` などへ反映し、stable化する
 
 ## 文書タイプ一覧
 
@@ -41,6 +44,7 @@
 **目的**: エターナル・アルカディア世界の公式設定を記述する文書
 
 **対象**:
+
 - world/lore/（歴史・神話）
 - world/geography/（地理・環境）
 - world/races/（種族・文化）
@@ -54,12 +58,14 @@
 - world/transportation/（交通）
 
 **特徴**:
+
 - 客観的事実を記述
 - 複数人での共同編集を想定
 - `contributors` フィールドで貢献者を明記
 - 変更履歴（`changelog`）の記述推奨
 
 **必須フィールド**:
+
 ```yaml
 type: "canon-document"
 category: "<カテゴリ>"
@@ -75,6 +81,7 @@ status: "draft|review|stable"
 ```
 
 **推奨フィールド**:
+
 - `previous_version`: 前バージョン番号
 - `changelog`: 変更履歴リスト
 - `reviewed_by`: レビュー担当者リスト
@@ -84,18 +91,20 @@ status: "draft|review|stable"
 
 **目的**: 非プレイヤーキャラクターの公式キャラクターシート
 
-**対象**: world/npcs/leaders/, world/npcs/historical/, world/npcs/adventurers/
+**対象**: world/npcs/leaders/, world/npcs/historical/, world/npcs/adventurers/, world/npcs/unique/
 
 **特徴**:
+
 - TRPG形式のキャラクターデータ
 - 能力値、クラス、精霊契約度を構造化
 - `npc_type` で種別を明記
 
 **必須追加フィールド**:
+
 ```yaml
 type: "npc"
-npc_type: "leader|historical|adventurer|commoner|deity|monster-npc"
-race: "human|elf|dwarf|orc|halfling|aquatic-elf|elemental|deity|other"
+npc_type: "leader|historical|adventurer|scholar|unique|commoner|deity|monster-npc"
+race: "human|elf|dwarf|orc|halfling|aquatic-elf|triton|half-elf|half-orc|elemental|deity|other"
 age: 55  # 数値または "eternal", "unknown"
 alignment: "lawful-good|neutral-good|..."
 class: "Fighter (Champion) 15 / Bard 3"
@@ -108,6 +117,7 @@ spirit_contract:
 ```
 
 **推奨フィールド**:
+
 - `subrace`: 亜種（例: 月影エルフ）
 - `title`: 肩書き
 - `position`: 役職
@@ -123,10 +133,12 @@ spirit_contract:
 **対象**: world/rules/
 
 **特徴**:
+
 - システムタイプと複雑度を明記
 - 関連ルールへの相互参照
 
 **必須追加フィールド**:
+
 ```yaml
 type: "rule"
 rule_type: "core|combat|magic|character|bestiary|equipment|setting"
@@ -142,10 +154,12 @@ related_rules: ["..."]
 **対象**: world/images/README.md
 
 **特徴**:
+
 - 各アセットのメタデータ（ライセンス、クレジット、形式）を管理
 - 使用文書の追跡
 
-**必須追加フィールド**:
+**代表的な追加フィールド（任意）**:
+
 ```yaml
 type: "asset"
 asset_type: "image|audio|video|3d-model|font|other"
@@ -165,11 +179,13 @@ related_documents: ["world/maps/world-map.md"]
 **対象**: evaluation/analysis/, evaluation/ 以下
 
 **特徴**:
+
 - 体系的調査・評価
 - 発見事項の構造化
 - 評価スコアと推奨アクション
 
-**必須追加フィールド**:
+**代表的な追加フィールド（任意）**:
+
 ```yaml
 type: "analysis"
 analysis_type: "world-analysis|repository-analysis|data-consistency|content-audit|technical-debt|feature-evaluation"
@@ -190,7 +206,8 @@ recommendations: []  # 推奨アクション
 
 **対象**: world/index.md, world/README.md
 
-**必須追加フィールド**:
+**代表的な追加フィールド（任意）**:
+
 ```yaml
 type: "overview"
 document_kind: "index|readme|toc|navigation|landing"
@@ -198,6 +215,7 @@ summary: "短い概要（1-2文）"
 ```
 
 **推奨フィールド**:
+
 - `directory_structure`: ディレクトリ構造説明
 - `getting_started`: スタートガイド手順
 - `usage_examples`: 使用例
@@ -215,9 +233,11 @@ summary: "短い概要（1-2文）"
 | `created` | ○ | string | 作成日（YYYY-MM-DD） |
 | `last_updated` | ○ | string | 最終更新日 |
 | `author` | ○ | string | 主作成者（GitHub username） |
-| `contributors` | ○ | array | 貢献者リスト（canon-document, npc, rule は必須） |
+| `contributors` | 条件付き | array | 貢献者リスト（canon-document, npc, rule は必須） |
 | `tags` | ○ | array[str] | タグ（5-10個推奨） |
-| `status` | ○ | string | `draft`, `review`, `stable` |
+| `status` | ○ | string | `draft`, `review`, `stable`, `deprecated` |
+
+`deprecated` は履歴参照用に保持された文書を示し、現在のカノンには含めません。
 
 ## カテゴリ一覧
 
@@ -296,14 +316,18 @@ SStory/
 ### よくある修正パターン
 
 #### パターンA: overviewカテゴリの修正
+
 **Before**:
+
 ```yaml
 ---
 title: "..."
 category: "overview"
 ---
 ```
+
 **After**:
+
 ```yaml
 ---
 type: "overview"
@@ -315,14 +339,18 @@ summary: "..."
 ```
 
 #### パターンB: assetsカテゴリの修正
+
 **Before**:
+
 ```yaml
 ---
 title: "..."
 category: "assets"
 ---
 ```
+
 **After**:
+
 ```yaml
 ---
 type: "asset"
@@ -334,13 +362,17 @@ items: []
 ```
 
 #### パターンC: analysis文書のworld/内からの移動
+
 **Before**: `world/geography/geographical-analysis-report.md`
+
 ```yaml
 ---
 category: "geography"
 ---
 ```
+
 **After**: `evaluation/analysis/geographical-analysis-report.md`
+
 ```yaml
 ---
 type: "analysis"
@@ -351,14 +383,18 @@ base_files: [...]
 ```
 
 #### パターンD: NPC文書の標準化
+
 **Before** (minimal):
+
 ```yaml
 ---
 title: "..."
 category: "npcs"
 ---
 ```
+
 **After**:
+
 ```yaml
 ---
 type: "npc"
@@ -381,6 +417,7 @@ spirit_contract:
 各スキーマファイルはYAML形式で定義されており、自動バリデーションに使用できます。
 
 推奨ツール:
+
 - `yamllint`: YAML構文チェック
 - カスタムスクリプト: スキーマ適合性チェック
 - GitHub Actions: PR時の自動検証
@@ -391,6 +428,7 @@ spirit_contract:
 |------------|------|-----------|--------|
 | 1.0.0 | 2026-05-01 | 初期版（CONTRIBUTING.md内定義） | halc8312 |
 | 2.0.0 | 2026-05-02 | スキーマシステム導入、schemas/ ディレクトリ新設、全ファイル更新 | opencode AI Assistant |
+| 2.1.0 | 2026-07-18 | statusとカノン境界を統一し、Map Data・Languageの扱いを明文化 | Codex |
 
 ## 参考
 

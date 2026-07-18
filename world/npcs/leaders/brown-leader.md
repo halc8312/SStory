@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "ブラウン・リーダー (反体制派「自由の斧」指導者)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "dwarf", "rebel", "anti-establishment"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 16 | +3 |
 
 **防御**:
+
 - **AC**: 18 ( heavy armor + shield)
 - **HP**: 210 (12d10+36 from Fighter 12 + 3d10+3 from Paladin 3)
 - **速度**: 25フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
+
 - **戦斧 (Greataxe)**: +9 命中, 1d12+4 斬撃 + 1d6 (rage).
 - **盾撃 (Shield Bash)**: +8 命中, 1d6+4 打撃, stun.
 
 **特殊能力**:
-- ** Extra Attack**: 2回攻撃/ターン.
-- ** Action Surge**: 追加アクション.
-- ** Divine Smite**: 攻撃に radiant damage.
-- ** 革命の叫び**: 周囲の味方を鼓舞 (bonus action).
-- ** 不屈**: 困難な状況でセーブにadvantage.
+
+- **Extra Attack**: 2回攻撃/ターン.
+- **アクションサージ**: 追加アクション.
+- **Divine Smite**: 攻撃に radiant damage.
+- **革命の叫び**: 周囲の味方を鼓舞 (ボーナスアクション).
+- **不屈**: 困難な状況でセーブにadvantage.
 
 **精霊契約**: 地70%, 風40%
 
 **装備**:
+
 - 自由の斧 (革命の象徴, +2)
 - ドワーフ製のplate armor
 - 盾 (斧の紋章)
@@ -125,8 +129,8 @@ spirit_contract:
 
 ## シナリオフック
 
-- デモの警備を依頼 (政府側 or 反乱側)
-- ブラウン・リーダーの暗殺計画 → 阻止 or 実行？
+- デモの警備を依頼 (政府側または反乱側)
+- ブラウン・リーダーの暗殺計画 → 阻止または実行？
 - 組織内のスパイを探してほしい
 - 政府から「取引」を持ちかけられる
 - 資金源を断たれ、窮地に
@@ -134,6 +138,7 @@ spirit_contract:
 ---
 
 **関連項目**:
-- [反体制](../politics/kingdoms.md#反体制組織)
-- [ドワーフ王国](../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
-- [社会問題](../world/economy/trade.md#贫困と格差)
+
+- [反体制](../../politics/kingdoms.md#反体制組織)
+- [ドワーフ王国](../../politics/kingdoms.md#3-鉄山脉ドワーフ王国)
+- [社会問題](../../economy/trade.md#贫困と格差)

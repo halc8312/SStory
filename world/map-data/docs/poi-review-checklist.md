@@ -1,11 +1,15 @@
 ---
-title: "poi-review-checklist"
-version: "0.2.0"
-created: "2026-05-08"
-last_updated: "2026-05-09"
-author: "halc8312"
+type: "overview"
 category: "maps"
+title: "POI Review Checklist"
+version: "0.2.1"
+created: "2026-05-08"
+last_updated: "2026-07-18"
+author: "halc8312"
+tags: ["map-data", "poi", "review", "checklist"]
 status: "draft"
+document_kind: "navigation"
+summary: "追加POIのスコープ、根拠、参照整合性、公開同期を確認するレビュー項目です。"
 ---
 
 <!-- cspell:disable -->

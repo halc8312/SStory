@@ -1,5 +1,7 @@
-site_name: エターナル・アルカディア設定資料館
-site_description: エターナル・アルカディア世界の設定資料ポータル
+# LEGACY: GitHub Pages はリポジトリ直下の docs/ をそのまま公開します。
+# この設定は過去のMkDocs案を参照する場合だけに残しています。
+site_name: エターナル・アルカディア設定資料館 (Legacy MkDocs)
+site_description: 非公開の旧MkDocs試作。現行ポータルは ../docs/ の静的HTMLです。
 site_author: halc8312
 repo_url: https://github.com/halc8312/SStory
 repo_name: halc8312/SStory

@@ -14,7 +14,7 @@
 | **人口比** | 約45% |
 | **主要国家** | ゼフィア連合共和国、自由都市連合、ハーフリング商工業連合 |
 
-**概要**: 
+**概要**:
 人間は最も多くの人口を持つ種族。精霊契約率は低いが、技術と組織力で世界をリードしている。短期間で高度な文明を築き、多種族社会の基盤を作った。
 
 ---
@@ -82,16 +82,19 @@
 ### 6. その他の種族（Minor Races）
 
 #### トンベリ（Tombli）
+
 - 平均寿命: 50年
 - 特徴: 夜行性、洞穴居住、採掘技術
 - 人口: 少ないが分散
 
 #### グノーム（Gnome）
+
 - 平均寿命: 200年
 - 特徴: 発明家、機械技術、精霊機械工房
 - 人口: 少数
 
 #### 妖精（Fairy）
+
 - 平均寿命: 不詳（ immortal 種族）
 - 特徴: 小型、自然精霊と親和、魔法の素養极高
 - 人口: 極めて稀少
@@ -111,6 +114,7 @@
 | **月精霊ルナ** | 月 | 神秘、時間、予言 | エルフ（80%）、一部グリモワール住民 |
 
 **契約の種類**:
+
 - **完全契約**: 強力な力、厳格な制約
 - **部分契約**: 制限された力、柔軟な使用
 - **血統契約**: 種族全体への遺伝的契約
@@ -119,6 +123,7 @@
 ## 種族間関係
 
 ### 歴史的背景
+
 - **精霊契約期**: 種族間の大戦争（契約戦争）
 - **近代契約期**: 人間を媒介とした融和
 - **現代**: 十二国同盟による共存
@@ -168,19 +173,21 @@
 ## 各国家の種族構成
 
 詳細は各国家ページを参照：
-- [ゼフィア連合共和国](world/politics/kingdoms.md#ゼフィア連合共和国)
-- [月影エルフ王国](world/politics/kingdoms.md#月影エルフ王国)
-- [鉄山脉ドワーフ王国](world/politics/kingdoms.md#鉄山脉ドワーフ王国)
-- [赤砂オーク連合](world/politics/kingdoms.md#赤砂オーク連合)
+
+- [ゼフィア連合共和国](https://github.com/halc8312/SStory/blob/main/world/politics/kingdoms.md)
+- [月影エルフ王国](https://github.com/halc8312/SStory/blob/main/world/politics/kingdoms.md)
+- [鉄山脉ドワーフ王国](https://github.com/halc8312/SStory/blob/main/world/politics/kingdoms.md)
+- [赤砂オーク連合](https://github.com/halc8312/SStory/blob/main/world/politics/kingdoms.md)
 
 ## NPC種族別一覧
 
 主要NPCは種族ごとに整理されています：
-- [人間NPC](world/npcs/leaders/)
-- [エルフNPC](world/npcs/leaders/)
-- [ドワーフNPC](world/npcs/leaders/)
-- [オークNPC](world/npcs/leaders/)
-- [ハーフリングNPC](world/npcs/leaders/)
+
+- [人間NPC](https://github.com/halc8312/SStory/tree/main/world/npcs/leaders)
+- [エルフNPC](https://github.com/halc8312/SStory/tree/main/world/npcs/leaders)
+- [ドワーフNPC](https://github.com/halc8312/SStory/tree/main/world/npcs/leaders)
+- [オークNPC](https://github.com/halc8312/SStory/tree/main/world/npcs/leaders)
+- [ハーフリングNPC](https://github.com/halc8312/SStory/tree/main/world/npcs/leaders)
 
 ## 正史資料
 
@@ -204,8 +211,8 @@ world/
 - [世界概要](overview.md) - 世界の基本情報
 - [魔法](magic.md) - 精霊契約と魔法体系
 - [政治](politics.md) - 国家と種族の関係
-- [文化](world/culture/) - 各文化の詳細
+- [文化](https://github.com/halc8312/SStory/tree/main/world/culture) - 各文化の詳細
 
 ---
 
-**次のステップ**: [魔法システムを学ぶ](magic.md) | [政治構造を理解する](politics.md) | [文化を知る](world/culture/)
+**次のステップ**: [魔法システムを学ぶ](magic.md) | [政治構造を理解する](politics.md) | [文化を知る](https://github.com/halc8312/SStory/tree/main/world/culture)

@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "エルロンド・シルバーレイン (月影エルフ女王)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "elf", "queen", "moon-elf"]
@@ -14,6 +14,7 @@ race: "elf"
 age: 1020
 alignment: "lawful-good"
 class: "Mage (Archmage) 15 / Cleric 3"
+spirit_contract: {}
 ---
 
 # エルロンド・シルバーレイン (Elrond Silverrain)
@@ -51,6 +52,7 @@ class: "Mage (Archmage) 15 / Cleric 3"
 | CHA | 18 | +4 |
 
 **防御**:
+
 - **AC**: 17 ( mage armor + 敏捷)
 - **HP**: 98 (15d6+30 from Mage 15 + 3d8+6 from Cleric 3)
 - **速度**: 30フィート, 暗視60フィート
@@ -62,17 +64,20 @@ class: "Mage (Archmage) 15 / Cleric 3"
 **戦闘能力**:
 
 **攻撃**:
+
 - **月の杖 (Staff of Moon)**: +9 命中, 1d6+4 bludgeoning, 月魔法+2レベル.
 - **月の光弾 (Moonbeam)**: 射程120フィート, セーブ DC18, 4d10 月ダメージ + 混乱.
 
 **特殊能力**:
-- ** 呪文発動 (Mage 15)**: スロット 4/3/3/3/2/1/1 (1-7レベル), DC18, +10.
-- ** Divine 呪文発動 (Cleric 3)**: 治癒・守護系呪文, DC15.
-- ** High Elfの遺伝**: Cantrip 1つ (任意).
-- ** Moon Blessing**: 夜間に+2 AC, 月の魔法+1レベル.
-- ** Trance**: 4時間の休息で完全休息.
+
+- **呪文発動 (Mage 15)**: スロット 4/3/3/3/2/1/1 (1-7レベル), DC18, +10.
+- **Divine 呪文発動 (Cleric 3)**: 治癒・守護系呪文, DC15.
+- **High Elfの遺伝**: Cantrip 1つ (任意).
+- **Moon Blessing**: 夜間に+2 AC, 月の魔法+1レベル.
+- **Trance**: 4時間の休息で完全休息.
 
 **精霊契約**:
+
 - 月: 98% (ほぼ完全契約)
 - 風: 25%
 - 地: 15%
@@ -80,6 +85,7 @@ class: "Mage (Archmage) 15 / Cleric 3"
 - 水: 20%
 
 **装備**:
+
 - 月の杖 (伝説の魔導器, 月魔法強化)
 - 銀のローブ (AC+1, 魔力耐性)
 - 月光石の首飾り (夜間 vision 120フィート)
@@ -114,6 +120,7 @@ class: "Mage (Archmage) 15 / Cleric 3"
 ---
 
 **関連項目**:
-- [月影エルフ王国](../politics/kingdoms.md#2-月影エルフ王国)
-- [精霊協会](../religion/pantheon.md)
-- [魔法系統](../magic/system.md)
+
+- [月影エルフ王国](../../politics/kingdoms.md#2-月影エルフ王国)
+- [精霊協会](../../religion/pantheon.md)
+- [魔法系統](../../magic/system.md)

@@ -1,11 +1,15 @@
 ---
-title: "poi-ai-addition-workflow"
-version: "0.1.0"
-created: "2026-05-09"
-last_updated: "2026-05-09"
-author: "halc8312"
+type: "overview"
 category: "maps"
+title: "POI AI Addition Workflow"
+version: "0.1.1"
+created: "2026-05-09"
+last_updated: "2026-07-18"
+author: "halc8312"
+tags: ["map-data", "poi", "workflow", "ai"]
 status: "draft"
+document_kind: "navigation"
+summary: "AIエージェントがPOIを安全に追加・同期・検証するための標準手順です。"
 ---
 
 <!-- cspell:disable -->

@@ -2,9 +2,9 @@
 type: "rule"
 category: "rules"
 title: "戦闘ルール"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-01"
-last_updated: "2026-05-01"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["combat", "rules", "tactics", "action"]
@@ -191,7 +191,8 @@ STR/Athletics チェックで距離判定。
 ---
 
 **関連項目**:
-- [コアルール](../core-mechanics.md)
+
+- [コアルール](core-mechanics.md)
 - [魔法発動](magic-casting.md)
 - [キャラクター作成](character-creation.md)
 - [モンスター統計](bestiary-stats.md)

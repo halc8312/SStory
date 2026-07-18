@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pixel Mapping Schema",
+  "description": "Maps canonical map-data IDs onto the published world-map image coordinate space.",
+  "type": "object",
+  "required": [
+    "image_width",
+    "image_height",
+    "nodes",
+    "continents",
+    "hazards",
+    "hazard_radius_scale"
+  ],
+  "properties": {
+    "image_width": { "type": "number", "exclusiveMinimum": 0 },
+    "image_height": { "type": "number", "exclusiveMinimum": 0 },
+    "nodes": { "$ref": "#/definitions/coordinateMap" },
+    "continents": { "$ref": "#/definitions/coordinateMap" },
+    "hazards": { "$ref": "#/definitions/coordinateMap" },
+    "hazard_radius_scale": { "type": "number", "exclusiveMinimum": 0 }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "coordinateMap": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" },
+      "additionalProperties": { "$ref": "#/definitions/coordinate" }
+    },
+    "coordinate": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number", "minimum": 0 },
+        "y": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

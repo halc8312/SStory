@@ -2,9 +2,9 @@
 type: "npc"
 category: "npcs"
 title: "アルスター・インヴェンション (銀盟共和国技術大臣)"
-version: "1.0.0"
+version: "1.0.1"
 created: "2026-05-03"
-last_updated: "2026-05-03"
+last_updated: "2026-07-18"
 author: "halc8312"
 contributors: []
 tags: ["npc", "leader", "human", "technology", "silver-confederation"]
@@ -67,6 +67,7 @@ spirit_contract:
 | CHA | 14 | +2 |
 
 **防御**:
+
 - **AC**: 15 ( mage armor + 敏捷)
 - **HP**: 135 (15d6+30 from Wizard 15 + 3d8+3 from Artificer 3)
 - **速度**: 30フィート
@@ -78,19 +79,22 @@ spirit_contract:
 **戦闘能力**:
 
 **攻撃**:
-- ** エナジー・ボルト (Ray of Frost)**: +11 命中, 2d8 cold.
-- ** 変容の光 (Transmute Rock)**: 地形変化.
+
+- **エナジー・ボルト (Ray of Frost)**: +11 命中, 2d8 cold.
+- **変容の光 (Transmute Rock)**: 地形変化.
 
 **特殊能力**:
-- ** 呪文発動 (Wizard 15)**: transmutation 中心, DC19, +13.
-- ** Infuse Item**: 装備に魔法効果付与.
-- ** 超elow の魔法**: 上級呪文を低レベルで発動可能.
-- ** Tool Expertise**: 工具判定に倍修正.
-- ** 多芸の才**: 技能判定に半修正.
+
+- **呪文発動 (Wizard 15)**: transmutation 中心, DC19, +13.
+- **Infuse Item**: 装備に魔法効果付与.
+- **低位発動**: 上級呪文を低レベルで発動可能。
+- **Tool Expertise**: 工具判定に倍修正.
+- **多芸の才**: 技能判定に半修正.
 
 **精霊契約**: 風60%, 地55%, 水40%, 月45%, 火30%
 
 **装備**:
+
 - 魔法のメガネ (INT+2, 分析用)
 - ツールベルト (各種)
 - 実験用の魔導器
@@ -127,14 +131,15 @@ spirit_contract:
 ## シナリオフック
 
 - 実験施設が謎の事故 → 調査と隠蔽
-- 脱走した失敗作の怪物を追跡 → 捕獲 or 始末
+- 脱走した失敗作の怪物を追跡 → 捕獲または始末
 - 精霊協会の査察が迫る → データの隠滅
-- 人工精霊が自我に目覚める → 対話 or 破壊
+- 人工精霊が自我に目覚める → 対話または破壊
 - 技術盗難の疑い → 内部調査
 
 ---
 
 **関連項目**:
-- [銀盟共和国](../politics/kingdoms.md#6-銀盟共和国)
-- [魔法技術](../magic/artifacts.md)
-- [精霊契約](../races/races-overview.md)
+
+- [銀盟共和国](../../politics/kingdoms.md#6-銀盟共和国)
+- [魔法技術](../../magic/artifacts.md)
+- [精霊契約](../../races/races-overview.md)

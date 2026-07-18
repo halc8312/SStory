@@ -1,0 +1,18 @@
+* text=auto eol=lf
+
+# Keep source and content files deterministic across Windows and Linux.
+*.css text eol=lf
+*.html text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# Binary assets must never undergo newline conversion.
+*.jpg binary
+*.png binary
+*.webp binary
+*.gif binary
+*.ico binary
