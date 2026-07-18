@@ -145,7 +145,7 @@ GitHub Issue Form を使って、対象地域・件数・参照設定・禁止�
 1. 依頼件数を超えていないか確認する
 2. 既存POIとID・名前・役割・座標が過度に重複していないか確認する
 3. `world/map-data/data/pois.json` を更新する
-4. `python world/map-data/scripts/sync_pois_to_docs.py` で docs 側へ同期する
+4. `python world/map-data/scripts/sync_map_data.py` で docs 側へ同期する
 5. `python -m json.tool world/map-data/data/pois.json` を実行する
 6. `python -m json.tool docs/data/map/pois.json` を実行する
 7. `python -m json.tool world/map-data/schemas/poi.schema.json` を実行する

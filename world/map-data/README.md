@@ -41,7 +41,7 @@ world/map-data/
     poi-review-checklist.md
     poi-ai-addition-workflow.md
   scripts/
-    sync_pois_to_docs.py
+    sync_map_data.py
     validate_pois.py
   examples/
     route_astralis_to_jade_port.json   # Example route output
@@ -253,8 +253,10 @@ continent-by-continent expansion can build on a reviewed foundation.
 ### GitHub Pages Copy
 
 GitHub Pages uses the copy at [`docs/data/map/pois.json`](../../docs/data/map/pois.json).
-Use `python world/map-data/scripts/sync_pois_to_docs.py` to copy the canonical
-data from `world/map-data/data/pois.json`.
+Use `python world/map-data/scripts/sync_map_data.py` to copy all canonical map
+data files (continents, regions, nodes, routes, hazards, POIs) from
+`world/map-data/data/` to `docs/data/map/`. Pass `--check` to verify the copies
+without writing (used in CI).
 
 ### POI Addition Flow
 
@@ -277,7 +279,7 @@ When adding or reviewing POIs:
 3. `poi-data-spec.md` を確認する
 4. `poi-authoring-template.md` に沿って内容を作る
 5. `world/map-data/data/pois.json` を編集する
-6. `sync_pois_to_docs.py` で docs 側へ同期する
+6. `sync_map_data.py` で docs 側へ同期する
 7. `validate_pois.py` で検証する
 8. Leaflet上で `focusPoi()` を確認する
 9. `poi-review-checklist.md` でレビューする

@@ -1,6 +1,13 @@
 (() => {
+  const MapCommon = window.EternalArcadiaMapCommon;
+  if (!MapCommon) {
+    console.error('[LeafletTransportMap] map-common.js must be loaded before leaflet-transport-map.js.');
+    return;
+  }
+  const { escapeHtml, isFiniteNumber, formatMonths, buildLookupById, createJsonFetcher } = MapCommon;
+
   const BASE_PATH = '../data/map/';
-  const CACHE_BUSTER = '20260510a';
+  const CACHE_BUSTER = '20260718a';
   const WORLD_MAP_SOURCE_DIMENSIONS = {
     width: 1000,
     height: 800
@@ -198,12 +205,6 @@
   const UNKNOWN_POI_CATEGORY = 'unknown';
   const POI_DISPLAY_SEPARATOR = ' / ';
 
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = String(text ?? '');
-    return div.innerHTML;
-  }
-
     function transformPosition(position) {
       const config = MAP_COORDINATE_CONFIG;
       let x = Number(position?.x ?? 0);
@@ -260,10 +261,6 @@
       return gridLayer;
     }
 
-  function formatMonths(months) {
-    return Array.isArray(months) && months.length > 0 ? months.join(', ') : 'なし';
-  }
-
   function formatList(items) {
     return Array.isArray(items) && items.length > 0 ? items.join(' / ') : 'なし';
   }
@@ -281,14 +278,6 @@
     }
     const zValue = position.z ?? 0;
     return `X: ${position.x}, Y: ${position.y}, Z: ${zValue}`;
-  }
-
-  function isFiniteNumber(value) {
-    return Number.isFinite(Number(value));
-  }
-
-  function buildLookupById(items) {
-    return Object.fromEntries((items || []).filter(item => item?.id).map(item => [item.id, item]));
   }
 
   function createPopupHtml(title, rows, description) {
@@ -678,13 +667,7 @@
         console.warn('[LeafletTransportMap] Map container height is smaller than expected:', mapElement.clientHeight);
       }
 
-      const fetchJson = async (name) => {
-        const response = await fetch(`${BASE_PATH}${name}?v=${CACHE_BUSTER}`);
-        if (!response.ok) {
-          throw new Error(`${name}: HTTP ${response.status}`);
-        }
-        return response.json();
-      };
+      const fetchJson = createJsonFetcher(BASE_PATH, CACHE_BUSTER);
 
       let datasets = {};
       const fetchResults = await Promise.allSettled([

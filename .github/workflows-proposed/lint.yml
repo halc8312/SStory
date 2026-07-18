@@ -1,0 +1,139 @@
+name: Lint and Validate
+
+# NOTE: これは .github/workflows/lint.yml の修正版です。
+# 現行の lint.yml はジョブキーのインデント不整合 (2/3/4スペース混在) により
+# YAMLとしてパースできず、ワークフローが一切実行されていません。
+# GitHub App の workflows 権限がないため自動更新できませんでした。
+# 適用方法:
+#   git mv .github/workflows-proposed/lint.yml .github/workflows/lint.yml
+#   git commit && git push
+# 変更点: インデント統一 + map-data-check / unit-tests ジョブの追加
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  grammar-check:
+    name: Grammar (markdownlint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run markdownlint
+        run: npm run lint
+
+  link-check:
+    name: Link Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Check links
+        run: npm run links
+
+  spell-check:
+    name: Spelling (cspell)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Check spelling
+        run: npm run spell
+
+  frontmatter-check:
+    name: Frontmatter Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Check frontmatter
+        run: npm run frontmatter
+
+  consistency-check:
+    name: Consistency Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Check consistency
+        run: npm run consistency
+
+  terminology-check:
+    name: Terminology Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Python dependencies
+        run: pip install pyyaml
+      - name: Install Node dependencies
+        run: npm ci
+      - name: Check terminology
+        run: npm run terminology
+
+  map-data-check:
+    name: Map Data Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Python dependencies
+        run: pip install jsonschema
+      - name: Validate map data
+        run: python3 tools/map/validate_map_data.py
+      - name: Validate POI data
+        run: python3 world/map-data/scripts/validate_pois.py
+      - name: Check world/docs map data sync
+        run: python3 world/map-data/scripts/sync_map_data.py --check
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Node dependencies
+        run: npm ci
+      - name: Run unit tests
+        run: npm run test:unit

@@ -7,15 +7,11 @@ Coordinates use the internal x/y system (0-10000) directly as GeoJSON coordinate
 """
 
 import json
-import sys
-from pathlib import Path
 
-DATA_DIR = Path("world/map-data/data")
-EXPORT_DIR = Path("world/map-data/exports")
-
-def load_json(path):
-    with open(path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+try:
+    from tools.map.common import DATA_DIR, EXPORT_DIR, load_json
+except ImportError:  # run as a script from tools/map
+    from common import DATA_DIR, EXPORT_DIR, load_json
 
 def export_nodes(nodes):
     features = []
@@ -98,16 +94,7 @@ def export_hazards(hazards):
     for hazard in hazards:
         center = hazard['center']
         radius = hazard.get('radius', 100)
-        # Create a circular polygon approximation (20 sides)
-        coords = []
-        for i in range(21):  # 0 to 20 inclusive (21 points, closed)
-            angle = (i / 20) * 2 * 3.14159
-            x = center['x'] + radius * (180 / 3.14159)  # approximate degree scaling
-            y = center['y'] + radius * (180 / 3.14159)
-            # Simplified: use small square for now (exact circle requires more complex math)
-            # For simplicity, just use center point with radius info in properties
-            break
-        # Simpler: just use center point, radius in properties
+        # Hazards are exported as center points; the radius lives in properties.
         geometry = {
             "type": "Point",
             "coordinates": [center['x'], center['y']]

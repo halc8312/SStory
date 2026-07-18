@@ -6,20 +6,14 @@ Finds optimal routes between nodes using Dijkstra's algorithm.
 Supports weighting by time, distance, safety (inverse of danger), and cost.
 """
 
-import json
 import argparse
 import sys
-from pathlib import Path
 from heapq import heappush, heappop
 
-DATA_DIR = Path("world/map-data/data")
-
-# Route type allowances
-ALLOWED_TYPES_DEFAULT = {"road", "rail", "sea", "air", "caravan", "submarine", "tunnel"}
-
-def load_json(path):
-    with open(path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+try:
+    from tools.map.common import DATA_DIR, load_json
+except ImportError:  # run as a script from tools/map
+    from common import DATA_DIR, load_json
 
 def build_graph(routes, weight="time", avoid_danger_level=None, allow_restricted=False,
                 allow_air=True, allow_sea=True, month=None):
@@ -28,7 +22,6 @@ def build_graph(routes, weight="time", avoid_danger_level=None, allow_restricted
     Returns: dict {node_id: [(neighbor_id, weight, route_info), ...]}
     """
     graph = {}
-    node_types = {}  # not used currently but available
 
     for route in routes:
         # Filter by status

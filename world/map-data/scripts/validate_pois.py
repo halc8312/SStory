@@ -53,7 +53,7 @@ def main() -> int:
     if WORLD_POIS_PATH.read_bytes() != DOCS_POIS_PATH.read_bytes():
         errors.append(
             "world/map-data/data/pois.json and docs/data/map/pois.json differ. "
-            "Run: python world/map-data/scripts/sync_pois_to_docs.py"
+            "Run: python world/map-data/scripts/sync_map_data.py"
         )
 
     if not isinstance(world_pois, list):

@@ -4,6 +4,13 @@
  */
 
 (() => {
+  const MapCommon = window.EternalArcadiaMapCommon;
+  if (!MapCommon) {
+    console.error('[RouteSearch] map-common.js must be loaded before route-search.js.');
+    return;
+  }
+  const { escapeHtml, normalizeNumber } = MapCommon;
+
   const SEARCH_RESULT_EMPTY_HTML = `<p class="route-search-empty">条件を指定して「検索」を押すと、結果がここに表示されます。</p>`;
   const NODE_SELECT_PLACEHOLDER_HTML = '<option value="">選択してください</option>';
   const ROUTE_SELECTED_CLASS = 'map-route--selected';
@@ -13,17 +20,6 @@
   const DEFAULT_NODE_TYPE = 'unknown';
   const DEFAULT_ROUTE_COST = 9999;
   const MINIMUM_EDGE_COST = 0.1;
-
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = String(text ?? '');
-    return div.innerHTML;
-  }
-
-  function normalizeNumber(value) {
-    const number = Number(value);
-    return Number.isFinite(number) ? number : null;
-  }
 
   function unique(values) {
     return [...new Set(values.filter(Boolean))];
