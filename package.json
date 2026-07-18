@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "description": "SStory - Eternal Arcadia Worldbuilding Project",
   "main": "index.js",
-   "scripts": {
-      "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
-      "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
-       "spell": "cspell '**/*.md' --language=ja --ignore-paths '**/node_modules/**' --ignore-paths '**/evaluation/**' --ignore-paths '**/Language/**'",
-      "frontmatter": "node scripts/validate-frontmatter.js",
-      "consistency": "node scripts/validate-consistency.js",
-      "terminology": "python3 tools/terminology_check.py",
-      "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency && npm run terminology",
-      "test:unit": "node --test test/*.test.js && python3 -m unittest discover -s tests -p '*_test.py'",
-      "test": "npm run validate && npm run test:unit"
-    },
+  "scripts": {
+    "lint": "markdownlint '**/*.md' --ignore node_modules --ignore '**/evaluation/**'",
+    "links": "markdown-link-check -q -c .markdown-link-check.json '**/*.md'",
+    "spell": "cspell '**/*.md' --language=ja --ignore-paths '**/node_modules/**' --ignore-paths '**/evaluation/**' --ignore-paths '**/Language/**'",
+    "frontmatter": "node scripts/validate-frontmatter.js",
+    "consistency": "node scripts/validate-consistency.js",
+    "terminology": "python3 tools/terminology_check.py",
+    "map:sync": "python3 world/map-data/scripts/sync_map_data.py",
+    "map:validate": "python3 tools/map/validate_map_data.py && python3 world/map-data/scripts/validate_pois.py && python3 world/map-data/scripts/sync_map_data.py --check",
+    "validate": "npm run lint && npm run links && npm run spell && npm run frontmatter && npm run consistency && npm run terminology",
+    "test:unit": "node --test test/*.test.js && python3 -m unittest discover -s tests -p '*_test.py'",
+    "test": "npm run validate && npm run test:unit"
+  },
   "keywords": [
     "worldbuilding",
     "fantasy",
@@ -23,12 +25,12 @@
   ],
   "author": "halc8312",
   "license": "CC-BY-SA-4.0",
-   "devDependencies": {
-     "markdownlint-cli": "^0.40.0",
-     "markdown-link-check": "^3.10.0",
-     "cspell": "^8.0.0",
-     "yaml": "^2.6.0"
-   },
+  "devDependencies": {
+    "markdownlint-cli": "^0.40.0",
+    "markdown-link-check": "^3.10.0",
+    "cspell": "^8.0.0",
+    "yaml": "^2.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/halc8312/SStory.git"

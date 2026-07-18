@@ -6,8 +6,8 @@
 
 - **正史データ本体**: `world/map-data/data/` にあります
 - **公開用コピー**: `docs/data/map/` はブラウザからFetch可能な形式でコピーされたデータです
-- **同期**: データ更新時は `world/map-data/data/` から手動でコピーしてください
-- **将来**: GitHub Actionsなどによる自動同期を検討中です
+- **同期**: データ更新時は `python world/map-data/scripts/sync_map_data.py` を実行してください
+- **検証**: CI が `sync_map_data.py --check` で同期漏れを検出します
 
 ## ファイル一覧
 

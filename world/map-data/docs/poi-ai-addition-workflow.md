@@ -33,7 +33,7 @@ status: "draft"
 5. 依頼に書かれた追加件数を守る
 6. 各POIに `lore_basis` / `historical_reason` / `economic_role` / `cultural_role` / `transport_role` / `risk_context` を書く
 7. `world/map-data/data/pois.json` を編集する
-8. `python world/map-data/scripts/sync_pois_to_docs.py` を実行して `docs/data/map/pois.json` へ同期する
+8. `python world/map-data/scripts/sync_map_data.py` を実行して `docs/data/map/pois.json` へ同期する
 9. `python -m json.tool world/map-data/data/pois.json` と `python -m json.tool docs/data/map/pois.json` を実行して JSON 構文チェックを行う
 10. `python world/map-data/scripts/validate_pois.py` を実行して Schema 検証・参照整合・同期確認を行う
 11. Leaflet上で `focusPoi()` を使って表示確認を行う
@@ -71,7 +71,7 @@ status: "draft"
 ## 同期と検証コマンド
 
 ```bash
-python world/map-data/scripts/sync_pois_to_docs.py
+python world/map-data/scripts/sync_map_data.py
 python -m json.tool world/map-data/data/pois.json
 python -m json.tool docs/data/map/pois.json
 python -m json.tool world/map-data/schemas/poi.schema.json

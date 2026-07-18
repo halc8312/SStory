@@ -4,9 +4,16 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  const MapCommon = window.EternalArcadiaMapCommon;
+  if (!MapCommon) {
+    console.error('[InteractiveMap] map-common.js must be loaded before interactive-map.js.');
+    return;
+  }
+  const { escapeHtml, clamp, formatMonths, createJsonFetcher } = MapCommon;
+
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const BASE_PATH = '../data/map/';
-  const CACHE_BUSTER = '20260505b';
+  const CACHE_BUSTER = '20260718a';
   const DEFAULT_VIEW_BOX = { x: 0, y: 0, width: 10000, height: 10000 };
   const MIN_VIEW_BOX_SIZE = 2200;
   const DATA_FILES = [
@@ -44,12 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return document.createElementNS(SVG_NS, tagName);
   }
 
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = String(text ?? '');
-    return div.innerHTML;
-  }
-
   function showError(message) {
     if (messageElement) {
       messageElement.textContent = message;
@@ -69,15 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  const fetchJson = createJsonFetcher(BASE_PATH, CACHE_BUSTER);
+
   function fetchData(key, url) {
-    const requestUrl = `${BASE_PATH + url}?v=${CACHE_BUSTER}`;
-    return fetch(requestUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`${key}: HTTP ${response.status} - ${response.statusText}`);
-        }
-        return response.json();
-      })
+    return fetchJson(url)
       .then(data => {
         if (Array.isArray(data)) {
           mapData[key] = data;
@@ -94,22 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
-
   function formatArray(values, fallback = 'なし') {
     if (!Array.isArray(values) || values.length === 0) {
       return fallback;
     }
     return values.map(item => escapeHtml(item)).join(', ');
-  }
-
-  function formatMonths(months) {
-    if (!Array.isArray(months) || months.length === 0) {
-      return 'なし';
-    }
-    return months.join(', ');
   }
 
   function formatCoordinate(position) {

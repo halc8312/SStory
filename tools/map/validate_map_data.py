@@ -6,14 +6,12 @@ Validates the structured map data files for consistency and correctness.
 Checks: unique IDs, valid references, basic structural checks, value ranges.
 """
 
-import json
-import os
 import sys
-from pathlib import Path
 
-# Constants
-DATA_DIR = Path("world/map-data/data")
-SCHEMA_DIR = Path("world/map-data/schemas")
+try:
+    from tools.map.common import DATA_DIR, load_json
+except ImportError:  # run as a script from tools/map
+    from common import DATA_DIR, load_json
 
 # Value sets
 VALID_ROUTE_TYPES = {"road", "rail", "sea", "air", "caravan", "submarine", "tunnel", "underwater_tunnel", "ice_road", "warp", "forbidden_path"}
@@ -22,10 +20,6 @@ VALID_ROUTE_STATUS = {"active", "seasonal", "restricted", "forbidden", "experime
 VALID_NODE_TYPES = {"capital", "city", "town", "port", "airport", "air_terminal", "carriage_terminal", "inn", "checkpoint", "oasis", "caravan_lodge", "floating_island", "underwater_city", "submarine_terminal", "warp_gate", "forbidden_gate", "landmark", "ruin"}
 VALID_HAZARD_TYPES = {"sandstorm", "pirate_sea", "ice_sea", "time_distortion", "forbidden_zone", "monster_sea", "volcanic_zone", "avalanche", "spirit_anomaly", "fog", "storm"}
 VALID_CONFIDENCE = {"canon", "estimated", "inferred", "placeholder"}
-
-def load_json(path):
-    with open(path, 'r', encoding='utf-8') as f:
-        return json.load(f)
 
 def validate_continents(continents, all_ids):
     errors = []

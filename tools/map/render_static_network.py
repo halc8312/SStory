@@ -6,13 +6,10 @@ Renders a simple static visualization of the map network (nodes and routes).
 Uses only Python standard library; outputs SVG.
 """
 
-import json
-import sys
-from pathlib import Path
-import math
-
-DATA_DIR = Path("world/map-data/data")
-EXPORT_DIR = Path("world/map-data/exports")
+try:
+    from tools.map.common import DATA_DIR, EXPORT_DIR, load_json
+except ImportError:  # run as a script from tools/map
+    from common import DATA_DIR, EXPORT_DIR, load_json
 
 # SVG dimensions
 WIDTH = 1200
@@ -28,10 +25,6 @@ def scale_coord(x, y):
     svg_x = MARGIN + (x / 10000) * avail_w
     svg_y = MARGIN + ((10000 - y) / 10000) * avail_h
     return svg_x, svg_y
-
-def load_json(path):
-    with open(path, 'r', encoding='utf-8') as f:
-        return json.load(f)
 
 def main():
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
