@@ -1,0 +1,38 @@
+Use case: precise-object-edit
+Asset type: full-resolution fantasy cartographic raster
+Primary request: Replace only the two existing north-east and south-east mountain fields with strictly orthographic nineteenth-century topographic hachure relief.
+Input images: Image 1 is the pixel-authoritative edit target and complete style reference outside the permitted terrain; Image 2 is the flat geometry-only guide for the same six approximate plan-view footprints used by G2; Image 3 is a geometry-only skeleton of short open fall-line segments for the six landforms.
+
+REFERENCE PRIORITY
+
+Reference priority is Image 1 > Image 2 > Image 3. Image 1 controls the exact 1536 x 1024 canvas, registration, palette, paper, engraving weight, and every pixel outside the two terrain fields. Image 2 controls only the approximate locations, relative extents, one-main-plus-two-foothills hierarchy, and the sole compositing permission. Never copy Image 2's colors, boundary pixels, closed outline, or flat fill. Its smooth closed shapes are complete plan-view editing envelopes, not side-view mountain silhouettes. Inside those envelopes only, Image 3 controls the internal two-rise/open-saddle structure and the placement, direction, unequal length, and unequal spacing of short fall-line hachures. Never copy Image 3's background or stroke colors, connect its separate strokes, trace a perimeter from them, or treat Image 3 as a compositing mask.
+
+THE ONE PERMITTED EDIT
+
+Within each guided field, replace the pictorial or oblique mountain treatment with one broad principal terrain mass and two smaller detached foothill masses. Each of the six landforms must read at 100% as an area of terrain seen from infinitely high directly above, never as a row of mountain icons. Keep broad, quiet parchment between the three masses in each field.
+
+STRICT ORTHOGRAPHIC HACHURE LANGUAGE
+
+- Use restrained nineteenth-century topographic hachure printed on the horizontal paper plane.
+- Describe slope only through short, fine, irregular strokes that follow the local fall line: slightly denser on steeper ground, more open on gentler ground.
+- Use subtle areal ink density, not simulated illumination. There is no sky-facing plane, lit face, shadowed face, cast shadow, horizon, front, side, underside, cliff wall, or scenic depth.
+- Keep the outer transition soft and broken. Do not trace the guide boundary and do not form a continuous perimeter line.
+- Inside each principal mass, imply two broad upland swells and one short, low saddle by reduced hachure density. The saddle is an open area of gentler slope, not a notch in the outer silhouette and not a cut line.
+- Make every footprint asymmetric and organically branching, with varied hachure length and spacing. It must read as terrain texture rather than a symbol, stamp, polygon, ridge chain, or blob.
+- Match Image 1's sepia ink and paper grain while deliberately rejecting Image 1's existing oblique mountain projection grammar.
+
+ROADS AND PROTECTED DETAIL
+
+Every road, watercourse, wall, farm line, tree, settlement mark, and coastline from Image 1 must remain fixed and legible. Where a road crosses a guided footprint, imagine and render one continuous underlying landform on both sides of the road. The road is merely printed above the terrain. Do not create a hollow center, trench, tunnel, pale channel, outline, parallel halo, shadow gap, or split mountain along a road. A deterministic 64 px road guard and protected-detail mask will restore the authoritative Image 1 pixels after generation; the terrain rhythm and slope direction must continue naturally beneath that protected strip.
+
+EXACT PRESERVATION
+
+Do not move, resize, repaint, invent, or remove any coast, island, river, delta channel, city, port, road, field, forest, tree, wall, building, farm, settlement, paper texture, or feature outside the guided terrain. Preserve Image 1's full composition and color balance. Do not crop, extend, rotate, or rescale.
+
+FORBIDDEN
+
+No text, letters, numbers, runes, labels, legend, compass, scale, watermark, signature, border, or UI. No perspective, isometric form, oblique peak, triangular mountain symbol, crown-and-flank icon, scenic ridge, vertical face, cast or displaced shadow, directional lighting, photorealism, 3D render, closed contour ring, concentric band, terrace, repeated scallop, equal-size lobe, ellipse, capsule, radial blob, dashed route, dark ridge-center line, hard polygon edge, traced guide outline, rectangular seam, mask edge, blur halo, hollow road gap, or road-shaped terrain.
+
+OUTPUT CONTRACT
+
+Return one full-color PNG at exactly 1536 x 1024. No explanation or text inside the image. After generation, only pixels admitted by Image 2's six guide footprints and not protected by the exact 64 px road/detail masks will be composited over Image 1; Image 3 is conditioning only and can never contribute compositing permission. Every protected or outside pixel must remain identical to Image 1.

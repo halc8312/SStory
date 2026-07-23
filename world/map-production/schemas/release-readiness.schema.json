@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/release-readiness.schema.json",
+  "title": "SStory map release readiness declaration",
+  "description": "Explicitly selects in-progress validation or the fail-closed strict publication gate, including durable browser-QA provenance for published state.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "status",
+    "manifest_path"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "schemas/release-readiness.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "in-progress",
+        "release-candidate",
+        "published"
+      ]
+    },
+    "manifest_path": {
+      "const": "world/map-production/production-manifest.json"
+    },
+    "publication_receipt_path": {
+      "type": "string",
+      "pattern": "^world/map-production/releases/[a-z][a-z0-9_-]*-publication-receipt\\.json$"
+    },
+    "browser_qa_bundle": {
+      "$ref": "#/definitions/browser_qa_bundle"
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"status": {"const": "published"}},
+        "required": ["status"]
+      },
+      "then": {
+        "required": ["publication_receipt_path", "browser_qa_bundle"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"enum": ["in-progress", "release-candidate"]}
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "allOf": [
+          {"not": {"required": ["publication_receipt_path"]}},
+          {"not": {"required": ["browser_qa_bundle"]}}
+        ]
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "browser_qa_bundle": {
+      "type": "object",
+      "required": [
+        "path",
+        "receipt_sha256",
+        "tree_sha256",
+        "tested_url",
+        "completed_at"
+      ],
+      "properties": {
+        "path": {
+          "const": "world/map-production/releases/world-v3-phase6-browser-qa"
+        },
+        "receipt_sha256": {"$ref": "#/definitions/sha256"},
+        "tree_sha256": {"$ref": "#/definitions/sha256"},
+        "tested_url": {"type": "string", "format": "uri", "minLength": 1},
+        "completed_at": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

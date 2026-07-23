@@ -1,0 +1,206 @@
+{
+  "$schema": "https://sstory.example/schemas/phase5-protected-control.schema.json",
+  "schema_version": "1.0.0",
+  "type": "sstory-phase5-protected-metatile-control",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "generated_by": "sstory-map-production/render_phase5_metatile_controls.py@1",
+  "sheet_id": "sheet_region_marineport_region",
+  "column": 1,
+  "row": 0,
+  "dimensions": {
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG"
+  },
+  "visual_geometry_control": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/geometry-control.png",
+    "sha256": "7b9c11f7e1b3a53ea2c47e4f9dac8153ed16c83362b970d9590b3ed94061bcfe",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "parent_context": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/parent-context.png",
+    "sha256": "d59411f1611b577cfe34568f8bdc0419f41af79e1f0431b995f8fdf6868aaf67",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "prior_neighbor_contexts": [
+    {
+      "direction": "west",
+      "source_tile": {
+        "column": 0,
+        "row": 0
+      },
+      "context": {
+        "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/neighbor-west-geometry-context.png",
+        "sha256": "c8b00724390ad76c4148edcf62a68b8233887b8dd49dc22d28a84267fc2021c2",
+        "width": 2048,
+        "height": 2048,
+        "format": "PNG",
+        "color_mode": "RGB"
+      }
+    }
+  ],
+  "land_sea": {
+    "land_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/land-mask.png",
+      "sha256": "711474cff70ec7ca3f243f388d3f19154f27b3f72e14f35e6ef71e31c74cf09e",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "water_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/water-mask.png",
+      "sha256": "72a8257db229b29bfa57e534e231ccfe9d7ae01ae8d0b8cda00de7dfcfd3dd0d",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "known_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/known-mask.png",
+      "sha256": "f855f10570903f6a5b11caf85eedb007dd8af2d0c212372db6d418cfea5e1095",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "unknown_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/unknown-mask.png",
+      "sha256": "d78a0affc11b1bffa7b77c60cb7b23122b6894c64e1dd7271af37c10c7382864",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/land-sea-overlay.png",
+      "sha256": "d59411f1611b577cfe34568f8bdc0419f41af79e1f0431b995f8fdf6868aaf67",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "partition": {
+      "algorithm": "canon-land-water-unknown-partition-v1",
+      "pixel_count": 4194304,
+      "land_pixel_count": 3069489,
+      "water_pixel_count": 190936,
+      "unknown_pixel_count": 933879,
+      "overlap_pixel_count": 0,
+      "unclassified_pixel_count": 0
+    }
+  },
+  "transport": {
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/transport-mask.png",
+      "sha256": "05e16d8e8898c52097d4692b6a4dd41d950c27bb624b30e0254968ef2be18aba",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/transport-overlay.png",
+      "sha256": "e1d1b6beee11f75d8e885136a6236ca1993843f6659a5d0cd6e55ff651567c0f",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [
+      "central_sea_marineport_jadeport",
+      "central_sea_portzephia_marineport",
+      "northern_ocean_ironport_timeport",
+      "western_air_corridor_astralis_atlantis_base"
+    ],
+    "rasterization": "source-lines-global-native-grid-v1"
+  },
+  "detail": {
+    "status": "explicit-empty",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/detail-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/detail-overlay.png",
+      "sha256": "6e84541fac14f31507b9d68f110245775261bfd6f75fb997b4b053e25a0614b0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [],
+    "provenance": "No reviewed raster-safe detail exists; provisional outlines remain guide-only and labels/POIs remain vector data."
+  },
+  "unknown_fallback": {
+    "policy": "replace-raw-with-parent-context",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/unknown-mask.png",
+      "sha256": "d78a0affc11b1bffa7b77c60cb7b23122b6894c64e1dd7271af37c10c7382864",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "source": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/parent-context.png",
+      "sha256": "d59411f1611b577cfe34568f8bdc0419f41af79e1f0431b995f8fdf6868aaf67",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    }
+  },
+  "source_inputs": {
+    "resolution_contract": {
+      "path": "world/map-production/spec/resolution-contract.json",
+      "sha256": "f65984a6e162e6f60eb93873aa38e0daf1a263975f89cb063092c80389bb0290"
+    },
+    "map_sheets": {
+      "path": "world/map-production/source/map-sheets.json",
+      "sha256": "20204c1bf14c8cb7b1204066c1b0755a0a74f62f9c7c6418b76754540a9a3c15"
+    },
+    "canon_sources": [
+      {
+        "role": "landmasses",
+        "path": "world/map-production/source/landmasses.geojson",
+        "sha256": "d5e9600590bf2d122f33405c1f1924a8274a76f4bac1669f35f6adaaaa854b20"
+      },
+      {
+        "role": "regions",
+        "path": "world/map-production/source/regions.geojson",
+        "sha256": "233053f8ed4214016d8d4c841bceeb5192f5912dfd721325ad9657313752dbb4"
+      },
+      {
+        "role": "terrain",
+        "path": "world/map-production/source/terrain.geojson",
+        "sha256": "fd186efd744c5dd31d5abe039d23e7fc2f04ff4e689233b48dc4bd9b397ab3aa"
+      },
+      {
+        "role": "hydrography",
+        "path": "world/map-production/source/hydrography.geojson",
+        "sha256": "33e23b5c85cc41f3ac6a65ced65284b81e04664ae373d85c1afb55dc67f8677d"
+      },
+      {
+        "role": "settlement-footprints",
+        "path": "world/map-production/source/settlement-footprints.geojson",
+        "sha256": "48baf5f1a4857ef9500b6aab80468356869c5e8651196718a83a78a50cb89974"
+      },
+      {
+        "role": "transport-geometries",
+        "path": "world/map-production/source/transport-geometries.geojson",
+        "sha256": "4beabac07fbfa6c67a4340f4a45a5199cb4c536e1b081ea5d5ba20a6c19c4565"
+      }
+    ]
+  }
+}

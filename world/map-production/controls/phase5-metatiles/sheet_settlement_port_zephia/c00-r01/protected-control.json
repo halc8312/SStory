@@ -1,0 +1,208 @@
+{
+  "$schema": "https://sstory.example/schemas/phase5-protected-control.schema.json",
+  "schema_version": "1.0.0",
+  "type": "sstory-phase5-protected-metatile-control",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "generated_by": "sstory-map-production/render_phase5_metatile_controls.py@1",
+  "sheet_id": "sheet_settlement_port_zephia",
+  "column": 0,
+  "row": 1,
+  "dimensions": {
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG"
+  },
+  "visual_geometry_control": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/geometry-control.png",
+    "sha256": "cfbbae1c0bd1bf1b264cf36a60e48794bbfdd32f7e20b5e2d3ae6626d88688a8",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "parent_context": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/parent-context.png",
+    "sha256": "75a3c2a2102a6a0417d34a44d886d7a7874b35f8992f02281cef4fbf52494442",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "prior_neighbor_contexts": [
+    {
+      "direction": "north",
+      "source_tile": {
+        "column": 0,
+        "row": 0
+      },
+      "context": {
+        "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/neighbor-north-geometry-context.png",
+        "sha256": "60ba4e75d942e79a3d8effbbef228cbe7a922ad1a0be683aa4a59f8713a888e3",
+        "width": 2048,
+        "height": 2048,
+        "format": "PNG",
+        "color_mode": "RGB"
+      }
+    }
+  ],
+  "land_sea": {
+    "land_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/land-mask.png",
+      "sha256": "5fa91ad55a5ec226f92a4b86d0ce0a5f903ce5a1b0bf9a7f45dbd8d3948b2b9e",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "water_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/water-mask.png",
+      "sha256": "a0366ba820ad1d43f7b62d5a1ec36544af7d20835c55d4e246335b02652d107c",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "known_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/known-mask.png",
+      "sha256": "9b53cdd774cdf03922861615271382fc85f5de23ef70da30115f7a4db9c2a645",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "unknown_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/unknown-mask.png",
+      "sha256": "39e29daf5a62453a4abc957310281a44e8af6dc343c4b8dd173fc3e886636150",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/land-sea-overlay.png",
+      "sha256": "75a3c2a2102a6a0417d34a44d886d7a7874b35f8992f02281cef4fbf52494442",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "partition": {
+      "algorithm": "canon-land-water-unknown-partition-v1",
+      "pixel_count": 4194304,
+      "land_pixel_count": 3001073,
+      "water_pixel_count": 476431,
+      "unknown_pixel_count": 716800,
+      "overlap_pixel_count": 0,
+      "unclassified_pixel_count": 0
+    }
+  },
+  "transport": {
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/transport-mask.png",
+      "sha256": "90f66ecc19bd57f8532507aa13c344231d9455a492dd28b58e15d0616e77060a",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/transport-overlay.png",
+      "sha256": "5db83a9420b6b7b5c88b76741a31a54c2463bad36efef418888a76d6600c5759",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [
+      "astralis_port_zephia_magic_train",
+      "central_sea_portzephia_marineport",
+      "eastern_road_astralis_moonlight",
+      "lumiera_arch_astralis_moonshadow",
+      "sky_chain_moonshadow_griffin_nest",
+      "southern_air_corridor_astralis_jade_airport"
+    ],
+    "rasterization": "source-lines-global-native-grid-v1"
+  },
+  "detail": {
+    "status": "explicit-empty",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/detail-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/detail-overlay.png",
+      "sha256": "6e84541fac14f31507b9d68f110245775261bfd6f75fb997b4b053e25a0614b0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [],
+    "provenance": "No reviewed raster-safe detail exists; provisional outlines remain guide-only and labels/POIs remain vector data."
+  },
+  "unknown_fallback": {
+    "policy": "replace-raw-with-parent-context",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/unknown-mask.png",
+      "sha256": "39e29daf5a62453a4abc957310281a44e8af6dc343c4b8dd173fc3e886636150",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "source": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/parent-context.png",
+      "sha256": "75a3c2a2102a6a0417d34a44d886d7a7874b35f8992f02281cef4fbf52494442",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    }
+  },
+  "source_inputs": {
+    "resolution_contract": {
+      "path": "world/map-production/spec/resolution-contract.json",
+      "sha256": "f65984a6e162e6f60eb93873aa38e0daf1a263975f89cb063092c80389bb0290"
+    },
+    "map_sheets": {
+      "path": "world/map-production/source/map-sheets.json",
+      "sha256": "20204c1bf14c8cb7b1204066c1b0755a0a74f62f9c7c6418b76754540a9a3c15"
+    },
+    "canon_sources": [
+      {
+        "role": "landmasses",
+        "path": "world/map-production/source/landmasses.geojson",
+        "sha256": "d5e9600590bf2d122f33405c1f1924a8274a76f4bac1669f35f6adaaaa854b20"
+      },
+      {
+        "role": "regions",
+        "path": "world/map-production/source/regions.geojson",
+        "sha256": "233053f8ed4214016d8d4c841bceeb5192f5912dfd721325ad9657313752dbb4"
+      },
+      {
+        "role": "terrain",
+        "path": "world/map-production/source/terrain.geojson",
+        "sha256": "fd186efd744c5dd31d5abe039d23e7fc2f04ff4e689233b48dc4bd9b397ab3aa"
+      },
+      {
+        "role": "hydrography",
+        "path": "world/map-production/source/hydrography.geojson",
+        "sha256": "33e23b5c85cc41f3ac6a65ced65284b81e04664ae373d85c1afb55dc67f8677d"
+      },
+      {
+        "role": "settlement-footprints",
+        "path": "world/map-production/source/settlement-footprints.geojson",
+        "sha256": "48baf5f1a4857ef9500b6aab80468356869c5e8651196718a83a78a50cb89974"
+      },
+      {
+        "role": "transport-geometries",
+        "path": "world/map-production/source/transport-geometries.geojson",
+        "sha256": "4beabac07fbfa6c67a4340f4a45a5199cb4c536e1b081ea5d5ba20a6c19c4565"
+      }
+    ]
+  }
+}

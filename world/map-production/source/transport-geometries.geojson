@@ -1,0 +1,181 @@
+{
+  "type": "FeatureCollection",
+  "name": "transport_geometries",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "metadata": {
+    "version": "0.1.0",
+    "status": "provisional",
+    "source": "world/map-data/data/routes.json",
+    "anchor_source": "world/map-data/data/pixel-mapping.json",
+    "geometry_method": "direct endpoint connection; no canon waypoints inferred",
+    "common_geometry_confidence": "estimated",
+    "common_review_status": "provisional"
+  },
+  "features": [
+    {
+      "type": "Feature", "id": "central_road_astralis_granrock",
+      "properties": {"id": "central_road_astralis_granrock", "name": "中央街道：アストラリス〜グランロック", "route_type": "road", "from_node_id": "astralis", "to_node_id": "granrock", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3759.7], [3450.4, 3300.7]]}
+    },
+    {
+      "type": "Feature", "id": "central_road_granrock_jade_north",
+      "properties": {"id": "central_road_granrock_jade_north", "name": "中央街道：グランロック〜翡翠北", "route_type": "road", "from_node_id": "granrock", "to_node_id": "jade_north", "status": "active", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3450.4, 3300.7], [4264.4, 5273.3]]}
+    },
+    {
+      "type": "Feature", "id": "central_road_jade_north_jade_capital",
+      "properties": {"id": "central_road_jade_north_jade_capital", "name": "中央街道：翡翠北〜翡翠王都", "route_type": "road", "from_node_id": "jade_north", "to_node_id": "jade_capital", "status": "active", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4264.4, 5273.3], [4622.3, 5859.3]]}
+    },
+    {
+      "type": "Feature", "id": "eastern_road_astralis_moonlight",
+      "properties": {"id": "eastern_road_astralis_moonlight", "name": "東方街道：アストラリス〜ムーンライト・グレイス", "route_type": "road", "from_node_id": "astralis", "to_node_id": "moonlight_grace", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3759.7], [7649.7, 3076.2]]}
+    },
+    {
+      "type": "Feature", "id": "southern_road_astralis_blood_fort",
+      "properties": {"id": "southern_road_astralis_blood_fort", "name": "南方街道：アストラリス〜ブラッド・フォート", "route_type": "road", "from_node_id": "astralis", "to_node_id": "blood_fort", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3759.7], [3841.1, 5615.4]]}
+    },
+    {
+      "type": "Feature", "id": "southern_road_blood_fort_jade_port",
+      "properties": {"id": "southern_road_blood_fort_jade_port", "name": "南方街道：ブラッド・フォート〜翡翠港", "route_type": "road", "from_node_id": "blood_fort", "to_node_id": "jade_port", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3841.1, 5615.4], [4804.7, 5029.3]]}
+    },
+    {
+      "type": "Feature", "id": "western_road_marineport_iron_mountains",
+      "properties": {"id": "western_road_marineport_iron_mountains", "name": "西方街道：マリンポート〜鉄山脈", "route_type": "road", "from_node_id": "marineport", "to_node_id": "iron_mountain_port", "status": "active", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[1139.4, 3808.4], [1419.2, 3369.2]]}
+    },
+    {
+      "type": "Feature", "id": "western_road_iron_mountains_glacier_city",
+      "properties": {"id": "western_road_iron_mountains_glacier_city", "name": "西方街道：鉄山脈〜氷河都市", "route_type": "road", "from_node_id": "iron_mountain_port", "to_node_id": "glacier_city", "status": "active", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[1419.2, 3369.2], [1158.9, 4960.8]]}
+    },
+    {
+      "type": "Feature", "id": "astralis_loop_line",
+      "properties": {"id": "astralis_loop_line", "name": "アストラリス環状線", "route_type": "rail", "from_node_id": "astralis", "to_node_id": "astralis", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "geometry_method": "schematic closed loop around mapped node anchor"},
+      "geometry": {"type": "LineString", "coordinates": [[4003.6, 3759.7], [4047.5, 3653.6], [4153.6, 3609.7], [4259.7, 3653.6], [4303.6, 3759.7], [4259.7, 3865.8], [4153.6, 3909.7], [4047.5, 3865.8], [4003.6, 3759.7]]}
+    },
+    {
+      "type": "Feature", "id": "astralis_port_zephia_magic_train",
+      "properties": {"id": "astralis_port_zephia_magic_train", "name": "アストラリス・ポートゼフィア魔導列車", "route_type": "rail", "from_node_id": "astralis", "to_node_id": "port_zephia", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3759.7], [4687.5, 3515.8]]}
+    },
+    {
+      "type": "Feature", "id": "atlantis_tidal_train_experimental",
+      "properties": {"id": "atlantis_tidal_train_experimental", "name": "アトランティス潮力列車（実験）", "route_type": "rail", "from_node_id": "marineport", "to_node_id": "atlantia_undersea_city", "status": "experimental", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[1139.4, 3808.4], [833.3, 4101.5]]}
+    },
+    {
+      "type": "Feature", "id": "central_sea_portzephia_marineport",
+      "properties": {"id": "central_sea_portzephia_marineport", "name": "中央海航路：ポートゼフィア〜マリンポート", "route_type": "sea", "from_node_id": "port_zephia", "to_node_id": "marineport", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4687.5, 3515.8], [1139.4, 3808.4]]}
+    },
+    {
+      "type": "Feature", "id": "central_sea_marineport_jadeport",
+      "properties": {"id": "central_sea_marineport_jadeport", "name": "中央海航路：マリンポート〜翡翠港", "route_type": "sea", "from_node_id": "marineport", "to_node_id": "jade_port", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[1139.4, 3808.4], [4804.7, 5029.3]]}
+    },
+    {
+      "type": "Feature", "id": "red_sand_coastal_warriorport_jadeport",
+      "properties": {"id": "red_sand_coastal_warriorport_jadeport", "name": "赤砂海岸航路：戦士の港〜翡翠港", "route_type": "sea", "from_node_id": "warrior_port", "to_node_id": "jade_port", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3385.5, 6103.7], [4804.7, 5029.3]]}
+    },
+    {
+      "type": "Feature", "id": "northern_ocean_ironport_timeport",
+      "properties": {"id": "northern_ocean_ironport_timeport", "name": "北大洋航路：鉄山港〜時空の港", "route_type": "sea", "from_node_id": "iron_mountain_port", "to_node_id": "time_port", "status": "seasonal", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[1419.2, 3369.2], [4023.4, 1660.1]]}
+    },
+    {
+      "type": "Feature", "id": "sky_chain_astralis_wind_rest",
+      "properties": {"id": "sky_chain_astralis_wind_rest", "name": "スカイ・チェーン：アストラリス〜風の休息所", "route_type": "air", "from_node_id": "astralis_airport", "to_node_id": "wind_rest_isle", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3613.2], [3971.4, 3417.9]]}
+    },
+    {
+      "type": "Feature", "id": "sky_chain_wind_rest_moonshadow_isle",
+      "properties": {"id": "sky_chain_wind_rest_moonshadow_isle", "name": "スカイ・チェーン：風の休息所〜月影浮島", "route_type": "air", "from_node_id": "wind_rest_isle", "to_node_id": "moonshadow_floating_island", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3971.4, 3417.9], [7096.4, 3124.9]]}
+    },
+    {
+      "type": "Feature", "id": "sky_chain_moonshadow_griffin_nest",
+      "properties": {"id": "sky_chain_moonshadow_griffin_nest", "name": "スカイ・チェーン：月影浮島〜グリフォン栖", "route_type": "air", "from_node_id": "moonshadow_floating_island", "to_node_id": "griffin_nest", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[7096.4, 3124.9], [3776.1, 3613.2]]}
+    },
+    {
+      "type": "Feature", "id": "sky_chain_griffin_nest_eye_of_storm",
+      "properties": {"id": "sky_chain_griffin_nest_eye_of_storm", "name": "スカイ・チェーン：グリフォン栖〜嵐の目", "route_type": "air", "from_node_id": "griffin_nest", "to_node_id": "eye_of_storm", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3776.1, 3613.2], [3710.9, 3564.5]]}
+    },
+    {
+      "type": "Feature", "id": "sky_chain_eye_of_storm_stormhold",
+      "properties": {"id": "sky_chain_eye_of_storm_stormhold", "name": "スカイ・チェーン：嵐の目〜嵐の都", "route_type": "air", "from_node_id": "eye_of_storm", "to_node_id": "stormhold", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3710.9, 3564.5], [3645.8, 3711.0]]}
+    },
+    {
+      "type": "Feature", "id": "lumiera_arch_astralis_moonshadow",
+      "properties": {"id": "lumiera_arch_astralis_moonshadow", "name": "リュミエラ・アーチ航路：アストラリス〜月影浮島", "route_type": "air", "from_node_id": "astralis_airport", "to_node_id": "moonshadow_floating_island", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3613.2], [7096.4, 3124.9]]}
+    },
+    {
+      "type": "Feature", "id": "lumiera_arch_moonshadow_moonlight_platform",
+      "properties": {"id": "lumiera_arch_moonshadow_moonlight_platform", "name": "リュミエラ・アーチ航路：月影浮島〜月光台", "route_type": "air", "from_node_id": "moonshadow_floating_island", "to_node_id": "moonlight_platform", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[7096.4, 3124.9], [7714.8, 3027.5]]}
+    },
+    {
+      "type": "Feature", "id": "southern_air_corridor_astralis_jade_airport",
+      "properties": {"id": "southern_air_corridor_astralis_jade_airport", "name": "南方空中回廊：アストラリス〜翡翠空港", "route_type": "air", "from_node_id": "astralis_airport", "to_node_id": "jade_airport", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3613.2], [4817.6, 4980.6]]}
+    },
+    {
+      "type": "Feature", "id": "western_air_corridor_astralis_atlantis_base",
+      "properties": {"id": "western_air_corridor_astralis_atlantis_base", "name": "西方空中回廊：アストラリス〜アトランティス浮上基地", "route_type": "air", "from_node_id": "astralis_airport", "to_node_id": "atlantis_floating_base", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 3613.2], [1204.3, 3662.3]]}
+    },
+    {
+      "type": "Feature", "id": "western_air_corridor_atlantis_base_marineport",
+      "properties": {"id": "western_air_corridor_atlantis_base_marineport", "name": "西方空中回廊：アトランティス浮上基地〜マリンポート", "route_type": "air", "from_node_id": "atlantis_floating_base", "to_node_id": "marineport", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[1204.3, 3662.3], [1139.4, 3808.4]]}
+    },
+    {
+      "type": "Feature", "id": "red_desert_caravan_bloodfort_jade_oasis",
+      "properties": {"id": "red_desert_caravan_bloodfort_jade_oasis", "name": "紅海砂漠隊商路：ブラッド・フォート〜翡翠のオアシス", "route_type": "caravan", "from_node_id": "blood_fort", "to_node_id": "jade_oasis", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3841.1, 5615.4], [4362.1, 5419.8]]}
+    },
+    {
+      "type": "Feature", "id": "red_desert_caravan_jade_oasis_jade_port",
+      "properties": {"id": "red_desert_caravan_jade_oasis_jade_port", "name": "紅海砂漠隊商路：翡翠のオアシス〜翡翠港", "route_type": "caravan", "from_node_id": "jade_oasis", "to_node_id": "jade_port", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4362.1, 5419.8], [4804.7, 5029.3]]}
+    },
+    {
+      "type": "Feature", "id": "atlantis_submarine_marineport_atlantia",
+      "properties": {"id": "atlantis_submarine_marineport_atlantia", "name": "アトランティス潜水艇路：マリンポート〜アトランティア", "route_type": "submarine", "from_node_id": "marineport", "to_node_id": "atlantia_undersea_city", "status": "active", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[1139.4, 3808.4], [833.3, 4101.5]]}
+    },
+    {
+      "type": "Feature", "id": "atlantis_undersea_tunnel_atlantia_glacier",
+      "properties": {"id": "atlantis_undersea_tunnel_atlantia_glacier", "name": "アトランティス海底トンネル：アトランティア〜氷河都市", "route_type": "underwater_tunnel", "from_node_id": "atlantia_undersea_city", "to_node_id": "glacier_city", "status": "experimental", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[833.3, 4101.5], [1158.9, 4960.8]]}
+    },
+    {
+      "type": "Feature", "id": "grimoire_north_road_timeport_labyrinth",
+      "properties": {"id": "grimoire_north_road_timeport_labyrinth", "name": "グリモワール北道：時空の港〜時の迷宮", "route_type": "road", "from_node_id": "time_port", "to_node_id": "labyrinth_of_time", "status": "restricted", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4023.4, 1660.1], [4153.6, 1777.3]]}
+    },
+    {
+      "type": "Feature", "id": "grimoire_barrier_road_labyrinth_spirit_gate",
+      "properties": {"id": "grimoire_barrier_road_labyrinth_spirit_gate", "name": "グリモワール結界道：時の迷宮〜精霊の門", "route_type": "road", "from_node_id": "labyrinth_of_time", "to_node_id": "spirit_gate", "status": "forbidden", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 1777.3], [3841.1, 1709.2]]}
+    },
+    {
+      "type": "Feature", "id": "grimoire_chrono_tunnel_labyrinth_sealed_lands",
+      "properties": {"id": "grimoire_chrono_tunnel_labyrinth_sealed_lands", "name": "グリモワール時空トンネル：時の迷宮〜封印の地", "route_type": "tunnel", "from_node_id": "labyrinth_of_time", "to_node_id": "sealed_lands", "status": "restricted", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[4153.6, 1777.3], [4231.7, 1855.3]]}
+    },
+    {
+      "type": "Feature", "id": "grimoire_spirit_warp_spirit_gate_ethernia_core",
+      "properties": {"id": "grimoire_spirit_warp_spirit_gate_ethernia_core", "name": "精霊ワープ：精霊の門〜エターニア・コア", "route_type": "warp", "from_node_id": "spirit_gate", "to_node_id": "ethernia_core", "status": "forbidden", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional"},
+      "geometry": {"type": "LineString", "coordinates": [[3841.1, 1709.2], [4003.9, 1416.1]]}
+    }
+  ]
+}

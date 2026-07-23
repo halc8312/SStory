@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-e-v3-calibration-v1",
+  "report_id": "style-candidate-e-v3-calibration",
+  "created_at": "2026-07-19T00:30:00Z",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "source_image": {
+    "path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+    "sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0",
+    "mode": "RGB",
+    "role": "pixel-authoritative standalone luminance plate base"
+  },
+  "transfer_control": {
+    "path": "world/map-production/controls/style-candidate-e-v3-relief-mask-v1.json",
+    "sha256": "acee8d871e26fd557f553c40446752d0d5e1c70d98acd1683a1b1a83b8586b69",
+    "raster_path": "world/map-production/controls/style-candidate-e-v3-relief-mask-v1.png",
+    "raster_sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a",
+    "functional_reference_path": "world/map-production/controls/style-candidate-e-v2-relief-mask-v1.json",
+    "functional_reference_sha256": "13288618d15f92e4e7d5f95d9014775407dc95c44c110baab7ab26997830bba8",
+    "allowed_metadata_differences": ["id", "transfer_report_id", "purpose", "notes"]
+  },
+  "calibration": {
+    "low_pass": {
+      "method": "gaussian",
+      "radius_px": 24
+    },
+    "regional_gain": {
+      "region_id": "south_east_range",
+      "gain": 2.0,
+      "center_statistic": "median",
+      "sample_scope": "opaque-core-excluding-road-guard",
+      "preserve_high_frequency_residual": true,
+      "apply_transfer_region_feather": true
+    }
+  },
+  "numeric_contract": {
+    "pillow_version": "12.3.0",
+    "luminance_mode": "Pillow-L",
+    "pixel_sample_origin": "integer-top-left-no-half-pixel-offset",
+    "ellipse_boundary": "strict-r-less-than-one",
+    "mask_normalization": "mask-byte-divided-by-255",
+    "rounding": "python-half-even-each-operation-before-integer-sum",
+    "operation_order": "derive-from-source-sum-integers-then-apply-equal-rgb-delta",
+    "range_handling": "reject-before-write-never-clamp"
+  },
+  "safety": {
+    "maximum_absolute_raw_channel_delta_levels": 20,
+    "maximum_rgb_delta_spread_levels": 0,
+    "maximum_clipping_pixels": 0,
+    "require_exact_outside_calibration_permission": true,
+    "require_source_high_frequency_residual_preserved": true,
+    "raw_high_frequency_gaussian_radius_px": 8,
+    "maximum_raw_high_frequency_rms_levels": 1.0,
+    "maximum_raw_high_frequency_p99_levels": 2,
+    "maximum_raw_high_frequency_levels": 8,
+    "require_full_transfer_preflight": true,
+    "expected_transfer_preflight_status": "rejected",
+    "expected_transfer_failure": "north_east_range quadrant 3 P90 is 1.0",
+    "require_deterministic_png": true,
+    "publication": "atomic-output-and-report-no-overwrite"
+  },
+  "expected_transfer_preflight": {
+    "status": "rejected",
+    "north_east_input_q90_q10_levels": 33,
+    "south_east_input_q90_q10_levels": 33,
+    "north_east_bandpass_q90_q10_levels": 6,
+    "south_east_bandpass_q90_q10_levels": 6,
+    "north_east_final_q90_q10_levels": 7,
+    "south_east_final_q90_q10_levels": 7,
+    "region_quadrant_p90_absolute_delta_levels": [4, 4, 1, 6, 4, 2, 6, 4],
+    "traceable_components": 0,
+    "road_changed_pixels": 0,
+    "outside_mask_changed_pixels": 0,
+    "maximum_absolute_delta_levels": 6,
+    "maximum_active_high_frequency_p99_levels": 1
+  },
+  "purpose": "Candidate E attempt three changes only the south-east low-frequency amplitude of the hash-locked E v1 substrate. North-east and every other pixel remain exact. The expected full-transfer rejection at north-east quadrant three is retained as causal evidence for a separate one-change Candidate E v4 support-field attempt; no transfer tolerance is relaxed."
+}

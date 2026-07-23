@@ -3,8 +3,9 @@
 /**
  * Run the repository's Python tooling on Windows, macOS, and Linux.
  *
- * Windows commonly exposes Python through the `py` launcher while CI images
- * expose `python3`. npm scripts should not need platform-specific variants.
+ * Prefer the active environment's executable aliases before the Windows
+ * launcher. setup-python and virtual environments update `python` on PATH,
+ * while `py -3` can select a different system installation with no packages.
  */
 
 const { spawnSync } = require('node:child_process');
@@ -15,9 +16,9 @@ function pythonCandidates(platform = process.platform) {
 
   if (platform === 'win32') {
     candidates.push(
-      { command: 'py', prefix: ['-3'] },
+      { command: 'python', prefix: [] },
       { command: 'python3', prefix: [] },
-      { command: 'python', prefix: [] }
+      { command: 'py', prefix: ['-3'] }
     );
   } else {
     candidates.push(
@@ -29,8 +30,27 @@ function pythonCandidates(platform = process.platform) {
   return candidates;
 }
 
+function isUsablePythonCandidate(candidate, options = {}) {
+  const probe = spawnSync(
+    candidate.command,
+    [...candidate.prefix, '-c', 'print("SSTORY_PYTHON_OK")'],
+    {
+      cwd: options.cwd || process.cwd(),
+      env: options.env || process.env,
+      encoding: 'utf8',
+      shell: false
+    }
+  );
+
+  return !probe.error && probe.status === 0 && probe.stdout.includes('SSTORY_PYTHON_OK');
+}
+
 function runPython(args, options = {}) {
   for (const candidate of pythonCandidates(options.platform)) {
+    if (!isUsablePythonCandidate(candidate, options)) {
+      continue;
+    }
+
     const result = spawnSync(candidate.command, [...candidate.prefix, ...args], {
       cwd: options.cwd || process.cwd(),
       env: options.env || process.env,
@@ -72,4 +92,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { pythonCandidates, runPython };
+module.exports = { isUsablePythonCandidate, pythonCandidates, runPython };

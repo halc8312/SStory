@@ -1,0 +1,17 @@
+Edit the supplied H4 map image. Preserve its composition, coastline, river delta, river paths, roads, circular city footprint, port footprint, forest extent, fields, palette, parchment grain, line density, and frame-free edges.
+
+Make exactly one global correction: remove every trace of pictorial height, oblique projection, side face, cast shadow, and directional lighting. Redraw all features as a strict orthographic plan-view cartographic plate, as though every point is seen straight down from directly overhead with a vertical camera and flat diffuse illumination.
+
+Required replacements:
+- replace every triangular or faceted mountain/rock peak in the right half with irregular flat areal rocky texture: tiny non-convergent chips, stipple, short disconnected strokes, and very soft non-directional mottling; no bright side, dark side, peak, ridge face, cone, pyramid, rosette, or contour ring;
+- replace tree crowns and trunks with varied flat overhead canopy marks only: irregular circular/branching ink clusters without visible trunks, side faces, cast shadows, or repeated stamps;
+- flatten the circular city completely: walls, towers, roofs, streets, and blocks must be overhead footprints and rings with no visible façades, wall height, roof pitch, shadows, or radial perspective;
+- flatten the port completely: buildings and piers must be plan footprints only, with no front walls, roof faces, vertical posts, shadows, or miniature scenic viewpoint;
+- make every coastline and riverbank a low plan-view boundary with no cliff face, vertical hatch wall, overhang, or side shading;
+- keep roads, rivers, delta channels, fields, and quiet label corridors unbroken and readable.
+
+At 400% inspection there must be no object with a light-facing side and a dark-facing side. Relief may be communicated only by flat, direction-neutral density and texture. Do not add or remove major geography and do not simplify the existing micro-detail.
+
+Hard exclusions: horizon, tilt, isometric view, bird's-eye perspective, 3D relief, visible façades, cliff sides, mountain peaks, pictorial hills, radial rosettes, repeated triangular symbols, cast shadows, directional highlights, floating islands, text or pseudo-text, letters, numbers, legend, compass, scale bar, frame, border, signature, watermark, logo, modern objects, or new major settlements.
+
+Output one coherent 1536x1024 landscape RGB image in the same restrained sepia/olive/dusty-blue copperplate style. It must read as a seamless flat GIS raster base at native size and at 200% and 400% zoom.

@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-h-v11-colour-calibration-generation-receipt",
+  "type": "sstory-imagegen-candidate-generation-receipt",
+  "provenance_limitations": {
+    "tool_family": "OpenAI ImageGen through Codex built-in image generation",
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The tool output retained for this trial did not expose a model identifier, model snapshot, generation identifier, or generation timestamp. No value is inferred or reconstructed."
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-h-v11-colour-calibration.generation.txt",
+    "sha256": "7534a27b2142dc3ff8a353a40af00b01e5455fe0c2a2e45fb4342ee53cfad990",
+    "exact_text_retained": true
+  },
+  "inputs": [
+    {
+      "path": "world/map-production/candidates/style-candidate-h-v10-material-restoration-raw.png",
+      "sha256": "543cb36aa37b6d3f572f7d7379636205ec60760c73157caa0235034dad08d32e",
+      "role": "pixel-level drawing, geometry, and texture authority"
+    },
+    {
+      "path": "world/map-production/candidates/style-candidate-b-v1.png",
+      "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "role": "colour-statistics reference only"
+    }
+  ],
+  "output": {
+    "path": "world/map-production/candidates/style-candidate-h-v11-colour-calibration-raw.png",
+    "sha256": "32175b57fa82891045a3f8ffa70c3da134b33e38a790db62b14d11c0256cda75",
+    "bytes": 3951840,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "accepted_as_final": false
+  }
+}

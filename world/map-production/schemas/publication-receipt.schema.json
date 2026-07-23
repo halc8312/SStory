@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/publication-receipt.schema.json",
+  "title": "SStory world-v3 publication receipt",
+  "description": "Persistent, hash-locked evidence written only after the immutable tile tree, both byte-identical runtime indexes, active HTML metadata, and canonical Phase 6 browser-QA bundle have been validated.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "release_id",
+    "published_at",
+    "published_by",
+    "canonical_index",
+    "compatibility_index",
+    "release_tree",
+    "browser_qa",
+    "html",
+    "runtime",
+    "validation"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/publication-receipt.schema.json"
+    },
+    "schema_version": {"const": "1.0.0"},
+    "type": {"const": "sstory-map-publication-receipt"},
+    "release_id": {"const": "world-v3"},
+    "published_at": {"type": "string", "format": "date-time"},
+    "published_by": {"type": "string", "minLength": 1},
+    "canonical_index": {
+      "$ref": "#/definitions/canonical_index"
+    },
+    "compatibility_index": {
+      "$ref": "#/definitions/compatibility_index"
+    },
+    "release_tree": {"$ref": "#/definitions/release_tree"},
+    "browser_qa": {"$ref": "#/definitions/browser_qa"},
+    "html": {"$ref": "#/definitions/html"},
+    "runtime": {"$ref": "#/definitions/runtime"},
+    "validation": {"$ref": "#/definitions/validation"}
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "canonical_index": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "docs/data/map/sheet-tiles-v3.json"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "compatibility_index": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "docs/data/map/region-rasters.json"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "release_tree": {
+      "type": "object",
+      "required": ["path", "file_count", "sha256"],
+      "properties": {
+        "path": {"const": "docs/assets/images/maps/tiles/world-v3"},
+        "file_count": {"type": "integer", "minimum": 24},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "browser_qa": {
+      "type": "object",
+      "required": [
+        "path",
+        "receipt_sha256",
+        "tree_sha256",
+        "tested_url",
+        "completed_at"
+      ],
+      "properties": {
+        "path": {
+          "const": "world/map-production/releases/world-v3-phase6-browser-qa"
+        },
+        "receipt_sha256": {"$ref": "#/definitions/sha256"},
+        "tree_sha256": {"$ref": "#/definitions/sha256"},
+        "tested_url": {"type": "string", "format": "uri", "minLength": 1},
+        "completed_at": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    },
+    "html": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "docs/pages/interactive-map-v3.html"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "required": [
+        "active_release",
+        "target_release",
+        "fallback_releases",
+        "cache_key",
+        "world_v3_manifest",
+        "sheet_tile_index"
+      ],
+      "properties": {
+        "active_release": {"const": "world-v3"},
+        "target_release": {"const": "world-v3"},
+        "fallback_releases": {"const": ["world-v2", "world-v1"]},
+        "cache_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "world_v3_manifest": {
+          "const": "../assets/images/maps/tiles/world-v3/metadata.json"
+        },
+        "sheet_tile_index": {
+          "const": "../data/map/region-rasters.json"
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "required": ["bounded_sheet_count", "tile_count", "tile_bytes"],
+      "properties": {
+        "bounded_sheet_count": {"const": 23},
+        "tile_count": {"type": "integer", "minimum": 23},
+        "tile_bytes": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    }
+  }
+}

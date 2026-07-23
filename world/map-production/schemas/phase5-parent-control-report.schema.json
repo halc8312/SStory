@@ -1,0 +1,362 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-parent-control-report.schema.json",
+  "title": "SStory Phase 5 independent parent control report",
+  "description": "Fail-closed report binding the six-parent control index and all twelve canonical control masks.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "generated_by",
+    "status",
+    "index",
+    "inputs",
+    "outputs",
+    "summary",
+    "checks"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-parent-control-report.schema.json"
+    },
+    "schema_version": {"const": "1.1.0"},
+    "type": {"const": "sstory-phase5-parent-control-report"},
+    "coordinate_reference_system": {"const": "EA-WORLD-1"},
+    "generated_by": {
+      "const": "sstory-map-production/render_phase5_parent_control_masks.py@3"
+    },
+    "status": {"const": "passed"},
+    "index": {"$ref": "#/definitions/artifact"},
+    "inputs": {"$ref": "#/definitions/inputs"},
+    "outputs": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {"$ref": "#/definitions/output"},
+      "allOf": [
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_world"}, "role": {"const": "land_sea_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_world"}, "role": {"const": "transport_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_elysion"}, "role": {"const": "land_sea_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_elysion"}, "role": {"const": "transport_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_lumiera"}, "role": {"const": "land_sea_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_lumiera"}, "role": {"const": "transport_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_chaos_ria"}, "role": {"const": "land_sea_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_chaos_ria"}, "role": {"const": "transport_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_atlantis"}, "role": {"const": "land_sea_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_atlantis"}, "role": {"const": "transport_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_grimoire"}, "role": {"const": "land_sea_control"}}, "required": ["sheet_id", "role"]}},
+        {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_grimoire"}, "role": {"const": "transport_control"}}, "required": ["sheet_id", "role"]}}
+      ]
+    },
+    "summary": {"$ref": "#/definitions/summary"},
+    "checks": {"$ref": "#/definitions/checks"}
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "source_artifact": {
+      "type": "object",
+      "required": ["role", "path", "sha256"],
+      "properties": {
+        "role": {
+          "enum": [
+            "landmasses",
+            "regions",
+            "terrain",
+            "hydrography",
+            "transport",
+            "settlements"
+          ]
+        },
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "executable_artifact": {
+      "type": "object",
+      "required": ["role", "path", "sha256"],
+      "properties": {
+        "role": {
+          "enum": [
+            "generator",
+            "production-common",
+            "canonical-source-contract",
+            "resolution-contract-validator"
+          ]
+        },
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "schema_artifact": {
+      "type": "object",
+      "required": ["role", "path", "sha256"],
+      "properties": {
+        "role": {"enum": ["index-schema", "report-schema"]},
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "runtime_compatibility": {
+      "type": "object",
+      "required": [
+        "python_implementation",
+        "python_series",
+        "pillow_version",
+        "jsonschema_version",
+        "png_encoding_contract"
+      ],
+      "properties": {
+        "python_implementation": {"const": "CPython"},
+        "python_series": {"const": "3.12"},
+        "pillow_version": {"const": "12.3.0"},
+        "jsonschema_version": {"const": "4.26.0"},
+        "png_encoding_contract": {
+          "const": "pillow-png-l-compress9-no-optimize-v1"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "required": [
+        "resolution_contract",
+        "map_sheets",
+        "canonical_sources",
+        "executable_inputs",
+        "validation_schemas",
+        "runtime_compatibility"
+      ],
+      "properties": {
+        "resolution_contract": {"$ref": "#/definitions/artifact"},
+        "map_sheets": {"$ref": "#/definitions/artifact"},
+        "canonical_sources": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/source_artifact"},
+          "allOf": [
+            {"contains": {"properties": {"role": {"const": "landmasses"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "regions"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "terrain"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "hydrography"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "transport"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "settlements"}}, "required": ["role"]}}
+          ]
+        },
+        "executable_inputs": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/executable_artifact"},
+          "allOf": [
+            {"contains": {"properties": {"role": {"const": "generator"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "production-common"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "canonical-source-contract"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "resolution-contract-validator"}}, "required": ["role"]}}
+          ]
+        },
+        "validation_schemas": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/schema_artifact"},
+          "allOf": [
+            {"contains": {"properties": {"role": {"const": "index-schema"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "report-schema"}}, "required": ["role"]}}
+          ]
+        },
+        "runtime_compatibility": {
+          "$ref": "#/definitions/runtime_compatibility"
+        }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "sheet_count",
+        "world_sheet_count",
+        "continent_sheet_count",
+        "control_mask_count",
+        "input_artifact_count"
+      ],
+      "properties": {
+        "sheet_count": {"const": 6},
+        "world_sheet_count": {"const": 1},
+        "continent_sheet_count": {"const": 5},
+        "control_mask_count": {"const": 12},
+        "input_artifact_count": {"const": 14}
+      },
+      "additionalProperties": false
+    },
+    "sheet_id": {
+      "enum": [
+        "sheet_world",
+        "sheet_continent_elysion",
+        "sheet_continent_lumiera",
+        "sheet_continent_chaos_ria",
+        "sheet_continent_atlantis",
+        "sheet_continent_grimoire"
+      ]
+    },
+    "output": {
+      "type": "object",
+      "required": ["sheet_id", "role", "path", "sha256"],
+      "properties": {
+        "sheet_id": {"$ref": "#/definitions/sheet_id"},
+        "role": {"enum": ["land_sea_control", "transport_control"]},
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "dimension": {
+      "type": "object",
+      "required": ["sheet_id", "width", "height", "pixel_bounds"],
+      "properties": {
+        "sheet_id": {"$ref": "#/definitions/sheet_id"},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "pixel_bounds": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {"type": "integer", "minimum": 0}
+        }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "exact_parent_sheet_set",
+        "native_dimensions",
+        "binary_png_controls",
+        "hash_locked_artifacts",
+        "independent_control_path"
+      ],
+      "properties": {
+        "exact_parent_sheet_set": {
+          "type": "object",
+          "required": ["passed", "expected", "actual"],
+          "properties": {
+            "passed": {"const": true},
+            "expected": {
+              "const": [
+                "sheet_world",
+                "sheet_continent_elysion",
+                "sheet_continent_lumiera",
+                "sheet_continent_chaos_ria",
+                "sheet_continent_atlantis",
+                "sheet_continent_grimoire"
+              ]
+            },
+            "actual": {
+              "const": [
+                "sheet_world",
+                "sheet_continent_elysion",
+                "sheet_continent_lumiera",
+                "sheet_continent_chaos_ria",
+                "sheet_continent_atlantis",
+                "sheet_continent_grimoire"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "native_dimensions": {
+          "type": "object",
+          "required": ["passed", "sheets"],
+          "properties": {
+            "passed": {"const": true},
+            "sheets": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "uniqueItems": true,
+              "items": {"$ref": "#/definitions/dimension"},
+              "allOf": [
+                {"contains": {"properties": {"sheet_id": {"const": "sheet_world"}}, "required": ["sheet_id"]}},
+                {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_elysion"}}, "required": ["sheet_id"]}},
+                {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_lumiera"}}, "required": ["sheet_id"]}},
+                {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_chaos_ria"}}, "required": ["sheet_id"]}},
+                {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_atlantis"}}, "required": ["sheet_id"]}},
+                {"contains": {"properties": {"sheet_id": {"const": "sheet_continent_grimoire"}}, "required": ["sheet_id"]}}
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "binary_png_controls": {
+          "type": "object",
+          "required": ["passed", "mask_count"],
+          "properties": {
+            "passed": {"const": true},
+            "mask_count": {"const": 12}
+          },
+          "additionalProperties": false
+        },
+        "hash_locked_artifacts": {
+          "type": "object",
+          "required": ["passed", "input_count", "output_count", "index_locked"],
+          "properties": {
+            "passed": {"const": true},
+            "input_count": {"const": 14},
+            "output_count": {"const": 12},
+            "index_locked": {"const": true}
+          },
+          "additionalProperties": false
+        },
+        "independent_control_path": {
+          "type": "object",
+          "required": [
+            "passed",
+            "source_policy",
+            "control_rasterizer",
+            "direct17_control_index_consumed",
+            "observed_renderer_builders_consumed",
+            "parent_observed_masks_consumed",
+            "composited_masters_consumed"
+          ],
+          "properties": {
+            "passed": {"const": true},
+            "source_policy": {"const": "canonical-ea-world-1-only"},
+            "control_rasterizer": {
+              "const": "independent-parent-canonical-raster-v1"
+            },
+            "direct17_control_index_consumed": {"const": false},
+            "observed_renderer_builders_consumed": {"const": false},
+            "parent_observed_masks_consumed": {"const": false},
+            "composited_masters_consumed": {"const": false}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

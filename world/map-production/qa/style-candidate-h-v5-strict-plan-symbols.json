@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v5-strict-plan-symbols",
+  "image_path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols.png",
+  "created_at": "2026-07-19T15:56:59Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "1536x1024 RGB final, the H5 generation prompt, H4 parent candidate, Candidate B1 style reference, and H3 comparison were inspected together.",
+      "notes": "The major coastline, delta, river, road, city, port, forest, and field composition remains recognizable, while the rendering vocabulary changes markedly from copperplate linework to uniform dots."
+    },
+    {
+      "id": "original",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "The final PNG was inspected at its native 1536x1024 resolution.",
+      "notes": "Mountain peaks are removed and routes remain legible, but the city and port still carry obvious pictorial height and the surrounding terrain is visibly simplified."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "The complete image was reduced to 384x256 and inspected.",
+      "notes": "Roads, river, delta, city, and fields survive reduction, but the land reads as an evenly seeded dot field rather than the requested high-detail copperplate plate."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "The complete image was reduced to 768x512 and inspected.",
+      "notes": "Feature hierarchy is clear, yet repeated rounded canopy marks dominate the forest and scrub transitions."
+    },
+    {
+      "id": "zoom_200",
+      "label": "9領域200%拡大",
+      "complete": true,
+      "evidence": "North-west, north-center, north-east, middle-west, center, middle-east, south-west, south-center, and south-east crops were each inspected at 200%.",
+      "notes": "The right highland is now flat and direction-neutral, but city wall faces, cylindrical towers, pitched roof forms, and port posts remain visible."
+    },
+    {
+      "id": "zoom_400",
+      "label": "9領域400%拡大",
+      "complete": true,
+      "evidence": "The same nine regions were each inspected at 400%, with an additional 400% port-centered crop.",
+      "notes": "The city has a dark lower wall facade and modeled towers; the central monument has visible height; port buildings and piers retain directional side strokes and vertical posts."
+    },
+    {
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
+      "complete": true,
+      "evidence": "All nine spatial regions were scanned for text, modern objects, geometry breaks, perspective, repetition, and edge defects at enlarged scale.",
+      "notes": "No text or modern object was found. Perspective failures concentrate in the center city and lower-left port, while rounded stamp repetition spans nearly every land region."
+    },
+    {
+      "id": "h4_parent",
+      "label": "H4親候補との比較",
+      "complete": true,
+      "evidence": "H5 and style-candidate-h-v4-plan-view-golden-board-raw.png were compared at matching full extent and enlarged detail.",
+      "notes": "H5 successfully removes H4's repeated lit mountain peaks and most cliff/tree side faces, but it retains the H4 city and port perspective grammar and sacrifices much of H4's micro-detail."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1画風比較",
+      "complete": true,
+      "evidence": "H5 was compared with style-candidate-b-v1.png for parchment, palette, copperplate line quality, density, and hierarchy.",
+      "notes": "The restrained palette and parchment remain compatible, while H5's broad circular-dot vocabulary is substantially flatter, simpler, and less hand-inked than B1."
+    },
+    {
+      "id": "h3_comparison",
+      "label": "H3比較",
+      "complete": true,
+      "evidence": "H5 was compared with the H3 balanced prototype and its reduced/full comparison views.",
+      "notes": "H5 is more decisively flat than H3's relief texture, but its canopy and scrub fields are more mechanically repetitive and less differentiated."
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・継ぎ目拡張性",
+      "complete": true,
+      "evidence": "All four outer edges were inspected at native and enlarged views for borders, abrupt tonal bands, clipped motifs, and continuation defects.",
+      "notes": "The output is frame-free and no visible edge seam is present; sea, forest, highland, fields, and routes can visually continue beyond the canvas."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳可読性",
+      "complete": true,
+      "evidence": "Road, river, coast, field, city, and quiet-corridor readability was assessed at native, 25%, 50%, 200%, and 400% views.",
+      "notes": "Road and river hierarchy is strong, but the dense uniform dot coverage and dark radial city still compete with future labels and POI symbols."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "No readable text, pseudo-label, letter, number, legend, compass, or scale bar was found at native or 400% inspection."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "No watermark, logo, signature, frame, border, modern object, or decorative corner element was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島・島下面",
+      "detected": false,
+      "evidence": "All detached land is drawn as ordinary sea-level islands or delta bars; no floating underside or suspended landform remains."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "側面・遠近法・方向光",
+      "detected": true,
+      "evidence": "At 400%, the circular city retains a dark lower wall facade, modeled cylindrical towers, roof-like light/dark faces, and a raised central monument. The port retains pitched building forms, directional pier strokes, and vertical post-like marks."
+    },
+    {
+      "id": "missing_composition",
+      "label": "必須構成・置換の欠落",
+      "detected": true,
+      "evidence": "The required completely flat city and port replacements were not achieved, and the instruction not to simplify existing micro-detail is violated across forest, scrub, coast, and highland areas."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "Major roads, river paths, delta channels, crossings, and field access lines remain continuously readable with no unintended interior break."
+    },
+    {
+      "id": "repetition",
+      "label": "目立つ反復",
+      "detected": true,
+      "evidence": "Thousands of similarly rounded olive canopy marks and small neutral dots repeat across forest, scrub, coast, and field margins, producing an obvious seeded wallpaper texture at native, 50%, 200%, and 400% views."
+    },
+    {
+      "id": "edge_seam",
+      "label": "端の継ぎ目",
+      "detected": false,
+      "evidence": "No visible border, abrupt edge band, or frame seam was found on the top, right, bottom, or left edge."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "prompt構成・平面形状",
+      "maximum": 25,
+      "score": 19,
+      "notes": "Major geography is preserved and the former mountain field is successfully flattened, but the explicitly required orthographic city and port replacements fail."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親画像・画風の連続性",
+      "maximum": 15,
+      "score": 11,
+      "notes": "Composition, parchment, and palette continue from H4/B1, while the broad dot-symbol rewrite loses much of their copperplate line vocabulary and tonal depth."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "端・継ぎ目拡張性",
+      "maximum": 15,
+      "score": 14,
+      "notes": "All edges are frame-free and visually extensible; only an actual neighbor composite remains untested."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 10,
+      "notes": "Palette is coherent, but simplified flat dot fields conflict with the retained highly modeled city and port and no longer read as one consistent copperplate grammar."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 6,
+      "notes": "Routes and fields remain useful, but forest, coast, scrub, and highland micro-detail has been substantially simplified despite the prompt's explicit preservation requirement."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 4,
+      "notes": "No text or gross deformation appears, but conspicuous rounded canopy and dot repetition covers most land areas."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 9,
+      "notes": "Roads, rivers, fields, and coast remain clear at reduced scale; uniform dot fields and the dense radial city are the main remaining overlay conflicts."
+    }
+  ],
+  "total_score": 73,
+  "decision": "rejected",
+  "summary": "H5 is rejected and cannot be a Golden reference. It removes H4's lit mountain peaks and flattens most terrain, trees, and coastlines, but the city and port retain prohibited side faces, modeled height, posts, and directional shading. The global replacement also simplifies the requested copperplate micro-detail into a conspicuously repeated dot and rounded-canopy texture. Three immediate-failure gates are triggered and the 73 score is below the required 94.",
+  "required_changes": [
+    "Replace the city and port themselves, not only their surroundings, with genuinely orthographic wall, roof, street, building, and pier footprints that contain no facade, tower height, pitched face, post, highlight, or cast shadow.",
+    "Replace the seeded circular canopy and dot wallpaper with individually varied irregular overhead canopy clusters, non-convergent rocky chips, stipple, and short strokes without reusable stamp silhouettes.",
+    "Restore B1/H4-level copperplate micro-detail and terrain differentiation while retaining H5's successful flat highland, low coast, unbroken routes, quiet label corridors, palette, and frame-free edges."
+  ]
+}

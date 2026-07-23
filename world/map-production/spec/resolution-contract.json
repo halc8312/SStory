@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0.0",
+  "type": "sstory-finite-deep-zoom-resolution-contract",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "description": "全23 bounded sheetを実画素密度で公開し、正典詳細がない場所ではoverzoomを許可しない段階LOD契約。",
+  "world_extent": {
+    "min_x": 0,
+    "min_y": 0,
+    "max_x": 10000,
+    "max_y": 10000
+  },
+  "world_raster": {
+    "width_px": 4096,
+    "height_px": 2730,
+    "native_zoom": 3
+  },
+  "sheet_type_order": [
+    "world",
+    "continent",
+    "region",
+    "corridor",
+    "settlement"
+  ],
+  "lod_by_sheet_type": {
+    "world": {
+      "zoom_range": [0, 3],
+      "native_zoom": 3,
+      "production_method": "deterministic-composite"
+    },
+    "continent": {
+      "zoom_range": [3, 4],
+      "native_zoom": 4,
+      "production_method": "deterministic-composite"
+    },
+    "region": {
+      "zoom_range": [4, 5],
+      "native_zoom": 5,
+      "production_method": "imagegen-metatile"
+    },
+    "corridor": {
+      "zoom_range": [5, 7],
+      "native_zoom": 7,
+      "production_method": "imagegen-metatile"
+    },
+    "settlement": {
+      "zoom_range": [7, 8],
+      "native_zoom": 8,
+      "production_method": "imagegen-metatile"
+    }
+  },
+  "pixel_bounds_formula": {
+    "coordinate_order": ["min_x", "min_y", "max_x", "max_y"],
+    "scale_base": 2,
+    "scale_exponent": "sheet_native_zoom-minus-world_native_zoom",
+    "minimum_rounding": "floor",
+    "maximum_rounding": "ceil",
+    "x_base_pixels": "world_raster.width_px",
+    "y_base_pixels": "world_raster.height_px",
+    "x_denominator": "world_extent.max_x-minus-min_x",
+    "y_denominator": "world_extent.max_y-minus-min_y"
+  },
+  "tile_profile": {
+    "scheme": "xyz",
+    "coordinate_scope": "sheet-local",
+    "tile_origin": "top-left",
+    "y_axis": "down",
+    "tile_size_px": 512,
+    "public_format": "webp"
+  },
+  "metatile_profile": {
+    "metatile_size_px": 2048,
+    "gutter_each_side_px": 256,
+    "stride_px": 1536,
+    "applicable_sheet_types": ["region", "corridor", "settlement"],
+    "coverage_formula": "metatile_size_px + (count - 1) * stride_px"
+  },
+  "unbounded_sheet_policy": {
+    "action": "skip",
+    "allowed_sheet_types": ["district", "block"],
+    "required_review_status": "planned",
+    "required_geometry_confidence": "unresolved"
+  },
+  "overzoom_policy": {
+    "allowed": false,
+    "maximum_source_scale": 1,
+    "behavior_outside_deeper_sheet": "clamp-to-deepest-intersecting-native-zoom",
+    "parent_visibility_until_child_ready": true
+  },
+  "expected_summary": {
+    "bounded_sheet_count": 23,
+    "unbounded_skipped_count": 2,
+    "total_master_pixels": 233802632,
+    "generation_master_pixels": 190786183,
+    "generation_metatile_count": 99
+  }
+}

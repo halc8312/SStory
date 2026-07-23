@@ -1,0 +1,586 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-automated-qa.schema.json",
+  "title": "SStory Phase 5 automated master QA",
+  "description": "Hash-lockable automated acceptance evidence for a Phase 5 master or deterministic composite master. A conforming document is pass-only: missing or failing coverage, band, seam, land/sea, or transport evidence cannot be represented as accepted QA.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "generated_by",
+    "job_id",
+    "sheet_id",
+    "status",
+    "source_kind",
+    "master",
+    "provenance_report",
+    "checks",
+    "geography",
+    "created_at"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-automated-qa.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "type": {
+      "const": "sstory-phase5-automated-master-qa"
+    },
+    "coordinate_reference_system": {
+      "const": "EA-WORLD-1"
+    },
+    "generated_by": {
+      "const": "sstory-map-production/audit_phase5_master.py@2"
+    },
+    "job_id": {
+      "$ref": "#/definitions/id"
+    },
+    "sheet_id": {
+      "$ref": "#/definitions/id"
+    },
+    "status": {
+      "const": "passed"
+    },
+    "source_kind": {
+      "enum": [
+        "master",
+        "composite_master",
+        "canonical_render_master"
+      ]
+    },
+    "master": {
+      "$ref": "#/definitions/master"
+    },
+    "provenance_report": {
+      "$ref": "#/definitions/artifact"
+    },
+    "parent_controls": {
+      "$ref": "#/definitions/parent_controls"
+    },
+    "checks": {
+      "$ref": "#/definitions/checks"
+    },
+    "geography": {
+      "$ref": "#/definitions/geography"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {"source_kind": {"const": "composite_master"}},
+        "required": ["source_kind"]
+      },
+      "then": {"required": ["parent_controls"]},
+      "else": {"not": {"required": ["parent_controls"]}}
+    }
+  ],
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "parent_controls": {
+      "type": "object",
+      "required": ["index", "report"],
+      "properties": {
+        "index": {"$ref": "#/definitions/artifact"},
+        "report": {"$ref": "#/definitions/artifact"}
+      },
+      "additionalProperties": false
+    },
+    "master": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256",
+        "width",
+        "height",
+        "format",
+        "color_mode"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "format": {
+          "const": "PNG"
+        },
+        "color_mode": {
+          "const": "RGB"
+        }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "dimensions",
+        "encoding",
+        "digest",
+        "coverage",
+        "unpainted_bands",
+        "seams"
+      ],
+      "properties": {
+        "dimensions": {
+          "$ref": "#/definitions/dimensions_check"
+        },
+        "encoding": {
+          "$ref": "#/definitions/encoding_check"
+        },
+        "digest": {
+          "$ref": "#/definitions/digest_check"
+        },
+        "coverage": {
+          "$ref": "#/definitions/coverage_check"
+        },
+        "unpainted_bands": {
+          "$ref": "#/definitions/unpainted_bands_check"
+        },
+        "seams": {
+          "$ref": "#/definitions/seams_check"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dimensions_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "expected_width",
+        "expected_height",
+        "actual_width",
+        "actual_height"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "expected_width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "actual_width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "actual_height": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "encoding_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "expected_format",
+        "actual_format",
+        "expected_color_mode",
+        "actual_color_mode"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "expected_format": {
+          "const": "PNG"
+        },
+        "actual_format": {
+          "const": "PNG"
+        },
+        "expected_color_mode": {
+          "const": "RGB"
+        },
+        "actual_color_mode": {
+          "const": "RGB"
+        }
+      },
+      "additionalProperties": false
+    },
+    "digest_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "expected_sha256",
+        "actual_sha256"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "expected_sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "actual_sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "coverage_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "algorithm",
+        "expected_pixel_count",
+        "covered_pixel_count",
+        "uncovered_pixel_count",
+        "overlap_pixel_count"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "algorithm": {
+          "const": "provenance-destination-coverage-v1"
+        },
+        "expected_pixel_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "covered_pixel_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "uncovered_pixel_count": {
+          "const": 0
+        },
+        "overlap_pixel_count": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "unpainted_bands_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "algorithm",
+        "tested_fill_rgb",
+        "fully_black_row_count",
+        "fully_black_column_count",
+        "black_band_count",
+        "unpainted_band_count"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "algorithm": {
+          "const": "coverage-and-axis-band-scan-v1"
+        },
+        "tested_fill_rgb": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": [
+            {
+              "const": 0
+            },
+            {
+              "const": 0
+            },
+            {
+              "const": 0
+            }
+          ],
+          "additionalItems": false
+        },
+        "fully_black_row_count": {
+          "const": 0
+        },
+        "fully_black_column_count": {
+          "const": 0
+        },
+        "black_band_count": {
+          "const": 0
+        },
+        "unpainted_band_count": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "seams_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "minimum_overlap_ssim",
+        "maximum_rgb_mean_difference",
+        "maximum_rgb_p95_difference",
+        "expected_count",
+        "evaluated_count",
+        "minimum_observed_ssim",
+        "maximum_observed_rgb_mean_difference",
+        "maximum_observed_rgb_p95_difference",
+        "evidence"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "minimum_overlap_ssim": {
+          "const": 0.9
+        },
+        "maximum_rgb_mean_difference": {
+          "const": 4
+        },
+        "maximum_rgb_p95_difference": {
+          "const": 10
+        },
+        "expected_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evaluated_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimum_observed_ssim": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0.9,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maximum_observed_rgb_mean_difference": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 4
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maximum_observed_rgb_p95_difference": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/seam_evidence"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "seam_evidence": {
+      "type": "object",
+      "required": [
+        "axis",
+        "column",
+        "row",
+        "source_a",
+        "source_b",
+        "effective_box_px",
+        "ssim",
+        "rgb_mean_abs_difference",
+        "rgb_p95_abs_difference"
+      ],
+      "properties": {
+        "axis": {
+          "enum": [
+            "x",
+            "y"
+          ]
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "row": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_a": {
+          "$ref": "#/definitions/artifact"
+        },
+        "source_b": {
+          "$ref": "#/definitions/artifact"
+        },
+        "effective_box_px": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "ssim": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1
+        },
+        "rgb_mean_abs_difference": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "rgb_p95_abs_difference": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        }
+      },
+      "additionalProperties": false
+    },
+    "geography": {
+      "type": "object",
+      "required": [
+        "land_sea",
+        "transport"
+      ],
+      "properties": {
+        "land_sea": {
+          "$ref": "#/definitions/land_sea_check"
+        },
+        "transport": {
+          "$ref": "#/definitions/transport_check"
+        }
+      },
+      "additionalProperties": false
+    },
+    "land_sea_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "control",
+        "observed",
+        "minimum_match_ratio",
+        "match_ratio"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "control": {
+          "$ref": "#/definitions/artifact"
+        },
+        "observed": {
+          "$ref": "#/definitions/artifact"
+        },
+        "minimum_match_ratio": {
+          "const": 0.98
+        },
+        "match_ratio": {
+          "type": "number",
+          "minimum": 0.98,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "transport_check": {
+      "type": "object",
+      "required": [
+        "passed",
+        "control",
+        "observed",
+        "tolerance_px",
+        "minimum_within_tolerance_ratio",
+        "control_within_tolerance_ratio",
+        "observed_within_tolerance_ratio"
+      ],
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "control": {
+          "$ref": "#/definitions/artifact"
+        },
+        "observed": {
+          "$ref": "#/definitions/artifact"
+        },
+        "tolerance_px": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "minimum_within_tolerance_ratio": {
+          "const": 0.95
+        },
+        "control_within_tolerance_ratio": {
+          "type": "number",
+          "minimum": 0.95,
+          "maximum": 1
+        },
+        "observed_within_tolerance_ratio": {
+          "type": "number",
+          "minimum": 0.95,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

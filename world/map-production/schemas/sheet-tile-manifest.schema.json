@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/sheet-tile-manifest.schema.json",
+  "title": "SStory published 512px WebP XYZ sheet manifest",
+  "description": "Each manifest is an independent sheet-local XYZ pyramid with a top-left origin, downward-positive y axis, and transparent right/bottom edge padding. Filesystem, pixel, and cross-field constraints are additionally recomputed by build_phase5_assets.py.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "type",
+    "generated_by",
+    "generated_at",
+    "release_id",
+    "map_id",
+    "scheme",
+    "coordinate_scope",
+    "tile_origin",
+    "x_axis",
+    "y_axis",
+    "edge_padding",
+    "format",
+    "tile_size",
+    "minzoom",
+    "maxzoom",
+    "native_zoom",
+    "tiles",
+    "coordinate_reference_system",
+    "coordinate_system",
+    "bounds",
+    "master",
+    "encoding",
+    "levels",
+    "tile_count",
+    "tile_set_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "type": {"const": "sstory-xyz-raster"},
+    "generated_by": {"const": "sstory-map-production/generate_tiles.py@1"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "release_id": {"$ref": "#/definitions/id"},
+    "map_id": {"$ref": "#/definitions/id"},
+    "scheme": {"const": "xyz"},
+    "coordinate_scope": {"const": "sheet-local"},
+    "tile_origin": {"const": "top-left"},
+    "x_axis": {"const": "right"},
+    "y_axis": {"const": "down"},
+    "edge_padding": {"const": "transparent"},
+    "format": {"const": "webp"},
+    "tile_size": {"const": 512},
+    "minzoom": {"type": "integer", "minimum": 0, "maximum": 24},
+    "maxzoom": {"type": "integer", "minimum": 0, "maximum": 24},
+    "native_zoom": {"type": "integer", "minimum": 0, "maximum": 24},
+    "tiles": {"const": ["{z}/{x}/{y}.webp"]},
+    "coordinate_reference_system": {"const": "EA-WORLD-1"},
+    "coordinate_system": {"const": "EA-WORLD-1"},
+    "bounds": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"type": "number", "minimum": 0, "maximum": 10000}
+    },
+    "master": {
+      "type": "object",
+      "required": ["path", "sha256", "width", "height", "mode"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "mode": {"const": "RGBA"}
+      },
+      "additionalProperties": false
+    },
+    "encoding": {
+      "type": "object",
+      "required": ["quality", "lossless", "background"],
+      "properties": {
+        "quality": {
+          "oneOf": [
+            {"type": "integer", "minimum": 1, "maximum": 100},
+            {"type": "null"}
+          ]
+        },
+        "lossless": {"type": "boolean"},
+        "background": {"enum": ["#00000000", "transparent"]}
+      },
+      "additionalProperties": false
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/definitions/level"}
+    },
+    "tile_count": {"type": "integer", "minimum": 1},
+    "tile_set_sha256": {"$ref": "#/definitions/sha256"}
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "level": {
+      "type": "object",
+      "required": ["zoom", "width", "height", "columns", "rows", "tile_count"],
+      "properties": {
+        "zoom": {"type": "integer", "minimum": 0, "maximum": 24},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "columns": {"type": "integer", "minimum": 1},
+        "rows": {"type": "integer", "minimum": 1},
+        "tile_count": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-h-v11-colour-calibration-automated-audit",
+  "status": "passed",
+  "scope": "automated artifact and H4 raster proxies only",
+  "decision": "automated-gates-passed-pending-vision",
+  "failed_gates": [],
+  "expected_rejection_evidence": true,
+  "generated_by": {
+    "path": "scripts/map-production/audit_style_candidates_h10_h13.py",
+    "sha256": "a0db28cb64c0c3e13e204c50cef94efb77f2e6fd962b4d78313afc4157f26db6",
+    "bytes": 17538
+  },
+  "audit_engine": {
+    "path": "scripts/map-production/audit_style_candidate_h4.py",
+    "sha256": "47ac3b6432b04aa56a172c21e1321d8848e82f3f48fd207176697f6634f3ddd2",
+    "bytes": 32036,
+    "threshold_policy": "unchanged H4 absolute gates; no threshold drift",
+    "raw_final_identity": {
+      "applicable": false,
+      "passed": null,
+      "reason": "This is a rejected raw ImageGen trial. No adopted final file was minted, so raw/final identity is intentionally not claimed."
+    }
+  },
+  "artifacts": {
+    "raw": {
+      "path": "world/map-production/candidates/style-candidate-h-v11-colour-calibration-raw.png",
+      "sha256": "32175b57fa82891045a3f8ffa70c3da134b33e38a790db62b14d11c0256cda75",
+      "bytes": 3951840
+    },
+    "prompt": {
+      "path": "world/map-production/prompts/style-candidate-h-v11-colour-calibration.generation.txt",
+      "sha256": "7534a27b2142dc3ff8a353a40af00b01e5455fe0c2a2e45fb4342ee53cfad990",
+      "bytes": 1396,
+      "utf8": true,
+      "required_phrases_present": true
+    },
+    "generation_receipt": {
+      "path": "world/map-production/prompts/style-candidate-h-v11-colour-calibration.generation-receipt.json",
+      "sha256": "d47fe3aa53ffa223902fc2b41b1b9c280e73bfbf0f39bd25661c770b9a171790",
+      "bytes": 1805
+    },
+    "reference_b1": {
+      "path": "world/map-production/candidates/style-candidate-b-v1.png",
+      "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "bytes": 4180383
+    }
+  },
+  "identity": {
+    "passed": true,
+    "raw_only_rejected_trial": true,
+    "adopted_final_exists": false,
+    "locked_sha256": {
+      "raw": "32175b57fa82891045a3f8ffa70c3da134b33e38a790db62b14d11c0256cda75",
+      "prompt": "7534a27b2142dc3ff8a353a40af00b01e5455fe0c2a2e45fb4342ee53cfad990",
+      "generation_receipt": "d47fe3aa53ffa223902fc2b41b1b9c280e73bfbf0f39bd25661c770b9a171790",
+      "reference_b1": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "vision_schema": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b"
+    }
+  },
+  "image_contract": {
+    "passed": true,
+    "required": {
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1536,
+      "height": 1024,
+      "bit_depth": 8,
+      "png_color_type": 2,
+      "alpha_or_transparency_present": false
+    },
+    "records_passed": {
+      "raw": true,
+      "reference_b1": true
+    },
+    "alpha_free": true,
+    "profile_matches_b1": true,
+    "profile_interpretation": "untagged RGB matching B1",
+    "images": {
+      "raw": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "reference_b1": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      }
+    }
+  },
+  "boundary": {
+    "passed": true,
+    "method": "edge-band color diversity, exact-color runs, and multi-side outer/inset mean-color gap; decorative semantics still require Vision review",
+    "thresholds": {
+      "band_width_px": 16,
+      "maximum_dominant_exact_rgb_ratio": 0.05,
+      "minimum_unique_rgb": 256,
+      "maximum_outer_identical_run_ratio": 0.25,
+      "frame_mean_rgb_gap": 18.0,
+      "frame_minimum_suspicious_sides": 2
+    },
+    "solid_color_signal_detected": false,
+    "solid_color_sides": [],
+    "decorative_frame_proxy_detected": false,
+    "frame_gap_sides": [],
+    "sides": [
+      {
+        "side": "left",
+        "pixels": 16384,
+        "unique_rgb": 3268,
+        "dominant_rgb": [
+          90,
+          103,
+          106
+        ],
+        "dominant_exact_rgb_ratio": 0.002075,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001953,
+        "luma_stddev": 9.545136,
+        "luma_entropy_bits": 5.294958,
+        "outer_to_inset_mean_rgb_distance": 3.835047,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "top",
+        "pixels": 24576,
+        "unique_rgb": 15506,
+        "dominant_rgb": [
+          103,
+          113,
+          114
+        ],
+        "dominant_exact_rgb_ratio": 0.000448,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 21.18283,
+        "luma_entropy_bits": 6.438402,
+        "outer_to_inset_mean_rgb_distance": 5.57513,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "right",
+        "pixels": 16384,
+        "unique_rgb": 9937,
+        "dominant_rgb": [
+          153,
+          130,
+          88
+        ],
+        "dominant_exact_rgb_ratio": 0.00061,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001953,
+        "luma_stddev": 18.531316,
+        "luma_entropy_bits": 6.235586,
+        "outer_to_inset_mean_rgb_distance": 10.040651,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "bottom",
+        "pixels": 24576,
+        "unique_rgb": 12504,
+        "dominant_rgb": [
+          95,
+          108,
+          108
+        ],
+        "dominant_exact_rgb_ratio": 0.000773,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 17.142546,
+        "luma_entropy_bits": 6.106125,
+        "outer_to_inset_mean_rgb_distance": 1.833345,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      }
+    ]
+  },
+  "palette_continuity": {
+    "passed": true,
+    "reference": "Candidate B1",
+    "method": "composition-tolerant palette proxy using 8x8x8 RGB and 24x6x6 HSV histograms sampled at 384x256",
+    "thresholds": {
+      "minimum_rgb_histogram_intersection": 0.72,
+      "minimum_hsv_histogram_intersection": 0.62,
+      "minimum_rgb_bhattacharyya": 0.9,
+      "maximum_mean_channel_delta": 12.0
+    },
+    "candidate_mean_rgb": [
+      133.073028,
+      121.421174,
+      92.557568
+    ],
+    "reference_mean_rgb": [
+      127.759797,
+      118.919413,
+      89.78157
+    ],
+    "mean_channel_absolute_delta": [
+      5.313231,
+      2.501761,
+      2.775997
+    ],
+    "maximum_mean_channel_delta": 5.313231,
+    "rgb_histogram_intersection": 0.751536,
+    "hsv_histogram_intersection": 0.631582,
+    "rgb_bhattacharyya": 0.930908
+  },
+  "exact_repetition": {
+    "passed": true,
+    "method": "exact SHA-256 of overlapping RGB blocks at one-quarter-block stride; this is a large-clone proxy, not semantic motif recognition",
+    "minimum_block_size_px": 64,
+    "duplicate_groups": 0,
+    "maximum_copy_count": 1,
+    "examples": [],
+    "scales": [
+      {
+        "block_size_px": 256,
+        "stride_px": 64,
+        "scanned_blocks": 273,
+        "unique_block_hashes": 273,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 128,
+        "stride_px": 32,
+        "scanned_blocks": 1305,
+        "unique_block_hashes": 1305,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 64,
+        "stride_px": 16,
+        "scanned_blocks": 5673,
+        "unique_block_hashes": 5673,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      }
+    ]
+  },
+  "downsample_readability": {
+    "passed": true,
+    "method": "LANCZOS downsample; Shannon luma entropy, global RMS contrast, and 24x16 macrocell contrast coverage are readability proxies",
+    "macrocell_grid": [
+      24,
+      16
+    ],
+    "minimum_macrocell_luma_stddev": 6.0,
+    "native": {
+      "scale": 1.0,
+      "width": 1536,
+      "height": 1024,
+      "luma_entropy_bits": 6.459283,
+      "luma_rms_contrast": 21.669278,
+      "macrocell_contrast_coverage": 1.0,
+      "minimum_macrocell_luma_stddev": 8.217623,
+      "median_macrocell_luma_stddev": 19.915258
+    },
+    "scales": [
+      {
+        "scale": 0.5,
+        "width": 768,
+        "height": 512,
+        "luma_entropy_bits": 6.26376,
+        "luma_rms_contrast": 18.83684,
+        "macrocell_contrast_coverage": 0.997396,
+        "minimum_macrocell_luma_stddev": 5.872927,
+        "median_macrocell_luma_stddev": 16.290078,
+        "entropy_retention": 0.96973,
+        "rms_contrast_retention": 0.869288,
+        "thresholds": {
+          "minimum_entropy_retention": 0.94,
+          "minimum_rms_contrast_retention": 0.82,
+          "minimum_macrocell_contrast_coverage": 0.9
+        },
+        "passed": true
+      },
+      {
+        "scale": 0.25,
+        "width": 384,
+        "height": 256,
+        "luma_entropy_bits": 6.101068,
+        "luma_rms_contrast": 16.83716,
+        "macrocell_contrast_coverage": 0.903646,
+        "minimum_macrocell_luma_stddev": 4.69541,
+        "median_macrocell_luma_stddev": 13.289584,
+        "entropy_retention": 0.944543,
+        "rms_contrast_retention": 0.777006,
+        "thresholds": {
+          "minimum_entropy_retention": 0.9,
+          "minimum_rms_contrast_retention": 0.68,
+          "minimum_macrocell_contrast_coverage": 0.85
+        },
+        "passed": true
+      }
+    ]
+  },
+  "automated_gates": {
+    "sha256_locked_inputs": true,
+    "image_contract_alpha_profile": true,
+    "boundary_proxy": true,
+    "palette_continuity_with_b1": true,
+    "no_large_exact_repetition_proxy": true,
+    "downsample_readability_proxy": true
+  },
+  "vision_handoff": {
+    "status": "required",
+    "schema": {
+      "path": "world/map-production/schemas/qa-report.schema.json",
+      "sha256": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b",
+      "bytes": 5569
+    },
+    "automated_audit_is_not_golden_acceptance": true,
+    "checks": [
+      {
+        "id": "generated_text_or_pseudotext",
+        "status": "requires_vision_review",
+        "automated_claim": null,
+        "reason": "Pixel statistics cannot reliably distinguish lettering, pseudo-writing, readable symbols, signatures, or watermarks."
+      },
+      {
+        "id": "strict_orthographic_plan_view",
+        "status": "requires_vision_review",
+        "automated_claim": null,
+        "reason": "Perspective, peak faces, cliff facades, cast shadows, and scenic mountain reading require semantic visual inspection."
+      }
+    ]
+  }
+}

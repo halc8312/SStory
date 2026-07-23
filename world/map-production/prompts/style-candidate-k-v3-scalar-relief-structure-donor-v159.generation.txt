@@ -1,0 +1,21 @@
+Create a new 4-by-2 scientific scalar-elevation atlas by editing the supplied references.
+
+Reference authority:
+- The first reference is the exact top-down topology authority. Preserve its eight different ridge networks, branching directions, saddles, and unequal scale.
+- The second reference is the exact identity and occupancy authority. There must be exactly eight and only eight isolated systems, one inside each of the eight cells, matching those footprints and never crossing a gutter.
+
+Required visual representation:
+- This is a 2D GIS height raster, not a fantasy-map illustration and not a rendered object.
+- Strict orthographic nadir view. Pixel brightness encodes elevation only.
+- Uniform neutral medium-gray background and completely blank, calm gutters.
+- Inside each footprint, form one continuous scalar terrain surface: low elevation at the boundary, broad foothill mass, irregular branching primary crests, secondary spurs, nested saddles, drainage-aware dendritic valleys, and finer tertiary relief.
+- Use many smoothly nested elevation scales so 200% and 400% inspection reveals genuinely new terrain structure.
+- Make all eight systems visibly different in orientation, branching, aspect ratio, elevation distribution, and valley structure.
+- Boundaries must feather to the background without a drawn perimeter.
+
+Absolute prohibitions:
+- no visible side faces, triangular mountain icons, frontal peaks, extruded islands, cliffs at the footprint edge, bevels, pedestals, drop shadows, cast shadows, ambient occlusion, directional lighting, or highlights
+- no contour lines, fingerprint loops, concentric rings, hachures, tree or fern marks, roads, rivers, labels, borders, frames, cell dividers, dots, holes, beads, clouds, fog, paper texture, or color
+- no repeated stamp grammar or repeated micro-pattern
+
+Output one clean high-resolution grayscale atlas with the same 4-by-2 organization. It must read as scalar data even when viewed small, never as eight physical objects sitting on a sheet.

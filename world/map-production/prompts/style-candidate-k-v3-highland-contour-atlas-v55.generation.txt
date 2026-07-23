@@ -1,0 +1,19 @@
+Use the supplied 1536x1024 control atlas as a strict geometry and layout edit target. Preserve its exact 4-by-2 arrangement, exact count of eight separated irregular footprints, every footprint's outer boundary, position, size, orientation, separation, and generous quiet parchment. Change only the eight ochre interiors. Do not add, remove, move, merge, split, duplicate, enlarge, or shrink any body, and add no mark outside a footprint.
+
+Remove every solid ochre fill and restore each interior to the same continuous quiet parchment tone as the surrounding background. Inside each footprint, draw a unique professional topographic contour survey in fine dry dark-sepia copperplate lines. Use five to nine meaningful elevation intervals per body, with irregular locally varying spacing: closer lines at steep breaks, wider lines on gentle shoulders. Lines may close naturally around summits, but they must be asymmetrical, lopsided, locally indented by valleys, and organized into compound terrain rather than concentric targets. Use no hachure, shading, wash, dots, labels, or elevation numbers.
+
+Body-specific terrain, reading left-to-right:
+- Top-left: two unequal offset summits, each with irregular nested summit contours, joined by a narrow low saddle; lower contours merge into one bent outer envelope, with valleys opening west and south.
+- Top-second: one long broken diagonal watershed with two separated high points and a transverse pass; contours are elongated and much steeper on the east side than the west.
+- Top-third: three unequal knolls connected by a crooked divide; upper contours form three distinct lopsided nests, while lower intervals merge around two saddles and a broad south-facing shoulder.
+- Top-right: two competing diagonal ridges with three small high points and an off-center low col; contour lobes point toward different edges and never form a central target.
+- Bottom-left: a long oblique divide with one large summit, two minor knolls, a deep transverse saddle, and two valley notches that break the rhythm of the lower contours.
+- Bottom-second: an angular zigzag ridge with two broad valley heads, three unequal peaks, and a low open basin; use strongly nonparallel irregular intervals.
+- Bottom-third: an off-center double crest, one steep escarpment with tight contours, one calm interior basin, and a broad gentle western shoulder with widely spaced contours.
+- Bottom-right: three compact offset knolls climbing along a diagonal chain; each has a small distinct summit loop, and only the lowest two contour intervals connect them into one narrow terrain body so it never reads as a horizontal bar.
+
+Every body's contour topology, peak count, spacing rhythm, valley indentation, and dominant direction must be visibly different. Retain broad quiet parchment inside the lowest outer contour and between contour groups. Keep the map calm at 25-50 percent while revealing clearly authored elevation structure at 200-400 percent.
+
+Strict prohibitions: no identical contour template; no concentric bullseye; no circular target; no evenly spaced onion rings; no maze; no cells; no cracks; no tree, leaf, feather, root, river drainage, fishbone, central vein, connected branching skeleton, hachure, dash bundle, stipple, solid silhouette, filled body wash, gradient, shadow, highlight, scenic mountain, perspective, 3D lighting, text, labels, numbers, legend, border, divider, watermark, road, river, building, coastline, or mark outside the eight footprints.
+
+The result must be exactly eight sparse, unique, orthographic topographic contour diagrams on one continuous antique parchment sheet.

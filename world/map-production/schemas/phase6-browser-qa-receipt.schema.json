@@ -1,0 +1,227 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase6-browser-qa-receipt.schema.json",
+  "title": "SStory Phase 6 browser QA receipt",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "release_id",
+    "result",
+    "started_at",
+    "completed_at",
+    "generated_by",
+    "tested_url",
+    "playwright",
+    "inputs",
+    "scenarios",
+    "failure_reasons"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase6-browser-qa-receipt.schema.json"
+    },
+    "schema_version": {"const": "1.0.0"},
+    "type": {"const": "sstory-phase6-browser-qa-receipt"},
+    "release_id": {"const": "world-v3"},
+    "result": {"enum": ["pass", "fail"]},
+    "started_at": {"type": "string", "format": "date-time"},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "generated_by": {"const": "sstory-map-production/run_phase6_browser_qa.py@1"},
+    "tested_url": {"type": "string", "format": "uri", "minLength": 1},
+    "playwright": {
+      "type": "object",
+      "required": ["cli_version", "browser_name", "browser_version"],
+      "properties": {
+        "cli_version": {"const": "0.1.17"},
+        "browser_name": {"const": "chromium"},
+        "browser_version": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "required": [
+        "readiness_status",
+        "bounded_sheet_count",
+        "readiness",
+        "production_manifest",
+        "canonical_index",
+        "compatibility_index",
+        "release_tree",
+        "world_manifest",
+        "html",
+        "runtime_dependencies",
+        "harness",
+        "royal_probe"
+      ],
+      "properties": {
+        "readiness_status": {"const": "release-candidate"},
+        "bounded_sheet_count": {"const": 23},
+        "readiness": {"$ref": "#/definitions/repositoryArtifact"},
+        "production_manifest": {"$ref": "#/definitions/repositoryArtifact"},
+        "canonical_index": {"$ref": "#/definitions/repositoryArtifact"},
+        "compatibility_index": {"$ref": "#/definitions/repositoryArtifact"},
+        "release_tree": {
+          "type": "object",
+          "required": ["path", "file_count", "sha256"],
+          "properties": {
+            "path": {"const": "docs/assets/images/maps/tiles/world-v3"},
+            "file_count": {"type": "integer", "minimum": 24},
+            "sha256": {"$ref": "#/definitions/sha256"}
+          },
+          "additionalProperties": false
+        },
+        "world_manifest": {"$ref": "#/definitions/repositoryArtifact"},
+        "html": {"$ref": "#/definitions/repositoryArtifact"},
+        "runtime_dependencies": {
+          "allOf": [
+            {"$ref": "#/definitions/artifactSet"},
+            {"properties": {"artifacts": {"minItems": 13, "maxItems": 13}}}
+          ]
+        },
+        "harness": {
+          "allOf": [
+            {"$ref": "#/definitions/artifactSet"},
+            {"properties": {"artifacts": {"minItems": 5, "maxItems": 5}}}
+          ]
+        },
+        "royal_probe": {
+          "type": "object",
+          "required": ["parent", "child"],
+          "properties": {
+            "parent": {
+              "$ref": "#/definitions/probeSheet"
+            },
+            "child": {
+              "$ref": "#/definitions/probeSheet"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/definitions/scenario"}
+    },
+    "failure_reasons": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "repositoryArtifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1, "pattern": "^[^\\\\]+$"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "artifactSet": {
+      "type": "object",
+      "required": ["artifacts", "sha256"],
+      "properties": {
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/definitions/repositoryArtifact"}
+        },
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "probeSheet": {
+      "type": "object",
+      "required": ["sheet_id", "manifest"],
+      "properties": {
+        "sheet_id": {"type": "string", "minLength": 1},
+        "manifest": {"$ref": "#/definitions/repositoryArtifact"}
+      },
+      "additionalProperties": false
+    },
+    "evidenceArtifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1, "pattern": "^[^\\\\]+$"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "required": [
+        "id",
+        "result",
+        "viewport",
+        "assertions",
+        "diagnostics",
+        "metrics"
+      ],
+      "properties": {
+        "id": {
+          "enum": ["desktop", "mobile", "slow_tiles", "royal_child_failure"]
+        },
+        "result": {"enum": ["pass", "fail"]},
+        "viewport": {
+          "type": "object",
+          "required": ["width", "height"],
+          "properties": {
+            "width": {"type": "integer", "minimum": 1},
+            "height": {"type": "integer", "minimum": 1}
+          },
+          "additionalProperties": false
+        },
+        "assertions": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "boolean"}
+        },
+        "diagnostics": {
+          "type": "object",
+          "required": [
+            "console_errors",
+            "page_errors",
+            "network_errors",
+            "expected_console_warnings",
+            "expected_network_failures"
+          ],
+          "properties": {
+            "console_errors": {"type": "array", "items": {"type": "string"}},
+            "page_errors": {"type": "array", "items": {"type": "string"}},
+            "network_errors": {"type": "array", "items": {"type": "string"}},
+            "expected_console_warnings": {"type": "array", "items": {"type": "string"}},
+            "expected_network_failures": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        },
+        "metrics": {"type": "object"},
+        "evidence": {
+          "type": "object",
+          "required": ["screenshot", "snapshot", "console", "network", "driver", "config"],
+          "properties": {
+            "screenshot": {"$ref": "#/definitions/evidenceArtifact"},
+            "snapshot": {"$ref": "#/definitions/evidenceArtifact"},
+            "console": {"$ref": "#/definitions/evidenceArtifact"},
+            "network": {"$ref": "#/definitions/evidenceArtifact"},
+            "driver": {"$ref": "#/definitions/evidenceArtifact"},
+            "config": {"$ref": "#/definitions/evidenceArtifact"}
+          },
+          "additionalProperties": false
+        },
+        "error": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  }
+}

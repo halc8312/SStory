@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "k3-v64-integrated-orthographic-relief-donor",
+  "generator": "OpenAI ImageGen",
+  "generation_mode": "single-reference image edit",
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-k-v3-integrated-orthographic-relief-donor-v64.generation.txt",
+    "sha256": "67fb0370c570069aadd0a823ca2951b1d5e93b30a707b64a68d624c2bc8c6985"
+  },
+  "reference_input": {
+    "historical_candidate": "k3-v63-integrated-orthographic-relief-source",
+    "sha256": "d938486df54885eabcf0ab10d2ebfb12ed5a2b4c64c7b75209db45dc88c2a03f",
+    "tracked_replay_authority": false
+  },
+  "output": {
+    "path": "world/map-production/style-assets/k3-v64-integrated-orthographic-relief-donor.png",
+    "sha256": "cce887425642637e0b031c4cc527f59c019f8693d233abbaaf257cadb700201e",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB"
+  },
+  "status": "accepted-as-conditional-integration-and-relief-material-donor",
+  "golden_reference": false,
+  "raw_full-map_promotion_allowed": false,
+  "notes": "The tracked v64 bytes are usable as a role-limited donor. This receipt deliberately does not claim a hermetic replay of its historical ImageGen predecessor."
+}

@@ -1,0 +1,24 @@
+Use case: precise-object-edit
+Asset type: full-context orthographic antique fantasy-map highland correction
+
+Input image:
+Image 1 is the sole edit target and absolute authority for the 1536 x 1024 canvas, registration, crop, palette, paper, coast, water, forest, fields, capital, port, roads, boundaries, and every feature outside the pale upper-right highland.
+
+Primary request:
+Change only the pale upper-right highland of Image 1. Replace the woven/felt residue with a convincing natural mountain region made from an irregular branching ridge network. Preserve the complete map and all surrounding features. The highland must read as genuine terrain at map scale, not as a collection of separate symbols.
+
+Required large-scale topology:
+Create three long primary ridge spines and five to seven shorter secondary spurs. The primary spines should cross the highland on varied oblique or diagonal bearings, with different lengths, slopes, and prominence. Secondary spurs may meet a primary spine at natural Y or T junctions, or terminate independently, but they must not form a repeated object set. Distribute them unevenly with large quiet valleys and at least two broad open lowlands.
+
+Every ridge must be an open, forward-progressing line of relief. Its two endpoints must remain far apart: the straight endpoint distance should be at least 60 percent of the ridge's travelled length. Avoid sharp reversals; no ridge may turn back toward its own start, curl around a centre, or approach its earlier course closely. Use restrained bends, branching, broken continuity, and naturally tapered ends. Vary width from roughly 12 to 38 native pixels, including long thin stretches and occasional broader saddles. Do not outline individual mountains or enclose interior areas.
+
+Relief and print behaviour:
+Give each ridge a restrained darker lee-side relief and a softer, nonparallel lighter shoulder on the opposite side. The two sides must vary in distance and length and must merge into the ground gradually, never forming a constant-width paired band. Break the ridges into irregular dry-print passages with long gaps, tapered fragments, occasional forked rock shoulders, and sparse non-symbolic pigment. Keep the darkest highland marks visibly lighter than roads, coastlines, city walls, and field borders.
+
+The background between ridges must be quiet aged parchment with subtle non-directional natural paper variation. At 25% and 50%, the highland should read as one varied mountain system with several open ridge chains and broad valleys. At 200% and 400%, it should resolve into natural broken relief and paper grain, without miniature repeated motifs.
+
+Hard invariants:
+Preserve the road through and beside the highland exactly: same route, width, double edges, junctions, colour, and registration, with a generous calm buffer. Preserve the highland boundary and blend the edit seamlessly inside it. Preserve every pixel outside the upper-right highland as closely as possible. Do not add labels, settlements, waterways, borders, or new roads. Return the complete original 1536 x 1024 map without cropping, resizing, rotation, reframing, recolouring, or a new border.
+
+Immediate failures to avoid:
+No U shapes, C shapes, S shapes, horseshoes, parentheses, commas, beans, leaves, worms, curls, spirals, hooks, rings, loops, contour lines, nested arcs, concentric forms, enclosing outlines, isolated repeated landform stamps, or evenly spaced objects. No ridge may return toward its own beginning. No parallel paired bands of constant width. No maze, cellular network, cloud blobs, camouflage, airbrush, smooth stains, halos, glowing edges, flat polygon fills, rectangular panel, pasted patch edge, hatching, crosshatching, woven texture, dash wallpaper, dot wallpaper, gravel, pebbles, glyphs, letters, icons, signatures, frames, or watermarks.

@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-h-v12-organic-plan-material-generation-receipt",
+  "type": "sstory-imagegen-candidate-generation-receipt",
+  "provenance_limitations": {
+    "tool_family": "OpenAI ImageGen through Codex built-in image generation",
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The tool output retained for this trial did not expose a model identifier, model snapshot, generation identifier, or generation timestamp. No value is inferred or reconstructed."
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-h-v12-organic-plan-material.generation.txt",
+    "sha256": "846647c628f7bf429d94792f7d1e257628b1d7d7edd1ebc6f4b2373366285f7f",
+    "exact_text_retained": true
+  },
+  "inputs": [
+    {
+      "path": "world/map-production/candidates/style-candidate-h-v11-colour-calibration-raw.png",
+      "sha256": "32175b57fa82891045a3f8ffa70c3da134b33e38a790db62b14d11c0256cda75",
+      "role": "map geometry, palette, and material authority"
+    }
+  ],
+  "output": {
+    "path": "world/map-production/candidates/style-candidate-h-v12-organic-plan-material-raw.png",
+    "sha256": "13633f90ea8f9a1fda7a0102229b19402e02a7144ad7238bdc1ba558f1d01417",
+    "bytes": 3997278,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "accepted_as_final": false
+  }
+}

@@ -406,6 +406,7 @@
     "build/**",
     "evaluation/**",
     "Language/Evaluation/**",
+    "tmp*/**",
     "*.pdf",
     "*.png",
     "*.jpg",

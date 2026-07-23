@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-b-v3-mountain-relief",
+  "image_path": "world/map-production/candidates/style-candidate-b-v3-mountain-relief.png",
+  "created_at": "2026-07-18T16:14:00Z",
+  "reviewer": "Independent Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 overview inspected independently.", "notes": "The broad composition remains recognizable, but non-mountain areas were regenerated."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Original-resolution PNG inspected.", "notes": "Triangular mountain peaks and dark side hatching are visible."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Upper-right and lower-right mountain areas plus city, delta, islands, fields, and forests inspected.", "notes": "Bullseyes were replaced by repeated fan/star-shaped peaks."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "No text, watermark, or hard seam; widespread pixel drift exists outside the requested area."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Applicability reviewed; this style board has no production control geometry.", "notes": "A local binary edit mask is required for the next attempt."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared directly with candidate B v2.", "notes": "Delta channels, island shapes, forest distribution, city details, and field hatching changed despite invariants."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Applicability reviewed; the style board has no neighbors and frame-free edges.", "notes": "Production seam continuity remains unproven."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road hierarchy and quiet corridors inspected.", "notes": "Readability remains good, but mountain peaks would compete with labels."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; candidate is not a production tile set.", "notes": "Not staged in Leaflet."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; candidate is not a production tile set.", "notes": "Not staged in Leaflet."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "No major relocation crossed the hard-gate threshold, although widespread fine-detail drift occurred."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": false, "evidence": "All representative elements remain present."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No new major settlement or facility was found."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text or pseudo-writing found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No hard internal seam found."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": true, "evidence": "Mountain ranges at approximately x=930–1535,y=0–590 and x=900–1350,y=820–1024 use triangular peaks and dark side hatching."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Repeated fan-shaped and star-shaped peak symbols replace the former concentric targets."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 21, "notes": "Broad feature placement remains, but the edit did not preserve non-mountain detail."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 9, "notes": "Widespread regeneration outside the requested footprint weakens continuity with B v2."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 13, "notes": "Frame-free edges remain even; no production neighbor exists."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 13, "notes": "Palette is coherent, but pictorial peaks violate the locked plan-view vocabulary."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 8, "notes": "Detail is sufficient but too icon-like in mountain areas."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 8, "notes": "Concentric targets are gone, but repeated peak motifs remain."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 9, "notes": "Road and label corridors remain generally readable."}
+  ],
+  "total_score": 81,
+  "decision": "rejected",
+  "summary": "Candidate B v3 is rejected: the mountain edit reintroduced perspective and repetition, and regenerated non-mountain details despite the single-change invariant.",
+  "required_changes": [
+    "Return to B v2 and confine the next mountain edit to a binary mountain-footprint mask; reuse B v2 pixels exactly outside the mask and allow only top-down ridge and valley lines inside it."
+  ]
+}

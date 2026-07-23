@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-b-mountain-mask-v1",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_image": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+  "purpose": "Confine attempt-4 image-generation changes to the two existing mountain footprints while preserving roads and every pixel outside the mask.",
+  "include_polygons": [
+    {
+      "id": "north_east_range",
+      "points": [[882, 0], [1535, 0], [1535, 596], [1458, 610], [1370, 596], [1288, 612], [1194, 598], [1098, 620], [1010, 590], [934, 552], [884, 486], [872, 392], [884, 286]]
+    },
+    {
+      "id": "south_east_range",
+      "points": [[884, 782], [996, 764], [1118, 770], [1234, 798], [1348, 844], [1454, 910], [1535, 974], [1535, 1023], [752, 1023], [786, 958], [820, 900]]
+    }
+  ],
+  "exclude_strokes": [
+    {
+      "id": "east_road",
+      "width": 28,
+      "points": [[804, 505], [906, 470], [1016, 447], [1134, 450], [1260, 470], [1392, 482], [1535, 465]]
+    },
+    {
+      "id": "south_east_road",
+      "width": 30,
+      "points": [[792, 552], [902, 610], [1008, 680], [1114, 748], [1222, 818], [1342, 872], [1450, 919], [1535, 956]]
+    }
+  ],
+  "feather_inside_px": 10,
+  "review_status": "provisional",
+  "notes": "Mask geometry is a style-board editing control, not a canon mountain boundary. Excluded road corridors retain the B v2 pixels exactly."
+}

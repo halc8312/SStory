@@ -1,0 +1,9 @@
+Refine this exact NORTHERN FOREST CROP into a calmer abstract areal ink plate while preserving crop framing, all coast/river/road geometry, and the forest boundary.
+
+Reference 1 is the current forest correction and is the visual base. Reference 2 is the locked K2 crop and controls parchment, muted palette, line weight, and surrounding context. Reference 3 is geometry only; never copy its flat vector colors.
+
+EDIT ONLY forest interior. The current dark masses still contain too many visible curly strokes and tangled line shapes. Remove every loop, curl, crescent, leaf, crown, tree, rosette, cell, squiggle, hatch, and outlined component. Do not render any recognizable object and do not use linework inside the forest. No internal mark may extend as a visible stroke beyond two source pixels.
+
+Build forest identity only from broad asymmetric low-contrast olive tone, soft broken dry-ink granulation, extremely fine nonperiodic pointillist speckle, and large irregular quiet clearings. At least 58% of forest interior must be calm negative space. Dark coverage must form soft-edged uneven masses, not connected glyph carpets, and must never make a closed outline, repeated stamp, lattice, row, contour, or directional field. At 400% the material may show tiny isolated dots and paper fibers only—no curls, lines, loops, or icons.
+
+Keep strict flat orthographic projection and seamless K2 paper grain. No blur halo, cloud, spotlight, gradient, relief, shadow, text, pseudo-writing, border, new road, new water, or new hue.

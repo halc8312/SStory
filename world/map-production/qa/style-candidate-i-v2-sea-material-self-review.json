@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-i-v2-sea-material-self-review",
+  "image_path": "world/map-production/candidates/style-candidate-i-v2-sea-material.png",
+  "created_at": "2026-07-19T23:17:34.0220770Z",
+  "reviewer": "codex-vision-self-review-non-independent",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "full_25",
+      "label": "全景25%",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.full.25-contact.png",
+      "notes": "I1の全地形階層は維持され、外洋はI1より明るい灰青へ移動した。森林と高地の既存反復はI2の編集範囲外なので残る。"
+    },
+    {
+      "id": "full_50",
+      "label": "全景50%",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.full.50-contact.png",
+      "notes": "海と陸の大分類は読みやすいが、50% RMSコントラスト保持は0.783909で0.82閾値を下回る。海岸に沿うI1保護帯と新しい海面材質の差が見え始める。"
+    },
+    {
+      "id": "crop_100",
+      "label": "海面クロップ100%原寸",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.crop.100-native-contact.png",
+      "notes": "I1の長い一方向平行線は短い折れ線へ置換され、H4方向へ明度と青灰色が改善した。一方、短線同士が斜めのセル状網目へ連結し、外洋全体を均質に覆う。"
+    },
+    {
+      "id": "crop_200",
+      "label": "海面クロップ200%",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.crop.200-contact.png",
+      "notes": "斜めに連なる菱形・細胞状の格子が明瞭で、長短・方向・密度の局所変化や不規則な静穏域が不足する。数値的な方向分散改善だけでは意味的反復を解消できていない。"
+    },
+    {
+      "id": "crop_400",
+      "label": "海面クロップ400%",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.crop.400-contact.png",
+      "notes": "連結格子が反復記号として強く読める。島岸の3px以上のI1保護コアは画素完全一致だが、その外側で平行波線から格子材質への帯状遷移が見える。"
+    },
+    {
+      "id": "protection",
+      "label": "地形・岸・陸上要素保護",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json の水許可マスク外・クロップ外差分、I1権威地形、保守的水域、海岸帯の比較。",
+      "notes": "水許可マスク外の変更画素は0、最大チャンネル差は0。クロップ外変更も0。I1権威地形IoUは1.0、外観由来の保守的水域IoUは0.997944、海岸帯IoUは0.971876で、島・海岸・デルタ・河川・港・道路・都市・森林・高地・農地の画素は保護された。"
+    },
+    {
+      "id": "automated_repetition",
+      "label": "水面反復プロキシ",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json の方向エントロピー、方向合力、遠距離パッチ相関。",
+      "notes": "方向エントロピーは0.881073から0.954676、方向合力は0.555777から0.356168、遠距離パッチp99相関は0.681218から0.414150へ改善した。しかしこれらは連結したセル格子の意味的反復を検出できず、Vision判定を代替しない。"
+    },
+    {
+      "id": "palette",
+      "label": "H4海面色・材質連続性",
+      "complete": true,
+      "evidence": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json のI1・I2・H4ヒストグラム比較。",
+      "notes": "局所水域RGBヒストグラム交差はI1の0.259687からI2の0.409948へ0.150261改善した。改善点として保持できるが、全体のI2対H4パレットゲートはRGB 0.665843、HSV 0.606242、Bhattacharyya 0.872012で不合格。"
+    },
+    {
+      "id": "seam",
+      "label": "海岸材質遷移",
+      "complete": true,
+      "evidence": "100%、200%、400%の海岸クロップと tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json の3px継ぎ目帯測定。",
+      "notes": "3px継ぎ目帯の平均最大チャンネル差は2.429100だが、p95は8で閾値6を超え、最大25で閾値18を超えた。100–400%で海岸沿いの材質遷移として視認できる。"
+    },
+    {
+      "id": "provenance_and_promotion",
+      "label": "証拠出典・昇格状態",
+      "complete": true,
+      "evidence": "Candidate world/map-production/candidates/style-candidate-i-v2-sea-material.png (SHA-256 324c0c679535830eb1ea5cce47f5d9a0a70cf7987eb19e6ced39d8865c474e41); prompt world/map-production/prompts/style-candidate-i-v2-sea-material.generation.txt; raw world/map-production/candidates/style-candidate-i-v2-sea-material-raw.png; receipt world/map-production/prompts/style-candidate-i-v2-sea-material.generation-receipt.json (SHA-256 051c459b4aa7e43e1571b93c0ed5e113ba3e8bbbc8ecf9070367797249eb828f); automated report tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json (SHA-256 1ee920a050e9eee76b41d81273247c2ac494af2f423d51c02d9057020cc436f0).",
+      "notes": "本報告は非独立の自己Visionで、manifest未登録・未正式化・非Goldenである。次回もH4方向の明るいdusty slate-blueパレットと、長い一方向波線を短い途切れた線へ変える改善は保持する。"
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・疑似文章",
+      "detected": false,
+      "evidence": "100%、200%、400%で文字、数字、ラベル、透かし、署名、疑似文章を確認しなかった。"
+    },
+    {
+      "id": "water_lattice_repetition",
+      "label": "水面の連結格子反復",
+      "detected": true,
+      "evidence": "200%と400%で短い波線が規則的な斜め・菱形・細胞状の連結格子を形成し、外洋全域に反復する。"
+    },
+    {
+      "id": "protected_boundary_material_seam",
+      "label": "保護岸帯の材質継ぎ目",
+      "detected": true,
+      "evidence": "I1画素保護は完全だが、保護岸帯の平行波線と新規格子材質の間に帯状の材質遷移があり、機械継ぎ目ゲートもp95 8>6、最大25>18で不合格。"
+    },
+    {
+      "id": "geometry_or_network_drift",
+      "label": "地形・ネットワークのずれ",
+      "detected": false,
+      "evidence": "許可マスク外とクロップ外の変更画素・最大チャンネル差はいずれも0で、I1の島、海岸、河川、デルタ、港、都市、道路、森林、高地、農地を保持した。"
+    },
+    {
+      "id": "new_objects_or_perspective",
+      "label": "新規物体・遠近法・3D表現",
+      "detected": false,
+      "evidence": "船、海獣、崖、浮島下面、投影影、方向光、遠近法、3D表現を確認しなかった。"
+    },
+    {
+      "id": "missing_required_composition",
+      "label": "必須構図の欠落",
+      "detected": false,
+      "evidence": "25%・50%全景と保護差分で、I1の島、海岸、デルタ、河川、港、道路、都市、森林、高地、農地を保持した。"
+    },
+    {
+      "id": "palette_continuity_gate",
+      "label": "H4パレット連続性ゲート",
+      "detected": true,
+      "evidence": "I2対H4の全体パレットはRGB交差0.665843、HSV交差0.606242、Bhattacharyya 0.872012で不合格。"
+    },
+    {
+      "id": "downsample_readability_gate",
+      "label": "縮小可読性ゲート",
+      "detected": true,
+      "evidence": "50% RMSコントラスト保持は0.783909で、最低閾値0.82を下回った。"
+    }
+  ],
+  "scores": [
+    {
+      "id": "geometry_and_protection",
+      "label": "地形・保護画素の保持",
+      "maximum": 25,
+      "score": 25,
+      "notes": "I1権威画素を水許可範囲外で完全保護した。"
+    },
+    {
+      "id": "palette_and_parent_style",
+      "label": "パレット・親スタイル連続性",
+      "maximum": 15,
+      "score": 11,
+      "notes": "海面はH4方向へ明るく灰青化したが、全体パレット閾値は未達。"
+    },
+    {
+      "id": "seam_continuity",
+      "label": "海岸・材質継ぎ目の連続性",
+      "maximum": 15,
+      "score": 9,
+      "notes": "地形継ぎ目はないが、海岸付近の材質遷移が目立つ。"
+    },
+    {
+      "id": "water_material_quality",
+      "label": "水面材質の品質",
+      "maximum": 15,
+      "score": 8,
+      "notes": "短線化は成功したが、セル状の連結格子に置き換わった。"
+    },
+    {
+      "id": "detail_and_scale_readability",
+      "label": "多段階の細部・可読性",
+      "maximum": 10,
+      "score": 7,
+      "notes": "原寸細部は保つが、50% RMS保持が不合格。"
+    },
+    {
+      "id": "artifact_nonrepetition",
+      "label": "意味的非反復",
+      "maximum": 10,
+      "score": 3,
+      "notes": "200–400%で規則的な連結格子が即時不合格。"
+    },
+    {
+      "id": "vector_overlay_readability",
+      "label": "ネットワーク・オーバーレイ可読性",
+      "maximum": 10,
+      "score": 7,
+      "notes": "海面はI1より明るいが、均質な格子と既存の森林・高地反復が静穏度を下げる。"
+    }
+  ],
+  "total_score": 70,
+  "decision": "rejected",
+  "summary": "I2はI1の地形と全保護画素を正しく固定し、海面をH4寄りの明るい灰青へ移動して長い一方向波線を短線化した。しかし短線が規則的な斜め・菱形・細胞状の連結格子となり、200–400%で即時不合格の意味的反復として明瞭である。海岸材質遷移と50% RMS保持も不合格なので採用しない。本報告は非独立の自己Visionであり、manifest、docs、Golden、正式成果物へ昇格しない。",
+  "required_changes": [
+    "線間隔と長さを非周期・非均質にする",
+    "不規則な大中小の静穏域を明示する",
+    "局所方向を複数に分散し、支配的な斜め方向を作らない",
+    "短線同士を接続させず、菱形・細胞・網目・格子を絶対に形成しない",
+    "海岸保護帯へ向けて同じ材質語彙を自然に疎化し、帯状遷移を作らない"
+  ]
+}

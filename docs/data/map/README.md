@@ -11,7 +11,7 @@
 
 ## ファイル一覧
 
-以下のJSONファイルが配置されています：
+以下のJSONファイルが配置されます。公開時に生成されるindexも含みます。
 
 - `continents.json` - 大陸情報
 - `regions.json` - 地域情報
@@ -20,6 +20,8 @@
 - `hazards.json` - 危険区域
 - `pois.json` - 施設・スポット
 - `pixel-mapping.json` - 高解像度世界地図上の正典ID別ピクセル座標
+- `sheet-tiles-v3.json` - v3の23 sheet・1350 WebPタイルを参照するschema 2正規index
+- `region-rasters.json` - `sheet-tiles-v3.json` と同一バイトの互換index。full-master WebPは登録しない
 
 ## 利用方法
 

@@ -1,0 +1,7 @@
+Edit this exact EASTERN HIGHLAND CROP as a restrained antique-map restoration, keeping the crop framing, road placement, western forest edge, and surrounding registration.
+
+Reference 1 is the current correction crop. Reference 2 is K1 material/style authority. Reference 3 is geometry only; do not copy its flat colors.
+
+The existing highland is still too busy. Replace approximately 75% of the repeated hatch/scratch marks with seamless local parchment and dry K1 grain. The result must have broad quiet planar tonal zones and ample calm negative space. Retain only sparse, isolated, uniquely angled short warm-sepia copperplate hachures, tiny broken rock marks, and a few subtle low-contrast patches. No group may look stamped or repeat; no 3–5-stroke bundles; no chains; no uniform diagonal cadence; no long parallel fields; no contour rings; no ridge wall; no mountains, peaks, cliffs, relief, clouds, gradients, polygons, or spotlight.
+
+LOCK the double-line road and junctions, the western forest boundary, and all pixels outside the highland. Preserve the muted ochre palette, fine paper fibers, 100% flat orthographic plan-view, and crisp source-scale line quality. At 25% this should read as one calm highland zone; at 200–400% the remaining marks should be irregular and handcrafted. No text, labels, glyphs, borders, shadows, 3D, blur, or new hue.

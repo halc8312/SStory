@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "base_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "edit_path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks-raw.png",
+  "control_path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json",
+  "output_path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+  "width": 1536,
+  "height": 1024,
+  "masked_pixels": 33591,
+  "opaque_mask_pixels": 20410,
+  "protected_pixels_verified": 1539273,
+  "outside_mask_max_channel_difference": 0,
+  "output_sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016"
+}

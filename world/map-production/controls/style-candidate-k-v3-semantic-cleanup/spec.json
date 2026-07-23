@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-k-v3-semantic-cleanup",
+  "status": "prepared-donors-locked-output-held",
+  "source": {
+    "path": "world/map-production/candidates/style-candidate-k-v2-hybrid.png",
+    "sha256": "25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92",
+    "role": "exact rejected-evidence K2 raster used as immutable K3 byte source"
+  },
+  "scope": {
+    "editable_semantics": [
+      "canonical forest interior",
+      "canonical highland interior",
+      "eight canonical field interiors eroded inward by 12px"
+    ],
+    "pre_style_byte_identical_semantics": [
+      "all pixels outside the edit union",
+      "warped coast and islands",
+      "river and delta",
+      "port and piers",
+      "capital and five gates",
+      "exact agricultural road center core and all road pixels outside the agricultural envelope",
+      "v17 non-parcel agricultural envelope and capital-to-fields approach restored byte-exactly from K2",
+      "v18 legacy field-channel margins outside the eight 12px-eroded strict interiors restored byte-exactly from K2",
+      "all pixels outside the exact Blind-B permission union",
+      "field parcel borders"
+    ],
+    "forbidden": [
+      "overwrite or mutate any K2 candidate, receipt, audit, prompt, mask, or QA record",
+      "broad water or land projection",
+      "whole-board synthesis",
+      "candidate output before donor manifest approval",
+      "Golden, manifest, docs, or renderer mutation"
+    ]
+  },
+  "donor_slots": {
+    "forest": {
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/forest-areal-v3.png",
+      "sha256": "e6b7d8fc7e39f96e5f186783ba89f493232f638dd4787432451feeb0e6d78d52",
+      "source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-4fa38609-005a-4cc9-b78e-f26eaaf8d30d.png",
+      "prompt_path": "world/map-production/prompts/style-candidate-k-v3-forest-areal-donor-v3.generation.txt",
+      "prompt_sha256": "77eb6780515e777db0608b7557f9eff44883a27a99fd7b99652cf70d30a7309f",
+      "native_size": [1254, 1254],
+      "mode": "RGB",
+      "registration_crop_xyxy": [300, 0, 1020, 440],
+      "generation_metadata": {"model": null, "snapshot": null, "generation_id": null},
+      "vision_status": "selected for TEMP v3; crisp irregular filled stipple aggregates and broad clearings",
+      "status": "ready"
+    },
+    "highland": {
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/highland-planar-v4.png",
+      "sha256": "c30fd2f4fc3774148b48a6380522c532fe33c4bf54b6100eaa5160fd9b9e1cfd",
+      "source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-2f229070-5b44-4e48-8da7-b6e9d61f2801.png",
+      "prompt_path": "world/map-production/prompts/style-candidate-k-v3-highland-planar-donor-v4.generation.txt",
+      "prompt_sha256": "94f2d910b3a90d1dbb4a56e09e5af36e1da3738b5141cc702c4d91a35b8ab889",
+      "native_size": [1254, 1254],
+      "mode": "RGB",
+      "registration_crop_xyxy": [930, 0, 1536, 560],
+      "generation_metadata": {"model": null, "snapshot": null, "generation_id": null},
+      "vision_status": "Root Vision-selected for TEMP v8; broad quiet clearings with sparse solid pinprick/angular-fleck clusters and no hollow rings, rows, ridges, clouds, or polygons",
+      "status": "ready"
+    },
+    "fields": {
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/fields-quiet-v2.png",
+      "sha256": "c8554ec066caecee9f3fd428c5c1c6ca3c784c568a1547f717883440cb83196f",
+      "source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-32eb8aec-fcfd-408e-9247-e330dacc8d12.png",
+      "prompt_path": "world/map-production/prompts/style-candidate-k-v3-fields-quiet-donor-v2.generation.txt",
+      "prompt_sha256": "f90c21450fba17cfc7b8e31372da95e2062c924a774a80e19fb9d96c00840334",
+      "native_size": [1254, 1254],
+      "mode": "RGB",
+      "registration_crop_xyxy": [940, 470, 1536, 980],
+      "generation_metadata": {"model": null, "snapshot": null, "generation_id": null},
+      "vision_status": "selected for TEMP v3; calm crisp soil granulation with no rows, grids, or hatches",
+      "status": "ready"
+    }
+  },
+  "forest_procedural_surface": {
+    "selected": false,
+    "status": "Vision-rejected in TEMP v1/v2 for soft camouflage and airbrush-cloud reading; replaced by forest-areal-v3",
+    "texture_authority_slot": "highland",
+    "target_crop_xyxy": [300, 0, 1020, 440],
+    "seed": 103031,
+    "recipe": {
+      "broad_noise_grids_wh": [[12, 7], [37, 23]],
+      "broad_noise_weights": [0.72, 0.28],
+      "quantile_normalization": [0.05, 0.95],
+      "density_range": [0.20, 0.78],
+      "light_rgb": [151, 137, 96],
+      "dark_rgb": [93, 91, 61],
+      "paper_residual_gaussian_sigma": 5.0,
+      "paper_residual_gain": 1.15,
+      "single_dot_probability": "0.0008 + 0.0022 * density",
+      "two_pixel_fleck_probability": 0.00018
+    },
+    "forbidden": "no internal linework, closed loops, cells, tree icons, or donor motifs"
+  },
+  "forest_rejected_lineage": [
+    {
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/forest-areal-v1.png",
+      "sha256": "1e21f08b9e5da24db041a37010342fcfe83ae84a19b763ffd88b64434c3ebb43",
+      "source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-8cda0c9b-3f2c-4609-986c-4a9ee8e88e10.png",
+      "reason": "dense tangled curlicue microline masses at 200 percent"
+    },
+    {
+      "kind": "deterministic procedural highland-paper surface",
+      "reason": "soft camouflage and airbrush-cloud reading in TEMP v1/v2"
+    }
+  ],
+  "semantic_targets": {
+    "forest": {
+      "quiet_clearing_fraction": [0.35, 0.55],
+      "material": "irregular connected stipple and wash",
+      "maximum_loop_tree_cell_icon_count": 0,
+      "forbidden": ["closed crown loops", "tree icons", "leaf cells", "glyph carpet", "orchard cadence"]
+    },
+    "highland": {
+      "minimum_quiet_ground_fraction": 0.85,
+      "material": "broad planar tone with sparse independent marks only",
+      "maximum_multi_stroke_dash_bundles": 0,
+      "maximum_woven_diagonal_substrate_signal": 0,
+      "forbidden": ["parallel bundles", "woven substrate", "contour chains", "ridge icons"]
+    },
+    "fields": {
+      "parcel_count": 8,
+      "minimum_quiet_interior_fraction_per_parcel": 0.85,
+      "maximum_row_cadence_signal": 0,
+      "maximum_continuous_furrow_count": 0,
+      "allowed": "parcel border and restrained tint may carry field semantics",
+      "forbidden": ["parallel dash rows", "CAD grid", "continuous furrows", "regular arrays"]
+    }
+  },
+  "blind_b_raster_contract": {
+    "forest": {
+      "minimum_semantic_calm_fraction": 0.55,
+      "minimum_raster_calm_fraction": 0.25,
+      "maximum_strong_ink_fraction": 0.10,
+      "maximum_closed_loops": 0
+    },
+    "highland": {
+      "minimum_semantic_calm_fraction": 0.85,
+      "minimum_raster_calm_fraction": 0.65,
+      "maximum_strong_ink_fraction": 0.018,
+      "minimum_empty_64px_window_fraction": 0.50
+    },
+    "fields": {
+      "minimum_semantic_calm_fraction_per_parcel": 0.85,
+      "minimum_raster_calm_fraction_per_parcel": 0.50,
+      "maximum_strong_ink_fraction_per_parcel": 0.035,
+      "minimum_empty_48px_window_fraction_per_parcel": 0.35
+    },
+    "boundary_channel_delta": {"maximum_median": 2, "maximum_p95": 5},
+    "changed_pixels_outside_permission_union": 0,
+    "global_transform_allowed": false,
+    "agricultural_corridor": {
+      "required_operation": "same-coordinate exact K2 byte restoration",
+      "minimum_replacement_fraction": 0.0,
+      "maximum_replacement_fraction": 0.0,
+      "plate_allowed": false,
+      "inpaint_allowed": false,
+      "blur_allowed": false
+    }
+  },
+  "v17_corridor_restoration": {
+    "status": "root-authorized-single-change",
+    "baseline": {
+      "path": "tmp/map-production/k3-semantic-cleanup-proof-v16/style-candidate-k-v3-semantic-cleanup-proof-v16.png",
+      "sha256": "e8b233c192441ce7dde8542ad0ac04ce9ad4957c3be9c583c66c32292da29a4c"
+    },
+    "operation": "restore every agricultural_corridor_envelope permission pixel to the same-coordinate locked K2 RGB byte",
+    "forbidden": ["plate", "inpaint", "blur", "donor raster", "alpha composite", "color transform"],
+    "byte_exact_v16_carry_outside_corridor": true,
+    "persistent_output_authorized": false
+  },
+  "v18_field_control_mask": {
+    "status": "root-selected-after-hard-binary-and-8px-erosion-comparison",
+    "baseline": {
+      "path": "tmp/map-production/k3-semantic-cleanup-proof-v17/style-candidate-k-v3-semantic-cleanup-proof-v17.png",
+      "sha256": "9e11125b30f4849ee23c3cb4c0a69ab070ff53401b419bc5699529ace8cd573c"
+    },
+    "strict_interior_erosion_px": 12,
+    "legacy_field_permission_pixels": 100574,
+    "strict_interior_pixels": 57529,
+    "strict_interior_pixels_per_parcel": [8356, 8063, 6743, 5729, 8534, 4568, 7788, 7748],
+    "restored_legacy_parcel_margin_pixels": 43045,
+    "restored_corridor_pixels": 1477,
+    "total_restore_scope_pixels": 44522,
+    "operation": "carry frozen v17 bytes only inside the eight strict interiors and restore the entire legacy field-channel scope outside them to same-coordinate K2 bytes",
+    "strict_interior_composite": "hard binary byte copy from frozen v17; alpha values limited to 0 or 1",
+    "outside_feather_px": 0,
+    "field_donor_rerendered": false,
+    "field_local_rgb_match_applied": false,
+    "field_source_tail_override_pixels": 0,
+    "agricultural_outer_alpha_maximum": 0,
+    "required_field_channel_diff_vs_k2_outside_strict_interiors": 0,
+    "byte_exact_v17_carry_outside_restoration_scope": true,
+    "external_boundary_gate": {
+      "permission": "legacy field-parcel permission",
+      "maximum_median_channel_delta": 2,
+      "maximum_p95_channel_delta": 5,
+      "strict_interior_transition": "diagnostic plus Root Vision; external field-channel boundary remains K2 exact"
+    },
+    "rejected_comparison_probes": [
+      {
+        "control": "8px-eroded strict interiors",
+        "reason": "retained part of the rejected west approach wedge"
+      },
+      {
+        "control": "hard-binary full legacy parcel permission",
+        "reason": "introduced a conspicuous hard diagonal tan/ground cutoff and obscured the west parcel road/border edge"
+      }
+    ],
+    "parcel_boundary_cadence": "diagnostic-only in v18; any border-cadence treatment is deferred to a separate version",
+    "highland_v5_deferred_to": "v19",
+    "persistent_output_authorized": false
+  },
+  "low_frequency_blotch_gate": {
+    "version": "1.0.0",
+    "status": "fail-closed-independent-gate",
+    "scope": "eight eroded field-parcel interiors plus eroded agricultural corridor permission",
+    "measurement": {
+      "color_channel": "CIELAB L",
+      "normalized_permission_gaussian_sigma_px": 11.0,
+      "permission_erosion_px": 8,
+      "robust_span_quantiles": [0.05, 0.95],
+      "large_blob_absolute_delta_from_region_median_lab_l": 8.0,
+      "large_blob_connectivity": 8
+    },
+    "thresholds": {
+      "maximum_robust_low_frequency_span_lab_l": 18.0,
+      "maximum_local_low_frequency_gradient": 10.5,
+      "maximum_connected_large_blob_core_fraction": 0.15
+    },
+    "rationale": "Sigma-11 normalized smoothing and 8px permission erosion exclude paper grain and byte-locked parcel borders while retaining the broad airbrush/cloud masses rejected by Root Vision in TEMP v10.",
+    "calibration_evidence": {
+      "k2_sha256": "25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92",
+      "k2_maxima": {
+        "robust_span_lab_l": 15.853,
+        "local_gradient": 9.758,
+        "large_blob_core_fraction": 0.1265,
+        "passed_regions": 9
+      },
+      "rejected_temp_v10": {
+        "path": "tmp/map-production/k3-semantic-cleanup-proof-v10/style-candidate-k-v3-semantic-cleanup-proof-v10.png",
+        "sha256": "d1c835e62ec7e9c2f7f42709aa1600ee42c0ddcc98f02d41daf3a1f1449feb24",
+        "field_maxima": {
+          "robust_span_lab_l": 45.688,
+          "local_gradient": 12.662,
+          "large_blob_core_fraction": 0.4353
+        },
+        "failed_field_regions": 8,
+        "vision_failure": "visible pasted parcel patches with broad brown low-frequency airbrush/cloud blobs"
+      }
+    }
+  },
+  "style_calibration": {
+    "preflight_state": "disabled",
+    "policy": "may run only after the pre-style protected-byte-identity gate passes and root explicitly authorizes it",
+    "spatial_pixel_reassignment_forbidden": true,
+    "cdf_or_exact_multiset_remap_forbidden": true
+  },
+  "future_outputs": {
+    "raw": "world/map-production/candidates/style-candidate-k-v3-semantic-cleanup-raw.png",
+    "candidate": "world/map-production/candidates/style-candidate-k-v3-semantic-cleanup.png",
+    "receipt": "world/map-production/prompts/style-candidate-k-v3-semantic-cleanup.provenance-receipt.json",
+    "audit": "world/map-production/qa/automated/style-candidate-k-v3-semantic-cleanup.json"
+  },
+  "output_authorized": false,
+  "golden_accepted": false
+}

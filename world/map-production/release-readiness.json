@@ -1,0 +1,7 @@
+{
+  "$schema": "schemas/release-readiness.schema.json",
+  "schema_version": "1.0.0",
+  "status": "in-progress",
+  "manifest_path": "world/map-production/production-manifest.json",
+  "notes": "Phase 4-6 production remains in progress. Change status to release-candidate only after the bounded-sheet artifacts and QA evidence are complete."
+}

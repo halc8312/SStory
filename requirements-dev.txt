@@ -1,3 +1,6 @@
 # Python dependencies used by repository validators and tests.
 jsonschema==4.26.0
+numpy==2.3.5
+opencv-python-headless==4.13.0.92
+Pillow==12.3.0
 PyYAML==6.0.3

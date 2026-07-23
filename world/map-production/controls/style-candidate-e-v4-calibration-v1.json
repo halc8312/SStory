@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-e-v4-calibration-v1",
+  "report_id": "style-candidate-e-v4-calibration",
+  "created_at": "2026-07-19T00:45:00Z",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_image": {
+    "path": "world/map-production/candidates/style-candidate-e-v3-south-east-calibrated-plate.png",
+    "sha256": "1197915a788f56a80619e4e2110178827c3dbe4be84374f5d3eae8e2a570f47f",
+    "mode": "RGB",
+    "role": "pixel-authoritative Candidate E v3 plate with the single south-east gain already frozen"
+  },
+  "transfer_control": {
+    "path": "world/map-production/controls/style-candidate-e-v4-relief-mask-v1.json",
+    "sha256": "6e83b4db3d7c488904b1578a412d53181653a9654b4ae335ba4378649298fc1c",
+    "raster_path": "world/map-production/controls/style-candidate-e-v4-relief-mask-v1.png",
+    "raster_sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a",
+    "functional_reference_path": "world/map-production/controls/style-candidate-e-v3-relief-mask-v1.json",
+    "functional_reference_sha256": "acee8d871e26fd557f553c40446752d0d5e1c70d98acd1683a1b1a83b8586b69",
+    "allowed_metadata_differences": ["id", "transfer_report_id", "purpose", "notes"]
+  },
+  "calibration": {
+    "minimum_areal_support": {
+      "region_id": "north_east_range",
+      "target_quadrant": 3,
+      "shape": "cosine-squared-ellipse",
+      "center": [1040, 440],
+      "radii": [180, 140],
+      "amplitude_levels": -2,
+      "apply_transfer_region_feather": true,
+      "purpose": "Raise only the north-east quadrant-three final P90 absolute delta from one to the unchanged minimum of two; amplitude zero and minus one remain below the gate."
+    }
+  },
+  "numeric_contract": {
+    "pillow_version": "12.3.0",
+    "luminance_mode": "Pillow-L",
+    "pixel_sample_origin": "integer-top-left-no-half-pixel-offset",
+    "ellipse_boundary": "strict-r-less-than-one",
+    "mask_normalization": "mask-byte-divided-by-255",
+    "rounding": "python-half-even-each-operation-before-integer-sum",
+    "operation_order": "derive-from-source-sum-integers-then-apply-equal-rgb-delta",
+    "range_handling": "reject-before-write-never-clamp"
+  },
+  "safety": {
+    "maximum_absolute_raw_channel_delta_levels": 2,
+    "maximum_rgb_delta_spread_levels": 0,
+    "maximum_clipping_pixels": 0,
+    "require_exact_outside_calibration_permission": true,
+    "require_source_high_frequency_residual_preserved": true,
+    "raw_high_frequency_gaussian_radius_px": 8,
+    "maximum_raw_high_frequency_rms_levels": 1.0,
+    "maximum_raw_high_frequency_p99_levels": 2,
+    "maximum_raw_high_frequency_levels": 8,
+    "require_full_transfer_preflight": true,
+    "expected_transfer_preflight_status": "passed",
+    "expected_transfer_failure": null,
+    "require_deterministic_png": true,
+    "publication": "atomic-output-and-report-no-overwrite"
+  },
+  "expected_transfer_preflight": {
+    "status": "passed",
+    "north_east_input_q90_q10_levels": 33,
+    "south_east_input_q90_q10_levels": 33,
+    "north_east_bandpass_q90_q10_levels": 6,
+    "south_east_bandpass_q90_q10_levels": 6,
+    "north_east_final_q90_q10_levels": 7,
+    "south_east_final_q90_q10_levels": 7,
+    "region_quadrant_p90_absolute_delta_levels": [4, 4, 2, 6, 4, 2, 6, 4],
+    "traceable_components": 0,
+    "road_changed_pixels": 0,
+    "outside_mask_changed_pixels": 0,
+    "maximum_absolute_delta_levels": 6,
+    "maximum_active_high_frequency_p99_levels": 1
+  },
+  "purpose": "Candidate E attempt four changes only the north-east quadrant-three minimum areal support on the hash-locked E v3 plate. The south-east calibration and every transfer threshold remain byte- and functionally locked."
+}

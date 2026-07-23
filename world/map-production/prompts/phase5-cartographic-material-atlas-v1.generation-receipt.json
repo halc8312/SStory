@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "id": "phase5-cartographic-material-atlas-v1-generation-receipt",
+  "type": "sstory-imagegen-material-atlas-receipt",
+  "provenance_limitations": {
+    "raw_invocation_prompt_available": false,
+    "raw_invocation_prompt_reconstructed": false,
+    "normalized_production_brief_path": "world/map-production/prompts/phase5-cartographic-material-atlas-v1.normalized-generation-brief.txt",
+    "exact_image_model_identifier_available": false,
+    "tool_family": "OpenAI ImageGen through Codex built-in image generation",
+    "generation_identifier_available": false,
+    "generation_timestamp_utc": null,
+    "note": "The atlas is known to be ImageGen-originated, but the exact raw prompt, model identifier, generation identifier, and generation timestamp were not retained. No value is inferred here."
+  },
+  "artifact": {
+    "path": "world/map-production/style-assets/phase5-cartographic-material-atlas-v1.png",
+    "sha256": "9b42dcce48d275d392bc28235925ac02f37690ace3418d6cb65920f4da05c6e3",
+    "bytes": 4744978,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "alpha_or_transparency_present": false,
+    "embedded_color_profile_present": false
+  },
+  "accepted_crops": [
+    {
+      "id": "h9_forest_high_frequency_source",
+      "rect_px": [0, 0, 512, 480],
+      "width": 512,
+      "height": 480,
+      "raw_rgb_sha256": "2c9968be64cb9d6aebc21d0ab1fcb3f1d5a38bfff873563737b873a1c09e5b00",
+      "approved_use": "Candidate H9 inter-canopy gap fill only, high-frequency residual at locked strength 0.08; not approved as a general Phase 5 material crop"
+    },
+    {
+      "id": "connected_forest",
+      "rect_px": [24, 24, 472, 472],
+      "width": 448,
+      "height": 448,
+      "raw_rgb_sha256": "81a2a305c7a957ce2b998ba83f793854b81fffc4803ba9161f8f3e21de66f5a4",
+      "approved_use": "connected overhead forest material under canonical forest masks"
+    },
+    {
+      "id": "cultivated_hatching",
+      "rect_px": [32, 600, 600, 1000],
+      "width": 568,
+      "height": 400,
+      "raw_rgb_sha256": "1fe55bfd83eaac0b91acb5e9d685c5b1ed6a98e938cab869aa166380b6539734",
+      "approved_use": "cultivated hatching under canonical agricultural masks"
+    },
+    {
+      "id": "wetland",
+      "rect_px": [760, 620, 1120, 1000],
+      "width": 360,
+      "height": 380,
+      "raw_rgb_sha256": "9392ead6cb954a8d1893c3012ee5001b81c90ebf593db741c4b6a9159e6d5cd1",
+      "approved_use": "wetland material under canonical riparian masks"
+    },
+    {
+      "id": "neutral_parchment",
+      "rect_px": [1336, 296, 1368, 328],
+      "width": 32,
+      "height": 32,
+      "raw_rgb_sha256": "63e04598ab885f0d461b2209f672ad558e43f02cfad1f7565a52c32b3a10b659",
+      "approved_use": "low-strength neutral parchment grain"
+    },
+    {
+      "id": "flat_rock_hachure",
+      "rect_px": [970, 210, 1070, 310],
+      "width": 100,
+      "height": 100,
+      "raw_rgb_sha256": "d090585ff5ba68d955b8fb26d4940142b8a7148290916c94e997a2a2981f59ce",
+      "approved_use": "low-strength flat rock hachure under canonical terrain masks"
+    }
+  ],
+  "rejected_zones": [
+    {
+      "id": "central_dimensional_rock_cluster",
+      "rect_px": [620, 0, 960, 600],
+      "reason": "Dense angular forms can read as dimensional or triangular peak-like rocks.",
+      "policy": "must_not_sample"
+    },
+    {
+      "id": "upper_right_triangular_rock_cluster",
+      "rect_px": [1080, 0, 1280, 180],
+      "reason": "Repeated angular rock forms violate the flat plan-view vocabulary.",
+      "policy": "must_not_sample"
+    },
+    {
+      "id": "right_repeated_grass_bundle_field",
+      "rect_px": [1180, 380, 1536, 1024],
+      "reason": "Repeated tuft bundles create an obvious stamped motif field.",
+      "policy": "must_not_sample"
+    }
+  ],
+  "whole_image_acceptance": {
+    "accepted": false,
+    "decision": "partial-material-crops-only",
+    "reason": "The rejected rock and grass-tuft zones prevent whole-image adoption."
+  },
+  "review_record": {
+    "review_method": "Codex visual inspection at native atlas resolution",
+    "reviewed_views": [
+      "full atlas at native resolution",
+      "five canonical Phase 5 crop coordinates and one H9-specific crop",
+      "three rejected-zone coordinates"
+    ],
+    "generation_time_known": false,
+    "acceptance_inferred_from_generation": false
+  }
+}

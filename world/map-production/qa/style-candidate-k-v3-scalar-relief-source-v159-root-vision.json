@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "k3-v159-scalar-relief-structure-donor",
+  "image_path": "world/map-production/style-assets/k3-v159-scalar-relief-structure-donor.png",
+  "image_sha256": "79d8396575b3a046e39656fbc614648e3e28a930cb3de4c64620d62c34bab656",
+  "dimensions": [1536, 1024],
+  "mode": "RGB",
+  "reviewer": "Codex Root Vision",
+  "review_mode": "root-authority-multiscale-source",
+  "golden_reference": false,
+  "decision": "accepted-as-conditional-scalar-relief-structure-donor",
+  "total_score": 92,
+  "views_completed": ["native", "full25", "full50", "full200", "full400"],
+  "strengths": [
+    "Exactly eight isolated and unequal systems remain countable at native, 25 percent, and 50 percent scales.",
+    "The atlas is strict nadir scalar-style relief with no side face, triangular icon, pedestal, enclosing outline, cast shadow, cell border, or perspective projection.",
+    "Primary ridges, secondary spurs, saddles, and dendritic valleys provide useful low- and mid-frequency structure while differing across all eight systems."
+  ],
+  "limitations_for_direct_use": [
+    "Major crests become near-white luminous paths and may not be copied as absolute luminance.",
+    "Fine tributary branches repeat fern-like paired forms and must be filtered from any deep-zoom material.",
+    "Diffuse footprint halos and the atlas background are prohibited transfer content.",
+    "Local ImageGen footprint and branch drift do not replace the v55/v52 topology contract.",
+    "The 1536-by-1024 source does not contain independent information beyond native resolution."
+  ],
+  "adoption_scope": {
+    "normalized_low_frequency_elevation": true,
+    "normalized_mid_frequency_branching": true,
+    "exact_eight_count_signal": true,
+    "raw_pixels_or_absolute_luminance": false,
+    "high_frequency_fern_texture": false,
+    "footprint_halo_or_background": false,
+    "v55_topology_authority_replaced": false,
+    "golden_candidate": false
+  },
+  "required_derivation": [
+    "Normalize each cell independently and derive only low- and mid-frequency scalar bands.",
+    "Replay derived bands through the v55 affine and exact canonical body masks with an inward feather.",
+    "Restore all outside, protected, and road-calm pixels from v18 exactly.",
+    "Emit exactly five map review PNGs and require a separate Root Vision score of at least 94 before Golden promotion."
+  ],
+  "notes": "This tracked asset is a role-limited ImageGen structure donor, not a finished map or Golden reference."
+}

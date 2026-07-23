@@ -1,0 +1,284 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/qa-report.schema.json",
+  "title": "SStory map Vision QA report",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "job_id",
+    "image_path",
+    "created_at",
+    "reviewer",
+    "status",
+    "acceptance_threshold",
+    "review_views",
+    "immediate_failures",
+    "scores",
+    "total_score",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "job_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "image_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "image_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "complete"
+      ]
+    },
+    "golden_reference": {
+      "type": "boolean"
+    },
+    "review_mode": {
+      "enum": [
+        "standard",
+        "self",
+        "blind-independent"
+      ]
+    },
+    "acceptance_threshold": {
+      "type": "integer",
+      "minimum": 90,
+      "maximum": 100
+    },
+    "review_views": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "complete",
+          "evidence",
+          "notes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "complete": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "immediate_failures": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "detected",
+          "evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "detected": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "scores": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "maximum",
+          "score",
+          "notes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "maximum": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "score": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "total_score": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "decision": {
+      "enum": [
+        "pending",
+        "accepted",
+        "revise",
+        "rejected"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "required_changes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "golden_reference": {
+            "const": true
+          }
+        },
+        "required": [
+          "golden_reference"
+        ]
+      },
+      "then": {
+        "required": [
+          "image_sha256",
+          "review_mode"
+        ],
+        "properties": {
+          "review_mode": {
+            "const": "blind-independent"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "complete"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "summary"
+        ],
+        "properties": {
+          "review_views": {
+            "items": {
+              "properties": {
+                "complete": {
+                  "const": true
+                },
+                "evidence": {
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "immediate_failures": {
+            "items": {
+              "properties": {
+                "detected": {
+                  "type": "boolean"
+                },
+                "evidence": {
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "scores": {
+            "items": {
+              "properties": {
+                "score": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "total_score": {
+            "type": "integer"
+          },
+          "decision": {
+            "enum": [
+              "accepted",
+              "revise",
+              "rejected"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

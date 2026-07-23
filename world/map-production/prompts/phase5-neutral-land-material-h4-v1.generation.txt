@@ -1,0 +1,18 @@
+Use case: stylized-concept
+Asset type: Phase 5 experimental continuous neutral land-material source for a strict orthographic fantasy-map renderer
+
+Primary request: Generate one edge-to-edge, continuous, neutral land-material field. Use Image 1 only as the visual-style reference for its warm aged ochre parchment, restrained sepia/olive ink, delicate copperplate line weight, dense handmade micro-detail, and historical scanned-print character. Do not copy, preserve, reinterpret, or imply any geography, layout, object, or semantic region from Image 1.
+
+Input images: Image 1 is the sole visual-style reference. Its depicted sea, coast, delta, rivers, roads, fields, forest, rocks, mountains, buildings, city, port, and all other map content are forbidden in the output.
+
+Scene/backdrop: The entire 1536x1024 landscape frame is a single unbroken sheet of neutral land material, continuing naturally through all four edges. It is not a map, not a terrain scene, not an atlas, and not a collection of swatches or panels.
+
+Style/medium: Strict orthographic/scanned 2D antique copperplate print on warm aged ochre parchment. No camera perspective and no lighting model. Rich, hand-made, non-directional micro-hachure, hairline cross-hatching fragments, drypoint scratches, paper fibres, tiny irregular stipple, ink-grain variation, and restrained olive-sepia patina. Maintain organic low-, mid-, and high-frequency variation: broad extremely gradual parchment mottling without zones or edges; mid-scale interwoven density drift without shapes, contours, or clusters; crisp fine engraved marks without stamps or wallpaper repetition. The material must remain nuanced and spatially varied when reduced to 25%, and the linework must remain crisp, natural, and non-pixelated when inspected at 400%.
+
+Composition/framing: Uniformly continuous edge-to-edge material, with no focal point, no distinct areas, no patches, no panels, no seams, no border, and no directional flow. Local mark density and colour may drift organically, but every transition must be gradual, boundaryless, and non-semantic.
+
+Color palette: Warm aged ochre parchment with restrained umber, sepia, muted olive, and charcoal-brown ink. No blue water colour, no bright colour accents, no black voids, and no large pale or dark masses.
+
+Constraints: One coherent landscape RGB raster. It must read solely as neutral historical paper-and-ink land texture at every scale. No text, letters, numbers, pseudo-writing, signature, logo, watermark, legend, compass, scale bar, frame, border, grid, or decorative cartouche.
+
+Hard exclusions: Absolutely no coastline, shore, sea, water, lake, river, stream, canal, road, path, parcel, field boundary, polygon, contour, boundary, region, biome, mountain, peak, ridge, cliff, rock, boulder, tree, forest, grass tuft, crop row, wetland, building, wall, settlement, city, port, bridge, island, symbol, icon, landmark, object, scene, horizon, perspective, isometric projection, side face, cast shadow, drop shadow, directional lighting, highlight, embossed relief, vignette, repeated dots, repeated stamps, repeated glyphs, obvious tiles, periodic pattern, seams, rectangular blocks, angular shapes, circular motifs, rosettes, blobs, bands, or material zones.

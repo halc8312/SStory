@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.1.0",
+  "id": "style-candidate-e-v5-calibration-v1",
+  "report_id": "style-candidate-e-v5-calibration",
+  "created_at": "2026-07-19T03:20:00Z",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_image": {
+    "path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+    "sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0",
+    "mode": "RGB",
+    "role": "ImageGen-authored scalar plate whose high-frequency residual is preserved while only its low-frequency topology is replaced"
+  },
+  "transfer_control": {
+    "path": "world/map-production/controls/style-candidate-e-v5-relief-mask-v1.json",
+    "sha256": "b52362f25568f5c72b7ce234a0e7adfeddc31280f66f442204f3b876e526ac89",
+    "raster_path": "world/map-production/controls/style-candidate-e-v5-relief-mask-v1.png",
+    "raster_sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a",
+    "functional_reference_path": "world/map-production/controls/style-candidate-e-v4-relief-mask-v1.json",
+    "functional_reference_sha256": "6e83b4db3d7c488904b1578a412d53181653a9654b4ae335ba4378649298fc1c",
+    "allowed_metadata_differences": ["id", "transfer_report_id", "purpose", "notes"]
+  },
+  "calibration": {
+    "topology_mesh": {
+      "preflight_region_ids": ["north_east_range", "south_east_range"],
+      "grid": {
+        "width": 17,
+        "height": 13,
+        "values": [
+          128, 128, 128, 128, 128, 128, 128, 128, 120, 126, 136, 145, 153, 158, 156, 148, 139,
+          128, 128, 128, 128, 128, 128, 128, 128, 119, 125, 136, 148, 156, 159, 155, 144, 134,
+          128, 128, 128, 128, 128, 128, 128, 128, 117, 123, 137, 150, 155, 151, 145, 137, 131,
+          128, 128, 128, 128, 128, 128, 128, 128, 116, 125, 140, 148, 144, 134, 125, 131, 140,
+          128, 128, 128, 128, 128, 128, 128, 128, 119, 131, 144, 142, 130, 116, 114, 130, 145,
+          128, 128, 128, 128, 128, 128, 128, 128, 125, 137, 142, 133, 119, 112, 119, 136, 147,
+          128, 128, 128, 128, 128, 128, 128, 128, 130, 140, 136, 122, 112, 116, 131, 144, 142,
+          128, 128, 128, 128, 128, 128, 128, 128, 131, 136, 126, 116, 117, 130, 142, 139, 128,
+          128, 128, 128, 128, 128, 128, 128, 128, 128, 131, 130, 126, 125, 128, 131, 134, 136,
+          128, 128, 128, 128, 128, 128, 128, 128, 131, 138, 143, 141, 131, 121, 120, 129, 139,
+          128, 128, 128, 128, 128, 128, 128, 128, 139, 149, 153, 146, 134, 118, 115, 128, 142,
+          128, 128, 128, 128, 128, 128, 128, 128, 146, 155, 156, 149, 138, 122, 120, 134, 146,
+          128, 128, 128, 128, 128, 128, 128, 128, 150, 157, 156, 146, 135, 121, 122, 136, 149
+        ]
+      },
+      "interpolation": "bicubic",
+      "smoothing_radius_px": 32,
+      "source_low_pass_radius_px": 24,
+      "permission_envelope": {
+        "shape": "right-side-cosine-ramp",
+        "zero_through_x": 736,
+        "opaque_from_x": 801
+      },
+      "preserve_high_frequency_residual": true,
+      "purpose": "Replace repeated cloud blobs with one dominant non-radial massif, a readable saddle, and two or three subordinate foothill masses in each region without changing transfer contrast or protection gates."
+    }
+  },
+  "numeric_contract": {
+    "pillow_version": "12.3.0",
+    "luminance_mode": "Pillow-L",
+    "pixel_sample_origin": "integer-top-left-no-half-pixel-offset",
+    "ellipse_boundary": "strict-r-less-than-one",
+    "mask_normalization": "mask-byte-divided-by-255",
+    "rounding": "python-half-even-each-operation-before-integer-sum",
+    "operation_order": "derive-from-source-sum-integers-then-apply-equal-rgb-delta",
+    "range_handling": "reject-before-write-never-clamp"
+  },
+  "safety": {
+    "maximum_absolute_raw_channel_delta_levels": 64,
+    "maximum_rgb_delta_spread_levels": 0,
+    "maximum_clipping_pixels": 0,
+    "require_exact_outside_calibration_permission": true,
+    "require_source_high_frequency_residual_preserved": true,
+    "raw_high_frequency_gaussian_radius_px": 8,
+    "maximum_raw_high_frequency_rms_levels": 1.25,
+    "maximum_raw_high_frequency_p99_levels": 3,
+    "maximum_raw_high_frequency_levels": 12,
+    "require_full_transfer_preflight": true,
+    "expected_transfer_preflight_status": "passed",
+    "expected_transfer_failure": null,
+    "require_deterministic_png": true,
+    "publication": "atomic-output-and-report-no-overwrite"
+  },
+  "expected_transfer_preflight": {
+    "status": "passed",
+    "north_east_input_q90_q10_levels": 0,
+    "south_east_input_q90_q10_levels": 0,
+    "north_east_bandpass_q90_q10_levels": 0,
+    "south_east_bandpass_q90_q10_levels": 0,
+    "north_east_final_q90_q10_levels": 0,
+    "south_east_final_q90_q10_levels": 0,
+    "region_quadrant_p90_absolute_delta_levels": [0, 0, 0, 0, 0, 0, 0, 0],
+    "traceable_components": 0,
+    "road_changed_pixels": 0,
+    "outside_mask_changed_pixels": 0,
+    "maximum_absolute_delta_levels": 0,
+    "maximum_active_high_frequency_p99_levels": 0
+  },
+  "purpose": "Candidate E attempt five changes only the low-frequency topology of the ImageGen-authored scalar plate. The final contrast, region masks, road guards, protected pixels, and every transfer gate remain functionally identical to Candidate E v4."
+}

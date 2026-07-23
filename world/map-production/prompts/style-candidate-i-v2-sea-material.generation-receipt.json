@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-i-v2-sea-material-generation-receipt",
+  "type": "sstory-imagegen-protected-crop-generation-receipt",
+  "provenance_limitations": {
+    "tool_family": "OpenAI ImageGen through Codex built-in image generation",
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The built-in tool output exposed no authoritative model identifier, snapshot, generation identifier, or timestamp; none is inferred."
+  },
+  "generation_policy": {
+    "calls_authorized": 1,
+    "calls_performed": 1,
+    "retry_performed": false,
+    "tool_mode": "OpenAI ImageGen through Codex built-in image generation"
+  },
+  "execution": {
+    "intent": "precise-object-edit",
+    "crop_box_full_coordinates_xyxy": [
+      0,
+      0,
+      672,
+      1024
+    ],
+    "raw_center_crop_xyxy": [
+      4,
+      6,
+      1012,
+      1542
+    ],
+    "downsample": "1008x1536 to 672x1024 at exact 2/3; no upscale"
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-i-v2-sea-material.generation.txt",
+    "sha256": "ebc1d36c9ba44249589cc2f2e880ab097267b32f1a1a864bf99239d0c779e6cd",
+    "bytes": 2104
+  },
+  "inputs": [
+    {
+      "path": "tmp/map-production/i2-sea-material/i1-sea-edit-target-x0000-y0000-w0672-h1024.png",
+      "sha256": "8da94c5683fbb2dfccdbca8ec3bc8dc6890b0b07e350dd1cd309bd922f8f145d",
+      "bytes": 1719315,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 672,
+      "height": 1024,
+      "role": "Image 1: absolute I1 edit target and geography/pixel authority"
+    },
+    {
+      "path": "tmp/map-production/i2-sea-material/h4-sea-material-reference-x0000-y0000-w0672-h1024.png",
+      "sha256": "88a2f792bd6ac25682bc5479a30b61b2a0b99c1515dd36dee29f9d7bfe241d69",
+      "bytes": 1488008,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 672,
+      "height": 1024,
+      "role": "Image 2: H4 water palette/material variation only; no geography"
+    }
+  ],
+  "raw_output": {
+    "path": "world/map-production/candidates/style-candidate-i-v2-sea-material-raw.png",
+    "sha256": "12a7697c4385b46bfa7cc39e69f5c81f3d90dbb15179ab68319534b040150e1f",
+    "bytes": 3772798,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1016,
+    "height": 1548,
+    "accepted_as_final": false
+  },
+  "deterministic_postprocess": {
+    "registration": {
+      "method": "center crop to an exact 21:32 ratio followed by exact 2/3 LANCZOS downsample",
+      "raw_size": [
+        1016,
+        1548
+      ],
+      "raw_center_crop_xyxy": [
+        4,
+        6,
+        1012,
+        1542
+      ],
+      "center_crop_size": [
+        1008,
+        1536
+      ],
+      "native_size": [
+        672,
+        1024
+      ],
+      "scale_x": 0.6666666666666666,
+      "scale_y": 0.6666666666666666,
+      "upscale_performed": false,
+      "affine_or_projective_warp_performed": false,
+      "passed": true
+    },
+    "protection": {
+      "method": "binary conservative water permission plus 12 px inward raised-cosine feather",
+      "permission_pixels": 381344,
+      "changed_pixels": 378681,
+      "changed_fraction_of_crop": 0.550306048,
+      "changed_pixels_outside_permission": 0,
+      "maximum_channel_delta_outside_permission": 0,
+      "exact_i1_pixels_outside_permission": 306784,
+      "outside_permission_pixels": 306784,
+      "inward_feather_px": 12.0,
+      "minimum_bank_guard_px": 3,
+      "seam_band_pixels": 13505,
+      "seam_band_mean_max_channel_delta": 2.4291,
+      "seam_band_p95_max_channel_delta": 8.0,
+      "seam_band_max_channel_delta": 25,
+      "thresholds": {
+        "maximum_changed_pixels_outside_permission": 0,
+        "maximum_channel_delta_outside_permission": 0,
+        "maximum_seam_band_p95_max_channel_delta": 6.0,
+        "maximum_seam_band_max_channel_delta": 18
+      },
+      "passed": false
+    },
+    "permission": {
+      "path": "tmp/map-production/i2-sea-material/i2-conservative-water-permission.png",
+      "sha256": "4468d32114fe24288a8ee372a89d0faa0c4d908ecd462536e96fd78bea7c11aa",
+      "bytes": 5615,
+      "format": "PNG",
+      "mode": "L",
+      "width": 672,
+      "height": 1024
+    },
+    "protected_crop": {
+      "path": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.protected-crop.png",
+      "sha256": "f3bf9e01014e5089028d9aa2e7f4b0e9bb58fd2be28615050c808041f7a6a132",
+      "bytes": 1718980,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 672,
+      "height": 1024
+    },
+    "full_review_candidate": {
+      "path": "world/map-production/candidates/style-candidate-i-v2-sea-material.png",
+      "sha256": "324c0c679535830eb1ea5cce47f5d9a0a70cf7987eb19e6ced39d8865c474e41",
+      "bytes": 3993099,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1536,
+      "height": 1024,
+      "manifest_registered": false,
+      "golden_accepted": false,
+      "note": "Incremental I2 preview only; forest and highland repetition remain inherited from I1."
+    }
+  },
+  "automated_evidence": {
+    "path": "tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json",
+    "sha256": "1ee920a050e9eee76b41d81273247c2ac494af2f423d51c02d9057020cc436f0",
+    "bytes": 25020
+  },
+  "adoption": {
+    "formalized": false,
+    "manifest_registered": false,
+    "golden_accepted": false,
+    "decision_authority": "root Vision review"
+  }
+}

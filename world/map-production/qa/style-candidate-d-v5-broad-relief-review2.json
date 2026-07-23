@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-d-v5-broad-relief",
+  "image_path": "world/map-production/candidates/style-candidate-d-v5-broad-relief-raw.png",
+  "created_at": "2026-07-18T23:05:01Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "Dv4 and formal Dv5 raw were independently compared.", "notes": "No usable broad relief hierarchy appears in either target field."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Both target fields were inspected at 100%.", "notes": "The north-east remains especially uniform; the south-east also lacks a clear dominant and subordinate hierarchy."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Detailed crops were compared at 200% and 400%.", "notes": "Trees, rocks, road edges, paper grain, and hatch marks are regenerated or thickened."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "A nine-region scan covered the full raster.", "notes": "Water texture, coastline, city linework, forest, and fields drift outside the intended area."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Generation and transfer masks were checked against the raw output.", "notes": "No obvious rectangular edge, but the raw edit does not respect outside-mask pixel identity."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Dv4 was treated as the authoritative parent.", "notes": "The raw output fails exact parent continuity."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Edges and target boundaries were inspected.", "notes": "There is no discrete hard seam, but global redraw invalidates seam evidence."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road and feature alignment were compared visually.", "notes": "Road centers are similar but their rendered edges no longer match exactly."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "No final candidate was published.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "No final candidate was published.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": true, "evidence": "Outside-mask exact comparison finds 99.976% of locked pixels changed."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": true, "evidence": "Neither target field reaches the required broad low-frequency signal or readable hierarchy."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No new major canonical-class object appears."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text or long route-like pseudo-writing appears."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No conspicuous mask edge or halo is visible."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No watermark, signature, logo, or modern object appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "The map remains plan-view overall."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": false, "evidence": "No new dominant repeated route chain appears."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 9, "notes": "Macro layout survives, but exact geometry and high-frequency identity do not."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 4, "notes": "The full raw raster differs from Dv4."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 9, "notes": "No hard edge, but global drift defeats continuity."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 9, "notes": "Palette is close while many strokes are regenerated."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 4, "notes": "Fine detail exists without the requested macro hierarchy."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 2, "notes": "Nearly complete pixel drift is unacceptable."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 5, "notes": "Features remain legible but no longer align exactly."}
+  ],
+  "total_score": 42,
+  "decision": "rejected",
+  "summary": "Candidate D v5 is independently rejected. The raw output changes the complete map, while the robust broad signal remains below threshold in both regions. Atomic failure leaves the authoritative map unchanged.",
+  "required_changes": [
+    "Generate a standalone featureless luminance delta plate and add only its bounded region-centered low-frequency field to Dv4; do not ask ImageGen to edit the detailed map."
+  ]
+}

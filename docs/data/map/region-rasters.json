@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "bounds_order": ["min_x", "min_y", "max_x", "max_y"],
+  "deprecated": true,
+  "replacement_type": "sstory-sheet-tile-index@2.0.0",
+  "description": "公開前のdeprecated空placeholder。Phase 5 publisherが、23 bounded sheetを網羅するsheet-tiles-v3.jsonと同一のschema-2 tile-only aliasへ原子的に置換する。full-master WebPは登録しない。",
+  "rasters": []
+}

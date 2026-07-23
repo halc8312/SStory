@@ -1,0 +1,60 @@
+TASK
+Perform one surgical edit on reference image 1. Return one 1536 x 1024 RGB
+landscape image. Reference image 2 supplies the exact seamless paper/ground material.
+
+REFERENCE ROLES
+1. The Round-4 map is the edit target and exact eight-location control. Its eight brown
+   shapes identify the eight allowed ridge centers, but the brown fills, their outlines,
+   and the smooth highland panel are defects that must disappear completely.
+2. k3-v18-reconstruction-base.png is the material and preservation authority. Its
+   parchment, grain, palette, roads, city, river, coast, forest, fields, and port define
+   what unchanged context and seamless highland ground must look like.
+
+THE ONLY CHANGE
+Dissolve the Round-4 upper-right highland panel and all eight filled brown carrier
+silhouettes into seamless reference-2 parchment. At the same eight locations, retain
+exactly eight understated, separate, strictly plan-view ridge systems made from sparse
+open terrain marks and gentle tonal drift. The former carrier boundaries must become
+impossible to see or infer.
+
+EIGHT-RIDGE CONTRACT
+- Exactly eight ridge systems, one centered within each former brown shape.
+- Do not preserve, trace, fill, outline, or feather the old shape boundaries.
+- Each system may occupy only a loose inner portion of its old location and must taper
+  into the same shared ground on every side.
+- Body 8, formerly the narrow horizontal bar near the lower road, must read as one small
+  compact knoll made from a few irregular open marks, never as a bar.
+- Keep broad quiet gaps between all systems and along the main road.
+
+VISUAL LANGUAGE
+- Strict 90-degree overhead antique cartography, flat ink on paper.
+- One restrained low-saturation sepia/umber ink family matching reference 2.
+- Use broad low-frequency tonal drift plus sparse, short, disconnected, nonparallel dry
+  copperplate hachure and incomplete asymmetric open contour fragments.
+- Every ridge has different anatomy, orientation, spacing, density, and termination.
+- At 25% and 50%, the highland reads as one continuous region with eight faint local
+  concentrations, not eight blobs.
+- At 200% and 400%, irregular hand-printed detail appears without repeated templates.
+- Preserve ample quiet parchment for labels and POIs.
+
+ABSOLUTE NEGATIVES
+- No brown filled islands, visible masks, hard carrier edges, stains, plaques, panels,
+  rectangles, color steps, texture seams, or separate paper pieces.
+- No scenic triangular mountains, peak faces, cliffs, shadows, directional lighting,
+  perspective, isometric view, raised relief, or horizon.
+- No closed concentric rings, bullseyes, targets, onion contours, halos, repeated loops,
+  uniform contour intervals, or nested stamps.
+- No parallel dash bundles, fishbones, roots, leaf veins, woven hatching, wallpaper,
+  aligned rows, CAD grids, or repeated symbols.
+- No text, labels, numerals, letters, signatures, watermarks, legends, borders, frames,
+  compass roses, new settlements, or UI.
+- Do not alter anything outside the upper-right highland. Do not move or repaint the
+  road beside/through it, city, river, coast, forest, fields, port, or other geography.
+
+PRIORITY
+1. Erase all visible panel and filled-carrier evidence.
+2. Preserve exactly eight subtle locations without exposing their old silhouettes.
+3. Flat plan-view semantics and seamless v18 paper material.
+4. Quiet, irregular, nonrepeating antique detail.
+
+The result is an unlabeled material/terrain donor, not a finished illustrated poster.

@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-g-v2-orthographic-hachure",
+  "image_path": "world/map-production/candidates/style-candidate-g-v2-orthographic-hachure.png",
+  "created_at": "2026-07-19T05:52:00Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "Base, raw, protected final, guide, masks, and automated report were independently inspected.", "notes": "The two primary relief fields are visible, but the requested six-landform hierarchy is absent."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "The full 1536x1024 final was inspected at native scale.", "notes": "G1 perspective is fixed; relief density is locally excessive and reads like pasted dark line fields."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "The twenty final/raw diagnostic crops under tmp/map-production/g2-review-v1 were independently inspected.", "notes": "NE-west is nearly absent in raw, NE-central merges with rocks, SE-west is a faint fragment, and SE-east is largely erased beside the road guard."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "The full image and amplified difference were scanned across the center, corners, and edges.", "notes": "No outer-edge modification or clipping occurs; faults are local to the two declared terrain groups."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "The guide components, generated raw, final, edit mask, protection mask, and component statistics were compared.", "notes": "The flat footprints do not sufficiently constrain internal fall-line direction, two-lobe massifs, saddles, or four independent foothills."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Candidate D v4 and G2 were compared at matching coordinates and reduced scale.", "notes": "Paper color is continuous; the new hachure density jumps relative to the parent and secondary terrain disappears."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "All four border differences are zero; road-adjacent north-east and south-east crops were checked.", "notes": "Canvas-edge continuity is safe, but the 64px road guard creates internal unpainted-looking terrain channels."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Roads, city, coast, fields, trees, rocks, and intended future overlays were assessed.", "notes": "Exact protected pixels remain readable, but the surrounding dense line fields and road-shaped gaps weaken the hierarchy."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Desktop suitability was assessed from native and enlarged views without staging a rejected raster.", "notes": "The main massifs are conspicuous as repeated line patches and do not meet Golden quality."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Mobile suitability was assessed from the reduced full overview without staging a rejected raster.", "notes": "Only two dark fields survive; required foothills and saddles are not navigationally useful."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "Hash-locked automated gates report zero changes on all protected cores, outside permission, and zero-mask pixels; visual inspection agrees."},
+    {"id": "missing_required", "label": "必須地点・地形の欠落", "detected": true, "evidence": "All four detached foothills fail independent recognition and neither main massif provides a clear two-rise plus short saddle structure."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No noncanonical major settlement, facility, transport route, or landmark was added."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No generated words, pseudo-labels, legend, compass, scale, or signature were found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": true, "evidence": "The north-east road corridor and south-east east-foothill corridor become broad flat terrain gaps that visibly expose the compositing mask."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern element, watermark, logo, or signature was found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "Both groups are rendered in plan view with no scenic peaks, side faces, horizon, or cast shadow."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Massed equal-spaced parallel curves repeat across both groups and resemble contour or fingerprint bands rather than individually varied hachures."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 18, "notes": "Protected canon is exact, but four foothills and both explicit saddle structures are missing."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 9, "notes": "Palette is compatible; line density jumps and secondary terrain vanishes at parent scale."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 10, "notes": "Outer borders are exact, while road guard channels visibly divide internal relief."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 12, "notes": "Orthographic historical color succeeds, but the mark grammar is closer to long contour bands than short fall-line hachure."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 5, "notes": "Primary relief is dense and secondary landforms are too weak for a balanced scale hierarchy."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 4, "notes": "Uniform wavy repetition and mask-shaped road gaps remain despite clean encoding and borders."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 6, "notes": "Protected vectors remain exact; dense surrounding relief still competes with future overlays."}
+  ],
+  "total_score": 64,
+  "decision": "rejected",
+  "summary": "G2 is independently rejected. It fixes oblique perspective and canvas clipping, but four foothills and saddle topology are missing, uniform contour-like line bands repeat, and the road guard is visible as a terrain void.",
+  "required_changes": [
+    "Replace the flat six-color footprint guide with a deterministic six-landform hachure skeleton that declares short fall-line strokes, two rises, and an open saddle.",
+    "Keep the prompt, base, palette, projection, and protected canon fixed while proving all six structures in raw output before compositing."
+  ]
+}

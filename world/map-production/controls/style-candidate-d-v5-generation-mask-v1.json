@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-v5-generation-mask-v1",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "source_image": {
+    "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+    "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016"
+  },
+  "purpose": "ImageGen permission mask for Candidate D v5. It contains only the two broad mountain fields and deliberately omits road-shaped black exclusions, ridge corridors, fragments, labels, and topology guides.",
+  "include_polygons": [
+    {
+      "id": "north_east_range",
+      "feather_inside_px": 64,
+      "points": [
+        [882, 0], [1535, 0], [1535, 596], [1458, 610], [1370, 596],
+        [1288, 612], [1194, 598], [1098, 620], [1010, 590], [934, 552],
+        [884, 486], [872, 392], [884, 286]
+      ]
+    },
+    {
+      "id": "south_east_range",
+      "feather_inside_px": 16,
+      "points": [
+        [884, 782], [996, 764], [1118, 770], [1234, 798], [1348, 844],
+        [1454, 910], [1535, 974], [1535, 1023], [752, 1023], [786, 958],
+        [820, 900]
+      ]
+    }
+  ],
+  "exclude_strokes": [],
+  "feather_inside_px": 64,
+  "review_status": "provisional",
+  "notes": "The mask communicates only areal permission. Road preservation is enforced by the prompt and, independently, by the final transfer control. No black line inside either mountain polygon can be traced or copied by ImageGen."
+}

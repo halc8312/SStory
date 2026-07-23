@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.1.0",
+  "id": "style-candidate-f-v2-calibration-v1",
+  "report_id": "style-candidate-f-v2-calibration",
+  "created_at": "2026-07-19T05:40:00Z",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_image": {
+    "path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+    "sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0",
+    "mode": "RGB",
+    "role": "ImageGen-authored scalar plate whose high-frequency residual is preserved while its repeatedly rejected elliptical low-frequency topology is replaced"
+  },
+  "transfer_control": {
+    "path": "world/map-production/controls/style-candidate-f-v2-relief-mask-v1.json",
+    "sha256": "6efbe5214866604156e01ea42b1d82171d9c6b68d8847ca3381e2d07b8d58d77",
+    "raster_path": "world/map-production/controls/style-candidate-f-v2-relief-mask-v1.png",
+    "raster_sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a",
+    "functional_reference_path": "world/map-production/controls/style-candidate-f-v1-relief-mask-v1.json",
+    "functional_reference_sha256": "9fc22557d6ae66e0dbc8dbed5b093153259090c7a6d2d30786c6f0ca4e7e964d",
+    "allowed_metadata_differences": ["id", "transfer_report_id", "purpose", "notes"]
+  },
+  "calibration": {
+    "topology_zones": {
+      "preflight_region_ids": ["north_east_range", "south_east_range"],
+      "base_level": 128,
+      "zones": [
+        {
+          "id": "ne-dominant-massif",
+          "region_id": "north_east_range",
+          "role": "dominant-massif",
+          "level": 155,
+          "points": [[996, 0], [1535, 0], [1535, 158], [1460, 196], [1384, 162], [1310, 222], [1250, 300], [1150, 322], [1060, 272], [994, 168]]
+        },
+        {
+          "id": "ne-shaded-slope",
+          "region_id": "north_east_range",
+          "role": "shaded-slope",
+          "level": 115,
+          "points": [[1244, 266], [1384, 162], [1535, 206], [1535, 420], [1452, 404], [1372, 456], [1260, 420], [1164, 330]]
+        },
+        {
+          "id": "ne-west-foothill",
+          "region_id": "north_east_range",
+          "role": "foothill",
+          "level": 143,
+          "points": [[878, 246], [978, 226], [1074, 278], [1120, 368], [1060, 446], [960, 438], [892, 366]]
+        },
+        {
+          "id": "ne-south-east-foothill",
+          "region_id": "north_east_range",
+          "role": "foothill",
+          "level": 141,
+          "points": [[1328, 424], [1422, 384], [1535, 370], [1535, 596], [1450, 610], [1354, 552]]
+        },
+        {
+          "id": "ne-saddle",
+          "region_id": "north_east_range",
+          "role": "saddle",
+          "level": 121,
+          "points": [[1082, 344], [1160, 310], [1248, 342], [1304, 406], [1262, 478], [1174, 488], [1114, 440]]
+        },
+        {
+          "id": "se-dominant-massif",
+          "region_id": "south_east_range",
+          "role": "dominant-massif",
+          "level": 155,
+          "points": [[752, 1023], [786, 944], [826, 872], [894, 810], [996, 766], [1108, 776], [1160, 842], [1112, 916], [1000, 970], [922, 1023]]
+        },
+        {
+          "id": "se-shaded-slope",
+          "region_id": "south_east_range",
+          "role": "shaded-slope",
+          "level": 115,
+          "points": [[1044, 800], [1158, 812], [1274, 848], [1344, 916], [1300, 1023], [1110, 1023], [1012, 952], [1076, 892]]
+        },
+        {
+          "id": "se-north-west-foothill",
+          "region_id": "south_east_range",
+          "role": "foothill",
+          "level": 142,
+          "points": [[812, 904], [858, 824], [944, 776], [1038, 776], [1060, 832], [984, 890], [900, 920]]
+        },
+        {
+          "id": "se-east-foothill",
+          "region_id": "south_east_range",
+          "role": "foothill",
+          "level": 143,
+          "points": [[1278, 826], [1390, 852], [1482, 908], [1535, 966], [1535, 1023], [1434, 1010], [1342, 950]]
+        },
+        {
+          "id": "se-saddle",
+          "region_id": "south_east_range",
+          "role": "saddle",
+          "level": 121,
+          "points": [[1074, 846], [1154, 820], [1238, 846], [1298, 906], [1262, 974], [1174, 1012], [1088, 966], [1048, 906]]
+        }
+      ],
+      "smoothing_radius_px": 16,
+      "source_low_pass_radius_px": 24,
+      "permission_envelope": {
+        "shape": "right-side-cosine-ramp",
+        "zero_through_x": 736,
+        "opaque_from_x": 801
+      },
+      "preserve_high_frequency_residual": true,
+      "purpose": "Encode one edge-clipped irregular dominant massif, its adjacent broad shaded slope, one compact saddle, and two separated foothill masses per review region; prevent interpolation from collapsing the authored hierarchy into ellipses."
+    }
+  },
+  "numeric_contract": {
+    "pillow_version": "12.3.0",
+    "luminance_mode": "Pillow-L",
+    "pixel_sample_origin": "integer-top-left-no-half-pixel-offset",
+    "ellipse_boundary": "strict-r-less-than-one",
+    "mask_normalization": "mask-byte-divided-by-255",
+    "rounding": "python-half-even-each-operation-before-integer-sum",
+    "operation_order": "derive-from-source-sum-integers-then-apply-equal-rgb-delta",
+    "range_handling": "reject-before-write-never-clamp"
+  },
+  "safety": {
+    "maximum_absolute_raw_channel_delta_levels": 64,
+    "maximum_rgb_delta_spread_levels": 0,
+    "maximum_clipping_pixels": 0,
+    "require_exact_outside_calibration_permission": true,
+    "require_source_high_frequency_residual_preserved": true,
+    "raw_high_frequency_gaussian_radius_px": 8,
+    "maximum_raw_high_frequency_rms_levels": 1.25,
+    "maximum_raw_high_frequency_p99_levels": 3,
+    "maximum_raw_high_frequency_levels": 12,
+    "require_full_transfer_preflight": true,
+    "expected_transfer_preflight_status": "passed",
+    "expected_transfer_failure": null,
+    "require_deterministic_png": true,
+    "publication": "atomic-output-and-report-no-overwrite"
+  },
+  "expected_transfer_preflight": {
+    "status": "passed",
+    "north_east_input_q90_q10_levels": 0,
+    "south_east_input_q90_q10_levels": 0,
+    "north_east_bandpass_q90_q10_levels": 0,
+    "south_east_bandpass_q90_q10_levels": 0,
+    "north_east_final_q90_q10_levels": 0,
+    "south_east_final_q90_q10_levels": 0,
+    "region_quadrant_p90_absolute_delta_levels": [0, 0, 0, 0, 0, 0, 0, 0],
+    "traceable_components": 0,
+    "road_changed_pixels": 0,
+    "outside_mask_changed_pixels": 0,
+    "maximum_absolute_delta_levels": 0,
+    "maximum_active_high_frequency_p99_levels": 0
+  },
+  "purpose": "Candidate F attempt two changes the rejected mesh representation to ten reviewable irregular topology zones. The ImageGen source residual, guarded direct transfer, final contrast, region masks, road protection, and all release gates stay fixed."
+}

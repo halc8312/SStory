@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-b-v5-sparse-ridges",
+  "image_path": "world/map-production/candidates/style-candidate-b-v5-sparse-ridges.png",
+  "created_at": "2026-07-18T17:26:01Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 composite inspected independently.", "notes": "The fingerprint pattern is removed, but the edited terrain resembles fractures."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Original-resolution PNG inspected.", "notes": "A horizontal old-relief band remains visible along the north-east exclusion stroke."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Both ranges and exclusion corridors inspected at enlarged scale.", "notes": "The east-road band is unambiguously visible and branching strokes resemble drainage."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "The north-east and south-east regions contain the material defects."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "The artifact aligns with the erroneous east_road exclusion stroke; the report confirms protected pixels are unchanged.", "notes": "Mechanical protection is correct but protects the wrong visual band."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared with candidate B v4b at original and enlarged views.", "notes": "Old relief survives inside the excluded strip while adjacent relief is replaced."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Mask boundaries and exclusion corridors inspected at 100%, 200%, and 400%.", "notes": "The east-road exclusion corridor forms a visible internal seam."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road and future route/river semantics inspected.", "notes": "Fracture lines can be misread as routes or tributaries."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; this style board is not a production tile set.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; this style board is not a production tile set.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "The composite report verifies 1,042,420 protected pixels and zero outside-mask difference."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": false, "evidence": "All required map areas remain present, although mountain semantics are weak."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No new major place or facility appears."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text or pseudo-writing appears."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": true, "evidence": "Old relief forms a visible horizontal band along east_road around x=804–1535, y=447–505."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "The map remains in strict flat plan view."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": false, "evidence": "Fingerprint, bullseye, and evenly spaced waves are removed; defects are semantic and seam-related."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 23, "notes": "Protected canonical geometry is exact."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 13, "notes": "The parent is retained outside the mask, with a local internal mismatch."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 8, "notes": "The protected east-road strip remains visible at 100%."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 9, "notes": "Branching fractures do not read as mountain relief."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 8, "notes": "Density is present but semantically misdirected."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 8, "notes": "No fingerprint repetition remains, but the exclusion seam is a clear artifact."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 8, "notes": "Roads are readable, but fractures conflict with route and river overlays."}
+  ],
+  "total_score": 77,
+  "decision": "rejected",
+  "summary": "The repeated contour defect is removed, but a visible old-relief band remains along the erroneous road exclusion and the new terrain reads as cracks or tributaries.",
+  "required_changes": ["End candidate B at attempt five. Correct the east-road exclusion from actual road pixels and use sparse non-branching ridge axes with short one-sided hachures for candidate D."]
+}

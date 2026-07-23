@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sstory.example/schemas/protected-relief-composite-v1.schema.json",
+  "title": "SStory guide-derived protected relief composite control v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "schema_lock",
+    "id",
+    "coordinate_space",
+    "canvas",
+    "prompt",
+    "references",
+    "guide_contract",
+    "road_protection",
+    "detail_protection",
+    "purpose"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "schema_lock": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "const": "world/map-production/schemas/protected-relief-composite-v1.schema.json"
+        },
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "coordinate_space": {"const": "source-pixels-y-down"},
+    "canvas": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "integer", "minimum": 64},
+        "height": {"type": "integer", "minimum": 64}
+      },
+      "additionalProperties": false
+    },
+    "prompt": {
+      "$ref": "#/$defs/lockedFile"
+    },
+    "references": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/lockedRaster"},
+            {
+              "properties": {
+                "index": {"const": 1},
+                "role": {"const": "pixel-authoritative-base"}
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/lockedRaster"},
+            {
+              "properties": {
+                "index": {"const": 2},
+                "role": {"const": "flat-color-topology-guide"}
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "guide_contract": {
+      "type": "object",
+      "required": [
+        "source_control",
+        "background_rgb",
+        "active_colors",
+        "expected_components",
+        "permission_feather_inside_px"
+      ],
+      "properties": {
+        "source_control": {"$ref": "#/$defs/lockedFile"},
+        "background_rgb": {"$ref": "#/$defs/rgb"},
+        "active_colors": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            {
+              "type": "object",
+              "required": ["role", "rgb", "expected_components"],
+              "properties": {
+                "role": {"const": "main-massif"},
+                "rgb": {"$ref": "#/$defs/rgb"},
+                "expected_components": {"const": 2}
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": ["role", "rgb", "expected_components"],
+              "properties": {
+                "role": {"const": "foothill-a"},
+                "rgb": {"$ref": "#/$defs/rgb"},
+                "expected_components": {"const": 2}
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": ["role", "rgb", "expected_components"],
+              "properties": {
+                "role": {"const": "foothill-b"},
+                "rgb": {"$ref": "#/$defs/rgb"},
+                "expected_components": {"const": 2}
+              },
+              "additionalProperties": false
+            }
+          ],
+          "items": false
+        },
+        "expected_components": {"const": 6},
+        "permission_feather_inside_px": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 64
+        }
+      },
+      "additionalProperties": false
+    },
+    "road_protection": {
+      "type": "object",
+      "required": ["guard_width_px", "feather_px", "strokes"],
+      "properties": {
+        "guard_width_px": {"const": 64},
+        "feather_px": {"type": "number", "minimum": 0, "maximum": 32},
+        "strokes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {"$ref": "#/$defs/stroke"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "detail_protection": {
+      "type": "object",
+      "required": [
+        "gaussian_radius_px",
+        "high_frequency_threshold_levels",
+        "dark_luminance_max",
+        "feather_px"
+      ],
+      "properties": {
+        "gaussian_radius_px": {"type": "number", "exclusiveMinimum": 0, "maximum": 16},
+        "high_frequency_threshold_levels": {"type": "integer", "minimum": 1, "maximum": 255},
+        "dark_luminance_max": {"type": "integer", "minimum": 0, "maximum": 254},
+        "feather_px": {"type": "number", "minimum": 0, "maximum": 8}
+      },
+      "additionalProperties": false
+    },
+    "purpose": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "lockedFile": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "lockedRaster": {
+      "type": "object",
+      "required": ["index", "path", "sha256", "format", "mode", "role"],
+      "properties": {
+        "index": {"type": "integer"},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "format": {"const": "PNG"},
+        "mode": {"const": "RGB"},
+        "role": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "rgb": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"type": "integer", "minimum": 0, "maximum": 255}
+    },
+    "point": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"type": "integer", "minimum": 0}
+    },
+    "stroke": {
+      "type": "object",
+      "required": ["id", "points"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+        },
+        "points": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"$ref": "#/$defs/point"}
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

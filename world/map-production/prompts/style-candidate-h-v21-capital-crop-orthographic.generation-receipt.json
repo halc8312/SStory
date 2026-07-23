@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-h-v21-capital-crop-orthographic-generation-receipt",
+  "type": "sstory-imagegen-crop-generation-receipt",
+  "provenance_limitations": {
+    "tool_family": "OpenAI ImageGen through Codex built-in image generation",
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The retained tool output exposed no authoritative model identifier, snapshot, generation identifier, or timestamp; none is inferred."
+  },
+  "execution": {
+    "intent": "precise-object-edit",
+    "built_in_imagegen_calls": 1,
+    "retries": 0,
+    "crop_box_full_coordinates_xyxy": [
+      642,
+      292,
+      1058,
+      708
+    ]
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-h-v21-capital-crop-orthographic.generation.txt",
+    "sha256": "f3e33013c75d6e8e80c3db278bdbbbb46bc9b32648b78a0cefeb21f1a1ea6dc2",
+    "bytes": 3051
+  },
+  "inputs": [
+    {
+      "path": "tmp/map-production/h21-city-crop/h4-capital-edit-target-x642-y292-w416-h416.png",
+      "sha256": "7b4b49c5af42ca1f82781a2cf074a38daa55e74bab45392ae2446420797613b7",
+      "bytes": 404625,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 416,
+      "height": 416,
+      "role": "Image 1: absolute H4 edit target"
+    },
+    {
+      "path": "tmp/map-production/h21-city-crop/h9-capital-flat-topology-reference-x642-y292-w416-h416.png",
+      "sha256": "8780aa4389ce403d17add34ef81f1467e58d42667c5800b82bc66a1236484b4a",
+      "bytes": 302999,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 416,
+      "height": 416,
+      "role": "Image 2: aligned flat-footprint topology reference only"
+    }
+  ],
+  "raw_output": {
+    "path": "world/map-production/candidates/style-candidate-h-v21-capital-crop-orthographic-raw.png",
+    "sha256": "296593a85f7cdce78351fb1a3527eacbca2fa7ede3eb266c48c2fa103fc4fd16",
+    "bytes": 3234894,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1254,
+    "height": 1254,
+    "accepted_as_final": false
+  },
+  "deterministic_postprocess": {
+    "registration": {
+      "method": "full-resolution affine ECC on the protected context annulus; generated crop warped into H4 native crop coordinates",
+      "raw_size": [
+        1254,
+        1254
+      ],
+      "native_size": [
+        416,
+        416
+      ],
+      "context_annulus_radius_px": [
+        132,
+        204
+      ],
+      "ecc_correlation": 0.984174864,
+      "affine_matrix": [
+        [
+          1.006636739,
+          -1.57e-05,
+          0.209513903
+        ],
+        [
+          -6.1828e-05,
+          1.005128622,
+          0.11745733
+        ]
+      ],
+      "scale_x": 1.006636741,
+      "scale_y": 1.005128622,
+      "rotation_degrees": -0.003519139,
+      "determinant": 1.011799397,
+      "translation_px": [
+        0.209513903,
+        0.11745733
+      ],
+      "registered_context_luma_mae": 11.305845,
+      "thresholds": {
+        "minimum_ecc_correlation": 0.95,
+        "minimum_scale": 0.98,
+        "maximum_scale": 1.02,
+        "maximum_absolute_rotation_degrees": 0.5,
+        "maximum_absolute_translation_px": 4.0
+      },
+      "passed": true
+    },
+    "protection": {
+      "method": "city-interior permission disk with inward cosine feather; H4 force-restored outside permission, throughout outer wall/context, and on eight radial road cores",
+      "permission_radius_px": 108.0,
+      "inward_cosine_feather_px": 18.0,
+      "radial_core_half_width_px": 2.25,
+      "radial_core_min_radius_px": 22.0,
+      "crop_pixels": 173056,
+      "permission_pixels": 33209,
+      "changed_pixels": 30537,
+      "changed_fraction_of_crop": 0.17645733,
+      "changed_pixels_outside_permission": 0,
+      "changed_outer_wall_or_context_pixels": 0,
+      "changed_radial_core_pixels": 0,
+      "exact_h4_pixels": 142519,
+      "seam_band_pixels": 3532,
+      "seam_band_mean_max_channel_delta": 0.471404,
+      "seam_band_p95_max_channel_delta": 2.0,
+      "seam_band_max_channel_delta": 4,
+      "thresholds": {
+        "maximum_changed_pixels_outside_permission": 0,
+        "maximum_changed_outer_wall_or_context_pixels": 0,
+        "maximum_changed_radial_core_pixels": 0,
+        "maximum_seam_band_p95_delta": 2.0,
+        "maximum_seam_band_max_delta": 8
+      },
+      "passed": true
+    },
+    "protected_patch": {
+      "path": "world/map-production/candidates/style-candidate-h-v21-capital-crop-orthographic-protected-patch.png",
+      "sha256": "9f41cbf8ac1aae8011bef33cc133d6a35b9e2c77893486ddc8cbf8415fd36b8c",
+      "bytes": 408928,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 416,
+      "height": 416,
+      "accepted_as_final": false
+    },
+    "full_review_composite": {
+      "path": "world/map-production/candidates/style-candidate-h-v21-capital-crop-orthographic.png",
+      "sha256": "8ce828ef2f3088ec56129d3618dec3fa855d938fcace0a55a124db35e8aedcc3",
+      "bytes": 3569965,
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1536,
+      "height": 1024,
+      "manifest_registered": false,
+      "golden_accepted": false,
+      "note": "Stable review evidence only; not a formal Golden candidate or publication asset."
+    }
+  },
+  "automated_evidence": {
+    "path": "tmp/map-production/h21-city-crop/style-candidate-h-v21-capital-crop-orthographic.automated.json",
+    "sha256": "14a1ecfa6d06f90cec4543b28a0e89cd50b0714d8777db3d30a8dbee0b15ec34",
+    "bytes": 18815
+  },
+  "adoption": {
+    "formalized": false,
+    "manifest_registered": false,
+    "golden_accepted": false,
+    "decision_authority": "root Vision review"
+  }
+}

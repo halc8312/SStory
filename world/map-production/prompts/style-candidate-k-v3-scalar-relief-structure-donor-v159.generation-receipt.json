@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "k3-v159-scalar-relief-structure-donor",
+  "generator": "OpenAI ImageGen",
+  "generation_mode": "multi-reference image edit",
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-k-v3-scalar-relief-structure-donor-v159.generation.txt",
+    "sha256": "96a56f388445165ad510abf942bd0e2eb3754bfd50a435847305a09fb9ff6a48"
+  },
+  "references_in_order": [
+    {
+      "role": "strict-overhead-topology-authority",
+      "path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+      "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f"
+    },
+    {
+      "role": "exact-eight-identity-and-occupancy-authority",
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+      "sha256": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4"
+    }
+  ],
+  "output": {
+    "path": "world/map-production/style-assets/k3-v159-scalar-relief-structure-donor.png",
+    "sha256": "79d8396575b3a046e39656fbc614648e3e28a930cb3de4c64620d62c34bab656",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB"
+  },
+  "status": "accepted-as-conditional-structure-donor",
+  "golden_reference": false,
+  "raw_pixel_transfer_allowed": false,
+  "adoption_scope": "Normalized low- and mid-frequency scalar elevation per body only; v55 and v52 remain geometry authorities."
+}

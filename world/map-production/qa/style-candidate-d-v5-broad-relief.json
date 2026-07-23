@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-d-v5-broad-relief",
+  "image_path": "world/map-production/candidates/style-candidate-d-v5-broad-relief-raw.png",
+  "created_at": "2026-07-18T23:05:00Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "Dv4 and the formal Dv5 raw output were compared at full 1536x1024 extent.", "notes": "The composition is recognizable, but the broad mountain hierarchy remains absent and the entire raster was regenerated."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "North-east and south-east mountain fields were inspected at native scale.", "notes": "Both fields remain dominated by nearly uniform small symbols instead of readable massifs and saddles."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Native comparison crops under tmp/map-qa-d-v5-raw were inspected at 200% and 400%.", "notes": "Rocks, trees, roads, ground hatches, coastlines, and paper texture were redrawn or shifted by roughly one to two pixels."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "The complete image was scanned as nine regions.", "notes": "Global regeneration affects water, islands, forest, city, fields, coast, and the eastern terrain."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "The polygon-only generation mask and final road-safe transfer mask were compared with the raw output.", "notes": "No conspicuous hard mask outline appears, but almost every pixel outside the generation mask changes."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Dv4 is the pixel-authoritative parent.", "notes": "Raw Dv5 is not parent-continuous; the deterministic transfer correctly refused publication."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Outer areas and both target boundaries were inspected.", "notes": "There is no single hard seam, but whole-image drift prevents canonical seam continuity."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road and symbol positions were compared with Dv4.", "notes": "Road edges and small symbols are visibly recomposed, so exact vector alignment is not acceptable."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "The transfer failed before tiling.", "notes": "Not staged; no candidate artifact was published."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "The transfer failed before tiling.", "notes": "Not staged; no candidate artifact was published."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": true, "evidence": "1,572,560 of 1,572,864 pixels differ from Dv4; 1,034,592 pixels outside the permission mask change."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": true, "evidence": "Band-pass Q90-Q10 is only 2 levels north-east and 1 level south-east, below the required 3.5; broad hierarchy is not readable."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No new major settlement or facility is recognizable."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No label or long pseudo-writing chain was found, although existing symbols were regenerated."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No single straight mask edge or halo dominates the raw image."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "The raw image remains broadly top-down."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": false, "evidence": "Dense symbols remain repetitive but do not form a new dominant repeated chain."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 8, "notes": "Macro composition is recognizable, but exact geometry and almost every pixel drift."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 3, "notes": "The raw raster is not pixel-continuous with Dv4."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 10, "notes": "No hard local seam, but global drift makes it unusable."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 9, "notes": "The broad palette is similar while linework is recomposed."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 4, "notes": "Fine symbols remain, but macro relief information is missing."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 2, "notes": "Whole-image regeneration violates the locked-detail contract."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 5, "notes": "Roads remain visible but are no longer exact."}
+  ],
+  "total_score": 41,
+  "decision": "rejected",
+  "summary": "Formal Candidate D v5 is rejected. It redraws nearly the whole map yet produces too little low-frequency mountain signal. The deterministic transfer safely published no candidate, mask, field, or report.",
+  "required_changes": [
+    "Change the generation input representation only: generate a standalone featureless luminance delta plate and interpret its region-centered luminance without subtracting Dv4, while preserving all final masks and safety gates."
+  ]
+}

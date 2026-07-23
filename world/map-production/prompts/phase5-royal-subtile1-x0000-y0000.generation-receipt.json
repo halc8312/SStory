@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "id": "phase5-royal-subtile1-x0000-y0000-generation-receipt",
+  "type": "sstory-imagegen-candidate-generation-receipt",
+  "scope": "one-call native-resolution Phase 5 preview only; not formal QA, manifest adoption, or publication evidence",
+  "provenance_limitations": {
+    "tool_family": "OpenAI ImageGen through Codex built-in image generation",
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The retained tool output exposed no authoritative model identifier, model snapshot, request or generation identifier, or generation timestamp. No value is inferred or reconstructed."
+  },
+  "generation_execution": {
+    "built_in_tool_mode": true,
+    "imagegen_call_count": 1,
+    "retry_performed": false,
+    "intent": "style-transfer edit with geometry invariants",
+    "requested_dimensions": {
+      "width": 1536,
+      "height": 1024
+    },
+    "returned_dimensions": {
+      "width": 1536,
+      "height": 1024
+    },
+    "source_pixel_density_ratio": 1.0,
+    "candidate_upscale_used": false
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/phase5-royal-subtile1-x0000-y0000.generation.txt",
+    "sha256": "68088fcfa36410ac89e645681e2401ade2d87991668c9da003698b52437520e0",
+    "exact_text_retained": true
+  },
+  "crop": {
+    "sheet_id": "sheet_region_royal_capital_region",
+    "source_parent": {
+      "path": "tmp/map-production/phase5-reviewed-v2/vision-pass-5/sheet_region_royal_capital_region.png",
+      "sha256": "c6732ca91651a86374b297b0b3c0d4a5c6964e4d4bdc85bc0cc529f3b0670ae8",
+      "width": 2294,
+      "height": 1421
+    },
+    "bounds_xywh": [
+      0,
+      0,
+      1536,
+      1024
+    ],
+    "coordinate_origin": "top-left",
+    "coordinate_space": "native sheet pixels"
+  },
+  "inputs": [
+    {
+      "path": "tmp/map-production/phase5-royal-imagegen-subtile1/control/royal-top-left-x0000-y0000-w1536-h1024.control.png",
+      "sha256": "6dc7500a689d894ee21b68295a7108d59fcd51415b44db45e7a7d619037cd6a1",
+      "role": "edit target and sole geometry, geography, transport, settlement, scale, and framing authority"
+    },
+    {
+      "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+      "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
+      "role": "sole style, material, palette, line-density, and finish reference; never geography"
+    }
+  ],
+  "canonical_masks": [
+    {
+      "path": "tmp/map-production/phase5-royal-imagegen-subtile1/control/royal-top-left-x0000-y0000-w1536-h1024.land-sea-mask.png",
+      "sha256": "1cfafea92a54f2862fa2b2a3581f7122b23d2264fe4f86b3928db076810311a2",
+      "role": "canonical land/sea and water-boundary guard source"
+    },
+    {
+      "path": "tmp/map-production/phase5-royal-imagegen-subtile1/control/royal-top-left-x0000-y0000-w1536-h1024.transport-mask.png",
+      "sha256": "0c65d3847b22a14f03caf469b01b3a00564061844326b5cd87cca611231ccad1",
+      "role": "canonical transport guard source"
+    }
+  ],
+  "raw_output": {
+    "path": "world/map-production/candidates/phase5-royal-subtile1-x0000-y0000-raw.png",
+    "sha256": "ec9eafe3796ec509abd11cedcf507a483f5ebe01fdc5f399d40105720aa09003",
+    "bytes": 4632998,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "accepted_as_phase5_master": false
+  },
+  "registered_candidate": {
+    "path": "world/map-production/candidates/phase5-royal-subtile1-x0000-y0000-registered.png",
+    "sha256": "70ce76945793284ef35b55d55156cb120debe5dc1a5976ed94abd4ad0e4ed9fe",
+    "bytes": 3835435,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "chosen_integer_translation_xy_px": [
+      0,
+      0
+    ],
+    "scale_factor": 1.0,
+    "pixel_data_identical_to_raw": true,
+    "accepted_as_phase5_master": false
+  },
+  "protected_candidate": {
+    "path": "world/map-production/candidates/phase5-royal-subtile1-x0000-y0000-protected.png",
+    "sha256": "31c07925409d34b27737db06ca6d82857b151de9e562e0a1abfd6f42a0bb299f",
+    "bytes": 3278399,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "canonical_guard_pixels_exact": true,
+    "outside_permission_pixels_exact": true,
+    "accepted_as_phase5_master": false
+  },
+  "preview_processing": {
+    "path": "tmp/map-production/phase5-royal-imagegen-subtile1/process_subtile.py",
+    "sha256": "3874fdbb662996256bbf5abf0e71ba0ea02f0851dd30b04af72111a35ba76988",
+    "registration": "integer translation only; no rotation, scale change, or upscale",
+    "protection": "canonical water-boundary and transport guards plus exact outer permission band; palette transition is preview-only"
+  },
+  "preview_evidence": {
+    "metrics": {
+      "path": "tmp/map-production/phase5-royal-imagegen-subtile1/phase5-royal-subtile1.metrics.json",
+      "sha256": "69c548358ba4ec4794e421253e10d665e539daeaf74396a3c2efb57e2f420272"
+    },
+    "vision_self_review": {
+      "path": "tmp/map-production/phase5-royal-imagegen-subtile1/phase5-royal-subtile1.vision-self-review.json",
+      "sha256": "f78ffecd57f7e7e8839a7a9f146e40c23467bc0ccd0e470ff268abd26e359f7d"
+    },
+    "formal_qa_created": false
+  },
+  "decision": {
+    "status": "rejected",
+    "raw_route_assessment": "promising but not exact enough for adoption",
+    "protected_candidate_assessment": "immediate reject because broad pale guard bands and rectangular overlap patches destroy continuity",
+    "manifest_registered": false,
+    "docs_modified": false,
+    "renderer_modified": false,
+    "published": false
+  }
+}

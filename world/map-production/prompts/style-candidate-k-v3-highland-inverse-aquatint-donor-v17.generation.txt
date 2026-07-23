@@ -1,0 +1,16 @@
+Use case: stylized-concept
+Asset type: full-bleed orthographic antique-print highland material plate for a deep-zoom fantasy map
+
+Input image: Image 1 is the supplied v15 plate. Use Image 1 only as the authority for its restrained warm parchment / muted ochre hue family, overall median tone, low-to-medium tonal span, and visibility after one-half and one-quarter reduction. Preserve none of its objects, blotches, islands, background loops, cells, or texture motifs.
+
+Primary request: completely rebuild every pixel as a 1254 x 1254 full-bleed CONTINUOUS INVERSE-AQUATINT INK FILM. This is one uninterrupted matte printed material extending uniformly through all four edges, not a population of flakes, stones, spots, symbols, or patches. Imagine a single antique rosin-aquatint copper plate viewed before it is cut into a map region.
+
+The highland character must come only from shallow, stochastic pigment-density variation inside the connected ink film. Use very fine irregular aquatint breakup whose dominant visible scale is approximately 1 to 8 pixels, plus restrained interlocking density variation around 12 to 45 pixels. The larger variation must never close into a silhouette, surround an area, form a separate patch, or remain readable as an object. No coherent tonal feature may span more than about 64 pixels. Every local transition is dry, granular, low-amplitude, and absorbed into neighbouring tone.
+
+Keep the complete film in the same warm sand, parchment, muted ochre, and light umber family as Image 1. Match Image 1's overall median and reduced-size visual strength, but distribute that tonal range throughout one continuous material instead of concentrating it into dark shapes. No black or near-black pixel, no highlight, no shadow, no bevel, and nothing as strong as cartographic line ink.
+
+At one-half and one-quarter size, the plate must retain a quiet warm highland tone with subtle material life and approximately the same palette separation as Image 1. It must not collapse into empty beige, and it must not resolve into spots, mottled islands, camouflage, clouds, or moire. At native size and 400 percent, it should resemble genuinely random antique aquatint ink absorption under a loupe: fine, aperiodic, non-directional, and without any recognisable unit.
+
+The substrate itself must be visually quiet. Do not reproduce the faint loop, diamond, curl, fibre, honeycomb, or woven ground visible in Image 1. Do not add paper grain as a second texture layer. Keep edge statistics identical to the centre: no vignette, frame, seam, border, central composition, or implied tile boundary.
+
+There must be no discrete flakes, stones, pebbles, granules, dots, pores, bubbles, rings, rosettes, islands, stains, blobs, spots, symbols, repeated stamps, closed contours, cells, cracks, veins, connected mesh, cloud fields, camouflage patches, smooth airbrushed washes, fibres, curls, scratches, weave, herringbone, crosshatch, stippling rows, dash fields, directional strokes, horizontal or vertical bands, relief, lighting, perspective, ridges, peaks, terraces, roads, rivers, coastlines, buildings, labels, pseudo-writing, signature, or watermark. No repeated cadence or seamless-texture look at any scale.

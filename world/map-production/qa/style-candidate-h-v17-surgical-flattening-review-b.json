@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v17-surgical-flattening-review-b",
+  "image_path": "world/map-production/candidates/style-candidate-h-v17-surgical-flattening-raw.png",
+  "created_at": "2026-07-20T05:45:35+09:00",
+  "reviewer": "Codex independent Vision QA reviewer B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "complete": true,
+      "evidence": "The 1536x1024 board remains coherent and broadly retains H4's city, port, delta, forest, roads, river and fields. However, the entire image is darker, more uniform and substantially less hierarchical than H4 or Candidate B1.",
+      "notes": "Flattening is visible, but this reads as a full reinterpretation rather than the requested surgical edit."
+    },
+    {
+      "id": "original",
+      "label": "Native resolution",
+      "complete": true,
+      "evidence": "The source is a 1536x1024 RGB PNG with SHA-256 5eeee266f37ab418a4b136a6d66e67ccfe9268fa04a18cf7e96323e9b7d1506f. Native inspection shows widespread replacement of H4's paper, water, forest, plains, fields and settlement marks.",
+      "notes": "H4 SHA-256 is b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25% reduction",
+      "complete": true,
+      "evidence": "At 384x256, roads and rivers remain traceable, but the circular city loses most of its settlement contrast and the land becomes an almost continuous gray-brown stipple field. Candidate B1 and H4 retain substantially clearer terrain separation.",
+      "notes": "The quiet label corridors requested by H4 and B1 are largely consumed by texture."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50% reduction",
+      "complete": true,
+      "evidence": "At 768x512, the city, port, field blocks, roads and rivers are recognizable. The repetitive rocky texture nevertheless dominates the eastern and southern halves, while the sea's loop pattern becomes visibly regular.",
+      "notes": "Functional route readability survives, but visual hierarchy and terrain differentiation regress."
+    },
+    {
+      "id": "zoom_200",
+      "label": "200% zoom",
+      "complete": true,
+      "evidence": "The city is flatter than H4, yet its central raised-looking emblem and circular wall nodes retain height cues. The port is reorganized into a grid, while its pier ends still contain dark side-like caps. Shorelines use multiple bright parallel bands rather than a single low plan boundary.",
+      "notes": "The edits are sharp, but strict orthographic flattening is incomplete."
+    },
+    {
+      "id": "zoom_400",
+      "label": "400% zoom",
+      "complete": true,
+      "evidence": "At 400%, east and south terrain resolve into repeated e-, c-, loop- and pebble-like tokens, and the sea resolves into closely repeated interlocking curls. Forest marks also reuse similar round crowns and upright stems. The image is sharp but mechanically repetitive.",
+      "notes": "This fails the prompt's natural, varied, subordinate-mark requirement."
+    },
+    {
+      "id": "nine_regions",
+      "label": "Nine-region inspection",
+      "complete": true,
+      "evidence": "NW: water is replaced by loop tessellation and the coast is recontoured. N: forest and river positions are approximate, but every canopy and ground mark is regenerated. NE: flat highland becomes a dense repeated-token carpet. W: delta island outlines and shoreline bands drift. Center: the city is rebuilt and surrounding terrain replaced. E: rocky noise fills former quiet terrain. SW: port blocks, piers and shoreline are reconfigured. S: hills are flattened but H4 vegetation, coast and road context are replaced. SE: field layout is approximate, while crop lines, trees and ground material all change.",
+      "notes": "No reviewed region preserves unaffected H4 material visually identically."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1 style comparison",
+      "complete": true,
+      "evidence": "The aged sepia, olive and slate-blue family remains recognizable, but Candidate B1's clear terrain color fields, natural water marks and high-value handcrafted detail are replaced by a lower-contrast monochrome surface.",
+      "notes": "Palette family is retained more successfully than material vocabulary or readability."
+    },
+    {
+      "id": "city_port_flatness",
+      "label": "City and port plan-view inspection",
+      "complete": true,
+      "evidence": "The circular street geometry and port street grid are strongly plan-oriented. Nevertheless, the city center, wall nodes and pier terminals retain rounded raised forms and dark side-edge shading, rather than only footprints, courtyards, streets and pier centerlines.",
+      "notes": "This is an improvement over H4 but not a strict no-height result."
+    },
+    {
+      "id": "rocky_coast_forest",
+      "label": "Rock, coast and forest inspection",
+      "complete": true,
+      "evidence": "Eastern and southern peaks are removed, but the replacement lacks irregular density and natural gaps. It repeats near-identical curls, rings and small triangular marks over broad areas. Coastlines still carry stacked bright bands, and forest texture is globally regenerated with conspicuous crown/stem repetition.",
+      "notes": "The target features are flatter, but their replacement vocabulary is unsuitable for a Golden reference."
+    },
+    {
+      "id": "roads_rivers",
+      "label": "Road and river inspection",
+      "complete": true,
+      "evidence": "Major roads remain pale, continuous and distinguishable from the cool blue-gray river and delta branches. No major route break or road/river ambiguity was found at 25%, 50% or native resolution.",
+      "notes": "This is H17's strongest functional result, although several alignments differ from H4."
+    },
+    {
+      "id": "edge_seams",
+      "label": "Outer-edge inspection",
+      "complete": true,
+      "evidence": "There is no frame, decorative border, hard crop seam, signature or watermark. Water, fields and terrain reach the appropriate outer edges and could visually continue.",
+      "notes": "Outer-edge construction itself does not cause rejection."
+    },
+    {
+      "id": "vector_readability",
+      "label": "Vector-overlay readability",
+      "complete": true,
+      "evidence": "Road and river overlays would remain usable, but the dense loop-and-stipple carpet occupies most former calm land corridors. At 25%, settlement contrast is weak; at 50% and native scale, labels would compete with high-frequency ground marks.",
+      "notes": "Readability is materially below H4 and Candidate B1."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "Generated text or pseudo-text",
+      "detected": true,
+      "evidence": "No legible words appear, but 400% inspection reveals extensive repeated e-, c-, omega- and cursive-loop-like pseudo-writing across sea and rocky terrain. The prompt explicitly excludes pseudo-text."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "Watermark, frame or modern object",
+      "detected": false,
+      "evidence": "No watermark, logo, frame, UI element or modern object was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "Floating land or underside",
+      "detected": false,
+      "evidence": "All islands and shore terrain are attached to water in plan view; no floating underside or horizon is present."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "Side-face or perspective cue",
+      "detected": true,
+      "evidence": "The city center and ring nodes retain raised rounded cues, while pier terminals show dark side-like caps and posts. Multiple stacked shoreline bands also retain relief-like treatment instead of a clean low boundary."
+    },
+    {
+      "id": "missing_composition",
+      "label": "Required composition missing",
+      "detected": false,
+      "evidence": "Sea, delta, river, forest, circular city, port, roads, rocky ground and fields are all present."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "Broken or ambiguous road/river network",
+      "detected": false,
+      "evidence": "Major roads and waterways remain continuous and visually distinguishable."
+    },
+    {
+      "id": "repetition",
+      "label": "Repeated clone or glyph pattern",
+      "detected": true,
+      "evidence": "Sea loops, eastern and southern rock tokens, and repeated forest crown/stem marks form obvious large-area pattern repetition at native through 400% views."
+    },
+    {
+      "id": "edge_seam",
+      "label": "Outer-edge seam or frame",
+      "detected": false,
+      "evidence": "Outer boundaries are borderless and do not show a hard trim line or pasted edge."
+    },
+    {
+      "id": "surgical_scope_breach",
+      "label": "Surgical edit scope breached",
+      "detected": true,
+      "evidence": "Against H4, mean absolute channel delta is 18.2898; only 0.0018% of pixels are exact RGB matches and only 0.2696% have maximum channel delta at most 2. All nine regions are extensively regenerated, including non-target sea, forest, fields, roads and rivers."
+    },
+    {
+      "id": "coastline_position_drift",
+      "label": "Protected coastline positions changed",
+      "detected": true,
+      "evidence": "Side-by-side native and 200% inspection shows changed delta-island silhouettes, altered inlets and a reconfigured shoreline around the lower-left port, despite H4 coastline positions being authoritative."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "Canonical plan-view geometry",
+      "maximum": 25,
+      "score": 20,
+      "notes": "Major mountain relief is successfully flattened, but city-center, wall-node, pier-end and shoreline relief cues remain."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "H4 parent continuity",
+      "maximum": 15,
+      "score": 3,
+      "notes": "High-level composition is recognizable, but almost no unaffected H4 pixels or microfeatures are preserved."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "Edit and transition continuity",
+      "maximum": 15,
+      "score": 11,
+      "notes": "The global rendering is coherent without rectangular splice seams, though shoreline banding and terrain transitions remain conspicuous."
+    },
+    {
+      "id": "style_consistency",
+      "label": "Style and palette consistency",
+      "maximum": 15,
+      "score": 9,
+      "notes": "The broad palette family survives, but B1/H4 material richness and terrain separation are replaced by uniform gray-brown noise."
+    },
+    {
+      "id": "detail_density",
+      "label": "Close-zoom detail density",
+      "maximum": 10,
+      "score": 6,
+      "notes": "The source is sharp and dense at 400%, but much of the density is repetitive rather than semantically varied cartographic detail."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "Artifact integrity",
+      "maximum": 10,
+      "score": 2,
+      "notes": "Large-scale repeated loops, pseudo-writing shapes and cloned terrain tokens are immediate-failure artifacts."
+    },
+    {
+      "id": "vector_readability",
+      "label": "Vector-overlay readability",
+      "maximum": 10,
+      "score": 5,
+      "notes": "Roads and rivers remain usable, but quiet corridors and settlement hierarchy are substantially degraded."
+    }
+  ],
+  "total_score": 56,
+  "decision": "rejected",
+  "summary": "H17 is a coherent and substantially flatter map, but it is not the requested surgical H4 correction and cannot serve as the Golden reference. It globally regenerates protected material, moves coastlines, retains minor height cues, and introduces immediate-failure repeated pseudo-writing and terrain glyphs. Score 56/100, below the 94 threshold; immediate failures independently require rejection.",
+  "required_changes": [
+    "Return to exact H4 pixels and restrict modification to explicit masks for the circular city, lower-left port, eastern and southern rocky ground, and a narrow cliff-stroke shoreline band.",
+    "Require all pixels outside those masks to remain identical to H4; do not regenerate sea, forest, fields, roads, rivers, delta islands, paper grain or quiet corridors.",
+    "Redraw the city and port using only plan footprints, courtyards, street lines and pier centerlines, removing raised central forms, wall-node side cues and pier-end caps.",
+    "Replace the rocky-ground loop carpet with irregular broken hachure and stipple of varied scale, orientation and density, including substantial natural gaps and no letter-like tokens.",
+    "Preserve every coastline coordinate and island silhouette; alter only cliff-like internal strokes without widening, smoothing or relocating the land-water boundary.",
+    "Recheck overview, native, 25%, 50%, 200%, 400%, all nine regions and vector-label corridors before resubmission."
+  ]
+}

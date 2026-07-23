@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-e-v3-calibration",
+  "status": "passed",
+  "created_at": "2026-07-19T00:30:00Z",
+  "control_path": "world/map-production/controls/style-candidate-e-v3-calibration-v1.json",
+  "schema_path": "world/map-production/schemas/luminance-plate-calibration.schema.json",
+  "source_path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+  "transfer_control_path": "world/map-production/controls/style-candidate-e-v3-relief-mask-v1.json",
+  "output_path": "world/map-production/candidates/style-candidate-e-v3-south-east-calibrated-plate.png",
+  "support_output_path": "world/map-production/qa/automated/style-candidate-e-v3-calibration-support.png",
+  "field_output_path": "world/map-production/controls/style-candidate-e-v3-calibration-field-v1.png",
+  "operation": {
+    "type": "regional-low-pass-gain",
+    "region_id": "south_east_range",
+    "low_pass_radius_px": 24,
+    "gain": 2.0,
+    "low_pass_median_levels": 125.0,
+    "sample_pixels": 108751,
+    "support_pixels": 148621,
+    "opaque_support_pixels": 108751,
+    "changed_pixels": 141467,
+    "outside_permission_changed_pixels": 0,
+    "left_48_percent_changed_pixels": 0,
+    "minimum_channel_delta_levels": -12,
+    "maximum_channel_delta_levels": 20,
+    "maximum_absolute_channel_delta_levels": 20,
+    "clipping_pixels": 0,
+    "maximum_rgb_delta_spread_levels": 0,
+    "chroma_changed_pixels": 0
+  },
+  "numeric_contract": {
+    "pillow_version": "12.3.0",
+    "luminance_mode": "Pillow-L",
+    "pixel_sample_origin": "integer-top-left-no-half-pixel-offset",
+    "ellipse_boundary": "strict-r-less-than-one",
+    "mask_normalization": "mask-byte-divided-by-255",
+    "rounding": "python-half-even-each-operation-before-integer-sum",
+    "operation_order": "derive-from-source-sum-integers-then-apply-equal-rgb-delta",
+    "range_handling": "reject-before-write-never-clamp"
+  },
+  "source_high_frequency": {
+    "rms_levels": 0.672164,
+    "p99_levels": 2.0,
+    "maximum_levels": 4.0
+  },
+  "output_high_frequency": {
+    "rms_levels": 0.697391,
+    "p99_levels": 2.0,
+    "maximum_levels": 8.0
+  },
+  "transfer_preflight_metrics": {
+    "region_metrics": [
+      {
+        "id": "north_east_range",
+        "opaque_core_pixels": 215934,
+        "raw_median_levels": 0.0,
+        "raw_q10_levels": -2.0,
+        "raw_q90_levels": 4.0,
+        "raw_q90_q10_levels": 6.0,
+        "bandpass_median_levels": 0.0,
+        "bandpass_q10_levels": -2.0,
+        "bandpass_q90_levels": 4.0,
+        "bandpass_q90_q10_levels": 6.0,
+        "normalization_gain": 1.166667,
+        "input_plate_q10_levels": 126.0,
+        "input_plate_q90_levels": 159.0,
+        "input_plate_q90_q10_levels": 33.0,
+        "input_plate_q90_q10_percent": 12.941176,
+        "final_q10_levels": -2.0,
+        "final_q90_levels": 5.0,
+        "final_q90_q10_levels": 7.0
+      },
+      {
+        "id": "south_east_range",
+        "opaque_core_pixels": 108751,
+        "raw_median_levels": -1.0,
+        "raw_q10_levels": -3.0,
+        "raw_q90_levels": 3.0,
+        "raw_q90_q10_levels": 6.0,
+        "bandpass_median_levels": -1.0,
+        "bandpass_q10_levels": -3.0,
+        "bandpass_q90_levels": 3.0,
+        "bandpass_q90_q10_levels": 6.0,
+        "normalization_gain": 1.166667,
+        "input_plate_q10_levels": 105.0,
+        "input_plate_q90_levels": 138.0,
+        "input_plate_q90_q10_levels": 33.0,
+        "input_plate_q90_q10_percent": 12.941176,
+        "final_q10_levels": -2.0,
+        "final_q90_levels": 5.0,
+        "final_q90_q10_levels": 7.0
+      }
+    ],
+    "region_quadrant_metrics": [
+      {
+        "region_id": "north_east_range",
+        "quadrant": 1,
+        "sample_pixels": 48677,
+        "p90_absolute_delta_levels": 4.0
+      },
+      {
+        "region_id": "north_east_range",
+        "quadrant": 2,
+        "sample_pixels": 103230,
+        "p90_absolute_delta_levels": 4.0
+      },
+      {
+        "region_id": "north_east_range",
+        "quadrant": 3,
+        "sample_pixels": 20476,
+        "p90_absolute_delta_levels": 1.0
+      },
+      {
+        "region_id": "north_east_range",
+        "quadrant": 4,
+        "sample_pixels": 43551,
+        "p90_absolute_delta_levels": 6.0
+      },
+      {
+        "region_id": "south_east_range",
+        "quadrant": 1,
+        "sample_pixels": 20405,
+        "p90_absolute_delta_levels": 4.0
+      },
+      {
+        "region_id": "south_east_range",
+        "quadrant": 2,
+        "sample_pixels": 8666,
+        "p90_absolute_delta_levels": 2.0
+      },
+      {
+        "region_id": "south_east_range",
+        "quadrant": 3,
+        "sample_pixels": 40236,
+        "p90_absolute_delta_levels": 6.0
+      },
+      {
+        "region_id": "south_east_range",
+        "quadrant": 4,
+        "sample_pixels": 39444,
+        "p90_absolute_delta_levels": 4.0
+      }
+    ],
+    "traceable_components": 0,
+    "road_changed_pixels": 0,
+    "outside_mask_changed_pixels": 0,
+    "maximum_absolute_delta_levels": 6,
+    "active_high_frequency": {
+      "rms_levels": 0.338659,
+      "p99_levels": 1.0,
+      "maximum_levels": 2.0
+    }
+  },
+  "full_transfer_preflight": {
+    "status": "rejected",
+    "failure": "north_east_range quadrant 3 P90 is 1.0",
+    "published_candidate": false,
+    "published_mask": false,
+    "published_field": false,
+    "published_report": false
+  },
+  "source_sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0",
+  "control_sha256": "43ca16481b560c372cc5da97c87f94ee3fda05181a6fe7b9549934d5b0e52eb7",
+  "schema_sha256": "66e92280c8e9827f5d685409dca0690053c425d14273d99828856617f0c7e07f",
+  "transfer_control_sha256": "acee8d871e26fd557f553c40446752d0d5e1c70d98acd1683a1b1a83b8586b69",
+  "output_sha256": "1197915a788f56a80619e4e2110178827c3dbe4be84374f5d3eae8e2a570f47f",
+  "support_sha256": "a8bd926ec9992f8c0f345b1da0672ba1261740ba07daff87c0d6abf19efae1b4",
+  "field_sha256": "024a9a252231c24c297ba7299a702326f36bc5c0474d091cf3d3e3fbc0a0e872"
+}

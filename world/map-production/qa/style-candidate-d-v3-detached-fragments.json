@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-d-v3-detached-fragments",
+  "image_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "created_at": "2026-07-18T19:53:06Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 composite inspected independently.", "notes": "The ten locations are preserved, but their dark fragments read as a dashed route."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "north-east.png and south-east.png inspected at native scale.", "notes": "Route-like capsules are conspicuous without magnification."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "zoom4-ne-detail.png and zoom4-se-detail.png inspected.", "notes": "Crests are double-outlined capsules rather than 1-2 px single strokes; hatch identity is ambiguous."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "Material changes remain inside the deterministic local mask."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "All ten cyan geometry zones and fragment positions were compared.", "notes": "Five-plus-five placement broadly passes, while the exact crest-versus-hatch grammar is not visually provable."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared to style-candidate-d-v2-localized-base.png and amplified difference crops.", "notes": "378,317 local pixels differ; 338,148 exceed three levels, so more than the requested ink marks were repainted."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "north-boundary.png, south-boundary.png, and east-road-crossing.png inspected.", "notes": "No visible edit-boundary or protected-road seam."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Future route and boundary semantics assessed at native scale.", "notes": "Dark capsule chains conflict directly with route and boundary overlays."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; this remains an unstaged style board.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; this remains an unstaged style board.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "Deterministic composite verifies 1,194,316 protected pixels and zero outside-mask channel difference."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": true, "evidence": "The broad mountain hierarchy is not readable as relief; dark route-like capsules dominate instead."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No city, facility, or landmark was added."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "The v2 pseudo-writing was removed; the replacement is route-like rather than text-like."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No outer-mask or protected-road seam is visible."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "The edited relief remains flat plan-view."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Uniform dark double-outline capsules repeat across all ten ridges."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 24, "notes": "The ten positions and protected geography remain stable."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 11, "notes": "Local substrate drift exceeds the requested mark-only edit."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 14, "notes": "No hard edit or road-exclusion seam."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 9, "notes": "Double-outline capsules are outside the map's terrain vocabulary."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 5, "notes": "Dark route marks replace legible relief hierarchy."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 6, "notes": "Regular capsule repetition is a visible generation artifact."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 4, "notes": "The marks can be mistaken for routes or boundaries."}
+  ],
+  "total_score": 73,
+  "decision": "rejected",
+  "summary": "v3 removes the continuous pseudo-script and protects mapped geography, but its thirty dark double-outline capsules read as dashed routes, repeat unnaturally, and fail to establish mountain relief.",
+  "required_changes": ["Change only the thirty capsule-like crest fragments into short, irregular, tapered, low-contrast single-line terrain strokes while preserving topology, detached hatches, roads, cities, fields, and the local edit scope."]
+}

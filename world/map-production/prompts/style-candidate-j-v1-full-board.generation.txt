@@ -1,0 +1,66 @@
+Use case: stylized-concept
+Asset type: fresh full Golden-styleboard candidate for a finite deep-zoom fantasy atlas
+Candidate: J1
+Preflight version: 1
+
+Primary request:
+Create one entirely new, coherent, borderless antique copperplate map board from the two supplied images. This is a fresh full-canvas synthesis, not an edit, inpaint, crop repair, protected composite, or local patch. Keep the successful flat composition encoded by Image 1 while eliminating semantic wallpaper from every natural and built material at initial generation.
+
+Input images and strict roles:
+- Image 1 is the exact and sole composition, geometry, topology, relative-placement, and connection authority. Reconstruct its full arrangement: open sea on the left; low irregular west and south-west coast; braided western delta islands; forest across the north and north-centre; a north-to-centre river that reaches and splits through the delta into the sea; a dense circular-plan capital near the centre; a compact coastal port in the lower-left; connected roads from the capital to the port, north, east, and lower-right fields; an irregular flat highland region in the upper-right; large varied agricultural parcels in the lower-right; and calm unmarked corridors between major regions. Preserve these footprints, proportions, adjacencies, route directions, junctions, and water connections. Image 1's flat placeholder colours, clean vector lines, and lack of microdetail are not style authority.
+- Image 2 is the sole visual-style and material authority. Use its warm aged parchment, restrained umber/sepia ink, dusty dark slate-blue water, fine copperplate line weight, dry printed grain, hand-made irregularity, tonal range, and dense but readable detail. Do not copy Image 2's geography, coast, roads, settlements, individual trees, individual rocks, or framing. Do not tile, stamp, trace, or repeat any local motif from Image 2. Translate its print language into the material grammars below.
+- Use no past Candidate I image, I2 edit, I3 edit, third reference, or unmentioned style source as an input or authority.
+
+Single coherent design change:
+Retain the complete Image 1 composition and strict flat-plan success, but replace the semantic-wallpaper tendency with materially distinct, nonperiodic, multiscale copperplate surfaces. Every mark must belong to a terrain function, yet no mark shape may become a reusable stamp vocabulary. Vary spacing, length, scale, orientation, density, and negative space organically across broad, medium, and fine scales. Adjacent regions must transition naturally without seams, bands, pasted edges, or abrupt texture changes.
+
+Projection and physical grammar:
+- Exactly 90-degree vertical orthographic plan view everywhere, fully two-dimensional and direction-neutral.
+- Settlements are building footprints, courtyards, alleys, streets, quays, basins, and pier centre-lines seen from directly overhead.
+- Coasts, banks, highlands, roads, walls, and piers have no visible side faces, thickness, extrusion, or underside.
+- No perspective, isometric grammar, oblique aerial view, horizon cue, roof view, facade, cliff face, cast shadow, drop shadow, directional highlight, or directional lighting.
+
+Sea, delta, and river material:
+- Keep most open water as a calm dusty slate-blue wash with restrained paper-and-ink variation.
+- Add only sparse, short, disconnected, nonperiodic engraved water marks. Marks must end independently, remain separated, use varied lengths and local orientations, and leave irregular large, medium, and small calm gaps.
+- Water must be quieter and less line-dense than every major land material while remaining finished and readable at native and deep zoom.
+- Do not form long wave bands, parallel-wave wallpaper, connected chains, crossings, contour-following bands, closed contours, cells, diamonds, honeycombs, meshes, nets, grids, lattices, or any repeated wave symbol.
+- Preserve the exact low coast, all delta-island silhouettes, river width hierarchy, branching topology, and unbroken river-to-sea connections from Image 1. Do not add ships, sea creatures, rocks, islands, tributaries, canals, or decorative symbols.
+
+Forest material:
+- Render the north and north-centre forest as one continuous overhead land-cover material made from irregular fine stipple, broken micro-hachure, asymmetric clusters, varied local density, and irregular negative-space openings.
+- Mix small and medium mark families without outlining individual trees. Let dense and open areas merge organically, and keep rivers, roads, clearings, and the forest footprint legible.
+- No individual round tree icons, closed crown loops, circular or oval crowns, lollipop trees, domes, trunks, conifers, rosettes, repeated dots, repeated blobs, identical clusters, glyph rows, symbol rows, orchard spacing, or cloned canopy stamps.
+- Stipple must be irregular in size, grouping, spacing, and density; it must never become uniform dot wallpaper, halftone, noise fill, or a visible grid.
+
+Highland material:
+- Render the upper-right highland as broad, soft-edged tonal zones within its Image 1 footprint, supported by sparse direction-neutral broken copperplate hachure and irregular calm gaps.
+- Use low-frequency tonal grouping to establish the region without pictorial elevation, then add short discontinuous marks whose orientation and density vary locally without a dominant flow.
+- No mountain, peak, boulder, ridge, or contour icons; no raised plateau; no nested contours; no closed rings; no oval loops; no S-curves; no spirals; no long parallel snakes; no directional lattice; and no repeated rocky glyph.
+- Broad tonal zones must not become hard-edged polygons, cloudy blobs, concentric bands, lighting gradients, or side-shaded relief.
+
+Capital, port, roads, fields, and quiet corridors:
+- Keep the capital's circular footprint, central civic void, ring-and-radial street logic, gates, and all road connections. Make it dense and richly legible with varied hand-drawn building footprints, courts, alleys, and small voids. Do not use cloned rectangles, repeated house stamps, concentric machine-perfect rings, roofs, towers, or wall side faces.
+- Keep the lower-left port compact and integrated into the shoreline, with varied plan-view footprints, narrow lanes, flat quays, basins, and pier centre-lines. No raised docks, posts, pilings, boats, or copied port motifs.
+- Keep every road continuous through all terrain, with naturally varied but controlled width and clear junctions. Do not invent, delete, break, or reroute any road.
+- Keep the lower-right fields as large irregular parcels with varied boundaries and restrained, meaningful crop-direction marks. Avoid a rigid cadastral grid, uniform parallel fill, repeated parcel stamps, or moire.
+- Preserve calm low-contrast corridors between major regions for future overlays. They must read as intentional finished parchment ground, not blank unfinished holes.
+
+Global anti-wallpaper contract:
+- No repeated stamp vocabulary anywhere: no cloned waves, trees, rocks, hachure clusters, buildings, field marks, dots, lozenges, curls, hooks, rings, rosettes, triangles, glyphs, or pseudo-symbols.
+- No uniform rows, arrays, tiling, evenly spaced motifs, periodic cadence, mechanically parallel fill, connected cellular texture, contour field, CAD pattern, halftone, moire, or isotropic procedural noise.
+- No rectangular repair zones, seams, halos, edge bands, pasted patches, abrupt palette transitions, or local material swaps. The result must read as one plate made by one cartographer.
+
+Palette, hierarchy, and multiscale readability:
+- Preserve Image 2's muted Royal palette and copperplate finish: warm aged parchment land, restrained sepia/umber ink, dusty dark slate-blue water, subtle olive-brown land-cover variation, and no new saturated hue family.
+- Keep dense copperplate richness without letting microdetail flatten the hierarchy. Sea is calmest; quiet corridors are low contrast; forest and highland are materially distinct; the capital, port, waterways, roads, and field boundaries remain immediately readable.
+- At 25% (384 x 256), the sea/coast/delta, forest, river, circular capital, port, highland, fields, and primary network must separate clearly.
+- At 50% (768 x 512), all major connections and terrain boundaries must remain crisp rather than averaging into one dark texture.
+- At native 1536 x 1024, the engraving must be dense, coherent, and free of seams or repetitive material fields.
+- At 200% and 400%, individual marks must stay crisp, disconnected where required, organically varied, non-glyphic, and nonperiodic; no hidden text or stamp family may emerge.
+
+Absolute exclusions:
+No labels, letters, numbers, words, pseudo-writing, glyph rows, legend, compass rose, cartouche, signature, watermark, border, frame, margin, inset, UI, modern object, or decorative emblem. No perspective or 3D cues of any kind. No missing required region or broken river/road connection.
+
+Output:
+Return exactly one seamless 1536 x 1024 RGB landscape artwork filling the full frame. Do not return a crop, detail study, patch, comparison, contact sheet, mask, diagram, or text.

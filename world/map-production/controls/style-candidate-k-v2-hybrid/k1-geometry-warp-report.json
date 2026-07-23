@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.0.0",
+  "id": "k1-geometry-warp-proof-v1",
+  "status": "persistent-control-passed-root-vision",
+  "scope": "persistent K2 geometry control; no manifest, docs, renderer, QA decision, or Golden registration modified",
+  "technique": {
+    "class": "continuous spatial deformation; no domain fill; no inpaint; no synthetic redraw",
+    "source_pixels": "one Lanczos-4 inverse remap from the locked K1 image",
+    "geometry_signal": "canonical guide cool-water signed-distance field using the exact K1 automated-audit predicates",
+    "regularization": {
+      "method": "DIS optical flow over clipped signed-distance fields, Gaussian-regularized, magnitude-capped, and cosine-tapered to identity",
+      "direction": "inverse target-to-source remap: output(x,y) = K1(x+dx,y+dy)",
+      "signed_distance_clip_px": 32.0,
+      "gaussian_sigma_px": 36.0,
+      "maximum_displacement_cap_px": 32.0,
+      "full_strength_within_boundary_distance_px": 24.0,
+      "identity_at_boundary_distance_px": 140.0,
+      "protected_capital_anchor": {
+        "center_xy": [
+          860.0,
+          510.0
+        ],
+        "identity_radius_px": 160.0,
+        "smooth_release_radius_px": 225.0
+      },
+      "displacement_px": {
+        "median": 0.0,
+        "p90": 8.999733,
+        "p95": 11.93914,
+        "p99": 27.317135,
+        "maximum": 32.000004
+      },
+      "support": {
+        "nonzero_pixels": 631125,
+        "nonzero_fraction": 0.401258,
+        "full_strength_pixels": 207442,
+        "identity_pixels": 941021
+      },
+      "mapping_jacobian_determinant": {
+        "minimum": 0.697886,
+        "p01": 0.706898,
+        "p1": 0.821118,
+        "median": 1.0,
+        "p99": 1.240308,
+        "maximum": 1.595222,
+        "nonpositive_pixels": 0,
+        "fold_free": true
+      }
+    }
+  },
+  "inputs": {
+    "k1": {
+      "path": "world/map-production/candidates/style-candidate-k-v1-full-board.png",
+      "sha256": "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 4009164
+    },
+    "canonical_guide": {
+      "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
+      "sha256": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 311514
+    }
+  },
+  "requested_geometry_thresholds": {
+    "minimum_stable_land_water_agreement": 0.985,
+    "minimum_candidate_boundary_within_8px": 0.93,
+    "minimum_guide_boundary_within_8px": 0.93,
+    "maximum_bidirectional_boundary_distance_p95_px": 8.0
+  },
+  "before": {
+    "stable_land_water_agreement": 0.99615,
+    "full_land_water_agreement": 0.977869,
+    "candidate_boundary_within_8px": 0.764898,
+    "guide_boundary_within_8px": 0.814361,
+    "candidate_boundary_distance_p95_px": 15.787598,
+    "guide_boundary_distance_p95_px": 13.181398,
+    "passes_proof_target": false
+  },
+  "after": {
+    "stable_land_water_agreement": 0.999675,
+    "full_land_water_agreement": 0.990966,
+    "candidate_boundary_within_8px": 0.956488,
+    "guide_boundary_within_8px": 0.975549,
+    "candidate_boundary_distance_p95_px": 7.5907,
+    "guide_boundary_distance_p95_px": 5.7938,
+    "passes_proof_target": true
+  },
+  "improvement": {
+    "stable_land_water_agreement": 0.003525,
+    "full_land_water_agreement": 0.013097,
+    "candidate_boundary_within_8px": 0.19159,
+    "guide_boundary_within_8px": 0.161188
+  },
+  "protected_identity": {
+    "identity_zone_pixels": 941021,
+    "changed_pixels": 0,
+    "maximum_rgb_channel_delta": 0,
+    "byte_identical": true
+  },
+  "semantic_region_preservation": {
+    "capital": {
+      "mask_pixels": 59805,
+      "changed_pixels": 0,
+      "changed_fraction": 0.0,
+      "displacement_median_px": 0.0,
+      "displacement_p95_px": 0.0,
+      "displacement_maximum_px": 0.0
+    },
+    "fields": {
+      "mask_pixels": 106068,
+      "changed_pixels": 0,
+      "changed_fraction": 0.0,
+      "displacement_median_px": 0.0,
+      "displacement_p95_px": 0.0,
+      "displacement_maximum_px": 0.0
+    },
+    "highland": {
+      "mask_pixels": 251551,
+      "changed_pixels": 0,
+      "changed_fraction": 0.0,
+      "displacement_median_px": 0.0,
+      "displacement_p95_px": 0.0,
+      "displacement_maximum_px": 0.0
+    },
+    "port": {
+      "mask_pixels": 11436,
+      "changed_pixels": 11436,
+      "changed_fraction": 1.0,
+      "displacement_median_px": 8.317389,
+      "displacement_p95_px": 11.113876,
+      "displacement_maximum_px": 12.968406
+    }
+  },
+  "artifacts": {
+    "proof": {
+      "path": "world/map-production/controls/style-candidate-k-v2-hybrid/k1-geometry-warp-base.png",
+      "sha256": "c21c5c07515f2bcc11d0ab8e613f3a6e52ec407606cb5afac4f5946579e62e9a",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 3497043
+    },
+    "displacement_visualization": {
+      "path": "tmp/map-production/k1-geometry-warp-proof-v1/k1-geometry-warp-displacement.png",
+      "sha256": "1b07cc146c8801f6458ba3f65b55741a3f2ebd7fd019b22f6bcf5d868185b436",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 2412201
+    },
+    "boundary_overlay": {
+      "path": "tmp/map-production/k1-geometry-warp-proof-v1/k1-geometry-warp-boundary-overlay.png",
+      "sha256": "469f347cf49d844303ae22014fd21473ed6680f491280a3bcc23add459742136",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 3171092
+    },
+    "before_after_contact": {
+      "path": "tmp/map-production/k1-geometry-warp-proof-v1/k1-geometry-warp-proof-contact.png",
+      "sha256": "e4e639bfdba9240a4226f7c4c2141c0529c811a56a94ec983af3da44749b4501",
+      "width": 1536,
+      "height": 554,
+      "mode": "RGB",
+      "bytes": 1203262
+    },
+    "before_after_focus_200": {
+      "path": "tmp/map-production/k1-geometry-warp-proof-v1/k1-geometry-warp-focus-200.png",
+      "sha256": "068b635eab181d1891e9a87fb301ef8f12058564d7270cf50ea3528c2c76072a",
+      "width": 1280,
+      "height": 1542,
+      "mode": "RGB",
+      "bytes": 1295181
+    }
+  },
+  "vision_handoff": {
+    "required": true,
+    "decision_authority": false,
+    "inspect": [
+      "coast, islands, delta branches, and river for smooth alignment without doubled edges",
+      "port for continuous motion with the coast and no local stretch tear",
+      "capital, fields, and highland for exact visual preservation",
+      "open sea and forest for curved bands, smears, repeated pixels, or transition seams",
+      "top and bottom image borders for reflected-edge artifacts"
+    ]
+  }
+}

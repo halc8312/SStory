@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "base_path": "world/map-production/candidates/style-candidate-d-v2-localized-base.png",
+  "edit_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments-raw.png",
+  "control_path": "world/map-production/controls/style-candidate-d-ridge-edit-mask-v2.json",
+  "output_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "width": 1536,
+  "height": 1024,
+  "masked_pixels": 378548,
+  "opaque_mask_pixels": 139151,
+  "protected_pixels_verified": 1194316,
+  "outside_mask_max_channel_difference": 0,
+  "output_sha256": "8112f35363cc5e314e2b9793d06603bf5274a516e9a5ec72c5a06c5f421a73f8"
+}

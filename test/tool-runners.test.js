@@ -7,14 +7,14 @@ const path = require('node:path');
 const { pythonCandidates } = require('../scripts/run-python');
 const { collectMarkdownFiles } = require('../scripts/run-markdown-link-check');
 
-test('pythonCandidates uses the Windows launcher before executable aliases', () => {
+test('pythonCandidates prefers the active Windows Python environment', () => {
   const previous = process.env.SSTORY_PYTHON;
   delete process.env.SSTORY_PYTHON;
   try {
     assert.deepEqual(pythonCandidates('win32'), [
-      { command: 'py', prefix: ['-3'] },
+      { command: 'python', prefix: [] },
       { command: 'python3', prefix: [] },
-      { command: 'python', prefix: [] }
+      { command: 'py', prefix: ['-3'] }
     ]);
   } finally {
     if (previous === undefined) {

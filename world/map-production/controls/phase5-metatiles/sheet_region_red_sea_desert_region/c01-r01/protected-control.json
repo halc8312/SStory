@@ -1,0 +1,216 @@
+{
+  "$schema": "https://sstory.example/schemas/phase5-protected-control.schema.json",
+  "schema_version": "1.0.0",
+  "type": "sstory-phase5-protected-metatile-control",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "generated_by": "sstory-map-production/render_phase5_metatile_controls.py@1",
+  "sheet_id": "sheet_region_red_sea_desert_region",
+  "column": 1,
+  "row": 1,
+  "dimensions": {
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG"
+  },
+  "visual_geometry_control": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/geometry-control.png",
+    "sha256": "43216b9808fcdd1f4114f32bb1b434ca58691bb22423f9b0f0fe7285cb118b7b",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "parent_context": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/parent-context.png",
+    "sha256": "3ff0c75367d7205208274954e4fa2a73d74cb297a2ebac008799850685d2a5e9",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "prior_neighbor_contexts": [
+    {
+      "direction": "north",
+      "source_tile": {
+        "column": 1,
+        "row": 0
+      },
+      "context": {
+        "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/neighbor-north-geometry-context.png",
+        "sha256": "de9d460e716c8064fb7bb481da56c5e214d6624f7e3c4ac4e7fadfd49f1a2296",
+        "width": 2048,
+        "height": 2048,
+        "format": "PNG",
+        "color_mode": "RGB"
+      }
+    },
+    {
+      "direction": "west",
+      "source_tile": {
+        "column": 0,
+        "row": 1
+      },
+      "context": {
+        "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/neighbor-west-geometry-context.png",
+        "sha256": "4c8c099c3c6a30af8f89ab8d6303938f5585d191c8873ba809de2f073a32df6a",
+        "width": 2048,
+        "height": 2048,
+        "format": "PNG",
+        "color_mode": "RGB"
+      }
+    }
+  ],
+  "land_sea": {
+    "land_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/land-mask.png",
+      "sha256": "51726e740d037884b8a0d8c4a537afeec6822c8bed33913a373c68ae9335a88d",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "water_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/water-mask.png",
+      "sha256": "312f0372c4da060dd58a3b4ea5a4cb92f4b575dc10e2be603caa94204614216d",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "known_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/known-mask.png",
+      "sha256": "12c77e4a41a055f618d9aa992c2950d8366a5b2cb554644eac215f5e814c8358",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "unknown_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/unknown-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/land-sea-overlay.png",
+      "sha256": "3ff0c75367d7205208274954e4fa2a73d74cb297a2ebac008799850685d2a5e9",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "partition": {
+      "algorithm": "canon-land-water-unknown-partition-v1",
+      "pixel_count": 4194304,
+      "land_pixel_count": 4077889,
+      "water_pixel_count": 116415,
+      "unknown_pixel_count": 0,
+      "overlap_pixel_count": 0,
+      "unclassified_pixel_count": 0
+    }
+  },
+  "transport": {
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/transport-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/transport-overlay.png",
+      "sha256": "6e84541fac14f31507b9d68f110245775261bfd6f75fb997b4b053e25a0614b0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [],
+    "rasterization": "source-lines-global-native-grid-v1"
+  },
+  "detail": {
+    "status": "explicit-empty",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/detail-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/detail-overlay.png",
+      "sha256": "6e84541fac14f31507b9d68f110245775261bfd6f75fb997b4b053e25a0614b0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [],
+    "provenance": "No reviewed raster-safe detail exists; provisional outlines remain guide-only and labels/POIs remain vector data."
+  },
+  "unknown_fallback": {
+    "policy": "replace-raw-with-parent-context",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/unknown-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "source": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/parent-context.png",
+      "sha256": "3ff0c75367d7205208274954e4fa2a73d74cb297a2ebac008799850685d2a5e9",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    }
+  },
+  "source_inputs": {
+    "resolution_contract": {
+      "path": "world/map-production/spec/resolution-contract.json",
+      "sha256": "f65984a6e162e6f60eb93873aa38e0daf1a263975f89cb063092c80389bb0290"
+    },
+    "map_sheets": {
+      "path": "world/map-production/source/map-sheets.json",
+      "sha256": "20204c1bf14c8cb7b1204066c1b0755a0a74f62f9c7c6418b76754540a9a3c15"
+    },
+    "canon_sources": [
+      {
+        "role": "landmasses",
+        "path": "world/map-production/source/landmasses.geojson",
+        "sha256": "d5e9600590bf2d122f33405c1f1924a8274a76f4bac1669f35f6adaaaa854b20"
+      },
+      {
+        "role": "regions",
+        "path": "world/map-production/source/regions.geojson",
+        "sha256": "233053f8ed4214016d8d4c841bceeb5192f5912dfd721325ad9657313752dbb4"
+      },
+      {
+        "role": "terrain",
+        "path": "world/map-production/source/terrain.geojson",
+        "sha256": "fd186efd744c5dd31d5abe039d23e7fc2f04ff4e689233b48dc4bd9b397ab3aa"
+      },
+      {
+        "role": "hydrography",
+        "path": "world/map-production/source/hydrography.geojson",
+        "sha256": "33e23b5c85cc41f3ac6a65ced65284b81e04664ae373d85c1afb55dc67f8677d"
+      },
+      {
+        "role": "settlement-footprints",
+        "path": "world/map-production/source/settlement-footprints.geojson",
+        "sha256": "48baf5f1a4857ef9500b6aab80468356869c5e8651196718a83a78a50cb89974"
+      },
+      {
+        "role": "transport-geometries",
+        "path": "world/map-production/source/transport-geometries.geojson",
+        "sha256": "4beabac07fbfa6c67a4340f4a45a5199cb4c536e1b081ea5d5ba20a6c19c4565"
+      }
+    ]
+  }
+}

@@ -1,0 +1,457 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-metatile-control-index.schema.json",
+  "title": "SStory Phase 5 metatile control index",
+  "description": "Deterministic row-major bindings from the checked resolution/catalog/canon sources to all 99 Phase 5 visual and protected-composite controls.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "generated_by",
+    "generation_order",
+    "inputs",
+    "render_contract",
+    "summary",
+    "sheets"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-metatile-control-index.schema.json"
+    },
+    "schema_version": {"const": "1.0.0"},
+    "type": {"const": "sstory-phase5-metatile-control-index"},
+    "coordinate_reference_system": {"const": "EA-WORLD-1"},
+    "generated_by": {
+      "const": "sstory-map-production/render_phase5_metatile_controls.py@1"
+    },
+    "generation_order": {"const": "row-major"},
+    "inputs": {"$ref": "#/definitions/source_inputs"},
+    "render_contract": {"$ref": "#/definitions/render_contract"},
+    "summary": {"$ref": "#/definitions/summary"},
+    "sheets": {
+      "type": "array",
+      "minItems": 17,
+      "maxItems": 17,
+      "uniqueItems": true,
+      "items": {"$ref": "#/definitions/sheet"}
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "rgb_image": {
+      "type": "object",
+      "required": ["path", "sha256", "width", "height", "format", "color_mode"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "width": {"const": 2048},
+        "height": {"const": 2048},
+        "format": {"const": "PNG"},
+        "color_mode": {"const": "RGB"}
+      },
+      "additionalProperties": false
+    },
+    "tile_mask": {
+      "type": "object",
+      "required": ["path", "sha256", "width", "height", "format", "color_mode"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "width": {"const": 2048},
+        "height": {"const": 2048},
+        "format": {"const": "PNG"},
+        "color_mode": {"const": "L"}
+      },
+      "additionalProperties": false
+    },
+    "master_mask": {
+      "type": "object",
+      "required": ["path", "sha256", "width", "height", "format", "color_mode"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "format": {"const": "PNG"},
+        "color_mode": {"const": "L"}
+      },
+      "additionalProperties": false
+    },
+    "source_artifact": {
+      "type": "object",
+      "required": ["role", "path", "sha256"],
+      "properties": {
+        "role": {
+          "enum": [
+            "landmasses",
+            "regions",
+            "terrain",
+            "hydrography",
+            "settlement-footprints",
+            "transport-geometries"
+          ]
+        },
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "source_inputs": {
+      "type": "object",
+      "required": ["resolution_contract", "map_sheets", "canon_sources"],
+      "properties": {
+        "resolution_contract": {"$ref": "#/definitions/artifact"},
+        "map_sheets": {"$ref": "#/definitions/artifact"},
+        "canon_sources": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/source_artifact"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "render_contract": {
+      "type": "object",
+      "required": [
+        "metatile_size_px",
+        "image_format",
+        "visual_color_mode",
+        "mask_color_mode",
+        "coordinate_quantization",
+        "unknown_policy",
+        "detail_policy",
+        "receipt_control_binding",
+        "postprocess_control_binding",
+        "protected_layers"
+      ],
+      "properties": {
+        "metatile_size_px": {"const": 2048},
+        "image_format": {"const": "PNG"},
+        "visual_color_mode": {"const": "RGB"},
+        "mask_color_mode": {"const": "L"},
+        "coordinate_quantization": {"const": "global-native-grid-round-half-up-v1"},
+        "unknown_policy": {"const": "raw-forbidden-parent-context-fallback"},
+        "detail_policy": {"const": "explicit-empty-until-reviewed-raster-detail"},
+        "receipt_control_binding": {"const": "visual-geometry-control"},
+        "postprocess_control_binding": {"const": "protected-control-json"},
+        "protected_layers": {"const": ["land-sea", "transport", "detail"]}
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "sheet_count",
+        "metatile_count",
+        "protected_control_count",
+        "prior_neighbor_context_count",
+        "sheet_qa_control_count"
+      ],
+      "properties": {
+        "sheet_count": {"const": 17},
+        "metatile_count": {"const": 99},
+        "protected_control_count": {"const": 99},
+        "prior_neighbor_context_count": {"const": 120},
+        "sheet_qa_control_count": {"const": 17}
+      },
+      "additionalProperties": false
+    },
+    "position": {
+      "type": "object",
+      "required": ["column", "row"],
+      "properties": {
+        "column": {"type": "integer", "minimum": 0},
+        "row": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "box": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"type": "integer"}
+    },
+    "bounds": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"type": "number"}
+    },
+    "feature_ids": {
+      "type": "object",
+      "required": [
+        "landmasses",
+        "regions",
+        "terrain",
+        "hydrography",
+        "settlement-footprints",
+        "transport-geometries"
+      ],
+      "properties": {
+        "landmasses": {"$ref": "#/definitions/id_array"},
+        "regions": {"$ref": "#/definitions/id_array"},
+        "terrain": {"$ref": "#/definitions/id_array"},
+        "hydrography": {"$ref": "#/definitions/id_array"},
+        "settlement-footprints": {"$ref": "#/definitions/id_array"},
+        "transport-geometries": {"$ref": "#/definitions/id_array"}
+      },
+      "additionalProperties": false
+    },
+    "id_array": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/definitions/id"}
+    },
+    "static_input": {
+      "type": "object",
+      "required": ["role", "path", "sha256"],
+      "properties": {
+        "role": {"enum": ["geometry-control", "parent-context", "continuation-reference"]},
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "prior_neighbor": {
+      "type": "object",
+      "required": [
+        "direction",
+        "source_tile",
+        "receipt_role",
+        "binding",
+        "geometry_context"
+      ],
+      "properties": {
+        "direction": {"enum": ["north", "west"]},
+        "source_tile": {"$ref": "#/definitions/position"},
+        "receipt_role": {"enum": ["neighbor-north", "neighbor-west"]},
+        "binding": {"const": "generated-protected-output-required"},
+        "geometry_context": {"$ref": "#/definitions/rgb_image"}
+      },
+      "additionalProperties": false
+    },
+    "prior_neighbors": {
+      "type": "object",
+      "required": ["north", "west"],
+      "properties": {
+        "north": {"oneOf": [{"$ref": "#/definitions/prior_neighbor"}, {"type": "null"}]},
+        "west": {"oneOf": [{"$ref": "#/definitions/prior_neighbor"}, {"type": "null"}]}
+      },
+      "additionalProperties": false
+    },
+    "future_targets": {
+      "type": "object",
+      "required": ["east", "south"],
+      "properties": {
+        "east": {"oneOf": [{"$ref": "#/definitions/position"}, {"type": "null"}]},
+        "south": {"oneOf": [{"$ref": "#/definitions/position"}, {"type": "null"}]}
+      },
+      "additionalProperties": false
+    },
+    "receipt_bindings": {
+      "type": "object",
+      "required": [
+        "control",
+        "parent",
+        "postprocess_control",
+        "static_inputs",
+        "runtime_prior_neighbors",
+        "future_seam_targets",
+        "unbound_required_roles"
+      ],
+      "properties": {
+        "control": {"$ref": "#/definitions/artifact"},
+        "parent": {"$ref": "#/definitions/artifact"},
+        "postprocess_control": {"$ref": "#/definitions/artifact"},
+        "static_inputs": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/static_input"}
+        },
+        "runtime_prior_neighbors": {"$ref": "#/definitions/prior_neighbors"},
+        "future_seam_targets": {"$ref": "#/definitions/future_targets"},
+        "unbound_required_roles": {
+          "const": ["golden-style", "prompt", "raw-output", "postprocess-report", "output"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "authoritative_controls": {
+      "type": "object",
+      "required": [
+        "land_mask",
+        "water_mask",
+        "known_mask",
+        "unknown_mask",
+        "land_sea_overlay",
+        "transport_mask",
+        "transport_overlay",
+        "detail_mask",
+        "detail_overlay",
+        "partition"
+      ],
+      "properties": {
+        "land_mask": {"$ref": "#/definitions/tile_mask"},
+        "water_mask": {"$ref": "#/definitions/tile_mask"},
+        "known_mask": {"$ref": "#/definitions/tile_mask"},
+        "unknown_mask": {"$ref": "#/definitions/tile_mask"},
+        "land_sea_overlay": {"$ref": "#/definitions/rgb_image"},
+        "transport_mask": {"$ref": "#/definitions/tile_mask"},
+        "transport_overlay": {"$ref": "#/definitions/rgb_image"},
+        "detail_mask": {"$ref": "#/definitions/tile_mask"},
+        "detail_overlay": {"$ref": "#/definitions/rgb_image"},
+        "partition": {
+          "type": "object",
+          "required": [
+            "algorithm",
+            "pixel_count",
+            "land_pixel_count",
+            "water_pixel_count",
+            "unknown_pixel_count",
+            "overlap_pixel_count",
+            "unclassified_pixel_count"
+          ],
+          "properties": {
+            "algorithm": {"const": "canon-land-water-unknown-partition-v1"},
+            "pixel_count": {"const": 4194304},
+            "land_pixel_count": {"type": "integer", "minimum": 0},
+            "water_pixel_count": {"type": "integer", "minimum": 0},
+            "unknown_pixel_count": {"type": "integer", "minimum": 0},
+            "overlap_pixel_count": {"const": 0},
+            "unclassified_pixel_count": {"const": 0}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "tile": {
+      "type": "object",
+      "required": [
+        "sheet_sequence",
+        "column",
+        "row",
+        "canvas_origin_px",
+        "source_core_box_px",
+        "destination_box_px",
+        "active_box_px",
+        "world_bounds",
+        "feature_ids",
+        "visual_geometry_control",
+        "parent_context",
+        "protected_control",
+        "authoritative_controls",
+        "receipt_bindings"
+      ],
+      "properties": {
+        "sheet_sequence": {"type": "integer", "minimum": 0},
+        "column": {"type": "integer", "minimum": 0},
+        "row": {"type": "integer", "minimum": 0},
+        "canvas_origin_px": {"$ref": "#/definitions/box2"},
+        "source_core_box_px": {"$ref": "#/definitions/box"},
+        "destination_box_px": {"$ref": "#/definitions/box"},
+        "active_box_px": {"$ref": "#/definitions/box"},
+        "world_bounds": {"$ref": "#/definitions/bounds"},
+        "feature_ids": {"$ref": "#/definitions/feature_ids"},
+        "visual_geometry_control": {"$ref": "#/definitions/rgb_image"},
+        "parent_context": {"$ref": "#/definitions/rgb_image"},
+        "protected_control": {"$ref": "#/definitions/artifact"},
+        "authoritative_controls": {"$ref": "#/definitions/authoritative_controls"},
+        "receipt_bindings": {"$ref": "#/definitions/receipt_bindings"}
+      },
+      "additionalProperties": false
+    },
+    "box2": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"type": "integer", "minimum": 0}
+    },
+    "master": {
+      "type": "object",
+      "required": ["pixel_bounds", "width", "height", "columns", "rows"],
+      "properties": {
+        "pixel_bounds": {"$ref": "#/definitions/box"},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "columns": {"type": "integer", "minimum": 1},
+        "rows": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "qa_controls": {
+      "type": "object",
+      "required": ["land_sea_control", "land_sea_known_mask", "transport_control"],
+      "properties": {
+        "land_sea_control": {"$ref": "#/definitions/master_mask"},
+        "land_sea_known_mask": {"$ref": "#/definitions/master_mask"},
+        "transport_control": {"$ref": "#/definitions/master_mask"}
+      },
+      "additionalProperties": false
+    },
+    "sheet": {
+      "type": "object",
+      "required": [
+        "sheet_id",
+        "sheet_type",
+        "source_feature_id",
+        "parent_sheet_ids",
+        "bounds",
+        "native_zoom",
+        "master",
+        "qa_controls",
+        "tiles"
+      ],
+      "properties": {
+        "sheet_id": {"$ref": "#/definitions/id"},
+        "sheet_type": {"enum": ["region", "corridor", "settlement"]},
+        "source_feature_id": {
+          "oneOf": [{"$ref": "#/definitions/id"}, {"type": "null"}]
+        },
+        "parent_sheet_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/id"}
+        },
+        "bounds": {"$ref": "#/definitions/bounds"},
+        "native_zoom": {"type": "integer", "minimum": 0},
+        "master": {"$ref": "#/definitions/master"},
+        "qa_controls": {"$ref": "#/definitions/qa_controls"},
+        "tiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/tile"}
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

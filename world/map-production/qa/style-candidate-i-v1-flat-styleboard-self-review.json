@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-i-v1-flat-styleboard-self-review",
+  "image_path": "world/map-production/candidates/style-candidate-i-v1-flat-styleboard.png",
+  "created_at": "2026-07-19T22:56:20.491Z",
+  "reviewer": "codex-vision-self-review-non-independent",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "I1 SHA-256 bf48605572a312f0acb4aa7b950b6f9a7981b32f73e1d4df1df159789195fed1、1536×1024 RGBを全景確認。",
+      "notes": "左の外洋、低い西岸、デルタ島群、北部森林と河川、中央円形都市、南西港、東高地、南東農地、接続道路が一枚の地図として明瞭に成立している。"
+    },
+    {
+      "id": "scale_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "384×256のLANCZOS縮小像を確認。",
+      "notes": "都市、港、森林、外洋、河川、農地の大階層は読める。暗い海面と森林が一つの濃い面に寄り、細い道路の一部は弱くなる。"
+    },
+    {
+      "id": "scale_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "768×512のLANCZOS縮小像を確認。自動値はRMSコントラスト保持0.806521で閾値0.82未満。",
+      "notes": "全地物は識別できるが、微細線が縮小時に平均化されるため、正式な50%可読性ゲートを僅差で通過しない。"
+    },
+    {
+      "id": "native",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "1536×1024原寸で全域を走査。",
+      "notes": "銅版画線は連続し、貼付境界はない。水面・森林・高地の局所語彙が画面全域で高密度なため、静穏回廊は存在するもののRoyal参照より弱い。"
+    },
+    {
+      "id": "zoom_200",
+      "label": "200%拡大",
+      "complete": true,
+      "evidence": "外洋、森林、デルタ、首都、港、高地、農地の中心切り出しをNEAREST 200%で確認。",
+      "notes": "都市と港は建物足跡・街路・中庭として真上から読め、河川接続も破断しない。森林の丸い樹冠語彙と高地の巻線語彙の反復が目立ち始める。"
+    },
+    {
+      "id": "zoom_400",
+      "label": "400%拡大",
+      "complete": true,
+      "evidence": "同7重点領域の中心切り出しをNEAREST 400%で確認。",
+      "notes": "画素破綻、継ぎ目、文字列はない。外洋は同方向の長い波線、森林は丸い輪郭、高地は楕円・S字状の巻線が広く反復し、意味的な素材多様性が94点基準に届かない。"
+    },
+    {
+      "id": "region_nw",
+      "label": "北西・外洋海岸",
+      "complete": true,
+      "evidence": "九分割r1c1と外洋200/400%を確認。",
+      "notes": "海岸は低い平面境界で、崖面や方向光はない。外洋の波線は繊細だが、暗い同系統の波形が全域を覆う。"
+    },
+    {
+      "id": "region_n",
+      "label": "北部森林・河川",
+      "complete": true,
+      "evidence": "九分割r1c2と森林200/400%を確認。",
+      "notes": "森林は連続材質として成立し、河川と道路は連続する。ただし近接すると類似した丸い樹冠と輪郭ループが繰り返され、局所差が不足する。"
+    },
+    {
+      "id": "region_ne",
+      "label": "北東高地",
+      "complete": true,
+      "evidence": "九分割r1c3と高地200/400%を確認。",
+      "notes": "峰、三角山、崖側面、影はなく、全体は平面岩地として読める。一方、楕円・短い巻線・S字状線が均質に反復し、自然な大中小の空隙が少ない。"
+    },
+    {
+      "id": "region_center",
+      "label": "中央都市・デルタ接続",
+      "complete": true,
+      "evidence": "九分割r2c2と首都200/400%を確認。",
+      "notes": "密な円形都市は環状路、放射路、建物足跡、中庭、中央広場で構成され、壁側面、塔の立ち上がり、屋根、投影影は確認しない。"
+    },
+    {
+      "id": "region_sw",
+      "label": "南西港・外洋",
+      "complete": true,
+      "evidence": "九分割r3c1と港200/400%を確認。",
+      "notes": "港は小型の街区足跡、街路、平面岸壁、桟橋中心線として海岸に接続し、支柱や側面を確認しない。港から首都への道路も連続する。"
+    },
+    {
+      "id": "region_se",
+      "label": "南東農地・幹線道路",
+      "complete": true,
+      "evidence": "九分割r2c3・r3c3と農地200/400%を確認。",
+      "notes": "農地区画は形と耕作方向に変化があり、道路も破断しない。区画内の平行線は高密度だが、農地として意味のある方向差に限定される。"
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・四隅・継ぎ目",
+      "complete": true,
+      "evidence": "全景、原寸、九分割で四辺・四隅と主要材質境界を確認。自動境界ゲートも合格。",
+      "notes": "フレーム、余白、矩形パッチ、タイル継ぎ目、急な色切替はない。"
+    },
+    {
+      "id": "style_references",
+      "label": "Royal・B1/H4画風比較",
+      "complete": true,
+      "evidence": "Royal参照との色ヒストグラムはRGB 0.753001、HSV 0.727020、Bhattacharyya 0.915084で既存閾値を通過。B1とはRGB 0.594055、HSV 0.415039、Bhattacharyya 0.829095で不合格。",
+      "notes": "指定されたRoyalの素材・投影・色調にはよく整合するが、プロジェクトの既存B1/H4連続性ゲートに対して海面と森林が暗く、全体の色分布が狭い。"
+    },
+    {
+      "id": "network_and_quiet_corridors",
+      "label": "ネットワーク・静穏回廊",
+      "complete": true,
+      "evidence": "北河川からデルタと外洋、都市から港・北・東・南東への道路を全景と九分割で追跡。",
+      "notes": "主要ネットワークはすべて連続する。都市南側と東西道路周辺に余白はあるが、細密な地表線が残り、ラベル用の静穏度は十分とは言い切れない。"
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "全景、原寸、200%、400%、九分割で確認し、ラベル、文章、読める文字列、連続した疑似文章は見つからなかった。"
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "透かし、署名、UI、現代物、外周フレーム、凡例、コンパスローズは見つからなかった。"
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島下面",
+      "detected": false,
+      "evidence": "全島は水面と同一平面で接し、浮遊岩下面や宙に浮く陸塊はない。"
+    },
+    {
+      "id": "side_face_perspective_lighting",
+      "label": "側面・遠近法・方向光",
+      "detected": false,
+      "evidence": "都市、港、高地、海岸、森林を400%まで確認し、屋根、建物側面、崖面、塔の立ち上がり、投影影、方向光を確認しなかった。"
+    },
+    {
+      "id": "missing_required",
+      "label": "必須構成・指定表現の欠落",
+      "detected": false,
+      "evidence": "外洋、海岸、デルタ、森林、河川、円形都市、港、道路、高地、農地、静穏回廊の全必須構成を確認した。"
+    },
+    {
+      "id": "broken_network",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "北河川、デルタ分流、外洋接続、都市の放射道路、港接続、東西・南東幹線に明白な破断はない。"
+    },
+    {
+      "id": "repetition",
+      "label": "樹木・岩・水面・記号の不自然な反復",
+      "detected": true,
+      "evidence": "200～400%で、外洋の長い同方向波線、森林の類似した丸い輪郭ループ、高地の楕円・S字状巻線が広域に反復する。画素完全一致や強い周期ピークは自動検出されないが、意味的な素材反復はVision上明瞭である。"
+    },
+    {
+      "id": "visible_edge_seam",
+      "label": "目立つ端継ぎ目",
+      "detected": false,
+      "evidence": "四辺・四隅に矩形パッチ境界、直線的な色変化、フレーム、編集継ぎ目はない。"
+    }
+  ],
+  "scores": [
+    {
+      "id": "prompt_geometry",
+      "label": "Prompt構成・厳密平面性",
+      "maximum": 25,
+      "score": 24,
+      "notes": "全必須構成とネットワークを保持し、都市・港・高地・海岸は厳密な平面図として成立する。"
+    },
+    {
+      "id": "parent_style_continuity",
+      "label": "Royal素材・B1/H4色調連続性",
+      "maximum": 15,
+      "score": 10,
+      "notes": "Royal参照との診断色ゲートは通るが、正式なB1色ゲート三指標が不合格で、海面と森林が暗く全体色域も狭い。"
+    },
+    {
+      "id": "edge_seam_continuity",
+      "label": "端部・継ぎ目連続性",
+      "maximum": 15,
+      "score": 15,
+      "notes": "枠、パッチ、継ぎ目、急な素材境界はなく、一枚の連続した地図として成立する。"
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 13,
+      "notes": "銅版画語彙と投影は一貫するが、暗い海面・森林と高地の高密度巻線が画面の階層を平坦化する。"
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 9,
+      "notes": "原寸から400%まで細部は豊富で破綻しないが、50% RMS保持が0.806521で閾値0.82を僅かに下回る。"
+    },
+    {
+      "id": "artifact_nonrepetition",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 7,
+      "notes": "完全一致・周期性の自動プロキシは合格する一方、水面、森林、高地に意味的な同形語彙の反復が残る。"
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 8,
+      "notes": "ネットワークと主要地物は明瞭で余白もあるが、暗部と細密地表線がラベル・POI用静穏度を一部削る。"
+    }
+  ],
+  "total_score": 86,
+  "decision": "rejected",
+  "summary": "I1は今回の候補群で最も有望な構図・厳密平面性・一枚絵としての完成度を持ち、円形都市、港、海岸、高地、全ネットワークを正しく成立させた。しかし正式なB1色調ゲートと50%縮小可読性ゲートが不合格で、200～400%では水面・森林・高地の意味的反復も確認した。94点かつ即時不合格なしというGolden条件を満たさないため、86点で不採用とする。本報告は生成担当の自己Visionであり独立レビューではない。",
+  "required_changes": [
+    "Royalの平面投影と銅版画材質を保ちつつ、B1/H4に対するRGB・HSVヒストグラム交差とBhattacharyya係数を正式閾値まで戻し、特に暗い海面と森林の色域を調整する。",
+    "主要形状のコントラストを保持しながら微細線の均質密度を下げ、50% RMSコントラスト保持を0.82以上へ上げる。",
+    "外洋の同方向波線、森林の丸い輪郭ループ、高地の楕円・S字巻線をより長短・方向・密度・空隙の異なる非反復材質へ置換する。",
+    "今回成功した構図、真上視点の都市・港、高地の無側面表現、道路・河川接続、枠なし外周は変更しない。"
+  ]
+}

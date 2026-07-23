@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "base_path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains.png",
+  "edit_path": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands-raw.png",
+  "control_path": "world/map-production/controls/style-candidate-d-mountain-mask-v1.json",
+  "output_path": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands.png",
+  "width": 1536,
+  "height": 1024,
+  "masked_pixels": 531024,
+  "opaque_mask_pixels": 324685,
+  "protected_pixels_verified": 1041840,
+  "outside_mask_max_channel_difference": 0,
+  "output_sha256": "c968d4422277c9d6ef4aea8186d220d100e741053e9fe658cee80fd3d9bc3cc7"
+}

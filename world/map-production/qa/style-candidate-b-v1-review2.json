@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-b-v1",
+  "image_path": "world/map-production/candidates/style-candidate-b-v1.png",
+  "created_at": "2026-07-18T15:25:00Z",
+  "reviewer": "Independent Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "Independent original-resolution overview.", "notes": "Best road, river, coast, and negative-space hierarchy of the three candidates."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "1536x1024 source inspected at original detail.", "notes": "Roads remain continuously traceable."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Fine-detail inspection of city, port, mountains, forest, delta, and islands.", "notes": "No major artifact; visible side faces remain."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan.", "notes": "No text, watermark, or hard seam."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Applicability reviewed; synthetic style board has no canon control geometry.", "notes": "Production assets still require an overlay."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared with supplied legacy style reference.", "notes": "Clean inheritance with improved hierarchy."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Applicability reviewed; no neighbors exist and the image is frame-free.", "notes": "Seam continuity remains unproven."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Negative-space and line-competition inspection.", "notes": "Best overlay readiness of A/B/C."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; candidate is not a production tile set.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; candidate is not a production tile set.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "No production geometry is claimed by this style board."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": false, "evidence": "Prompt-required representative elements are present."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "Representative non-canon elements are isolated from production geography."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text or pseudo-text found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No internal hard seam found."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, or signature found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": true, "evidence": "The mountain range and floating islands expose side and underside faces despite the explicit plan-view constraint."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": false, "evidence": "No exact clone cluster found."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 22, "notes": "Best candidate-prompt fit, except strict plan view."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 13, "notes": "Strong style inheritance; no parent composite exists."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 13, "notes": "Clean, even, frame-free edges but no neighbor test."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 13, "notes": "Consistent, legible visual hierarchy."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 9, "notes": "Slightly less dense than C but meaningfully detailed."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 9, "notes": "Fewest visible artifacts and repetitions."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 10, "notes": "Best roads and quiet label corridors."}
+  ],
+  "total_score": 89,
+  "decision": "revise",
+  "summary": "B is the selected revision base but cannot be golden because visible mountain and floating-island side faces trigger the perspective gate.",
+  "required_changes": ["Change only the plan-view geometry lock: no front, side, underside, façade, vertical face, or oblique shadow may be visible."]
+}

@@ -1,0 +1,125 @@
+{
+  "type": "FeatureCollection",
+  "name": "settlement_footprints",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "metadata": {
+    "version": "0.1.0",
+    "status": "provisional",
+    "source": "world/map-data/data/nodes.json",
+    "anchor_source": "world/map-data/data/pixel-mapping.json",
+    "selection_policy": "capital, city, town, port, underwater_city, floating_island, and named floating base",
+    "geometry_role": "texture and label allocation envelope; not a wall or administrative border"
+  },
+  "features": [
+    {
+      "type": "Feature", "id": "astralis",
+      "properties": {"id": "astralis", "name": "アストラリス", "node_type": "capital", "continent_id": "elysion", "region_id": "royal_capital_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#astralis"},
+      "geometry": {"type": "Polygon", "coordinates": [[[3933.6, 3579.7], [4373.6, 3579.7], [4373.6, 3939.7], [3933.6, 3939.7], [3933.6, 3579.7]]]}
+    },
+    {
+      "type": "Feature", "id": "granrock",
+      "properties": {"id": "granrock", "name": "グランロック", "node_type": "city", "continent_id": "elysion", "region_id": "soaring_mountains_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#granrock"},
+      "geometry": {"type": "Polygon", "coordinates": [[[3310.4, 3180.7], [3590.4, 3180.7], [3590.4, 3420.7], [3310.4, 3420.7], [3310.4, 3180.7]]]}
+    },
+    {
+      "type": "Feature", "id": "port_zephia",
+      "properties": {"id": "port_zephia", "name": "ポートゼフィア", "node_type": "port", "continent_id": "elysion", "region_id": "port_zephia_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#port_zephia"},
+      "geometry": {"type": "Polygon", "coordinates": [[[4567.5, 3415.8], [4807.5, 3415.8], [4807.5, 3615.8], [4567.5, 3615.8], [4567.5, 3415.8]]]}
+    },
+    {
+      "type": "Feature", "id": "silverport",
+      "properties": {"id": "silverport", "name": "シルバーポート", "node_type": "port", "continent_id": "elysion", "region_id": "silver_plains_region", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#silverport"},
+      "geometry": {"type": "Polygon", "coordinates": [[[4359.7, 4402.3], [4559.7, 4402.3], [4559.7, 4582.3], [4359.7, 4582.3], [4359.7, 4402.3]]]}
+    },
+    {
+      "type": "Feature", "id": "moonlight_grace",
+      "properties": {"id": "moonlight_grace", "name": "ムーンライト・グレイス", "node_type": "city", "continent_id": "lumiera", "region_id": "emerald_belt_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#moonlight_grace"},
+      "geometry": {"type": "Polygon", "coordinates": [[[7509.7, 2956.2], [7789.7, 2956.2], [7789.7, 3196.2], [7509.7, 3196.2], [7509.7, 2956.2]]]}
+    },
+    {
+      "type": "Feature", "id": "moonport",
+      "properties": {"id": "moonport", "name": "ムーンポート", "node_type": "port", "continent_id": "lumiera", "region_id": "emerald_belt_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#moonport"},
+      "geometry": {"type": "Polygon", "coordinates": [[[7647.3, 2888.4], [7847.3, 2888.4], [7847.3, 3068.4], [7647.3, 3068.4], [7647.3, 2888.4]]]}
+    },
+    {
+      "type": "Feature", "id": "moonshadow_floating_island",
+      "properties": {"id": "moonshadow_floating_island", "name": "月影浮島", "node_type": "floating_island", "continent_id": "lumiera", "region_id": "lumiera_arch_region", "vertical_layer_id": "upper_sky", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#moonshadow_floating_island"},
+      "geometry": {"type": "Polygon", "coordinates": [[[6986.4, 3034.9], [7206.4, 3034.9], [7206.4, 3214.9], [6986.4, 3214.9], [6986.4, 3034.9]]]}
+    },
+    {
+      "type": "Feature", "id": "emerald_city",
+      "properties": {"id": "emerald_city", "name": "エメラルド・シティ", "node_type": "city", "continent_id": "lumiera", "region_id": "emerald_belt_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#emerald_city"},
+      "geometry": {"type": "Polygon", "coordinates": [[[7379.5, 3981.5], [7659.5, 3981.5], [7659.5, 4221.5], [7379.5, 4221.5], [7379.5, 3981.5]]]}
+    },
+    {
+      "type": "Feature", "id": "blood_fort",
+      "properties": {"id": "blood_fort", "name": "ブラッド・フォート", "node_type": "city", "continent_id": "chaos_ria", "region_id": "red_sea_desert_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#blood_fort"},
+      "geometry": {"type": "Polygon", "coordinates": [[[3701.1, 5495.4], [3981.1, 5495.4], [3981.1, 5735.4], [3701.1, 5735.4], [3701.1, 5495.4]]]}
+    },
+    {
+      "type": "Feature", "id": "jade_oasis",
+      "properties": {"id": "jade_oasis", "name": "翡翠のオアシス", "node_type": "town", "continent_id": "chaos_ria", "region_id": "jade_oasis_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#jade_oasis"},
+      "geometry": {"type": "Polygon", "coordinates": [[[4272.1, 5339.8], [4452.1, 5339.8], [4452.1, 5499.8], [4272.1, 5499.8], [4272.1, 5339.8]]]}
+    },
+    {
+      "type": "Feature", "id": "jade_north",
+      "properties": {"id": "jade_north", "name": "翡翠王国北部", "node_type": "town", "continent_id": "chaos_ria", "region_id": "jade_oasis_region", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#jade_north"},
+      "geometry": {"type": "Polygon", "coordinates": [[[4174.4, 5193.3], [4354.4, 5193.3], [4354.4, 5353.3], [4174.4, 5353.3], [4174.4, 5193.3]]]}
+    },
+    {
+      "type": "Feature", "id": "jade_capital",
+      "properties": {"id": "jade_capital", "name": "翡翠王都", "node_type": "city", "continent_id": "chaos_ria", "region_id": "jade_oasis_region", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#jade_capital"},
+      "geometry": {"type": "Polygon", "coordinates": [[[4482.3, 5739.3], [4762.3, 5739.3], [4762.3, 5979.3], [4482.3, 5979.3], [4482.3, 5739.3]]]}
+    },
+    {
+      "type": "Feature", "id": "warrior_port",
+      "properties": {"id": "warrior_port", "name": "戦士の港", "node_type": "port", "continent_id": "chaos_ria", "region_id": "red_sea_desert_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#warrior_port"},
+      "geometry": {"type": "Polygon", "coordinates": [[[3285.5, 6013.7], [3485.5, 6013.7], [3485.5, 6193.7], [3285.5, 6193.7], [3285.5, 6013.7]]]}
+    },
+    {
+      "type": "Feature", "id": "jade_port",
+      "properties": {"id": "jade_port", "name": "翡翠港", "node_type": "port", "continent_id": "chaos_ria", "region_id": "jade_oasis_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#jade_port"},
+      "geometry": {"type": "Polygon", "coordinates": [[[4704.7, 4939.3], [4904.7, 4939.3], [4904.7, 5119.3], [4704.7, 5119.3], [4704.7, 4939.3]]]}
+    },
+    {
+      "type": "Feature", "id": "marineport",
+      "properties": {"id": "marineport", "name": "マリンポート", "node_type": "port", "continent_id": "atlantis", "region_id": "marineport_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#marineport"},
+      "geometry": {"type": "Polygon", "coordinates": [[[1039.4, 3718.4], [1239.4, 3718.4], [1239.4, 3898.4], [1039.4, 3898.4], [1039.4, 3718.4]]]}
+    },
+    {
+      "type": "Feature", "id": "iron_mountain_port",
+      "properties": {"id": "iron_mountain_port", "name": "鉄山港", "node_type": "port", "continent_id": "atlantis", "region_id": "marineport_region", "source_confidence": "estimated", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#iron_mountain_port"},
+      "geometry": {"type": "Polygon", "coordinates": [[[1319.2, 3279.2], [1519.2, 3279.2], [1519.2, 3459.2], [1319.2, 3459.2], [1319.2, 3279.2]]]}
+    },
+    {
+      "type": "Feature", "id": "atlantia_undersea_city",
+      "properties": {"id": "atlantia_undersea_city", "name": "アトランティア", "node_type": "underwater_city", "continent_id": "atlantis", "region_id": "atlantia_region", "vertical_layer_id": "undersea", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#atlantia_undersea_city"},
+      "geometry": {"type": "Polygon", "coordinates": [[[693.3, 3981.5], [973.3, 3981.5], [973.3, 4221.5], [693.3, 4221.5], [693.3, 3981.5]]]}
+    },
+    {
+      "type": "Feature", "id": "glacier_city",
+      "properties": {"id": "glacier_city", "name": "氷河都市", "node_type": "city", "continent_id": "atlantis", "region_id": "marineport_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#glacier_city"},
+      "geometry": {"type": "Polygon", "coordinates": [[[1018.9, 4840.8], [1298.9, 4840.8], [1298.9, 5080.8], [1018.9, 5080.8], [1018.9, 4840.8]]]}
+    },
+    {
+      "type": "Feature", "id": "time_port",
+      "properties": {"id": "time_port", "name": "時空の港", "node_type": "port", "continent_id": "grimoire", "region_id": "time_port_region", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#time_port"},
+      "geometry": {"type": "Polygon", "coordinates": [[[3923.4, 1570.1], [4123.4, 1570.1], [4123.4, 1750.1], [3923.4, 1750.1], [3923.4, 1570.1]]]}
+    },
+    {
+      "type": "Feature", "id": "wind_rest_isle",
+      "properties": {"id": "wind_rest_isle", "name": "風の休息所", "node_type": "floating_island", "continent_id": "elysion", "region_id": "soaring_mountains_region", "vertical_layer_id": "lower_sky", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#wind_rest_isle"},
+      "geometry": {"type": "Polygon", "coordinates": [[[3881.4, 3347.9], [4061.4, 3347.9], [4061.4, 3487.9], [3881.4, 3487.9], [3881.4, 3347.9]]]}
+    },
+    {
+      "type": "Feature", "id": "stormhold",
+      "properties": {"id": "stormhold", "name": "嵐の都", "node_type": "floating_island", "continent_id": "elysion", "region_id": "soaring_mountains_region", "vertical_layer_id": "lower_sky", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#stormhold"},
+      "geometry": {"type": "Polygon", "coordinates": [[[3525.8, 3611.0], [3765.8, 3611.0], [3765.8, 3811.0], [3525.8, 3811.0], [3525.8, 3611.0]]]}
+    },
+    {
+      "type": "Feature", "id": "atlantis_floating_base",
+      "properties": {"id": "atlantis_floating_base", "name": "アトランティス浮上基地", "node_type": "air_terminal", "continent_id": "atlantis", "region_id": "marineport_region", "vertical_layer_id": "lower_sky", "source_confidence": "canon", "geometry_confidence": "estimated", "review_status": "provisional", "source_ref": "world/map-data/data/nodes.json#atlantis_floating_base"},
+      "geometry": {"type": "Polygon", "coordinates": [[[1104.3, 3572.3], [1304.3, 3572.3], [1304.3, 3752.3], [1104.3, 3752.3], [1104.3, 3572.3]]]}
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-canonical-render-provenance.schema.json",
+  "title": "SStory Phase 5 deterministic canonical-render provenance",
+  "description": "Fail-closed provenance for one exact Phase 5 canonical-render master. ImageGen contributes only the accepted Golden style; geography is rendered deterministically from the locked catalog, finite-resolution contract, metatile controls, and all six canonical GeoJSON sources.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "generated_by",
+    "coordinate_reference_system",
+    "sheet_id",
+    "inputs",
+    "artifacts",
+    "created_at"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-canonical-render-provenance.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "type": {
+      "const": "sstory-phase5-deterministic-canonical-render-provenance"
+    },
+    "generated_by": {
+      "const": "sstory-map-production/build_phase5_assets.py@2"
+    },
+    "coordinate_reference_system": {
+      "const": "EA-WORLD-1"
+    },
+    "sheet_id": {
+      "$ref": "#/definitions/id"
+    },
+    "inputs": {
+      "$ref": "#/definitions/inputs"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "$ref": "#/definitions/rendered_artifact"
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "renderer_settings": {
+      "type": "object",
+      "required": [
+        "seed",
+        "parameters"
+      ],
+      "properties": {
+        "seed": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          ]
+        },
+        "parameters": {
+          "type": "object",
+          "minProperties": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "canon_source": {
+      "type": "object",
+      "required": [
+        "role",
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "landmasses",
+            "regions",
+            "terrain",
+            "hydrography",
+            "settlement-footprints",
+            "transport-geometries"
+          ]
+        },
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "required": [
+        "golden_style",
+        "golden_vision_reports",
+        "renderer",
+        "renderer_report",
+        "renderer_settings",
+        "material_atlas",
+        "map_catalog",
+        "resolution_contract",
+        "control_index",
+        "canon_sources"
+      ],
+      "properties": {
+        "golden_style": {
+          "$ref": "#/definitions/artifact"
+        },
+        "golden_vision_reports": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/artifact"
+          }
+        },
+        "renderer": {
+          "$ref": "#/definitions/artifact"
+        },
+        "renderer_report": {
+          "$ref": "#/definitions/artifact"
+        },
+        "renderer_settings": {
+          "$ref": "#/definitions/renderer_settings"
+        },
+        "material_atlas": {
+          "$ref": "#/definitions/artifact"
+        },
+        "map_catalog": {
+          "$ref": "#/definitions/artifact"
+        },
+        "resolution_contract": {
+          "$ref": "#/definitions/artifact"
+        },
+        "control_index": {
+          "$ref": "#/definitions/artifact"
+        },
+        "canon_sources": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/canon_source"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rendered_artifact": {
+      "type": "object",
+      "required": [
+        "sheet_id",
+        "path",
+        "sha256",
+        "width",
+        "height",
+        "format",
+        "color_mode",
+        "method",
+        "provenance"
+      ],
+      "properties": {
+        "sheet_id": {
+          "$ref": "#/definitions/id"
+        },
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "format": {
+          "const": "PNG"
+        },
+        "color_mode": {
+          "const": "RGB"
+        },
+        "method": {
+          "const": "deterministic-canonical-render"
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "kind",
+            "acceptance_inferred"
+          ],
+          "properties": {
+            "kind": {
+              "const": "deterministic-canonical-render"
+            },
+            "acceptance_inferred": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

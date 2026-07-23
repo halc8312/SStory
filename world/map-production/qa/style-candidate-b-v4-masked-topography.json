@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-b-v4-masked-topography",
+  "image_path": "world/map-production/candidates/style-candidate-b-v4-masked-topography.png",
+  "created_at": "2026-07-18T16:32:00Z",
+  "reviewer": "Independent Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 masked composite inspected independently.", "notes": "Non-mountain geography is protected exactly, but the two generated areas are visually isolated."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Original-resolution PNG inspected.", "notes": "Hard mask boundaries and fingerprint-like contour repetition are visible."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Both mountain masks, road corridors, city edge, and surrounding textures inspected.", "notes": "Wide road exclusions retain old bullseye and diamond symbols."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "No text, watermark, or perspective; internal seams remain."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Versioned mask and composite report verified 1,063,587 protected pixels with zero outside-mask difference.", "notes": "Geometry preservation is proven."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared directly with B v2 and B v3.", "notes": "B v2 is identical outside the edit mask."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Mask edges were inspected as local neighbor seams.", "notes": "North-east west/south edges and south-east north edge fail the visible-seam gate."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road and quiet-label corridors inspected.", "notes": "Roads remain legible; repeated contour fields compete locally."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; style board is not a production tile set.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; style board is not a production tile set.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "Composite report proves zero change outside the mask."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": false, "evidence": "All representative elements remain present."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No new major feature found."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text or pseudo-writing found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": true, "evidence": "Color, paper grain, and line density change abruptly around both mask boundaries at 100%."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "Mountain relief is strictly flat plan-view linework."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Long evenly spaced contour lines read as fingerprint or wood-grain repetition."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 23, "notes": "Protected geometry is exact; mountain mask is a style control."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 13, "notes": "B v2 is exact outside the mask."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 6, "notes": "Multiple mask edges are visible at 100%."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 10, "notes": "Flat relief is correct, but generated areas are lighter and more uniform."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 8, "notes": "Adequate detail with excessive contour density."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 7, "notes": "Fingerprint repetition and retained old symbols fail the gate."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 9, "notes": "Protected roads and label corridors remain readable."}
+  ],
+  "total_score": 76,
+  "decision": "rejected",
+  "summary": "The mask proves geometry preservation and plan-view relief, but visible composite seams and fingerprint repetition make this first attempt-4 composite unacceptable.",
+  "required_changes": ["Change only the composite mask: reduce road exclusions to the road pixels and increase inward feathering to 64 pixels."]
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-g-v1-topology-guide",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "background_rgb": [128, 128, 128],
+  "shapes": [
+    {
+      "id": "ne-main-massif",
+      "region_id": "north_east_range",
+      "role": "main-massif",
+      "rgb": [206, 74, 62],
+      "points": [[970,180],[1020,95],[1120,50],[1215,90],[1270,180],[1300,235],[1340,180],[1400,130],[1480,180],[1535,245],[1535,330],[1470,310],[1410,270],[1340,315],[1290,360],[1240,270],[1180,225],[1100,240],[1030,285],[980,250]]
+    },
+    {
+      "id": "ne-west-foothill",
+      "region_id": "north_east_range",
+      "role": "foothill-a",
+      "rgb": [232, 151, 61],
+      "points": [[815,420],[840,360],[900,320],[970,345],[1010,400],[985,450],[910,470],[845,455]]
+    },
+    {
+      "id": "ne-central-foothill",
+      "region_id": "north_east_range",
+      "role": "foothill-b",
+      "rgb": [126, 93, 178],
+      "points": [[1080,485],[1105,420],[1170,390],[1235,420],[1270,480],[1240,520],[1160,530],[1100,515]]
+    },
+    {
+      "id": "se-main-massif",
+      "region_id": "south_east_range",
+      "role": "main-massif",
+      "rgb": [206, 74, 62],
+      "points": [[950,940],[980,850],[1040,800],[1120,805],[1170,860],[1205,930],[1245,850],[1290,810],[1340,850],[1380,920],[1350,965],[1300,930],[1260,905],[1220,990],[1160,1015],[1100,960],[1050,920],[1000,985]]
+    },
+    {
+      "id": "se-west-foothill",
+      "region_id": "south_east_range",
+      "role": "foothill-a",
+      "rgb": [232, 151, 61],
+      "points": [[670,1023],[690,965],[750,930],[820,950],[860,1000],[840,1023]]
+    },
+    {
+      "id": "se-east-foothill",
+      "region_id": "south_east_range",
+      "role": "foothill-b",
+      "rgb": [126, 93, 178],
+      "points": [[1410,1023],[1430,960],[1490,930],[1535,950],[1535,1023]]
+    }
+  ],
+  "purpose": "Geometry-only ImageGen conditioning raster. Flat colors identify one irregular main massif and two detached foothills in each review region. Color, edges, and fill are not rendering instructions."
+}

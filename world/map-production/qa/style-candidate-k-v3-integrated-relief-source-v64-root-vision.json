@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "k3-v64-integrated-orthographic-relief-donor",
+  "image_path": "world/map-production/style-assets/k3-v64-integrated-orthographic-relief-donor.png",
+  "image_sha256": "cce887425642637e0b031c4cc527f59c019f8693d233abbaaf257cadb700201e",
+  "dimensions": [1536, 1024],
+  "mode": "RGB",
+  "reviewer": "Codex Root Vision",
+  "review_mode": "root-authority-multiscale-source",
+  "golden_reference": false,
+  "decision": "accepted-as-conditional-integration-and-relief-material-donor",
+  "total_score": 92,
+  "views_completed": ["native", "full25", "full50", "highland200", "highland400"],
+  "strengths": [
+    "The northeast is a seamless strict-overhead elevation surface rather than a rectangular pasted panel.",
+    "Connected valleys, branching spurs, saddles, and fine erosion provide real information at 200 and 400 percent.",
+    "The sepia range and ground transition integrate with the surrounding map while both roads remain legible.",
+    "No side-view mountain, triangle icon, text, watermark, dot carrier, or closed blob is present."
+  ],
+  "limitations_for_direct_use": [
+    "Most slopes repeat a dense dendritic frond or leaf-vein grammar at overly uniform spacing.",
+    "Exactly eight unequal primary systems are not clearly separated from secondary and tertiary structure.",
+    "The full ImageGen map does not preserve v18 protected pixels byte-for-byte and may not be promoted directly."
+  ],
+  "adoption_scope": {
+    "integrated_highland_ground_transition": true,
+    "broad_continuous_relief": true,
+    "low_and_mid_frequency_material": true,
+    "raw_full_map_pixels": false,
+    "high_frequency_frond_texture": false,
+    "exact_eight_topology_authority": false,
+    "protected_geometry_authority": false,
+    "golden_candidate": false
+  },
+  "required_derivation": [
+    "Use v18 as the only base and restore every protected and permission-exterior pixel exactly.",
+    "Use v52 and v55 as the exact-eight geometry and topology authorities.",
+    "Suppress repeated high-frequency fronds before transferring v64 integration or relief material.",
+    "Emit exactly five map review PNGs and pass fixed numeric gates plus Root Vision 94 before Golden review."
+  ],
+  "notes": "v64 is the strongest integrated visual source retained for the next production family, but it is not Golden and is not direct publish content."
+}

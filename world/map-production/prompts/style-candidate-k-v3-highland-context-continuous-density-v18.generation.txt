@@ -1,0 +1,20 @@
+Use case: precise-object-edit
+Asset type: full-board orthographic antique fantasy-map material correction
+
+Input image: Image 1 is the edit target and the sole authority for the complete 1536 x 1024 map, exact composition, geography, registration, colours, coast, sea, islands, forest, river, capital, port, roads, field parcels, highland outline, and all protected linework.
+
+Primary request: make exactly one material correction inside the broad warm-ochre highland in the upper-right of Image 1. Fully remove its pervasive herringbone, woven dash cadence, directional hatch, and repeating microscopic grammar. Replace only that unwanted texture with one uninterrupted, non-directional matte dry-print pigment ground that belongs to the same antique printing process as the surrounding central land.
+
+This must be a continuous material, never a collection of marks or objects. Create all visible variation only through shallow stochastic changes in the packing density and tone of tiny broken pigment fragments. Individual fragments must be too small and too irregular to read as dots, strokes, symbols, stones, pores, fibres, or separate items at native size.
+
+Across irregular 12 to 45 pixel neighbourhoods in the final 1536 x 1024 image, let the local pigment occupancy drift gently but distinctly. Neighbouring densities must cross-dissolve through shared, interspersed microscopic pigment breakup. No density variation may acquire a centre, perimeter, closed silhouette, edge, outline, halo, or object identity. No coherent tonal feature may extend beyond roughly 45 pixels. Do not make a countable population. Do not leave a uniform background with foreground marks placed upon it.
+
+Use conspicuously aperiodic spacing and scale variation. The material must have no dominant horizontal, vertical, diagonal, curved, or radial direction. It must contain neither an evenly distributed microtexture nor large smooth tonal zones. Maintain continuous visual life across the entire highland without making any part read as a bounded patch.
+
+Match the existing v18 highland's warm sand, muted ochre, parchment-brown median tone, broad tonal range, and apparent print age. Preserve the existing highland boundary transition and make the new interior meet it with no seam, halo, lighter plate, darker plate, rectangular fill, or polygon-shaped material discontinuity. At the western and southern contacts, the highland must feel printed on the same sheet and by the same process as the adjacent land.
+
+At 25 and 50 percent view, the highland must retain subtle dry-print variation and comparable visual weight to the surrounding land; it must not collapse into a flat beige panel and must not reveal spots, blobs, clouds, camouflage, or a repeating screen. At native size and 200 to 400 percent, it must reveal only continuous, fine, random pigment breakup with non-closed 12 to 45 pixel density variation—never a recognisable unit or motif.
+
+Keep every new tonal step clearly weaker than roads, coastlines, city walls, field borders, and other cartographic ink. Do not add or reinterpret terrain symbols. Preserve all roads and protected linework that touch or cross the highland. Preserve every feature outside the highland as faithfully as possible. Do not crop, rotate, resize, reframe, relight, recolour, or redesign the map.
+
+Absolutely no hairlines, paper fibres, curls, scratches, herringbone, weave, crosshatch, parallel strokes, dash rows, stipple screen, dither, evenly distributed dots, loop felt, curls, hooks, cells, honeycomb, rosettes, rings, bubbles, pores, pseudo-writing, glyphs, repeated stamps, discrete flakes, pebbles, stones, spots, stains, islands, blobs, camouflage, cloud fields, smooth airbrushed wash, connected mesh, cracks, veins, contour bands, ridges, peaks, terraces, relief, lighting, perspective, labels, borders, new roads, rivers, coastlines, buildings, signature, frame, or watermark.

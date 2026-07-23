@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v4-plan-view-golden-board",
+  "image_path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+  "created_at": "2026-07-19T16:23:27.158Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "The 1536x1024 RGB final, its H4 generation prompt, and the supplied Candidate B1 style reference were inspected together.",
+      "notes": "H4 preserves the requested sea, branching delta, forest river, circular city, coastal port, roads, fields, and quiet corridors while removing B1's large floating islands and dominant scenic mountain range."
+    },
+    {
+      "id": "original",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "The final PNG was inspected at its native 1536x1024 resolution.",
+      "notes": "The parchment, dusty-blue water, copperplate ink, and high information density are strong, but the city and port retain modeled height and the eastern highland still reads as a field of small pictorial mountains."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "The complete image was reduced to 384x256 and inspected.",
+      "notes": "Sea, land, forest, city, highland, roads, river, and farmland remain distinguishable, confirming strong broad-scale contrast and hierarchy."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "The complete image was reduced to 768x512 and inspected.",
+      "notes": "Major routes and terrain classes remain readable, although the repeated triangular upland vocabulary forms an obvious scenic-mountain texture and the city remains visually dominant."
+    },
+    {
+      "id": "zoom_200",
+      "label": "9領域200%拡大",
+      "complete": true,
+      "evidence": "North-west, north-center, north-east, middle-west, center, middle-east, south-west, south-center, and south-east crops were each inspected at 200%.",
+      "notes": "City wall faces and tower forms, port roof and pier depth marks, triangular or pyramidal highland motifs, and recurrent rounded tree crowns are confirmed across the relevant regions."
+    },
+    {
+      "id": "zoom_400",
+      "label": "9領域400%拡大",
+      "complete": true,
+      "evidence": "The same nine regions were each inspected at 400%, including focused review of the central city, lower-left port, coast, forest, and eastern highland.",
+      "notes": "The city has a dark outer facade, cylindrical towers, modeled roofs, and a raised central monument. The port contains pitched forms, side faces, and vertical pier posts; the coastline and many rocky marks also carry directional side or relief cues."
+    },
+    {
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
+      "complete": true,
+      "evidence": "All nine spatial regions were scanned for text, modern objects, missing features, route breaks, perspective, repetition, and boundary defects at enlarged scale.",
+      "notes": "No text, watermark, modern object, or broken major route was found. Perspective failures concentrate in the center city, lower-left port, coast, and right highland; repeated motifs span forests and rocky terrain."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1画風比較",
+      "complete": true,
+      "evidence": "H4 was compared directly with style-candidate-b-v1.png for palette, parchment, copperplate line character, terrain density, composition changes, and pictorial height.",
+      "notes": "H4 closely matches B1's artist, material, palette, and micro-detail and successfully removes B1's floating islands and large mountain massif, but it does not fully replace B1's three-dimensional city, port, cliff, tree, and peak grammar with strict orthographic symbols."
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・継ぎ目拡張性",
+      "complete": true,
+      "evidence": "All four outer edges were inspected at native and enlarged views for borders, abrupt tonal bands, clipped motifs, and continuation defects; automated edge-band proxies were also reviewed.",
+      "notes": "The image is frame-free, no visible seam or decorative border is present, and terrain can visually continue beyond the canvas; an actual neighboring-tile composite was not tested."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳可読性",
+      "complete": true,
+      "evidence": "Road, river, coast, field, city, and quiet-corridor readability was assessed at native, 25%, 50%, 200%, and 400% views.",
+      "notes": "Roads, rivers, fields, coast, and intended quiet corridors remain usable, but the dense central city, highland peaks, forest crowns, and relief linework compete with future labels and POI vectors."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "No readable text, pseudo-label, letter, number, legend, compass, scale bar, or readable writing-like symbol was found at native or 400% inspection."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "No watermark, logo, signature, frame, border, modern object, or decorative corner element was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島・島下面",
+      "detected": false,
+      "evidence": "B1's floating islands and suspended undersides have been removed; all detached land in H4 reads as ordinary sea-level islands or delta bars."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "側面・遠近法・方向光",
+      "detected": true,
+      "evidence": "At 400%, the central city retains a dark outer wall facade, cylindrical towers, modeled roofs, and a raised center. The port retains pitched structures, side faces, and vertical pier posts. Coast rims, tree trunks, and triangular highland peaks add further forbidden side-face or directional-relief cues."
+    },
+    {
+      "id": "missing_composition",
+      "label": "必須構成・置換の欠落",
+      "detected": true,
+      "evidence": "The required completely orthographic city and port were not achieved. The right highland was not replaced solely by irregular stipple, sparse non-convergent marks, and non-directional wash, and portions of the coastline retain cliff-like relief rather than an ordinary low edge."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "Major roads, river paths, delta channels, crossings, and field access lines remain continuously readable with no unintended interior break."
+    },
+    {
+      "id": "repetition",
+      "label": "目立つ反復",
+      "detected": true,
+      "evidence": "The eastern and southern rocky terrain contains many similarly shaped triangular, A-like, or pyramidal peak marks, and forest or scrub areas reuse conspicuously similar rounded tree-crown and trunk motifs. This semantic repetition is visible at native, 50%, 200%, and 400% views despite the absence of exact duplicated pixel blocks."
+    },
+    {
+      "id": "edge_seam",
+      "label": "端の継ぎ目",
+      "detected": false,
+      "evidence": "No visible border, abrupt edge band, or frame seam was found on the top, right, bottom, or left edge."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "prompt構成・平面形状",
+      "maximum": 25,
+      "score": 14,
+      "notes": "The requested major regions and routes are present and B1's floating islands and massive mountain range are removed, but strict orthographic city, port, coast, and flat triangle-free highland requirements fail."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親画像・画風の連続性",
+      "maximum": 15,
+      "score": 15,
+      "notes": "Parchment grain, restrained sepia, olive, and dusty-blue palette, delicate copperplate linework, and high micro-detail closely match Candidate B1."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "端・継ぎ目拡張性",
+      "maximum": 15,
+      "score": 14,
+      "notes": "All edges are frame-free and visually extensible, with no visible seam; only an actual neighbor composite remains untested."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 12,
+      "notes": "The hand-inked material and palette are coherent, but scenic triangular peaks and modeled city, port, and coast forms conflict with the requested unified orthographic plan-view vocabulary."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 9,
+      "notes": "H4 carries strong micro-detail and terrain differentiation at native and reduced views, with only some density being supplied by overused peak and tree motifs."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 3,
+      "notes": "No generated text or gross deformation appears, but extensive semantic repetition of triangular highland peaks and similar rounded tree symbols violates the non-repetition gate."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 7,
+      "notes": "Routes, river, fields, and broad quiet corridors remain clear, while the dense radial city, scenic highland, forest marks, and relief textures compete with future labels and POI overlays."
+    }
+  ],
+  "total_score": 74,
+  "decision": "rejected",
+  "summary": "H4 is rejected and cannot be a Golden reference. It strongly preserves Candidate B1's parchment, restrained palette, copperplate character, micro-detail, and reduced-scale readability, and it successfully removes B1's floating islands and dominant mountain massif. However, the central city and lower-left port retain prohibited height and side faces, the right highland is rebuilt from repeated triangular scenic-peak symbols instead of flat non-directional terrain marks, and repeated tree and rock motifs remain conspicuous. Three immediate-failure gates are triggered and the 74 score is below the required 94.",
+  "required_changes": [
+    "Replace the city and port themselves with genuinely orthographic wall, street, roof, building, quay, and pier footprints that contain no facade, cylindrical tower height, raised central monument, pitched side face, post, directional highlight, or cast shadow.",
+    "Replace every triangular or pyramidal highland peak and cliff-like coast cue with irregular top-down rocky chips, sparse non-convergent short strokes, stipple, low non-directional wash, and an ordinary low coastline.",
+    "Break up recurring tree-crown, trunk, and rock silhouettes into varied merged overhead forest patches and individually varied terrain marks while preserving H4's successful B1 palette, copperplate detail, route continuity, quiet label corridors, and frame-free edges."
+  ]
+}

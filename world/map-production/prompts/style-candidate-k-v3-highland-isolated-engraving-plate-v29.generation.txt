@@ -1,0 +1,28 @@
+TASK
+Edit the supplied reference image into a production extraction plate containing only the engraved mountain system. This is not a finished map and not a redesign.
+
+SPATIAL LOCK
+- Keep the full 3:2 canvas, camera, scale, and pixel-coordinate composition of the reference.
+- Preserve the upper-right highland mountain network at the same coordinates: the long primary diagonal chains, unequal secondary spurs, asymmetric forks, open valleys, saddles, gaps, varied bearings, and varied ridge lengths.
+- Do not crop, zoom, rotate, mirror, translate, or invent a new mountain layout.
+
+ISOLATION
+- Replace every non-mountain pixel on the entire canvas with one perfectly uniform, flat, warm neutral matte colour.
+- The matte must have no paper grain, fibres, speckle, mottling, vignette, gradient, shadow, relief, noise, stains, border, or texture of any kind.
+- Remove the sea, coast, river, roads, city, port, forest, fields, islands, labels, symbols, frames, and all other map features completely.
+- Do not leave ghosts or silhouettes of removed map features.
+
+MOUNTAIN INK
+- Retain only the mountain chains as crisp, irregular, hand-engraved dark-sepia linework on the uniform matte.
+- Use nonrepeating ridge crests, broken slope hachures, sparse rock chips, short dry-brush fragments, and open uninked valleys.
+- Mountain marks must be localized to the mountain bodies and their immediate slopes; at least half of the highland area must remain the exact flat matte.
+- Keep ink strokes separated with visible matte gaps. Prefer a sparse professional antique cartographic engraving over dense all-over texture.
+- Preserve a clear hierarchy: primary ridges are strongest, secondary spurs lighter and shorter, tertiary marks sparse.
+- Every ridge and spur must have an open end or natural junction. No closed contours, rings, horseshoes, repeated U/C/S glyphs, blobs, worms, mazes, route-like lines, or parallel wallpaper hatching.
+- No smooth shaded relief, Gaussian blur, airbrush, clouds, camouflage, broad tonal panels, or filled mountain masses.
+
+OUTPUT CONTRACT
+- Full 3:2 raster extraction plate, no transparency required.
+- Exactly two visual materials only: perfectly uniform warm-neutral matte and localized dark-sepia mountain engraving.
+- No text, watermark, legend, border, compass, scale bar, or decorative frame.
+- The result must be easy to segment by subtracting the uniform matte while retaining natural mountain anatomy from 25 percent overview through 400 percent inspection.

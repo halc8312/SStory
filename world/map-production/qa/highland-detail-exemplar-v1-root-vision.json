@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "status": "accepted-as-high-zoom-material-authority",
+  "decision_authority": true,
+  "golden_accepted": false,
+  "reviewer": "Codex Root Vision",
+  "reviewed_at": "2026-07-22",
+  "generated_image_count": 1,
+  "reviewed_image_count": 1,
+  "every_generated_image_reviewed": true,
+  "source": {
+    "path": "world/map-production/style-assets/highland-detail-exemplar-v1.png",
+    "sha256": "c7fcd3da5fba6fe08f10fd1e0fe16bdb2884a0a04386de828f923d660de8f1a2",
+    "bytes": 4222690,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "reference_roles": {
+    "v18": "registered base-map and protected-coordinate authority",
+    "v22": "mountain geometry authority",
+    "v33": "dry engraved mountain material authority"
+  },
+  "decision": {
+    "vision_score": 94,
+    "accepted_for": [
+      "mountain material statistics inside the canonical soaring-mountains mask",
+      "peak-saddle-spur anatomy vocabulary",
+      "dark lee-face hierarchy",
+      "sparse muted-sepia engraving vocabulary"
+    ],
+    "not_accepted_for": [
+      "source geometry or absolute source coordinates",
+      "non-mountain RGB pixels",
+      "roads, cities, fields, water, boundaries, or coastline",
+      "direct Golden promotion",
+      "raw unmasked source transfer"
+    ],
+    "findings": [
+      "The highland reads immediately as a coherent mountain system at native scale.",
+      "Separate mountain bodies, peaks, saddles, branching spurs, and open valleys are present.",
+      "The material uses restrained dark sepia engraving without the white-crack failure of v37.",
+      "There is no obvious rectangular pale plate or all-over cloud field.",
+      "The generated full map contains non-target pixel changes, so every use must discard source geometry and remain inside the canonical target mask.",
+      "The production renderer must prove mask containment and non-target-sheet invariance."
+    ]
+  }
+}

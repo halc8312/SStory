@@ -1,0 +1,40 @@
+{
+  "recorded_at": "2026-07-18",
+  "source_commit": "ea61d15",
+  "viewer": "docs/pages/interactive-map-v2.html",
+  "assets": {
+    "world_image": {
+      "path": "docs/assets/images/maps/world/world-map-hires.jpg",
+      "width": 4096,
+      "height": 2730
+    },
+    "region_image_count": 10,
+    "region_image_width": 1536,
+    "region_image_height": 1024,
+    "continent_detail_count": 1
+  },
+  "data": {
+    "continents": 5,
+    "regions": 14,
+    "nodes": 37,
+    "routes": 33,
+    "hazards": 8,
+    "pois": 31
+  },
+  "verification": {
+    "npm_test": "pass",
+    "desktop_viewport": "1440x1000",
+    "mobile_viewport": "390x844",
+    "browser_console_errors": 0,
+    "screenshots": [
+      "output/playwright/map-v2-baseline-desktop.png",
+      "output/playwright/map-v2-baseline-mobile.png"
+    ]
+  },
+  "known_limitations": [
+    "world and region maps are image overlays rather than XYZ tiles",
+    "region overlay bounds are approximate",
+    "mobile panels overlap the map viewport",
+    "labels and decorative frames are baked into source imagery"
+  ]
+}

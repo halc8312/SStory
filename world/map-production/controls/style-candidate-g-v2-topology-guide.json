@@ -1,0 +1,58 @@
+{
+  "schema_version": "2.0.0",
+  "id": "style-candidate-g-v2-topology-guide",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "background_rgb": [128, 128, 128],
+  "render_contract": {
+    "curve": "closed-uniform-catmull-rom",
+    "samples_per_segment": 24,
+    "minimum_canvas_inset_px": 64,
+    "minimum_shape_gap_px": 24
+  },
+  "shapes": [
+    {
+      "id": "ne-main-massif",
+      "region_id": "north_east_range",
+      "role": "main-massif",
+      "rgb": [206, 74, 62],
+      "knots": [[982,216],[1018,148],[1095,98],[1188,76],[1270,102],[1332,148],[1405,166],[1462,218],[1452,278],[1398,319],[1328,316],[1262,350],[1188,336],[1120,303],[1048,325],[998,280]]
+    },
+    {
+      "id": "ne-west-foothill",
+      "region_id": "north_east_range",
+      "role": "foothill-a",
+      "rgb": [232, 151, 61],
+      "knots": [[790,408],[806,370],[845,344],[885,340],[920,355],[950,388],[942,420],[922,452],[882,472],[844,462],[810,450]]
+    },
+    {
+      "id": "ne-central-foothill",
+      "region_id": "north_east_range",
+      "role": "foothill-b",
+      "rgb": [126, 93, 178],
+      "knots": [[1074,470],[1090,435],[1125,410],[1160,400],[1200,410],[1238,435],[1252,472],[1238,500],[1210,525],[1168,538],[1132,525],[1095,515]]
+    },
+    {
+      "id": "se-main-massif",
+      "region_id": "south_east_range",
+      "role": "main-massif",
+      "rgb": [206, 74, 62],
+      "knots": [[942,824],[970,758],[1040,716],[1122,714],[1186,746],[1238,790],[1278,764],[1310,790],[1324,842],[1308,896],[1272,930],[1228,918],[1174,944],[1108,934],[1042,904],[982,918],[948,874]]
+    },
+    {
+      "id": "se-west-foothill",
+      "region_id": "south_east_range",
+      "role": "foothill-a",
+      "rgb": [232, 151, 61],
+      "knots": [[690,898],[708,860],[742,832],[780,822],[815,835],[852,860],[870,895],[862,925],[834,948],[798,952],[760,944],[730,925],[705,918]]
+    },
+    {
+      "id": "se-east-foothill",
+      "region_id": "south_east_range",
+      "role": "foothill-b",
+      "rgb": [126, 93, 178],
+      "knots": [[1350,850],[1362,800],[1407,770],[1452,780],[1468,820],[1457,865],[1462,910],[1424,945],[1380,930],[1357,890]]
+    }
+  ],
+  "purpose": "Geometry-only G2 conditioning raster. Six complete, detached, 64px-inset closed curves indicate organic plan-view relief footprints; their colors and outer edges are not mountain silhouettes or rendering instructions."
+}

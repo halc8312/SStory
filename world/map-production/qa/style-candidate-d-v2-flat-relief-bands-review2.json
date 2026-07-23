@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-d-v2-flat-relief-bands",
+  "image_path": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands.png",
+  "created_at": "2026-07-18T19:04:48Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 composite inspected independently.", "notes": "Ten conspicuous script-like or scalloped chains replace v1's mountain faces."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Native-size north-east and south-east fields inspected.", "notes": "Dominant near-continuous trajectories are visible without magnification."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Every ridge, hatch field, and road corridor inspected enlarged.", "notes": "Connected arches, teeth, and repeated M-like units breach fragment, hatch, and pseudo-writing rules."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "No new protected-area defect was found."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Ten locations compared with the guide.", "notes": "Topology placement passes; the broad-band and detached-mark grammar fails."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared to D v1 overview and enlarged crops.", "notes": "Large triangular silhouettes improve, but repeated line artifacts replace them."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Outer mask boundaries and road exclusions inspected.", "notes": "No visible seam or cyan control residue."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road and label semantic separation assessed.", "notes": "The scripted lines can be mistaken for text or symbols."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; style board is not staged as tiles.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; style board is not staged as tiles.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "Deterministic composite proves protected geography and roads are exact."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": true, "evidence": "The requested broad low-contrast parchment bands and exact sparse mark counts are absent."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No noncanonical major place appears."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": true, "evidence": "Several connected mmmm-like strings read as pseudo-script at enlarged scale."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No outer, road-strip, or crop seam is visible."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": true, "evidence": "Dense mostly one-sided hachures still imply cliff faces and directional slope."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Continuous dark axis units and touching comb hatches repeat across all ten ridges."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 24, "notes": "Protected geography and ten-chain topology remain correct."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 14, "notes": "Parent structure is continuous despite relief-vocabulary failure."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 14, "notes": "No hard boundary or road-strip seam."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 8, "notes": "Pseudo-writing and one-sided combs are inconsistent."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 7, "notes": "Density is present but concentrated in thin scripted axes."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 4, "notes": "Connected arches and teeth are a dominant repetition artifact."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 7, "notes": "Roads remain primary, while script-like lines compete with labels."}
+  ],
+  "total_score": 78,
+  "decision": "rejected",
+  "summary": "v2 improves the large mountain silhouettes, but all ten ridges fail as continuous pseudo-script centerlines with touching hatches, absent broad tonal bands, and residual side-face cues.",
+  "required_changes": ["Erase only the ten scripted line chains and use a revised control that explicitly shows three detached crest-fragment zones plus one detached hatch zone per ridge."]
+}

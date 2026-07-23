@@ -1,0 +1,167 @@
+{
+  "type": "FeatureCollection",
+  "name": "terrain",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "metadata": {
+    "version": "0.1.0",
+    "status": "provisional",
+    "source": "docs/assets/images/maps/world/world-map-hires.jpg",
+    "purpose": "generation control masks and terrain-density guidance"
+  },
+  "features": [
+    {
+      "type": "Feature", "id": "atlantis_northern_permafrost",
+      "properties": {
+        "id": "atlantis_northern_permafrost", "name": "北方永久凍土",
+        "terrain_type": "tundra_permafrost", "continent_id": "atlantis",
+        "source_confidence": "inferred", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [820, 2250], [1320, 1880], [1940, 2050], [2390, 2540],
+        [2500, 3240], [2150, 3550], [1560, 3420], [1020, 3030], [820, 2250]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "atlantis_iron_range",
+      "properties": {
+        "id": "atlantis_iron_range", "name": "鉄山脈",
+        "terrain_type": "mountain_axis", "continent_id": "atlantis",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "nominal_width": 420,
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "LineString", "coordinates": [
+        [1510, 2400], [1700, 3100], [1660, 3820], [1900, 4480], [1650, 5300], [1410, 6200]
+      ]}
+    },
+    {
+      "type": "Feature", "id": "grimoire_spirit_highlands",
+      "properties": {
+        "id": "grimoire_spirit_highlands", "name": "グリモワール精霊高地",
+        "terrain_type": "arcane_highlands", "continent_id": "grimoire",
+        "source_confidence": "inferred", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3490, 1240], [3970, 970], [4610, 1000], [5320, 1390],
+        [5570, 1930], [5230, 2290], [4590, 2370], [3960, 2180],
+        [3560, 1810], [3490, 1240]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "elysion_moonshadow_forest",
+      "properties": {
+        "id": "elysion_moonshadow_forest", "name": "月影の森",
+        "terrain_type": "temperate_magic_forest", "continent_id": "elysion",
+        "region_id": "moonlit_forest_region", "source_confidence": "canon",
+        "geometry_confidence": "estimated", "review_status": "provisional",
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3020, 3650], [3290, 3440], [3660, 3500], [3890, 3800],
+        [3820, 4200], [3470, 4460], [3150, 4310], [2980, 4000], [3020, 3650]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "elysion_soaring_mountains_axis",
+      "properties": {
+        "id": "elysion_soaring_mountains_axis", "name": "天翔山脈主稜",
+        "terrain_type": "mountain_axis", "continent_id": "elysion",
+        "region_id": "soaring_mountains_region", "source_confidence": "canon",
+        "geometry_confidence": "estimated", "review_status": "provisional",
+        "nominal_width": 260, "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "LineString", "coordinates": [
+        [3180, 3450], [3430, 3290], [3700, 3380], [3900, 3540], [4070, 3830]
+      ]}
+    },
+    {
+      "type": "Feature", "id": "elysion_silver_plains",
+      "properties": {
+        "id": "elysion_silver_plains", "name": "銀の平野",
+        "terrain_type": "temperate_plains", "continent_id": "elysion",
+        "region_id": "silver_plains_region", "source_confidence": "canon",
+        "geometry_confidence": "estimated", "review_status": "provisional",
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3570, 4630], [4100, 4400], [4820, 4490], [5410, 4850],
+        [5480, 5480], [5020, 5920], [4290, 6060], [3730, 5680], [3570, 4630]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "lumiera_emerald_belt_rainforest",
+      "properties": {
+        "id": "lumiera_emerald_belt_rainforest", "name": "エメラルド・ベルト",
+        "terrain_type": "tropical_magic_rainforest", "continent_id": "lumiera",
+        "region_id": "emerald_belt_region", "source_confidence": "canon",
+        "geometry_confidence": "estimated", "review_status": "provisional",
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [6620, 2900], [7200, 2510], [7960, 2580], [8390, 3260],
+        [8420, 4240], [8250, 5400], [7820, 6220], [7230, 6250],
+        [6840, 5570], [6660, 4620], [6620, 2900]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "chaos_ria_red_sea_desert",
+      "properties": {
+        "id": "chaos_ria_red_sea_desert", "name": "紅海砂漠",
+        "terrain_type": "hot_desert", "continent_id": "chaos_ria",
+        "region_id": "red_sea_desert_region", "source_confidence": "canon",
+        "geometry_confidence": "estimated", "review_status": "provisional",
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3310, 6560], [3970, 6330], [4800, 6360], [5520, 6570],
+        [5980, 6990], [6030, 7690], [5700, 8150], [5000, 8320],
+        [4200, 8200], [3550, 7850], [3260, 7240], [3310, 6560]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "chaos_ria_land_of_flame",
+      "properties": {
+        "id": "chaos_ria_land_of_flame", "name": "炎の地",
+        "terrain_type": "volcanic_land", "continent_id": "chaos_ria",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3600, 8200], [4200, 8050], [5000, 8170], [5750, 8500],
+        [5900, 8970], [5480, 9330], [4810, 9500], [4110, 9370],
+        [3650, 9020], [3600, 8200]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "lumiera_arch_island_chain",
+      "properties": {
+        "id": "lumiera_arch_island_chain", "name": "リュミエラ浮島列",
+        "terrain_type": "floating_island_chain", "continent_id": "lumiera",
+        "region_id": "lumiera_arch_region", "source_confidence": "canon",
+        "geometry_confidence": "estimated", "review_status": "provisional",
+        "vertical_layer_id": "middle_sky", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "MultiPolygon", "coordinates": [
+        [[[8760, 2750], [8910, 2670], [9040, 2780], [8980, 2930], [8810, 2940], [8760, 2750]]],
+        [[[9050, 3370], [9210, 3290], [9350, 3420], [9280, 3580], [9110, 3570], [9050, 3370]]],
+        [[[8660, 4430], [8820, 4340], [8950, 4470], [8880, 4630], [8710, 4620], [8660, 4430]]],
+        [[[9200, 5050], [9380, 4970], [9510, 5120], [9420, 5290], [9250, 5260], [9200, 5050]]]
+      ]}
+    },
+    {
+      "type": "Feature", "id": "chaos_ria_sandstorm_gorge_axis",
+      "properties": {
+        "id": "chaos_ria_sandstorm_gorge_axis", "name": "砂嵐峡谷軸",
+        "terrain_type": "gorge_axis", "continent_id": "chaos_ria",
+        "source_confidence": "inferred", "geometry_confidence": "estimated",
+        "review_status": "provisional", "nominal_width": 180,
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "LineString", "coordinates": [
+        [5220, 6850], [5360, 7300], [5480, 7750], [5430, 8250]
+      ]}
+    }
+  ]
+}

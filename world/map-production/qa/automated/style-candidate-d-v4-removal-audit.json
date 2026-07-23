@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-v4-removal-audit",
+  "status": "passed",
+  "base_path": "world/map-production/candidates/style-candidate-d-v2-localized-base.png",
+  "before_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "after_path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+  "control_path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json",
+  "mask_path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.png",
+  "composite_report_path": "world/map-production/qa/automated/style-candidate-d-v4-composite.json",
+  "reviewed_target_count": 44,
+  "automated_components_pre_edit": 40,
+  "reviewed_automated_targets": 39,
+  "automated_route_like_components_post_edit": 0,
+  "preserved_false_positive_components_post_edit": 1,
+  "preserved_false_positive_id": "mark_26",
+  "preserved_false_positive_bbox": [
+    1019,
+    842,
+    9,
+    16
+  ],
+  "masked_false_positive_pixels": 0,
+  "false_positive_changed_pixels": 0,
+  "manual_targets": [
+    {
+      "id": "manual_ne_east_center",
+      "core_pixels": 186,
+      "pre_edit_detected_pixels": 40,
+      "post_edit_detected_pixels": 0
+    },
+    {
+      "id": "manual_se_north",
+      "core_pixels": 186,
+      "pre_edit_detected_pixels": 25,
+      "post_edit_detected_pixels": 0
+    },
+    {
+      "id": "manual_se_under_tree",
+      "core_pixels": 266,
+      "pre_edit_detected_pixels": 1,
+      "post_edit_detected_pixels": 0
+    },
+    {
+      "id": "manual_se_west",
+      "core_pixels": 204,
+      "pre_edit_detected_pixels": 24,
+      "post_edit_detected_pixels": 0
+    },
+    {
+      "id": "manual_se_east",
+      "core_pixels": 232,
+      "pre_edit_detected_pixels": 34,
+      "post_edit_detected_pixels": 0
+    }
+  ],
+  "manual_targets_with_post_edit_detected_pixels": 0,
+  "changed_pixels_inside_reviewed_mask": 33576,
+  "outside_mask_max_channel_difference": 0,
+  "after_sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+  "control_sha256": "6df981917be374637c6d685023e06127db0f9ecb942b52a1f098fd5b749ab407",
+  "mask_sha256": "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c",
+  "composite_report_sha256": "687cf2d8503b8f560c994ade712519f68c82b43ad5e2e804164aa7dddaf16180"
+}

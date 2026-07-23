@@ -1,0 +1,1220 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-v3-mark-mask-v1",
+  "base_path": "world/map-production/candidates/style-candidate-d-v2-localized-base.png",
+  "candidate_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "fragment_guide_path": "world/map-production/controls/style-candidate-d-ridge-fragment-guide-v2.json",
+  "control_path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json",
+  "mask_path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.png",
+  "automated_component_count": 40,
+  "regional_component_counts": {
+    "north_east": 23,
+    "south_east": 17
+  },
+  "role_assignment": "not-claimed-because-v3-does-not-preserve-four-marks-per-ridge",
+  "reviewed_component_allowlist": [
+    "mark_01",
+    "mark_02",
+    "mark_03",
+    "mark_04",
+    "mark_05",
+    "mark_06",
+    "mark_07",
+    "mark_08",
+    "mark_09",
+    "mark_10",
+    "mark_11",
+    "mark_12",
+    "mark_13",
+    "mark_14",
+    "mark_15",
+    "mark_16",
+    "mark_17",
+    "mark_18",
+    "mark_19",
+    "mark_20",
+    "mark_21",
+    "mark_22",
+    "mark_23",
+    "mark_24",
+    "mark_25",
+    "mark_27",
+    "mark_28",
+    "mark_29",
+    "mark_30",
+    "mark_31",
+    "mark_32",
+    "mark_33",
+    "mark_34",
+    "mark_35",
+    "mark_36",
+    "mark_37",
+    "mark_38",
+    "mark_39",
+    "mark_40"
+  ],
+  "reviewed_false_positives": [
+    "mark_26"
+  ],
+  "reviewed_manual_strokes": [
+    {
+      "id": "manual_ne_east_center",
+      "points": [
+        [
+          1434,
+          158
+        ],
+        [
+          1446,
+          143
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-ne-east-source-detail.png"
+    },
+    {
+      "id": "manual_se_north",
+      "points": [
+        [
+          1038,
+          806
+        ],
+        [
+          1054,
+          795
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-se-north-source-detail.png"
+    },
+    {
+      "id": "manual_se_under_tree",
+      "points": [
+        [
+          1014,
+          879
+        ],
+        [
+          1038,
+          864
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-se-under-tree-source-detail.png"
+    },
+    {
+      "id": "manual_se_west",
+      "points": [
+        [
+          836,
+          950
+        ],
+        [
+          851,
+          937
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-839-941-source-detail.png"
+    },
+    {
+      "id": "manual_se_east",
+      "points": [
+        [
+          1359,
+          933
+        ],
+        [
+          1383,
+          936
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-se-east-source-detail.png"
+    }
+  ],
+  "reviewed_target_count": 44,
+  "extraction": {
+    "grayscale": "Pillow-L",
+    "darkening_gaussian_radius_px": 0.8,
+    "darkening_threshold": 24,
+    "local_background_gaussian_radius_px": 5.0,
+    "local_contrast_threshold": 12,
+    "candidate_luminance_maximum": 124,
+    "spatial_gate": [
+      [
+        780,
+        0,
+        1536,
+        420
+      ],
+      [
+        780,
+        760,
+        1536,
+        1024
+      ]
+    ],
+    "connectivity": 8,
+    "area_px": [
+      25,
+      120
+    ],
+    "maximum_bbox_axis_px": [
+      8,
+      45
+    ],
+    "minimum_covariance_eigenvalue_ratio": 8.0
+  },
+  "mask_pixels": 33591,
+  "opaque_mask_pixels": 20410,
+  "reviewed_detected_target_pixels": 1861,
+  "reviewed_detected_target_pixels_without_opaque_core": 0,
+  "masked_false_positive_pixels": 0,
+  "manual_endpoint_core_failures": [],
+  "outside_parent_edit_mask_pixels": 0,
+  "control_sha256": "6df981917be374637c6d685023e06127db0f9ecb942b52a1f098fd5b749ab407",
+  "mask_sha256": "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c",
+  "components": [
+    {
+      "component_id": "mark_01",
+      "bbox": [
+        1147,
+        18,
+        14,
+        9
+      ],
+      "area_px": 37,
+      "centroid": [
+        1153.2973,
+        21.5946
+      ],
+      "covariance_eigenvalue_ratio": 17.93,
+      "centerline_endpoints": [
+        [
+          1159.3785,
+          17.9601
+        ],
+        [
+          1146.7174,
+          25.5272
+        ]
+      ],
+      "minor_sigma_px": 0.949
+    },
+    {
+      "component_id": "mark_02",
+      "bbox": [
+        1196,
+        40,
+        19,
+        8
+      ],
+      "area_px": 54,
+      "centroid": [
+        1204.9815,
+        43.9259
+      ],
+      "covariance_eigenvalue_ratio": 25.7077,
+      "centerline_endpoints": [
+        [
+          1195.9774,
+          41.0713
+        ],
+        [
+          1214.0619,
+          46.8047
+        ]
+      ],
+      "minor_sigma_px": 1.0704
+    },
+    {
+      "component_id": "mark_03",
+      "bbox": [
+        1392,
+        51,
+        18,
+        12
+      ],
+      "area_px": 48,
+      "centroid": [
+        1401.0417,
+        55.875
+      ],
+      "covariance_eigenvalue_ratio": 24.1111,
+      "centerline_endpoints": [
+        [
+          1392.2636,
+          50.5643
+        ],
+        [
+          1409.1374,
+          60.7729
+        ]
+      ],
+      "minor_sigma_px": 1.1616
+    },
+    {
+      "component_id": "mark_04",
+      "bbox": [
+        979,
+        53,
+        15,
+        12
+      ],
+      "area_px": 45,
+      "centroid": [
+        985.3111,
+        57.7556
+      ],
+      "covariance_eigenvalue_ratio": 15.9723,
+      "centerline_endpoints": [
+        [
+          991.8936,
+          52.5901
+        ],
+        [
+          978.8582,
+          62.8193
+        ]
+      ],
+      "minor_sigma_px": 1.2421
+    },
+    {
+      "component_id": "mark_05",
+      "bbox": [
+        1256,
+        54,
+        16,
+        14
+      ],
+      "area_px": 53,
+      "centroid": [
+        1264.0377,
+        59.5849
+      ],
+      "covariance_eigenvalue_ratio": 22.4784,
+      "centerline_endpoints": [
+        [
+          1256.3914,
+          53.5075
+        ],
+        [
+          1271.9164,
+          65.847
+        ]
+      ],
+      "minor_sigma_px": 1.234
+    },
+    {
+      "component_id": "mark_06",
+      "bbox": [
+        1010,
+        77,
+        25,
+        10
+      ],
+      "area_px": 57,
+      "centroid": [
+        1020.9123,
+        80.6316
+      ],
+      "covariance_eigenvalue_ratio": 28.6497,
+      "centerline_endpoints": [
+        [
+          1033.6471,
+          76.8207
+        ],
+        [
+          1009.4224,
+          84.0699
+        ]
+      ],
+      "minor_sigma_px": 1.3511
+    },
+    {
+      "component_id": "mark_07",
+      "bbox": [
+        1055,
+        82,
+        17,
+        10
+      ],
+      "area_px": 51,
+      "centroid": [
+        1063.3725,
+        86.1176
+      ],
+      "covariance_eigenvalue_ratio": 21.4823,
+      "centerline_endpoints": [
+        [
+          1055.4588,
+          82.097
+        ],
+        [
+          1071.4067,
+          90.1994
+        ]
+      ],
+      "minor_sigma_px": 1.1131
+    },
+    {
+      "component_id": "mark_08",
+      "bbox": [
+        1289,
+        90,
+        5,
+        21
+      ],
+      "area_px": 49,
+      "centroid": [
+        1291.3469,
+        101.2653
+      ],
+      "covariance_eigenvalue_ratio": 26.7527,
+      "centerline_endpoints": [
+        [
+          1291.9612,
+          90.0527
+        ],
+        [
+          1290.8629,
+          110.102
+        ]
+      ],
+      "minor_sigma_px": 1.153
+    },
+    {
+      "component_id": "mark_09",
+      "bbox": [
+        976,
+        99,
+        13,
+        11
+      ],
+      "area_px": 37,
+      "centroid": [
+        982.1081,
+        103.5135
+      ],
+      "covariance_eigenvalue_ratio": 13.2159,
+      "centerline_endpoints": [
+        [
+          987.3541,
+          99.2122
+        ],
+        [
+          976.2558,
+          108.312
+        ]
+      ],
+      "minor_sigma_px": 1.1785
+    },
+    {
+      "component_id": "mark_10",
+      "bbox": [
+        1090,
+        99,
+        15,
+        15
+      ],
+      "area_px": 43,
+      "centroid": [
+        1097.8837,
+        106.0465
+      ],
+      "covariance_eigenvalue_ratio": 30.5043,
+      "centerline_endpoints": [
+        [
+          1090.581,
+          98.4421
+        ],
+        [
+          1103.8123,
+          112.22
+        ]
+      ],
+      "minor_sigma_px": 1.0613
+    },
+    {
+      "component_id": "mark_11",
+      "bbox": [
+        1445,
+        98,
+        7,
+        18
+      ],
+      "area_px": 50,
+      "centroid": [
+        1448.24,
+        106.9
+      ],
+      "covariance_eigenvalue_ratio": 18.6616,
+      "centerline_endpoints": [
+        [
+          1446.0408,
+          97.7498
+        ],
+        [
+          1450.1766,
+          114.9576
+        ]
+      ],
+      "minor_sigma_px": 1.1816
+    },
+    {
+      "component_id": "mark_12",
+      "bbox": [
+        1047,
+        111,
+        14,
+        4
+      ],
+      "area_px": 27,
+      "centroid": [
+        1054.2593,
+        112.6667
+      ],
+      "covariance_eigenvalue_ratio": 15.8355,
+      "centerline_endpoints": [
+        [
+          1060.0191,
+          112.2989
+        ],
+        [
+          1047.0083,
+          113.1296
+        ]
+      ],
+      "minor_sigma_px": 0.93
+    },
+    {
+      "component_id": "mark_13",
+      "bbox": [
+        1284,
+        130,
+        10,
+        15
+      ],
+      "area_px": 41,
+      "centroid": [
+        1288.7073,
+        137.122
+      ],
+      "covariance_eigenvalue_ratio": 15.7746,
+      "centerline_endpoints": [
+        [
+          1292.9326,
+          129.9602
+        ],
+        [
+          1284.7399,
+          143.8466
+        ]
+      ],
+      "minor_sigma_px": 1.2084
+    },
+    {
+      "component_id": "mark_14",
+      "bbox": [
+        1472,
+        152,
+        15,
+        10
+      ],
+      "area_px": 32,
+      "centroid": [
+        1478.9062,
+        156.6562
+      ],
+      "covariance_eigenvalue_ratio": 20.9098,
+      "centerline_endpoints": [
+        [
+          1485.6097,
+          152.3871
+        ],
+        [
+          1472.0247,
+          161.0388
+        ]
+      ],
+      "minor_sigma_px": 1.0007
+    },
+    {
+      "component_id": "mark_15",
+      "bbox": [
+        1431,
+        174,
+        16,
+        10
+      ],
+      "area_px": 43,
+      "centroid": [
+        1437.6977,
+        177.907
+      ],
+      "covariance_eigenvalue_ratio": 21.0427,
+      "centerline_endpoints": [
+        [
+          1445.581,
+          173.2853
+        ],
+        [
+          1430.4911,
+          182.1319
+        ]
+      ],
+      "minor_sigma_px": 1.0763
+    },
+    {
+      "component_id": "mark_16",
+      "bbox": [
+        1076,
+        198,
+        17,
+        10
+      ],
+      "area_px": 53,
+      "centroid": [
+        1084.2264,
+        201.5849
+      ],
+      "covariance_eigenvalue_ratio": 21.0149,
+      "centerline_endpoints": [
+        [
+          1091.9574,
+          197.9104
+        ],
+        [
+          1075.8041,
+          205.5879
+        ]
+      ],
+      "minor_sigma_px": 1.1161
+    },
+    {
+      "component_id": "mark_17",
+      "bbox": [
+        1122,
+        199,
+        20,
+        10
+      ],
+      "area_px": 56,
+      "centroid": [
+        1131.8036,
+        202.8571
+      ],
+      "covariance_eigenvalue_ratio": 22.2294,
+      "centerline_endpoints": [
+        [
+          1122.4466,
+          199.6833
+        ],
+        [
+          1141.6155,
+          206.1853
+        ]
+      ],
+      "minor_sigma_px": 1.2191
+    },
+    {
+      "component_id": "mark_18",
+      "bbox": [
+        1160,
+        222,
+        17,
+        13
+      ],
+      "area_px": 57,
+      "centroid": [
+        1169.3158,
+        227.2807
+      ],
+      "covariance_eigenvalue_ratio": 19.7899,
+      "centerline_endpoints": [
+        [
+          1161.0127,
+          220.7186
+        ],
+        [
+          1176.6989,
+          233.1157
+        ]
+      ],
+      "minor_sigma_px": 1.277
+    },
+    {
+      "component_id": "mark_19",
+      "bbox": [
+        1310,
+        261,
+        18,
+        11
+      ],
+      "area_px": 51,
+      "centroid": [
+        1318.7647,
+        265.0196
+      ],
+      "covariance_eigenvalue_ratio": 20.3737,
+      "centerline_endpoints": [
+        [
+          1326.4252,
+          260.9247
+        ],
+        [
+          1309.8773,
+          269.7704
+        ]
+      ],
+      "minor_sigma_px": 1.2332
+    },
+    {
+      "component_id": "mark_20",
+      "bbox": [
+        1360,
+        267,
+        18,
+        11
+      ],
+      "area_px": 52,
+      "centroid": [
+        1368.7115,
+        271.1346
+      ],
+      "covariance_eigenvalue_ratio": 21.9049,
+      "centerline_endpoints": [
+        [
+          1360.4321,
+          266.2653
+        ],
+        [
+          1376.996,
+          276.0068
+        ]
+      ],
+      "minor_sigma_px": 1.2085
+    },
+    {
+      "component_id": "mark_21",
+      "bbox": [
+        1409,
+        299,
+        14,
+        18
+      ],
+      "area_px": 51,
+      "centroid": [
+        1416.0588,
+        307.1765
+      ],
+      "covariance_eigenvalue_ratio": 26.9283,
+      "centerline_endpoints": [
+        [
+          1409.1149,
+          298.9035
+        ],
+        [
+          1422.4461,
+          314.7862
+        ]
+      ],
+      "minor_sigma_px": 1.1897
+    },
+    {
+      "component_id": "mark_22",
+      "bbox": [
+        1438,
+        338,
+        17,
+        10
+      ],
+      "area_px": 48,
+      "centroid": [
+        1445.5417,
+        342.5
+      ],
+      "covariance_eigenvalue_ratio": 21.688,
+      "centerline_endpoints": [
+        [
+          1437.7819,
+          338.4142
+        ],
+        [
+          1453.6069,
+          346.7466
+        ]
+      ],
+      "minor_sigma_px": 1.0976
+    },
+    {
+      "component_id": "mark_23",
+      "bbox": [
+        1494,
+        354,
+        20,
+        6
+      ],
+      "area_px": 52,
+      "centroid": [
+        1502.6731,
+        356.4808
+      ],
+      "covariance_eigenvalue_ratio": 16.447,
+      "centerline_endpoints": [
+        [
+          1512.9511,
+          355.9857
+        ],
+        [
+          1493.9471,
+          356.9011
+        ]
+      ],
+      "minor_sigma_px": 1.2058
+    },
+    {
+      "component_id": "mark_24",
+      "bbox": [
+        1089,
+        812,
+        20,
+        8
+      ],
+      "area_px": 48,
+      "centroid": [
+        1099.8542,
+        815.4792
+      ],
+      "covariance_eigenvalue_ratio": 24.1035,
+      "centerline_endpoints": [
+        [
+          1089.3878,
+          812.5935
+        ],
+        [
+          1108.3267,
+          817.8151
+        ]
+      ],
+      "minor_sigma_px": 1.1802
+    },
+    {
+      "component_id": "mark_25",
+      "bbox": [
+        1215,
+        839,
+        20,
+        6
+      ],
+      "area_px": 54,
+      "centroid": [
+        1224.4815,
+        840.9444
+      ],
+      "covariance_eigenvalue_ratio": 19.5215,
+      "centerline_endpoints": [
+        [
+          1233.9522,
+          839.65
+        ],
+        [
+          1214.8981,
+          842.2543
+        ]
+      ],
+      "minor_sigma_px": 1.2729
+    },
+    {
+      "component_id": "mark_26",
+      "bbox": [
+        1019,
+        842,
+        9,
+        16
+      ],
+      "area_px": 40,
+      "centroid": [
+        1022.65,
+        850.275
+      ],
+      "covariance_eigenvalue_ratio": 10.5339,
+      "centerline_endpoints": [
+        [
+          1019.7399,
+          841.7475
+        ],
+        [
+          1024.8464,
+          856.7112
+        ]
+      ],
+      "minor_sigma_px": 1.4486
+    },
+    {
+      "component_id": "mark_27",
+      "bbox": [
+        1264,
+        850,
+        19,
+        12
+      ],
+      "area_px": 53,
+      "centroid": [
+        1273.7736,
+        854.3774
+      ],
+      "covariance_eigenvalue_ratio": 21.1819,
+      "centerline_endpoints": [
+        [
+          1264.9849,
+          849.2963
+        ],
+        [
+          1282.0593,
+          859.1676
+        ]
+      ],
+      "minor_sigma_px": 1.2425
+    },
+    {
+      "component_id": "mark_28",
+      "bbox": [
+        1127,
+        849,
+        9,
+        13
+      ],
+      "area_px": 35,
+      "centroid": [
+        1131.6857,
+        854.4286
+      ],
+      "covariance_eigenvalue_ratio": 12.2473,
+      "centerline_endpoints": [
+        [
+          1128.2133,
+          848.3113
+        ],
+        [
+          1135.0709,
+          860.3921
+        ]
+      ],
+      "minor_sigma_px": 1.1636
+    },
+    {
+      "component_id": "mark_29",
+      "bbox": [
+        1134,
+        884,
+        9,
+        16
+      ],
+      "area_px": 43,
+      "centroid": [
+        1138.093,
+        891.3488
+      ],
+      "covariance_eigenvalue_ratio": 17.3866,
+      "centerline_endpoints": [
+        [
+          1141.4317,
+          884.2017
+        ],
+        [
+          1134.426,
+          899.199
+        ]
+      ],
+      "minor_sigma_px": 1.1199
+    },
+    {
+      "component_id": "mark_30",
+      "bbox": [
+        1304,
+        885,
+        14,
+        19
+      ],
+      "area_px": 58,
+      "centroid": [
+        1311.3276,
+        893.9483
+      ],
+      "covariance_eigenvalue_ratio": 22.5832,
+      "centerline_endpoints": [
+        [
+          1304.3707,
+          884.7205
+        ],
+        [
+          1317.0096,
+          901.485
+        ]
+      ],
+      "minor_sigma_px": 1.3513
+    },
+    {
+      "component_id": "mark_31",
+      "bbox": [
+        895,
+        913,
+        21,
+        7
+      ],
+      "area_px": 63,
+      "centroid": [
+        905.0794,
+        915.3968
+      ],
+      "covariance_eigenvalue_ratio": 19.177,
+      "centerline_endpoints": [
+        [
+          894.9775,
+          914.1883
+        ],
+        [
+          915.1671,
+          916.6037
+        ]
+      ],
+      "minor_sigma_px": 1.4218
+    },
+    {
+      "component_id": "mark_32",
+      "bbox": [
+        1119,
+        925,
+        13,
+        11
+      ],
+      "area_px": 41,
+      "centroid": [
+        1124.5854,
+        929.9512
+      ],
+      "covariance_eigenvalue_ratio": 14.3811,
+      "centerline_endpoints": [
+        [
+          1130.6696,
+          925.5439
+        ],
+        [
+          1118.5236,
+          934.3423
+        ]
+      ],
+      "minor_sigma_px": 1.1519
+    },
+    {
+      "component_id": "mark_33",
+      "bbox": [
+        1158,
+        938,
+        21,
+        7
+      ],
+      "area_px": 55,
+      "centroid": [
+        1167.9636,
+        940.8
+      ],
+      "covariance_eigenvalue_ratio": 25.6446,
+      "centerline_endpoints": [
+        [
+          1158.1373,
+          939.1714
+        ],
+        [
+          1178.0866,
+          942.4777
+        ]
+      ],
+      "minor_sigma_px": 1.1824
+    },
+    {
+      "component_id": "mark_34",
+      "bbox": [
+        945,
+        940,
+        18,
+        14
+      ],
+      "area_px": 53,
+      "centroid": [
+        954.2075,
+        946.0
+      ],
+      "covariance_eigenvalue_ratio": 27.7428,
+      "centerline_endpoints": [
+        [
+          946.0586,
+          939.643
+        ],
+        [
+          962.4467,
+          952.4274
+        ]
+      ],
+      "minor_sigma_px": 1.1491
+    },
+    {
+      "component_id": "mark_35",
+      "bbox": [
+        1403,
+        951,
+        18,
+        10
+      ],
+      "area_px": 51,
+      "centroid": [
+        1411.8039,
+        954.4706
+      ],
+      "covariance_eigenvalue_ratio": 19.5125,
+      "centerline_endpoints": [
+        [
+          1403.0943,
+          950.7776
+        ],
+        [
+          1420.7383,
+          958.2589
+        ]
+      ],
+      "minor_sigma_px": 1.246
+    },
+    {
+      "component_id": "mark_36",
+      "bbox": [
+        1326,
+        950,
+        15,
+        13
+      ],
+      "area_px": 40,
+      "centroid": [
+        1332.8,
+        955.1
+      ],
+      "covariance_eigenvalue_ratio": 20.6398,
+      "centerline_endpoints": [
+        [
+          1339.774,
+          949.7077
+        ],
+        [
+          1325.6892,
+          960.5981
+        ]
+      ],
+      "minor_sigma_px": 1.1558
+    },
+    {
+      "component_id": "mark_37",
+      "bbox": [
+        1199,
+        958,
+        15,
+        13
+      ],
+      "area_px": 50,
+      "centroid": [
+        1206.7,
+        963.94
+      ],
+      "covariance_eigenvalue_ratio": 19.574,
+      "centerline_endpoints": [
+        [
+          1199.6361,
+          958.2151
+        ],
+        [
+          1213.4668,
+          969.4241
+        ]
+      ],
+      "minor_sigma_px": 1.1986
+    },
+    {
+      "component_id": "mark_38",
+      "bbox": [
+        1107,
+        961,
+        16,
+        13
+      ],
+      "area_px": 44,
+      "centroid": [
+        1113.7273,
+        966.3864
+      ],
+      "covariance_eigenvalue_ratio": 23.4021,
+      "centerline_endpoints": [
+        [
+          1121.4788,
+          960.3326
+        ],
+        [
+          1106.3404,
+          972.1554
+        ]
+      ],
+      "minor_sigma_px": 1.2086
+    },
+    {
+      "component_id": "mark_39",
+      "bbox": [
+        1440,
+        981,
+        18,
+        11
+      ],
+      "area_px": 54,
+      "centroid": [
+        1449.0556,
+        985.4074
+      ],
+      "covariance_eigenvalue_ratio": 21.2517,
+      "centerline_endpoints": [
+        [
+          1440.319,
+          980.4391
+        ],
+        [
+          1457.4618,
+          990.1879
+        ]
+      ],
+      "minor_sigma_px": 1.2246
+    },
+    {
+      "component_id": "mark_40",
+      "bbox": [
+        1370,
+        988,
+        13,
+        7
+      ],
+      "area_px": 32,
+      "centroid": [
+        1375.8438,
+        990.5
+      ],
+      "covariance_eigenvalue_ratio": 13.3272,
+      "centerline_endpoints": [
+        [
+          1381.8828,
+          987.7433
+        ],
+        [
+          1370.0633,
+          993.1386
+        ]
+      ],
+      "minor_sigma_px": 1.0331
+    }
+  ]
+}

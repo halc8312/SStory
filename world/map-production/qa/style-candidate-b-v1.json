@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-b-v1",
+  "image_path": "world/map-production/candidates/style-candidate-b-v1.png",
+  "created_at": "2026-07-18T12:08:00Z",
+  "reviewer": "Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 source inspected with Codex Vision.", "notes": "Coast, delta, forest, mountains, city, port, fields, and floating islands are separated clearly."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Original-resolution PNG inspection.", "notes": "Road casings, river edges, roofs, and field lines remain coherent at native resolution."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Original-detail inspection of city, port, delta, forest, roads, and mountain marks.", "notes": "No pseudo-writing or collapsed micro-detail was found."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Full-frame regional scan.", "notes": "No watermark, signature, frame fragment, or clone cluster was found."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Applicability reviewed: synthetic style board has no canonical control geometry.", "notes": "Production sheets still require numerical overlay checks."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared visually with the supplied legacy world-map style reference.", "notes": "Palette and line language inherit cleanly while improving hierarchy."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Applicability reviewed: no production neighbors exist; all four edges are frame-free.", "notes": "Continuous paper and terrain treatment appears extension-safe."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Negative-space and contrast inspection at city, plain, forest edge, and road junctions.", "notes": "Quiet corridors are visibly better than candidate A; live overlay remains mandatory for production sheets."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed: style candidate is not a production tile set.", "notes": "The v3 viewer will test the selected production master."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed: style candidate is not a production tile set.", "notes": "The v3 viewer will test the selected production master."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "Not applicable to a synthetic style board; no production geometry is claimed."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": false, "evidence": "Every element required by the candidate prompt is present."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "Representative elements are explicitly non-canon and are not used as world geography."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text, fake text, letters, numbers, legend, or compass marks found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No internal patch seam or border found."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "No abrupt internal viewpoint jump; mountain and floating-island symbols remain consistently stylized, though production controls must flatten them further."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": false, "evidence": "No obvious cloned motif cluster found."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 23, "notes": "Strong inheritance from the supplied map; canonical geometry is intentionally not testable on a style board."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 14, "notes": "Palette, paper, and ink density remain compatible with the legacy parent style."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 14, "notes": "Frame-free, evenly lit edges are promising; a production neighbor composite is still required."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 14, "notes": "Very cohesive; mountains and floating islands remain more pictorial than strict plan-view terrain."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 10, "notes": "High useful detail in delta, port, city, fields, and terrain transitions."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 9, "notes": "No major failure or clone pattern; dense mountain symbols deserve production-scale control."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 10, "notes": "Distinct roads, rivers, coast, and quiet label corridors materially improve overlay readiness."}
+  ],
+  "total_score": 94,
+  "decision": "accepted",
+  "summary": "Candidate B reaches the 94-point first-review threshold and is the current leader because roads, rivers, coastline, and label space are clear without losing handcrafted detail. Final golden designation waits for candidate C and a second independent inspection.",
+  "required_changes": []
+}

@@ -1,0 +1,47 @@
+Phase 5 cartographic material atlas v1 — normalized production brief
+
+PROVENANCE NOTICE
+
+This is a post-generation normalized production brief. It is not a verbatim
+raw ImageGen invocation transcript. The exact raw invocation prompt, exact
+model identifier, generation identifier, and generation timestamp were not
+retained. Those absences are recorded explicitly in the adjacent generation
+receipt and must not be inferred from this brief.
+
+INTENDED OUTPUT
+
+Create one unlabeled 1536x1024 landscape RGB PNG that functions as a material
+atlas for a strict orthographic fantasy-map renderer. The image should be a
+continuous copperplate-like field without panels, captions, dividers, border,
+signature, watermark, legend, compass, scale bar, text, or pseudo-text.
+
+MATERIAL VOCABULARY
+
+- Connected overhead forest canopy: irregular merged crowns, branching gaps,
+  fine stipple, varied edge density, olive and restrained sepia ink.
+- Cultivated land: dense hand-drawn field hatching with locally changing
+  direction and spacing; avoid machine-perfect repetition.
+- Wetland: shallow plan-view water and marsh texture, broken reed density and
+  fine horizontal water marks, without scenic depth.
+- Neutral parchment: quiet warm paper grain that tolerates low-strength use.
+- Flat rock hachure: short disconnected direction-neutral ink marks suitable
+  for plan-view geology, never peaks or terrain faces.
+
+STYLE AND HARD EXCLUSIONS
+
+Use warm muted parchment, restrained olive/sepia ink, high local line detail,
+and no lighting model. Exclude perspective, isometric view, façades, side
+faces, cast shadows, directional highlights, mountains as triangles or cones,
+dimensional rock piles, repeated grass-bundle stamps, repeated circular tree
+stamps, modern objects, readable writing, letters, numbers, logos, signatures,
+and watermarks.
+
+POST-GENERATION USE POLICY
+
+The generated image is not accepted as a whole-image style reference. Only the
+five canonical Phase 5 crops and the separate H9-specific high-frequency crop,
+all hash-locked in the adjacent receipt, are approved as source material. The
+H9 crop is approved only for its recorded 0.08-strength inter-canopy gap fill;
+it is not a general Phase 5 material crop. The receipt's rejected zones must
+never be sampled. Any renderer must clip use to a canonical semantic mask, keep
+strength within its own locked limit, and preserve protected geography.

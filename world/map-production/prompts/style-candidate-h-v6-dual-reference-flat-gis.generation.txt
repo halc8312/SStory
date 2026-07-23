@@ -1,0 +1,21 @@
+Use two supplied references with distinct, non-interchangeable roles.
+
+REFERENCE 1 (H5) is the geometry and projection control. Preserve its exact overall composition: open sea, low coastline, branching delta, river paths, forest extent, central circular city footprint, roads, coastal port footprint, fields, flat rocky highland, quiet corridors, and frame-free edges.
+
+REFERENCE 2 (H4) is material and palette reference only. Restore its deep dusty-blue water, warm muted parchment, restrained sepia/olive ink, dark copperplate line richness, local contrast, and high micro-detail. Do not copy H4's pictorial mountains, cliff sides, trees, wall faces, roof faces, shadows, or lighting.
+
+Produce a strict orthographic 2D GIS raster base. Every feature is seen vertically from directly overhead. There is no height axis, camera tilt, object side, roof pitch, façade, cast shadow, directional highlight, or scenic relief.
+
+Correct these H5 defects:
+1. Replace the central domed/towered city treatment with flat concentric boundary lines, irregular overhead street blocks, courtyards, and roof footprints only. Wall and gate circles are plan symbols, never cylinders or towers.
+2. Replace port buildings with varied flat footprint polygons and pier centerlines only. No roof faces, front walls, piles, posts, or shadows.
+3. Replace the broad field of repeated round canopy dots. Forest must read as varied merged overhead canopy patches: irregular branching clusters, stipple, broken ink edges, meaningful gaps, clearings, and several sizes. No identical circular stamps, regular spacing, or polka-dot texture.
+4. Keep the right-side rocky highland flat. Use irregular chips, sparse stipple, short disconnected non-convergent strokes, and direction-neutral mottling only. No triangle, peak, cone, ridge face, contour loop, rosette, highlight side, or shadow side.
+5. Keep coastlines and riverbanks as low plan boundaries. No cliff hatch wall or vertical shore face.
+6. Restore strong but restrained B1/H4 palette continuity and enough macro-contrast that the sea, forest, city, highland, roads, and fields remain distinct at 25% and 50% scale.
+
+At 400% inspection no object may have a light-facing side and dark-facing side. The only tonal change allowed is flat, direction-neutral material density. Preserve major geography and road/river continuity; do not add or remove major features.
+
+Hard exclusions: perspective, isometric or bird's-eye view, 3D relief, visible façades, wall height, towers as cylinders, roof faces, cliff sides, mountain peaks, radial rosettes, repeated triangular symbols, repeated circular canopy stamps, cast shadows, directional lighting, floating islands, text or pseudo-text, letters, numbers, legend, compass, scale bar, frame, border, signature, watermark, logo, modern objects, or new settlements.
+
+Output one coherent 1536x1024 landscape RGB image. It must look like a richly inked historical GIS base, not a miniature landscape illustration.

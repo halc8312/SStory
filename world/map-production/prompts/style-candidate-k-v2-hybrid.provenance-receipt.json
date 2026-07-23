@@ -1,0 +1,358 @@
+{
+  "schema_version": "2.0.0",
+  "id": "style-candidate-k-v2-hybrid-local-repair-provenance",
+  "created_at": "2026-07-20T00:00:00Z",
+  "proof_only": false,
+  "scope": "K1-dominant native full-board proof; localized semantic donors plus <=2px canonical warm linework only.",
+  "builder": {
+    "path": "scripts/map-production/build_style_candidate_k2_hybrid.py",
+    "sha256": "333761820e7ed1167a8b80e6f54a053810e930117ab3a93b4867ad54d7024fa3",
+    "seed": 120260720
+  },
+  "inputs": {
+    "k1_original_source": {
+      "path": "world/map-production/candidates/style-candidate-k-v1-full-board.png",
+      "sha256": "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a"
+    },
+    "k1_geometry_warp_base": {
+      "path": "world/map-production/controls/style-candidate-k-v2-hybrid/k1-geometry-warp-base.png",
+      "sha256": "c21c5c07515f2bcc11d0ab8e613f3a6e52ec407606cb5afac4f5946579e62e9a",
+      "builder_path": "scripts/map-production/build_style_candidate_k2_geometry_warp.py",
+      "builder_sha256": "82bd78966d546d242286e27007a9364b04ba5c5a6963c7575efa5370420c7f92",
+      "report_path": "world/map-production/controls/style-candidate-k-v2-hybrid/k1-geometry-warp-report.json",
+      "report_sha256": "11d76e486ed7feecd41987baa89a53ef72950167730e89d6a048aad22dde5c2d",
+      "role": "seam-free strict-gate geometry base; capital, fields, and highland are byte-identical to K1"
+    },
+    "i1_geometry_control": {
+      "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
+      "sha256": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc"
+    },
+    "b1_reference": {
+      "path": "world/map-production/candidates/style-candidate-b-v1.png",
+      "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "use": "visual palette reference only; no global remap in this proof"
+    },
+    "crop_donors": [
+      {
+        "semantic": "highland",
+        "path": "world/map-production/controls/style-candidate-k-v2-hybrid/highland-calm-v2.png",
+        "sha256": "2ada272aa25955f35e445b2fd98b02e171d47a01c185adddde7bb617f6dac1d8",
+        "crop_xyxy": [
+          930,
+          0,
+          1536,
+          560
+        ]
+      },
+      {
+        "semantic": "fields",
+        "path": "world/map-production/controls/style-candidate-k-v2-hybrid/fields-calm-v2.png",
+        "sha256": "d92ef6322b59197373d142eca89263376a4072acbf8f09718763c5da4b956a6a",
+        "crop_xyxy": [
+          940,
+          470,
+          1536,
+          980
+        ]
+      },
+      {
+        "semantic": "capital",
+        "path": "world/map-production/controls/style-candidate-k-v2-hybrid/capital-organic-v2.png",
+        "sha256": "7cefcbb1cda73e59e97ecfffa44e24684047d9959e41e714f66a6b2c6169f9aa",
+        "crop_xyxy": [
+          640,
+          290,
+          1050,
+          730
+        ]
+      },
+      {
+        "semantic": "capital-wall-gates-only",
+        "path": "world/map-production/controls/style-candidate-k-v2-hybrid/crisp-capital-wall-gates-source.png",
+        "sha256": "9908e9930b91359976f63873796a3fbbec19405d546a7ca655959e1be1eee504"
+      }
+    ],
+    "imagegen_prompt_lineage": [
+      {
+        "role": "full-board local correction plate",
+        "prompt_path": "world/map-production/prompts/style-candidate-k-v2-local-correction-plate.generation.txt",
+        "prompt_sha256": "16c3436e3af856c01c372eefd3c673f205264d55ee844390ed2cf504a7f64b29",
+        "original_generated_source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-9d272741-69d9-49de-a5a8-dc2a1957bf17.png"
+      },
+      {
+        "role": "capital organic crop donor",
+        "prompt_path": "world/map-production/prompts/style-candidate-k-v2-capital-organic-donor.generation.txt",
+        "prompt_sha256": "bf6db9f71fea8c75024a51e165399c002dd612f242367a288b79a7557b6761d0",
+        "original_generated_source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-0924d1c8-0649-436d-bf1e-3c34ba4e9c46.png"
+      },
+      {
+        "role": "highland calm crop donor",
+        "prompt_path": "world/map-production/prompts/style-candidate-k-v2-highland-calm-donor.generation.txt",
+        "prompt_sha256": "8e4597440c25be096fae444a706757b7527dc0c353a67399b711d7a9d5ebd05c",
+        "original_generated_source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-29f01014-1c1f-4151-8852-34e7d310a927.png"
+      },
+      {
+        "role": "fields calm crop donor",
+        "prompt_path": "world/map-production/prompts/style-candidate-k-v2-fields-calm-donor.generation.txt",
+        "prompt_sha256": "5cab7125396709a1dd3328fd18bbe50d525a6264c0fd0a2bc1e6b96e0c90ee12",
+        "original_generated_source_path": "C:/Users/User/.codex/generated_images/019f73a3-3486-71a2-b86e-61ed24072d20/exec-02179799-9450-4946-b965-bdaa80501eed.png"
+      }
+    ],
+    "imagegen_metadata_limits": {
+      "exact_model": "unavailable",
+      "snapshot": "unavailable",
+      "generation_ids": "unavailable",
+      "inference_forbidden": true
+    }
+  },
+  "construction": {
+    "canvas": [
+      1536,
+      1024
+    ],
+    "mode": "RGB",
+    "no_final_board_upscale": true,
+    "imagegen_calls_by_this_builder": 0,
+    "upstream_imagegen_calls_with_verbatim_prompts": 4,
+    "whole_board_synthesis": false,
+    "whole_board_palette_calibration": "gentle spatially fixed affine RGB correction; no CDF/multiset remap",
+    "highland": {
+      "method": "registered crop donor, canonical highland only, 16px smoothstep feather, roads protected",
+      "crop_xyxy": [
+        930,
+        0,
+        1536,
+        560
+      ],
+      "rgb_median_shift": [
+        -7,
+        -4,
+        2
+      ],
+      "permission_pixels": 249619,
+      "changed_pixels": 247906,
+      "maximum_alpha": 0.9200000166893005
+    },
+    "fields": {
+      "method": "registered calm-field donor inside eight exact parcels; no polygon fill; road guard; warm 1px edges",
+      "crop_xyxy": [
+        940,
+        470,
+        1536,
+        980
+      ],
+      "rgb_median_shift": [
+        -10,
+        -10,
+        -10
+      ],
+      "parcels": [
+        {
+          "parcel": 1,
+          "permission_pixels": 13065,
+          "changed_pixels": 13027,
+          "edge_pixels": 1099,
+          "feather_px": 10
+        },
+        {
+          "parcel": 2,
+          "permission_pixels": 13711,
+          "changed_pixels": 13699,
+          "edge_pixels": 1368,
+          "feather_px": 10
+        },
+        {
+          "parcel": 3,
+          "permission_pixels": 12104,
+          "changed_pixels": 12100,
+          "edge_pixels": 1327,
+          "feather_px": 10
+        },
+        {
+          "parcel": 4,
+          "permission_pixels": 9056,
+          "changed_pixels": 8926,
+          "edge_pixels": 1049,
+          "feather_px": 10
+        },
+        {
+          "parcel": 5,
+          "permission_pixels": 14266,
+          "changed_pixels": 14254,
+          "edge_pixels": 1401,
+          "feather_px": 10
+        },
+        {
+          "parcel": 6,
+          "permission_pixels": 9428,
+          "changed_pixels": 9419,
+          "edge_pixels": 874,
+          "feather_px": 10
+        },
+        {
+          "parcel": 7,
+          "permission_pixels": 11512,
+          "changed_pixels": 11465,
+          "edge_pixels": 983,
+          "feather_px": 10
+        },
+        {
+          "parcel": 8,
+          "permission_pixels": 12090,
+          "changed_pixels": 12047,
+          "edge_pixels": 1067,
+          "feather_px": 10
+        }
+      ],
+      "changed_pixels": 98062
+    },
+    "capital": {
+      "method": "organic crop donor inside r132 plus reviewed crisp wall/gates in annulus; northwest bastion excluded",
+      "crop_xyxy": [
+        640,
+        290,
+        1050,
+        730
+      ],
+      "registration": {
+        "source_center_xy": [
+          214.0,
+          216.0
+        ],
+        "source_radius_px": 141.0,
+        "target_center_xy": [
+          202.0,
+          220.0
+        ],
+        "target_radius_px": 138.0,
+        "scale": 0.9787234
+      },
+      "rgb_median_shift": [
+        9,
+        9,
+        9
+      ],
+      "old_displaced_wall_ink_removed_pixels": 523,
+      "organic_inner_pixels": 54693,
+      "crisp_wall_and_gate_pixels": 11090,
+      "northwest_bastion_excluded_pixels": 416,
+      "changed_pixels": 65049,
+      "outer_wall_center_xy": [
+        842,
+        510
+      ],
+      "outer_wall_radius_px": 138,
+      "exact_gate_count": 5,
+      "complete_interior_rings_added": 0,
+      "uniform_radial_spokes_added": 0
+    },
+    "geometry_linework": {
+      "method": "exact <=2px warm road linework only; warped base coast, river, delta, and port remain untouched",
+      "road_outer_line_pixels": 11478,
+      "changed_pixels": 11476,
+      "maximum_line_width_px": 2,
+      "warped_water_and_port_pixels_changed": 0
+    },
+    "local_change_budget_before_style_calibration": {
+      "changed_pixels": 422142,
+      "changed_fraction": 0.26839066,
+      "byte_identical_pixel_fraction": 0.73160934,
+      "outside_allowed_mask_changed_pixels": 0,
+      "outside_allowed_mask_max_channel_delta": 0,
+      "maximum_channel_delta": 158
+    },
+    "style_calibration": {
+      "method": "global full-covariance RGB affine blend followed by restrained local print-detail boost",
+      "spatial_pixel_reassignment": false,
+      "histogram_or_cdf_matching": false,
+      "palette_quantization": false,
+      "color_blend": 0.5,
+      "unsharp_sigma_px": 3.0,
+      "unsharp_amount": 0.4,
+      "source_mean_rgb": [
+        133.515426,
+        122.921034,
+        93.902662
+      ],
+      "target_mean_rgb": [
+        127.759797,
+        118.919413,
+        89.78157
+      ],
+      "rgb_transform_matrix": [
+        [
+          0.861850052,
+          -0.136137718,
+          0.178986805
+        ],
+        [
+          0.213437005,
+          1.387634988,
+          -0.100529962
+        ],
+        [
+          0.250807664,
+          0.23260241,
+          1.637920751
+        ]
+      ]
+    },
+    "final_change_metrics": {
+      "changed_pixels": 1570675,
+      "changed_fraction": 0.99860827,
+      "maximum_channel_delta": 197,
+      "spatial_pixel_reassignment": false
+    }
+  },
+  "masks": {
+    "highland": {
+      "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-highland-edit-mask-v1.png",
+      "sha256": "59402816ee289913d3e3c7134fc2f3301ffc180271dfcc7994ab0f95f12b7d44"
+    },
+    "fields": {
+      "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-fields-edit-mask-v1.png",
+      "sha256": "2fa5471dc6f1cfcaf0201d088f0bd74c4a5fb3b131ed650b6163cbeae7fc6e8a"
+    },
+    "capital": {
+      "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-capital-edit-mask-v1.png",
+      "sha256": "bae4f8e266c646e828b5e3bc49cf072bb2f07032d44b4e3169874cd38ca2041d"
+    },
+    "geometry": {
+      "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-geometry-edit-mask-v1.png",
+      "sha256": "5e98a94f9f35f4c591e8da30247cb7b7078a42f42bfbc8d6aea48ae323acdf8c"
+    },
+    "union": {
+      "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-edit-mask-v1.png",
+      "sha256": "a419fd398e5339c7df26c84c5d130fbc6161f7c8d9981e678234a8c7f1156e16"
+    }
+  },
+  "outputs": {
+    "raw": {
+      "path": "world/map-production/candidates/style-candidate-k-v2-hybrid-raw.png",
+      "sha256": "25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92",
+      "bytes": 3881004
+    },
+    "review_candidate": {
+      "path": "world/map-production/candidates/style-candidate-k-v2-hybrid.png",
+      "sha256": "25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92",
+      "bytes": 3881004,
+      "raw_byte_identity": true
+    }
+  },
+  "assertions": {
+    "k1_geometry_warp_is_byte_source_base": true,
+    "donors_confined_to_named_masks": true,
+    "no_broad_water_or_land_projection": true,
+    "no_cloudy_low_frequency_synthesis": true,
+    "no_global_cdf_or_multiset_palette_mapping": true,
+    "style_calibration_has_no_spatial_pixel_reassignment": true,
+    "maximum_canonical_line_width_px": 2,
+    "exact_field_parcel_count": 8,
+    "capital_exact_outer_wall_and_five_gates": true,
+    "manifest_untouched": true,
+    "docs_untouched": true,
+    "renderer_untouched": true,
+    "golden_accepted": false
+  },
+  "promotion_state": "review-only-pending-strict-audit-and-root-vision"
+}

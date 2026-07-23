@@ -1,0 +1,22 @@
+SStory Candidate H13 — one-change forest material refinement.
+
+Reference roles:
+
+1. H12 is authoritative for the entire map: coastline, islands, rivers, delta, roads, fields, city, port, flat highland hachures, palette, projection, feature positions, and the successful removal of triangular/conical terrain glyphs.
+2. H11 is a reference only for fine-grained copperplate information density and calibrated B1-family colour. Never copy its repeated triangular/conical tree or terrain glyphs.
+
+Make one conceptual change only: replace H12's visibly large round, oval, lozenge, coin-like, or cookie-like forest canopy units with a much finer, irregular, connected, non-repeating engraved forest material.
+
+Forest requirements:
+
+- preserve exactly the H12 forest envelopes, clearings, coastlines, water channels, roads, city, port, fields, and highlands;
+- use interlocking branching foliage clusters, broken organic edges, variable clearings, stipple, cross-hatching, tiny irregular leaf masses, and short curved strokes;
+- distribute fine local contrast throughout the forest so the map remains informative at 50% and 25%;
+- no discrete circular crowns, lozenges, identical blobs, rows, grid, stamp cadence, isolated tree icons, trunks, triangular/conical symbols, directional highlights, or cast shadows;
+- equal tone on all sides and exact 90-degree plan view.
+
+Keep H12's flat non-triangular highland vocabulary unchanged. Keep the successful palette near B1: deep slate-blue water, warm ochre parchment, dark olive forest, restrained umber ink. Preserve the H12 city and port as flat footprint plans and keep clean road/river corridors.
+
+Hard prohibitions: perspective, 3D, scenic mountains, triangular peaks, cliffs, floating islands, side faces, roofs, facades, trunks, directional lighting, atmospheric perspective, text, pseudo-writing, labels, watermark, frame, legend, compass, cartouche, repeated motif, seam, blur, or upscale softness.
+
+Return one borderless 1536 x 1024 RGB image.

@@ -1,0 +1,284 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-protected-control.schema.json",
+  "title": "SStory Phase 5 protected metatile control",
+  "description": "Hash-locked authoritative controls consumed by the deterministic Phase 5 protected compositor. Unknown pixels may never retain raw ImageGen output and must fall back to the parent context.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "generated_by",
+    "sheet_id",
+    "column",
+    "row",
+    "dimensions",
+    "visual_geometry_control",
+    "parent_context",
+    "prior_neighbor_contexts",
+    "land_sea",
+    "transport",
+    "detail",
+    "unknown_fallback",
+    "source_inputs"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-protected-control.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "type": {
+      "const": "sstory-phase5-protected-metatile-control"
+    },
+    "coordinate_reference_system": {
+      "const": "EA-WORLD-1"
+    },
+    "generated_by": {
+      "const": "sstory-map-production/render_phase5_metatile_controls.py@1"
+    },
+    "sheet_id": {
+      "$ref": "#/definitions/id"
+    },
+    "column": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "row": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "dimensions": {
+      "$ref": "#/definitions/dimensions"
+    },
+    "visual_geometry_control": {
+      "$ref": "#/definitions/rgb_image"
+    },
+    "parent_context": {
+      "$ref": "#/definitions/rgb_image"
+    },
+    "prior_neighbor_contexts": {
+      "type": "array",
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/prior_context"
+      }
+    },
+    "land_sea": {
+      "$ref": "#/definitions/land_sea"
+    },
+    "transport": {
+      "$ref": "#/definitions/transport"
+    },
+    "detail": {
+      "$ref": "#/definitions/detail"
+    },
+    "unknown_fallback": {
+      "$ref": "#/definitions/unknown_fallback"
+    },
+    "source_inputs": {
+      "$ref": "#/definitions/source_inputs"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "dimensions": {
+      "type": "object",
+      "required": ["width", "height", "format"],
+      "properties": {
+        "width": {"const": 2048},
+        "height": {"const": 2048},
+        "format": {"const": "PNG"}
+      },
+      "additionalProperties": false
+    },
+    "rgb_image": {
+      "type": "object",
+      "required": ["path", "sha256", "width", "height", "format", "color_mode"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "width": {"const": 2048},
+        "height": {"const": 2048},
+        "format": {"const": "PNG"},
+        "color_mode": {"const": "RGB"}
+      },
+      "additionalProperties": false
+    },
+    "mask_image": {
+      "type": "object",
+      "required": ["path", "sha256", "width", "height", "format", "color_mode"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "width": {"const": 2048},
+        "height": {"const": 2048},
+        "format": {"const": "PNG"},
+        "color_mode": {"const": "L"}
+      },
+      "additionalProperties": false
+    },
+    "position": {
+      "type": "object",
+      "required": ["column", "row"],
+      "properties": {
+        "column": {"type": "integer", "minimum": 0},
+        "row": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "prior_context": {
+      "type": "object",
+      "required": ["direction", "source_tile", "context"],
+      "properties": {
+        "direction": {"enum": ["north", "west"]},
+        "source_tile": {"$ref": "#/definitions/position"},
+        "context": {"$ref": "#/definitions/rgb_image"}
+      },
+      "additionalProperties": false
+    },
+    "partition": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "pixel_count",
+        "land_pixel_count",
+        "water_pixel_count",
+        "unknown_pixel_count",
+        "overlap_pixel_count",
+        "unclassified_pixel_count"
+      ],
+      "properties": {
+        "algorithm": {"const": "canon-land-water-unknown-partition-v1"},
+        "pixel_count": {"const": 4194304},
+        "land_pixel_count": {"type": "integer", "minimum": 0, "maximum": 4194304},
+        "water_pixel_count": {"type": "integer", "minimum": 0, "maximum": 4194304},
+        "unknown_pixel_count": {"type": "integer", "minimum": 0, "maximum": 4194304},
+        "overlap_pixel_count": {"const": 0},
+        "unclassified_pixel_count": {"const": 0}
+      },
+      "additionalProperties": false
+    },
+    "land_sea": {
+      "type": "object",
+      "required": [
+        "land_mask",
+        "water_mask",
+        "known_mask",
+        "unknown_mask",
+        "authoritative_overlay",
+        "partition"
+      ],
+      "properties": {
+        "land_mask": {"$ref": "#/definitions/mask_image"},
+        "water_mask": {"$ref": "#/definitions/mask_image"},
+        "known_mask": {"$ref": "#/definitions/mask_image"},
+        "unknown_mask": {"$ref": "#/definitions/mask_image"},
+        "authoritative_overlay": {"$ref": "#/definitions/rgb_image"},
+        "partition": {"$ref": "#/definitions/partition"}
+      },
+      "additionalProperties": false
+    },
+    "transport": {
+      "type": "object",
+      "required": ["mask", "authoritative_overlay", "feature_ids", "rasterization"],
+      "properties": {
+        "mask": {"$ref": "#/definitions/mask_image"},
+        "authoritative_overlay": {"$ref": "#/definitions/rgb_image"},
+        "feature_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/id"}
+        },
+        "rasterization": {
+          "const": "source-lines-global-native-grid-v1"
+        }
+      },
+      "additionalProperties": false
+    },
+    "detail": {
+      "type": "object",
+      "required": ["status", "mask", "authoritative_overlay", "feature_ids", "provenance"],
+      "properties": {
+        "status": {"const": "explicit-empty"},
+        "mask": {"$ref": "#/definitions/mask_image"},
+        "authoritative_overlay": {"$ref": "#/definitions/rgb_image"},
+        "feature_ids": {"const": []},
+        "provenance": {
+          "const": "No reviewed raster-safe detail exists; provisional outlines remain guide-only and labels/POIs remain vector data."
+        }
+      },
+      "additionalProperties": false
+    },
+    "unknown_fallback": {
+      "type": "object",
+      "required": ["policy", "mask", "source"],
+      "properties": {
+        "policy": {"const": "replace-raw-with-parent-context"},
+        "mask": {"$ref": "#/definitions/mask_image"},
+        "source": {"$ref": "#/definitions/rgb_image"}
+      },
+      "additionalProperties": false
+    },
+    "source_artifact": {
+      "type": "object",
+      "required": ["role", "path", "sha256"],
+      "properties": {
+        "role": {
+          "enum": [
+            "landmasses",
+            "regions",
+            "terrain",
+            "hydrography",
+            "settlement-footprints",
+            "transport-geometries"
+          ]
+        },
+        "path": {"$ref": "#/definitions/path"},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "source_inputs": {
+      "type": "object",
+      "required": ["resolution_contract", "map_sheets", "canon_sources"],
+      "properties": {
+        "resolution_contract": {"$ref": "#/definitions/artifact"},
+        "map_sheets": {"$ref": "#/definitions/artifact"},
+        "canon_sources": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/source_artifact"}
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

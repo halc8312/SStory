@@ -1,0 +1,664 @@
+{
+  "schema": "k3-v52-imagegen-control-atlas-recipe-v1",
+  "status": "accepted-as-persistent-control-and-hermetic-replay-authority",
+  "authority_inventory_complete": true,
+  "guide": {
+    "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+    "sha256": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "png_count_emitted_by_recipe": 1
+  },
+  "canonical_body_control": {
+    "status": "accepted-as-hermetic-replay-authority",
+    "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+    "sha256": "7527b0be4d7a042c5fd33e499b96806bcbbd6a1b614086c7c0fbdf308b83666b",
+    "bytes": 6154,
+    "width": 1536,
+    "height": 1024,
+    "mode": "L",
+    "background_value": 0,
+    "body_values_in_order": [32, 64, 96, 128, 160, 192, 224, 255],
+    "anti_alias": false,
+    "union_pixels": 86603,
+    "union_sha256_uint8": "46de962497e114d0d822ef70422c2628188a6c50c2fa73376e16f7af41f805e2"
+  },
+  "historical_v49_source": {
+    "sha256": "d16dc6f2fd48285063e970a8f1def1749b70843bc41912b4ab357921c0f2e711",
+    "not_replay_authority": true
+  },
+  "extraction": {
+    "operator": "normalized Gaussian(L, permission, sigma40) minus sigma2.5",
+    "threshold": 3.5,
+    "morphology": [
+      "close disk7",
+      "open disk3"
+    ],
+    "selection": "area>=3000 plus one 250px small component in x1200..1320/y450..500",
+    "contours": "RETR_EXTERNAL + CHAIN_APPROX_NONE; filled; no polygon approximation or convex hull",
+    "partition_seeds": "frozen OpenCV component centroids in label order; atlas cells are their deterministic Voronoi-equivalent one-body partitions",
+    "permission_pixels": 241773,
+    "fully_editable_pixels": 233333,
+    "threshold_region_pixels": 229467,
+    "selected_labels": [
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "source_components": [
+      {
+        "source_label": 3,
+        "segmented_area_px": 12370,
+        "source_centroid_xy": [
+          1297.806386418755,
+          105.72142279708973
+        ],
+        "source_bbox_xywh": [
+          1230,
+          26,
+          123,
+          164
+        ],
+        "source_chain_approx_none_points": 465
+      },
+      {
+        "source_label": 4,
+        "segmented_area_px": 11618,
+        "source_centroid_xy": [
+          1434.900671372009,
+          127.60122224134963
+        ],
+        "source_bbox_xywh": [
+          1375,
+          41,
+          119,
+          178
+        ],
+        "source_chain_approx_none_points": 457
+      },
+      {
+        "source_label": 6,
+        "segmented_area_px": 11142,
+        "source_centroid_xy": [
+          1218.388888888889,
+          240.82130676718722
+        ],
+        "source_bbox_xywh": [
+          1146,
+          173,
+          126,
+          144
+        ],
+        "source_chain_approx_none_points": 392
+      },
+      {
+        "source_label": 7,
+        "segmented_area_px": 15929,
+        "source_centroid_xy": [
+          1396.915813924289,
+          272.67530918450626
+        ],
+        "source_bbox_xywh": [
+          1299,
+          194,
+          207,
+          154
+        ],
+        "source_chain_approx_none_points": 669
+      },
+      {
+        "source_label": 8,
+        "segmented_area_px": 13473,
+        "source_centroid_xy": [
+          1134.8335931121503,
+          370.557188450976
+        ],
+        "source_bbox_xywh": [
+          1059,
+          293,
+          145,
+          160
+        ],
+        "source_chain_approx_none_points": 565
+      },
+      {
+        "source_label": 9,
+        "segmented_area_px": 10915,
+        "source_centroid_xy": [
+          1285.543197434723,
+          386.00082455336695
+        ],
+        "source_bbox_xywh": [
+          1217,
+          312,
+          127,
+          142
+        ],
+        "source_chain_approx_none_points": 456
+      },
+      {
+        "source_label": 10,
+        "segmented_area_px": 9379,
+        "source_centroid_xy": [
+          1427.5025055976116,
+          418.48331378611795
+        ],
+        "source_bbox_xywh": [
+          1369,
+          358,
+          129,
+          111
+        ],
+        "source_chain_approx_none_points": 389
+      },
+      {
+        "source_label": 11,
+        "segmented_area_px": 856,
+        "source_centroid_xy": [
+          1281.266355140187,
+          471.1950934579439
+        ],
+        "source_bbox_xywh": [
+          1241,
+          456,
+          86,
+          30
+        ],
+        "source_chain_approx_none_points": 174,
+        "tiny_body_repair": {
+          "source_to_repaired_affine": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.799999952316,
+              -376.956085205078
+            ]
+          ],
+          "vertical_scale_about_component_centroid": 1.8,
+          "morph_close_radius_px": 2,
+          "dilate_radius_px": 3
+        }
+      }
+    ],
+    "repaired_union_pixels": 86603,
+    "repaired_union_sha256_uint8": "46de962497e114d0d822ef70422c2628188a6c50c2fa73376e16f7af41f805e2"
+  },
+  "layout": {
+    "grid": [
+      4,
+      2
+    ],
+    "cell_size": [
+      360,
+      440
+    ],
+    "outer_margin_xy": [
+      24,
+      48
+    ],
+    "gap_xy": [
+      16,
+      48
+    ],
+    "fit_box_wh": [
+      280,
+      320
+    ],
+    "background": "deterministic quiet parchment; no text, labels, cell rules, frame, or semantic marks",
+    "silhouette_fill_rgb": [
+      181,
+      147,
+      91
+    ],
+    "silhouette_outline_rgb": [
+      96,
+      70,
+      38
+    ]
+  },
+  "bodies": [
+    {
+      "body_id": "body-01",
+      "canonical_control_value": 32,
+      "source_label": 3,
+      "source_mask_pixels": 12370,
+      "source_mask_sha256_uint8": "22411dccde51d280322d6357bf3bfd7103c83316df75d5e153c4d4628e573d94",
+      "source_bbox_xywh": [
+        1230,
+        26,
+        123,
+        164
+      ],
+      "cell_xywh": [
+        24,
+        48,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 47088,
+      "atlas_mask_sha256_uint8": "f76557f9b2ad8a05e7ad3eaa27fa5a48075f6277ef4fa68509a95e898bf1ca77",
+      "atlas_bbox_xywh": [
+        71,
+        111,
+        240,
+        320
+      ],
+      "atlas_chain_approx_none_points": 1103,
+      "source_to_atlas_affine": [
+        [
+          1.951219512195,
+          0.0,
+          -2328.805144231717
+        ],
+        [
+          0.0,
+          1.951219512195,
+          61.214296981288
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.5125,
+          -0.0,
+          1193.512636418755
+        ],
+        [
+          -0.0,
+          0.5125,
+          -31.37232720291
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    },
+    {
+      "body_id": "body-02",
+      "canonical_control_value": 64,
+      "source_label": 4,
+      "source_mask_pixels": 11618,
+      "source_mask_sha256_uint8": "f528cfa39a95ea1f49c9cefaa35848f7ce7bb9b0939eab325501aabfd04f2f0e",
+      "source_bbox_xywh": [
+        1375,
+        41,
+        119,
+        178
+      ],
+      "cell_xywh": [
+        400,
+        48,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 37563,
+      "atlas_mask_sha256_uint8": "5cd616fedd437bb8f1771eb30c8899a34baef79d77525297e0da73259014da0a",
+      "atlas_bbox_xywh": [
+        471,
+        111,
+        214,
+        320
+      ],
+      "atlas_chain_approx_none_points": 997,
+      "source_to_atlas_affine": [
+        [
+          1.797752808989,
+          0.0,
+          -2000.096712578892
+        ],
+        [
+          0.0,
+          1.797752808989,
+          38.104544285214
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.55625,
+          -0.0,
+          1112.553796372009
+        ],
+        [
+          -0.0,
+          0.55625,
+          -21.19565275865
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    },
+    {
+      "body_id": "body-03",
+      "canonical_control_value": 96,
+      "source_label": 6,
+      "source_mask_pixels": 11142,
+      "source_mask_sha256_uint8": "5c7219a4a67dd2be266011791b7ff04e2c19e996088ebd39c61760ab0e9240c9",
+      "source_bbox_xywh": [
+        1146,
+        173,
+        126,
+        144
+      ],
+      "cell_xywh": [
+        776,
+        48,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 55026,
+      "atlas_mask_sha256_uint8": "5c8deb151b1856068432e10cbe0b305ef659ba2828f5e304812eb71f7b163a12",
+      "atlas_bbox_xywh": [
+        794,
+        116,
+        280,
+        320
+      ],
+      "atlas_chain_approx_none_points": 1080,
+      "source_to_atlas_affine": [
+        [
+          2.222222222222,
+          0.0,
+          -1752.030864197531
+        ],
+        [
+          0.0,
+          2.222222222222,
+          -267.658459482638
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.45,
+          -0.0,
+          788.413888888889
+        ],
+        [
+          -0.0,
+          0.45,
+          120.446306767187
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    },
+    {
+      "body_id": "body-04",
+      "canonical_control_value": 128,
+      "source_label": 7,
+      "source_mask_pixels": 15929,
+      "source_mask_sha256_uint8": "b3ff40a24077abb168a1490a1b23b8841d024243ec201a3833799bc8c7d38d81",
+      "source_bbox_xywh": [
+        1299,
+        194,
+        207,
+        154
+      ],
+      "cell_xywh": [
+        1152,
+        48,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 29142,
+      "atlas_mask_sha256_uint8": "1c91ead3c485dc2011c8092ba3f032ec4599349d6ece72751602a083e1b9ba81",
+      "atlas_bbox_xywh": [
+        1199,
+        161,
+        280,
+        208
+      ],
+      "atlas_chain_approx_none_points": 1009,
+      "source_to_atlas_affine": [
+        [
+          1.352657004831,
+          0.0,
+          -558.047960863773
+        ],
+        [
+          0.0,
+          1.352657004831,
+          -101.336167012859
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.739285714286,
+          -0.0,
+          412.55688535286
+        ],
+        [
+          -0.0,
+          0.739285714286,
+          74.916380613078
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    },
+    {
+      "body_id": "body-05",
+      "canonical_control_value": 160,
+      "source_label": 8,
+      "source_mask_pixels": 13473,
+      "source_mask_sha256_uint8": "b28ce325cc9a0abffafa3c4d4cf94bb85b468973fbef972cc2f082148f657ccd",
+      "source_bbox_xywh": [
+        1059,
+        293,
+        145,
+        160
+      ],
+      "cell_xywh": [
+        24,
+        536,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 50265,
+      "atlas_mask_sha256_uint8": "f3ff955c9b9ef79602328b417eedd2230e804f58f4c18a01d40e4536081ca18d",
+      "atlas_bbox_xywh": [
+        57,
+        605,
+        280,
+        309
+      ],
+      "atlas_chain_approx_none_points": 1339,
+      "source_to_atlas_affine": [
+        [
+          1.931034482759,
+          0.0,
+          -1987.902800492428
+        ],
+        [
+          0.0,
+          1.931034482759,
+          39.941291267081
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.517857142857,
+          -0.0,
+          1029.449664540722
+        ],
+        [
+          -0.0,
+          0.517857142857,
+          -20.683882977595
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    },
+    {
+      "body_id": "body-06",
+      "canonical_control_value": 192,
+      "source_label": 9,
+      "source_mask_pixels": 10915,
+      "source_mask_sha256_uint8": "6e2dcb974dfb2596c861916719c637df70b5a16095527abcaa9dba4f377f545a",
+      "source_bbox_xywh": [
+        1217,
+        312,
+        127,
+        142
+      ],
+      "cell_xywh": [
+        400,
+        536,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 53057,
+      "atlas_mask_sha256_uint8": "777ed41af12afaafcfe669d2a5457ec2dafe4645bf422e69bd1399abca5683e5",
+      "atlas_bbox_xywh": [
+        428,
+        592,
+        280,
+        313
+      ],
+      "atlas_chain_approx_none_points": 1246,
+      "source_to_atlas_affine": [
+        [
+          2.204724409449,
+          0.0,
+          -2254.768466785216
+        ],
+        [
+          0.0,
+          2.204724409449,
+          -95.525439960179
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.453571428571,
+          -0.0,
+          1022.69855457758
+        ],
+        [
+          -0.0,
+          0.453571428571,
+          43.327610267653
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    },
+    {
+      "body_id": "body-07",
+      "canonical_control_value": 224,
+      "source_label": 10,
+      "source_mask_pixels": 9379,
+      "source_mask_sha256_uint8": "df6ef1892510bf62dc55d46fbe25b365e16d9ec194284245341ebcc712ea0bc9",
+      "source_bbox_xywh": [
+        1369,
+        358,
+        129,
+        111
+      ],
+      "cell_xywh": [
+        776,
+        536,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 44230,
+      "atlas_mask_sha256_uint8": "c3c0aa71a6089d5576a0e3fa8e058df1e0cd4c03f6e8b5de360e4b89c9c12152",
+      "atlas_bbox_xywh": [
+        828,
+        624,
+        280,
+        241
+      ],
+      "atlas_chain_approx_none_points": 1041,
+      "source_to_atlas_affine": [
+        [
+          2.170542635659,
+          0.0,
+          -2142.955050909544
+        ],
+        [
+          0.0,
+          2.170542635659,
+          -152.835874884597
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.460714285714,
+          -0.0,
+          987.290005597612
+        ],
+        [
+          -0.0,
+          0.460714285714,
+          70.413670928975
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    },
+    {
+      "body_id": "body-08",
+      "canonical_control_value": 255,
+      "source_label": 11,
+      "source_mask_pixels": 1777,
+      "source_mask_sha256_uint8": "f48bab150218955f5680545bb127e388bc3daf951d4221bb1de29f062840ba1f",
+      "source_bbox_xywh": [
+        1238,
+        441,
+        92,
+        47
+      ],
+      "cell_xywh": [
+        1152,
+        536,
+        360,
+        440
+      ],
+      "atlas_mask_pixels": 16504,
+      "atlas_mask_sha256_uint8": "a63e5573e19746c91b0907edac161f02713b5050bb79b0f4f2a61fc189c9c3bc",
+      "atlas_bbox_xywh": [
+        1181,
+        678,
+        280,
+        143
+      ],
+      "atlas_chain_approx_none_points": 798,
+      "source_to_atlas_affine": [
+        [
+          3.04347826087,
+          0.0,
+          -2585.550720559811
+        ],
+        [
+          0.0,
+          3.04347826087,
+          -662.971532382374
+        ]
+      ],
+      "atlas_to_source_affine": [
+        [
+          0.328571428571,
+          -0.0,
+          849.538093898223
+        ],
+        [
+          -0.0,
+          0.328571428571,
+          217.833503497066
+        ]
+      ],
+      "resampling": "OpenCV INTER_NEAREST"
+    }
+  ],
+  "validation": {
+    "source_body_count": 8,
+    "atlas_body_count": 8,
+    "source_bodies_separated": true,
+    "atlas_bodies_separated": true,
+    "affine_inverse_recorded_per_body": true,
+    "atlas_union_pixels": 332875,
+    "atlas_union_sha256_uint8": "6fffc12d2d6d50f6c5e963749a3451e6d9c650a640dae82e05bc1b79c927f806"
+  }
+}

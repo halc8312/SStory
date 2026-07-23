@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "type": "sstory-xyz-raster",
+  "generated_by": "sstory-map-production/generate_tiles.py@1",
+  "generated_at": "2026-07-18T15:45:07Z",
+  "map_id": "eternal-arcadia-world",
+  "scheme": "xyz",
+  "format": "webp",
+  "tile_size": 512,
+  "minzoom": 0,
+  "maxzoom": 3,
+  "native_zoom": 3,
+  "tiles": [
+    "{z}/{x}/{y}.webp"
+  ],
+  "coordinate_reference_system": "EA-WORLD-1",
+  "coordinate_system": "EA-WORLD-1",
+  "bounds": [
+    0.0,
+    0.0,
+    10000.0,
+    10000.0
+  ],
+  "master": {
+    "path": "docs/assets/images/maps/world/world-map-hires.jpg",
+    "sha256": "cf3b089896cc3922cd4d34769220979a7b972d8aaaedfcb2b0ff83597d125a5c",
+    "width": 4096,
+    "height": 2730,
+    "mode": "RGBA"
+  },
+  "encoding": {
+    "quality": 88,
+    "lossless": false,
+    "background": "#00000000"
+  },
+  "levels": [
+    {
+      "zoom": 0,
+      "width": 512,
+      "height": 342,
+      "columns": 1,
+      "rows": 1,
+      "tile_count": 1
+    },
+    {
+      "zoom": 1,
+      "width": 1024,
+      "height": 683,
+      "columns": 2,
+      "rows": 2,
+      "tile_count": 4
+    },
+    {
+      "zoom": 2,
+      "width": 2048,
+      "height": 1365,
+      "columns": 4,
+      "rows": 3,
+      "tile_count": 12
+    },
+    {
+      "zoom": 3,
+      "width": 4096,
+      "height": 2730,
+      "columns": 8,
+      "rows": 6,
+      "tile_count": 48
+    }
+  ],
+  "tile_count": 65,
+  "tile_set_sha256": "0ac8c1f1b936e9f558c208a7140121d87ba321af985ef24aa5aa985f15b01cee"
+}

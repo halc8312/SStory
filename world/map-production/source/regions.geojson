@@ -1,0 +1,230 @@
+{
+  "type": "FeatureCollection",
+  "name": "regions",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "metadata": {
+    "version": "0.1.0",
+    "status": "provisional",
+    "geometry_role": "overlapping production work areas, not political borders",
+    "source": "world/map-data/data/regions.json",
+    "placement_sources": [
+      "world/map-data/data/pixel-mapping.json",
+      "docs/assets/images/maps/world/world-map-hires.jpg"
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature", "id": "royal_capital_region",
+      "properties": {
+        "id": "royal_capital_region", "name": "王都地方",
+        "continent_id": "elysion", "region_type": "capital_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5000, 5000, 0],
+        "map_anchor": [4153.6, 3759.7],
+        "source_ref": "world/map-data/data/regions.json#royal_capital_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3740, 3450], [4200, 3320], [4680, 3470], [4920, 3820],
+        [4770, 4200], [4300, 4380], [3900, 4230], [3680, 3850], [3740, 3450]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "silver_plains_region",
+      "properties": {
+        "id": "silver_plains_region", "name": "銀の平野",
+        "continent_id": "elysion", "region_type": "agricultural_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5200, 5500, 0],
+        "map_anchor": [4459.7, 4492.3],
+        "source_ref": "world/map-data/data/regions.json#silver_plains_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3650, 4440], [4200, 4250], [4870, 4380], [5480, 4770],
+        [5590, 5440], [5100, 6010], [4310, 6170], [3720, 5720], [3650, 4440]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "soaring_mountains_region",
+      "properties": {
+        "id": "soaring_mountains_region", "name": "天翔山脈",
+        "continent_id": "elysion", "region_type": "mountain_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [4800, 4800, 500],
+        "map_anchor": [3540, 3480],
+        "source_ref": "world/map-data/data/regions.json#soaring_mountains_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3040, 3370], [3480, 3160], [3970, 3280], [4210, 3590],
+        [4020, 3950], [3640, 4110], [3270, 3940], [3030, 3660], [3040, 3370]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "moonlit_forest_region",
+      "properties": {
+        "id": "moonlit_forest_region", "name": "月影の森",
+        "continent_id": "elysion", "region_type": "forest_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [4200, 5200, 0],
+        "map_anchor": [3440, 3970],
+        "source_ref": "world/map-data/data/regions.json#moonlit_forest_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3000, 3620], [3360, 3420], [3770, 3540], [3950, 3900],
+        [3820, 4380], [3460, 4720], [3130, 4480], [2960, 4050], [3000, 3620]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "emerald_plains_region",
+      "properties": {
+        "id": "emerald_plains_region", "name": "翡翠平原",
+        "continent_id": "elysion", "region_type": "region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5400, 4200, 0],
+        "map_anchor": [5320, 4150],
+        "source_ref": "world/map-data/data/regions.json#emerald_plains_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [4730, 3500], [5280, 3360], [5770, 3560], [6070, 3970],
+        [6040, 4580], [5740, 5020], [5220, 4900], [4860, 4440], [4730, 3500]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "port_zephia_region",
+      "properties": {
+        "id": "port_zephia_region", "name": "ポートゼフィア港湾圏",
+        "continent_id": "elysion", "region_type": "coastal_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5200, 4790, 0],
+        "map_anchor": [4687.5, 3515.8],
+        "source_ref": "world/map-data/data/regions.json#port_zephia_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [4450, 3300], [4750, 3210], [5050, 3350], [5170, 3630],
+        [5040, 3920], [4750, 4010], [4490, 3850], [4380, 3560], [4450, 3300]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "lumiera_arch_region",
+      "properties": {
+        "id": "lumiera_arch_region", "name": "リュミエラ・アーチ",
+        "continent_id": "lumiera", "region_type": "floating_islands_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [7800, 4800, 1200],
+        "map_anchor": [8984.4, 2881.0],
+        "source_ref": "world/map-data/data/regions.json#lumiera_arch_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [8420, 2420], [9080, 2260], [9630, 2720], [9770, 3600],
+        [9550, 4700], [9170, 5450], [8680, 5000], [8490, 3900], [8420, 2420]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "emerald_belt_region",
+      "properties": {
+        "id": "emerald_belt_region", "name": "エメラルド・ベルト",
+        "continent_id": "lumiera", "region_type": "forest_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [7000, 5500, 0],
+        "map_anchor": [7560, 4100],
+        "source_ref": "world/map-data/data/regions.json#emerald_belt_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [6580, 2780], [7250, 2410], [8060, 2520], [8490, 3180],
+        [8500, 4230], [8350, 5480], [7890, 6460], [7210, 6480],
+        [6770, 5740], [6610, 4680], [6580, 2780]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "red_sea_desert_region",
+      "properties": {
+        "id": "red_sea_desert_region", "name": "紅海砂漠",
+        "continent_id": "chaos_ria", "region_type": "desert_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5000, 7400, 0],
+        "map_anchor": [4166.7, 5859.3],
+        "source_ref": "world/map-data/data/regions.json#red_sea_desert_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3290, 6500], [3970, 6260], [4860, 6280], [5650, 6510],
+        [6160, 7000], [6200, 7850], [5860, 8420], [5050, 8620],
+        [4190, 8500], [3500, 8070], [3210, 7350], [3290, 6500]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "jade_oasis_region",
+      "properties": {
+        "id": "jade_oasis_region", "name": "翡翠のオアシス",
+        "continent_id": "chaos_ria", "region_type": "oasis_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5400, 6600, 0],
+        "map_anchor": [4362.1, 5419.8],
+        "source_ref": "world/map-data/data/regions.json#jade_oasis_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3970, 5190], [4330, 5000], [4740, 5080], [5000, 5360],
+        [4950, 5780], [4620, 6040], [4200, 5910], [3950, 5580], [3970, 5190]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "marineport_region",
+      "properties": {
+        "id": "marineport_region", "name": "マリンポート地方",
+        "continent_id": "atlantis", "region_type": "coastal_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [2800, 4800, 0],
+        "map_anchor": [1139.4, 3808.4],
+        "source_ref": "world/map-data/data/regions.json#marineport_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [760, 2780], [1280, 2250], [2000, 2440], [2510, 3100],
+        [2540, 4140], [2290, 5220], [1700, 5950], [1080, 5700],
+        [790, 4800], [760, 2780]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "atlantia_region",
+      "properties": {
+        "id": "atlantia_region", "name": "アトランティア",
+        "continent_id": "atlantis", "region_type": "underwater_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [2500, 4700, -300],
+        "map_anchor": [833.3, 4101.5],
+        "source_ref": "world/map-data/data/regions.json#atlantia_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [250, 3600], [760, 3200], [1290, 3390], [1540, 3920],
+        [1460, 4700], [1130, 5310], [600, 5200], [270, 4600], [250, 3600]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "time_port_region",
+      "properties": {
+        "id": "time_port_region", "name": "時空の港",
+        "continent_id": "grimoire", "region_type": "special_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5000, 2200, 0],
+        "map_anchor": [4023.4, 1660.1],
+        "source_ref": "world/map-data/data/regions.json#time_port_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3510, 1480], [3910, 1300], [4380, 1420], [4590, 1770],
+        [4480, 2140], [4090, 2310], [3690, 2140], [3480, 1820], [3510, 1480]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "ethernia_core_region",
+      "properties": {
+        "id": "ethernia_core_region", "name": "エターニア・コア",
+        "continent_id": "grimoire", "region_type": "spirit_core_region",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_center_legacy": [5000, 2200, 0],
+        "map_anchor": [4003.9, 1416.1],
+        "source_ref": "world/map-data/data/regions.json#ethernia_core_region"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [3620, 1020], [4070, 900], [4580, 1040], [4800, 1360],
+        [4670, 1700], [4260, 1900], [3830, 1770], [3580, 1430], [3620, 1020]
+      ]]}
+    }
+  ]
+}

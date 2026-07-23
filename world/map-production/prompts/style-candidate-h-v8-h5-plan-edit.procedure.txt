@@ -1,0 +1,61 @@
+Candidate H8 deterministic H5 plan-edit procedure (frozen before rendering)
+
+Purpose
+Create a diagnostic Golden-reference candidate by editing only the documented
+defects in the SHA-256 locked Candidate H5 raster.  This is a deterministic
+localized raster edit, not an ImageGen reroll and not a replacement map redraw.
+
+Locked parent
+world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols.png
+SHA-256: d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe
+
+Permitted edits
+1. Replace the central city's wall, keep, tower, and roof imagery with dense,
+   unshaded, orthographic building footprints, lanes, streets, courtyards, and
+   uniform plan rings.  No facade, side face, modeled height, cast shadow, or
+   directional highlight may be drawn.
+2. Replace the south-west port buildings and piers with flat plan footprints.
+3. Replace detected repeated olive canopy stamps with merged, seeded,
+   non-cloned irregular overhead canopy unions, clearings, branching marks,
+   stipple, and broken copperplate strokes.
+4. Add only local copperplate microtexture within those semantic edit masks.
+
+Protected parent material
+Ocean, coastline, delta and river channels, field plots, highland, and road
+network pixels remain byte-identical except where the explicit port footprint
+crosses water.  Candidate H5 itself is never overwritten.
+
+Forbidden processing
+- no ImageGen reroll
+- no H7 pixels or geometry
+- no histogram or rank transfer
+- no whole-image remapping, blur, emboss, relief, lighting, or shadow
+- no cloned/repeated canopy stamp silhouette
+- no text, pseudo-text, frame, legend, compass, watermark, or modern object
+
+Frozen automated gates
+- locked-parent SHA-256 and 1536x1024 RGB PNG contract must pass
+- every changed pixel must be inside the emitted semantic edit-mask union
+- at least 88% of detected old canopy-stamp pixels must change
+- at least 86% of the old city core and 62% of the port repair mask must change
+- total changed-pixel coverage must be no more than 35% of the canvas
+- protected highland and field swatches must be byte-identical
+- protected swatch maximum CIE76 delta-E must be no more than 0.25
+- edited forest/city/port swatch maximum CIE76 delta-E from H5 must be no more
+  than 8.0, preserving the H5 material family while changing symbol grammar
+- global RGB RMS difference from H5 must be no more than 24.0
+- output luma entropy must remain between 96% and 106% of H5
+- the edited forest luma entropy must be at least 6.0 bits
+- city must contain at least 150 distinct flat building footprints, six
+  courtyards, three street rings, and six radial/through streets
+- port must contain at least 24 flat footprints and four flat pier centerlines
+- canopy construction must contain at least 700 non-cloned irregular lobes,
+  20 clearings, and 3,000 stipple or broken-line micro-marks
+- boundary proxy and exact-repetition proxy must pass unchanged H4 definitions
+
+Vision-only acceptance remains separate
+The automated result is only a diagnostic handoff.  A reviewer must inspect
+the native raster, 25% and 50% reductions, and 200% and 400% city, port,
+forest, coast, field, highland, and boundary crops.  Any visible perspective,
+directional shading, repeated round-canopy wallpaper, network break, or patch
+seam rejects the candidate regardless of automated score.

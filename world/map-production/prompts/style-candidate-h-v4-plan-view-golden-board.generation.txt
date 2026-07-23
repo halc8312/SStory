@@ -1,0 +1,24 @@
+Create one production Golden style-reference map board by editing the supplied Candidate B image.
+
+Purpose: establish the reusable raster art direction only. This is a non-canonical style board, so do not preserve or invent named geography.
+
+Keep from the reference:
+- the same aged warm parchment grain and restrained sepia/olive/dusty-blue palette;
+- the same delicate hand-inked copperplate line weight and high micro-detail;
+- the clear top-down river delta, winding rivers, dense forest canopy, circular walled city, coastal port, pale roads, farmland plots, scrub, rocks, and quiet label corridors;
+- frame-free image edges that can visually continue into adjacent sheets.
+
+Change the composition so every element is strict orthographic plan view. Replace the entire reference mountain range and every floating island with flat terrain vocabulary: irregular top-down rocky upland texture, low non-directional tonal relief, forest transitions, ordinary coastline, open sea, and fields. No peak faces, cliff façades, island undersides, vertical walls, horizon, cast shadows, directional lighting, concentric contours, radial rosettes, or repeated fingerprint hills.
+
+Required composition:
+- upper-left/left: ordinary open sea and a low coastline with a branching river delta; no floating land;
+- upper-center: a dense forest crossed by one river;
+- center: one circular walled city viewed exactly from above, with several pale roads;
+- lower-left: one compact coastal port and piers viewed exactly from above;
+- lower-right: varied agricultural fields;
+- upper-right/right: flat rocky highland shown only by irregular stipple, sparse short non-convergent ink marks, and a gentle non-directional tonal wash; it must never read as scenic mountains;
+- preserve generous quiet corridors for future vector labels.
+
+Hard exclusions: all text and pseudo-text, letters, numbers, legend, compass, scale bar, border, frame, signature, watermark, logo, modern objects, extra major cities, duplicated buildings, cloned trees, readable symbols, and decorative corner elements.
+
+Output one coherent 1536x1024 landscape RGB image. It must look like the same artist and material as Candidate B, but be safer for strict plan-view canonical rendering and vector overlays.

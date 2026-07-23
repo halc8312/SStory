@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "type": "sstory-sheet-tile-publication-contract",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "runtime_contract": {
+    "index_schema_version": "2.0.0",
+    "index_type": "sstory-sheet-tile-index",
+    "canonical_index_path": "docs/data/map/sheet-tiles-v3.json",
+    "compatibility_index_path": "docs/data/map/region-rasters.json",
+    "compatibility_note": "The legacy filename remains only as a byte-identical schema-2 alias. It must never list full-master WebP overlays.",
+    "root_id": "sheet_world",
+    "root_loaded_separately": true,
+    "runtime_descendant_count": 22
+  },
+  "coverage": {
+    "bounded_sheet_count": 23,
+    "sheet_type_counts": {
+      "world": 1,
+      "continent": 5,
+      "region": 14,
+      "corridor": 1,
+      "settlement": 2
+    },
+    "minimum_status": "accepted",
+    "publication_status": "tiled",
+    "partial_index_allowed": false
+  },
+  "release_layout": {
+    "release_id_pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$",
+    "world_manifest": "docs/assets/images/maps/tiles/{release_id}/metadata.json",
+    "descendant_manifest": "docs/assets/images/maps/tiles/{release_id}/sheets/{sheet_id}/metadata.json",
+    "tile_template_relative_to_manifest": "{z}/{x}/{y}.webp",
+    "immutable_version_directory": true
+  },
+  "publication_receipt": {
+    "schema": "world/map-production/schemas/publication-receipt.schema.json",
+    "persistent_path": "world/map-production/releases/world-v3-publication-receipt.json",
+    "write_order": "last",
+    "required_before_published_readiness": true,
+    "algorithm": "After the immutable release tree is installed, write both indexes from the same staged bytes, verify the complete public release, activate and hash the HTML metadata, then atomically persist the receipt. A crash before the last step leaves published readiness false.",
+    "release_tree_sha256": "sha256(canonical JSON object mapping every release-relative file path to its SHA-256, with sorted keys and separators comma/colon)",
+    "partial_or_stale_staging_allowed": false
+  },
+  "browser_qa_receipt": {
+    "schema": "world/map-production/schemas/phase6-browser-qa-receipt.schema.json",
+    "runner": "scripts/map-production/run_phase6_browser_qa.py",
+    "validator": "scripts/map-production/validate_phase6_browser_qa.py",
+    "caller_selected_output": true,
+    "required_before_published_transition": true,
+    "playwright_cli_version": "0.1.17",
+    "canonical_published_bundle": "world/map-production/releases/world-v3-phase6-browser-qa",
+    "release_candidate_query": "release-preview=world-v3",
+    "viewports": ["1440x1000", "390x844"],
+    "slow_tile_minimum_delay_ms": 400,
+    "failure_probe": "HTTP 503 for sheet_region_royal_capital_region child WebP while sheet_continent_elysion remains ready and visible",
+    "base_tile_probe": "at least one world-v3 base WebP reaches Leaflet tileload and no base tileerror activates the legacy JPG fallback",
+    "diagnostic_cutoff": "console, pageerror, and failed/HTTP-error network events are recollected after the final snapshot and screenshot",
+    "published_invariant_recheck": "runtime dependencies and the full world-v3 release tree remain byte-identical to the Phase 6 receipt",
+    "publication_chronology": "publication receipt published_at must be at or after browser QA completed_at",
+    "exact_hash_inputs": [
+      "release-readiness.json",
+      "production-manifest.json",
+      "sheet-tiles-v3.json",
+      "region-rasters.json",
+      "world-v3 release tree",
+      "world-v3 metadata.json",
+      "interactive-map-v3.html",
+      "interactive-map-v3 runtime JS/CSS and Leaflet JS/CSS",
+      "legacy low-zoom fallback raster",
+      "all seven runtime vector/pixel-mapping JSON files",
+      "Phase 6 runner, validator, scenario template, and receipt schema",
+      "Royal child and Elysion parent manifests",
+      "browser-served world-v3 tile bytes"
+    ]
+  },
+  "tile_profile": {
+    "manifest_schema_version": "1.0.0",
+    "manifest_type": "sstory-xyz-raster",
+    "scheme": "xyz",
+    "coordinate_scope": "sheet-local",
+    "tile_origin": "top-left",
+    "x_axis": "right",
+    "y_axis": "down",
+    "tile_size_px": 512,
+    "format": "webp",
+    "edge_padding": "transparent",
+    "coordinate_note": "Each sheet owns an independent XYZ pyramid. At every level x increases rightward, y increases downward, and tile 0/0 begins at that sheet level's top-left pixel; x/y are never global world tile numbers.",
+    "levels": "every integer from sheet zoom_range[0] through native_zoom",
+    "dimensions": "ceil(master_dimension / 2^(native_zoom - level_zoom))",
+    "columns_rows": "ceil(level_dimension / 512)"
+  },
+  "fail_closed_checks": [
+    "all 23 accepted masters and QA evidence exist and match SHA-256",
+    "root and all parent IDs exactly match map-sheets.json",
+    "child bounds are contained by the accepted parent",
+    "child native zoom is strictly deeper than the parent",
+    "manifest URLs resolve inside the versioned docs tile directory",
+    "all metadata dimensions, level counts, tile counts, and SHA-256 values are recomputed",
+    "every tile is a readable 512px WebP",
+    "every right/bottom pixel outside the declared sheet-local level dimensions has RGBA alpha=0",
+    "every declared tile content rectangle contains at least one visible pixel",
+    "canonical and compatibility indexes are byte-identical before a publication receipt is issued",
+    "published transition requires a current-byte-bound four-scenario Phase 6 browser QA PASS receipt",
+    "published readiness requires a hash-locked persistent receipt written only after release-tree, index-alias, and HTML activation validation",
+    "the public version directory is never overwritten"
+  ]
+}

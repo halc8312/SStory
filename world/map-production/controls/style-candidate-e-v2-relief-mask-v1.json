@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-e-v2-relief-mask-v1",
+  "transfer_report_id": "style-candidate-e-v2-relief-transfer",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "source_image": {
+    "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+    "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016"
+  },
+  "purpose": "Candidate E attempt-two transfer mask. Geometry and safety gates are byte-equivalent to Candidate E v1; the only generation change is stronger existing south-east plate amplitude while north-east remains locked.",
+  "include_polygons": [
+    {
+      "id": "north_east_range",
+      "feather_inside_px": 64,
+      "points": [
+        [882, 0], [1535, 0], [1535, 596], [1458, 610], [1370, 596],
+        [1288, 612], [1194, 598], [1098, 620], [1010, 590], [934, 552],
+        [884, 486], [872, 392], [884, 286]
+      ]
+    },
+    {
+      "id": "south_east_range",
+      "feather_inside_px": 16,
+      "points": [
+        [884, 782], [996, 764], [1118, 770], [1234, 798], [1348, 844],
+        [1454, 910], [1535, 974], [1535, 1023], [752, 1023], [786, 958],
+        [820, 900]
+      ]
+    }
+  ],
+  "exclude_strokes": [
+    {
+      "id": "east_road",
+      "width": 12,
+      "feather_px": 4,
+      "points": [[930, 505], [1050, 515], [1180, 540], [1270, 535], [1370, 490], [1535, 450]]
+    },
+    {
+      "id": "south_east_road",
+      "width": 12,
+      "feather_px": 4,
+      "points": [[910, 558], [1000, 610], [1090, 666], [1180, 725], [1270, 785], [1360, 840], [1450, 892], [1535, 936]]
+    }
+  ],
+  "feather_inside_px": 64,
+  "low_frequency_transfer": {
+    "signal_mode": "luminance_delta_plate",
+    "required_input_plate_q90_q10_levels": [31, 40],
+    "robust_window_median_px": 128,
+    "robust_sample_stride_px": 64,
+    "robust_coarse_median_size": 3,
+    "robust_coarse_gaussian_radius_cells": 2,
+    "final_quantized_median_size": 5,
+    "input_difference_clip_levels": 96,
+    "road_signal_guard_width_px": 64,
+    "inner_gaussian_radius_px": 24,
+    "outer_gaussian_radius_px": 128,
+    "target_q90_q10_levels": 7,
+    "minimum_raw_q90_q10_levels": 3.5,
+    "maximum_normalization_gain": 2.0,
+    "maximum_absolute_delta_levels": 6,
+    "region_core_minimum_mask_value": 255,
+    "required_final_q90_q10_levels": [5, 9],
+    "maximum_mean_absolute_delta_levels": 4,
+    "maximum_p95_absolute_delta_levels": 6,
+    "maximum_high_frequency_rms_levels": 0.75,
+    "maximum_high_frequency_p99_levels": 2,
+    "maximum_active_high_frequency_rms_levels": 0.85,
+    "maximum_active_high_frequency_p99_levels": 2,
+    "maximum_feather_high_frequency_p99_levels": 2,
+    "trace_threshold_levels": 3,
+    "trace_minimum_span_px": 128,
+    "trace_maximum_covariance_ratio": 10,
+    "trace_severe_covariance_ratio": 40,
+    "trace_covariance_maximum_bbox_occupancy": 0.5,
+    "trace_maximum_compactness": 18,
+    "trace_maximum_bbox_occupancy": 0.3,
+    "minimum_region_quadrant_p90_absolute_delta_levels": 2
+  },
+  "audit_window_control": {
+    "path": "world/map-production/controls/style-candidate-d-ridge-edit-mask-v2.json",
+    "sha256": "f455808fe7502108c1adbb44d82058d6da1bbd0f8a0d13169f2f1dcdb2e8e82e",
+    "role": "diagnostic measurement only; never supplied to ImageGen, never used as the final composite shape, and never scored as a minimum-signal route"
+  },
+  "review_status": "provisional",
+  "notes": "The E v2 generated raster remains a standalone luminance delta plate. E v1 and E v2 transfer geometry, roads, masks, band limits, topology, publication rules, and final maximum delta are unchanged. Only the south-east source-plate amplitude request differs."
+}

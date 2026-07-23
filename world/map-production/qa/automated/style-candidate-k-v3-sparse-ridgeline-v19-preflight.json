@@ -1,0 +1,197 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-k-v3-sparse-ridgeline-v19-preflight",
+  "status": "passed-write-free-preflight",
+  "decision_authority": false,
+  "golden_accepted": false,
+  "source": {
+    "path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+    "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f",
+    "size": [1536, 1024],
+    "mode": "RGB",
+    "role": "v55 full-material source reverse-affine transferred into exact canonical bodies"
+  },
+  "active_sources": {
+    "base_v18": {
+      "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+      "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+    },
+    "generated_contour_atlas": {
+      "path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+      "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f"
+    },
+    "canonical_body_control": {
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+      "sha256": "7527b0be4d7a042c5fd33e499b96806bcbbd6a1b614086c7c0fbdf308b83666b",
+      "mode": "L",
+      "body_values": [32, 64, 96, 128, 160, 192, 224, 255]
+    },
+    "control_atlas_metadata": {
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.json",
+      "sha256": "f9a1eab4a8e417bcd688ceae8db1e8f01dc21835842e69339dda70f461eab768"
+    },
+    "control_atlas_guide": {
+      "authority_role": "v52-control-atlas",
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+      "sha256": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4"
+    },
+    "copperplate_material_reference": {
+      "authority_role": "v55-copperplate-material-reference",
+      "path": "world/map-production/style-assets/highland-detail-exemplar-v1.png",
+      "sha256": "c7fcd3da5fba6fe08f10fd1e0fe16bdb2884a0a04386de828f923d660de8f1a2"
+    },
+    "palette_parchment_reference": {
+      "authority_role": "v55-palette-parchment-reference",
+      "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+      "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837"
+    }
+  },
+  "recipe": {
+    "interface": "sstory-k3-sparse-ridgeline-v19-replay-v2",
+    "foundation": {
+      "broad_field": "per-channel normalized Gaussian over editable support, sigma 64, BORDER_REFLECT",
+      "fine_field": "base Lab minus Gaussian sigma 1.8, clipped per channel to [1.6,0.8,0.8]",
+      "paper_amplitude_lab_l": 1.4,
+      "encoding": "round and clip Lab once, convert to RGB, replace editable, canonical fractional-alpha composite"
+    },
+    "body_source": "decode exact indexed values from canonical_body_control; no segmentation, polygon approximation, hull, or geometry inference",
+    "body_l_delta": -35.0,
+    "material_transfer": {
+      "reverse_transfer": "warp the complete v55 RGB atlas with each frozen atlas_to_source_affine using INTER_LINEAR and BORDER_REFLECT",
+      "support": "every pixel of each exact canonical body; no threshold, erosion, dilation, feather, or inferred geometry",
+      "close_kernel_px": 9,
+      "background_sigma_px": 3.0,
+      "relief_sigma_px": 7.0,
+      "relief_scale": "body-local median-centered 95th percentile absolute deviation, clipped to [-1,1]",
+      "relief_amplitude_gray": 5.0,
+      "sharp_ink_denominator": 80.0,
+      "red_chroma_gain": 10.0,
+      "blue_chroma_gain": -15.0,
+      "owner_rule": "canonical body index on every body pixel"
+    },
+    "grayscale_correction": "hold transferred R/B chroma offsets, solve G around rounded BT.601 ideal with deterministic delta -4..4, and require exact OpenCV RGB-to-gray equality to the relief target",
+    "locks": "restore alpha-zero, outside-permission, protected, and 18px road-calm pixels exactly from v18"
+  },
+  "intermediate_sha256": {
+    "base_lab": "6417f7e3684df7a510b8f3254c43dcd7f71757bc6c41ac97611829ae319d49d7",
+    "paper": "1bd3a7b6679221b0f98819fb1988b308b3396b12544fe1f432c3e1f09102de52",
+    "broad": "ccfb6d3864675161343246f7bac4ebc77be4e232acb508902de438c202adefff",
+    "smooth18": "4356e2772c3e10b06d489e87f0849d2998ad9223e0a1be4a6c72c24807943d95",
+    "fine": "d83ab20f58210a7483a9f317511d735572e4bf6377e77b6a145405b9e6c9bb2a",
+    "target": "949628d7c0182c27c94c20edb786e01f71a811400aae29c56d77fde9156bbfc4",
+    "encoded_lab": "a177e9386f33b8ae698324fd07fd6f8bceadbdf6586155646892dc00cbc49a64",
+    "encoded_rgb": "2ee902d41351d47f067269b5ec428d9beb5c5dc5be5669f590bd8054361f1bba",
+    "plate": "d420a4d0ad7bee8286689f85ab829e26d09dd4e81e04c932de78baee7564d367",
+    "foundation": "ad19c90e324833201dcf0b3051b0c6991934ff4bc046578acaa3440addb8f3f5",
+    "foundation_lab": "ff9762aa592bdfd4d8f30dce6725815d52d4b04e00b2cc5987f5a3b6624d05da",
+    "hard_target": "7484eb7fb4326d2613e7ab3ea6d0192135a6efb1d44ad1c257bfc625cee66777",
+    "hard_lab": "ff6ca303e1d18ef0fa87b32304ee598942a4c7b9126a9e5ec14a0a3245f91c24",
+    "hard_rgb_full": "4c5b8492c81822e20c915272a6e276901ce22427371f29727c73673bda67430e",
+    "hard_candidate": "71f5d2bec73b441f820175cf7837b79cce89091a25ccd8e423d5939f743237d7",
+    "hard_gray": "e4a95148678c5b3031afd9d76bc7e0e3e7e84316f3a08f89acb6bb95192e7fc0",
+    "field": "a9b27c4a0cc6bf3a80702794853d5053d024e22b16088597fa4b32fd06e8b022",
+    "owner": "513d81aa30e97f272466a9ce7009c01ecc40a28286aba70f770de44bd596e3d0",
+    "support": "46de962497e114d0d822ef70422c2628188a6c50c2fa73376e16f7af41f805e2",
+    "core": "46de962497e114d0d822ef70422c2628188a6c50c2fa73376e16f7af41f805e2",
+    "target_gray": "26c88c19352e2deec18d97fa9c0e9c145079bb89d4d9b2f0ac200dcd60ac5f51",
+    "candidate": "f613b6579c637b6f93f12b7ffd332fd79e0b1cba1f5f992b578bf74adcedd1c3"
+  },
+  "geometry": {
+    "selected_component_count": 8,
+    "canonical_values": [32, 64, 96, 128, 160, 192, 224, 255],
+    "per_body_pixels": [12370, 11618, 11142, 15929, 13473, 10915, 9379, 1777],
+    "body_pixels": 86603,
+    "body_outside_official_full_alpha_support": 0,
+    "body_outside_permission": 0,
+    "mask_sha256": "46de962497e114d0d822ef70422c2628188a6c50c2fa73376e16f7af41f805e2"
+  },
+  "material_transfer": {
+    "semantic": "complete reverse-affine v55 RGB material transferred over every canonical body pixel",
+    "total_pixels": 86603,
+    "nonempty_body_count": 8,
+    "per_body_pixels": [12370, 11618, 11142, 15929, 13473, 10915, 9379, 1777],
+    "outside_carrier_pixels": 0,
+    "mask_sha256": "46de962497e114d0d822ef70422c2628188a6c50c2fa73376e16f7af41f805e2"
+  },
+  "metrics": {
+    "coverage_50": 367,
+    "coverage_25": 338,
+    "quiet_fraction": 0.912177,
+    "dash_bundle_pairs": 0,
+    "orientation_coherence": 0.05625,
+    "texture_inside_to_outside_ratio": {
+      "4": 0.614135,
+      "8": 0.981493
+    },
+    "official_final_rgb_active_fraction": 0.087823
+  },
+  "thresholds": {
+    "fixed": {
+      "minimum_macrocell_count_50_percent": 350,
+      "minimum_macrocell_count_25_percent": 330,
+      "minimum_quiet_fraction": 0.86,
+      "maximum_dash_bundle_pairs": 0,
+      "maximum_orientation_coherence": 0.18
+    },
+    "preferred": {
+      "minimum_macrocell_count_50_percent": 360,
+      "minimum_macrocell_count_25_percent": 334,
+      "minimum_quiet_fraction": 0.9,
+      "maximum_dash_bundle_pairs": 0,
+      "maximum_orientation_coherence": 0.16,
+      "minimum_texture_ratio_sigma4": 0.6,
+      "texture_ratio_sigma8_interval": [0.75, 1.25]
+    },
+    "robust_margin": {
+      "minimum_quiet_fraction": 0.905,
+      "minimum_texture_ratio_sigma4": 0.61,
+      "texture_ratio_sigma8_interval": [0.75, 1.22]
+    },
+    "thresholds_changed": false
+  },
+  "gates": {
+    "fixed_passed": true,
+    "preferred_passed": true,
+    "robust_margin_passed": true,
+    "exactly_eight_bodies": true,
+    "all_material_pixels_transferred": true,
+    "all_material_support_inside_carrier": true,
+    "all_body_luminance_deltas_dark_only": true,
+    "material_target_gray_exact": true,
+    "outside_permission_exact": true,
+    "protected_features_exact": true,
+    "road_calm_18px_exact": true,
+    "alpha_zero_exact": true
+  },
+  "identity": {
+    "changed_pixels": 237342,
+    "outside_permission": 0,
+    "protected_features": 0,
+    "road_calm_18px": 0,
+    "alpha_zero_pixels": 1334836,
+    "alpha_zero_changed": 0,
+    "body_outside_full_alpha": 0,
+    "contour_outside_body": 0,
+    "contour_grayscale_mismatch": 0
+  },
+  "determinism": {
+    "independent_in_memory_builds": 2,
+    "pixel_equal": true,
+    "body_equal": true,
+    "material_relief_equal": true,
+    "material_owner_equal": true,
+    "expected_raw_rgb_sha256": "f613b6579c637b6f93f12b7ffd332fd79e0b1cba1f5f992b578bf74adcedd1c3",
+    "expected_png_sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+    "expected_png_bytes": 3630310,
+    "passed": true
+  },
+  "vision_handoff": {
+    "status": "pending-root-vision-on-five-view-canonical-board-bundle",
+    "required_png_count": 5,
+    "reviewed_png_count": 0,
+    "root_acceptance_threshold": 94,
+    "generated_source_score": 95,
+    "direct_source_is_not_golden": true,
+    "candidate_is_not_golden_until_root_accepts": true
+  }
+}
