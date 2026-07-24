@@ -51,7 +51,7 @@ EXPECTED_SHA256 = {
         "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003"
     ),
     "vision_schema": (
-        "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b"
+        "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db"
     ),
 }
 

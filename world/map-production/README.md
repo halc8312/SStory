@@ -123,7 +123,7 @@ node scripts/run-python.js scripts/map-production/render_phase5_reviewed_master.
 
 Get-ChildItem -LiteralPath $render -Filter "sheet_*.report.json" -File | ForEach-Object {
   $rendererReport = $_.FullName
-  $sid = (Get-Content -LiteralPath $rendererReport -Raw | ConvertFrom-Json).sheet_id
+  $sid = (Get-Content -LiteralPath $rendererReport -Raw | ConvertFrom-Json).sheet.sheet_id
   node scripts/run-python.js scripts/map-production/build_phase5_assets.py canonical-provenance --renderer-report $rendererReport --output "$render/$sid.canonical-provenance.json" --canonical-control-index world/map-production/controls/phase5-metatiles/index.json
 }
 
@@ -152,7 +152,7 @@ $standardDirect = @(
 )
 $directSids = @(
   Get-ChildItem -LiteralPath $masters -Filter "sheet_*.report.json" -File |
-    ForEach-Object { (Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json).sheet_id }
+    ForEach-Object { (Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json).sheet.sheet_id }
 )
 if ($directSids.Count -ne 17) {
   throw "Expected 17 promoted renderer reports, found $($directSids.Count)."

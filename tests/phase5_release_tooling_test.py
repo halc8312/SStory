@@ -19,6 +19,7 @@ SCRIPT_DIR = REPO_ROOT / "scripts" / "map-production"
 sys.path.insert(0, str(SCRIPT_DIR))
 
 import build_phase5_assets as phase5  # noqa: E402
+import phase5_vision_evidence as vision_evidence  # noqa: E402
 import promote_phase5_renderer_outputs as promoter  # noqa: E402
 import release_bound_artifact as bound_artifacts  # noqa: E402
 import release_path_safety as path_safety  # noqa: E402
@@ -423,6 +424,152 @@ class SourceIndexWriterTests(unittest.TestCase):
         ):
             write_json(path, value)
 
+    def _canonical_vision_receipt(self, master: Path, sheet_id: str) -> dict[str, str]:
+        version = vision_evidence.CANONICAL_EVIDENCE_ROOT / (
+            f"test-{uuid.uuid4().hex}"
+        )
+        self.addCleanup(lambda: shutil.rmtree(version, ignore_errors=True))
+        registry = vision_evidence.load_focus_registry()
+        entry = registry.entry(sheet_id)
+        source = vision_evidence.bind_file(
+            master, label=f"{sheet_id} source-index integration master"
+        )
+        focus_box = list(entry["box_px"])
+        source_size, views = vision_evidence.render_view_artifacts(source, focus_box)
+        document = vision_evidence.build_canonical_receipt(
+            sheet_id=sheet_id,
+            source=source,
+            source_size=source_size,
+            focus_registry=registry.binding,
+            focus_box=focus_box,
+            views=views,
+        )
+        receipt = (
+            version
+            / sheet_id
+            / vision_evidence.PERSISTENT_RECEIPT_FILENAME
+        )
+        receipt.parent.mkdir(parents=True)
+        receipt.write_bytes(vision_evidence.stable_json_bytes(document))
+        return artifact(receipt)
+
+    def _integration_vision_receipt(
+        self, root: Path, master: Path, sheet_id: str
+    ) -> dict[str, str]:
+        receipt = root / "fixture-vision-evidence" / sheet_id / "view-bundle.json"
+        document = {
+            "fixture_schema_version": "1.0.0",
+            "sheet_id": sheet_id,
+            "source": artifact(master),
+            "focus_registry": artifact(vision_evidence.DEFAULT_FOCUS_REGISTRY),
+        }
+        receipt.parent.mkdir(parents=True)
+        receipt.write_bytes(vision_evidence.stable_json_bytes(document))
+        return artifact(receipt)
+
+    def _validate_integration_vision_evidence(
+        self,
+        report: dict,
+        *,
+        sheet_id: str,
+        master_path: Path,
+        master_sha256: str,
+        focus_registry_path=None,
+    ) -> vision_evidence.VisionEvidenceBindings:
+        bundle = report.get("vision_bundle")
+        if not isinstance(bundle, dict) or (
+            bundle.get("reviewer_confirmed_exact_five") is not True
+        ):
+            raise vision_evidence.Phase5VisionEvidenceError(
+                "integration reviewer did not confirm the exact-five bundle"
+            )
+        source = vision_evidence.bind_file(
+            master_path, label=f"{sheet_id} integration Vision source"
+        )
+        if source.sha256 != master_sha256:
+            raise vision_evidence.Phase5VisionEvidenceError(
+                f"{sheet_id} integration Vision source hash mismatch"
+            )
+        if (
+            report.get("image_path") != source.relative
+            or report.get("image_sha256") != source.sha256
+        ):
+            raise vision_evidence.Phase5VisionEvidenceError(
+                f"{sheet_id} integration Vision report source binding mismatch"
+            )
+
+        receipt_spec = bundle.get("receipt")
+        if not isinstance(receipt_spec, dict):
+            raise vision_evidence.Phase5VisionEvidenceError(
+                f"{sheet_id} integration Vision receipt is missing"
+            )
+        receipt = vision_evidence.bind_file(
+            receipt_spec.get("path"),
+            label=f"{sheet_id} integration Vision receipt",
+        )
+        if receipt.sha256 != receipt_spec.get("sha256"):
+            raise vision_evidence.Phase5VisionEvidenceError(
+                f"{sheet_id} integration Vision receipt hash mismatch"
+            )
+
+        registry_path = (
+            vision_evidence.DEFAULT_FOCUS_REGISTRY
+            if focus_registry_path is None
+            else Path(focus_registry_path)
+        )
+        if not path_safety.same_path(
+            registry_path, vision_evidence.DEFAULT_FOCUS_REGISTRY
+        ):
+            raise vision_evidence.Phase5VisionEvidenceError(
+                "integration Vision fixture requires the canonical focus registry"
+            )
+        registry = vision_evidence.bind_file(
+            registry_path, label="integration canonical focus registry"
+        )
+        document = receipt.json_object()
+        expected = {
+            "fixture_schema_version": "1.0.0",
+            "sheet_id": sheet_id,
+            "source": source.artifact(),
+            "focus_registry": registry.artifact(),
+        }
+        if document != expected or (
+            vision_evidence.stable_json_bytes(document) != receipt.data
+        ):
+            raise vision_evidence.Phase5VisionEvidenceError(
+                f"{sheet_id} integration Vision receipt binding mismatch"
+            )
+        return vision_evidence.VisionEvidenceBindings(source, receipt, registry)
+
+    def _assert_integration_vision_calls(
+        self, validator: mock.Mock, records: dict[str, dict]
+    ) -> None:
+        expected = sorted(
+            (
+                sheet_id,
+                record["path"],
+                record["sha256"],
+            )
+            for sheet_id, record in records.items()
+            for _ in record["vision_reports"]
+            for _ in range(2)  # Pre-install and installed-candidate validation.
+        )
+        actual = []
+        for recorded_call in validator.call_args_list:
+            self.assertEqual(len(recorded_call.args), 1)
+            self.assertEqual(
+                set(recorded_call.kwargs),
+                {"sheet_id", "master_path", "master_sha256"},
+            )
+            actual.append(
+                (
+                    recorded_call.kwargs["sheet_id"],
+                    phase5.repo_path(Path(recorded_call.kwargs["master_path"])),
+                    recorded_call.kwargs["master_sha256"],
+                )
+            )
+        self.assertEqual(sorted(actual), expected)
+
     def _record(self, sheet_id: str) -> dict:
         sheet_type = self.catalog_by_id[sheet_id]["sheet_type"]
         return {
@@ -570,20 +717,20 @@ class SourceIndexWriterTests(unittest.TestCase):
             source_kind=phase5.CANONICAL_RENDER_SOURCE_KIND,
         )
         vision_specs = []
+        vision_receipt = self._canonical_vision_receipt(master, sheet_id)
         reviewers = ("Canonical Reviewer A", "Canonical Reviewer B")
         for review_index, reviewer in enumerate(
             reviewers[: phase5.required_review_count(sheet)]
         ):
             vision_path = root / f"{sheet_id}-vision-{review_index + 1}.json"
-            write_json(
-                vision_path,
-                complete_report(
-                    phase5.job_id_for_sheet(sheet_id),
-                    phase5.repo_path(master),
-                    reviewer,
-                    phase5.acceptance_threshold(sheet),
-                ),
+            report = complete_report(
+                phase5.job_id_for_sheet(sheet_id),
+                phase5.repo_path(master),
+                reviewer,
+                phase5.acceptance_threshold(sheet),
             )
+            report["vision_bundle"]["receipt"] = vision_receipt
+            write_json(vision_path, report)
             vision_specs.append(artifact(vision_path))
         record = {
             "sheet_id": sheet_id,
@@ -695,19 +842,24 @@ class SourceIndexWriterTests(unittest.TestCase):
                 source_kind=phase5.CANONICAL_RENDER_SOURCE_KIND,
             )
             vision_specs = []
+            vision_receipt = self._integration_vision_receipt(
+                root, master, sheet_id
+            )
             reviewers = ("Integration Reviewer A", "Integration Reviewer B")
             for review_index, reviewer in enumerate(
                 reviewers[: phase5.required_review_count(sheet)]
             ):
                 vision_path = root / f"{sheet_id}-vision-{review_index + 1}.json"
+                report = complete_report(
+                    phase5.job_id_for_sheet(sheet_id),
+                    phase5.repo_path(master),
+                    reviewer,
+                    phase5.acceptance_threshold(sheet),
+                )
+                report["vision_bundle"]["receipt"] = vision_receipt
                 write_json(
                     vision_path,
-                    complete_report(
-                        phase5.job_id_for_sheet(sheet_id),
-                        phase5.repo_path(master),
-                        reviewer,
-                        phase5.acceptance_threshold(sheet),
-                    ),
+                    report,
                 )
                 vision_specs.append(artifact(vision_path))
             records[sheet_id] = {
@@ -872,19 +1024,24 @@ class SourceIndexWriterTests(unittest.TestCase):
             write_json(automated_path, automated_document)
             automated = artifact(automated_path)
             vision_specs = []
+            vision_receipt = self._integration_vision_receipt(
+                root, master, sheet_id
+            )
             reviewers = ("Composite Reviewer A", "Composite Reviewer B")
             for review_index, reviewer in enumerate(
                 reviewers[: phase5.required_review_count(sheet)]
             ):
                 vision_path = root / f"{sheet_id}-vision-{review_index + 1}.json"
+                report = complete_report(
+                    phase5.job_id_for_sheet(sheet_id),
+                    phase5.repo_path(master),
+                    reviewer,
+                    phase5.acceptance_threshold(sheet),
+                )
+                report["vision_bundle"]["receipt"] = vision_receipt
                 write_json(
                     vision_path,
-                    complete_report(
-                        phase5.job_id_for_sheet(sheet_id),
-                        phase5.repo_path(master),
-                        reviewer,
-                        phase5.acceptance_threshold(sheet),
-                    ),
+                    report,
                 )
                 vision_specs.append(artifact(vision_path))
             records[sheet_id] = {
@@ -1161,6 +1318,12 @@ class SourceIndexWriterTests(unittest.TestCase):
                     self._integration_parent_controls[0].parent
                 ),
             ),
+            mock.patch.object(
+                writer.phase5.vision_evidence,
+                "validate_report_vision_bundle",
+                autospec=True,
+                side_effect=self._validate_integration_vision_evidence,
+            ) as validate_vision,
         ):
             with self.assertRaisesRegex(
                 writer.SourceIndexWriterError, "child coverage mismatch"
@@ -1173,12 +1336,16 @@ class SourceIndexWriterTests(unittest.TestCase):
                     base_manifest_path=manifest,
                 )
             self.assertFalse(invalid_idx22.exists())
+            validate_vision.reset_mock()
             idx22_result = writer.write_source_index(
                 stage="idx22",
                 record_paths=[valid_continent_bundle],
                 output_path=idx22,
                 base_index_path=base_idx17,
                 base_manifest_path=manifest,
+            )
+            self._assert_integration_vision_calls(
+                validate_vision, {**direct, **valid_continents}
             )
 
         self.assertEqual(idx22_result["source_count"], 22)
@@ -1225,6 +1392,12 @@ class SourceIndexWriterTests(unittest.TestCase):
                     self._integration_parent_controls[0].parent
                 ),
             ),
+            mock.patch.object(
+                writer.phase5.vision_evidence,
+                "validate_report_vision_bundle",
+                autospec=True,
+                side_effect=self._validate_integration_vision_evidence,
+            ) as validate_vision,
         ):
             with self.assertRaisesRegex(
                 writer.SourceIndexWriterError, "child coverage mismatch"
@@ -1237,12 +1410,17 @@ class SourceIndexWriterTests(unittest.TestCase):
                     base_manifest_path=manifest,
                 )
             self.assertFalse(invalid_idx23.exists())
+            validate_vision.reset_mock()
             idx23_result = writer.write_source_index(
                 stage="idx23",
                 record_paths=[valid_world_bundle],
                 output_path=idx23,
                 base_index_path=idx22,
                 base_manifest_path=manifest,
+            )
+            self._assert_integration_vision_calls(
+                validate_vision,
+                {**direct, **valid_continents, **valid_world},
             )
 
         self.assertEqual(idx23_result["source_count"], 23)

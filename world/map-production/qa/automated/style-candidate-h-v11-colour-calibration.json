@@ -13,7 +13,7 @@
   },
   "audit_engine": {
     "path": "scripts/map-production/audit_style_candidate_h4.py",
-    "sha256": "9dee90fa67570302d01fab0a922e98838f18dfc83b561ff7b1fa287f89d0e389",
+    "sha256": "6521883260ed3c979ed974708a402e1d7b60227cb97e6dcbc04693d68e7e612f",
     "bytes": 32058,
     "threshold_policy": "unchanged H4 absolute gates; no threshold drift",
     "raw_final_identity": {
@@ -55,7 +55,7 @@
       "prompt": "7534a27b2142dc3ff8a353a40af00b01e5455fe0c2a2e45fb4342ee53cfad990",
       "generation_receipt": "d47fe3aa53ffa223902fc2b41b1b9c280e73bfbf0f39bd25661c770b9a171790",
       "reference_b1": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
-      "vision_schema": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b"
+      "vision_schema": "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db"
     }
   },
   "image_contract": {
@@ -350,8 +350,8 @@
     "status": "required",
     "schema": {
       "path": "world/map-production/schemas/qa-report.schema.json",
-      "sha256": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b",
-      "bytes": 5569
+      "sha256": "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db",
+      "bytes": 6949
     },
     "automated_audit_is_not_golden_acceptance": true,
     "checks": [

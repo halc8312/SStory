@@ -33,7 +33,7 @@
       "id": "automated_evidence",
       "label": "Automated evidence summary",
       "complete": true,
-      "evidence": "world/map-production/qa/automated/style-candidate-j-v1-full-board.json (SHA-256 ccb77200c451a3b863c6fb565046febde53b82c3711740352b3deb63814545f8), status failed. Failed gates: palette_continuity_with_b1 and downsample_readability_proxy. Passed gates: image_contract_alpha_profile, boundary_proxy, no_large_exact_repetition_proxy, and semantic_repetition_proxies_vs_h4.",
+      "evidence": "world/map-production/qa/automated/style-candidate-j-v1-full-board.json (SHA-256 51add75881d5381a5b9a1caf67951fbe879ed72c2ad3b83eac9985fd2d628e58), status failed. Failed gates: palette_continuity_with_b1 and downsample_readability_proxy. Passed gates: image_contract_alpha_profile, boundary_proxy, no_large_exact_repetition_proxy, and semantic_repetition_proxies_vs_h4.",
       "notes": "B1 palette measurements fail at RGB intersection 0.544535, HSV intersection 0.426768, Bhattacharyya 0.795501, and maximum mean channel delta 10.746760 against thresholds 0.72, 0.62, 0.90, and 12.0. At 50%, entropy retention is 0.959799, RMS 0.816674, and macrocell coverage 1.0, so RMS misses 0.82; at 25%, entropy is 0.928280, RMS 0.717348, and macrocell coverage 0.924479 and the scale passes. Exact and near-repetition proxies do not replace Vision and did not detect the region-specific semantic wallpaper behind the rejection."
     },
     {

@@ -13,7 +13,7 @@
   "renderer_mutation": false,
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidate_k2_hybrid.py",
-    "sha256": "a069d9acbd2c17d136eb47f78b07d146708b5d883f86367e4e2b6a377210b19e",
+    "sha256": "dd5891bc079bc5aab801edee054d2f75f533269838c59e9e4bf9ddb9f091094f",
     "bytes": 39839
   },
   "artifacts": {
@@ -788,8 +788,8 @@
     "status": "required-pending-root-vision",
     "schema": {
       "path": "world/map-production/schemas/qa-report.schema.json",
-      "sha256": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b",
-      "bytes": 5569
+      "sha256": "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db",
+      "bytes": 6949
     },
     "automated_audit_is_not_vision": true,
     "automated_audit_is_not_golden_acceptance": true,

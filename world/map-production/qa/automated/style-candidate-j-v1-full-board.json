@@ -39,7 +39,7 @@
     },
     "generation_receipt": {
       "path": "world/map-production/prompts/style-candidate-j-v1-full-board.generation-receipt.json",
-      "sha256": "5264ffb9d8db9a42ad612fd7b81109cca7d026b69effc0f14343c28d5fa732a8",
+      "sha256": "ec33755ef1196dba4e33461c1cf75b24a00771ce9f971e118f9f08a3b68d0049",
       "bytes": 5120
     },
     "approved_preflight": {
@@ -55,7 +55,7 @@
     "guide_metadata": {
       "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.json",
       "sha256": "a357e4e8d6da7b2626b9c4d79a6f69374b7477d97536aa51d981be9914708d79",
-      "bytes": 1986
+      "bytes": 1924
     },
     "sole_style_material_authority": {
       "path": "world/map-production/candidates/phase5-royal-subtile1-x0000-y0000-raw.png",
@@ -591,8 +591,8 @@
     ],
     "schema": {
       "path": "world/map-production/schemas/qa-report.schema.json",
-      "sha256": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b",
-      "bytes": 5569
+      "sha256": "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db",
+      "bytes": 6949
     }
   }
 }

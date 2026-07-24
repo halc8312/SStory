@@ -12,7 +12,7 @@
   "manifest_mutation": false,
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidate_i1.py",
-    "sha256": "75d35fac73ed46fcb464cb7d98d2666af1c4cc921439b705cdbf9668cb22a963",
+    "sha256": "ddbffe745a134057e8f3127d743f588b149fec109830c8d4c906c96a6661b3b0",
     "bytes": 19756
   },
   "artifacts": {
@@ -35,7 +35,7 @@
     },
     "generation_receipt": {
       "path": "world/map-production/prompts/style-candidate-i-v1-flat-styleboard.generation-receipt.json",
-      "sha256": "e8682403506f88d9c5d71a8570030388de240a78025ae37de23e6960b9e60c5e",
+      "sha256": "e6cff4d18d22c53eab8813abc029df2db259c15900687fd54d0a08905a8d26f6",
       "bytes": 2799
     },
     "geometry_only_guide": {
@@ -46,7 +46,7 @@
     "guide_metadata": {
       "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.json",
       "sha256": "a357e4e8d6da7b2626b9c4d79a6f69374b7477d97536aa51d981be9914708d79",
-      "bytes": 1986
+      "bytes": 1924
     },
     "sole_style_material_projection_authority": {
       "path": "world/map-production/candidates/phase5-royal-subtile1-x0000-y0000-raw.png",
@@ -549,8 +549,8 @@
     ],
     "schema": {
       "path": "world/map-production/schemas/qa-report.schema.json",
-      "sha256": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b",
-      "bytes": 5569
+      "sha256": "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db",
+      "bytes": 6949
     },
     "independent_reviewer_threshold": "two blind reviews, each score >= 94 and no immediate-failure trigger"
   }
