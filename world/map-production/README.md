@@ -192,7 +192,7 @@ foreach ($sid in $directSids) {
   git add -- $receipt
 
   for ($reviewIndex = 0; $reviewIndex -lt $reviewerIds.Count; $reviewIndex++) {
-    $reviewLetter = [char](97 + $reviewIndex)
+    $reviewLetter = @("a", "b")[$reviewIndex]
     $reviewerId = $reviewerIds[$reviewIndex]
     node scripts/run-python.js scripts/map-production/create_qa_report.py --job-id $jobId --image $master --image-sha256 $masterSha --vision-bundle-receipt $receipt --review-mode blind-independent --threshold $threshold --reviewer $reviewerId --format json --output "$vision/$jobId-review-$reviewLetter.json"
   }
