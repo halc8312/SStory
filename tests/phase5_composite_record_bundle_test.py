@@ -43,6 +43,7 @@ def accepted_vision(
     reviewer: str,
     golden: bool,
     threshold: int,
+    vision_receipt: dict[str, str] | None = None,
 ) -> dict:
     report = create_qa_report.build_report(
         job_id,
@@ -52,7 +53,10 @@ def accepted_vision(
         threshold=threshold,
         image_sha256=digest(image),
         review_mode="blind-independent",
+        vision_bundle_receipt=vision_receipt,
     )
+    if vision_receipt is not None:
+        report["vision_bundle"]["reviewer_confirmed_exact_five"] = True
     report["created_at"] = "2026-07-21T00:00:00Z"
     report["status"] = "complete"
     report["decision"] = "accepted"
@@ -176,6 +180,7 @@ class CompositeBundleFixture:
         Image.new("L", (8, 8), 255).save(self.observed_mask)
         self.build_report = self.build_root / "build-report.json"
         self.vision_paths: dict[str, Path] = {}
+        self.vision_receipts: dict[str, Path] = {}
         artifact_by_id: dict[str, dict] = {}
         for sheet_id in self.ordered_base_ids:
             imported = self.masters / f"{sheet_id}.png"
@@ -219,45 +224,45 @@ class CompositeBundleFixture:
                 )
             ]
             artifact_by_id[sheet_id] = {
-                    "sheet_id": sheet_id,
-                    "path": f"masters/{sheet_id}.png",
-                    "manifest_path": phase5.repo_path(master),
-                    "sha256": digest(master),
-                    "width": 8,
-                    "height": 8,
-                    "method": "deterministic-parent-composite",
-                    "accepted": False,
-                    "provisional": True,
-                    "provenance": {
-                        "kind": "deterministic-parent-composite",
-                        "children": children,
-                        "acceptance_inferred": False,
-                        "canonical_native_base": {
-                            "renderer": artifact(phase5.CANONICAL_RENDERER_PATH),
-                            "resolution_contract": artifact(phase5.DEFAULT_CONTRACT),
-                            "material_atlas": artifact(
-                                phase5.DEFAULT_PHASE5_MATERIAL_ATLAS
-                            ),
-                            "canon_sources": [
-                                {"role": role, **artifact(path)}
-                                for role, path in phase5.CANONICAL_GEOJSON_SOURCES.items()
-                            ],
-                            "render_stats_sha256": "0" * 64,
-                            "source_coordinates_modified": False,
-                            "world_crop_or_upscale_used": False,
-                        },
-                        "observed_masks": {
-                            "land_sea": artifact(self.observed_mask),
-                            "transport": artifact(self.observed_mask),
-                        },
-                        "composition": {
-                            "child_order": child_order,
-                            "resampling": "LANCZOS-downsample-only",
-                            "upscaled_child_count": 0,
-                            "base_rendered_at_parent_native_resolution": True,
-                        },
+                "sheet_id": sheet_id,
+                "path": f"masters/{sheet_id}.png",
+                "manifest_path": phase5.repo_path(master),
+                "sha256": digest(master),
+                "width": 8,
+                "height": 8,
+                "method": "deterministic-parent-composite",
+                "accepted": False,
+                "provisional": True,
+                "provenance": {
+                    "kind": "deterministic-parent-composite",
+                    "children": children,
+                    "acceptance_inferred": False,
+                    "canonical_native_base": {
+                        "renderer": artifact(phase5.CANONICAL_RENDERER_PATH),
+                        "resolution_contract": artifact(phase5.DEFAULT_CONTRACT),
+                        "material_atlas": artifact(
+                            phase5.DEFAULT_PHASE5_MATERIAL_ATLAS
+                        ),
+                        "canon_sources": [
+                            {"role": role, **artifact(path)}
+                            for role, path in phase5.CANONICAL_GEOJSON_SOURCES.items()
+                        ],
+                        "render_stats_sha256": "0" * 64,
+                        "source_coordinates_modified": False,
+                        "world_crop_or_upscale_used": False,
                     },
-                }
+                    "observed_masks": {
+                        "land_sea": artifact(self.observed_mask),
+                        "transport": artifact(self.observed_mask),
+                    },
+                    "composition": {
+                        "child_order": child_order,
+                        "resampling": "LANCZOS-downsample-only",
+                        "upscaled_child_count": 0,
+                        "base_rendered_at_parent_native_resolution": True,
+                    },
+                },
+            }
             automated = self.automated / f"{sheet_id}.phase5.json"
             write_json(
                 automated,
@@ -272,6 +277,8 @@ class CompositeBundleFixture:
                 },
             )
             vision = self.vision / f"{phase5.job_id_for_sheet(sheet_id)}-review.json"
+            vision_receipt = self.root / "evidence" / f"{sheet_id}.view-bundle.json"
+            write_json(vision_receipt, {"sheet_id": sheet_id, "fixture": True})
             write_json(
                 vision,
                 accepted_vision(
@@ -280,15 +287,17 @@ class CompositeBundleFixture:
                     reviewer=f"Composite Reviewer {position + 1}",
                     golden=False,
                     threshold=90,
+                    vision_receipt=artifact(vision_receipt),
                 ),
             )
             self.vision_paths[sheet_id] = vision
+            self.vision_receipts[sheet_id] = vision_receipt
 
         output_ids = writer._expected_stage_ids(stage, self.catalog_by_id)
         ordered_output_ids = self._ordered(output_ids)
-        deferred_ids = writer._expected_stage_ids(
-            "idx23", self.catalog_by_id
-        ) - output_ids
+        deferred_ids = (
+            writer._expected_stage_ids("idx23", self.catalog_by_id) - output_ids
+        )
         self.build_document = {
             "schema_version": phase5.BUILD_REPORT_SCHEMA_VERSION,
             "generated_by": phase5.GENERATOR_ID,
@@ -316,9 +325,7 @@ class CompositeBundleFixture:
 
     def _ordered(self, ids: set[str]) -> list[str]:
         return [
-            sheet["id"]
-            for sheet in self.catalog["sheets"]
-            if sheet.get("id") in ids
+            sheet["id"] for sheet in self.catalog["sheets"] if sheet.get("id") in ids
         ]
 
     def _write_build_report(self) -> None:
@@ -330,11 +337,48 @@ class CompositeBundleFixture:
             write_json(path, report)
 
     def assemble(self, *, force: bool = False) -> dict:
+        def fixture_vision_evidence(
+            report: dict,
+            *,
+            sheet_id: str,
+            master_path: Path,
+            master_sha256: str,
+            focus_registry_path=None,
+        ):
+            del focus_registry_path
+            source = bundle.vision_evidence.bind_file(
+                master_path, label=f"{sheet_id} fixture Vision source"
+            )
+            if source.sha256 != master_sha256:
+                raise bundle.vision_evidence.Phase5VisionEvidenceError(
+                    "fixture Vision source hash mismatch"
+                )
+            receipt_spec = report["vision_bundle"]["receipt"]
+            receipt = bundle.vision_evidence.bind_file(
+                receipt_spec["path"], label=f"{sheet_id} fixture Vision receipt"
+            )
+            if receipt.sha256 != receipt_spec["sha256"]:
+                raise bundle.vision_evidence.Phase5VisionEvidenceError(
+                    "fixture Vision receipt hash mismatch"
+                )
+            registry = bundle.vision_evidence.bind_file(
+                bundle.vision_evidence.DEFAULT_FOCUS_REGISTRY,
+                label="fixture canonical focus registry",
+            )
+            return bundle.vision_evidence.VisionEvidenceBindings(
+                source, receipt, registry
+            )
+
         with (
             mock.patch.object(
                 bundle.phase5, "load_contract", return_value=self.load_contract_result
             ),
             mock.patch.object(bundle.phase5, "validate_automated_qa_report"),
+            mock.patch.object(
+                bundle.vision_evidence,
+                "validate_report_vision_bundle",
+                side_effect=fixture_vision_evidence,
+            ),
         ):
             return bundle.assemble_composite_record_bundle(
                 stage=self.stage,
@@ -350,7 +394,9 @@ class CompositeBundleFixture:
 
 class Phase5CompositeRecordBundleTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.root = REPO_ROOT / f".phase5-composite-record-bundle-test-{uuid.uuid4().hex}"
+        self.root = (
+            REPO_ROOT / f".phase5-composite-record-bundle-test-{uuid.uuid4().hex}"
+        )
         self.root.mkdir()
         self.addCleanup(lambda: shutil.rmtree(self.root, ignore_errors=True))
         self.fixture = CompositeBundleFixture(self.root)
@@ -416,7 +462,8 @@ class Phase5CompositeRecordBundleTests(unittest.TestCase):
         self.fixture.build_document["inputs"]["source_index"]["sha256"] = "0" * 64
         self.fixture._write_build_report()
         with self.assertRaisesRegex(
-            bundle.CompositeRecordBundleError, "hash mismatch|sha256 mismatch|exact artifact"
+            bundle.CompositeRecordBundleError,
+            "hash mismatch|sha256 mismatch|exact artifact",
         ):
             self.fixture.assemble()
 
@@ -483,18 +530,14 @@ class Phase5CompositeRecordBundleTests(unittest.TestCase):
                 )
                 fixture.build_document[key] = value
                 fixture._write_build_report()
-                with self.assertRaisesRegex(
-                    bundle.CompositeRecordBundleError, message
-                ):
+                with self.assertRaisesRegex(bundle.CompositeRecordBundleError, message):
                     fixture.assemble()
 
     def test_rejects_stale_master_and_build_report_hashes(self):
         sheet_id = self.fixture.ordered_expected_ids[0]
         master = self.fixture.masters / f"{sheet_id}.png"
         Image.new("RGB", (8, 8), "black").save(master)
-        with self.assertRaisesRegex(
-            bundle.CompositeRecordBundleError, "hash|sha256"
-        ):
+        with self.assertRaisesRegex(bundle.CompositeRecordBundleError, "hash|sha256"):
             self.fixture.assemble()
 
         self.fixture = CompositeBundleFixture(self.root / "provenance-hash")
@@ -550,9 +593,7 @@ class Phase5CompositeRecordBundleTests(unittest.TestCase):
         report["scores"][0]["score"] -= 11
         report["total_score"] = 89
         write_json(path, report)
-        with self.assertRaisesRegex(
-            bundle.CompositeRecordBundleError, "at least 90"
-        ):
+        with self.assertRaisesRegex(bundle.CompositeRecordBundleError, "at least 90"):
             self.fixture.assemble()
 
         self.fixture = CompositeBundleFixture(self.root / "extra-review")

@@ -6,12 +6,16 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
-from production_common import ID_PATTERN, dump_json, utc_now
+from production_common import ID_PATTERN, REPO_ROOT, dump_json, utc_now
 from validate_manifest import validate_manifest
+from release_bound_artifact import BoundArtifact, BoundArtifactError, bind_file
+from release_path_safety import ReleasePathError
+import phase5_vision_evidence as vision_evidence
 
 
 REVIEW_VIEWS = (
@@ -51,6 +55,36 @@ SCORE_AXES = (
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 
 
+def _assert_git_index_matches(binding: BoundArtifact) -> None:
+    """Require the Git index to contain the exact receipt bytes just bound."""
+
+    try:
+        result = subprocess.run(
+            ["git", "show", f":{binding.relative}"],
+            cwd=REPO_ROOT,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+    except OSError as exc:
+        raise BoundArtifactError(
+            f"cannot inspect Git index for {binding.label}: {exc}"
+        ) from exc
+    if result.returncode != 0:
+        diagnostic = result.stderr.decode("utf-8", errors="replace").strip()
+        suffix = f" ({diagnostic})" if diagnostic else ""
+        raise BoundArtifactError(
+            f"{binding.label} must already be staged in the Git index: "
+            f"{binding.relative}{suffix}"
+        )
+    if result.stdout != binding.data:
+        raise BoundArtifactError(
+            f"Git index bytes do not match the bound {binding.label}: "
+            f"{binding.relative}"
+        )
+
+
 def build_report(
     job_id: str,
     image_path: str,
@@ -60,10 +94,13 @@ def build_report(
     threshold: int | None = None,
     image_sha256: str | None = None,
     review_mode: str | None = None,
+    vision_bundle_receipt: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     if not ID_PATTERN.fullmatch(job_id):
         raise ValueError("job_id must use lowercase kebab/snake case")
-    acceptance_threshold = threshold if threshold is not None else (94 if golden else 90)
+    acceptance_threshold = (
+        threshold if threshold is not None else (94 if golden else 90)
+    )
     if not 90 <= acceptance_threshold <= 100:
         raise ValueError("acceptance threshold must be between 90 and 100")
     selected_mode = review_mode or ("blind-independent" if golden else "standard")
@@ -86,7 +123,13 @@ def build_report(
         "review_mode": selected_mode,
         "acceptance_threshold": acceptance_threshold,
         "review_views": [
-            {"id": identifier, "label": label, "complete": False, "evidence": "", "notes": ""}
+            {
+                "id": identifier,
+                "label": label,
+                "complete": False,
+                "evidence": "",
+                "notes": "",
+            }
             for identifier, label in REVIEW_VIEWS
         ],
         "immediate_failures": [
@@ -94,7 +137,13 @@ def build_report(
             for identifier, label in IMMEDIATE_FAILURES
         ],
         "scores": [
-            {"id": identifier, "label": label, "maximum": maximum, "score": None, "notes": ""}
+            {
+                "id": identifier,
+                "label": label,
+                "maximum": maximum,
+                "score": None,
+                "notes": "",
+            }
             for identifier, label, maximum in SCORE_AXES
         ],
         "total_score": None,
@@ -104,14 +153,26 @@ def build_report(
     }
     if image_sha256 is not None:
         report["image_sha256"] = image_sha256
+    if vision_bundle_receipt is not None:
+        if (
+            not isinstance(vision_bundle_receipt, dict)
+            or set(vision_bundle_receipt) != {"path", "sha256"}
+            or not isinstance(vision_bundle_receipt.get("path"), str)
+            or not SHA256_PATTERN.fullmatch(
+                str(vision_bundle_receipt.get("sha256", ""))
+            )
+        ):
+            raise ValueError("vision_bundle_receipt must contain exact path and sha256")
+        report["vision_bundle"] = {
+            "receipt": dict(vision_bundle_receipt),
+            "reviewer_confirmed_exact_five": False,
+        }
     return report
 
 
 def markdown_report(report: dict[str, Any]) -> str:
     created_date = str(report["created_at"])[:10]
-    yaml_title = json.dumps(
-        f"Map Vision QA: {report['job_id']}", ensure_ascii=False
-    )
+    yaml_title = json.dumps(f"Map Vision QA: {report['job_id']}", ensure_ascii=False)
     yaml_author = json.dumps(str(report["reviewer"]), ensure_ascii=False)
     yaml_scope = json.dumps(
         f"Map-production image {report['job_id']}", ensure_ascii=False
@@ -141,13 +202,36 @@ def markdown_report(report: dict[str, Any]) -> str:
         f"- Acceptance threshold: {report['acceptance_threshold']}/100",
         f"- Golden reference: {'yes' if report['golden_reference'] else 'no'}",
         f"- Review mode: {report.get('review_mode', 'standard')}",
+        (
+            "- Exact-five receipt: `"
+            + str(
+                report.get("vision_bundle", {})
+                .get("receipt", {})
+                .get("path", "not bound")
+            )
+            + "`"
+        ),
+        (
+            "- Exact-five reviewer confirmation: "
+            + (
+                "yes"
+                if report.get("vision_bundle", {}).get("reviewer_confirmed_exact_five")
+                is True
+                else "no"
+            )
+        ),
         "",
         "## Review views",
         "",
     ]
-    lines.extend(f"- [ ] {item['label']} — evidence: _TBD_" for item in report["review_views"])
+    lines.extend(
+        f"- [ ] {item['label']} — evidence: _TBD_" for item in report["review_views"]
+    )
     lines.extend(["", "## Immediate-failure gate", ""])
-    lines.extend(f"- [ ] Not detected: {item['label']} — evidence: _TBD_" for item in report["immediate_failures"])
+    lines.extend(
+        f"- [ ] Not detected: {item['label']} — evidence: _TBD_"
+        for item in report["immediate_failures"]
+    )
     lines.extend(
         [
             "",
@@ -188,11 +272,25 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--job-id", required=True)
     parser.add_argument("--image", help="candidate image path")
     parser.add_argument("--manifest", type=Path, help="optional production manifest")
-    parser.add_argument("--output", required=True, type=Path, help="output stem or .md/.json path")
-    parser.add_argument("--format", choices=("both", "markdown", "json"), default="both")
+    parser.add_argument(
+        "--output", required=True, type=Path, help="output stem or .md/.json path"
+    )
+    parser.add_argument(
+        "--format", choices=("both", "markdown", "json"), default="both"
+    )
     parser.add_argument("--reviewer", default="Codex Vision QA")
     parser.add_argument("--golden", action="store_true")
-    parser.add_argument("--image-sha256", help="lowercase SHA-256 digest of the reviewed image")
+    parser.add_argument(
+        "--image-sha256", help="lowercase SHA-256 digest of the reviewed image"
+    )
+    parser.add_argument(
+        "--vision-bundle-receipt",
+        type=Path,
+        help=(
+            "tracked Phase 5 exact-five view-bundle.json; the generated draft "
+            "keeps reviewer confirmation false until all five views are inspected"
+        ),
+    )
     parser.add_argument(
         "--review-mode",
         choices=("standard", "self", "blind-independent"),
@@ -208,6 +306,8 @@ def main(argv: list[str] | None = None) -> int:
     image = args.image
     threshold = args.threshold
     image_sha256 = args.image_sha256
+    vision_bundle_receipt: dict[str, str] | None = None
+    vision_bundle_binding: BoundArtifact | None = None
     if args.manifest:
         manifest, errors = validate_manifest(args.manifest)
         if errors or manifest is None:
@@ -215,7 +315,9 @@ def main(argv: list[str] | None = None) -> int:
             for error in errors:
                 print(f"- {error}", file=sys.stderr)
             return 1
-        job = next((item for item in manifest["jobs"] if item.get("id") == args.job_id), None)
+        job = next(
+            (item for item in manifest["jobs"] if item.get("id") == args.job_id), None
+        )
         if job is None:
             print(f"Unknown manifest job: {args.job_id!r}", file=sys.stderr)
             return 1
@@ -224,11 +326,49 @@ def main(argv: list[str] | None = None) -> int:
             image = master.get("path")
         if threshold is None:
             threshold = job.get("acceptance_threshold")
-        if image_sha256 is None and isinstance(master, dict) and image == master.get("path"):
+        if (
+            image_sha256 is None
+            and isinstance(master, dict)
+            and image == master.get("path")
+        ):
             image_sha256 = master.get("sha256")
     if not image:
-        print("--image is required when the manifest job has no master.path", file=sys.stderr)
+        print(
+            "--image is required when the manifest job has no master.path",
+            file=sys.stderr,
+        )
         return 2
+    if args.vision_bundle_receipt is not None:
+        try:
+            receipt = bind_file(
+                args.vision_bundle_receipt,
+                label="Phase 5 exact-five Vision receipt",
+                trackable=True,
+            )
+            _assert_git_index_matches(receipt)
+            receipt_document = receipt.json_object()
+        except (BoundArtifactError, ReleasePathError) as exc:
+            print(f"Vision bundle binding failed: {exc}", file=sys.stderr)
+            return 2
+        receipt_source = receipt_document.get("source")
+        if (
+            receipt_document.get("schema_version")
+            != vision_evidence.CANONICAL_RECEIPT_SCHEMA_VERSION
+            or receipt_document.get("type") != vision_evidence.BUNDLE_TYPE
+            or not isinstance(receipt_source, dict)
+            or receipt_source.get("path") != image
+            or (
+                image_sha256 is not None
+                and receipt_source.get("sha256") != image_sha256
+            )
+        ):
+            print(
+                "Vision bundle receipt does not bind the selected image bytes",
+                file=sys.stderr,
+            )
+            return 2
+        vision_bundle_receipt = receipt.artifact()
+        vision_bundle_binding = receipt
     try:
         report = build_report(
             args.job_id,
@@ -238,12 +378,25 @@ def main(argv: list[str] | None = None) -> int:
             threshold=threshold,
             image_sha256=image_sha256,
             review_mode=args.review_mode,
+            vision_bundle_receipt=vision_bundle_receipt,
         )
     except ValueError as exc:
         print(f"QA report creation failed: {exc}", file=sys.stderr)
         return 2
 
-    base = args.output.with_suffix("") if args.output.suffix.lower() in {".md", ".json"} else args.output
+    if vision_bundle_binding is not None:
+        try:
+            _assert_git_index_matches(vision_bundle_binding)
+            vision_bundle_binding.assert_unchanged()
+        except BoundArtifactError as exc:
+            print(f"Vision bundle binding failed: {exc}", file=sys.stderr)
+            return 2
+
+    base = (
+        args.output.with_suffix("")
+        if args.output.suffix.lower() in {".md", ".json"}
+        else args.output
+    )
     outputs: list[tuple[Path, str]] = []
     if args.format in {"both", "markdown"}:
         outputs.append((base.with_suffix(".md"), markdown_report(report)))
@@ -251,7 +404,11 @@ def main(argv: list[str] | None = None) -> int:
         outputs.append((base.with_suffix(".json"), ""))
     existing = [path for path, _ in outputs if path.exists()]
     if existing and not args.overwrite:
-        print("Refusing to overwrite existing report(s): " + ", ".join(map(str, existing)), file=sys.stderr)
+        print(
+            "Refusing to overwrite existing report(s): "
+            + ", ".join(map(str, existing)),
+            file=sys.stderr,
+        )
         return 1
     for path, content in outputs:
         path.parent.mkdir(parents=True, exist_ok=True)

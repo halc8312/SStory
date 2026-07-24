@@ -57,6 +57,37 @@
         "blind-independent"
       ]
     },
+    "vision_bundle": {
+      "type": "object",
+      "required": [
+        "receipt",
+        "reviewer_confirmed_exact_five"
+      ],
+      "properties": {
+        "receipt": {
+          "type": "object",
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "reviewer_confirmed_exact_five": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
     "acceptance_threshold": {
       "type": "integer",
       "minimum": 90,
@@ -190,6 +221,40 @@
     }
   },
   "allOf": [
+    {
+      "if": {
+        "properties": {
+          "job_id": {
+            "pattern": "^phase5-"
+          },
+          "status": {
+            "const": "complete"
+          },
+          "decision": {
+            "const": "accepted"
+          }
+        },
+        "required": [
+          "job_id",
+          "status",
+          "decision"
+        ]
+      },
+      "then": {
+        "required": [
+          "vision_bundle"
+        ],
+        "properties": {
+          "vision_bundle": {
+            "properties": {
+              "reviewer_confirmed_exact_five": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    },
     {
       "if": {
         "properties": {

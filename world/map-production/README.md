@@ -96,17 +96,230 @@ world/map-production/
 - 14地域、1回廊、2都市のdirect master 17枚を `idx17` に固定し、独立確認済みの5大陸を加えた `idx22`、さらに独立確認済みの世界を加えた `idx23` を順に作ります。最終buildは、追跡対象の `world/map-production/releases/` 以下にある版付き `idx23` source indexを必須入力とし、同じく版付きで追跡対象のrelease rootへ23 sheetを出力します。
 - `idx23` を入力にした最終buildだけが、世界1・大陸5・direct 17の計23 sheetから512 px WebPタイル1350枚を生成できます。公開先は `docs/assets/images/maps/tiles/{release-id}/`、正規indexは `docs/data/map/sheet-tiles-v3.json`、互換indexは同一バイトの `docs/data/map/region-rasters.json` です。
 
-正規buildは `--target-stage` 必須で、次の順序以外を拒否します。`idx22` / `idx23` では `--tiles` を指定できず、`final` では逆に `--tiles` が必須です。候補buildも後続のcomposite evidenceになるため、既定の `tmp/` ではなく追跡対象の版付きrelease rootへ出力します。
+### Golden v2受入後からfinalまでの完全runbook
+
+すべてリポジトリrootから `node scripts/run-python.js` 経由で実行します。`python` の直接起動、`--force`、preview renderer flagは正規制作に使いません。開始条件は、Golden v2 master、automated QA、Root review、匿名view packet、異なる2名のblind-independent review、acceptance receiptがtrackedされ、production manifestでacceptedになっていることです。
+
+最初に全正典controlと23枚のVision focus registryを再検証します。
 
 ```powershell
-python scripts/map-production/build_phase5_assets.py build --target-stage idx22 --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx17.json --output-root world/map-production/releases/world-v3-idx22-build-v1 --release-id world-v3
-python scripts/map-production/build_phase5_assets.py build --target-stage idx23 --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx22.json --output-root world/map-production/releases/world-v3-idx23-build-v1 --release-id world-v3
-python scripts/map-production/build_phase5_assets.py build --target-stage final --tiles --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx23.json --output-root world/map-production/releases/world-v3-phase5-v1 --release-id world-v3
+node scripts/run-python.js scripts/map-production/validate_resolution_contract.py --check-catalog --json
+node scripts/run-python.js scripts/map-production/render_phase5_metatile_controls.py --verify-existing
+node scripts/run-python.js scripts/map-production/render_phase5_parent_control_masks.py --verify-existing
+node scripts/run-python.js scripts/map-production/validate_phase5_vision_focus_boxes.py --json
+```
+
+direct 17枚はignored TEMPへ一括レンダーし、各renderer reportからcanonical provenanceを作ってから、版付きtracked master rootへ昇格します。以下は同じPowerShell sessionで続けて実行します。
+
+```powershell
+$golden = "world/map-production/candidates/style-candidate-k-v3-golden-v2.png"
+$goldenSha = (Get-FileHash -LiteralPath $golden -Algorithm SHA256).Hash.ToLowerInvariant()
+$render = "tmp/map-production/phase5-reviewed-v2/world-v3-direct17-v1"
+$masters = "world/map-production/masters/world-v3-direct17-v1"
+
+node scripts/run-python.js scripts/map-production/render_phase5_reviewed_master.py --all-generation --emit-masks --output-dir $render --golden-style $golden --golden-style-sha256 $goldenSha --material-atlas world/map-production/style-assets/phase5-cartographic-material-atlas-v1.png --highland-detail-exemplar --canonical-control-index world/map-production/controls/phase5-metatiles/index.json
+
+Get-ChildItem -LiteralPath $render -Filter "sheet_*.report.json" -File | ForEach-Object {
+  $rendererReport = $_.FullName
+  $sid = (Get-Content -LiteralPath $rendererReport -Raw | ConvertFrom-Json).sheet_id
+  node scripts/run-python.js scripts/map-production/build_phase5_assets.py canonical-provenance --renderer-report $rendererReport --output "$render/$sid.canonical-provenance.json" --canonical-control-index world/map-production/controls/phase5-metatiles/index.json
+}
+
+node scripts/run-python.js scripts/map-production/promote_phase5_renderer_outputs.py $render $masters
+git add -- $masters
+```
+
+`git add` はcommitではなく、exact-five emitterが `git ls-files` でsourceを固定するための必須順序です。reviewer IDは実担当者のIDを環境変数へ入れます。Unicode NFKC、whitespace圧縮、casefold後にもA/Bが異なる必要があります。90点・1名のstandard directは `sheet_region_atlantia_region`、`sheet_region_emerald_plains_region`、`sheet_region_ethernia_core_region` の3枚だけで、それ以外のdirect 14枚は94点・異なる2名です。
+
+```powershell
+$run = "phase5-world-v3-v1"
+$evidence = "world/map-production/qa/evidence/$run"
+$vision = "world/map-production/qa/$run/vision"
+$automated = "world/map-production/qa/automated/$run"
+$tempVisionRoot = "tmp/map-production/phase5-vision/$run"
+$reviewerA = $env:PHASE5_REVIEWER_A
+$reviewerB = $env:PHASE5_REVIEWER_B
+if ([string]::IsNullOrWhiteSpace($reviewerA) -or [string]::IsNullOrWhiteSpace($reviewerB)) {
+  throw "Set PHASE5_REVIEWER_A and PHASE5_REVIEWER_B to the two reviewer IDs."
+}
+
+$standardDirect = @(
+  "sheet_region_atlantia_region"
+  "sheet_region_emerald_plains_region"
+  "sheet_region_ethernia_core_region"
+)
+$directSids = @(
+  Get-ChildItem -LiteralPath $masters -Filter "sheet_*.report.json" -File |
+    ForEach-Object { (Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json).sheet_id }
+)
+if ($directSids.Count -ne 17) {
+  throw "Expected 17 promoted renderer reports, found $($directSids.Count)."
+}
+
+# The receipt emitter owns creation of each $evidence/$sid directory.
+New-Item -ItemType Directory -Force $tempVisionRoot, $evidence, $vision, $automated | Out-Null
+if ($IsLinux) {
+  $chmod = Get-Command chmod -CommandType Application -ErrorAction Stop
+  $setfacl = Get-Command setfacl -CommandType Application -ErrorAction Stop
+  foreach ($secureParent in @($tempVisionRoot, $evidence)) {
+    & $setfacl.Source --remove-all -- $secureParent
+    if ($LASTEXITCODE -ne 0) {
+      throw "Removing the access ACL failed for $secureParent."
+    }
+    & $setfacl.Source --remove-default -- $secureParent
+    if ($LASTEXITCODE -ne 0) {
+      throw "Removing the default ACL failed for $secureParent."
+    }
+    & $chmod.Source 700 -- $secureParent
+    if ($LASTEXITCODE -ne 0) {
+      throw "Final chmod 0700 failed for $secureParent."
+    }
+  }
+}
+foreach ($sid in $directSids) {
+  $master = "$masters/$sid.png"
+  $masterSha = (Get-FileHash -LiteralPath $master -Algorithm SHA256).Hash.ToLowerInvariant()
+  $jobId = "phase5-$($sid.Substring(6))-v1"
+  $threshold = if ($standardDirect -contains $sid) { 90 } else { 94 }
+  $reviewerIds = if ($threshold -eq 90) { @($reviewerA) } else { @($reviewerA, $reviewerB) }
+  $receipt = "$evidence/$sid/view-bundle.json"
+  $tempViews = "$tempVisionRoot/$sid"
+
+  node scripts/run-python.js scripts/map-production/audit_phase5_master.py --sheet-id $sid --source-kind canonical_render_master --master $master --provenance-report "$masters/$sid.canonical-provenance.json" --land-sea-control "world/map-production/controls/phase5-metatiles/$sid/qa/land-sea-control.png" --land-sea-observed "$masters/$sid.observed-land-sea-mask.png" --transport-control "world/map-production/controls/phase5-metatiles/$sid/qa/transport-control.png" --transport-observed "$masters/$sid.observed-transport-mask.png" --canonical-control-index world/map-production/controls/phase5-metatiles/index.json --base-manifest world/map-production/production-manifest.json --output "$automated/$sid.phase5.json"
+  node scripts/run-python.js scripts/map-production/emit_phase5_vision_views.py $master $tempViews --source-sha256 $masterSha --sheet-id $sid --evidence-receipt $receipt
+  git add -- $receipt
+
+  for ($reviewIndex = 0; $reviewIndex -lt $reviewerIds.Count; $reviewIndex++) {
+    $reviewLetter = [char](97 + $reviewIndex)
+    $reviewerId = $reviewerIds[$reviewIndex]
+    node scripts/run-python.js scripts/map-production/create_qa_report.py --job-id $jobId --image $master --image-sha256 $masterSha --vision-bundle-receipt $receipt --review-mode blind-independent --threshold $threshold --reviewer $reviewerId --format json --output "$vision/$jobId-review-$reviewLetter.json"
+  }
+}
+```
+
+LinuxではTEMP親を所有者専用mode 0700へ固定し、`setfacl`（通常は`acl` package）でaccess/default ACLを除去します。emitterも各実行時に所有者・mode・ACLを再検証するため、`chmod` / `setfacl`のどれかが失敗したら続行しません。`create_qa_report.py` はreceiptの現在bytesとGit indexのblobが完全一致することを要求するため、emitter直後の `git add -- $receipt` は順序上必須です。ここで停止し、各reviewerが5枚すべてを実際に確認してから、自分のreportの `vision_bundle.reviewer_confirmed_exact_five` を `true` にし、10 review views、8 immediate-failure gates、全scoreとsummaryを完成させます。各report filenameはassemblerが発見できる `$jobId-review-a.json` / `$jobId-review-b.json` の形から変えません。TEMP PNGはcommitしません。全reportがacceptedになった後、reportと自動QAをstageし、direct bundleとidx17を作ります。receiptは各emitter直後に正規filenameを個別stage済みであり、transaction debrisを含み得るevidence root全体はstageしません。
+
+```powershell
+git add -- world/map-production/qa/$run world/map-production/qa/automated/$run
+node scripts/run-python.js scripts/map-production/assemble_phase5_direct_records.py --masters-root $masters --automated-root world/map-production/qa/automated/$run --vision-root $vision --output world/map-production/releases/world-v3-source-indexes/world-v3-direct17-records-v1.json
+node scripts/run-python.js scripts/map-production/write_phase5_source_indexes.py --stage idx17 --records world/map-production/releases/world-v3-source-indexes/world-v3-direct17-records-v1.json --golden-style $golden --output world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx17.json
+git add -- world/map-production/releases/world-v3-source-indexes
+```
+
+以後は必ず `idx17 -> idx22 -> idx23 -> final` の順です。idx22/idx23 build直後に `validate` と `git add` を済ませてから、その段階で新規作成したcompositeだけを自動QA・exact-five・blind reviewします。composite automated QAには直前のchild source indexと `world/map-production/controls/phase5-parents/index.json` を必ず指定し、Vision reviewerはGoldenの両reviewerと別人にします。composite reportは各sheetにつきassemblerが要求するexact 1件だけを `$jobId-review-a.json` として作ります。
+
+```powershell
+$compositeReviewer = $env:PHASE5_COMPOSITE_REVIEWER
+if ([string]::IsNullOrWhiteSpace($compositeReviewer)) {
+  throw "Set PHASE5_COMPOSITE_REVIEWER to an ID distinct from both Golden reviewers."
+}
+
+function New-Phase5CompositeReviewTemplate {
+  param(
+    [Parameter(Mandatory = $true)][string]$SheetId,
+    [Parameter(Mandatory = $true)][string]$StageRoot,
+    [Parameter(Mandatory = $true)][string]$ChildIndex
+  )
+
+  $master = "$StageRoot/masters/$SheetId.png"
+  $masterSha = (Get-FileHash -LiteralPath $master -Algorithm SHA256).Hash.ToLowerInvariant()
+  $jobId = "phase5-$($SheetId.Substring(6))-v1"
+  $receipt = "$evidence/$SheetId/view-bundle.json"
+  $tempViews = "$tempVisionRoot/$SheetId"
+
+  node scripts/run-python.js scripts/map-production/audit_phase5_master.py --sheet-id $SheetId --source-kind composite_master --master $master --provenance-report "$StageRoot/build-report.json" --land-sea-control "world/map-production/controls/phase5-parents/$SheetId/qa/land-sea-control.png" --land-sea-observed "$StageRoot/qa/observed-masks/$SheetId.land-sea.png" --transport-control "world/map-production/controls/phase5-parents/$SheetId/qa/transport-control.png" --transport-observed "$StageRoot/qa/observed-masks/$SheetId.transport.png" --child-source-index $ChildIndex --parent-control-index world/map-production/controls/phase5-parents/index.json --output "$automated/$SheetId.phase5.json"
+  node scripts/run-python.js scripts/map-production/emit_phase5_vision_views.py $master $tempViews --source-sha256 $masterSha --sheet-id $SheetId --evidence-receipt $receipt
+  git add -- $receipt
+  node scripts/run-python.js scripts/map-production/create_qa_report.py --job-id $jobId --image $master --image-sha256 $masterSha --vision-bundle-receipt $receipt --review-mode blind-independent --threshold 90 --reviewer $compositeReviewer --format json --output "$vision/$jobId-review-a.json"
+}
+```
+
+idx22では5大陸だけを新規合成し、build rootをstageしてからexact-fiveを作ります。
+
+```powershell
+$idx17 = "world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx17.json"
+$idx22Root = "world/map-production/releases/world-v3-idx22-build-v1"
+$idx22Records = "world/map-production/releases/world-v3-source-indexes/world-v3-idx22-composite-records-v1.json"
+$idx22 = "world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx22.json"
+$continentSids = @(
+  "sheet_continent_elysion"
+  "sheet_continent_lumiera"
+  "sheet_continent_chaos_ria"
+  "sheet_continent_atlantis"
+  "sheet_continent_grimoire"
+)
+
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py build --target-stage idx22 --source-index $idx17 --output-root $idx22Root --release-id world-v3
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py validate $idx22Root
+git add -- $idx22Root
+foreach ($sid in $continentSids) {
+  New-Phase5CompositeReviewTemplate -SheetId $sid -StageRoot $idx22Root -ChildIndex $idx17
+}
+```
+
+ここで5件のreportを実見してacceptedへ完成させます。各receiptはhelper内のemitter直後に正規filenameだけを個別stage済みです。reportと自動QAをstageしてからbundle/indexを書きます。
+
+```powershell
+git add -- "world/map-production/qa/$run" $automated
+node scripts/run-python.js scripts/map-production/assemble_phase5_composite_records.py --stage idx22 --base-index $idx17 --build-report "$idx22Root/build-report.json" --masters-root "$idx22Root/masters" --automated-root $automated --vision-root $vision --output $idx22Records
+node scripts/run-python.js scripts/map-production/write_phase5_source_indexes.py --stage idx22 --base-index $idx17 --records $idx22Records --output $idx22
+git add -- world/map-production/releases/world-v3-source-indexes
+```
+
+idx23ではworldだけを新規合成します。
+
+```powershell
+$idx23Root = "world/map-production/releases/world-v3-idx23-build-v1"
+$idx23Records = "world/map-production/releases/world-v3-source-indexes/world-v3-idx23-composite-records-v1.json"
+$idx23 = "world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx23.json"
+
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py build --target-stage idx23 --source-index $idx22 --output-root $idx23Root --release-id world-v3
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py validate $idx23Root
+git add -- $idx23Root
+New-Phase5CompositeReviewTemplate -SheetId "sheet_world" -StageRoot $idx23Root -ChildIndex $idx22
+```
+
+ここでworld reportを実見してacceptedへ完成させます。world receiptはhelper内で個別stage済みなので、reportと自動QAをstageしてからbundle/indexを書きます。
+
+```powershell
+git add -- "world/map-production/qa/$run" $automated
+node scripts/run-python.js scripts/map-production/assemble_phase5_composite_records.py --stage idx23 --base-index $idx22 --build-report "$idx23Root/build-report.json" --masters-root "$idx23Root/masters" --automated-root $automated --vision-root $vision --output $idx23Records
+node scripts/run-python.js scripts/map-production/write_phase5_source_indexes.py --stage idx23 --base-index $idx22 --records $idx23Records --output $idx23
+git add -- world/map-production/releases/world-v3-source-indexes
+```
+
+finalは合成を行わず、exact idx23から23 masters / 1350 tilesを作ってbuild rootをstageします。
+
+```powershell
+$finalRoot = "world/map-production/releases/world-v3-phase5-v1"
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py build --target-stage final --tiles --source-index $idx23 --output-root $finalRoot --release-id world-v3
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py validate $finalRoot
+git add -- $finalRoot
+```
+
+build rootの `qa/*.json` / `qa/*.md` は未割当のscaffoldであり、不変buildの中では編集・採用しません。採用判断の正規場所は `$vision`、view hash evidenceの正規場所は `$evidence` です。既存output rootは上書きせず、新しい版付きpathを使います。
+
+Phase 7へ進むときは、finalizerより先に検証済みfinal buildを`docs/`へpublishします。`PHASE5_PREVIEW_URL`にはqueryを含まないrelease-candidate previewのbase URLを設定し、Browser QAの出力先には存在しないか空の版付きTEMP directoryを使います。
+
+```powershell
+$previewBaseUrl = $env:PHASE5_PREVIEW_URL
+if ([string]::IsNullOrWhiteSpace($previewBaseUrl)) {
+  throw "Set PHASE5_PREVIEW_URL to the query-free release-candidate preview base URL."
+}
+$browserQaRoot = "tmp/map-production/phase6-browser-qa/world-v3-v1"
+$browserQaReceipt = "$browserQaRoot/phase6-browser-qa-receipt.json"
+
+node scripts/run-python.js scripts/map-production/publish_phase5_tiles.py $finalRoot --docs-root docs
+git add -- docs/assets/images/maps/tiles/world-v3 docs/data/map/sheet-tiles-v3.json docs/data/map/region-rasters.json
+npm run map:production:finalize -- release-candidate $finalRoot
+npm run map:production:browser-qa -- --url "${previewBaseUrl}?release-preview=world-v3" --output-dir $browserQaRoot
+npm run map:production:finalize -- published $browserQaReceipt
+npm run map:production:receipt
 ```
 
 - `release-readiness.json` が `in-progress` の間は、制作中のmanifestと実在アセットを検査しつつ最終公開条件だけを保留します。全23 bounded sheetが `accepted` 以上になった場合、またはmanifestのjobが `staging` / `published` へ進んだ場合は、保留を継続できません。
 - `release-readiness.json` を `release-candidate` へ変更すると、CIは `npm run map:production:release` と同じ厳格検査を必須化し、ゴールデンの独立二回確認、QA整合、SHA/寸法/タイル再計算、bounds確定済み23 sheetのcoverageを要求します。`published` 宣言では23 sheetすべての `published` 状態も要求します。
-- 最終化は `npm run map:production:finalize -- release-candidate <phase5-build-root>`、`npm run map:production:browser-qa -- --url <preview-url>?release-preview=world-v3 --output-dir <TEMP/output-dir>`、`npm run map:production:finalize -- published <phase6-browser-qa-receipt>`、`npm run map:production:receipt` の順です。ブラウザQAは固定版Playwright CLI 0.1.17で1440×1000デスクトップ、390×844モバイル、400ms以上の低速タイル応答、Royal子タイル503時のエリュシオン親sheet保持を確認します。world-v3基底tileはHTTP成功だけでなくLeafletの実decode完了とfallback未使用を必須にし、console/network/page errorは最終スクリーンショット後に再収集します。受領証は実デコードした非blankスクリーンショット、snapshot、raw evidenceから再導出する診断、release/index、実行時JS/CSS/JSON、Royal親子manifest、実配信tile、QAハーネスのSHA-256を固定します。`published` 遷移は検証済みbundleを `world/map-production/releases/world-v3-phase6-browser-qa/` へコピーし、そのreceipt/tree hashをreadinessとpublication receiptへ永続化します。公開後もruntime依存物とworld-v3 release treeを同じSHA-256へ再照合し、publication receiptの時刻がブラウザQA完了より前なら拒否します。
+- 最終化は上の `publish -> release-candidate -> Browser QA -> published -> receipt` の順です。ブラウザQAは固定版Playwright CLI 0.1.17で1440×1000デスクトップ、390×844モバイル、400ms以上の低速タイル応答、Royal子タイル503時のエリュシオン親sheet保持を確認します。world-v3基底tileはHTTP成功だけでなくLeafletの実decode完了とfallback未使用を必須にし、console/network/page errorは最終スクリーンショット後に再収集します。受領証は実デコードした非blankスクリーンショット、snapshot、raw evidenceから再導出する診断、release/index、実行時JS/CSS/JSON、Royal親子manifest、実配信tile、QAハーネスのSHA-256を固定します。`published` 遷移は検証済みbundleを `world/map-production/releases/world-v3-phase6-browser-qa/` へコピーし、そのreceipt/tree hashをreadinessとpublication receiptへ永続化します。公開後もruntime依存物とworld-v3 release treeを同じSHA-256へ再照合し、publication receiptの時刻がブラウザQA完了より前なら拒否します。
 - `published` finalizerは `phase6-browser-qa-receipt.schema.json` と現在のrelease-candidate全バイトを再検証します。4シナリオの一つでも失敗、証拠欠落、SHA変化、別release、重複preview queryなら公開状態を一切変更しません。
 - release-candidateの作成、厳格検証、またはプレビューQAのどれかが失敗した場合はそこで停止し、`published` へ進めません。finalizer自体はpublication receiptを作らず、`published` 遷移直後の `npm run map:production:receipt` をリポジトリに対する最後の書き込みにします。receiptが永続化されるまで `published` readiness検証は意図どおり失敗します。
 - GitHubではDraft PRを作成し、Ubuntu / Windows CI成功後にReadyへ切り替え、squash mergeします。続けて `main` CI成功を確認してから、`main:/docs` のGitHub Pagesで公開URLを検証します。

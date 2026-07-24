@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-vision-focus-boxes.schema.json",
+  "title": "SStory Phase 5 canonical Vision focus boxes",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "coordinate_convention",
+    "focus_crop_size_px",
+    "map_catalog",
+    "resolution_contract",
+    "entries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-vision-focus-boxes.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "type": {
+      "const": "sstory-phase5-canonical-vision-focus-boxes"
+    },
+    "coordinate_reference_system": {
+      "const": "EA-WORLD-1"
+    },
+    "coordinate_convention": {
+      "const": "left-top-inclusive_right-bottom-exclusive"
+    },
+    "focus_crop_size_px": {
+      "const": 512
+    },
+    "map_catalog": {
+      "$ref": "#/definitions/artifact"
+    },
+    "resolution_contract": {
+      "$ref": "#/definitions/artifact"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 23,
+      "maxItems": 23,
+      "items": {
+        "type": "object",
+        "required": [
+          "sheet_id",
+          "source_size",
+          "box_px",
+          "purpose"
+        ],
+        "properties": {
+          "sheet_id": {
+            "type": "string",
+            "pattern": "^sheet_[a-z0-9_]+$"
+          },
+          "source_size": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "box_px": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "definitions": {
+    "artifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

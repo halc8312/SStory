@@ -33,6 +33,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable
 
 import build_phase5_assets as phase5
+import phase5_vision_evidence as vision_evidence
 import write_phase5_source_indexes as source_index_writer
 from release_bound_artifact import (
     BoundArtifact,
@@ -351,7 +352,9 @@ def _load_base_context(
 ) -> _BaseContext:
     base_stage = STAGE_BASE[stage]
     try:
-        base_path, _ = require_trackable_path(base_index_path, label="base source index")
+        base_path, _ = require_trackable_path(
+            base_index_path, label="base source index"
+        )
     except ReleasePathError as exc:
         raise CompositeRecordBundleError(str(exc)) from exc
     index_binding = _bind(base_path, "base source index")
@@ -361,9 +364,13 @@ def _load_base_context(
                 base_path, set(contracts)
             )
     except phase5.Phase5BuildError as exc:
-        raise CompositeRecordBundleError(f"base source index is invalid: {exc}") from exc
+        raise CompositeRecordBundleError(
+            f"base source index is invalid: {exc}"
+        ) from exc
     if index_sha256 != index_binding.sha256:
-        raise CompositeRecordBundleError("base source-index parser/hash binding mismatch")
+        raise CompositeRecordBundleError(
+            "base source-index parser/hash binding mismatch"
+        )
     if not isinstance(golden_style, dict):
         raise CompositeRecordBundleError("base source index must lock a Golden style")
     expected_ids = source_index_writer._expected_stage_ids(base_stage, catalog_by_id)
@@ -394,10 +401,9 @@ def _load_base_context(
             )
 
     bindings = dict(canonical_bindings)
-    _merge_bindings(bindings, (
-        bound
-        for bound in phase5.source_index_bound_artifacts(sources)
-    ))
+    _merge_bindings(
+        bindings, (bound for bound in phase5.source_index_bound_artifacts(sources))
+    )
     _merge_bindings(bindings, (index_binding,))
     golden_reviewers = _golden_reviewers_from_direct_sources(
         sources=sources,
@@ -421,7 +427,9 @@ def _expected_composite_ids(
 ) -> list[str]:
     ids = source_index_writer._expected_new_ids(stage, catalog_by_id)
     expected_type = STAGE_EXPECTED_TYPES[stage]
-    if not ids or any(catalog_by_id[sheet_id].get("sheet_type") != expected_type for sheet_id in ids):
+    if not ids or any(
+        catalog_by_id[sheet_id].get("sheet_type") != expected_type for sheet_id in ids
+    ):
         raise CompositeRecordBundleError(
             f"canonical {stage} transition does not contain only {expected_type} sheets"
         )
@@ -453,7 +461,9 @@ def _validate_build_report(
             f"{phase5.BUILD_REPORT_SCHEMA_VERSION!r}"
         )
     if report.get("generated_by") != phase5.GENERATOR_ID:
-        raise CompositeRecordBundleError("composite build report has the wrong generator")
+        raise CompositeRecordBundleError(
+            "composite build report has the wrong generator"
+        )
     if report.get("coordinate_reference_system") != "EA-WORLD-1":
         raise CompositeRecordBundleError("composite build report has the wrong CRS")
     stage_errors = phase5._build_report_stage_errors(report)
@@ -492,9 +502,14 @@ def _validate_build_report(
         )
     inputs = report.get("inputs")
     if not isinstance(inputs, dict):
-        raise CompositeRecordBundleError("composite build report inputs must be an object")
+        raise CompositeRecordBundleError(
+            "composite build report inputs must be an object"
+        )
     _require_exact_artifact(
-        inputs.get("source_index"), base.index, "composite build report child source index", bindings
+        inputs.get("source_index"),
+        base.index,
+        "composite build report child source index",
+        bindings,
     )
     canonical_catalog = _bind(phase5.DEFAULT_MAP_SHEETS, "canonical map catalog")
     canonical_contract = _bind(phase5.DEFAULT_CONTRACT, "canonical resolution contract")
@@ -506,7 +521,10 @@ def _validate_build_report(
         bindings,
     )
     _require_exact_artifact(
-        inputs.get("catalog"), canonical_catalog, "composite build report catalog", bindings
+        inputs.get("catalog"),
+        canonical_catalog,
+        "composite build report catalog",
+        bindings,
     )
     _require_exact_artifact(
         inputs.get("resolution_contract"),
@@ -517,7 +535,9 @@ def _validate_build_report(
 
     artifacts = report.get("artifacts")
     if not isinstance(artifacts, list):
-        raise CompositeRecordBundleError("composite build report artifacts must be an array")
+        raise CompositeRecordBundleError(
+            "composite build report artifacts must be an array"
+        )
     if any(not isinstance(item, dict) for item in artifacts):
         raise CompositeRecordBundleError(
             "composite build report artifacts must contain only objects"
@@ -575,7 +595,9 @@ def _validate_build_report(
         master = _bind(expected_path, f"{sheet_id} composite master")
         _merge_bindings(bindings, (master,))
         if item.get("sha256") != master.sha256:
-            raise CompositeRecordBundleError(f"{sheet_id} build report master hash is stale")
+            raise CompositeRecordBundleError(
+                f"{sheet_id} build report master hash is stale"
+            )
         records[sheet_id] = item
         masters[sheet_id] = master
     return report_binding, records, masters
@@ -630,8 +652,28 @@ def _validate_vision(
             threshold=COMPOSITE_REVIEW_THRESHOLD,
             label=f"{sheet_id} Vision report",
         )
+        evidence = vision_evidence.validate_report_vision_bundle(
+            report,
+            sheet_id=sheet_id,
+            master_path=master.path,
+            master_sha256=master.sha256,
+        )
+        _merge_bindings(
+            bindings,
+            (
+                evidence.source,
+                evidence.receipt,
+                evidence.registry,
+                *evidence.supporting,
+            ),
+        )
         reviewer_key = canonical_reviewer_identity(reviewer)
-    except (phase5.Phase5BuildError, TypeError, ValueError) as exc:
+    except (
+        phase5.Phase5BuildError,
+        vision_evidence.Phase5VisionEvidenceError,
+        TypeError,
+        ValueError,
+    ) as exc:
         raise CompositeRecordBundleError(str(exc)) from exc
     if score < COMPOSITE_REVIEW_THRESHOLD:
         raise CompositeRecordBundleError(
@@ -839,14 +881,10 @@ def _assemble_composite_record_bundle(
     expected_ids = _expected_composite_ids(
         stage, catalog=catalog, catalog_by_id=catalog_by_id
     )
-    expected_output_set = source_index_writer._expected_stage_ids(
-        stage, catalog_by_id
-    )
+    expected_output_set = source_index_writer._expected_stage_ids(stage, catalog_by_id)
     expected_output_ids = _catalog_order(catalog, expected_output_set)
     final_ids = source_index_writer._expected_stage_ids("idx23", catalog_by_id)
-    expected_deferred_ids = _catalog_order(
-        catalog, final_ids - expected_output_set
-    )
+    expected_deferred_ids = _catalog_order(catalog, final_ids - expected_output_set)
     base = _load_base_context(
         base_index_path=base_index_path,
         stage=stage,
@@ -887,9 +925,7 @@ def _assemble_composite_record_bundle(
                 f"{sheet_id} composite master must be a native RGB PNG"
             )
         artifact_record = artifact_records[sheet_id]
-        if (
-            artifact_record.get("width"), artifact_record.get("height")
-        ) != size:
+        if (artifact_record.get("width"), artifact_record.get("height")) != size:
             raise CompositeRecordBundleError(
                 f"{sheet_id} build report dimensions are stale"
             )
@@ -913,7 +949,7 @@ def _assemble_composite_record_bundle(
         except phase5.Phase5BuildError as exc:
             raise CompositeRecordBundleError(str(exc)) from exc
 
-        automated = _validate_automated(
+        _validate_automated(
             sheet=sheet,
             contract=contract,
             master=master,
@@ -1074,7 +1110,9 @@ def main(argv: list[str] | None = None) -> int:
     except CompositeRecordBundleError as exc:
         print(f"Composite-record bundle assembly failed: {exc}", file=sys.stderr)
         return 1
-    output, relative = require_trackable_path(args.output, label="composite-record bundle")
+    output, relative = require_trackable_path(
+        args.output, label="composite-record bundle"
+    )
     summary = {
         "generated_by": TOOL_ID,
         "stage": args.stage,

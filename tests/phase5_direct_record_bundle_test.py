@@ -45,6 +45,7 @@ def accepted_vision_report(
     image_sha256: str,
     reviewer: str,
     threshold: int,
+    vision_receipt: dict[str, str],
 ) -> dict:
     report = create_qa_report.build_report(
         job_id,
@@ -54,7 +55,9 @@ def accepted_vision_report(
         threshold=threshold,
         image_sha256=image_sha256,
         review_mode="blind-independent",
+        vision_bundle_receipt=vision_receipt,
     )
+    report["vision_bundle"]["reviewer_confirmed_exact_five"] = True
     report["created_at"] = "2026-07-21T00:00:00Z"
     report["status"] = "complete"
     report["decision"] = "accepted"
@@ -111,6 +114,7 @@ class DirectRecordBundleFixture:
         self.provenance_paths: dict[str, Path] = {}
         self.automated_paths: dict[str, Path] = {}
         self.vision_paths: dict[str, list[Path]] = {}
+        self.vision_receipts: dict[str, Path] = {}
         for position, sheet_id in enumerate(self.ordered_ids):
             self._write_sheet(sheet_id, position)
 
@@ -321,6 +325,10 @@ class DirectRecordBundleFixture:
         write_json(automated_path, automated_document)
         self.automated_paths[sheet_id] = automated_path
 
+        vision_receipt = self.root / "evidence" / f"{sheet_id}.view-bundle.json"
+        write_json(vision_receipt, {"sheet_id": sheet_id, "fixture": True})
+        self.vision_receipts[sheet_id] = vision_receipt
+
         threshold = 90 if sheet_id in bundle.EXPECTED_STANDARD_REVIEW_IDS else 94
         review_count = 1 if threshold == 90 else 2
         reports: list[Path] = []
@@ -336,14 +344,55 @@ class DirectRecordBundleFixture:
                     image_sha256=digest(master),
                     reviewer=f"Reviewer {position + 1} {review_number}",
                     threshold=threshold,
+                    vision_receipt=artifact(vision_receipt),
                 ),
             )
             reports.append(vision_path)
         self.vision_paths[sheet_id] = reports
 
+    def validate_fixture_vision_evidence(
+        self,
+        report: dict,
+        *,
+        sheet_id: str,
+        master_path: Path,
+        master_sha256: str,
+        focus_registry_path=None,
+    ):
+        """Bind compact fixture evidence without weakening production validation."""
+
+        del focus_registry_path
+        source = bundle.vision_evidence.bind_file(
+            master_path, label=f"{sheet_id} fixture Vision source"
+        )
+        if source.sha256 != master_sha256:
+            raise bundle.vision_evidence.Phase5VisionEvidenceError(
+                "fixture Vision source hash mismatch"
+            )
+        receipt_spec = report["vision_bundle"]["receipt"]
+        receipt = bundle.vision_evidence.bind_file(
+            receipt_spec["path"], label=f"{sheet_id} fixture Vision receipt"
+        )
+        if receipt.sha256 != receipt_spec["sha256"]:
+            raise bundle.vision_evidence.Phase5VisionEvidenceError(
+                "fixture Vision receipt hash mismatch"
+            )
+        registry = bundle.vision_evidence.bind_file(
+            bundle.vision_evidence.DEFAULT_FOCUS_REGISTRY,
+            label="fixture canonical focus registry",
+        )
+        return bundle.vision_evidence.VisionEvidenceBindings(source, receipt, registry)
+
     def assemble(self, *, force: bool = False) -> dict:
-        with mock.patch.object(
-            bundle.phase5, "load_contract", return_value=self.load_contract_result
+        with (
+            mock.patch.object(
+                bundle.phase5, "load_contract", return_value=self.load_contract_result
+            ),
+            mock.patch.object(
+                bundle.phase5.vision_evidence,
+                "validate_report_vision_bundle",
+                side_effect=self.validate_fixture_vision_evidence,
+            ),
         ):
             return bundle.assemble_direct_record_bundle(
                 masters_root=self.masters,
@@ -359,9 +408,7 @@ class Phase5DirectRecordBundleTests(unittest.TestCase):
         self.root = REPO_ROOT / f".phase5-direct-record-bundle-test-{uuid.uuid4().hex}"
         self.root.mkdir()
         self.addCleanup(lambda: shutil.rmtree(self.root, ignore_errors=True))
-        self.writer_root = (
-            source_index_writer.TRACKED_RELEASE_ROOT / self.root.name
-        )
+        self.writer_root = source_index_writer.TRACKED_RELEASE_ROOT / self.root.name
         self.addCleanup(lambda: shutil.rmtree(self.writer_root, ignore_errors=True))
         self.fixture = DirectRecordBundleFixture(self.root)
 
@@ -389,10 +436,17 @@ class Phase5DirectRecordBundleTests(unittest.TestCase):
         self.assertEqual(set(loaded), bundle.EXPECTED_DIRECT_IDS)
 
         writer_output = self.writer_root / "world-v3-source-index-idx17.json"
-        with mock.patch.object(
-            source_index_writer.phase5,
-            "load_contract",
-            return_value=self.fixture.load_contract_result,
+        with (
+            mock.patch.object(
+                source_index_writer.phase5,
+                "load_contract",
+                return_value=self.fixture.load_contract_result,
+            ),
+            mock.patch.object(
+                bundle.phase5.vision_evidence,
+                "validate_report_vision_bundle",
+                side_effect=self.fixture.validate_fixture_vision_evidence,
+            ),
         ):
             writer_result = source_index_writer.write_source_index(
                 stage="idx17",
@@ -467,7 +521,9 @@ class Phase5DirectRecordBundleTests(unittest.TestCase):
         self.fixture = DirectRecordBundleFixture(self.root / "dimensions")
         master = self.fixture.masters / f"{self.fixture.ordered_ids[0]}.png"
         Image.new("RGB", (7, 8), "white").save(master)
-        with self.assertRaisesRegex(bundle.DirectRecordBundleError, "dimensions mismatch"):
+        with self.assertRaisesRegex(
+            bundle.DirectRecordBundleError, "dimensions mismatch"
+        ):
             self.fixture.assemble()
 
     def test_rejects_missing_artifacts_and_missing_hashes(self):
@@ -477,13 +533,13 @@ class Phase5DirectRecordBundleTests(unittest.TestCase):
             self.fixture.assemble()
 
         self.fixture = DirectRecordBundleFixture(self.root / "missing-hash")
-        automated_path = self.fixture.automated_paths[
-            self.fixture.ordered_ids[0]
-        ]
+        automated_path = self.fixture.automated_paths[self.fixture.ordered_ids[0]]
         automated = json.loads(automated_path.read_text(encoding="utf-8"))
         del automated["geography"]["land_sea"]["control"]["sha256"]
         write_json(automated_path, automated)
-        with self.assertRaisesRegex(bundle.DirectRecordBundleError, "sha256 is required"):
+        with self.assertRaisesRegex(
+            bundle.DirectRecordBundleError, "sha256 is required"
+        ):
             self.fixture.assemble()
 
     def test_rejects_volatile_and_external_nested_paths(self):

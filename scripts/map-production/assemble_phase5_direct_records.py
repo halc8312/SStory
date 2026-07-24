@@ -38,6 +38,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 import build_phase5_assets as phase5
+import phase5_vision_evidence as vision_evidence
 import write_phase5_source_indexes as source_index_writer
 from reviewer_identity import canonical_reviewer_identity
 from release_path_safety import (
@@ -106,7 +107,9 @@ class _BindingRegistry:
         self._bindings: dict[str, _FileBinding] = {}
 
     @staticmethod
-    def _digest_and_signature(path: Path, label: str) -> tuple[str, tuple[int, int, int, int]]:
+    def _digest_and_signature(
+        path: Path, label: str
+    ) -> tuple[str, tuple[int, int, int, int]]:
         digest = hashlib.sha256()
         try:
             with path.open("rb") as handle:
@@ -116,11 +119,12 @@ class _BindingRegistry:
                 after = os.fstat(handle.fileno())
             current = os.stat(path, follow_symlinks=False)
         except OSError as exc:
-            raise DirectRecordBundleError(f"cannot read {label}: {path}: {exc}") from exc
-        if (
-            _stat_signature(before) != _stat_signature(after)
-            or _stat_signature(after) != _stat_signature(current)
-        ):
+            raise DirectRecordBundleError(
+                f"cannot read {label}: {path}: {exc}"
+            ) from exc
+        if _stat_signature(before) != _stat_signature(after) or _stat_signature(
+            after
+        ) != _stat_signature(current):
             raise DirectRecordBundleError(f"{label} changed while its bytes were read")
         return digest.hexdigest(), _stat_signature(current)
 
@@ -145,7 +149,9 @@ class _BindingRegistry:
             if (
                 not isinstance(claimed_sha256, str)
                 or len(claimed_sha256) != 64
-                or any(character not in "0123456789abcdef" for character in claimed_sha256)
+                or any(
+                    character not in "0123456789abcdef" for character in claimed_sha256
+                )
             ):
                 raise DirectRecordBundleError(
                     f"{label}.sha256 must be a lowercase 64-character digest"
@@ -217,9 +223,7 @@ def _stable_json_bytes(value: Any) -> bytes:
 
 def _require_directory(raw_path: Path, label: str) -> Path:
     try:
-        path, _ = require_trackable_path(
-            raw_path, label=label, require_file=False
-        )
+        path, _ = require_trackable_path(raw_path, label=label, require_file=False)
     except ReleasePathError as exc:
         raise DirectRecordBundleError(str(exc)) from exc
     if not path.is_dir():
@@ -272,7 +276,9 @@ def _relative_provenance_artifact(
     if not isinstance(raw_path, str) or not raw_path or "\\" in raw_path:
         raise DirectRecordBundleError(f"{label}.path must be a relative POSIX path")
     portable = PurePosixPath(raw_path)
-    if portable.is_absolute() or any(part in {"", ".", ".."} for part in portable.parts):
+    if portable.is_absolute() or any(
+        part in {"", ".", ".."} for part in portable.parts
+    ):
         raise DirectRecordBundleError(f"{label}.path escapes its provenance root")
     return bindings.add(
         report_path.parent.joinpath(*portable.parts),
@@ -341,7 +347,10 @@ def _validate_canonical_provenance(
 
     inputs = report["inputs"]
     _same_artifact_path(
-        inputs["map_catalog"], phase5.DEFAULT_MAP_SHEETS, f"{label}.inputs.map_catalog", bindings
+        inputs["map_catalog"],
+        phase5.DEFAULT_MAP_SHEETS,
+        f"{label}.inputs.map_catalog",
+        bindings,
     )
     _same_artifact_path(
         inputs["resolution_contract"],
@@ -373,9 +382,7 @@ def _validate_canonical_provenance(
     renderer_report_binding = bindings.add_artifact(
         inputs["renderer_report"], f"{label}.inputs.renderer_report"
     )
-    bindings.add_artifact(
-        inputs["material_atlas"], f"{label}.inputs.material_atlas"
-    )
+    bindings.add_artifact(inputs["material_atlas"], f"{label}.inputs.material_atlas")
 
     canonical_sources = {
         item.get("role"): item
@@ -461,7 +468,9 @@ def _bind_automated_report_artifacts(
 ) -> None:
     reported_master = bindings.add_artifact(report.get("master"), f"{label}.master")
     if not same_path(reported_master.path, master.path):
-        raise DirectRecordBundleError(f"{label}.master does not name the selected master")
+        raise DirectRecordBundleError(
+            f"{label}.master does not name the selected master"
+        )
     reported_provenance = bindings.add_artifact(
         report.get("provenance_report"), f"{label}.provenance_report"
     )
@@ -475,11 +484,11 @@ def _bind_automated_report_artifacts(
     for group in ("land_sea", "transport"):
         values = geography.get(group)
         if not isinstance(values, dict):
-            raise DirectRecordBundleError(f"{label}.geography.{group} must be an object")
-        for role in ("control", "observed"):
-            bindings.add_artifact(
-                values.get(role), f"{label}.geography.{group}.{role}"
+            raise DirectRecordBundleError(
+                f"{label}.geography.{group} must be an object"
             )
+        for role in ("control", "observed"):
+            bindings.add_artifact(values.get(role), f"{label}.geography.{group}.{role}")
     seams = report.get("checks", {}).get("seams", {}).get("evidence", [])
     if not isinstance(seams, list):
         raise DirectRecordBundleError(f"{label}.checks.seams.evidence must be an array")
@@ -573,6 +582,40 @@ def _validate_vision_reports(
             threshold=threshold,
             label=label,
         )
+        try:
+            evidence = vision_evidence.validate_report_vision_bundle(
+                report,
+                sheet_id=sheet["id"],
+                master_path=master.path,
+                master_sha256=master.sha256,
+            )
+        except vision_evidence.Phase5VisionEvidenceError as exc:
+            raise DirectRecordBundleError(f"{label}: {exc}") from exc
+        bound_source = bindings.add(
+            evidence.source.path,
+            f"{label} exact-five source",
+            claimed_sha256=evidence.source.sha256,
+        )
+        if not same_path(bound_source.path, master.path):
+            raise DirectRecordBundleError(
+                f"{label} exact-five receipt binds a different source master"
+            )
+        bindings.add(
+            evidence.receipt.path,
+            f"{label} exact-five receipt",
+            claimed_sha256=evidence.receipt.sha256,
+        )
+        bindings.add(
+            evidence.registry.path,
+            f"{label} canonical focus registry",
+            claimed_sha256=evidence.registry.sha256,
+        )
+        for support in evidence.supporting:
+            bindings.add(
+                support.path,
+                f"{label} exact-five supporting artifact {support.relative}",
+                claimed_sha256=support.sha256,
+            )
         if score < threshold:  # Defensive clarity; _accepted_report also enforces this.
             raise DirectRecordBundleError(
                 f"{label} score must be at least {threshold}, found {score}"
@@ -636,9 +679,7 @@ def _review_policy(sheet_id: str, sheet: dict[str, Any]) -> tuple[int, int]:
     return threshold, required
 
 
-def _assert_unique(
-    seen: dict[str, str], binding: _FileBinding, label: str
-) -> None:
+def _assert_unique(seen: dict[str, str], binding: _FileBinding, label: str) -> None:
     previous = seen.get(binding.identity)
     if previous is not None:
         raise DirectRecordBundleError(
@@ -746,7 +787,9 @@ def _assemble_direct_record_bundle(
         )
 
     if {record["sheet_id"] for record in records} != EXPECTED_DIRECT_IDS:
-        raise DirectRecordBundleError("assembled bundle does not contain exact idx17 coverage")
+        raise DirectRecordBundleError(
+            "assembled bundle does not contain exact idx17 coverage"
+        )
 
     document = {
         "schema_version": BUNDLE_SCHEMA_VERSION,
@@ -835,7 +878,9 @@ def main(argv: list[str] | None = None) -> int:
     except DirectRecordBundleError as exc:
         print(f"Direct-record bundle assembly failed: {exc}", file=sys.stderr)
         return 1
-    output, relative = canonical_repo_relative(args.output, label="direct-record bundle output")
+    output, relative = canonical_repo_relative(
+        args.output, label="direct-record bundle output"
+    )
     summary = {
         "generated_by": TOOL_ID,
         "output": relative,

@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""Emit a deterministic TEMP-only exact-five Phase 5 vision review bundle.
+"""Emit a deterministic exact-five Phase 5 vision review bundle.
 
-The source binding linearizes at its final check immediately before the
-anchored directory rename.  A successful transaction linearizes at the single
-installed bundle snapshot after that rename; the success path performs no
-further file read.  Failures preserve owned TEMP debris instead of recursively
-deleting through a pathname whose parent identity might have changed.
+The five PNGs remain TEMP-only.  Canonical Phase 5 runs additionally persist
+the same hash-only receipt below the tracked QA evidence root; release tooling
+can therefore regenerate and verify every view without committing review PNGs.
+
+The source binding linearizes at the closed set of final prerequisite checks
+immediately before the anchored directory rename.  A TEMP-only transaction
+linearizes at the installed bundle snapshot.  A canonical transaction
+linearizes later, when its immutable one-file evidence directory is installed
+after source, registry, and receipt content have all been rechecked.  Failures
+preserve owned TEMP debris instead of recursively deleting through a pathname
+whose parent identity might have changed.
 
 On Linux, the already-existing output parent is a caller-provisioned trust
 boundary: it must be owned by the effective user, mode 0700, and carry no POSIX
@@ -32,7 +38,7 @@ from dataclasses import dataclass
 from enum import Enum
 from io import BytesIO
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Callable, Sequence
 
 from PIL import Image, PngImagePlugin, UnidentifiedImageError
 
@@ -42,13 +48,14 @@ from release_path_safety import (
     ReleasePathError,
     require_trackable_path,
 )
+import phase5_vision_evidence as vision_evidence
 
 
 SCHEMA_VERSION = "1.0.0"
-BUNDLE_TYPE = "sstory-phase5-root-vision-view-bundle"
-VIEW_ORDER = ("native", "full25", "full50", "focus200", "focus400")
-VIEW_FILENAMES = {view_id: f"{view_id}.png" for view_id in VIEW_ORDER}
-RECEIPT_FILENAME = "receipt.json"
+BUNDLE_TYPE = vision_evidence.BUNDLE_TYPE
+VIEW_ORDER = vision_evidence.VIEW_ORDER
+VIEW_FILENAMES = vision_evidence.VIEW_FILENAMES
+RECEIPT_FILENAME = vision_evidence.RECEIPT_FILENAME
 PNG_OPTIONS: dict[str, Any] = {
     "format": "PNG",
     "compress_level": 9,
@@ -68,6 +75,10 @@ class Phase5EvidenceIOError(Phase5VisionViewsError):
 
 class Phase5ContentInvalidError(Phase5VisionViewsError):
     """Raised when stable bytes violate the bundle content contract."""
+
+
+class Phase5PublicationUnknownError(Phase5VisionViewsError):
+    """Raised when an anchored rename committed but visibility cannot be proven."""
 
 
 class PublicationState(str, Enum):
@@ -899,19 +910,9 @@ def _assert_anchor_visible(anchor: ParentAnchor) -> None:
     _assert_prepared_parent(anchor.prepared)
 
 
-def _assert_linux_private_parent(anchor: ParentAnchor) -> None:
+def _assert_linux_parent_acl(anchor: ParentAnchor) -> None:
     if anchor.parent_fd is None:
         return
-    metadata = os.fstat(anchor.parent_fd)
-    # POSIX has no mkdir-and-return-fd primitive.  This strict, pre-provisioned
-    # parent contract excludes untrusted credentials from the mkdir -> stat ->
-    # open interval; the captured identity still rejects any later exchange
-    # before the first bundle byte is written.
-    if metadata.st_uid != os.geteuid() or stat.S_IMODE(metadata.st_mode) != 0o700:
-        raise Phase5VisionViewsError(
-            "Linux output parent must be a caller-provisioned private directory "
-            "owned by the effective user with mode 0700"
-        )
     ignored_errors = {
         getattr(errno, "ENODATA", 61),
         getattr(errno, "ENOTSUP", 95),
@@ -932,9 +933,47 @@ def _assert_linux_private_parent(anchor: ParentAnchor) -> None:
             )
 
 
-def _create_owned_staging(*, output: Path, anchor: ParentAnchor) -> OwnedStaging:
+def _assert_linux_private_parent(anchor: ParentAnchor) -> None:
+    if anchor.parent_fd is None:
+        return
+    metadata = os.fstat(anchor.parent_fd)
+    # POSIX has no mkdir-and-return-fd primitive.  This strict, pre-provisioned
+    # parent contract excludes untrusted credentials from the mkdir -> stat ->
+    # open interval; the captured identity still rejects any later exchange
+    # before the first bundle byte is written.
+    if metadata.st_uid != os.geteuid() or stat.S_IMODE(metadata.st_mode) != 0o700:
+        raise Phase5VisionViewsError(
+            "Linux output parent must be a caller-provisioned private directory "
+            "owned by the effective user with mode 0700"
+        )
+    _assert_linux_parent_acl(anchor)
+
+
+def _assert_linux_owned_nonwritable_parent(anchor: ParentAnchor) -> None:
+    """Require an owned repository parent that other credentials cannot modify."""
+
+    if anchor.parent_fd is None:
+        return
+    metadata = os.fstat(anchor.parent_fd)
+    if metadata.st_uid != os.geteuid() or stat.S_IMODE(metadata.st_mode) & 0o022:
+        raise Phase5VisionViewsError(
+            "Linux evidence version parent must be owned by the effective user "
+            "and not be group/world writable"
+        )
+    _assert_linux_parent_acl(anchor)
+
+
+def _create_owned_staging(
+    *,
+    output: Path,
+    anchor: ParentAnchor,
+    require_private_parent: bool = True,
+) -> OwnedStaging:
     _assert_anchor_visible(anchor)
-    _assert_linux_private_parent(anchor)
+    if require_private_parent:
+        _assert_linux_private_parent(anchor)
+    else:
+        _assert_linux_owned_nonwritable_parent(anchor)
     if os.path.lexists(output):
         raise Phase5VisionViewsError(f"output already exists: {output}")
     for _ in range(64):
@@ -1148,6 +1187,7 @@ def _png_integrity_payload(
             "id": view_id,
             "path": filename,
             "sha256": _sha256_bytes(payload),
+            "pixel_sha256": pixel_sha256,
             "bytes": len(payload),
             "mode": "RGB",
             "size": size,
@@ -1165,7 +1205,13 @@ def _write_all(descriptor: int, payload: bytes) -> None:
         view = view[written:]
 
 
-def _write_owned_file(staging: OwnedStaging, name: str, payload: bytes) -> None:
+def _write_owned_file(
+    staging: OwnedStaging,
+    name: str,
+    payload: bytes,
+    *,
+    durable: bool = False,
+) -> None:
     if "/" in name or "\\" in name or name in {"", ".", ".."}:
         raise Phase5VisionViewsError(f"invalid bundle filename: {name!r}")
     _assert_owned_staging(staging, require_visible=True)
@@ -1183,6 +1229,8 @@ def _write_owned_file(staging: OwnedStaging, name: str, payload: bytes) -> None:
         descriptor = os.open(staging.path / name, flags, 0o600)
     try:
         _write_all(descriptor, payload)
+        if durable:
+            os.fsync(descriptor)
     except BaseException:
         try:
             os.close(descriptor)
@@ -1242,7 +1290,22 @@ def _build_receipt(
     source_size: tuple[int, int],
     focus_box: tuple[int, int, int, int],
     views: list[dict[str, Any]],
+    sheet_id: str | None = None,
+    focus_registry: BoundArtifact | None = None,
 ) -> dict[str, Any]:
+    if sheet_id is not None or focus_registry is not None:
+        if sheet_id is None or focus_registry is None:
+            raise Phase5VisionViewsError(
+                "canonical receipt requires both sheet_id and focus_registry"
+            )
+        return vision_evidence.build_canonical_receipt(
+            sheet_id=sheet_id,
+            source=source,
+            source_size=source_size,
+            focus_registry=focus_registry,
+            focus_box=focus_box,
+            views=views,
+        )
     x0, y0, x1, y1 = focus_box
     return {
         "schema_version": SCHEMA_VERSION,
@@ -1308,7 +1371,7 @@ def _assert_exact_bundle_inventory(
 ) -> None:
     if sorted(_owned_entry_names(staging)) != sorted(expected_inventory):
         raise Phase5VisionViewsError(
-            "bundle inventory must contain exactly five physical PNG files and one JSON"
+            "bundle inventory does not match its exact expected file set"
         )
 
 
@@ -1529,7 +1592,7 @@ def _read_pinned_bundle(
             }
         except OSError as exc:
             raise Phase5EvidenceIOError(
-                f"cannot read pinned six-file bundle snapshot: {exc}"
+                f"cannot read pinned bundle snapshot: {exc}"
             ) from exc
     except BaseException:
         _close_pinned_entries(entries, suppress_errors=True)
@@ -1571,10 +1634,17 @@ def _snapshot_bundle(
             raise Phase5VisionViewsError("bundle receipt exact-five view order drifted")
         pixel_hashes: list[tuple[str, str]] = []
         for expected in views:
-            view_payload = payloads[expected["path"]]
+            view_name = expected.get("path", expected.get("filename"))
+            if not isinstance(view_name, str):
+                raise Phase5VisionViewsError(
+                    f"bundle view {expected.get('id')} has no physical filename"
+                )
+            view_payload = payloads[view_name]
             actual, pixel_sha256 = _png_integrity_payload(
-                expected["id"], expected["path"], view_payload
+                expected["id"], view_name, view_payload
             )
+            if "filename" in expected:
+                actual["filename"] = actual.pop("path")
             if actual != expected:
                 raise Phase5VisionViewsError(
                     f"bundle view changed after receipt binding: {expected['id']}"
@@ -1585,6 +1655,11 @@ def _snapshot_bundle(
                 [
                     *(
                         (view["path"], _sha256_bytes(payloads[view["path"]]))
+                        if "path" in view
+                        else (
+                            view["filename"],
+                            _sha256_bytes(payloads[view["filename"]]),
+                        )
                         for view in views
                     ),
                     (RECEIPT_FILENAME, _sha256_bytes(actual_receipt_payload)),
@@ -1626,6 +1701,54 @@ def _snapshot_bundle(
             f"cannot revalidate closed six-file bundle snapshot: {exc}"
         ) from exc
     return snapshot
+
+
+def _snapshot_single_receipt(
+    staging: OwnedStaging,
+    *,
+    expected_payload: bytes,
+) -> str:
+    """Pin and verify the one-file persistent evidence directory."""
+
+    expected_inventory = [vision_evidence.PERSISTENT_RECEIPT_FILENAME]
+    entries, payloads = _read_pinned_bundle(staging, expected_inventory)
+    primary_error: BaseException | None = None
+    try:
+        actual = payloads[vision_evidence.PERSISTENT_RECEIPT_FILENAME]
+        if actual != expected_payload:
+            raise Phase5VisionViewsError(
+                "persistent Vision receipt changed after its bytes were prepared"
+            )
+        try:
+            parsed = json.loads(actual.decode("utf-8"))
+        except (UnicodeError, json.JSONDecodeError) as exc:
+            raise Phase5ContentInvalidError(
+                f"persistent Vision receipt is not canonical UTF-8 JSON: {exc}"
+            ) from exc
+        if not isinstance(parsed, dict) or _stable_json_bytes(parsed) != actual:
+            raise Phase5VisionViewsError(
+                "persistent Vision receipt is not canonical JSON"
+            )
+        _assert_owned_staging(staging, require_visible=False)
+        _assert_exact_bundle_inventory(staging, expected_inventory)
+        for entry in entries:
+            _assert_pinned_entry(staging, entry)
+    except BaseException as exc:
+        primary_error = exc
+        raise
+    finally:
+        _close_pinned_entries(entries, suppress_errors=primary_error is not None)
+
+    try:
+        _assert_owned_staging(staging, require_visible=False)
+        _assert_exact_bundle_inventory(staging, expected_inventory)
+        for entry in entries:
+            _assert_closed_entry_path(staging, entry)
+    except OSError as exc:
+        raise Phase5EvidenceIOError(
+            f"cannot revalidate persistent Vision receipt snapshot: {exc}"
+        ) from exc
+    return _sha256_bytes(expected_payload)
 
 
 def _linux_rename_anchor_no_replace(
@@ -1670,6 +1793,8 @@ def _rename_anchor_no_replace(
     *,
     invoke_fault_hook: bool = False,
     source: BoundArtifact | None = None,
+    additional_bindings: Sequence[BoundArtifact] = (),
+    final_content_check: Callable[[], None] | None = None,
 ) -> None:
     anchor = staging.anchor
     source_name = staging.name
@@ -1684,10 +1809,17 @@ def _rename_anchor_no_replace(
             raise Phase5VisionViewsError(
                 "guarded output rename requires a final source binding"
             )
-        # This is the last file validation before the rename syscall.  The
-        # fault hook deliberately precedes it so no test/production callback
-        # can invalidate the source after its linearizing check.
+        # The fault hook deliberately precedes the complete closed set of
+        # prerequisite checks.  The content callback is last so the staged
+        # directory is re-pinned immediately before the rename syscall.
         _assert_source_unchanged(source)
+        try:
+            for binding in additional_bindings:
+                binding.assert_unchanged()
+        except BoundArtifactError as exc:
+            raise Phase5VisionViewsError(str(exc)) from exc
+        if final_content_check is not None:
+            final_content_check()
     if anchor.parent_fd is not None:
         _linux_rename_anchor_no_replace(anchor, source_name, destination_name)
         return
@@ -1767,6 +1899,8 @@ def _install_owned_staging(
     output: Path,
     *,
     source: BoundArtifact,
+    additional_bindings: Sequence[BoundArtifact] = (),
+    final_content_check: Callable[[], None] | None = None,
 ) -> None:
     _assert_owned_staging(staging, require_visible=False)
     source_name = staging.name
@@ -1775,6 +1909,8 @@ def _install_owned_staging(
         output.name,
         invoke_fault_hook=True,
         source=source,
+        additional_bindings=additional_bindings,
+        final_content_check=final_content_check,
     )
     staging.name = output.name
     staging.path = output
@@ -1884,19 +2020,184 @@ def _assert_source_unchanged(source: BoundArtifact) -> None:
         raise Phase5VisionViewsError(str(exc)) from exc
 
 
+def _install_persistent_evidence_directory(
+    path: str | Path,
+    *,
+    sheet_id: str,
+    payload: bytes,
+    source: BoundArtifact,
+    focus_registry: vision_evidence.FocusRegistry,
+) -> dict[str, str]:
+    """Atomically install one complete, immutable one-file evidence directory."""
+
+    try:
+        destination, relative = vision_evidence.validate_persistent_receipt_location(
+            path, sheet_id
+        )
+        evidence_root, _ = require_trackable_path(
+            vision_evidence.CANONICAL_EVIDENCE_ROOT,
+            label="Phase 5 canonical evidence root",
+            require_file=False,
+        )
+    except (vision_evidence.Phase5VisionEvidenceError, ReleasePathError) as exc:
+        raise Phase5VisionViewsError(str(exc)) from exc
+
+    output = destination.parent
+    prepared_parent = _prepare_output_parent(output, evidence_root)
+    parent_anchor: ParentAnchor | None = None
+    evidence_staging: OwnedStaging | None = None
+    try:
+        _before_parent_anchor_open_hook(output=output, parent=prepared_parent)
+        parent_anchor = _open_parent_anchor(prepared_parent)
+        evidence_staging = _create_owned_staging(
+            output=output,
+            anchor=parent_anchor,
+            require_private_parent=False,
+        )
+        _write_owned_file(
+            evidence_staging,
+            vision_evidence.PERSISTENT_RECEIPT_FILENAME,
+            payload,
+            durable=True,
+        )
+        prepared_sha256 = _snapshot_single_receipt(
+            evidence_staging,
+            expected_payload=payload,
+        )
+        _assert_anchor_visible(parent_anchor)
+        _assert_owned_staging(evidence_staging, require_visible=True)
+        _claim_owned_staging(evidence_staging)
+
+        def final_content_check() -> None:
+            actual_sha256 = _snapshot_single_receipt(
+                evidence_staging,
+                expected_payload=payload,
+            )
+            if actual_sha256 != prepared_sha256:
+                raise Phase5VisionViewsError(
+                    "persistent Vision receipt changed before directory commit"
+                )
+
+        _install_owned_staging(
+            evidence_staging,
+            output,
+            source=source,
+            additional_bindings=(
+                focus_registry.binding,
+                *focus_registry.supporting_bindings,
+            ),
+            final_content_check=final_content_check,
+        )
+        try:
+            _retry_evidence_read(lambda: _assert_anchor_visible(parent_anchor))
+        except BaseException as evidence_error:
+            evidence_staging.publication_state = PublicationState.UNKNOWN
+            raise Phase5PublicationUnknownError(
+                "persistent Vision evidence directory was renamed, but its "
+                "canonical path visibility could not be proven"
+            ) from evidence_error
+        return {"path": relative, "sha256": prepared_sha256}
+    except BaseException as original_error:
+        if (
+            evidence_staging is not None
+            and evidence_staging.publication_state is PublicationState.UNKNOWN
+        ):
+            if isinstance(original_error, Phase5PublicationUnknownError):
+                raise
+            raise Phase5PublicationUnknownError(
+                "persistent Vision evidence publication state is unknown; "
+                "complete final/staging evidence was preserved without rename "
+                f"or deletion: {original_error}"
+            ) from original_error
+        if (
+            evidence_staging is not None
+            and evidence_staging.publication_state is PublicationState.COMMITTED
+            and evidence_staging.installed
+            and evidence_staging.name_owned
+        ):
+            try:
+                _rollback_to_preserved_staging(evidence_staging)
+            except BaseException as rollback_error:
+                raise Phase5PublicationUnknownError(
+                    "persistent Vision evidence failed after commit and its "
+                    "anchored rollback failed; complete evidence was preserved: "
+                    f"{rollback_error}"
+                ) from original_error
+        if evidence_staging is not None and not evidence_staging.name_owned:
+            raise Phase5VisionViewsError(
+                "persistent Vision evidence transaction failed after its staging "
+                "name was exchanged; guarded debris was preserved without deletion: "
+                f"{original_error}"
+            ) from original_error
+        if evidence_staging is not None:
+            raise Phase5VisionViewsError(
+                "persistent Vision evidence transaction failed; owned staging "
+                f"debris was preserved without recursive deletion: "
+                f"{evidence_staging.path}: {original_error}"
+            ) from original_error
+        raise
+    finally:
+        if evidence_staging is not None:
+            try:
+                _close_owned_staging(evidence_staging)
+            except BaseException:
+                pass
+        if parent_anchor is not None:
+            try:
+                _close_parent_anchor(parent_anchor, suppress_errors=True)
+            except BaseException:
+                pass
+
+
 def emit_phase5_vision_views(
     source: str,
     output: str | Path,
     *,
     source_sha256: str,
-    focus_box: Sequence[int],
+    focus_box: Sequence[int] | None,
+    sheet_id: str | None = None,
+    focus_registry_path: str | Path | None = None,
+    evidence_receipt: str | Path | None = None,
 ) -> dict[str, Any]:
     """Build and atomically install one deterministic exact-five review bundle."""
 
     expected_sha256 = _validate_sha256(source_sha256)
     bound, source_image = _bind_source(source, expected_sha256)
     try:
-        validated_focus = _validate_focus_box(focus_box, source_image.size)
+        focus_registry: vision_evidence.FocusRegistry | None = None
+        if sheet_id is not None or evidence_receipt is not None:
+            if sheet_id is None or evidence_receipt is None:
+                raise Phase5VisionViewsError(
+                    "canonical Phase 5 emission requires both --sheet-id and "
+                    "--evidence-receipt"
+                )
+            try:
+                focus_registry = vision_evidence.load_focus_registry(
+                    focus_registry_path
+                )
+                registry_entry = focus_registry.entry(sheet_id)
+            except vision_evidence.Phase5VisionEvidenceError as exc:
+                raise Phase5VisionViewsError(str(exc)) from exc
+            if Path(bound.relative).name != f"{sheet_id}.png":
+                raise Phase5VisionViewsError(
+                    "canonical Phase 5 source filename must equal <sheet-id>.png"
+                )
+            if list(source_image.size) != registry_entry["source_size"]:
+                raise Phase5VisionViewsError(
+                    f"{sheet_id} source dimensions differ from canonical focus registry"
+                )
+            canonical_focus = tuple(registry_entry["box_px"])
+            if focus_box is not None and tuple(focus_box) != canonical_focus:
+                raise Phase5VisionViewsError(
+                    f"{sheet_id} --focus-box differs from canonical focus registry"
+                )
+            validated_focus = _validate_focus_box(canonical_focus, source_image.size)
+        else:
+            if focus_box is None:
+                raise Phase5VisionViewsError(
+                    "--focus-box is required for noncanonical TEMP-only emission"
+                )
+            validated_focus = _validate_focus_box(focus_box, source_image.size)
         output_path, allowed_root = _validate_output_path(output)
         prepared_parent = _prepare_output_parent(output_path, allowed_root)
         parent_anchor: ParentAnchor | None = None
@@ -1916,15 +2217,24 @@ def emit_phase5_vision_views(
                 source_size=source_image.size,
                 focus_box=validated_focus,
                 views=views,
+                sheet_id=sheet_id,
+                focus_registry=(
+                    focus_registry.binding if focus_registry is not None else None
+                ),
             )
             receipt_payload = _stable_json_bytes(receipt)
             _write_owned_file(owned_staging, RECEIPT_FILENAME, receipt_payload)
 
-            # Every Git subprocess and race-test callback precedes the closed
+            # Every Git subprocess and race-test callback precedes the TEMP
             # commit sequence. Source bytes linearize at the final pre-rename
-            # assertion. Overall success linearizes at the single installed
-            # snapshot below; after it, the success path performs no file read.
+            # assertion. TEMP-only success linearizes at the installed snapshot;
+            # canonical success later linearizes at persistent receipt install.
             _assert_git_tracked(bound.relative)
+            if focus_registry is not None:
+                try:
+                    focus_registry.assert_unchanged()
+                except BoundArtifactError as exc:
+                    raise Phase5VisionViewsError(str(exc)) from exc
             _before_commit_validation_hook(
                 source=bound,
                 staging=owned_staging.path,
@@ -1975,12 +2285,34 @@ def emit_phase5_vision_views(
                 raise Phase5VisionViewsError(
                     "installed bundle differs from the prepared byte/pixel snapshot"
                 )
+            if evidence_receipt is not None:
+                assert sheet_id is not None
+                try:
+                    assert focus_registry is not None
+                    persistent = _install_persistent_evidence_directory(
+                        evidence_receipt,
+                        sheet_id=sheet_id,
+                        payload=receipt_payload,
+                        source=bound,
+                        focus_registry=focus_registry,
+                    )
+                except (
+                    BoundArtifactError,
+                    vision_evidence.Phase5VisionEvidenceError,
+                ) as exc:
+                    raise Phase5VisionViewsError(str(exc)) from exc
+                except Phase5PublicationUnknownError:
+                    owned_staging.publication_state = PublicationState.UNKNOWN
+                    raise
+                result["persistent_receipt"] = persistent
             return result
         except BaseException as original_error:
             if (
                 owned_staging is not None
                 and owned_staging.publication_state is PublicationState.UNKNOWN
             ):
+                if isinstance(original_error, Phase5PublicationUnknownError):
+                    raise
                 raise Phase5VisionViewsError(
                     "vision bundle publication state is unknown after the commit "
                     "boundary; final/staging evidence was preserved without "
@@ -2050,9 +2382,28 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--source-sha256", required=True)
     parser.add_argument(
         "--focus-box",
-        required=True,
         type=_parse_focus_box,
         metavar="X0,Y0,X1,Y1",
+        help=(
+            "required for TEMP-only emission; canonical emission reads the exact "
+            "box from the focus registry and treats this as an optional assertion"
+        ),
+    )
+    parser.add_argument(
+        "--sheet-id",
+        help="canonical Phase 5 sheet id; requires --evidence-receipt",
+    )
+    parser.add_argument(
+        "--focus-registry",
+        type=Path,
+        help="optional exact-path assertion override used by tests/tooling",
+    )
+    parser.add_argument(
+        "--evidence-receipt",
+        type=Path,
+        help=(
+            "immutable tracked <evidence-root>/<version>/<sheet-id>/view-bundle.json"
+        ),
     )
     return parser
 
@@ -2065,6 +2416,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.output,
             source_sha256=args.source_sha256,
             focus_box=args.focus_box,
+            sheet_id=args.sheet_id,
+            focus_registry_path=args.focus_registry,
+            evidence_receipt=args.evidence_receipt,
         )
     except (
         BoundArtifactError,

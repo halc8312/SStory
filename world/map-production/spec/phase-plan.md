@@ -153,25 +153,78 @@ Phase 5 の実制作は、ImageGenを99枚の地理正本そのものへ使う�
 
 ## Phase 7: GitHub公開
 
-1. `idx23` を必須入力にした版付き・追跡対象release rootの最終buildで、23 sheet、1350 tile、寸法、ハッシュ、出典、QA判定を再検証します。
-2. `publish_phase5_tiles.py <build-root> --docs-root docs` で、不変の版付きタイルtreeを `docs/assets/images/maps/tiles/{release-id}/` へ配置します。
-3. `npm run map:production:finalize -- release-candidate <phase5-build-root>` を実行し、厳格なrelease-candidate検証を通します。
-4. 公開既定値を切り替えないrelease-candidate専用URLに対し、`npm run map:production:browser-qa -- --url <preview-url>?release-preview=world-v3 --output-dir <TEMP/output-dir>` を実行します。固定版Playwright CLI 0.1.17のハーネスは1440×1000デスクトップ、390×844モバイル、400ms以上の低速タイル応答、Royal子タイル503時のエリュシオン親保持を実ブラウザで確認します。world-v3基底tileはHTTP 200だけでなくLeafletの実decode完了とfallback未使用を必須にし、console/network/page errorは最終スクリーンショット後に固定collectorから再収集します。受領証は実デコード可能な非blankスクリーンショット、アクセシビリティsnapshot、raw evidenceから再導出する診断に加え、release/index、実行時JS/CSS/JSON、Royal親子manifest、実配信tile、QAハーネスのSHA-256を固定します。ここまでの検証に失敗した場合は停止し、`published` へ進めません。
-5. ブラウザQA合格後だけ `npm run map:production:finalize -- published <phase6-browser-qa-receipt>` を実行します。finalizerはreceiptと現在のrelease-candidate全バイトを再照合し、検証済みbundleを `world/map-production/releases/world-v3-phase6-browser-qa/` へコピーしてreceipt/tree hashをpublished readinessへ固定します。PASSでなければ一切変更しません。直後に `npm run map:production:receipt` をリポジトリへの最後の書き込みとして実行し、同じbrowser QA bindingをpublication receiptへ継承します。公開後の検証でもruntime依存物とworld-v3 release treeをPhase 6時点のSHA-256へ再照合し、publication時刻がbrowser QA完了時刻より前なら拒否します。receipt永続化前の `published` readinessはfail-closedで失敗します。
+1. `idx23` を必須入力にした版付き・追跡対象release rootの最終buildで、23 sheet、1350 tile、寸法、ハッシュ、出典、QA判定を再検証し、`$finalRoot`を`git add`します。
+2. `node scripts/run-python.js scripts/map-production/publish_phase5_tiles.py $finalRoot --docs-root docs` で、不変の版付きタイルtreeを `docs/assets/images/maps/tiles/{release-id}/` へ配置します。publishを省略してfinalizerを先に実行してはいけません。
+3. `npm run map:production:finalize -- release-candidate $finalRoot` を実行し、厳格なrelease-candidate検証を通します。
+4. 公開既定値を切り替えないrelease-candidate専用URLに対し、`npm run map:production:browser-qa -- --url "${previewBaseUrl}?release-preview=world-v3" --output-dir $browserQaRoot` を実行します。固定版Playwright CLI 0.1.17のハーネスは1440×1000デスクトップ、390×844モバイル、400ms以上の低速タイル応答、Royal子タイル503時のエリュシオン親保持を実ブラウザで確認します。world-v3基底tileはHTTP 200だけでなくLeafletの実decode完了とfallback未使用を必須にし、console/network/page errorは最終スクリーンショット後に固定collectorから再収集します。受領証は実デコード可能な非blankスクリーンショット、アクセシビリティsnapshot、raw evidenceから再導出する診断に加え、release/index、実行時JS/CSS/JSON、Royal親子manifest、実配信tile、QAハーネスのSHA-256を固定します。ここまでの検証に失敗した場合は停止し、`published` へ進めません。
+5. ブラウザQA合格後だけ `npm run map:production:finalize -- published $browserQaReceipt` を実行します。finalizerはreceiptと現在のrelease-candidate全バイトを再照合し、検証済みbundleを `world/map-production/releases/world-v3-phase6-browser-qa/` へコピーしてreceipt/tree hashをpublished readinessへ固定します。PASSでなければ一切変更しません。直後に `npm run map:production:receipt` をリポジトリへの最後の書き込みとして実行し、同じbrowser QA bindingをpublication receiptへ継承します。公開後の検証でもruntime依存物とworld-v3 release treeをPhase 6時点のSHA-256へ再照合し、publication時刻がbrowser QA完了時刻より前なら拒否します。receipt永続化前の `published` readinessはfail-closedで失敗します。
 6. 全Node/Pythonテスト、frontmatter、map production検証をローカルで成功させ、専用ブランチへ意図した変更だけをcommit/pushしてDraft PRを作成します。
 7. Ubuntu / WindowsのGitHub Actions成功後にPRをReadyへ切り替えてsquash mergeし、続けて `main` CI成功を確認します。
 8. `main:/docs` のGitHub Pagesで実タイル、モバイルUI、フォールバック、公開URLを確認します。
 9. 公開後の切り戻しは公開commitに対する `git revert` のPRで行い、v1/v2を残したままv3だけを戻します。修正版では既存version directoryを上書きせず、新しいrelease IDを使います。
 
-buildは必須の `--target-stage` で段階を固定します。`idx22` はexact `idx17`を入力にdirect 17をimportして5大陸だけを新規合成し、世界もタイルも作りません。`idx23` はexact `idx22`を入力に既存22枚をimportして世界だけを新規合成し、大陸を再生成せずタイルも作りません。`final` はexact `idx23`の23枚をすべてimportし、合成を一切行わず、必須の `--tiles` で1350枚を作ります。実行順は次の3コマンドです。
+手順2–5の変数と実行順は次で固定します。`PHASE5_PREVIEW_URL`にはqueryを含まないpreview base URLを設定します。
 
 ```powershell
-python scripts/map-production/build_phase5_assets.py build --target-stage idx22 --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx17.json --output-root world/map-production/releases/world-v3-idx22-build-v1 --release-id world-v3
-python scripts/map-production/build_phase5_assets.py build --target-stage idx23 --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx22.json --output-root world/map-production/releases/world-v3-idx23-build-v1 --release-id world-v3
-python scripts/map-production/build_phase5_assets.py build --target-stage final --tiles --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx23.json --output-root world/map-production/releases/world-v3-phase5-v1 --release-id world-v3
+$finalRoot = "world/map-production/releases/world-v3-phase5-v1"
+$previewBaseUrl = $env:PHASE5_PREVIEW_URL
+if ([string]::IsNullOrWhiteSpace($previewBaseUrl)) {
+  throw "Set PHASE5_PREVIEW_URL to the query-free release-candidate preview base URL."
+}
+$browserQaRoot = "tmp/map-production/phase6-browser-qa/world-v3-v1"
+$browserQaReceipt = "$browserQaRoot/phase6-browser-qa-receipt.json"
+
+node scripts/run-python.js scripts/map-production/publish_phase5_tiles.py $finalRoot --docs-root docs
+git add -- docs/assets/images/maps/tiles/world-v3 docs/data/map/sheet-tiles-v3.json docs/data/map/region-rasters.json
+npm run map:production:finalize -- release-candidate $finalRoot
+npm run map:production:browser-qa -- --url "${previewBaseUrl}?release-preview=world-v3" --output-dir $browserQaRoot
+npm run map:production:finalize -- published $browserQaReceipt
+npm run map:production:receipt
 ```
 
-三つのbuild rootはいずれも後続証拠が参照するため、既定の `tmp/` 出力を昇格候補にせず、追跡対象の `world/map-production/releases/` 以下へ版付き・不変で保存します。`idx23` は `idx17` と `idx22` のハッシュ固定された依存連鎖を含み、世界1・大陸5・direct 17の全23 sheetを網羅しなければなりません。
+### Phase 5実行順序（Golden v2受入直後から）
+
+buildは必須の `--target-stage` で段階を固定します。ただし実行はidx22から始まりません。Golden v2がexact master、automated QA、Root review、匿名packet、異なる2名のblind-independent review、acceptance receiptを伴ってtracked manifestでacceptedになった直後から、次の順序を一つも省略せず実行します。全Python toolは環境差を避けるため `node scripts/run-python.js` 経由で起動します。
+
+1. `validate_resolution_contract --check-catalog`、metatile/parent controlの`--verify-existing`、`validate_phase5_vision_focus_boxes`を実行します。
+2. `render_phase5_reviewed_master --all-generation --emit-masks`でdirect 17と各枚のobserved land/transport maskを`tmp/map-production/phase5-reviewed-v2/`へ生成します。Golden preview、full-spatial preview、global-neutral previewの各flagは禁止です。
+3. 17 renderer reportsから`build_phase5_assets canonical-provenance`を作り、`promote_phase5_renderer_outputs.py`で`world/map-production/masters/world-v3-direct17-v1/`へ昇格します。
+4. master rootを先に`git add`します。これはcommit指示ではなく、exact-five emitterがsourceを`git ls-files`で固定するための入力条件です。
+5. direct各枚でautomated QAを通した後、canonical registryのfocusを使って`native/full25/full50/focus200/focus400`を確認します。TEMP PNGはcommitせず、emitter自身が`$evidence/$sid/view-bundle.json`とそのsheet directoryをatomicに作ります。callerは`$evidence` version parentだけを先に作り、sheet directoryを作りません。`create_qa_report`はtracked receiptだけを受理するため、emitter直後にそのreceiptを`git add`してから、採否JSONを`$vision/$jobId-review-a.json`、strict時の二件目を`$vision/$jobId-review-b.json`へ保存します。
+6. 5枚すべてを実際に見たreviewerだけが`reviewer_confirmed_exact_five=true`にできます。90点・1名のstandard directは`sheet_region_atlantia_region`、`sheet_region_emerald_plains_region`、`sheet_region_ethernia_core_region`の3枚だけで、残る14枚は94点・異なる2名を要求します。
+7. `assemble_phase5_direct_records`からexact 17 recordsを作り、`write_phase5_source_indexes --stage idx17`でidx17を固定します。
+8. idx22 buildで5大陸だけを合成し、validate・build rootのstage・独立parent-control automated QA・exact-five・Golden reviewersとは別人のblind review exact 1件を完了します。新しいreceipt/report/automated QAを再度`git add`してから、composite recordsとidx22を書きます。
+9. idx23 buildで世界だけを合成し、同じQA順序を完了します。worldのreceipt/report/automated QAを再度`git add`してからworld recordとidx23を書きます。
+10. exact idx23だけを入力にfinal buildを行い、合成せず23 masters / 1350 tilesを再検証して、final build rootを`git add`します。
+
+主要コマンドは次の順です。各`$sid`のautomated QA、exact-five、job-prefixed review templateを作る完全なPowerShell loopは[`../README.md`](../README.md#golden-v2受入後からfinalまでの完全runbook)を正規runbookとします。
+
+```powershell
+node scripts/run-python.js scripts/map-production/validate_resolution_contract.py --check-catalog --json
+node scripts/run-python.js scripts/map-production/render_phase5_metatile_controls.py --verify-existing
+node scripts/run-python.js scripts/map-production/render_phase5_parent_control_masks.py --verify-existing
+node scripts/run-python.js scripts/map-production/validate_phase5_vision_focus_boxes.py --json
+
+$golden = "world/map-production/candidates/style-candidate-k-v3-golden-v2.png"
+$goldenSha = (Get-FileHash -LiteralPath $golden -Algorithm SHA256).Hash.ToLowerInvariant()
+$finalRoot = "world/map-production/releases/world-v3-phase5-v1"
+node scripts/run-python.js scripts/map-production/render_phase5_reviewed_master.py --all-generation --emit-masks --output-dir tmp/map-production/phase5-reviewed-v2/world-v3-direct17-v1 --golden-style $golden --golden-style-sha256 $goldenSha --material-atlas world/map-production/style-assets/phase5-cartographic-material-atlas-v1.png --highland-detail-exemplar --canonical-control-index world/map-production/controls/phase5-metatiles/index.json
+# 17 reports: canonical-provenance, then promotion and git add of tracked masters
+# 17 masters: READMEのloopでautomated QA、exact-five receipt、job-prefixed blind-independent reports
+node scripts/run-python.js scripts/map-production/assemble_phase5_direct_records.py --masters-root world/map-production/masters/world-v3-direct17-v1 --automated-root world/map-production/qa/automated/phase5-world-v3-v1 --vision-root world/map-production/qa/phase5-world-v3-v1/vision --output world/map-production/releases/world-v3-source-indexes/world-v3-direct17-records-v1.json
+node scripts/run-python.js scripts/map-production/write_phase5_source_indexes.py --stage idx17 --records world/map-production/releases/world-v3-source-indexes/world-v3-direct17-records-v1.json --golden-style $golden --output world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx17.json
+
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py build --target-stage idx22 --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx17.json --output-root world/map-production/releases/world-v3-idx22-build-v1 --release-id world-v3
+# validate+stage, 5 continent automated/exact-five/review, QA rootsを再stage, composite bundle, idx22 writer
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py build --target-stage idx23 --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx22.json --output-root world/map-production/releases/world-v3-idx23-build-v1 --release-id world-v3
+# validate+stage, world automated/exact-five/review, QA rootsを再stage, composite bundle, idx23 writer
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py build --target-stage final --tiles --source-index world/map-production/releases/world-v3-source-indexes/world-v3-source-index-idx23.json --output-root $finalRoot --release-id world-v3
+node scripts/run-python.js scripts/map-production/build_phase5_assets.py validate $finalRoot
+git add -- $finalRoot
+node scripts/run-python.js scripts/map-production/publish_phase5_tiles.py $finalRoot --docs-root docs
+```
+
+idx22/idx23ではtilesを禁止し、finalでは`--tiles`を必須にします。三つのbuild rootはいずれも追跡対象の`world/map-production/releases/`以下へ版付き・不変で保存します。buildが作る`qa/*.json` / `qa/*.md`は未割当scaffoldであり、build root内で編集しません。採用判断はcanonical Vision root、exact-five evidenceはcanonical evidence rootだけに記録します。既存rootを`--force`で上書きせず版を上げます。
 
 `publish_phase5_tiles.py` は全manifest・tile・SHA・親子関係を再検証し、既存version directoryを上書きせずに公開します。既存HTMLが参照する `region-rasters.json` は、full-WebP indexではなくcanonical `sheet-tiles-v3.json` と同一内容の互換aliasへ置換します。Phase 7 finalizerの順序は必ず `release-candidate -> Browser QA -> published -> receipt` とし、receipt後にはファイルを書き換えません。
 

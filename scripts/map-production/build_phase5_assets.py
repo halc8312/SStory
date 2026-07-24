@@ -39,6 +39,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageOps, ImageStat
 
 from create_qa_report import build_report, markdown_report
 from generate_tiles import generate_pyramid
+import phase5_vision_evidence as vision_evidence
 from promote_phase5_renderer_outputs import (
     RendererPromotionError,
     _rename_directory_no_replace,
@@ -3605,6 +3606,10 @@ def accepted_evidence(
     vision_paths: list[str] = []
     primary_score: int | None = None
     primary_reviewer: str | None = None
+    reviewed_master = resolve_repo_artifact(
+        master_path, f"{sheet['id']} reviewed master"
+    )
+    reviewed_master_sha256 = sha256_file(reviewed_master)
     for index, spec in enumerate(vision_specs):
         report_path, _ = verify_hashed_file(
             spec, f"{sheet['id']}.vision_reports[{index}]"
@@ -3614,13 +3619,22 @@ def accepted_evidence(
             report,
             job_id=job_id,
             image_path=master_path,
-            image_sha256=sha256_file(
-                resolve_repo_artifact(master_path, f"{sheet['id']} reviewed master")
-            ),
+            image_sha256=reviewed_master_sha256,
             golden_reference=False,
             threshold=threshold,
             label=f"{sheet['id']} vision report {index + 1}",
         )
+        try:
+            vision_evidence.validate_report_vision_bundle(
+                report,
+                sheet_id=sheet["id"],
+                master_path=reviewed_master,
+                master_sha256=reviewed_master_sha256,
+            )
+        except vision_evidence.Phase5VisionEvidenceError as exc:
+            raise Phase5BuildError(
+                f"{sheet['id']} vision report {index + 1}: {exc}"
+            ) from exc
         reviewer_key = canonical_reviewer_identity(reviewer)
         if reviewer_key in reviewers:
             raise Phase5BuildError(

@@ -55,6 +55,11 @@ def complete_report(
     image_sha256 = digest(
         phase5.resolve_repo_artifact(image_path, "test reviewed image")
     )
+    vision_bundle_receipt = (
+        {"path": image_path, "sha256": image_sha256}
+        if job_id.startswith("phase5-")
+        else None
+    )
     report = phase5.build_report(
         job_id,
         image_path,
@@ -63,7 +68,10 @@ def complete_report(
         threshold=threshold,
         image_sha256=image_sha256,
         review_mode="blind-independent",
+        vision_bundle_receipt=vision_bundle_receipt,
     )
+    if vision_bundle_receipt is not None:
+        report["vision_bundle"]["reviewer_confirmed_exact_five"] = True
     report["status"] = "complete"
     report["decision"] = "accepted"
     report["summary"] = "Synthetic accepted evidence for a unit test."
@@ -614,6 +622,19 @@ class Phase5AssetPipelineTests(unittest.TestCase):
         )
         cls.contract_result = derived["result"]
         cls.contracts = derived["sheets"]
+
+    def setUp(self):
+        # Most pipeline tests use tiny synthetic masters that cannot satisfy the
+        # canonical 23-sheet focus registry.  Keep those fixtures focused on
+        # their existing concern while still asserting below that production
+        # acceptance invokes, and fails closed on, semantic exact-five checks.
+        patcher = patch.object(
+            phase5.vision_evidence,
+            "validate_report_vision_bundle",
+            return_value=None,
+        )
+        self.validate_vision_bundle = patcher.start()
+        self.addCleanup(patcher.stop)
 
     def _sources_for_target_stage(self, target_stage: str) -> dict[str, dict]:
         sources: dict[str, dict] = {}
@@ -3626,6 +3647,25 @@ class Phase5AssetPipelineTests(unittest.TestCase):
             )
             self.assertEqual(evidence.primary_score, 100)
             self.assertEqual(len(evidence.vision_paths), 2)
+            self.assertEqual(self.validate_vision_bundle.call_count, 2)
+
+            with patch.object(
+                phase5.vision_evidence,
+                "validate_report_vision_bundle",
+                side_effect=phase5.vision_evidence.Phase5VisionEvidenceError(
+                    "synthetic stale exact-five receipt"
+                ),
+            ):
+                with self.assertRaisesRegex(
+                    phase5.Phase5BuildError,
+                    "synthetic stale exact-five receipt",
+                ):
+                    phase5.accepted_evidence(
+                        entry,
+                        sheet=sheet,
+                        master_path=master_path,
+                        job_id=job_id,
+                    )
 
             wrongly_golden = copy.deepcopy(entry)
             wrongly_golden_path = root / "wrongly-golden.json"
