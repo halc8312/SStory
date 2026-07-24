@@ -1322,6 +1322,7 @@ def _install_reserved_output(stage: Path, reservation: OutputReservation) -> Non
         _load_bundle_documents(
             reservation.root,
             allow_reservation_marker=True,
+            require_canonical_distribution_hashes=False,
         )
         _validate_reservation(reservation, installed_names=installed)
         _commit_reservation(reservation, guard)
@@ -1885,6 +1886,8 @@ def generate_parent_controls(
             logical_root=output,
             plan_inputs=plan_inputs,
         )
+        _, staged_files = _plain_bundle_entries(stage)
+        _validate_expected_control_rasters(index, staged_files)
         reservation = _reserve_output_root(output)
         _install_reserved_output(stage, reservation)
         return index, report
@@ -2106,6 +2109,7 @@ def _load_bundle_documents(
     contract_path: Path = DEFAULT_CONTRACT,
     map_sheets_path: Path = DEFAULT_MAP_SHEETS,
     allow_reservation_marker: bool = False,
+    require_canonical_distribution_hashes: bool = True,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     output = _validated_output_root(output, must_exist=True)
     logical_root = (logical_root or output).resolve()
@@ -2128,7 +2132,8 @@ def _load_bundle_documents(
     if report.get("index") != expected_index:
         raise ParentControlError("parent control report does not hash-lock its index")
     _validate_distribution_bindings(index, report, actual_files)
-    _validate_expected_control_hashes(index)
+    if require_canonical_distribution_hashes:
+        _validate_expected_control_hashes(index)
     _validate_expected_control_rasters(index, actual_files)
 
     temporary = Path(

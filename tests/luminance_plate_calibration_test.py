@@ -9,6 +9,7 @@ import math
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -394,6 +395,38 @@ class LuminancePlateCalibrationTest(unittest.TestCase):
                     prefix=f"sstory-compact-schema-lock-{label}-",
                 )
 
+    def test_compact_zlib_runtime_is_provenance_only_and_distribution_stays_locked(
+        self,
+    ) -> None:
+        control = json.loads(F5_CONTROL.read_text(encoding="utf-8"))
+        numeric_contract = control["numeric_contract"]
+        self.assertEqual(
+            numeric_contract["raster_semantic_hash"],
+            "sstory-raster-semantic-v1",
+        )
+        self.assertEqual(
+            numeric_contract["zlib_runtime_policy"],
+            "provenance-only",
+        )
+        self.assertNotIn("zlib_runtime_version", numeric_contract)
+
+        raster_path = REPO_ROOT / control["transfer_control"]["raster_path"]
+        self.assertEqual(
+            sha256(raster_path),
+            control["transfer_control"]["raster_sha256"],
+        )
+        with mock.patch.object(calibration.zlib, "ZLIB_RUNTIME_VERSION", "1.3"):
+            calibration._validate_inputs(control, F5_CONTROL, SCHEMA_V2)
+
+        wrong_distribution = json.loads(F5_CONTROL.read_text(encoding="utf-8"))
+        wrong_distribution["transfer_control"]["raster_sha256"] = "0" * 64
+        with mock.patch.object(calibration.zlib, "ZLIB_RUNTIME_VERSION", "1.3"):
+            self._assert_rejected_without_artifacts(
+                wrong_distribution,
+                "transfer raster SHA-256 mismatch",
+                prefix="sstory-compact-distribution-sha-",
+            )
+
     def test_compact_unknown_key_is_rejected_without_artifacts(self) -> None:
         control = json.loads(F5_CONTROL.read_text(encoding="utf-8"))
         control["calibration"]["topology_compact_ridges"]["unexpected"] = True
@@ -409,11 +442,12 @@ class LuminancePlateCalibrationTest(unittest.TestCase):
             "primitives"
         ][0]["nodes"]
         nodes[0]["height"] = 0.1
-        self._assert_rejected_without_artifacts(
-            control,
-            "endpoints must have zero height",
-            prefix="sstory-compact-endpoint-height-",
-        )
+        with mock.patch.object(calibration.zlib, "ZLIB_RUNTIME_VERSION", "1.3"):
+            self._assert_rejected_without_artifacts(
+                control,
+                "endpoints must have zero height",
+                prefix="sstory-compact-endpoint-height-",
+            )
 
     def test_compact_duplicate_primitive_and_node_ids_are_rejected(self) -> None:
         duplicate_primitive = json.loads(F5_CONTROL.read_text(encoding="utf-8"))

@@ -46,19 +46,28 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _decoded_raster_identity(path: Path) -> tuple[str, tuple[int, int], bytes]:
+    with Image.open(path) as opened:
+        opened.load()
+        return opened.mode, opened.size, opened.tobytes()
+
+
 class CandidateG3HachureSkeletonTest(unittest.TestCase):
     def test_committed_source_renders_exact_rgb_skeleton(self) -> None:
         with tempfile.TemporaryDirectory(prefix="sstory-g3-skeleton-", dir=REPO_ROOT) as raw:
             regenerated = Path(raw) / "skeleton.png"
             metrics = MODULE.render(CONTROL_PATH, regenerated)
 
-            self.assertEqual(regenerated.read_bytes(), OUTPUT_PATH.read_bytes())
+            self.assertEqual(
+                _decoded_raster_identity(regenerated),
+                _decoded_raster_identity(OUTPUT_PATH),
+            )
             self.assertEqual(
                 _sha256(CONTROL_PATH),
                 "d6d68f39861802aa28ebf4a42fece89433da80fe616a79fdba57a34aca3baeb6",
             )
             self.assertEqual(
-                _sha256(regenerated),
+                _sha256(OUTPUT_PATH),
                 "dc8978b184755de6ba21f10a120bfb413b0976fed642b106065eff82dee34da3",
             )
             self.assertEqual(metrics["landform_count"], 6)

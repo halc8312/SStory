@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import hashlib
-import io
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,15 +12,21 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = REPO_ROOT / "scripts" / "map-production"
-import sys
 
 sys.path.insert(0, str(SCRIPT_DIR))
 
 from composite_masked_edit import build_mask, composite  # noqa: E402
 
 
+def _decoded_raster_identity(image: Image.Image) -> tuple[str, tuple[int, int], bytes]:
+    image.load()
+    return image.mode, image.size, image.tobytes()
+
+
 class CompositeMaskedEditTests(unittest.TestCase):
-    def test_repository_b_masks_keep_their_exact_png_hashes(self) -> None:
+    def test_repository_b_masks_keep_decoded_identity_and_distribution_hashes(
+        self,
+    ) -> None:
         controls = REPO_ROOT / "world/map-production/controls"
         expected = {
             1: "1c785d69d23ae1570f29c0322deed517928f6a5c2b4e2a11d2361965bf27c62b",
@@ -30,11 +36,63 @@ class CompositeMaskedEditTests(unittest.TestCase):
             control_path = controls / f"style-candidate-b-mountain-mask-v{version}.json"
             stored_path = control_path.with_suffix(".png")
             control = json.loads(control_path.read_text(encoding="utf-8"))
-            buffer = io.BytesIO()
-            build_mask(control).save(buffer, format="PNG", optimize=True)
+            regenerated = build_mask(control)
+            try:
+                with Image.open(stored_path) as stored:
+                    self.assertEqual(
+                        _decoded_raster_identity(regenerated),
+                        _decoded_raster_identity(stored),
+                    )
+            finally:
+                regenerated.close()
 
-            self.assertEqual(hashlib.sha256(buffer.getvalue()).hexdigest(), expected_hash)
-            self.assertEqual(hashlib.sha256(stored_path.read_bytes()).hexdigest(), expected_hash)
+            self.assertEqual(
+                hashlib.sha256(stored_path.read_bytes()).hexdigest(), expected_hash
+            )
+
+    def test_decoded_identity_ignores_png_compression_but_detects_one_pixel(self) -> None:
+        with tempfile.TemporaryDirectory(dir=REPO_ROOT) as temporary:
+            root = Path(temporary)
+            first_path = root / "first.png"
+            second_path = root / "second.png"
+            changed_path = root / "changed.png"
+            raster = Image.new("L", (16, 16))
+            raster.putdata(bytes((index * 41) % 256 for index in range(256)))
+            try:
+                raster.save(
+                    first_path, format="PNG", compress_level=0, optimize=False
+                )
+                raster.save(
+                    second_path, format="PNG", compress_level=9, optimize=False
+                )
+                changed = raster.copy()
+                changed.putpixel((6, 10), (changed.getpixel((6, 10)) + 1) % 256)
+                try:
+                    changed.save(
+                        changed_path,
+                        format="PNG",
+                        compress_level=9,
+                        optimize=False,
+                    )
+                finally:
+                    changed.close()
+            finally:
+                raster.close()
+
+            self.assertNotEqual(first_path.read_bytes(), second_path.read_bytes())
+            with (
+                Image.open(first_path) as first,
+                Image.open(second_path) as second,
+                Image.open(changed_path) as changed,
+            ):
+                self.assertEqual(
+                    _decoded_raster_identity(first),
+                    _decoded_raster_identity(second),
+                )
+                self.assertNotEqual(
+                    _decoded_raster_identity(first),
+                    _decoded_raster_identity(changed),
+                )
 
     def test_legacy_control_reproduces_the_previous_mask_byte_for_byte(self) -> None:
         control = {

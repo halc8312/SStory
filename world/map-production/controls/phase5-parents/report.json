@@ -7,7 +7,7 @@
   "status": "passed",
   "index": {
     "path": "world/map-production/controls/phase5-parents/index.json",
-    "sha256": "4605e7b473a4f1a61c3f44665637b725aee5aade1594fb7b68acfc7a23589fc9"
+    "sha256": "e24a82569f4f834dd59043fe97cdb95476066f5c2299f8893175a6b11f08645b"
   },
   "inputs": {
     "resolution_contract": {
@@ -54,7 +54,7 @@
       {
         "role": "generator",
         "path": "scripts/map-production/render_phase5_parent_control_masks.py",
-        "sha256": "01175efd044477228bbbf763360a505c78978633d9e3102cbdbc9f40751b71b5"
+        "sha256": "c7b29f232cf6aedcba2161d5b7e706729b25c7208032818009ea5fe2c2067f34"
       },
       {
         "role": "production-common",

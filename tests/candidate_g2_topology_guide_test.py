@@ -34,6 +34,12 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _decoded_raster_identity(path: Path) -> tuple[str, tuple[int, int], bytes]:
+    with Image.open(path) as opened:
+        opened.load()
+        return opened.mode, opened.size, opened.tobytes()
+
+
 class CandidateG2TopologyGuideTest(unittest.TestCase):
     def test_committed_guide_is_reproducible_complete_and_inset(self) -> None:
         with tempfile.TemporaryDirectory(
@@ -42,9 +48,12 @@ class CandidateG2TopologyGuideTest(unittest.TestCase):
             regenerated = Path(raw) / "guide.png"
             metrics = MODULE.render(CONTROL_PATH, regenerated)
 
-            self.assertEqual(regenerated.read_bytes(), OUTPUT_PATH.read_bytes())
             self.assertEqual(
-                _sha256(regenerated),
+                _decoded_raster_identity(regenerated),
+                _decoded_raster_identity(OUTPUT_PATH),
+            )
+            self.assertEqual(
+                _sha256(OUTPUT_PATH),
                 "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f",
             )
             self.assertEqual(metrics["shape_count"], 6)

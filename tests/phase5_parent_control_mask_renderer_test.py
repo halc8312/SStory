@@ -48,6 +48,22 @@ def copy_canonical_inputs(root: Path) -> tuple[Path, Path, Path]:
 
 
 class Phase5ParentControlMaskRendererTests(unittest.TestCase):
+    def test_fresh_generation_uses_semantic_not_canonical_container_hashes(self):
+        with tempfile.TemporaryDirectory(dir=REPO_ROOT) as temporary:
+            output = Path(temporary) / "parent-controls"
+            with mock.patch.object(
+                parent_controls,
+                "_validate_expected_control_hashes",
+                side_effect=AssertionError(
+                    "fresh generation must not require host-specific PNG bytes"
+                ),
+            ) as canonical_hash_validator:
+                index, report = parent_controls.generate_parent_controls(output)
+
+            canonical_hash_validator.assert_not_called()
+            self.assertEqual(index["summary"]["control_mask_count"], 12)
+            self.assertEqual(len(report["outputs"]), 12)
+
     def test_exact_six_parent_bundle_is_binary_and_hash_locked(self):
         with tempfile.TemporaryDirectory(dir=REPO_ROOT) as temporary:
             root = Path(temporary)

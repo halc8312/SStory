@@ -195,7 +195,8 @@ def _validate_inputs(
     if compact_requested:
         expected_numeric_contract = {
             "python_version": "3.12.10",
-            "zlib_runtime_version": "1.3.1",
+            "raster_semantic_hash": "sstory-raster-semantic-v1",
+            "zlib_runtime_policy": "provenance-only",
             "topology_float_mode": "python-array-binary64-row-major",
             "primitive_evaluation_order": "canonical-id-ascending-product-union",
             "topology_quantization": (
@@ -216,13 +217,6 @@ def _validate_inputs(
                 "Python version mismatch: "
                 f"expected {numeric_contract['python_version']}, got {sys.version.split()[0]}"
             )
-        if zlib.ZLIB_RUNTIME_VERSION != numeric_contract["zlib_runtime_version"]:
-            raise CalibrationError(
-                "zlib runtime version mismatch: "
-                f"expected {numeric_contract['zlib_runtime_version']}, "
-                f"got {zlib.ZLIB_RUNTIME_VERSION}"
-            )
-
     source_path = _resolve_repo_path(control["source_image"]["path"], "source_image.path")
     transfer_path = _resolve_repo_path(
         control["transfer_control"]["path"], "transfer_control.path"

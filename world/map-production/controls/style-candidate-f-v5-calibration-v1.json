@@ -2,7 +2,7 @@
   "schema_version": "1.2.0",
   "schema_lock": {
     "path": "world/map-production/schemas/luminance-plate-calibration-v2.schema.json",
-    "sha256": "e76c3ab2a505a85e22a2815b16eba2f53286386dcb55a6141945acdf635dcc09"
+    "sha256": "3ee43c63b32e1291d8f60647fa20104df298d59df9e7cb04efcb8977748e0714"
   },
   "id": "style-candidate-f-v5-calibration-v1",
   "report_id": "style-candidate-f-v5-calibration",
@@ -153,7 +153,8 @@
     "operation_order": "derive-from-source-sum-integers-then-apply-equal-rgb-delta",
     "range_handling": "reject-before-write-never-clamp",
     "python_version": "3.12.10",
-    "zlib_runtime_version": "1.3.1",
+    "raster_semantic_hash": "sstory-raster-semantic-v1",
+    "zlib_runtime_policy": "provenance-only",
     "topology_float_mode": "python-array-binary64-row-major",
     "primitive_evaluation_order": "canonical-id-ascending-product-union",
     "topology_quantization": "round-half-even-at-l8-intermediate-and-final-plate-boundaries",
