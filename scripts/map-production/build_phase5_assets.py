@@ -168,8 +168,20 @@ INTERNAL_CANONICAL_CONTEXT_KEY = "_phase5_canonical_render_context"
 INTERNAL_BOUND_ARTIFACTS_KEY = "_phase5_bound_artifacts"
 GOLDEN_ACCEPTANCE_RECEIPT_ROLE = "golden-acceptance-receipt"
 GOLDEN_BLIND_PACKET_ROLE = "blind-review-packet"
+# These roles are emitted by both the legacy v1 promoter and the v2
+# promoter, so none of them can prove that a job began the v2 workflow.
+# Falling back to the v1 verifier is still fail-closed: a truncated v2 job
+# that contains only these shared roles must independently satisfy the full
+# legacy evidence graph or it is rejected there.
+GOLDEN_SHARED_PREPARED_ROLES = frozenset(
+    {
+        "golden-raw-output",
+        "promotion-provenance",
+        "persistent-automated-audit",
+    }
+)
 GOLDEN_V2_PREPARED_ONLY_ROLES = frozenset(
-    golden_v2_promotion.PREPARED_INPUT_ROLES - {"golden-raw-output"}
+    golden_v2_promotion.PREPARED_INPUT_ROLES - GOLDEN_SHARED_PREPARED_ROLES
 )
 GOLDEN_BLIND_PACKET_VIEW_IDS = (
     "native",
