@@ -57,6 +57,11 @@ DEFAULT_MAP_SHEETS = DEFAULT_SOURCE_DIR / "map-sheets.json"
 DEFAULT_OUTPUT_ROOT = (
     REPO_ROOT / "world" / "map-production" / "controls" / "phase5-parents"
 )
+# Keep the repository distribution namespace immutable even when tests or
+# callers temporarily replace ``DEFAULT_OUTPUT_ROOT``.  PNG container bytes
+# are canonical only for the committed bundle; freshly regenerated bundles on
+# another supported zlib runtime are compared by decoded raster identity.
+CANONICAL_OUTPUT_ROOT = DEFAULT_OUTPUT_ROOT.resolve()
 DEFAULT_INDEX_SCHEMA = (
     REPO_ROOT
     / "world"
@@ -2109,10 +2114,14 @@ def _load_bundle_documents(
     contract_path: Path = DEFAULT_CONTRACT,
     map_sheets_path: Path = DEFAULT_MAP_SHEETS,
     allow_reservation_marker: bool = False,
-    require_canonical_distribution_hashes: bool = True,
+    require_canonical_distribution_hashes: bool | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     output = _validated_output_root(output, must_exist=True)
     logical_root = (logical_root or output).resolve()
+    if require_canonical_distribution_hashes is None:
+        require_canonical_distribution_hashes = (
+            logical_root == CANONICAL_OUTPUT_ROOT
+        )
     _repo_path(logical_root)
     _, actual_files = _plain_bundle_entries(
         output,
