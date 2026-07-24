@@ -12,15 +12,17 @@ from contextlib import redirect_stderr
 from pathlib import Path
 from unittest.mock import patch
 
-from PIL import Image
+from PIL import Image, PngImagePlugin
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = REPO_ROOT / "scripts" / "map-production"
 sys.path.insert(0, str(SCRIPT_DIR))
+sys.path.insert(0, str(REPO_ROOT / "tests"))
 
 import build_phase5_assets as phase5  # noqa: E402
 import audit_phase5_master as phase5_audit  # noqa: E402
+import candidate_k3_golden_promotion_v2_test as golden_v2_fixture  # noqa: E402
 import release_bound_artifact as bound_artifacts  # noqa: E402
 import render_phase5_parent_control_masks as parent_control_renderer  # noqa: E402
 import render_phase5_reviewed_master as reviewed_renderer  # noqa: E402
@@ -50,7 +52,9 @@ def complete_report(
     *,
     golden: bool = False,
 ) -> dict:
-    image_sha256 = digest(phase5.resolve_repo_artifact(image_path, "test reviewed image"))
+    image_sha256 = digest(
+        phase5.resolve_repo_artifact(image_path, "test reviewed image")
+    )
     report = phase5.build_report(
         job_id,
         image_path,
@@ -83,14 +87,10 @@ def write_golden_manifest(
     job_id: str = "golden-style-fixture-v1",
 ) -> tuple[Path, Path]:
     master_path = phase5.repo_path(master)
-    report = complete_report(
-        job_id, master_path, "Golden Reviewer", 94, golden=True
-    )
+    report = complete_report(job_id, master_path, "Golden Reviewer", 94, golden=True)
     report_path = root / f"{job_id}-vision.json"
     report_path.write_text(json.dumps(report), encoding="utf-8")
-    second = complete_report(
-        job_id, master_path, "Golden Reviewer B", 94, golden=True
-    )
+    second = complete_report(job_id, master_path, "Golden Reviewer B", 94, golden=True)
     second_path = root / f"{job_id}-vision-b.json"
     second_path.write_text(json.dumps(second), encoding="utf-8")
     raw_path = root / f"{job_id}-raw.png"
@@ -403,7 +403,9 @@ def write_golden_manifest_with_two_reviews(
         for item in manifest["jobs"][0]["inputs"]
         if item["role"].startswith("independent-vision-review-")
     ]
-    self_check = [item for item in review_specs if item["path"] == phase5.repo_path(primary_path)]
+    self_check = [
+        item for item in review_specs if item["path"] == phase5.repo_path(primary_path)
+    ]
     if len(review_specs) != 2 or len(self_check) != 1:
         raise AssertionError("Golden fixture must contain exactly two reviews")
     return manifest_path, review_specs
@@ -740,9 +742,7 @@ class Phase5AssetPipelineTests(unittest.TestCase):
     def test_build_cli_requires_target_stage(self):
         with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             phase5.build_parser().parse_args(["build"])
-        args = phase5.build_parser().parse_args(
-            ["build", "--target-stage", "idx22"]
-        )
+        args = phase5.build_parser().parse_args(["build", "--target-stage", "idx22"])
         self.assertEqual(args.target_stage, "idx22")
 
     def test_target_stage_contract_is_exact_and_tiles_are_final_only(self):
@@ -853,9 +853,12 @@ class Phase5AssetPipelineTests(unittest.TestCase):
             "final": (17, 6, 0),
         }
         for target_stage, expected_counts in expected.items():
-            with self.subTest(target_stage=target_stage), tempfile.TemporaryDirectory(
-                prefix=".phase5-stage-materialization-test-", dir=REPO_ROOT
-            ) as temporary:
+            with (
+                self.subTest(target_stage=target_stage),
+                tempfile.TemporaryDirectory(
+                    prefix=".phase5-stage-materialization-test-", dir=REPO_ROOT
+                ) as temporary,
+            ):
                 root = Path(temporary)
                 staging = root / "staging"
                 final_root = root / "final"
@@ -918,14 +921,14 @@ class Phase5AssetPipelineTests(unittest.TestCase):
                         resolution_contract_path=phase5.DEFAULT_CONTRACT,
                     )
                 self.assertEqual(
-                    tuple(len(calls[key]) for key in ("direct", "imported", "composite")),
+                    tuple(
+                        len(calls[key]) for key in ("direct", "imported", "composite")
+                    ),
                     expected_counts,
                 )
                 self.assertEqual(set(assets), set(contract.output_sheet_ids))
                 if target_stage == "idx22":
-                    self.assertFalse(
-                        (staging / "masters" / "sheet_world.png").exists()
-                    )
+                    self.assertFalse((staging / "masters" / "sheet_world.png").exists())
                 if target_stage == "idx23":
                     self.assertEqual(calls["composite"], ["sheet_world"])
                 if target_stage == "final":
@@ -948,7 +951,9 @@ class Phase5AssetPipelineTests(unittest.TestCase):
                 ]
             )
             with (
-                patch.object(phase5, "load_source_index", return_value=({}, None, None)),
+                patch.object(
+                    phase5, "load_source_index", return_value=({}, None, None)
+                ),
                 patch.object(phase5, "_prepare_output_root") as prepare,
                 self.assertRaisesRegex(phase5.Phase5BuildError, "exact source-index"),
             ):
@@ -981,7 +986,9 @@ class Phase5AssetPipelineTests(unittest.TestCase):
             with (
                 patch.object(phase5, "bind_file") as bind,
                 patch.object(phase5, "load_source_index") as load_index,
-                self.assertRaisesRegex(phase5.Phase5BuildError, "refusing to overwrite"),
+                self.assertRaisesRegex(
+                    phase5.Phase5BuildError, "refusing to overwrite"
+                ),
             ):
                 phase5.execute_build(args)
             bind.assert_not_called()
@@ -992,9 +999,7 @@ class Phase5AssetPipelineTests(unittest.TestCase):
 
     def test_build_output_root_must_be_trackable_and_nonvolatile(self):
         output = REPO_ROOT / "tmp" / "map-production" / "never-create-phase5-build"
-        with self.assertRaisesRegex(
-            phase5.Phase5BuildError, "volatile or ignored"
-        ):
+        with self.assertRaisesRegex(phase5.Phase5BuildError, "volatile or ignored"):
             phase5._preflight_output_root(output)
         self.assertFalse(output.exists())
 
@@ -1040,9 +1045,12 @@ class Phase5AssetPipelineTests(unittest.TestCase):
             phase5.Phase5BuildError("post-install validation failure"),
             KeyboardInterrupt("post-install interrupt"),
         ):
-            with self.subTest(failure=type(failure).__name__), tempfile.TemporaryDirectory(
-                prefix=".phase5-execute-rollback-test-", dir=REPO_ROOT
-            ) as temporary:
+            with (
+                self.subTest(failure=type(failure).__name__),
+                tempfile.TemporaryDirectory(
+                    prefix=".phase5-execute-rollback-test-", dir=REPO_ROOT
+                ) as temporary,
+            ):
                 root = Path(temporary)
                 output = root / "final-build"
                 source_index = root / "idx23.json"
@@ -1099,7 +1107,9 @@ class Phase5AssetPipelineTests(unittest.TestCase):
                         "load_source_index",
                         return_value=(sources, "1" * 64, golden),
                     ),
-                    patch.object(phase5, "bind_manifest_golden_evidence", return_value={}),
+                    patch.object(
+                        phase5, "bind_manifest_golden_evidence", return_value={}
+                    ),
                     patch.object(
                         phase5,
                         "verify_manifest_golden_style",
@@ -1199,9 +1209,7 @@ class Phase5AssetPipelineTests(unittest.TestCase):
                 path = root.joinpath(*relative.split("/"))
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(b"fixture")
-            self.assertEqual(
-                phase5._installed_stage_inventory_errors(root, report), []
-            )
+            self.assertEqual(phase5._installed_stage_inventory_errors(root, report), [])
             hidden_world = root / "masters" / "sheet_world.png"
             hidden_world.write_bytes(b"future")
             errors = phase5._installed_stage_inventory_errors(root, report)
@@ -1210,7 +1218,9 @@ class Phase5AssetPipelineTests(unittest.TestCase):
             hidden_qa = root / "qa" / "phase5-sheet-world-v1-review1.json"
             hidden_qa.write_text("{}", encoding="utf-8")
             errors = phase5._installed_stage_inventory_errors(root, report)
-            self.assertTrue(any("installed QA inventory mismatch" in error for error in errors))
+            self.assertTrue(
+                any("installed QA inventory mismatch" in error for error in errors)
+            )
 
     def test_idx17_to_idx22_to_idx23_to_final_contract_end_to_end(self):
         idx22 = phase5.target_stage_contract(
@@ -1657,9 +1667,7 @@ class Phase5AssetPipelineTests(unittest.TestCase):
             renderer_report.write_text(json.dumps(document), encoding="utf-8")
             output = root / "must-not-exist.json"
 
-            with self.assertRaisesRegex(
-                phase5.Phase5BuildError, "wrong generator id"
-            ):
+            with self.assertRaisesRegex(phase5.Phase5BuildError, "wrong generator id"):
                 phase5.write_canonical_render_provenance(
                     renderer_report_path=renderer_report,
                     output_path=output,
@@ -1940,6 +1948,273 @@ class Phase5AssetPipelineTests(unittest.TestCase):
             Image.new("RGB", (32, 24), "black").save(master)
             with self.assertRaisesRegex(phase5.Phase5BuildError, "sha256 mismatch"):
                 phase5.verify_manifest_golden_style(golden_style, manifest_path)
+
+    def test_manifest_golden_style_v2_rejects_rehashed_lineage_png_metadata(self):
+        fixture = golden_v2_fixture.PromotionFixture()
+        try:
+            fixture.prepare()
+            reviews = [fixture.root / "review-a.json", fixture.root / "review-b.json"]
+            fixture.build_review(
+                reviews[0], "independent-vision-review-a/Reviewer Alpha"
+            )
+            fixture.build_review(
+                reviews[1], "independent-vision-review-b/Reviewer Beta"
+            )
+            golden_v2_fixture.promotion.accept_promotion(
+                review_paths=reviews,
+                authorized_by="Phase 5 fixture",
+                paths=fixture.paths,
+            )
+
+            renderer_calls: list[list[str]] = []
+            original_run = golden_v2_fixture.promotion.subprocess.run
+
+            def observe_renderer(*args: object, **kwargs: object) -> object:
+                command = args[0]
+                if (
+                    isinstance(command, list)
+                    and len(command) >= 2
+                    and command[0] == sys.executable
+                    and command[1]
+                    == phase5.repo_path(
+                        golden_v2_fixture.promotion.READ_CLOSURE_RUNNER_PATH
+                    )
+                ):
+                    renderer_calls.append(command)
+                return original_run(*args, **kwargs)
+
+            replay_root = REPO_ROOT / "tmp/map-production/k3-golden-v2-replay"
+            before_runs = (
+                set(replay_root.glob("run-*")) if replay_root.exists() else set()
+            )
+            with patch.object(
+                golden_v2_fixture.promotion.subprocess,
+                "run",
+                side_effect=observe_renderer,
+            ):
+                evidence = phase5.verify_manifest_golden_style(
+                    artifact(fixture.paths.final), fixture.manifest
+                )
+            self.assertEqual(len(renderer_calls), 2)
+            self.assertEqual(
+                set(replay_root.glob("run-*")) if replay_root.exists() else set(),
+                before_runs,
+            )
+            self.assertEqual(len(evidence["blind_packet_views"]), 5)
+            self.assertEqual(len(evidence["manifest_vision_reports"]), 2)
+
+            # Re-encode identical native pixels with the two required fields
+            # plus a hidden lineage field, then consistently rewrite every
+            # downstream SHA. Pixel/hash-only validation would accept this.
+            packet_path = next(fixture.paths.blind_packet_dir.glob("*.json"))
+            packet = json.loads(packet_path.read_text(encoding="utf-8"))
+            forged_view = fixture.root / "qa" / "blind-packets" / "forged-native.png"
+            forged_view.parent.mkdir(parents=True, exist_ok=True)
+            source_view = phase5.resolve_repo_artifact(
+                packet["views"][0]["path"], "source anonymous native view"
+            )
+            metadata = PngImagePlugin.PngInfo()
+            metadata.add_text("sstory-blind-contract", "phase4-v2")
+            metadata.add_text("sstory-blind-view", "native")
+            metadata.add_text("lineage", "forbidden-source")
+            with Image.open(source_view) as source_image:
+                source_image.save(
+                    forged_view,
+                    format="PNG",
+                    compress_level=9,
+                    optimize=False,
+                    pnginfo=metadata,
+                )
+            packet["views"][0] = {"id": "native", **artifact(forged_view)}
+            packet_payload = json.dumps(packet).encode("utf-8")
+            packet_sha = hashlib.sha256(packet_payload).hexdigest()
+            packet_path = packet_path.with_name(f"{packet_sha}.json")
+            packet_path.write_bytes(packet_payload)
+            packet_artifact = artifact(packet_path)
+
+            provenance = json.loads(fixture.paths.receipt.read_text(encoding="utf-8"))
+            provenance["blind_packet"] = packet_artifact
+            fixture.paths.receipt.write_text(json.dumps(provenance), encoding="utf-8")
+            provenance_sha = digest(fixture.paths.receipt)
+
+            audit = json.loads(fixture.paths.audit.read_text(encoding="utf-8"))
+            audit["blind_packet"] = packet_artifact
+            audit["provenance_receipt"]["sha256"] = provenance_sha
+            fixture.paths.audit.write_text(json.dumps(audit), encoding="utf-8")
+            audit_sha = digest(fixture.paths.audit)
+
+            review_shas: dict[str, str] = {}
+            for review_path in reviews:
+                review = json.loads(review_path.read_text(encoding="utf-8"))
+                review["image_path"] = packet_artifact["path"]
+                review["image_sha256"] = packet_sha
+                review_path.write_text(json.dumps(review), encoding="utf-8")
+                review_shas[phase5.repo_path(review_path)] = digest(review_path)
+
+            acceptance = json.loads(
+                fixture.paths.final_receipt.read_text(encoding="utf-8")
+            )
+            acceptance["blind_packet"] = packet_artifact
+            acceptance["promotion_provenance"]["sha256"] = provenance_sha
+            acceptance["automated_audit"]["sha256"] = audit_sha
+            for review in acceptance["reviews"]:
+                review["sha256"] = review_shas[review["path"]]
+            fixture.paths.final_receipt.write_text(
+                json.dumps(acceptance), encoding="utf-8"
+            )
+            acceptance_sha = digest(fixture.paths.final_receipt)
+
+            manifest = json.loads(fixture.manifest.read_text(encoding="utf-8"))
+            job = manifest["jobs"][0]
+            rewritten = {
+                "promotion-provenance": provenance_sha,
+                "persistent-automated-audit": audit_sha,
+                "golden-acceptance-receipt": acceptance_sha,
+                **{
+                    role: review_shas[path]
+                    for role, path in zip(
+                        phase5.INDEPENDENT_VISION_REVIEW_ROLES,
+                        (phase5.repo_path(path) for path in reviews),
+                    )
+                },
+            }
+            for input_spec in job["inputs"]:
+                if input_spec["role"] == "blind-review-packet":
+                    input_spec.update(packet_artifact)
+                if input_spec["role"] in rewritten:
+                    input_spec["sha256"] = rewritten[input_spec["role"]]
+            fixture.manifest.write_text(json.dumps(manifest), encoding="utf-8")
+
+            with self.assertRaisesRegex(
+                phase5.Phase5BuildError, "anonymous PNG metadata/chunk contract"
+            ):
+                phase5.verify_manifest_golden_style(
+                    artifact(fixture.paths.final), fixture.manifest
+                )
+        finally:
+            fixture.cleanup()
+
+    def test_manifest_golden_style_v2_rejects_passing_value_metric_forgery(self):
+        fixture = golden_v2_fixture.PromotionFixture()
+        try:
+            fixture.prepare()
+            reviews = [fixture.root / "review-a.json", fixture.root / "review-b.json"]
+            fixture.build_review(
+                reviews[0], "independent-vision-review-a/Reviewer Alpha"
+            )
+            fixture.build_review(
+                reviews[1], "independent-vision-review-b/Reviewer Beta"
+            )
+            golden_v2_fixture.promotion.accept_promotion(
+                review_paths=reviews,
+                authorized_by="Phase 5 fixture",
+                paths=fixture.paths,
+            )
+
+            provenance = json.loads(fixture.paths.receipt.read_text(encoding="utf-8"))
+            # Keep the forged value above the fixed gate.  A threshold-only
+            # validator would accept this passing claim, but the Phase 5
+            # validator must require exact equality with recomputed pixels.
+            provenance["metrics"]["coverage_50"] += 1
+            fixture.paths.receipt.write_text(json.dumps(provenance), encoding="utf-8")
+            provenance_sha = digest(fixture.paths.receipt)
+
+            audit = json.loads(fixture.paths.audit.read_text(encoding="utf-8"))
+            audit["metrics"]["coverage_50"] = provenance["metrics"]["coverage_50"]
+            audit["provenance_receipt"]["sha256"] = provenance_sha
+            fixture.paths.audit.write_text(json.dumps(audit), encoding="utf-8")
+            audit_sha = digest(fixture.paths.audit)
+
+            acceptance = json.loads(
+                fixture.paths.final_receipt.read_text(encoding="utf-8")
+            )
+            acceptance["promotion_provenance"]["sha256"] = provenance_sha
+            acceptance["automated_audit"]["sha256"] = audit_sha
+            fixture.paths.final_receipt.write_text(
+                json.dumps(acceptance), encoding="utf-8"
+            )
+            acceptance_sha = digest(fixture.paths.final_receipt)
+
+            manifest = json.loads(fixture.manifest.read_text(encoding="utf-8"))
+            rewritten = {
+                "promotion-provenance": provenance_sha,
+                "persistent-automated-audit": audit_sha,
+                "golden-acceptance-receipt": acceptance_sha,
+            }
+            for input_spec in manifest["jobs"][0]["inputs"]:
+                if input_spec["role"] in rewritten:
+                    input_spec["sha256"] = rewritten[input_spec["role"]]
+            fixture.manifest.write_text(json.dumps(manifest), encoding="utf-8")
+
+            with self.assertRaisesRegex(
+                phase5.Phase5BuildError, "independently recomputed pixels"
+            ):
+                phase5.verify_manifest_golden_style(
+                    artifact(fixture.paths.final), fixture.manifest
+                )
+        finally:
+            fixture.cleanup()
+
+    def test_manifest_golden_style_refuses_partial_v2_legacy_fallback(self):
+        fixture = golden_v2_fixture.PromotionFixture()
+        try:
+            fixture.prepare()
+            reviews = [fixture.root / "review-a.json", fixture.root / "review-b.json"]
+            fixture.build_review(
+                reviews[0], "independent-vision-review-a/Reviewer Alpha"
+            )
+            fixture.build_review(
+                reviews[1], "independent-vision-review-b/Reviewer Beta"
+            )
+            golden_v2_fixture.promotion.accept_promotion(
+                review_paths=reviews,
+                authorized_by="Phase 5 fixture",
+                paths=fixture.paths,
+            )
+
+            # Re-point both reviews at the master so the legacy v1 validator
+            # would otherwise accept them, then remove only the v2 acceptance
+            # receipt and blind packet roles.  Eleven prepared v2 roles remain
+            # and must make fallback impossible.
+            review_digests: dict[str, str] = {}
+            for review_path in reviews:
+                report = json.loads(review_path.read_text(encoding="utf-8"))
+                report["image_path"] = phase5.repo_path(fixture.paths.final)
+                report["image_sha256"] = digest(fixture.paths.final)
+                review_path.write_text(json.dumps(report), encoding="utf-8")
+                review_digests[phase5.repo_path(review_path)] = digest(review_path)
+
+            manifest = json.loads(fixture.manifest.read_text(encoding="utf-8"))
+            job = manifest["jobs"][0]
+            job["inputs"] = [
+                item
+                for item in job["inputs"]
+                if item["role"]
+                not in {
+                    phase5.GOLDEN_ACCEPTANCE_RECEIPT_ROLE,
+                    phase5.GOLDEN_BLIND_PACKET_ROLE,
+                }
+            ]
+            for item in job["inputs"]:
+                if item["role"] in phase5.INDEPENDENT_VISION_REVIEW_ROLES:
+                    item["sha256"] = review_digests[item["path"]]
+            remaining_prepared = {
+                item["role"]
+                for item in job["inputs"]
+                if item["role"] in golden_v2_fixture.promotion.PREPARED_INPUT_ROLES
+            }
+            self.assertEqual(len(remaining_prepared), 11)
+            fixture.manifest.write_text(json.dumps(manifest), encoding="utf-8")
+
+            with self.assertRaisesRegex(
+                phase5.Phase5BuildError,
+                "v2 evidence is incomplete; refusing legacy fallback",
+            ):
+                phase5.verify_manifest_golden_style(
+                    artifact(fixture.paths.final), fixture.manifest
+                )
+        finally:
+            fixture.cleanup()
 
     def test_selected_golden_binding_skips_unrelated_rejected_history(self):
         with tempfile.TemporaryDirectory(

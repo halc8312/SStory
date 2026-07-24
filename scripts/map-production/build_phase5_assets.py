@@ -43,6 +43,7 @@ from promote_phase5_renderer_outputs import (
     RendererPromotionError,
     _rename_directory_no_replace,
 )
+import promote_style_candidate_k3_golden_v2 as golden_v2_promotion
 from release_bound_artifact import (
     BoundArtifact,
     BoundArtifactError,
@@ -61,6 +62,7 @@ from production_common import (
     ValidationFailure,
     dump_json,
     load_json,
+    parse_rfc3339,
     utc_now,
 )
 from validate_manifest import schema_errors, validate_manifest
@@ -164,6 +166,28 @@ POSTPROCESS_GENERATOR_ID = "sstory-map-production/composite_phase5_protected_til
 INTERNAL_GOLDEN_STYLE_KEY = "_phase5_golden_style"
 INTERNAL_CANONICAL_CONTEXT_KEY = "_phase5_canonical_render_context"
 INTERNAL_BOUND_ARTIFACTS_KEY = "_phase5_bound_artifacts"
+GOLDEN_ACCEPTANCE_RECEIPT_ROLE = "golden-acceptance-receipt"
+GOLDEN_BLIND_PACKET_ROLE = "blind-review-packet"
+GOLDEN_V2_PREPARED_ONLY_ROLES = frozenset(
+    golden_v2_promotion.PREPARED_INPUT_ROLES - {"golden-raw-output"}
+)
+GOLDEN_BLIND_PACKET_VIEW_IDS = (
+    "native",
+    "full25",
+    "full50",
+    "highland200",
+    "highland400",
+)
+GOLDEN_PHASE4_IMMEDIATE_FAILURE_IDS = (
+    "eight-system-topology",
+    "side-view-or-shared-projection",
+    "panel-seam-or-body-halo",
+    "white-particle-pill-hole-or-crater",
+    "root-river-vein-fingerprint-or-contour",
+    "fern-fishbone-dash-bundle-or-repetition",
+    "no-200-to-400-information-gain",
+    "protected-geometry-difference",
+)
 CANONICAL_RENDER_SOURCE_KIND = "canonical_render_master"
 CANONICAL_RENDER_METHOD = "deterministic-canonical-render"
 CANONICAL_RENDERER_ID = "sstory-map-production/render_phase5_reviewed_master.py@2.6"
@@ -569,8 +593,7 @@ def _phase5_json_path_references(
 ) -> Iterable[tuple[str, str | None, str, bool]]:
     provenance_document = (
         isinstance(value, dict)
-        and value.get("schema_version")
-        in {"1.0.0", BUILD_REPORT_SCHEMA_VERSION}
+        and value.get("schema_version") in {"1.0.0", BUILD_REPORT_SCHEMA_VERSION}
         and value.get("generated_by") == GENERATOR_ID
         and isinstance(value.get("artifacts"), list)
     )
@@ -783,7 +806,6 @@ def bind_manifest_golden_evidence(
     job_id = job.get("id")
     if not isinstance(job_id, str):
         raise Phase5BuildError("Golden manifest job id must be a string")
-
     active = _BOUND_ARTIFACT_CONTEXT.get()
     known = dict(active) if active is not None else {}
     existing_manifest = known.get(base_manifest.identity)
@@ -797,9 +819,12 @@ def bind_manifest_golden_evidence(
     known[base_manifest.identity] = base_manifest
     roots: list[BoundArtifact] = []
     with bound_artifact_context(known):
-        for raw_path, claimed, location, report_relative in (
-            _phase5_json_path_references(job)
-        ):
+        for (
+            raw_path,
+            claimed,
+            location,
+            report_relative,
+        ) in _phase5_json_path_references(job):
             referenced = _bind_graph_reference(
                 raw_path,
                 document=base_manifest,
@@ -1194,10 +1219,15 @@ def _accepted_report(
     return score, reviewer.strip()
 
 
-def verify_manifest_golden_style(
+def _verify_manifest_golden_style_v1(
     golden_style: dict[str, str], base_manifest_path: Path
 ) -> dict[str, Any]:
-    """Bind one source-index Golden artifact to exactly one accepted 94+ job."""
+    """Validate the frozen pre-v2 Golden evidence contract.
+
+    This compatibility path is intentionally isolated from the anonymous v2
+    packet contract below.  A job that advertises any v2 handoff artifact may
+    never fall back to this older direct-master-review mechanism.
+    """
 
     golden_path, golden_sha = verify_hashed_file(
         golden_style, "source index golden_style"
@@ -1291,7 +1321,9 @@ def verify_manifest_golden_style(
             if role == "golden-raw-output":
                 raw_artifacts.append(input_spec)
                 continue
-            if not isinstance(role, str) or not role.startswith("independent-vision-review-"):
+            if not isinstance(role, str) or not role.startswith(
+                "independent-vision-review-"
+            ):
                 continue
             if role not in INDEPENDENT_VISION_REVIEW_ROLES:
                 raise Phase5BuildError(
@@ -1372,6 +1404,591 @@ def verify_manifest_golden_style(
         "reviewer": report_reviewer,
         "threshold": threshold,
     }
+
+
+def _exact_artifact_record(value: Any, *, label: str) -> dict[str, str]:
+    """Bind one v2 receipt artifact with no unreviewed metadata."""
+
+    if not isinstance(value, dict) or set(value) != {"path", "sha256"}:
+        raise Phase5BuildError(f"{label} must be exactly a path/SHA-256 artifact")
+    path, digest = verify_hashed_file(value, label)
+    if value["sha256"] != digest:
+        raise Phase5BuildError(f"{label}.sha256 must be the canonical lowercase digest")
+    return {"path": repo_path(path), "sha256": digest}
+
+
+def _require_v2_timestamp(value: Any, *, label: str):
+    if not isinstance(value, str):
+        raise Phase5BuildError(f"{label} must be an RFC 3339 timestamp")
+    try:
+        return parse_rfc3339(value)
+    except ValueError as exc:
+        raise Phase5BuildError(f"{label} is invalid: {exc}") from exc
+
+
+def _v2_input_roles(job: dict[str, Any], *, job_id: str) -> dict[str, dict[str, Any]]:
+    inputs = job.get("inputs")
+    if not isinstance(inputs, list):
+        raise Phase5BuildError(
+            f"Golden manifest job {job_id!r} inputs must be an array"
+        )
+    selected = {
+        GOLDEN_ACCEPTANCE_RECEIPT_ROLE,
+        GOLDEN_BLIND_PACKET_ROLE,
+        *INDEPENDENT_VISION_REVIEW_ROLES,
+    }
+    result: dict[str, dict[str, Any]] = {}
+    for item in inputs:
+        if not isinstance(item, dict):
+            raise Phase5BuildError(
+                f"Golden manifest job {job_id!r} has an invalid input"
+            )
+        role = item.get("role")
+        if role not in selected:
+            continue
+        if role in result:
+            raise Phase5BuildError(
+                f"Golden manifest job {job_id!r} duplicates v2 input role {role!r}"
+            )
+        if set(item) != {"path", "sha256", "role"}:
+            raise Phase5BuildError(
+                f"Golden manifest job {job_id!r} {role!r} must be exactly a role/path/SHA-256 artifact"
+            )
+        result[role] = item
+    if set(result) != selected:
+        raise Phase5BuildError(
+            f"Golden manifest job {job_id!r} v2 evidence roles are incomplete"
+        )
+    return result
+
+
+def _verify_v2_blind_packet(
+    packet_spec: dict[str, Any],
+    *,
+    candidate: dict[str, str],
+    job_id: str,
+) -> tuple[dict[str, str], list[dict[str, str]]]:
+    """Validate the deliberately anonymous handoff packet and all five views."""
+
+    packet = _exact_artifact_record(
+        packet_spec, label=f"Golden manifest job {job_id!r} blind packet"
+    )
+    packet_path = resolve_repo_artifact(packet["path"], "Golden blind packet.path")
+    packet_text = packet_path.read_text(encoding="utf-8")
+    try:
+        document = json.loads(packet_text)
+    except json.JSONDecodeError as exc:
+        raise Phase5BuildError(f"Golden blind packet is invalid JSON: {exc}") from exc
+    if not isinstance(document, dict) or set(document) != {"schema_version", "views"}:
+        raise Phase5BuildError(
+            "Golden blind packet must contain only schema_version and views"
+        )
+    if document["schema_version"] != "1.0.0":
+        raise Phase5BuildError("Golden blind packet schema_version must be 1.0.0")
+    # The packet is the only artifact disclosed to blind reviewers.  Do not
+    # merely trust its shape: reject a master path/digest or any lineage label
+    # even if it was hidden in an otherwise harmless string.
+    folded = packet_text.casefold()
+    if candidate["path"].casefold() in folded or candidate["sha256"] in folded:
+        raise Phase5BuildError(
+            "Golden blind packet must not disclose the candidate path or SHA-256"
+        )
+    if any(
+        token in folded
+        for token in ("candidate", "lineage", "donor", "control", "generation")
+    ):
+        raise Phase5BuildError(
+            "Golden blind packet must not disclose candidate lineage"
+        )
+    views = document["views"]
+    if not isinstance(views, list) or len(views) != len(GOLDEN_BLIND_PACKET_VIEW_IDS):
+        raise Phase5BuildError(
+            "Golden blind packet must contain exactly five anonymous views"
+        )
+    artifacts: list[dict[str, str]] = []
+    for expected_id, item in zip(GOLDEN_BLIND_PACKET_VIEW_IDS, views):
+        if not isinstance(item, dict) or set(item) != {"id", "path", "sha256"}:
+            raise Phase5BuildError(
+                "Golden blind packet views must be exact id/path/SHA-256 records"
+            )
+        if item["id"] != expected_id:
+            raise Phase5BuildError("Golden blind packet view order must be fixed")
+        artifacts.append(
+            _exact_artifact_record(
+                {"path": item["path"], "sha256": item["sha256"]},
+                label=f"Golden blind packet view {expected_id}",
+            )
+        )
+    if len({item["path"] for item in artifacts}) != len(artifacts) or len(
+        {item["sha256"] for item in artifacts}
+    ) != len(artifacts):
+        raise Phase5BuildError(
+            "Golden blind packet views must be five distinct artifacts"
+        )
+    return packet, artifacts
+
+
+def _validate_v2_prepared_authority(
+    job: dict[str, Any], *, master_path: Path, job_id: str
+) -> tuple[
+    dict[str, BoundArtifact],
+    tuple[BoundArtifact, BoundArtifact, BoundArtifact, BoundArtifact],
+]:
+    """Re-run the promoter's complete persistent-evidence verifier.
+
+    Accepted jobs contain the two blind reviews and final acceptance receipt in
+    addition to the prepared evidence.  Feed the exact prepared-role subset
+    back through the authoritative v2 validator so Phase 5 cannot trust a
+    hand-written provenance/audit shell that merely has fresh hashes.
+    """
+
+    inputs = job.get("inputs")
+    if not isinstance(inputs, list):
+        raise Phase5BuildError(
+            f"Golden manifest job {job_id!r} inputs must be an array"
+        )
+    prepared_inputs = [
+        item
+        for item in inputs
+        if isinstance(item, dict)
+        and item.get("role") in golden_v2_promotion.PREPARED_INPUT_ROLES
+    ]
+    qa = job.get("qa")
+    automated = qa.get("automated") if isinstance(qa, dict) else None
+    prepared_job = {
+        "inputs": prepared_inputs,
+        "qa": {"automated": automated},
+        "history": job.get("history", [])[:4]
+        if isinstance(job.get("history"), list)
+        else job.get("history"),
+    }
+    try:
+        roles = golden_v2_promotion._prepared_role_bindings(prepared_job)
+        master = bind_file(
+            master_path,
+            label=f"Golden manifest job {job_id!r} v2 master",
+            trackable=True,
+        )
+        evidence = golden_v2_promotion._validate_prepared_evidence(
+            prepared_job, roles, master
+        )
+    except (
+        golden_v2_promotion.K3GoldenPromotionV2Error,
+        BoundArtifactError,
+        ReleasePathError,
+    ) as exc:
+        raise Phase5BuildError(
+            f"Golden manifest job {job_id!r} v2 prepared evidence is invalid: {exc}"
+        ) from exc
+    return roles, evidence
+
+
+def _assert_v2_packet_pixels_match_root_views(
+    packet_views: list[dict[str, str]],
+    prepared_roles: dict[str, BoundArtifact],
+) -> None:
+    """Prove each anonymous PNG is only a re-encoding of its Root view."""
+
+    for name, packet_record in zip(GOLDEN_BLIND_PACKET_VIEW_IDS, packet_views):
+        packet_image: Image.Image | None = None
+        root_image: Image.Image | None = None
+        try:
+            packet_binding = golden_v2_promotion._bind_trackable_record(
+                packet_record, label=f"Phase 5 blind packet view {name}"
+            )
+            packet_image = golden_v2_promotion._image_from_binding(
+                packet_binding,
+                label=f"Phase 5 blind packet view {name}",
+                expected_size=golden_v2_promotion.VIEW_DEFINITIONS[name][1],
+            )
+            root_image = golden_v2_promotion._image_from_binding(
+                prepared_roles[f"root-review-view-{name}"],
+                label=f"Phase 5 Root review view {name}",
+                expected_size=golden_v2_promotion.VIEW_DEFINITIONS[name][1],
+            )
+            if packet_image.tobytes() != root_image.tobytes():
+                raise Phase5BuildError(
+                    f"Golden blind packet view {name} is not pixel-identical to its Root review view"
+                )
+        except golden_v2_promotion.K3GoldenPromotionV2Error as exc:
+            raise Phase5BuildError(str(exc)) from exc
+        finally:
+            if packet_image is not None:
+                packet_image.close()
+            if root_image is not None:
+                root_image.close()
+
+
+def _verify_manifest_golden_style_v2(
+    golden_style: dict[str, str], base_manifest_path: Path
+) -> dict[str, Any]:
+    """Revalidate the Golden v2 acceptance graph from manifest to blind QA.
+
+    The old Golden mechanism pointed independent reviews straight at the
+    master.  v2 deliberately does not: both reviews must bind the immutable
+    anonymous packet, whose five fixed views are each SHA-bound here again.
+    """
+
+    golden_path, golden_sha = verify_hashed_file(
+        golden_style, "source index golden_style"
+    )
+    manifest = _json_object(base_manifest_path, "base production manifest")
+    job = _selected_manifest_golden_job(manifest, golden_style)
+    job_id = job.get("id")
+    if not isinstance(job_id, str):
+        raise Phase5BuildError("Golden manifest job id must be a string")
+    if job_id != golden_v2_promotion.JOB_ID:
+        raise Phase5BuildError(
+            f"Golden v2 manifest job id must be {golden_v2_promotion.JOB_ID!r}"
+        )
+    if job.get("status") != "accepted" or job.get("acceptance_threshold") != 94:
+        raise Phase5BuildError(
+            f"Golden manifest job {job_id!r} must be accepted at threshold 94"
+        )
+    master = job.get("master")
+    if not isinstance(master, dict):
+        raise Phase5BuildError(f"Golden manifest job {job_id!r} master is missing")
+    master_path, master_sha = verify_hashed_file(
+        master, f"Golden manifest job {job_id!r} master"
+    )
+    candidate = {"path": repo_path(master_path), "sha256": master_sha}
+    if candidate != {"path": repo_path(golden_path), "sha256": golden_sha}:
+        raise Phase5BuildError(
+            f"Golden manifest job {job_id!r} master does not match golden_style"
+        )
+    known_source = golden_v2_promotion.KNOWN_NON_GOLDEN_SOURCE_SHA256.get(master_sha)
+    if known_source is not None:
+        raise Phase5BuildError(
+            f"Golden manifest master is a known non-Golden source: {known_source}"
+        )
+
+    prepared_roles, prepared_evidence = _validate_v2_prepared_authority(
+        job, master_path=master_path, job_id=job_id
+    )
+    prepared_raw, prepared_receipt, prepared_audit, prepared_packet = prepared_evidence
+    prepared_document = _json_object(
+        prepared_receipt.path, "Golden prepared promotion receipt"
+    )
+    prepared_at = _require_v2_timestamp(
+        prepared_document.get("created_at"),
+        label="Golden prepared promotion receipt.created_at",
+    )
+    roles = _v2_input_roles(job, job_id=job_id)
+    acceptance_spec = _exact_artifact_record(
+        {
+            "path": roles[GOLDEN_ACCEPTANCE_RECEIPT_ROLE]["path"],
+            "sha256": roles[GOLDEN_ACCEPTANCE_RECEIPT_ROLE]["sha256"],
+        },
+        label=f"Golden manifest job {job_id!r} acceptance receipt",
+    )
+    acceptance_path = resolve_repo_artifact(
+        acceptance_spec["path"], "Golden acceptance receipt.path"
+    )
+    acceptance = _json_object(acceptance_path, "Golden acceptance receipt")
+    receipt_keys = {
+        "schema_version",
+        "id",
+        "job_id",
+        "status",
+        "golden_reference",
+        "acceptance_threshold",
+        "candidate",
+        "raw",
+        "promotion_provenance",
+        "automated_audit",
+        "root_review",
+        "blind_packet",
+        "reviews",
+        "authorized_by",
+        "accepted_at",
+    }
+    if set(acceptance) != receipt_keys:
+        raise Phase5BuildError(
+            "Golden acceptance receipt keys must exactly match the v2 contract"
+        )
+    if (
+        acceptance.get("schema_version") != "1.0.0"
+        or acceptance.get("id") != f"{job_id}-golden-acceptance-v2"
+        or acceptance.get("job_id") != job_id
+        or acceptance.get("status") != "accepted"
+        or acceptance.get("golden_reference") is not True
+        or acceptance.get("acceptance_threshold") != 94
+        or not isinstance(acceptance.get("authorized_by"), str)
+        or not acceptance["authorized_by"].strip()
+    ):
+        raise Phase5BuildError(
+            "Golden acceptance receipt has an invalid v2 identity or decision"
+        )
+    accepted_at = _require_v2_timestamp(
+        acceptance.get("accepted_at"), label="Golden acceptance receipt.accepted_at"
+    )
+    if (
+        _exact_artifact_record(
+            acceptance["candidate"], label="Golden acceptance receipt.candidate"
+        )
+        != candidate
+    ):
+        raise Phase5BuildError(
+            "Golden acceptance receipt candidate does not match the manifest master"
+        )
+    raw = _exact_artifact_record(
+        acceptance["raw"], label="Golden acceptance receipt.raw"
+    )
+    raw_path = resolve_repo_artifact(raw["path"], "Golden acceptance raw.path")
+    if (
+        raw != prepared_raw.artifact()
+        or raw == candidate
+        or raw_path.read_bytes() != master_path.read_bytes()
+    ):
+        raise Phase5BuildError(
+            "Golden acceptance receipt raw/final byte-identity contract failed"
+        )
+    prepared_acceptance_artifacts = {
+        "promotion_provenance": prepared_receipt,
+        "automated_audit": prepared_audit,
+        "root_review": prepared_roles["root-vision-authorization"],
+        "blind_packet": prepared_packet,
+    }
+    for field, expected in prepared_acceptance_artifacts.items():
+        actual = _exact_artifact_record(
+            acceptance[field], label=f"Golden acceptance receipt.{field}"
+        )
+        if actual != expected.artifact():
+            raise Phase5BuildError(
+                f"Golden acceptance receipt.{field} does not match prepared evidence"
+            )
+    root = _exact_artifact_record(
+        acceptance["root_review"], label="Golden acceptance receipt.root_review"
+    )
+    root_document = _json_object(
+        resolve_repo_artifact(root["path"], "Golden root review.path"),
+        "Golden root review",
+    )
+    root_reviewer = root_document.get("reviewer")
+    if not isinstance(root_reviewer, str) or not root_reviewer.strip():
+        raise Phase5BuildError("Golden root review reviewer must be non-empty")
+    root_at = _require_v2_timestamp(
+        root_document.get("created_at"), label="Golden root review.created_at"
+    )
+
+    packet, packet_views = _verify_v2_blind_packet(
+        acceptance["blind_packet"], candidate=candidate, job_id=job_id
+    )
+    _assert_v2_packet_pixels_match_root_views(packet_views, prepared_roles)
+    if packet != _exact_artifact_record(
+        {
+            "path": roles[GOLDEN_BLIND_PACKET_ROLE]["path"],
+            "sha256": roles[GOLDEN_BLIND_PACKET_ROLE]["sha256"],
+        },
+        label=f"Golden manifest job {job_id!r} blind packet input",
+    ):
+        raise Phase5BuildError(
+            "Golden manifest blind packet does not match the acceptance receipt"
+        )
+
+    reviews = acceptance.get("reviews")
+    if not isinstance(reviews, list) or len(reviews) != 2:
+        raise Phase5BuildError(
+            "Golden acceptance receipt must contain exactly two blind reviews"
+        )
+    if [
+        item.get("role") if isinstance(item, dict) else None for item in reviews
+    ] != list(INDEPENDENT_VISION_REVIEW_ROLES):
+        raise Phase5BuildError(
+            "Golden acceptance reviews must be in canonical blind role order"
+        )
+    review_records: dict[str, tuple[dict[str, str], dict[str, Any], str, Any]] = {}
+    for item in reviews:
+        required = {"role", "path", "sha256", "reviewer", "score", "created_at"}
+        if not isinstance(item, dict) or set(item) != required:
+            raise Phase5BuildError(
+                "Golden acceptance reviews must exactly match the v2 contract"
+            )
+        role = item["role"]
+        if role not in INDEPENDENT_VISION_REVIEW_ROLES or role in review_records:
+            raise Phase5BuildError(
+                "Golden acceptance reviews must use the two canonical blind roles"
+            )
+        artifact = _exact_artifact_record(
+            {"path": item["path"], "sha256": item["sha256"]},
+            label=f"Golden acceptance review {role}",
+        )
+        manifest_artifact = _exact_artifact_record(
+            {"path": roles[role]["path"], "sha256": roles[role]["sha256"]},
+            label=f"Golden manifest job {job_id!r} {role}",
+        )
+        if artifact != manifest_artifact:
+            raise Phase5BuildError(
+                "Golden acceptance review does not match its manifest input"
+            )
+        report = _json_object(
+            resolve_repo_artifact(artifact["path"], f"Golden review {role}.path"),
+            f"Golden review {role}",
+        )
+        score, reviewer = _accepted_report(
+            report,
+            job_id=job_id,
+            image_path=packet["path"],
+            image_sha256=packet["sha256"],
+            golden_reference=True,
+            threshold=94,
+            label=f"Golden review {role}",
+        )
+        if item["score"] != score:
+            raise Phase5BuildError(
+                "Golden acceptance review score is inconsistent with its report"
+            )
+        reviewed_at = _require_v2_timestamp(
+            item["created_at"], label=f"Golden acceptance review {role}.created_at"
+        )
+        report_at = _require_v2_timestamp(
+            report.get("created_at"), label=f"Golden review {role}.created_at"
+        )
+        if reviewed_at != report_at:
+            raise Phase5BuildError(
+                "Golden acceptance review timestamp is inconsistent with its report"
+            )
+        prefix = f"{role}/"
+        if not reviewer.startswith(prefix) or not reviewer[len(prefix) :].strip():
+            raise Phase5BuildError(
+                "Golden reviewer must use its canonical blind role/id form"
+            )
+        try:
+            reviewer_identity = canonical_reviewer_identity(reviewer[len(prefix) :])
+            root_identity = canonical_reviewer_identity(root_reviewer)
+        except ValueError as exc:
+            raise Phase5BuildError(str(exc)) from exc
+        if reviewer_identity == root_identity:
+            raise Phase5BuildError(
+                "Golden blind reviewer must differ from the Root reviewer"
+            )
+        if item["reviewer"] != f"{role}/{reviewer_identity}":
+            raise Phase5BuildError(
+                "Golden acceptance reviewer is inconsistent with its report"
+            )
+        views = report.get("review_views")
+        if not isinstance(views, list) or not set(GOLDEN_BLIND_PACKET_VIEW_IDS) <= {
+            item.get("id") for item in views if isinstance(item, dict)
+        }:
+            raise Phase5BuildError(
+                "Golden review must complete the five fixed blind packet views"
+            )
+        failures = report.get("immediate_failures")
+        if (
+            not isinstance(failures, list)
+            or tuple(
+                item.get("id") if isinstance(item, dict) else None for item in failures
+            )
+            != GOLDEN_PHASE4_IMMEDIATE_FAILURE_IDS
+        ):
+            raise Phase5BuildError(
+                "Golden review immediate-failure checklist must exactly match Phase 4"
+            )
+        if report_at <= root_at or report_at <= prepared_at:
+            raise Phase5BuildError(
+                "Golden blind review must occur after Root authorization and prepared evidence"
+            )
+        if report_at > accepted_at:
+            raise Phase5BuildError("Golden acceptance receipt predates a blind review")
+        review_records[role] = (artifact, report, reviewer_identity, report_at)
+    if (
+        set(review_records) != set(INDEPENDENT_VISION_REVIEW_ROLES)
+        or len({item[2] for item in review_records.values()}) != 2
+    ):
+        raise Phase5BuildError(
+            "Golden acceptance requires two distinct blind-independent reviewers"
+        )
+
+    qa = job.get("qa")
+    vision = qa.get("vision") if isinstance(qa, dict) else None
+    primary = review_records[INDEPENDENT_VISION_REVIEW_ROLES[0]]
+    if (
+        not isinstance(vision, dict)
+        or vision.get("decision") != "accepted"
+        or vision.get("score") != primary[1].get("total_score")
+        or vision.get("report_path") != primary[0]["path"]
+        or vision.get("reviewer")
+        != f"{INDEPENDENT_VISION_REVIEW_ROLES[0]}/{primary[2]}"
+    ):
+        raise Phase5BuildError(
+            "Golden manifest Vision QA does not bind the primary blind review"
+        )
+    reviewed_at = _require_v2_timestamp(
+        vision.get("reviewed_at"), label="Golden manifest Vision QA.reviewed_at"
+    )
+    if reviewed_at != primary[3]:
+        raise Phase5BuildError(
+            "Golden manifest Vision QA timestamp is inconsistent with the primary review"
+        )
+    history = job.get("history")
+    if not isinstance(history, list) or [
+        item.get("state") if isinstance(item, dict) else None for item in history
+    ] != [
+        "planned",
+        "inputs-ready",
+        "generated",
+        "automated-qa",
+        "vision-qa",
+        "accepted",
+    ]:
+        raise Phase5BuildError(
+            "Golden manifest history must be the exact six-state v2 sequence"
+        )
+    history_times = [
+        _require_v2_timestamp(item.get("at"), label="Golden manifest history.at")
+        for item in history
+        if isinstance(item, dict)
+    ]
+    if len(history_times) != len(history) or any(
+        later < earlier for earlier, later in zip(history_times, history_times[1:])
+    ):
+        raise Phase5BuildError(
+            "Golden manifest history timestamps must be complete and chronological"
+        )
+    if history_times[-1] != accepted_at or history_times[-2] != accepted_at:
+        raise Phase5BuildError(
+            "Golden manifest final history timestamps must match the acceptance receipt"
+        )
+    if any(value != prepared_at for value in history_times[:4]):
+        raise Phase5BuildError(
+            "Golden manifest prepared history timestamps must match the prepared receipt"
+        )
+    return {
+        "job_id": job_id,
+        "master": candidate,
+        "vision_report": primary[0]["path"],
+        "vision_report_artifact": primary[0],
+        "manifest_vision_reports": [item[0] for item in review_records.values()],
+        "score": primary[1]["total_score"],
+        "reviewer": f"{INDEPENDENT_VISION_REVIEW_ROLES[0]}/{primary[2]}",
+        "threshold": 94,
+        "acceptance_receipt": acceptance_spec,
+        "blind_packet": packet,
+        "blind_packet_views": packet_views,
+    }
+
+
+def verify_manifest_golden_style(
+    golden_style: dict[str, str], base_manifest_path: Path
+) -> dict[str, Any]:
+    """Bind an accepted Golden using its declared, fail-closed evidence version."""
+
+    manifest = _json_object(base_manifest_path, "base production manifest")
+    job = _selected_manifest_golden_job(manifest, golden_style)
+    inputs = job.get("inputs")
+    if not isinstance(inputs, list):
+        raise Phase5BuildError("Golden manifest job inputs must be an array")
+    roles = [item.get("role") for item in inputs if isinstance(item, dict)]
+    receipt_count = roles.count(GOLDEN_ACCEPTANCE_RECEIPT_ROLE)
+    if receipt_count == 1:
+        return _verify_manifest_golden_style_v2(golden_style, base_manifest_path)
+    v2_prepared_markers = set(roles) & set(GOLDEN_V2_PREPARED_ONLY_ROLES)
+    if receipt_count or v2_prepared_markers:
+        raise Phase5BuildError(
+            "Golden v2 evidence is incomplete; refusing legacy fallback; "
+            f"prepared_markers={sorted(v2_prepared_markers)}"
+        )
+    return _verify_manifest_golden_style_v1(golden_style, base_manifest_path)
 
 
 def canonical_render_context(
@@ -5874,12 +6491,10 @@ def _build_report_stage_errors(report: dict[str, Any]) -> list[str]:
     if target_stage not in TARGET_STAGES:
         return [
             *errors,
-            "build report target_stage must be one of " + ", ".join(TARGET_STAGES)
+            "build report target_stage must be one of " + ", ".join(TARGET_STAGES),
         ]
     try:
-        _, catalog_by_id, derived = load_contract(
-            DEFAULT_CONTRACT, DEFAULT_MAP_SHEETS
-        )
+        _, catalog_by_id, derived = load_contract(DEFAULT_CONTRACT, DEFAULT_MAP_SHEETS)
     except Phase5BuildError as exc:
         return [f"cannot validate target-stage coverage: {exc}"]
     contracts = derived["sheets"]
@@ -5948,9 +6563,7 @@ def _build_report_stage_errors(report: dict[str, Any]) -> list[str]:
         errors.append(
             f"{target_stage} tiles_requested must be {str(expected_tiles).lower()}"
         )
-    by_id = {
-        item.get("sheet_id"): item for item in artifacts if isinstance(item, dict)
-    }
+    by_id = {item.get("sheet_id"): item for item in artifacts if isinstance(item, dict)}
     generated_set = set(expected_generated)
     for sheet_id in expected_output:
         sheet_type = catalog_by_id[sheet_id].get("sheet_type")
@@ -5992,9 +6605,7 @@ def _build_report_stage_errors(report: dict[str, Any]) -> list[str]:
     return errors
 
 
-def _installed_stage_inventory_errors(
-    root: Path, report: dict[str, Any]
-) -> list[str]:
+def _installed_stage_inventory_errors(root: Path, report: dict[str, Any]) -> list[str]:
     target_stage = report.get("target_stage")
     if target_stage not in TARGET_STAGES:
         return []
