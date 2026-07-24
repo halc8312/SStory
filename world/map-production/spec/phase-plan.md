@@ -12,6 +12,8 @@ document_kind: "navigation"
 summary: "画像生成、Vision QA、正典照合、タイル化、公開を一つの再現可能な工程として管理する計画です。"
 ---
 
+<!-- cspell:words metatiles -->
+
 # 高精細ディープズーム地図 Phase 0–7 制作計画
 
 ## 目標

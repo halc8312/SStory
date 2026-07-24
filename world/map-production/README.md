@@ -12,6 +12,8 @@ document_kind: "readme"
 summary: "正典地理、生成ラスタ、ベクター表示を分離した高精細地図の制作・検証・公開手順です。"
 ---
 
+<!-- cspell:words metatiles -->
+
 # 高精細地図制作
 
 このディレクトリは、世界地図を有限ディープズーム対応の地図へ移行するための正本と制作記録を管理します。
@@ -163,15 +165,15 @@ if ($IsLinux) {
   $setfacl = Get-Command setfacl -CommandType Application -ErrorAction Stop
   foreach ($secureParent in @($tempVisionRoot, $evidence)) {
     & $setfacl.Source --remove-all -- $secureParent
-    if ($LASTEXITCODE -ne 0) {
+    if (-not $?) {
       throw "Removing the access ACL failed for $secureParent."
     }
     & $setfacl.Source --remove-default -- $secureParent
-    if ($LASTEXITCODE -ne 0) {
+    if (-not $?) {
       throw "Removing the default ACL failed for $secureParent."
     }
     & $chmod.Source 700 -- $secureParent
-    if ($LASTEXITCODE -ne 0) {
+    if (-not $?) {
       throw "Final chmod 0700 failed for $secureParent."
     }
   }
