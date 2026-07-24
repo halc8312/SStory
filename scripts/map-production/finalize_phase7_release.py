@@ -646,7 +646,22 @@ def _replace_meta(html: str, name: str, value: str) -> str:
     return html[:start] + replacement + html[end:]
 
 
-def _activate_html(repo_root: Path, index_bytes: bytes) -> bytes:
+def _release_cache_key(status: str, index_bytes: bytes) -> str:
+    digest = _sha256_bytes(index_bytes)[:16]
+    if status == "release-candidate":
+        return f"world-v3-rc-{digest}"
+    if status == "published":
+        return f"world-v3-{digest}"
+    raise ReleaseFinalizationError(f"unsupported HTML cache-key state: {status!r}")
+
+
+def _transition_html(
+    repo_root: Path,
+    *,
+    target: str,
+    index_bytes: bytes,
+    current_index_bytes: bytes,
+) -> bytes:
     path = _repo_path(repo_root, HTML_RELATIVE_PATH)
     if not path.is_file():
         raise ReleaseFinalizationError("interactive-map-v3.html is missing")
@@ -659,25 +674,43 @@ def _activate_html(repo_root: Path, index_bytes: bytes) -> bytes:
         )
     if values.get("ea-map-world-release") != "world-v1":
         raise ReleaseFinalizationError(
-            "world-v3 activation requires the rollback-safe world-v1 active release"
+            f"world-v3 {target} transition requires the rollback-safe world-v1 active release"
         )
     for name, expected in HTML_REQUIRED_META.items():
         if values.get(name) != expected:
             raise ReleaseFinalizationError(
                 f"interactive map HTML {name} must remain {expected!r} before activation"
             )
-    if not values.get("ea-map-cache-key"):
+    current_cache_key = values.get("ea-map-cache-key")
+    if not current_cache_key:
         raise ReleaseFinalizationError("interactive map HTML lacks a non-empty cache key")
-    cache_key = f"world-v3-{_sha256_bytes(index_bytes)[:16]}"
-    html = _replace_meta(html, "ea-map-world-release", RELEASE_ID)
+    if target == "published":
+        expected_candidate_key = _release_cache_key(
+            "release-candidate", current_index_bytes
+        )
+        if current_cache_key != expected_candidate_key:
+            raise ReleaseFinalizationError(
+                "published transition requires the exact release-candidate HTML cache key"
+            )
+        html = _replace_meta(html, "ea-map-world-release", RELEASE_ID)
+    elif target != "release-candidate":
+        raise ReleaseFinalizationError(f"unsupported HTML transition target: {target!r}")
+    cache_key = _release_cache_key(target, index_bytes)
     html = _replace_meta(html, "ea-map-cache-key", cache_key)
     after, duplicates = _meta_values(html)
-    if duplicates or after.get("ea-map-world-release") != RELEASE_ID:
-        raise ReleaseFinalizationError("world-v3 HTML activation did not round-trip")
+    expected_active_release = RELEASE_ID if target == "published" else "world-v1"
+    if (
+        duplicates
+        or after.get("ea-map-world-release") != expected_active_release
+        or after.get("ea-map-cache-key") != cache_key
+    ):
+        raise ReleaseFinalizationError(
+            f"world-v3 {target} HTML transition did not round-trip"
+        )
     for name, expected in HTML_REQUIRED_META.items():
         if after.get(name) != expected:
             raise ReleaseFinalizationError(
-                f"world-v3 activation changed rollback metadata {name}"
+                f"world-v3 {target} transition changed rollback metadata {name}"
             )
     return html.encode("utf-8")
 
@@ -1185,7 +1218,7 @@ def finalize_release(
     _load_readiness(repo_root, expected_readiness)
     bounded, _counts = _bounded_catalog(repo_root)
     public_validation = _validate_public_release(repo_root)
-    index, _original_index_bytes = _read_index_pair(repo_root)
+    index, current_index_bytes = _read_index_pair(repo_root)
     entries, entries_by_sheet = _index_entries(
         index, bounded, expected_status=expected_job_status
     )
@@ -1240,13 +1273,17 @@ def finalize_release(
     compatibility_index_path = _repo_path(
         repo_root, COMPATIBILITY_INDEX_RELATIVE_PATH
     )
-    activated_html_bytes: bytes | None = None
+    transitioned_html_bytes = _transition_html(
+        repo_root,
+        target=target,
+        index_bytes=index_bytes,
+        current_index_bytes=current_index_bytes,
+    )
     browser_bundle_stage: Path | None = None
     browser_bundle_target: Path | None = None
     browser_bundle_owner: dict[str, str] | None = None
     browser_bundle_parent_created = False
     if target == "published":
-        activated_html_bytes = _activate_html(repo_root, index_bytes)
         (
             browser_bundle_stage,
             browser_bundle_target,
@@ -1264,13 +1301,8 @@ def finalize_release(
             (canonical_index_path, index_bytes),
             (compatibility_index_path, index_bytes),
             (canonical_manifest_path, manifest_bytes),
+            (_repo_path(repo_root, HTML_RELATIVE_PATH), transitioned_html_bytes),
         ]
-        if target == "published":
-            if activated_html_bytes is None:
-                raise ReleaseFinalizationError("world-v3 activated HTML was not generated")
-            replacements.append(
-                (_repo_path(repo_root, HTML_RELATIVE_PATH), activated_html_bytes)
-            )
         # Readiness is the transaction commit pointer and is always installed last.
         replacements.append(
             (

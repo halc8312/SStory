@@ -1,5 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -206,6 +207,160 @@ function sheetIndexFixture() {
     description: 'Complete immutable release fixture.',
     sheets: [...continents, ...regions, corridor, ...settlements]
   };
+}
+
+function htmlMetaContent(html, name) {
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const tags = html.match(new RegExp(
+    `<meta\\b[^>]*\\bname\\s*=\\s*(["'])${escapedName}\\1[^>]*>`,
+    'gi'
+  )) || [];
+  assert.equal(tags.length, 1, `HTML must contain exactly one ${name} meta tag`);
+  const contentMatches = [...tags[0].matchAll(/\bcontent\s*=\s*(["'])(.*?)\1/gi)];
+  assert.equal(contentMatches.length, 1, `${name} must contain exactly one content attribute`);
+  return contentMatches[0][2];
+}
+
+function assertRuntimePublicationState({
+  readiness,
+  html,
+  compatibilityIndexBytes,
+  canonicalIndexBytes
+}) {
+  const status = readiness.status;
+  assert.ok(
+    ['in-progress', 'release-candidate', 'published'].includes(status),
+    `unsupported release readiness status: ${status}`
+  );
+  const baseReadinessKeys = ['$schema', 'manifest_path', 'notes', 'schema_version', 'status'];
+  const expectedReadinessKeys = status === 'published'
+    ? [...baseReadinessKeys, 'browser_qa_bundle', 'publication_receipt_path'].sort()
+    : baseReadinessKeys.sort();
+  assert.deepEqual(Object.keys(readiness).sort(), expectedReadinessKeys);
+  assert.equal(readiness.$schema, 'schemas/release-readiness.schema.json');
+  assert.equal(readiness.schema_version, '1.0.0');
+  assert.equal(readiness.manifest_path, 'world/map-production/production-manifest.json');
+  assert.equal(typeof readiness.notes, 'string');
+  assert.ok(readiness.notes.trim());
+
+  if (status === 'published') {
+    assert.equal(
+      readiness.publication_receipt_path,
+      'world/map-production/releases/world-v3-publication-receipt.json'
+    );
+    const browserBundle = readiness.browser_qa_bundle;
+    assert.deepEqual(Object.keys(browserBundle).sort(), [
+      'completed_at',
+      'path',
+      'receipt_sha256',
+      'tested_url',
+      'tree_sha256'
+    ]);
+    assert.equal(
+      browserBundle.path,
+      'world/map-production/releases/world-v3-phase6-browser-qa'
+    );
+    assert.match(browserBundle.receipt_sha256, /^[a-f0-9]{64}$/);
+    assert.match(browserBundle.tree_sha256, /^[a-f0-9]{64}$/);
+    assert.ok(['http:', 'https:'].includes(new URL(browserBundle.tested_url).protocol));
+    assert.match(browserBundle.completed_at, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
+  }
+
+  const expectedWorldRelease = status === 'published' ? 'world-v3' : 'world-v1';
+  assert.equal(htmlMetaContent(html, 'ea-map-world-release'), expectedWorldRelease);
+  assert.equal(htmlMetaContent(html, 'ea-map-world-target-release'), 'world-v3');
+  assert.equal(
+    htmlMetaContent(html, 'ea-map-world-fallback-releases'),
+    'world-v2,world-v1'
+  );
+  assert.equal(
+    htmlMetaContent(html, 'ea-map-sheet-tile-index'),
+    '../data/map/region-rasters.json'
+  );
+  let expectedCacheKey = 'world-v3-contract-20260720';
+  if (status === 'release-candidate' || status === 'published') {
+    assert.ok(Buffer.isBuffer(canonicalIndexBytes), `${status} cache key requires canonical index bytes`);
+    const indexSha256 = crypto.createHash('sha256').update(canonicalIndexBytes).digest('hex');
+    expectedCacheKey = status === 'release-candidate'
+      ? `world-v3-rc-${indexSha256.slice(0, 16)}`
+      : `world-v3-${indexSha256.slice(0, 16)}`;
+  }
+  assert.equal(
+    htmlMetaContent(html, 'ea-map-cache-key'),
+    expectedCacheKey,
+    `${status} HTML cache key must match its exact publication state`
+  );
+
+  assert.ok(Buffer.isBuffer(compatibilityIndexBytes));
+  if (status === 'in-progress') {
+    assert.equal(
+      canonicalIndexBytes,
+      null,
+      'in-progress publication must not expose sheet-tiles-v3.json'
+    );
+    const placeholder = JSON.parse(compatibilityIndexBytes.toString('utf8'));
+    assert.deepEqual(Object.keys(placeholder).sort(), [
+      'bounds_order',
+      'coordinate_reference_system',
+      'deprecated',
+      'description',
+      'rasters',
+      'replacement_type',
+      'schema_version'
+    ]);
+    assert.equal(placeholder.schema_version, '1.0.0');
+    assert.equal(placeholder.coordinate_reference_system, 'EA-WORLD-1');
+    assert.deepEqual(placeholder.bounds_order, ['min_x', 'min_y', 'max_x', 'max_y']);
+    assert.equal(placeholder.deprecated, true);
+    assert.equal(placeholder.replacement_type, 'sstory-sheet-tile-index@2.0.0');
+    assert.equal(typeof placeholder.description, 'string');
+    assert.ok(placeholder.description.trim());
+    assert.deepEqual(placeholder.rasters, []);
+    return;
+  }
+
+  assert.ok(Buffer.isBuffer(canonicalIndexBytes), `${status} requires sheet-tiles-v3.json`);
+  assert.ok(
+    compatibilityIndexBytes.equals(canonicalIndexBytes),
+    'region-rasters.json must be a byte-identical schema-2 alias'
+  );
+  const index = JSON.parse(canonicalIndexBytes.toString('utf8'));
+  assert.equal(index.$schema, 'https://sstory.example/schemas/sheet-tile-index.schema.json');
+  assert.equal(index.schema_version, '2.0.0');
+  assert.equal(index.type, 'sstory-sheet-tile-index');
+  assert.equal(index.generated_by, 'sstory-map-production/build_phase5_assets.py@2');
+  assert.equal(index.release_id, 'world-v3');
+  assert.equal(index.bounded_sheet_count, 23);
+  assert.equal(index.root_id, 'sheet_world');
+  assert.equal(index.root.sheet_type, 'world');
+  assert.equal(index.sheets.length, 22);
+  const entries = [index.root, ...index.sheets];
+  assert.equal(new Set(entries.map((entry) => entry.sheet_id)).size, 23);
+  assert.deepEqual(
+    entries.reduce((counts, entry) => ({
+      ...counts,
+      [entry.sheet_type]: (counts[entry.sheet_type] || 0) + 1
+    }), {}),
+    { world: 1, continent: 5, region: 14, corridor: 1, settlement: 2 }
+  );
+  const expectedEntryStatus = status === 'release-candidate' ? 'staging' : 'published';
+  assert.ok(entries.every((entry) => entry.review_status === 'accepted'));
+  assert.ok(entries.every((entry) => entry.status === expectedEntryStatus));
+  assert.ok(entries.every((entry) => entry.manifest_url.includes('/world-v3/')));
+  assert.equal(entries.reduce((total, entry) => total + entry.tile_count, 0), 1350);
+}
+
+function runtimePublicationHtmlFixture(
+  activeRelease,
+  cacheKey = 'world-v3-contract-20260720'
+) {
+  return [
+    `<meta name="ea-map-world-release" content="${activeRelease}">`,
+    '<meta name="ea-map-world-target-release" content="world-v3">',
+    '<meta name="ea-map-world-fallback-releases" content="world-v2,world-v1">',
+    '<meta name="ea-map-sheet-tile-index" content="../data/map/region-rasters.json">',
+    `<meta name="ea-map-cache-key" content="${cacheKey}">`
+  ].join('\n');
 }
 
 test('normalizes generate_tiles.py metadata and resolves its relative XYZ template', () => {
@@ -904,15 +1059,160 @@ test('mobile search exposes an unobstructed close control wired to focus restora
   assert.match(styles, /@media \(max-width: 760px\)[\s\S]*\.map-search__close\s*\{\s*display:\s*grid;/);
 });
 
+test('runtime publication state separates in-progress, release-candidate and published evidence', () => {
+  const prepublicationReadiness = {
+    $schema: 'schemas/release-readiness.schema.json',
+    schema_version: '1.0.0',
+    status: 'in-progress',
+    manifest_path: 'world/map-production/production-manifest.json',
+    notes: 'Fixture remains explicitly pre-publication.'
+  };
+  const placeholderBytes = Buffer.from(JSON.stringify({
+    schema_version: '1.0.0',
+    coordinate_reference_system: 'EA-WORLD-1',
+    bounds_order: ['min_x', 'min_y', 'max_x', 'max_y'],
+    deprecated: true,
+    replacement_type: 'sstory-sheet-tile-index@2.0.0',
+    description: 'Strict pre-publication fixture.',
+    rasters: []
+  }));
+  assertRuntimePublicationState({
+    readiness: prepublicationReadiness,
+    html: runtimePublicationHtmlFixture('world-v1'),
+    compatibilityIndexBytes: placeholderBytes,
+    canonicalIndexBytes: null
+  });
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: prepublicationReadiness,
+    html: runtimePublicationHtmlFixture('world-v3'),
+    compatibilityIndexBytes: placeholderBytes,
+    canonicalIndexBytes: null
+  }));
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: prepublicationReadiness,
+    html: runtimePublicationHtmlFixture('world-v1', 'world-v3-stale-published-key'),
+    compatibilityIndexBytes: placeholderBytes,
+    canonicalIndexBytes: null
+  }), /cache key must match its exact publication state/);
+
+  const candidateReadiness = {
+    ...prepublicationReadiness,
+    status: 'release-candidate',
+    notes: 'Fixture is staged for release-candidate browser QA.'
+  };
+  const candidateIndex = JSON.parse(JSON.stringify(sheetIndexFixture()));
+  candidateIndex.generated_by = 'sstory-map-production/build_phase5_assets.py@2';
+  const candidateEntries = [candidateIndex.root, ...candidateIndex.sheets];
+  candidateEntries.forEach((entry, index) => {
+    entry.status = 'staging';
+    entry.tile_count = index === candidateEntries.length - 1 ? 74 : 58;
+  });
+  const candidateIndexBytes = Buffer.from(JSON.stringify(candidateIndex));
+  const candidateIndexSha256 = crypto
+    .createHash('sha256')
+    .update(candidateIndexBytes)
+    .digest('hex');
+  const candidateCacheKey = `world-v3-rc-${candidateIndexSha256.slice(0, 16)}`;
+  assertRuntimePublicationState({
+    readiness: candidateReadiness,
+    html: runtimePublicationHtmlFixture('world-v1', candidateCacheKey),
+    compatibilityIndexBytes: candidateIndexBytes,
+    canonicalIndexBytes: candidateIndexBytes
+  });
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: candidateReadiness,
+    html: runtimePublicationHtmlFixture('world-v1'),
+    compatibilityIndexBytes: candidateIndexBytes,
+    canonicalIndexBytes: candidateIndexBytes
+  }), /cache key must match its exact publication state/);
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: candidateReadiness,
+    html: runtimePublicationHtmlFixture('world-v1', candidateCacheKey),
+    compatibilityIndexBytes: placeholderBytes,
+    canonicalIndexBytes: candidateIndexBytes
+  }), /byte-identical schema-2 alias/);
+
+  const publishedReadiness = {
+    $schema: 'schemas/release-readiness.schema.json',
+    schema_version: '1.0.0',
+    status: 'published',
+    manifest_path: 'world/map-production/production-manifest.json',
+    publication_receipt_path: 'world/map-production/releases/world-v3-publication-receipt.json',
+    browser_qa_bundle: {
+      path: 'world/map-production/releases/world-v3-phase6-browser-qa',
+      receipt_sha256: 'a'.repeat(64),
+      tree_sha256: 'b'.repeat(64),
+      tested_url: 'https://example.test/pages/interactive-map-v3.html',
+      completed_at: '2026-07-19T16:36:13Z'
+    },
+    notes: 'Fixture is explicitly published.'
+  };
+  const publishedIndex = JSON.parse(JSON.stringify(candidateIndex));
+  const publishedEntries = [publishedIndex.root, ...publishedIndex.sheets];
+  publishedEntries.forEach((entry) => {
+    entry.status = 'published';
+  });
+  const publishedIndexBytes = Buffer.from(JSON.stringify(publishedIndex));
+  const publishedIndexSha256 = crypto
+    .createHash('sha256')
+    .update(publishedIndexBytes)
+    .digest('hex');
+  const publishedCacheKey = `world-v3-${publishedIndexSha256.slice(0, 16)}`;
+  assertRuntimePublicationState({
+    readiness: publishedReadiness,
+    html: runtimePublicationHtmlFixture('world-v3', publishedCacheKey),
+    compatibilityIndexBytes: publishedIndexBytes,
+    canonicalIndexBytes: publishedIndexBytes
+  });
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: publishedReadiness,
+    html: runtimePublicationHtmlFixture('world-v3'),
+    compatibilityIndexBytes: publishedIndexBytes,
+    canonicalIndexBytes: publishedIndexBytes
+  }), /cache key must match its exact publication state/);
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: publishedReadiness,
+    html: runtimePublicationHtmlFixture('world-v3', candidateCacheKey),
+    compatibilityIndexBytes: publishedIndexBytes,
+    canonicalIndexBytes: publishedIndexBytes
+  }), /cache key must match its exact publication state/);
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: publishedReadiness,
+    html: runtimePublicationHtmlFixture('world-v1', publishedCacheKey),
+    compatibilityIndexBytes: publishedIndexBytes,
+    canonicalIndexBytes: publishedIndexBytes
+  }));
+  assert.throws(() => assertRuntimePublicationState({
+    readiness: publishedReadiness,
+    html: runtimePublicationHtmlFixture('world-v3', publishedCacheKey),
+    compatibilityIndexBytes: placeholderBytes,
+    canonicalIndexBytes: publishedIndexBytes
+  }), /byte-identical schema-2 alias/);
+});
+
 test('runtime fixture initializes world before optional sheet index and uses cancellable tiles', () => {
   const repoRoot = path.resolve(__dirname, '..');
   const html = fs.readFileSync(path.join(repoRoot, 'docs/pages/interactive-map-v3.html'), 'utf8');
   const script = fs.readFileSync(path.join(repoRoot, 'docs/assets/js/interactive-map-v3.js'), 'utf8');
+  const readiness = JSON.parse(fs.readFileSync(
+    path.join(repoRoot, 'world/map-production/release-readiness.json'),
+    'utf8'
+  ));
+  const compatibilityIndexBytes = fs.readFileSync(
+    path.join(repoRoot, 'docs/data/map/region-rasters.json')
+  );
+  const canonicalIndexPath = path.join(repoRoot, 'docs/data/map/sheet-tiles-v3.json');
 
-  assert.match(html, /name="ea-map-world-release" content="world-v1"/);
+  assertRuntimePublicationState({
+    readiness,
+    html,
+    compatibilityIndexBytes,
+    canonicalIndexBytes: fs.existsSync(canonicalIndexPath)
+      ? fs.readFileSync(canonicalIndexPath)
+      : null
+  });
   assert.match(html, /name="ea-map-world-target-release" content="world-v3"/);
   assert.match(html, /name="ea-map-world-fallback-releases" content="world-v2,world-v1"/);
-  assert.match(html, /name="ea-map-cache-key" content="world-v3-contract-20260720"/);
   assert.match(html, /name="ea-map-sheet-tile-index"/);
   assert.match(script, /Core\.worldReleasePreviewFromUrl\(window\.location\.href, HTML_TARGET_WORLD_RELEASE\)/);
   assert.match(script, /previewRelease: PREVIEW_WORLD_RELEASE/);

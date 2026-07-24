@@ -340,9 +340,17 @@ class Phase7ReleaseFinalizerTests(unittest.TestCase):
         self.assertEqual(
             self.canonical_index.read_bytes(), self.compatibility_index.read_bytes()
         )
+        candidate_html = self.html_path.read_text(encoding="utf-8")
         self.assertIn(
             'name="ea-map-world-release" content="world-v1"',
-            self.html_path.read_text(encoding="utf-8"),
+            candidate_html,
+        )
+        candidate_cache_key = finalizer._release_cache_key(
+            "release-candidate", self.canonical_index.read_bytes()
+        )
+        self.assertIn(
+            f'name="ea-map-cache-key" content="{candidate_cache_key}"',
+            candidate_html,
         )
 
         published = self.run_transition("published")
@@ -403,6 +411,12 @@ class Phase7ReleaseFinalizerTests(unittest.TestCase):
         )
         self.assertEqual(
             self.canonical_index.read_bytes(), self.compatibility_index.read_bytes()
+        )
+        published_cache_key = finalizer._release_cache_key(
+            "published", self.canonical_index.read_bytes()
+        )
+        self.assertIn(
+            f'name="ea-map-cache-key" content="{published_cache_key}"', html
         )
 
     def test_partial_22_job_build_is_refused_without_durable_changes(self):
@@ -514,6 +528,36 @@ class Phase7ReleaseFinalizerTests(unittest.TestCase):
                 "published", browser_errors=["Royal nearest parent assertion failed"]
             )
         self.assertEqual(self.readiness_path.read_bytes(), before)
+
+    def test_published_transition_rejects_a_mixed_release_candidate_cache_key(self):
+        self.run_transition("release-candidate", build_root=self.build_root)
+        html = self.html_path.read_text(encoding="utf-8")
+        candidate_key = finalizer._release_cache_key(
+            "release-candidate", self.canonical_index.read_bytes()
+        )
+        self.html_path.write_text(
+            html.replace(candidate_key, "world-v3-contract-test"),
+            encoding="utf-8",
+        )
+        before = {
+            path: path.read_bytes()
+            for path in (
+                self.canonical_manifest,
+                self.readiness_path,
+                self.canonical_index,
+                self.compatibility_index,
+                self.html_path,
+            )
+        }
+
+        with self.assertRaisesRegex(
+            finalizer.ReleaseFinalizationError,
+            "exact release-candidate HTML cache key",
+        ):
+            self.run_transition("published")
+
+        for path, content in before.items():
+            self.assertEqual(path.read_bytes(), content)
 
     def test_published_swap_failure_rolls_back_files_and_canonical_qa_bundle(self):
         self.run_transition("release-candidate", build_root=self.build_root)

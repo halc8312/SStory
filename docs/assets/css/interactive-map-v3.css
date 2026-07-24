@@ -254,7 +254,7 @@ input:focus-visible,
   flex: 1 1 320px;
 }
 
-.map-search__toggle {
+.icon-button.map-search__toggle {
   display: none;
 }
 
@@ -1094,7 +1094,7 @@ input:focus-visible,
     flex: 0 0 44px;
   }
 
-  .map-search__toggle {
+  .icon-button.map-search__toggle {
     display: inline-grid;
   }
 

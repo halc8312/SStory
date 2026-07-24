@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import posixpath
 import re
 import sys
@@ -60,6 +61,7 @@ RUNTIME_DEPENDENCIES = (
     PurePosixPath("docs/data/map/pois.json"),
     PurePosixPath("docs/data/map/pixel-mapping.json"),
 )
+SEARCH_ORACLE_SOURCE = PurePosixPath("docs/data/map/pois.json")
 HARNESS_ARTIFACTS = (
     PurePosixPath("scripts/map-production/run_phase6_browser_qa.py"),
     PurePosixPath("scripts/map-production/validate_phase6_browser_qa.py"),
@@ -100,9 +102,27 @@ COMMON_ASSERTIONS = frozenset(
         "no_unexpected_network_errors",
     }
 )
+INTERACTION_ASSERTIONS = frozenset(
+    {
+        "keyboard_focus_traversal_operable",
+        "keyboard_pan_operable",
+        "keyboard_zoom_operable",
+        "search_keyboard_selection_operable",
+        "layer_panel_keyboard_toggle_operable",
+    }
+)
+MOBILE_FOCUS_ASSERTIONS = frozenset(
+    {
+        "mobile_search_open_focus",
+        "mobile_search_close_focus_restored",
+    }
+)
 SCENARIO_ASSERTIONS = {
-    "desktop": COMMON_ASSERTIONS,
-    "mobile": COMMON_ASSERTIONS | {"responsive_mobile_layout"},
+    "desktop": COMMON_ASSERTIONS | INTERACTION_ASSERTIONS,
+    "mobile": COMMON_ASSERTIONS
+    | INTERACTION_ASSERTIONS
+    | MOBILE_FOCUS_ASSERTIONS
+    | {"responsive_mobile_layout"},
     "slow_tiles": COMMON_ASSERTIONS
     | {
         "slow_tiles_observed",
@@ -123,6 +143,48 @@ SCENARIO_ASSERTIONS = {
 }
 ROYAL_CHILD_ID = "sheet_region_royal_capital_region"
 ROYAL_PARENT_ID = "sheet_continent_elysion"
+INTERACTION_SCENARIOS = frozenset({"desktop", "mobile"})
+SEARCH_TARGET_KEY = "poi:astralis_royal_palace"
+SEARCH_TARGET_ID = "astralis_royal_palace"
+SEARCH_TARGET_LABEL = "アストラリス王宮"
+SEARCH_TARGET_KIND = "poi"
+SEARCH_TARGET_LAT = -4380.0
+SEARCH_TARGET_LNG = 5100.0
+SEARCH_TARGET_ZOOM_OFFSET = 3.75
+FOCUS_TRAVERSAL_STEPS = {
+    "desktop": (
+        ("Tab", "a.skip-link"),
+        ("Tab", "a.brand"),
+        ("Tab", "#mapSearchInput"),
+        ("Tab", "#mapSearchClear"),
+        ("Tab", "#fitMapButton"),
+        ("Tab", "#helpButton"),
+        ("Tab", "#layerPanelButton"),
+        ("Tab", "#mapV3"),
+    ),
+    "mobile": (
+        ("Tab", "a.skip-link"),
+        ("Tab", "a.brand"),
+        ("Tab", "#mapSearchToggle"),
+        ("Shift+Tab", "#layerPanelButton"),
+        ("Shift+Tab", "#helpButton"),
+        ("Shift+Tab", "#mapSearchToggle"),
+        ("Tab", "#mapSearchClear"),
+        ("Tab", "#mapSearchClose"),
+        ("Tab", "#helpButton"),
+        ("Tab", "#layerPanelButton"),
+        ("Tab", "#mapV3"),
+    ),
+}
+FOCUS_TRANSFERS = {
+    "desktop": (),
+    "mobile": (
+        ("search-open", "#mapSearchInput"),
+        ("search-selection", "#mapV3"),
+        ("mobile-search-open", "#mapSearchInput"),
+        ("mobile-search-close", "#mapSearchToggle"),
+    ),
+}
 
 
 class BrowserQaValidationError(RuntimeError):
@@ -139,6 +201,353 @@ def _repo_path(repo_root: Path, relative: PurePosixPath) -> Path:
             f"repository artifact escapes the repository: {relative.as_posix()}"
         ) from exc
     return path
+
+
+def _finite_number(value: Any) -> bool:
+    return (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+    )
+
+
+def _canonical_search_oracle(
+    repo_root: Path,
+    inputs: Any | None = None,
+) -> dict[str, Any]:
+    """Derive the locked browser-search oracle from canonical POI bytes."""
+
+    source_path = _required_file(repo_root, SEARCH_ORACLE_SOURCE)
+    source_sha256 = _sha256_file(source_path)
+    pois = load_json(source_path)
+    if not isinstance(pois, list):
+        raise BrowserQaValidationError("canonical search oracle must be a POI array")
+    matches = [
+        poi
+        for poi in pois
+        if isinstance(poi, dict) and poi.get("id") == SEARCH_TARGET_ID
+    ]
+    if len(matches) != 1:
+        raise BrowserQaValidationError(
+            "canonical search oracle must contain exactly one Astralis royal palace"
+        )
+    poi = matches[0]
+    position = poi.get("position")
+    if (
+        poi.get("name") != SEARCH_TARGET_LABEL
+        or not isinstance(position, dict)
+        or not _finite_number(position.get("x"))
+        or not _finite_number(position.get("y"))
+    ):
+        raise BrowserQaValidationError(
+            "canonical Astralis royal palace search oracle is malformed"
+        )
+    target = {"lat": -float(position["y"]), "lng": float(position["x"])}
+    if (
+        abs(target["lat"] - SEARCH_TARGET_LAT) > 0.000001
+        or abs(target["lng"] - SEARCH_TARGET_LNG) > 0.000001
+    ):
+        raise BrowserQaValidationError(
+            "canonical Astralis royal palace coordinates changed from the locked target"
+        )
+
+    if inputs is not None:
+        runtime = inputs.get("runtime_dependencies") if isinstance(inputs, dict) else None
+        artifacts = runtime.get("artifacts") if isinstance(runtime, dict) else None
+        owners = [
+            artifact
+            for artifact in artifacts or []
+            if isinstance(artifact, dict)
+            and artifact.get("path") == SEARCH_ORACLE_SOURCE.as_posix()
+        ]
+        if len(owners) != 1 or owners[0].get("sha256") != source_sha256:
+            raise BrowserQaValidationError(
+                "browser QA inputs do not bind the canonical POI search oracle bytes"
+            )
+
+    return {
+        "key": SEARCH_TARGET_KEY,
+        "id": SEARCH_TARGET_ID,
+        "label": SEARCH_TARGET_LABEL,
+        "kind": SEARCH_TARGET_KIND,
+        "source": {
+            "path": SEARCH_ORACLE_SOURCE.as_posix(),
+            "sha256": source_sha256,
+        },
+        "target": target,
+        "zoom_offset": SEARCH_TARGET_ZOOM_OFFSET,
+    }
+
+
+def _interaction_evidence_errors(
+    label: str,
+    scenario_id: Any,
+    metrics: dict[str, Any],
+    *,
+    search_oracle: dict[str, Any] | None,
+) -> list[str]:
+    if scenario_id not in INTERACTION_SCENARIOS:
+        return []
+
+    errors: list[str] = []
+    evidence = metrics.get("interaction_evidence")
+    if not isinstance(evidence, dict):
+        return [f"{label} lacks locked user-interaction evidence"]
+    if evidence.get("required") is not True or evidence.get("mode") != scenario_id:
+        errors.append(f"{label} user-interaction evidence is not bound to its scenario")
+    captured_errors = evidence.get("errors")
+    if not isinstance(captured_errors, list) or captured_errors:
+        errors.append(f"{label} user-interaction diagnostics must be an empty list")
+
+    focus = evidence.get("focus_traversal")
+    focus = focus if isinstance(focus, dict) else {}
+    known_start = focus.get("known_start")
+    expected_steps = FOCUS_TRAVERSAL_STEPS[scenario_id]
+    steps = focus.get("steps")
+    expected_transfers = FOCUS_TRANSFERS[scenario_id]
+    transfers = focus.get("transfers")
+
+    def actionable_state(state: Any, expected_selector: str) -> bool:
+        return bool(
+            isinstance(state, dict)
+            and state.get("selector") == expected_selector
+            and state.get("active") is True
+            and state.get("visible") is True
+            and state.get("within_viewport") is True
+            and state.get("enabled") is True
+            and state.get("not_inert") is True
+            and state.get("actionable") is True
+        )
+
+    steps_proved = bool(
+        isinstance(known_start, dict)
+        and known_start.get("selector") == "body"
+        and known_start.get("active") is True
+        and isinstance(steps, list)
+        and len(steps) == len(expected_steps)
+        and all(
+            isinstance(step, dict)
+            and step.get("key") == expected_key
+            and step.get("expected_selector") == expected_selector
+            and actionable_state(step, expected_selector)
+            for step, (expected_key, expected_selector) in zip(steps, expected_steps)
+        )
+    )
+    transfers_proved = bool(
+        isinstance(transfers, list)
+        and len(transfers) == len(expected_transfers)
+        and all(
+            isinstance(transfer, dict)
+            and transfer.get("cause") == expected_cause
+            and transfer.get("expected_selector") == expected_selector
+            and actionable_state(transfer, expected_selector)
+            for transfer, (expected_cause, expected_selector) in zip(
+                transfers, expected_transfers
+            )
+        )
+    )
+    if not steps_proved or not transfers_proved:
+        errors.append(
+            f"{label} did not prove actionable Tab/Shift+Tab focus traversal"
+        )
+
+    keyboard = evidence.get("keyboard")
+    keyboard = keyboard if isinstance(keyboard, dict) else {}
+    before = keyboard.get("center_before")
+    after = keyboard.get("center_after")
+    points_valid = all(
+        isinstance(point, dict)
+        and _finite_number(point.get("lat"))
+        and _finite_number(point.get("lng"))
+        for point in (before, after)
+    )
+    pan_changed = bool(
+        points_valid
+        and (
+            abs(after["lat"] - before["lat"]) > 0.000001
+            or abs(after["lng"] - before["lng"]) > 0.000001
+        )
+    )
+    if (
+        keyboard.get("focused") is not True
+        or keyboard.get("pan_key") != "ArrowRight"
+        or not pan_changed
+    ):
+        errors.append(f"{label} did not prove keyboard map panning")
+    zoom_before = keyboard.get("zoom_before")
+    zoom_after = keyboard.get("zoom_after")
+    if (
+        keyboard.get("zoom_key") != "Equal"
+        or not _finite_number(zoom_before)
+        or not _finite_number(zoom_after)
+        or zoom_after <= zoom_before + 0.000001
+    ):
+        errors.append(f"{label} did not prove keyboard map zooming")
+
+    search = evidence.get("search")
+    search = search if isinstance(search, dict) else {}
+    query = search.get("query")
+    active_option_id = search.get("active_option_id")
+    result_count = search.get("result_count")
+    entry_key = search.get("selected_entry_key")
+    entry_kind = search.get("selected_entry_kind")
+    expected_target = search.get("expected_target")
+    runtime_target = search.get("runtime_target")
+    oracle_source = search.get("oracle_source")
+    final_center = search.get("final_center")
+    final_bounds = search.get("final_bounds")
+    popup = search.get("popup")
+    zoom_inputs = search.get("zoom_inputs")
+    expected_zoom = search.get("expected_zoom")
+    final_zoom = search.get("final_zoom")
+    canonical_target = (
+        search_oracle.get("target") if isinstance(search_oracle, dict) else None
+    )
+    target_valid = bool(
+        isinstance(expected_target, dict)
+        and _finite_number(expected_target.get("lat"))
+        and _finite_number(expected_target.get("lng"))
+    )
+    canonical_target_bound = bool(
+        target_valid
+        and isinstance(canonical_target, dict)
+        and _finite_number(canonical_target.get("lat"))
+        and _finite_number(canonical_target.get("lng"))
+        and abs(expected_target["lat"] - canonical_target["lat"]) <= 0.000001
+        and abs(expected_target["lng"] - canonical_target["lng"]) <= 0.000001
+        and isinstance(runtime_target, dict)
+        and _finite_number(runtime_target.get("lat"))
+        and _finite_number(runtime_target.get("lng"))
+        and abs(runtime_target["lat"] - canonical_target["lat"]) <= 0.000001
+        and abs(runtime_target["lng"] - canonical_target["lng"]) <= 0.000001
+        and oracle_source == search_oracle.get("source")
+    )
+    center_valid = bool(
+        isinstance(final_center, dict)
+        and _finite_number(final_center.get("lat"))
+        and _finite_number(final_center.get("lng"))
+    )
+    bounds_valid = bool(
+        isinstance(final_bounds, dict)
+        and all(
+            _finite_number(final_bounds.get(name))
+            for name in ("south", "west", "north", "east")
+        )
+        and final_bounds["south"] < final_bounds["north"]
+        and final_bounds["west"] < final_bounds["east"]
+    )
+    target_inside_bounds = bool(
+        target_valid
+        and bounds_valid
+        and final_bounds["south"] <= expected_target["lat"] <= final_bounds["north"]
+        and final_bounds["west"] <= expected_target["lng"] <= final_bounds["east"]
+    )
+    computed_center_ratio = None
+    if target_valid and center_valid and bounds_valid:
+        computed_center_ratio = max(
+            abs(final_center["lat"] - expected_target["lat"])
+            / (final_bounds["north"] - final_bounds["south"]),
+            abs(final_center["lng"] - expected_target["lng"])
+            / (final_bounds["east"] - final_bounds["west"]),
+        )
+    popup_target_bound = bool(
+        isinstance(popup, dict)
+        and popup.get("open") is True
+        and popup.get("label_visible") is True
+        and _finite_number(popup.get("lat"))
+        and _finite_number(popup.get("lng"))
+        and target_valid
+        and abs(popup["lat"] - expected_target["lat"]) <= 0.000001
+        and abs(popup["lng"] - expected_target["lng"]) <= 0.000001
+    )
+    moveend_count = search.get("moveend_count")
+    quiescent_ms = search.get("quiescent_ms")
+    zoom_inputs_valid = bool(
+        isinstance(zoom_inputs, dict)
+        and zoom_inputs.get("kind") == SEARCH_TARGET_KIND
+        and _finite_number(zoom_inputs.get("fit_zoom"))
+        and _finite_number(zoom_inputs.get("current_zoom"))
+        and _finite_number(zoom_inputs.get("max_zoom"))
+        and zoom_inputs["max_zoom"] >= zoom_inputs["current_zoom"]
+    )
+    independently_expected_zoom = None
+    if zoom_inputs_valid:
+        independently_expected_zoom = min(
+            zoom_inputs["max_zoom"],
+            max(
+                zoom_inputs["current_zoom"],
+                zoom_inputs["fit_zoom"] + SEARCH_TARGET_ZOOM_OFFSET,
+            ),
+        )
+    search_proved = bool(
+        query == SEARCH_TARGET_LABEL
+        and search.get("surface_available") is True
+        and isinstance(result_count, int)
+        and not isinstance(result_count, bool)
+        and result_count >= 1
+        and isinstance(active_option_id, str)
+        and active_option_id.startswith("map-search-option-")
+        and search.get("active_option_label") == query
+        and search.get("active_option_key") == SEARCH_TARGET_KEY
+        and entry_key == SEARCH_TARGET_KEY
+        and entry_kind == "poi"
+        and search.get("selected_label") == query
+        and search.get("result_selected") is True
+        and canonical_target_bound
+        and target_inside_bounds
+        and search.get("target_visible") is True
+        and computed_center_ratio is not None
+        and computed_center_ratio <= 0.25
+        and _finite_number(search.get("center_target_ratio"))
+        and abs(search["center_target_ratio"] - computed_center_ratio) <= 0.000001
+        and popup_target_bound
+        and independently_expected_zoom is not None
+        and _finite_number(expected_zoom)
+        and abs(expected_zoom - independently_expected_zoom) <= 0.001
+        and _finite_number(final_zoom)
+        and abs(final_zoom - expected_zoom) <= 0.001
+        and isinstance(moveend_count, int)
+        and not isinstance(moveend_count, bool)
+        and moveend_count >= 1
+        and _finite_number(quiescent_ms)
+        and quiescent_ms >= 300
+        and search.get("map_animating") is False
+    )
+    if not search_proved:
+        errors.append(
+            f"{label} did not bind keyboard search selection to its quiescent target/popup"
+        )
+    if scenario_id == "mobile" and search.get("map_focused_after_selection") is not True:
+        errors.append(f"{label} did not focus the map after mobile search selection")
+
+    layer_panel = evidence.get("layer_panel")
+    layer_panel = layer_panel if isinstance(layer_panel, dict) else {}
+    if not (
+        layer_panel.get("open_trigger") == "Enter"
+        and layer_panel.get("trigger_actionable") is True
+        and layer_panel.get("opened") is True
+        and layer_panel.get("close_button_focused_after_open") is True
+        and layer_panel.get("close_trigger") == "Enter"
+        and layer_panel.get("closed") is True
+        and layer_panel.get("focus_restored") is True
+    ):
+        errors.append(f"{label} did not prove the keyboard layer-panel toggle")
+
+    if scenario_id == "mobile":
+        mobile_focus = evidence.get("mobile_search_focus")
+        mobile_focus = mobile_focus if isinstance(mobile_focus, dict) else {}
+        if not (
+            mobile_focus.get("required") is True
+            and mobile_focus.get("open_trigger") == "Enter"
+            and mobile_focus.get("opened") is True
+            and mobile_focus.get("input_focused") is True
+            and mobile_focus.get("close_button_focused") is True
+            and mobile_focus.get("close_trigger") == "Enter"
+            and mobile_focus.get("closed") is True
+            and mobile_focus.get("focus_restored") is True
+        ):
+            errors.append(f"{label} did not prove mobile search focus restoration")
+    return errors
 
 
 def _sha256_file(path: Path) -> str:
@@ -321,6 +730,7 @@ def capture_release_candidate_inputs(repo_root: Path = REPO_ROOT) -> dict[str, A
     file_count, tree_sha = readiness_validator._release_tree_evidence(release_tree)
     world_manifest_path = _required_file(repo_root, WORLD_MANIFEST)
     html_path = _required_file(repo_root, HTML)
+    _canonical_search_oracle(repo_root)
     by_sheet = {entry["sheet_id"]: entry for entry in entries}
     try:
         royal_parent = by_sheet[ROYAL_PARENT_ID]
@@ -477,6 +887,21 @@ def build_scenario_options(
     child = inputs["royal_probe"]["child"]
     add_response("royalParentManifest", parent["manifest"])
     add_response("royalChildManifest", child["manifest"])
+    search_source = next(
+        (
+            artifact
+            for artifact in runtime_artifacts
+            if isinstance(artifact, dict)
+            and artifact.get("path") == SEARCH_ORACLE_SOURCE.as_posix()
+        ),
+        None,
+    )
+    if not isinstance(search_source, dict) or not isinstance(
+        search_source.get("sha256"), str
+    ):
+        raise BrowserQaValidationError(
+            "scenario options require the canonical POI search oracle artifact"
+        )
     return {
         "mode": scenario_id,
         "testedUrl": tested_url,
@@ -490,6 +915,17 @@ def build_scenario_options(
         "readinessTimeoutMs": timeout_ms,
         "royalChildId": ROYAL_CHILD_ID,
         "royalParentId": ROYAL_PARENT_ID,
+        "searchOracle": {
+            "key": SEARCH_TARGET_KEY,
+            "label": SEARCH_TARGET_LABEL,
+            "kind": SEARCH_TARGET_KIND,
+            "source": {
+                "path": SEARCH_ORACLE_SOURCE.as_posix(),
+                "sha256": search_source["sha256"],
+            },
+            "target": {"lat": SEARCH_TARGET_LAT, "lng": SEARCH_TARGET_LNG},
+            "zoomOffset": SEARCH_TARGET_ZOOM_OFFSET,
+        },
     }
 
 
@@ -852,6 +1288,11 @@ def validate_browser_qa_receipt(
             expected_paths=RUNTIME_DEPENDENCIES,
         )
     )
+    try:
+        search_oracle = _canonical_search_oracle(repo_root, declared_inputs)
+    except (OSError, ValidationFailure, BrowserQaValidationError) as exc:
+        search_oracle = None
+        errors.append(f"cannot bind canonical POI search oracle: {exc}")
     errors.extend(
         _declared_artifact_set_errors(
             declared_inputs.get("harness"),
@@ -939,6 +1380,14 @@ def validate_browser_qa_receipt(
                 errors.append(f"{label} did not prove a decoded world-v3 base tile")
             if metrics.get("base_tile_fallback_used") is not False:
                 errors.append(f"{label} observed a world-v3 base tile decode failure")
+            errors.extend(
+                _interaction_evidence_errors(
+                    label,
+                    scenario_id,
+                    metrics,
+                    search_oracle=search_oracle,
+                )
+            )
             for metric_name, expected_hash in expected_served_hashes.items():
                 if metrics.get(metric_name) != expected_hash:
                     errors.append(

@@ -58,6 +58,123 @@ def write_visual_png(path: Path, size: tuple[int, int]) -> None:
     image.save(path, format="PNG")
 
 
+def interaction_evidence(scenario_id: str, inputs: dict) -> dict:
+    mobile = scenario_id == "mobile"
+    search_source = next(
+        artifact
+        for artifact in inputs["runtime_dependencies"]["artifacts"]
+        if artifact["path"] == browser_qa.SEARCH_ORACLE_SOURCE.as_posix()
+    )
+    focus_steps = [
+        {
+            "key": key,
+            "expected_selector": selector,
+            "selector": selector,
+            "active": True,
+            "visible": True,
+            "within_viewport": True,
+            "enabled": True,
+            "not_inert": True,
+            "actionable": True,
+        }
+        for key, selector in browser_qa.FOCUS_TRAVERSAL_STEPS[scenario_id]
+    ]
+    focus_transfers = [
+        {
+            "cause": cause,
+            "expected_selector": selector,
+            "selector": selector,
+            "active": True,
+            "visible": True,
+            "within_viewport": True,
+            "enabled": True,
+            "not_inert": True,
+            "actionable": True,
+        }
+        for cause, selector in browser_qa.FOCUS_TRANSFERS[scenario_id]
+    ]
+    return {
+        "required": True,
+        "mode": scenario_id,
+        "focus_traversal": {
+            "known_start": {"selector": "body", "active": True},
+            "steps": focus_steps,
+            "transfers": focus_transfers,
+        },
+        "keyboard": {
+            "focused": True,
+            "pan_key": "ArrowRight",
+            "center_before": {"lat": -100.0, "lng": 200.0},
+            "center_after": {"lat": -100.0, "lng": 290.0},
+            "zoom_key": "Equal",
+            "zoom_before": -2.0,
+            "zoom_after": -1.5,
+        },
+        "search": {
+            "query": "アストラリス王宮",
+            "surface_available": True,
+            "result_count": 1,
+            "active_option_id": "map-search-option-0",
+            "active_option_label": "アストラリス王宮",
+            "active_option_key": browser_qa.SEARCH_TARGET_KEY,
+            "selected_entry_key": browser_qa.SEARCH_TARGET_KEY,
+            "selected_entry_kind": "poi",
+            "selected_label": "アストラリス王宮",
+            "result_selected": True,
+            "oracle_source": search_source,
+            "expected_target": {"lat": -4380.0, "lng": 5100.0},
+            "runtime_target": {"lat": -4380.0, "lng": 5100.0},
+            "zoom_inputs": {
+                "kind": "poi",
+                "fit_zoom": 0.25,
+                "current_zoom": -2.0,
+                "max_zoom": 8.0,
+            },
+            "expected_zoom": 4.0,
+            "final_center": {"lat": -4300.0, "lng": 5000.0},
+            "final_bounds": {
+                "south": -5000.0,
+                "west": 4000.0,
+                "north": -3000.0,
+                "east": 6000.0,
+            },
+            "final_zoom": 4.0,
+            "target_visible": True,
+            "center_target_ratio": 0.05,
+            "popup": {
+                "open": True,
+                "lat": -4380.0,
+                "lng": 5100.0,
+                "label_visible": True,
+            },
+            "moveend_count": 2,
+            "quiescent_ms": 350.0,
+            "map_animating": False,
+            "map_focused_after_selection": mobile,
+        },
+        "layer_panel": {
+            "open_trigger": "Enter",
+            "trigger_actionable": True,
+            "opened": True,
+            "close_button_focused_after_open": True,
+            "close_trigger": "Enter",
+            "closed": True,
+            "focus_restored": True,
+        },
+        "mobile_search_focus": {
+            "required": mobile,
+            "open_trigger": "Enter",
+            "opened": mobile,
+            "input_focused": mobile,
+            "close_button_focused": mobile,
+            "close_trigger": "Enter",
+            "closed": mobile,
+            "focus_restored": mobile,
+        },
+        "errors": [],
+    }
+
+
 class Phase6BrowserQaReceiptTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(
@@ -151,7 +268,19 @@ class Phase6BrowserQaReceiptTests(unittest.TestCase):
         for relative in browser_qa.RUNTIME_DEPENDENCIES:
             target = self._path(relative)
             target.parent.mkdir(parents=True, exist_ok=True)
-            if target.suffix == ".json":
+            if relative == browser_qa.SEARCH_ORACLE_SOURCE:
+                write_json(
+                    target,
+                    [
+                        {
+                            "id": browser_qa.SEARCH_TARGET_ID,
+                            "name": browser_qa.SEARCH_TARGET_LABEL,
+                            "position": {"x": 5100, "y": 4380, "z": 0},
+                            "status": "active",
+                        }
+                    ],
+                )
+            elif target.suffix == ".json":
                 write_json(target, {"fixture": relative.as_posix()})
             else:
                 target.write_text(f"/* fixture {relative.as_posix()} */\n", encoding="utf-8")
@@ -207,6 +336,10 @@ class Phase6BrowserQaReceiptTests(unittest.TestCase):
             "base_tiles_decoded": True,
             "base_tile_fallback_used": False,
         }
+        if scenario_id in browser_qa.INTERACTION_SCENARIOS:
+            metrics["interaction_evidence"] = interaction_evidence(
+                scenario_id, self.inputs
+            )
         diagnostics = {
             "console_errors": [],
             "page_errors": [],
@@ -378,6 +511,16 @@ class Phase6BrowserQaReceiptTests(unittest.TestCase):
         runtime.write_bytes(runtime.read_bytes() + b"\n// tampered\n")
         self.assertTrue(any("input hashes" in error for error in self.validate()))
 
+    def test_canonical_search_oracle_coordinate_drift_is_rejected(self):
+        source = self._path(browser_qa.SEARCH_ORACLE_SOURCE)
+        pois = json.loads(source.read_text(encoding="utf-8"))
+        pois[0]["position"]["x"] = 5099
+        write_json(source, pois)
+        errors = self.validate()
+        self.assertTrue(
+            any("coordinates changed" in error or "input hashes" in error for error in errors)
+        )
+
     def test_missing_screenshot_is_rejected(self):
         screenshot = self.output / self.receipt["scenarios"][0]["evidence"]["screenshot"]["path"]
         screenshot.unlink()
@@ -432,6 +575,71 @@ class Phase6BrowserQaReceiptTests(unittest.TestCase):
         driver.write_text(driver.read_text(encoding="utf-8") + "\n// bypass\n", encoding="utf-8")
         desktop["evidence"]["driver"]["sha256"] = sha256(driver)
         self.assertTrue(any("locked scenario" in error for error in self.validate()))
+
+    def test_generated_driver_locks_real_focus_and_search_target_contracts(self):
+        html = REPO_ROOT.joinpath(*browser_qa.HTML.parts).read_text(encoding="utf-8")
+        styles = REPO_ROOT.joinpath(
+            "docs", "assets", "css", "interactive-map-v3.css"
+        ).read_text(encoding="utf-8")
+        runtime = REPO_ROOT.joinpath(
+            "docs", "assets", "js", "interactive-map-v3.js"
+        ).read_text(encoding="utf-8")
+        selectors = {
+            selector
+            for steps in browser_qa.FOCUS_TRAVERSAL_STEPS.values()
+            for _key, selector in steps
+        }
+        selectors.update(
+            selector
+            for transfers in browser_qa.FOCUS_TRANSFERS.values()
+            for _cause, selector in transfers
+        )
+        for selector in selectors:
+            if selector.startswith("#"):
+                self.assertIn(f'id="{selector[1:]}"', html)
+        self.assertIn('class="skip-link"', html)
+        self.assertIn('class="brand"', html)
+        self.assertIn('id="layerPanelClose"', html)
+        self.assertRegex(styles, r"\.map-search__toggle\s*\{[^}]*display:\s*none")
+        self.assertRegex(
+            styles,
+            r"@media \(max-width: 760px\)[\s\S]*"
+            r"\.map-search__toggle\s*\{[^}]*display:\s*inline-grid",
+        )
+        self.assertRegex(
+            runtime,
+            r"window\.setTimeout\(\(\) => \{[\s\S]*"
+            r"focusTarget = open \? elements\.layerClose : elements\.layerButton;"
+            r"[\s\S]*focusTarget\?\.focus\(\{ preventScroll: true \}\);"
+            r"[\s\S]*\}, 50\);",
+        )
+
+        for scenario_id in browser_qa.INTERACTION_SCENARIOS:
+            with self.subTest(scenario=scenario_id):
+                scenario = next(
+                    item for item in self.receipt["scenarios"] if item["id"] == scenario_id
+                )
+                driver = self.output / scenario["evidence"]["driver"]["path"]
+                source = driver.read_text(encoding="utf-8")
+                self.assertNotIn("page.locator", source)
+                self.assertNotIn(".focus()", source)
+                self.assertIn("page.keyboard.press(key)", source)
+                self.assertIn("traverseFocus('Tab'", source)
+                self.assertIn("traverseFocus('Shift+Tab'", source)
+                self.assertIn("window.__sstoryPhase6SearchMoveTracker", source)
+                self.assertIn("map.on('moveend', tracker.handler)", source)
+                self.assertIn("api?.search?.targets?.get(entry.key)", source)
+                self.assertIn("options.searchOracle.target", source)
+                self.assertIn("'#layerPanelClose'", source)
+                self.assertNotIn("core.mapSearchTargetZoom", source)
+                self.assertIn(browser_qa.SEARCH_TARGET_LABEL, source)
+                checked = browser_runner.subprocess.run(
+                    ["node", "--check", str(driver)],
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertEqual(checked.returncode, 0, checked.stderr)
 
     def test_playwright_cli_version_is_pinned(self):
         self.receipt["playwright"]["cli_version"] = "0.1.18"
@@ -495,6 +703,141 @@ class Phase6BrowserQaReceiptTests(unittest.TestCase):
         self.assertTrue(
             any("base tile" in error for error in self.validate())
         )
+
+    def test_user_interaction_metrics_are_fail_closed(self):
+        cases = (
+            (
+                "desktop",
+                ("keyboard", "center_after"),
+                {"lat": -100.0, "lng": 200.0},
+                "keyboard map panning",
+            ),
+            (
+                "desktop",
+                ("search", "result_selected"),
+                False,
+                "quiescent target/popup",
+            ),
+            (
+                "desktop",
+                ("search", "selected_entry_key"),
+                "poi:forged-target",
+                "quiescent target/popup",
+            ),
+            (
+                "desktop",
+                ("search", "oracle_source", "sha256"),
+                "f" * 64,
+                "quiescent target/popup",
+            ),
+            (
+                "desktop",
+                ("search", "popup", "lat"),
+                -4000.0,
+                "quiescent target/popup",
+            ),
+            (
+                "desktop",
+                ("search", "final_center"),
+                {"lat": 0.0, "lng": 0.0},
+                "quiescent target/popup",
+            ),
+            (
+                "desktop",
+                ("search", "quiescent_ms"),
+                0.0,
+                "quiescent target/popup",
+            ),
+            (
+                "desktop",
+                ("search", "moveend_count"),
+                0,
+                "quiescent target/popup",
+            ),
+            (
+                "mobile",
+                ("focus_traversal", "steps", 2, "actionable"),
+                False,
+                "Tab/Shift+Tab focus traversal",
+            ),
+            (
+                "desktop",
+                ("layer_panel", "closed"),
+                False,
+                "keyboard layer-panel toggle",
+            ),
+            (
+                "mobile",
+                ("mobile_search_focus", "focus_restored"),
+                False,
+                "mobile search focus restoration",
+            ),
+            (
+                "desktop",
+                ("errors",),
+                ["fixture interaction failure"],
+                "user-interaction diagnostics",
+            ),
+        )
+        for scenario_id, path, value, expected_error in cases:
+            with self.subTest(
+                scenario=scenario_id, metric=".".join(map(str, path))
+            ):
+                receipt = copy.deepcopy(self.receipt)
+                scenario = next(
+                    item for item in receipt["scenarios"] if item["id"] == scenario_id
+                )
+                target = scenario["metrics"]["interaction_evidence"]
+                for key in path[:-1]:
+                    target = target[key]
+                target[path[-1]] = value
+                self.assertTrue(
+                    any(
+                        expected_error in error
+                        for error in self.validate(receipt)
+                    )
+                )
+
+    def test_search_oracle_rejects_coordinated_target_and_zoom_forgery(self):
+        for scenario_id in browser_qa.INTERACTION_SCENARIOS:
+            with self.subTest(scenario=scenario_id, forgery="target"):
+                receipt = copy.deepcopy(self.receipt)
+                scenario = next(
+                    item for item in receipt["scenarios"] if item["id"] == scenario_id
+                )
+                search = scenario["metrics"]["interaction_evidence"]["search"]
+                search["expected_target"] = {"lat": 5620.0, "lng": 15100.0}
+                search["runtime_target"] = {"lat": 5620.0, "lng": 15100.0}
+                search["final_center"] = {"lat": 5700.0, "lng": 15000.0}
+                search["final_bounds"] = {
+                    "south": 5000.0,
+                    "west": 14000.0,
+                    "north": 7000.0,
+                    "east": 16000.0,
+                }
+                search["popup"]["lat"] = 5620.0
+                search["popup"]["lng"] = 15100.0
+                self.assertTrue(
+                    any(
+                        "quiescent target/popup" in error
+                        for error in self.validate(receipt)
+                    )
+                )
+
+            with self.subTest(scenario=scenario_id, forgery="zoom"):
+                receipt = copy.deepcopy(self.receipt)
+                scenario = next(
+                    item for item in receipt["scenarios"] if item["id"] == scenario_id
+                )
+                search = scenario["metrics"]["interaction_evidence"]["search"]
+                search["expected_zoom"] += 1.0
+                search["final_zoom"] += 1.0
+                self.assertTrue(
+                    any(
+                        "quiescent target/popup" in error
+                        for error in self.validate(receipt)
+                    )
+                )
 
     def test_duplicate_preview_parameter_is_rejected(self):
         receipt = copy.deepcopy(self.receipt)
@@ -664,6 +1007,10 @@ class Phase6BrowserQaReceiptTests(unittest.TestCase):
                     "failed_sheet_ids": [browser_qa.ROYAL_CHILD_ID] if scenario_id == "royal_child_failure" else [],
                     "visible_sheet_ids": [browser_qa.ROYAL_PARENT_ID] if scenario_id == "royal_child_failure" else [],
                 }
+                if scenario_id in browser_qa.INTERACTION_SCENARIOS:
+                    metrics["interaction_evidence"] = interaction_evidence(
+                        scenario_id, self.inputs
+                    )
                 tile_sheet = (
                     browser_qa.ROYAL_PARENT_ID
                     if scenario_id in {"slow_tiles", "royal_child_failure"}

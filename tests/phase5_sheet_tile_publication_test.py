@@ -22,6 +22,102 @@ import publish_phase5_tiles as publisher  # noqa: E402
 
 TIMESTAMP = "2026-07-19T16:36:13Z"
 RELEASE_ID = "world-v3-test"
+READINESS_PATH = REPO_ROOT / "world" / "map-production" / "release-readiness.json"
+READINESS_SCHEMA_PATH = (
+    REPO_ROOT / "world" / "map-production" / "schemas" / "release-readiness.schema.json"
+)
+CANONICAL_INDEX_PATH = REPO_ROOT / "docs" / "data" / "map" / "sheet-tiles-v3.json"
+COMPATIBILITY_INDEX_PATH = (
+    REPO_ROOT / "docs" / "data" / "map" / "region-rasters.json"
+)
+PREPUBLICATION_PLACEHOLDER_KEYS = {
+    "schema_version",
+    "coordinate_reference_system",
+    "bounds_order",
+    "deprecated",
+    "replacement_type",
+    "description",
+    "rasters",
+}
+
+
+def assert_repository_index_state(
+    testcase,
+    *,
+    readiness,
+    compatibility_bytes,
+    canonical_bytes,
+):
+    """Assert the exact index representation selected by release readiness."""
+
+    readiness_schema = json.loads(READINESS_SCHEMA_PATH.read_text(encoding="utf-8"))
+    testcase.assertEqual(
+        phase5.schema_errors(readiness, readiness_schema),
+        [],
+        "release-readiness.json must satisfy its checked-in schema",
+    )
+    status = readiness["status"]
+
+    if status == "in-progress":
+        testcase.assertIsNone(
+            canonical_bytes,
+            "in-progress publication must not expose sheet-tiles-v3.json",
+        )
+        placeholder = json.loads(compatibility_bytes.decode("utf-8"))
+        testcase.assertEqual(set(placeholder), PREPUBLICATION_PLACEHOLDER_KEYS)
+        testcase.assertEqual(placeholder["schema_version"], "1.0.0")
+        testcase.assertEqual(
+            placeholder["coordinate_reference_system"], "EA-WORLD-1"
+        )
+        testcase.assertEqual(
+            placeholder["bounds_order"],
+            ["min_x", "min_y", "max_x", "max_y"],
+        )
+        testcase.assertIs(placeholder["deprecated"], True)
+        testcase.assertEqual(
+            placeholder["replacement_type"], "sstory-sheet-tile-index@2.0.0"
+        )
+        testcase.assertIsInstance(placeholder["description"], str)
+        testcase.assertTrue(placeholder["description"].strip())
+        testcase.assertEqual(placeholder["rasters"], [])
+        return
+
+    testcase.assertIn(status, {"release-candidate", "published"})
+    testcase.assertIsNotNone(
+        canonical_bytes,
+        f"{status} publication requires sheet-tiles-v3.json",
+    )
+    testcase.assertTrue(
+        compatibility_bytes == canonical_bytes,
+        "region-rasters.json must be a byte-identical schema-2 alias",
+    )
+    index = json.loads(canonical_bytes.decode("utf-8"))
+    index_schema = json.loads(
+        phase5.DEFAULT_SHEET_TILE_INDEX_SCHEMA.read_text(encoding="utf-8")
+    )
+    testcase.assertEqual(
+        phase5.schema_errors(index, index_schema),
+        [],
+        "published sheet index must satisfy the schema-2 contract",
+    )
+    testcase.assertEqual(index["release_id"], "world-v3")
+    testcase.assertEqual(index["bounded_sheet_count"], 23)
+    testcase.assertEqual(index["root_id"], "sheet_world")
+    testcase.assertEqual(len(index["sheets"]), 22)
+    entries = [index["root"], *index["sheets"]]
+    testcase.assertEqual(len({entry["sheet_id"] for entry in entries}), 23)
+    testcase.assertTrue(
+        all(entry["review_status"] == "accepted" for entry in entries)
+    )
+    expected_entry_status = "staging" if status == "release-candidate" else "published"
+    testcase.assertTrue(
+        all(entry["status"] == expected_entry_status for entry in entries),
+        f"{status} index entries must all be {expected_entry_status}",
+    )
+    testcase.assertTrue(
+        all("/world-v3/" in entry["manifest_url"] for entry in entries)
+    )
+    testcase.assertEqual(sum(entry["tile_count"] for entry in entries), 1350)
 
 
 class Phase5SheetTilePublicationTests(unittest.TestCase):
@@ -196,15 +292,149 @@ class Phase5SheetTilePublicationTests(unittest.TestCase):
         )
         self.assertTrue(all(entry["status"] == "tiled" for entry in self.index["sheets"]))
 
-    def test_repository_legacy_index_is_an_empty_deprecated_placeholder(self):
-        placeholder = json.loads(
-            (REPO_ROOT / "docs" / "data" / "map" / "region-rasters.json").read_text(
-                encoding="utf-8"
-            )
+    def test_repository_index_matches_explicit_release_readiness(self):
+        readiness = json.loads(READINESS_PATH.read_text(encoding="utf-8"))
+        self.assertTrue(COMPATIBILITY_INDEX_PATH.is_file())
+        assert_repository_index_state(
+            self,
+            readiness=readiness,
+            compatibility_bytes=COMPATIBILITY_INDEX_PATH.read_bytes(),
+            canonical_bytes=(
+                CANONICAL_INDEX_PATH.read_bytes()
+                if CANONICAL_INDEX_PATH.is_file()
+                else None
+            ),
         )
-        self.assertTrue(placeholder["deprecated"])
-        self.assertEqual(placeholder["replacement_type"], "sstory-sheet-tile-index@2.0.0")
-        self.assertEqual(placeholder["rasters"], [])
+
+    def test_prepublication_state_requires_the_exact_deprecated_placeholder(self):
+        readiness = {
+            "$schema": "schemas/release-readiness.schema.json",
+            "schema_version": "1.0.0",
+            "status": "in-progress",
+            "manifest_path": "world/map-production/production-manifest.json",
+            "notes": "Fixture remains explicitly pre-publication.",
+        }
+        placeholder = {
+            "schema_version": "1.0.0",
+            "coordinate_reference_system": "EA-WORLD-1",
+            "bounds_order": ["min_x", "min_y", "max_x", "max_y"],
+            "deprecated": True,
+            "replacement_type": "sstory-sheet-tile-index@2.0.0",
+            "description": "Strict pre-publication fixture.",
+            "rasters": [],
+        }
+        placeholder_bytes = json.dumps(placeholder).encode("utf-8")
+        assert_repository_index_state(
+            self,
+            readiness=readiness,
+            compatibility_bytes=placeholder_bytes,
+            canonical_bytes=None,
+        )
+        with self.assertRaisesRegex(
+            AssertionError, "must not expose sheet-tiles-v3.json"
+        ):
+            assert_repository_index_state(
+                self,
+                readiness=readiness,
+                compatibility_bytes=placeholder_bytes,
+                canonical_bytes=placeholder_bytes,
+            )
+
+    def test_release_candidate_requires_staging_byte_identical_schema2_aliases(self):
+        readiness = {
+            "$schema": "schemas/release-readiness.schema.json",
+            "schema_version": "1.0.0",
+            "status": "release-candidate",
+            "manifest_path": "world/map-production/production-manifest.json",
+            "notes": "Fixture is staged for release-candidate browser QA.",
+        }
+        candidate_index = json.loads(json.dumps(self.index))
+        candidate_index["release_id"] = "world-v3"
+        for entry in [candidate_index["root"], *candidate_index["sheets"]]:
+            entry["status"] = "staging"
+            entry["manifest_url"] = entry["manifest_url"].replace(
+                f"/{RELEASE_ID}/", "/world-v3/"
+            )
+        index_bytes = (
+            json.dumps(candidate_index, ensure_ascii=False, indent=2).encode("utf-8")
+            + b"\n"
+        )
+        assert_repository_index_state(
+            self,
+            readiness=readiness,
+            compatibility_bytes=index_bytes,
+            canonical_bytes=index_bytes,
+        )
+        with self.assertRaisesRegex(AssertionError, "byte-identical schema-2 alias"):
+            assert_repository_index_state(
+                self,
+                readiness=readiness,
+                compatibility_bytes=index_bytes + b" ",
+                canonical_bytes=index_bytes,
+            )
+        forged = json.loads(json.dumps(candidate_index))
+        forged["root"]["status"] = "published"
+        forged_bytes = json.dumps(forged).encode("utf-8")
+        with self.assertRaisesRegex(AssertionError, "must all be staging"):
+            assert_repository_index_state(
+                self,
+                readiness=readiness,
+                compatibility_bytes=forged_bytes,
+                canonical_bytes=forged_bytes,
+            )
+
+    def test_published_state_requires_a_byte_identical_world_v3_schema2_alias(self):
+        readiness = {
+            "$schema": "schemas/release-readiness.schema.json",
+            "schema_version": "1.0.0",
+            "status": "published",
+            "manifest_path": "world/map-production/production-manifest.json",
+            "publication_receipt_path": (
+                "world/map-production/releases/world-v3-publication-receipt.json"
+            ),
+            "browser_qa_bundle": {
+                "path": "world/map-production/releases/world-v3-phase6-browser-qa",
+                "receipt_sha256": "a" * 64,
+                "tree_sha256": "b" * 64,
+                "tested_url": "https://example.test/pages/interactive-map-v3.html",
+                "completed_at": TIMESTAMP,
+            },
+            "notes": "Fixture is explicitly published.",
+        }
+        published_index = json.loads(json.dumps(self.index))
+        published_index["release_id"] = "world-v3"
+        for entry in [published_index["root"], *published_index["sheets"]]:
+            entry["status"] = "published"
+            entry["manifest_url"] = entry["manifest_url"].replace(
+                f"/{RELEASE_ID}/", "/world-v3/"
+            )
+        index_bytes = (
+            json.dumps(published_index, ensure_ascii=False, indent=2).encode("utf-8")
+            + b"\n"
+        )
+        assert_repository_index_state(
+            self,
+            readiness=readiness,
+            compatibility_bytes=index_bytes,
+            canonical_bytes=index_bytes,
+        )
+        with self.assertRaisesRegex(AssertionError, "byte-identical schema-2 alias"):
+            assert_repository_index_state(
+                self,
+                readiness=readiness,
+                compatibility_bytes=index_bytes + b" ",
+                canonical_bytes=index_bytes,
+            )
+        forged = json.loads(json.dumps(published_index))
+        forged["root"]["status"] = "staging"
+        forged_bytes = json.dumps(forged).encode("utf-8")
+        with self.assertRaisesRegex(AssertionError, "must all be published"):
+            assert_repository_index_state(
+                self,
+                readiness=readiness,
+                compatibility_bytes=forged_bytes,
+                canonical_bytes=forged_bytes,
+            )
 
     def test_manifest_urls_resolve_from_index_and_tiles_from_each_manifest(self):
         index_url = "https://example.test/docs/data/map/sheet-tiles-v3.json"

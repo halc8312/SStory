@@ -1374,8 +1374,11 @@
     elements.layerButton.setAttribute('aria-expanded', String(open));
     elements.layerButton.setAttribute('aria-label', open ? '表示レイヤーを閉じる' : '表示レイヤーを開く');
     elements.scrim.hidden = !open;
-    if (open) elements.layerClose.focus();
-    else elements.layerButton.focus();
+    window.setTimeout(() => {
+      if (panel.classList.contains('is-open') !== open) return;
+      const focusTarget = open ? elements.layerClose : elements.layerButton;
+      focusTarget?.focus({ preventScroll: true });
+    }, 50);
   }
 
   function initializeUi() {
