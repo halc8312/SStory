@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "k3-v172-natural-highland-relief-donor",
+  "generator": "OpenAI ImageGen",
+  "generation_mode": "multi-reference image edit",
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-k-v3-natural-highland-relief-donor-v172.generation.txt",
+    "sha256": "aad7d2934f5fe762bb6efff43a43e26f41ef57de037e92d1788426ade860bfa6"
+  },
+  "references_in_order": [
+    {
+      "role": "canonical-full-map-edit-target",
+      "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+      "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+    },
+    {
+      "role": "exact-eight-topology-reference",
+      "path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+      "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f"
+    },
+    {
+      "role": "canonical-exact-eight-occupancy-reference",
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+      "sha256": "7527b0be4d7a042c5fd33e499b96806bcbbd6a1b614086c7c0fbdf308b83666b"
+    },
+    {
+      "role": "clean-low-mid-scalar-relief-reference",
+      "path": "world/map-production/style-assets/k3-v171-clean-scalar-relief-donor.png",
+      "sha256": "152fe9231812e6acbc6292181de40e17fedceac3adc01a46a288fd873546d5ff"
+    },
+    {
+      "role": "quiet-integrated-ground-and-palette-reference",
+      "path": "world/map-production/style-assets/k3-v170-quiet-integrated-ground-donor.png",
+      "sha256": "8cb7792a725896bab24e032c8d9fadf8cbdf1bf1372f6901de182bf20f493b02"
+    }
+  ],
+  "output": {
+    "path": "world/map-production/style-assets/k3-v172-natural-highland-relief-donor.png",
+    "sha256": "e69deee1e5ba91c1bbcb9aa35dda036c8a7ae1cd07b90c94d1aede0beb957b4a",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB"
+  },
+  "status": "accepted-as-conditional-natural-low-mid-relief-donor",
+  "golden_reference": false,
+  "raw_pixel_transfer_allowed": false,
+  "adoption_scope": "Body-local, zero-centered Gaussian(4)-minus-Gaussian(18) low/mid-frequency relief only. Absolute luminance, positive or white crests, source background and edges, frond-like microbranches, raw pixels, and sub-four-pixel frequencies are forbidden; v55 and v52 remain the exact geometry authorities, and every protected pixel is restored from v18."
+}

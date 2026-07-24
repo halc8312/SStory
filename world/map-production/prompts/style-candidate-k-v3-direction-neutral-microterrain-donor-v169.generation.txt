@@ -1,0 +1,9 @@
+Create a production-grade MATERIAL DONOR ONLY for an illustrated fantasy world map.
+
+Use the three reference images only to understand the muted parchment palette, strict top-down cartographic relief language, and fine engraved terrain texture. Do not reproduce their geography or compose a map.
+
+Output: one seamless-looking 3:2 rectangular orthographic terrain-material sheet, edge to edge, with no frame. Warm muted ochre/taupe ground. Very fine, direction-neutral, non-repeating rocky/soil microtexture and restrained low-contrast erosion grain that remains meaningful at 200–400% zoom. The texture must be locally varied but globally even, suitable for deterministic masking inside eight separately defined mountain/highland regions.
+
+Hard constraints: strict nadir/top-down view; no individual mountains, ridges, valleys, coastlines, roads, rivers, cities, symbols, labels, contour-line systems, borders, panels, rectangular zones, vignettes, clouds, mist, glow, halos, white particles, fern/frond/leaf-vein patterns, fishbone strokes, fingerprints, brush swirls, or directional hatching. No large-scale light direction. No text. No transparency. No photorealism. Avoid bright whites and deep blacks.
+
+Texture character: hand-illustrated cartographic paper/stone grain, subtle multiscale detail, calm negative space, matte surface. It must work as a high-frequency carrier layered at low opacity over separately computed scalar relief without changing topology or protected pixels.

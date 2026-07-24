@@ -1,0 +1,13 @@
+Edit the FIRST reference into a finished-map VISUAL DONOR, changing only the empty northeast highland area.
+
+The SECOND reference is the exact topology authority for eight unequal systems. The THIRD reference is the canonical occupancy/layout authority showing where the eight systems belong in the northeast. The FOURTH reference supplies clean continuous low/mid scalar relief. The FIFTH reference supplies calm, seamless ground continuity and palette.
+
+Create exactly eight distinct, countable highland systems in the northeast, placed according to the canonical control. Each system must have a different strict top-down hierarchy of primary ridge, secondary spurs, saddles, basins, and branching valleys. Render them as integrated illustrated cartographic terrain—not icons, blobs, clouds, stains, or side-view mountains. The systems must be readable at 25–50% and reveal materially more engraved terrain information at 200–400%.
+
+The edited highland ground must dissolve continuously into the surrounding land with no rectangular/polygonal panel, pasted patch, halo, hard body silhouette, or visible edit boundary. Preserve the roads crossing/bordering the highland, the capital, coastline, islands, river, fields, settlements, and all non-highland map content visually unchanged.
+
+Style: strict nadir/orthographic fantasy cartography, muted warm ochre/taupe parchment, restrained dark relief and sparse engraving, natural non-repeating 3–18 px material grain, calm negative space. No directional screen pattern.
+
+Hard exclusions: no white/luminous crests, beads, particles, glow, mist, clouds, fern/frond/leaf-vein/fishbone texture, fingerprints, repeated closed contour loops, uniform hatching, moire, checkerboard, rectangular plate, labels, symbols, text, new roads, new rivers, vegetation icons, settlements, or border. No perspective or cliff faces. No ninth highland system.
+
+This is a visual donor; canonical pixels will later be restored deterministically. Prioritize a convincing seamless highland with exact-eight readable topography and true 200-to-400-percent information gain.
