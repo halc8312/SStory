@@ -124,11 +124,15 @@ class Phase5ParentControlMaskRendererTests(unittest.TestCase):
                 )
             self.assertEqual(
                 {
-                    (sheet["sheet_id"], role): record["sha256"]
+                    (sheet["sheet_id"], role): (
+                        parent_controls.raster_semantic_sha256_file(
+                            REPO_ROOT / record["path"]
+                        )
+                    )
                     for sheet in index["sheets"]
                     for role, record in sheet["qa_controls"].items()
                 },
-                parent_controls.EXPECTED_CONTROL_SHA256,
+                parent_controls.EXPECTED_CONTROL_RASTER_SHA256,
             )
 
             executable_roles = tuple(
@@ -232,6 +236,45 @@ class Phase5ParentControlMaskRendererTests(unittest.TestCase):
                     "runtime compatibility mismatch",
                 ):
                     parent_controls.load_parent_inputs()
+
+    def test_raster_semantic_hash_ignores_png_encoding_but_detects_one_pixel(self):
+        with tempfile.TemporaryDirectory(dir=REPO_ROOT) as temporary:
+            root = Path(temporary)
+            first_path = root / "first.png"
+            second_path = root / "second.png"
+            changed_path = root / "changed.png"
+            raster = Image.new("L", (16, 16))
+            raster.putdata(bytes((index * 37) % 256 for index in range(256)))
+            try:
+                raster.save(
+                    first_path, format="PNG", compress_level=0, optimize=False
+                )
+                raster.save(
+                    second_path, format="PNG", compress_level=9, optimize=False
+                )
+                changed = raster.copy()
+                changed.putpixel((9, 3), (changed.getpixel((9, 3)) + 1) % 256)
+                try:
+                    changed.save(
+                        changed_path,
+                        format="PNG",
+                        compress_level=9,
+                        optimize=False,
+                    )
+                finally:
+                    changed.close()
+            finally:
+                raster.close()
+
+            self.assertNotEqual(digest(first_path), digest(second_path))
+            self.assertEqual(
+                parent_controls.raster_semantic_sha256_file(first_path),
+                parent_controls.raster_semantic_sha256_file(second_path),
+            )
+            self.assertNotEqual(
+                parent_controls.raster_semantic_sha256_file(first_path),
+                parent_controls.raster_semantic_sha256_file(changed_path),
+            )
 
     def test_semantic_fields_are_recomputed_instead_of_schema_trusted(self):
         with tempfile.TemporaryDirectory(dir=REPO_ROOT) as temporary:
@@ -714,12 +757,12 @@ class Phase5ParentControlMaskRendererTests(unittest.TestCase):
             real_rename = parent_controls.os.rename
             rename_count = 0
 
-            def fail_after_first_install(source, destination):
+            def fail_after_first_install(source, destination, *args, **kwargs):
                 nonlocal rename_count
                 rename_count += 1
                 if rename_count == 2:
                     raise OSError("injected install failure")
-                return real_rename(source, destination)
+                return real_rename(source, destination, *args, **kwargs)
 
             with mock.patch.object(
                 parent_controls.os, "rename", side_effect=fail_after_first_install

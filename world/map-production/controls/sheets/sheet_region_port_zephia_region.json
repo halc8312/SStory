@@ -83,7 +83,7 @@
   "source_control": {
     "height": 2730,
     "metadata_path": "world/map-production/controls/world-control-v1.json",
-    "metadata_sha256": "cd22d6d0217e02614bf641dc7f2bf3535afe3eacc7c5804dd631256b639d238a",
+    "metadata_sha256": "30fc43d0fe6eaf3987f23facc8cb4320fe315335deba71b45b60629607cf1c05",
     "path": "world/map-production/controls/world-control-v1.png",
     "sha256": "df189ab294dc2d820ce28d95e920119560425a477099754e1d111489d5be728d",
     "verified_metadata_output_sha256": "df189ab294dc2d820ce28d95e920119560425a477099754e1d111489d5be728d",

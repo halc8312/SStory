@@ -456,7 +456,11 @@ def generate(
     control = build_control(components, base_path, candidate_path, fragment_guide_path)
     for path in outputs:
         path.parent.mkdir(parents=True, exist_ok=True)
-    control_path.write_text(json.dumps(control, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    control_path.write_text(
+        json.dumps(control, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     composite_module = _load_composite_module()
     mask = composite_module.build_mask(control)
     try:
@@ -543,7 +547,11 @@ def generate(
             for component in components
         ],
     }
-    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    report_path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     return report
 
 

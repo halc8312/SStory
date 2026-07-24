@@ -60,8 +60,8 @@ EXPECTED = {
     K1: "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a",
     B1: "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
     WARP_BASE: "c21c5c07515f2bcc11d0ab8e613f3a6e52ec407606cb5afac4f5946579e62e9a",
-    WARP_BUILDER: "82bd78966d546d242286e27007a9364b04ba5c5a6963c7575efa5370420c7f92",
-    WARP_REPORT: "11d76e486ed7feecd41987baa89a53ef72950167730e89d6a048aad22dde5c2d",
+    WARP_BUILDER: "e1d74785ec90bf5c6b3f14f043e3432142dcd7a9cfb0cf2acb4f4dcd7034c624",
+    WARP_REPORT: "5996f71b8cc9ae3de1309f9f32aa33c6653c93ad5271eee8d87afccb5ea9bb2a",
     CAPITAL_DONOR: "7cef cbb1cda73e59e97ecfffa44e24684047d9959e41e714f66a6b2c6169f9aa".replace(" ", ""),
     FIELDS_DONOR: "d92ef6322b59197373d142eca89263376a4072acbf8f09718763c5da4b956a6a",
     HIGHLAND_DONOR: "2ada272aa25955f35e445b2fd98b02e171d47a01c185adddde7bb617f6dac1d8",
@@ -652,7 +652,11 @@ def build(proof_only: bool = False) -> dict[str, Any]:
         "promotion_state": "temporary-visual-proof" if proof_only else "review-only-pending-strict-audit-and-root-vision",
     }
     receipt_path.parent.mkdir(parents=True, exist_ok=True)
-    receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    receipt_path.write_text(
+        json.dumps(receipt, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     return receipt
 
 

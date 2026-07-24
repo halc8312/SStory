@@ -28,10 +28,10 @@ DEFAULT_REPORT = (
 )
 
 EXPECTED_AFTER_SHA256 = "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016"
-EXPECTED_CONTROL_SHA256 = "6df981917be374637c6d685023e06127db0f9ecb942b52a1f098fd5b749ab407"
+EXPECTED_CONTROL_SHA256 = "b437aff4c4ed0ed16b477095562861f66c53bafdfe971e286601dc79caea2775"
 EXPECTED_MASK_SHA256 = "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c"
 EXPECTED_COMPOSITE_REPORT_SHA256 = (
-    "687cf2d8503b8f560c994ade712519f68c82b43ad5e2e804164aa7dddaf16180"
+    "e7deb7dca4fd2b3102e93fdbcea7fd22e90543f1c5422d033501c7aa73d8925d"
 )
 
 
@@ -258,6 +258,7 @@ def audit(
     report_path.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return report
 

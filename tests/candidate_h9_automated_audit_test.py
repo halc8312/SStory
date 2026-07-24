@@ -18,7 +18,7 @@ import render_candidate_h9_dense_flat_plan as h9  # noqa: E402
 
 
 EXPECTED_REPORT_SHA256 = (
-    "ff8594528ffbfc6526d42c8ddaa8b94b9ff939a04498b57ee0922817ff32663c"
+    "1bc01c99cf00be200ec78fd4a44a4824f86c92c134b848b0c202a811581ab60a"
 )
 
 

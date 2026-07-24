@@ -95,18 +95,18 @@ APPROVED_CANDIDATE_SHA256 = (
 EXPECTED_SHA256 = {
     "raw": APPROVED_CANDIDATE_SHA256,
     "final": APPROVED_CANDIDATE_SHA256,
-    "receipt": "dc45c06c8680d2aa3db259fce2707c2a9189252b75c49988ac003a6abdb4fa33",
+    "receipt": "221c9e6385223d10ce3abe19736877c95ce78489d326f516c6fa3f5acce73167",
     "guide": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc",
     "b1": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
     "h4": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
     "vision_schema": "3d5aa81edf380fbe13b4fbec63ee79c523f398f00cdaec22029c8eaf05f8df5b",
     "k1": "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a",
-    "k2_builder": "333761820e7ed1167a8b80e6f54a053810e930117ab3a93b4867ad54d7024fa3",
-    "h4_auditor": "47ac3b6432b04aa56a172c21e1321d8848e82f3f48fd207176697f6634f3ddd2",
+    "k2_builder": "f594d686a356b4ca9e041488f5f8cbd3d33d7a9b6cc1ef446b33e10979f7d16c",
+    "h4_auditor": "9dee90fa67570302d01fab0a922e98838f18dfc83b561ff7b1fa287f89d0e389",
     "h17_auditor": "192a132a36d62e15fbaed19629a1ea0245cb3b966baebd0589f238ab7693b190",
     "warp_base": "c21c5c07515f2bcc11d0ab8e613f3a6e52ec407606cb5afac4f5946579e62e9a",
-    "warp_builder": "82bd78966d546d242286e27007a9364b04ba5c5a6963c7575efa5370420c7f92",
-    "warp_report": "11d76e486ed7feecd41987baa89a53ef72950167730e89d6a048aad22dde5c2d",
+    "warp_builder": "e1d74785ec90bf5c6b3f14f043e3432142dcd7a9cfb0cf2acb4f4dcd7034c624",
+    "warp_report": "5996f71b8cc9ae3de1309f9f32aa33c6653c93ad5271eee8d87afccb5ea9bb2a",
     "highland_donor": "2ada272aa25955f35e445b2fd98b02e171d47a01c185adddde7bb617f6dac1d8",
     "fields_donor": "d92ef6322b59197373d142eca89263376a4072acbf8f09718763c5da4b956a6a",
     "capital_donor": "7cefcbb1cda73e59e97ecfffa44e24684047d9959e41e714f66a6b2c6169f9aa",
@@ -845,6 +845,7 @@ def audit(
     report_path.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return report
 

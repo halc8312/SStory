@@ -90,7 +90,7 @@ V55_ROBUST_RECIPE_AUTHORITY_SHA256 = (
 EXPECTED_V19_AUTHORITY_ARTIFACTS = {
     "canonical-k3-spec": {
         "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/spec.json",
-        "sha256": "ffc9c365b93d9738b8d3f0fe4985b907afc61137931715db24e16161ae609232",
+        "sha256": "49d681f16f061583638a778a0fd0fc8b7b3a977d21320ee0c51b9b593040890e",
     },
     "v55-root-vision-review": {
         "path": "world/map-production/qa/style-candidate-k-v3-highland-source-v55-root-vision.json",
@@ -115,7 +115,7 @@ EXPECTED_V19_AUTHORITY_ARTIFACTS = {
 }
 EXPECTED_V19_FIXED_SOURCE_SHA256 = {
     "reconstruction_builder": (
-        "226cb468a0ea27cbac67afe3c48296d0f01445fcc0a4f48ca2384e811c161423"
+        "92100794ff519fb77c7bca89af74897dcc422c9bb341582d31355d6b98cd229a"
     ),
     "generated_layout_control": (
         "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f"

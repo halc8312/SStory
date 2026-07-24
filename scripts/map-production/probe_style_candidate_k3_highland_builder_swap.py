@@ -33,8 +33,7 @@ import build_style_candidate_k3_semantic_cleanup as k3  # noqa: E402
 OUT = ROOT / "tmp/map-production/k3-semantic-cleanup-v19-builder-swap"
 V18 = (
     ROOT
-    / "tmp/map-production/k3-semantic-cleanup-proof-v18"
-    / "style-candidate-k-v3-semantic-cleanup-proof-v18.png"
+    / "world/map-production/style-assets/k3-v18-reconstruction-base.png"
 )
 EXPECTED_V18 = "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
 TARGET_BOX = (930, 0, 1536, 560)

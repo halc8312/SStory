@@ -56,7 +56,7 @@ EXPECTED_SHA256 = {
         "187e64221d22096ea4295b375fa81439bbcf7d8a07ddb3b47b72104f3a44c394"
     ),
     "provenance": (
-        "3ac21e9273f787c13c382a3ec422203efa2fde149101b3b0cc09850ebbc8b86e"
+        "34bcb70b256445f7ae97ee184b97e1f37df4885a967278dbd0d26658128f4983"
     ),
     "atlas": h9.ATLAS_SHA256,
     "atlas_receipt": (
@@ -67,7 +67,7 @@ EXPECTED_SHA256 = {
     ),
     "reference_b1": h4.EXPECTED_SHA256["reference_b1"],
     "renderer": (
-        "4f47a61aab66b41a484487d3ed6a75b70ccaa722d821c470184969b70b97ff46"
+        "c4e8a94f821122f90b0d5f81b72148e1d72cbc7950773b1f2f015a07e45c4870"
     ),
 }
 
@@ -902,6 +902,7 @@ def audit(
     report_path.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return report
 

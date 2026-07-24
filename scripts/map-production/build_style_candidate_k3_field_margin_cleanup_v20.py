@@ -38,8 +38,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TEMP_PARENT = ROOT / "tmp/map-production"
 V18_REFERENCE = (
     ROOT
-    / "tmp/map-production/k3-semantic-cleanup-proof-v18"
-    / "style-candidate-k-v3-semantic-cleanup-proof-v18.png"
+    / "world/map-production/style-assets/k3-v18-reconstruction-base.png"
 )
 EXPECTED_V18_SHA256 = (
     "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"

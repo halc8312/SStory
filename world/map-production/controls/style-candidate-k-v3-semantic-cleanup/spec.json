@@ -174,7 +174,7 @@
   "v18_field_control_mask": {
     "status": "root-selected-after-hard-binary-and-8px-erosion-comparison",
     "baseline": {
-      "path": "tmp/map-production/k3-semantic-cleanup-proof-v17/style-candidate-k-v3-semantic-cleanup-proof-v17.png",
+      "path": "world/map-production/qa/fixtures/k3/style-candidate-k-v3-semantic-cleanup-proof-v17.png",
       "sha256": "9e11125b30f4849ee23c3cb4c0a69ab070ff53401b419bc5699529ace8cd573c"
     },
     "strict_interior_erosion_px": 12,
@@ -240,7 +240,7 @@
         "passed_regions": 9
       },
       "rejected_temp_v10": {
-        "path": "tmp/map-production/k3-semantic-cleanup-proof-v10/style-candidate-k-v3-semantic-cleanup-proof-v10.png",
+        "path": "world/map-production/qa/fixtures/k3/style-candidate-k-v3-semantic-cleanup-proof-v10.png",
         "sha256": "d1c835e62ec7e9c2f7f42709aa1600ee42c0ddcc98f02d41daf3a1f1449feb24",
         "field_maxima": {
           "robust_span_lab_l": 45.688,

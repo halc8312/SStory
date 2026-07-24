@@ -33,12 +33,12 @@ AUDIT = load("candidate_k3_semantic_cleanup_audit", "audit_style_candidate_k3_se
 
 class CandidateK3SemanticCleanupPreflightTest(unittest.TestCase):
     def _frozen_v18(self) -> np.ndarray:
-        self.assertTrue(K3.TEMP_FINAL.is_file())
+        self.assertTrue(K3.V18_REFERENCE.is_file())
         self.assertEqual(
-            K3.sha256(K3.TEMP_FINAL),
-            "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882",
+            K3.sha256(K3.V18_REFERENCE),
+            K3.EXPECTED_V18_REFERENCE,
         )
-        return np.asarray(Image.open(K3.TEMP_FINAL).convert("RGB"), np.uint8)
+        return np.asarray(Image.open(K3.V18_REFERENCE).convert("RGB"), np.uint8)
 
     def _forced_flat_highland_candidate(
         self,
@@ -376,11 +376,11 @@ class CandidateK3SemanticCleanupPreflightTest(unittest.TestCase):
         self.assertTrue(baseline["passed"])
         self.assertTrue(all(item["passed"] for item in baseline["regions"]))
 
-        v10 = ROOT / "tmp/map-production/k3-semantic-cleanup-proof-v10/style-candidate-k-v3-semantic-cleanup-proof-v10.png"
+        v10 = K3.V10_PROOF
         self.assertTrue(v10.is_file())
         self.assertEqual(
             K3.sha256(v10),
-            "d1c835e62ec7e9c2f7f42709aa1600ee42c0ddcc98f02d41daf3a1f1449feb24",
+            K3.EXPECTED_V10_PROOF,
         )
         rejected = AUDIT.low_frequency_blotch_metrics(
             np.asarray(Image.open(v10).convert("RGB"), np.uint8), masks

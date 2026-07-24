@@ -75,7 +75,7 @@
       "id": "provenance_and_promotion",
       "label": "証拠出典・昇格状態",
       "complete": true,
-      "evidence": "Candidate world/map-production/candidates/style-candidate-i-v2-sea-material.png (SHA-256 324c0c679535830eb1ea5cce47f5d9a0a70cf7987eb19e6ced39d8865c474e41); prompt world/map-production/prompts/style-candidate-i-v2-sea-material.generation.txt; raw world/map-production/candidates/style-candidate-i-v2-sea-material-raw.png; receipt world/map-production/prompts/style-candidate-i-v2-sea-material.generation-receipt.json (SHA-256 051c459b4aa7e43e1571b93c0ed5e113ba3e8bbbc8ecf9070367797249eb828f); automated report tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json (SHA-256 1ee920a050e9eee76b41d81273247c2ac494af2f423d51c02d9057020cc436f0).",
+      "evidence": "Candidate world/map-production/candidates/style-candidate-i-v2-sea-material.png (SHA-256 324c0c679535830eb1ea5cce47f5d9a0a70cf7987eb19e6ced39d8865c474e41); prompt world/map-production/prompts/style-candidate-i-v2-sea-material.generation.txt; raw world/map-production/candidates/style-candidate-i-v2-sea-material-raw.png; receipt world/map-production/prompts/style-candidate-i-v2-sea-material.generation-receipt.json (SHA-256 a215a8ef61a08e307ee860a35e173e3a2dc93c353400dec48af0dbc006d7b72b); automated report tmp/map-production/i2-sea-material/style-candidate-i-v2-sea-material.automated.json (SHA-256 1ee920a050e9eee76b41d81273247c2ac494af2f423d51c02d9057020cc436f0).",
       "notes": "本報告は非独立の自己Visionで、manifest未登録・未正式化・非Goldenである。次回もH4方向の明るいdusty slate-blueパレットと、長い一方向波線を短い途切れた線へ変える改善は保持する。"
     }
   ],

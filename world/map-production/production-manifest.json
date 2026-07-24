@@ -604,7 +604,7 @@
       "inputs": [
         {"path": "world/map-production/prompts/style-candidate-d-v4-erase-route-marks.md", "sha256": "5ca33bcac30fb22e36a69df562d467ca864c09316e2eb779e46ba0f91deaca78", "role": "single-change-artifact-removal-prompt"},
         {"path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png", "sha256": "8112f35363cc5e314e2b9793d06603bf5274a516e9a5ec72c5a06c5f421a73f8", "role": "edit-source"},
-        {"path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json", "sha256": "6df981917be374637c6d685023e06127db0f9ecb942b52a1f098fd5b749ab407", "role": "reviewed-forty-four-target-control"},
+        {"path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json", "sha256": "b437aff4c4ed0ed16b477095562861f66c53bafdfe971e286601dc79caea2775", "role": "reviewed-forty-four-target-control"},
         {"path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.png", "sha256": "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c", "role": "reviewed-forty-four-target-mask"},
         {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks-raw.png", "sha256": "8335302765459a60adb17c048a996a54ab321b85bd53a003233f9ff591953a51", "role": "imagegen-raw-output"}
       ],
@@ -1000,7 +1000,7 @@
         {"path": "world/map-production/prompts/style-candidate-h-v4-plan-view-golden-board.generation.txt", "sha256": "ab066d73cd05d3d7b9bb5abfe3d76a70ae80b814fc8af51d48ead19784548675", "role": "strict-plan-view-golden-style-generation-prompt"},
         {"path": "world/map-production/candidates/style-candidate-b-v1.png", "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003", "role": "candidate-b1-composition-material-and-palette-reference"},
         {"path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board-raw.png", "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-h-v4-plan-view-golden-board.json", "sha256": "49cf14b0188dd708af302d6a78bc9d1a5bf5dc876358cf240c3b7c1e6ef20ca1", "role": "automated-artifact-and-raster-audit"},
+        {"path": "world/map-production/qa/automated/style-candidate-h-v4-plan-view-golden-board.json", "sha256": "05b83500cea3eaa107a4373d0d935b6b0ab785fdd3e33fa22be183172fdbf78f", "role": "automated-artifact-and-raster-audit"},
         {"path": "world/map-production/qa/style-candidate-h-v4-plan-view-golden-board.json", "sha256": "fe6ae43c61a2718d6d5e3ceeb66ba64f09ff2b46d61e56fa5c07c984aa51455d", "role": "independent-vision-review-a"},
         {"path": "world/map-production/qa/style-candidate-h-v4-plan-view-golden-board-review2.json", "sha256": "7447351b0ca1e7732c8de7092c6d97161a02888957589610b8e760a42f10848f", "role": "independent-vision-review-b"}
       ],
@@ -1053,7 +1053,7 @@
         {"path": "world/map-production/prompts/style-candidate-h-v5-strict-plan-symbols.generation.txt", "sha256": "2cff3a30dbc94ff620496f464bcae8c2e2dad20c302fd376e8bef8a39853f4ca", "role": "strict-plan-symbol-replacement-generation-prompt"},
         {"path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png", "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837", "role": "h4-geometry-material-and-palette-reference"},
         {"path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols-raw.png", "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-h-v5-strict-plan-symbols.json", "sha256": "7d8e72d2c52c7a1e6c87495f0fe4a3891e5e35051c384704841672cc455771ce", "role": "automated-artifact-and-raster-audit"},
+        {"path": "world/map-production/qa/automated/style-candidate-h-v5-strict-plan-symbols.json", "sha256": "a5061356ce6ce8bf99eb1780ef517799374dd09ee1205b3982289d662d3e21fc", "role": "automated-artifact-and-raster-audit"},
         {"path": "world/map-production/qa/style-candidate-h-v5-strict-plan-symbols.json", "sha256": "416846a4d386049682aaf02d2dfad54c67cf29c773cdd9245f76553fdf91ccb1", "role": "independent-vision-review-a"},
         {"path": "world/map-production/qa/style-candidate-h-v5-strict-plan-symbols-review2.json", "sha256": "a97c5e4881130f6d3201b6e9768de538c284d6994fba4cff55bd97109573ca92", "role": "independent-vision-review-b"}
       ],
@@ -1107,7 +1107,7 @@
         {"path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols.png", "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe", "role": "h5-geometry-and-projection-reference"},
         {"path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png", "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837", "role": "h4-material-and-palette-reference"},
         {"path": "world/map-production/candidates/style-candidate-h-v6-dual-reference-flat-gis-raw.png", "sha256": "86d61909913a3c6a402ae2c12211a79a2a15e755e98fba622fcb0e2d7bcfaaf6", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-h-v6-dual-reference-flat-gis.json", "sha256": "87143853e9eb1f2d1752750418c1a3658c88f5b908d7b0ee781daae4aff7e188", "role": "automated-artifact-and-raster-audit"},
+        {"path": "world/map-production/qa/automated/style-candidate-h-v6-dual-reference-flat-gis.json", "sha256": "43105c35a66aae33f6c778c86d4465b02d67814eedf25ae50bc7e21d3dac542e", "role": "automated-artifact-and-raster-audit"},
         {"path": "world/map-production/qa/style-candidate-h-v6-dual-reference-flat-gis.json", "sha256": "201be0ad9a15807504a6026fbd0a5d3cc1d5b8f944b23a96fd02c8f39c327449", "role": "independent-vision-review-a"},
         {"path": "world/map-production/qa/style-candidate-h-v6-dual-reference-flat-gis-review2.json", "sha256": "e7167b15a341eea18ab4fa2c151373a46b6747f7b2cfd3070a3c905fbd8dcee1", "role": "independent-vision-review-b"}
       ],

@@ -81,6 +81,14 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def semantic_sha256(path: Path) -> str:
+    from PIL import Image
+
+    with Image.open(path) as opened:
+        opened.load()
+        return calibration._raster_semantic_sha256(opened)
+
+
 class LuminancePlateCalibrationTest(unittest.TestCase):
     maxDiff = None
 
@@ -165,27 +173,70 @@ class LuminancePlateCalibrationTest(unittest.TestCase):
             "66e92280c8e9827f5d685409dca0690053c425d14273d99828856617f0c7e07f",
         )
 
-    def test_e3_regional_gain_replay_is_byte_deterministic(self) -> None:
+    def test_e3_regional_gain_replay_is_decoded_raster_deterministic(self) -> None:
         with tempfile.TemporaryDirectory(prefix="sstory-e3-replay-") as directory:
             root = Path(directory)
             report = self._run(E3_CONTROL, root)
             output, support, field, _ = self._targets(root)
-            self.assertEqual(output.read_bytes(), E3_OUTPUT.read_bytes())
-            self.assertEqual(support.read_bytes(), E3_SUPPORT.read_bytes())
-            self.assertEqual(field.read_bytes(), E3_FIELD.read_bytes())
-            self.assertEqual(report["output_sha256"], sha256(E3_OUTPUT))
+            self.assertEqual(semantic_sha256(output), semantic_sha256(E3_OUTPUT))
+            self.assertEqual(semantic_sha256(support), semantic_sha256(E3_SUPPORT))
+            self.assertEqual(semantic_sha256(field), semantic_sha256(E3_FIELD))
+            self.assertEqual(report["output_sha256"], sha256(output))
+            self.assertEqual(report["support_sha256"], sha256(support))
+            self.assertEqual(report["field_sha256"], sha256(field))
             self.assertEqual(report["full_transfer_preflight"]["status"], "rejected")
 
-    def test_e4_minimum_support_replay_is_byte_deterministic(self) -> None:
+    def test_e4_minimum_support_replay_is_decoded_raster_deterministic(self) -> None:
         with tempfile.TemporaryDirectory(prefix="sstory-e4-replay-") as directory:
             root = Path(directory)
             report = self._run(E4_CONTROL, root)
             output, support, field, _ = self._targets(root)
-            self.assertEqual(output.read_bytes(), E4_OUTPUT.read_bytes())
-            self.assertEqual(support.read_bytes(), E4_SUPPORT.read_bytes())
-            self.assertEqual(field.read_bytes(), E4_FIELD.read_bytes())
-            self.assertEqual(report["output_sha256"], sha256(E4_OUTPUT))
+            self.assertEqual(semantic_sha256(output), semantic_sha256(E4_OUTPUT))
+            self.assertEqual(semantic_sha256(support), semantic_sha256(E4_SUPPORT))
+            self.assertEqual(semantic_sha256(field), semantic_sha256(E4_FIELD))
+            self.assertEqual(report["output_sha256"], sha256(output))
+            self.assertEqual(report["support_sha256"], sha256(support))
+            self.assertEqual(report["field_sha256"], sha256(field))
             self.assertEqual(report["full_transfer_preflight"]["status"], "passed")
+
+    def test_raster_semantic_hash_ignores_png_encoding_but_detects_one_pixel(self) -> None:
+        from PIL import Image
+
+        with tempfile.TemporaryDirectory(prefix="sstory-plate-raster-hash-") as directory:
+            root = Path(directory)
+            first_path = root / "first.png"
+            second_path = root / "second.png"
+            changed_path = root / "changed.png"
+            raster = Image.new("L", (16, 16))
+            raster.putdata(bytes((index * 29) % 256 for index in range(256)))
+            try:
+                raster.save(
+                    first_path, format="PNG", compress_level=0, optimize=False
+                )
+                raster.save(
+                    second_path, format="PNG", compress_level=9, optimize=False
+                )
+                changed = raster.copy()
+                changed.putpixel((5, 11), (changed.getpixel((5, 11)) + 1) % 256)
+                try:
+                    changed.save(
+                        changed_path,
+                        format="PNG",
+                        compress_level=9,
+                        optimize=False,
+                    )
+                finally:
+                    changed.close()
+            finally:
+                raster.close()
+
+            self.assertNotEqual(first_path.read_bytes(), second_path.read_bytes())
+            self.assertEqual(
+                semantic_sha256(first_path), semantic_sha256(second_path)
+            )
+            self.assertNotEqual(
+                semantic_sha256(first_path), semantic_sha256(changed_path)
+            )
 
     def test_unknown_control_key_fails_without_partial_artifacts(self) -> None:
         control = json.loads(E3_CONTROL.read_text(encoding="utf-8"))

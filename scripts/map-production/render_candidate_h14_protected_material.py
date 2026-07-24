@@ -36,7 +36,7 @@ DEFAULT_ATLAS = (
 )
 DEFAULT_H11 = (
     REPO_ROOT
-    / "tmp/map-production/h11-prototype/"
+    / "world/map-production/candidates/"
     "style-candidate-h-v11-colour-calibration-raw.png"
 )
 DEFAULT_B1 = REPO_ROOT / "world/map-production/candidates/style-candidate-b-v1.png"

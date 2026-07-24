@@ -224,7 +224,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_royal_capital_region/c00-r00/protected-control.json",
-            "sha256": "9d7a4563d939369200979df081ef8a75585441bb60d37c33b0be15c9794452ee"
+            "sha256": "ea93546da247edbf110be8c42db0ab0b848976e5b86deb9f22b69253c3810c4c"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -320,7 +320,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_royal_capital_region/c00-r00/protected-control.json",
-              "sha256": "9d7a4563d939369200979df081ef8a75585441bb60d37c33b0be15c9794452ee"
+              "sha256": "ea93546da247edbf110be8c42db0ab0b848976e5b86deb9f22b69253c3810c4c"
             },
             "static_inputs": [
               {
@@ -438,7 +438,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_royal_capital_region/c01-r00/protected-control.json",
-            "sha256": "629c220974ad9bbc0e3bcc8f28865434f58b4707600af679ef16e5e75a81cdfd"
+            "sha256": "11f7cc611d8e18701facd96dc3eb8bcfe1ca6984d8be4adeb092350be662fe3d"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -534,7 +534,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_royal_capital_region/c01-r00/protected-control.json",
-              "sha256": "629c220974ad9bbc0e3bcc8f28865434f58b4707600af679ef16e5e75a81cdfd"
+              "sha256": "11f7cc611d8e18701facd96dc3eb8bcfe1ca6984d8be4adeb092350be662fe3d"
             },
             "static_inputs": [
               {
@@ -729,7 +729,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c00-r00/protected-control.json",
-            "sha256": "65dd7cfeec8d9b47f256b39966a5f7cc0973d28ac86cc6ebed237ec3eaa9fcbb"
+            "sha256": "6ec6342da6861dbe5f760b4c9e11686563319cd8a6cdd778116df022602209fd"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -825,7 +825,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c00-r00/protected-control.json",
-              "sha256": "65dd7cfeec8d9b47f256b39966a5f7cc0973d28ac86cc6ebed237ec3eaa9fcbb"
+              "sha256": "6ec6342da6861dbe5f760b4c9e11686563319cd8a6cdd778116df022602209fd"
             },
             "static_inputs": [
               {
@@ -943,7 +943,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c01-r00/protected-control.json",
-            "sha256": "2f4c9d4fb241d4cd7c940268427abc248aa74972d0b82b7600fb8dbe76c9ffd0"
+            "sha256": "77a7944ca79b98ac41054a729f1cb5525d83237704aa81231956a0efb98ca6b5"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -1039,7 +1039,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c01-r00/protected-control.json",
-              "sha256": "2f4c9d4fb241d4cd7c940268427abc248aa74972d0b82b7600fb8dbe76c9ffd0"
+              "sha256": "77a7944ca79b98ac41054a729f1cb5525d83237704aa81231956a0efb98ca6b5"
             },
             "static_inputs": [
               {
@@ -1167,7 +1167,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c02-r00/protected-control.json",
-            "sha256": "f057311fcb37d0415f81875a9cae5b4fb7d5ccfa06a2d19d532e16a42ac10955"
+            "sha256": "1410f42f7a0bef1f0ef19b53912c28442ce020f0fe112854e3800f1eaa3ba2b4"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -1263,7 +1263,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c02-r00/protected-control.json",
-              "sha256": "f057311fcb37d0415f81875a9cae5b4fb7d5ccfa06a2d19d532e16a42ac10955"
+              "sha256": "1410f42f7a0bef1f0ef19b53912c28442ce020f0fe112854e3800f1eaa3ba2b4"
             },
             "static_inputs": [
               {
@@ -1398,7 +1398,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c00-r01/protected-control.json",
-            "sha256": "28e29f2451c9c1163ffec3d3268b5756844b49931d33db2d85179f3d46d81e2c"
+            "sha256": "37ec34bdab8a2f9cc57bf80c855d76dbdcde7f851460bbb60cc2551ff727c67c"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -1494,7 +1494,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c00-r01/protected-control.json",
-              "sha256": "28e29f2451c9c1163ffec3d3268b5756844b49931d33db2d85179f3d46d81e2c"
+              "sha256": "37ec34bdab8a2f9cc57bf80c855d76dbdcde7f851460bbb60cc2551ff727c67c"
             },
             "static_inputs": [
               {
@@ -1627,7 +1627,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c01-r01/protected-control.json",
-            "sha256": "526e9fe9cbde2d6d0f050d6b1805fb330167c4ce38e74a8f108c1901dfe4ff6b"
+            "sha256": "ed3bca418306aa62777e6f17d56bc8ec4762204bcf3a85a169cb6845a9854cdc"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -1723,7 +1723,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c01-r01/protected-control.json",
-              "sha256": "526e9fe9cbde2d6d0f050d6b1805fb330167c4ce38e74a8f108c1901dfe4ff6b"
+              "sha256": "ed3bca418306aa62777e6f17d56bc8ec4762204bcf3a85a169cb6845a9854cdc"
             },
             "static_inputs": [
               {
@@ -1873,7 +1873,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c02-r01/protected-control.json",
-            "sha256": "ab7701ab1138e8df608794967651d763df0fce2f132bd7d39e534795e499eaf8"
+            "sha256": "7ebfc423a4a2a941119cb42c2ed86eaa61fd49fac13a65816bd4d91a2d601d5b"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -1969,7 +1969,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_silver_plains_region/c02-r01/protected-control.json",
-              "sha256": "ab7701ab1138e8df608794967651d763df0fce2f132bd7d39e534795e499eaf8"
+              "sha256": "7ebfc423a4a2a941119cb42c2ed86eaa61fd49fac13a65816bd4d91a2d601d5b"
             },
             "static_inputs": [
               {
@@ -2192,7 +2192,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_soaring_mountains_region/c00-r00/protected-control.json",
-            "sha256": "b0a09691a89bffbd7a7bd3c2de0d3889132c54981d7adaea1b2b5f1deeac45e9"
+            "sha256": "8298897f39aae4ade2bebad463c1d4be3ae7f0e2925bbc0cfcea517e7b581efc"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -2288,7 +2288,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_soaring_mountains_region/c00-r00/protected-control.json",
-              "sha256": "b0a09691a89bffbd7a7bd3c2de0d3889132c54981d7adaea1b2b5f1deeac45e9"
+              "sha256": "8298897f39aae4ade2bebad463c1d4be3ae7f0e2925bbc0cfcea517e7b581efc"
             },
             "static_inputs": [
               {
@@ -2417,7 +2417,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_soaring_mountains_region/c01-r00/protected-control.json",
-            "sha256": "895a9aae8cec190eb293bf046ee763283f78ea15b3114bb3fe3ec87f93e80ac6"
+            "sha256": "3ff39ae98a37d01e94e1a7ad3306d4a5afbaca05f64edc50442cba42473d523e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -2513,7 +2513,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_soaring_mountains_region/c01-r00/protected-control.json",
-              "sha256": "895a9aae8cec190eb293bf046ee763283f78ea15b3114bb3fe3ec87f93e80ac6"
+              "sha256": "3ff39ae98a37d01e94e1a7ad3306d4a5afbaca05f64edc50442cba42473d523e"
             },
             "static_inputs": [
               {
@@ -2714,7 +2714,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_moonlit_forest_region/c00-r00/protected-control.json",
-            "sha256": "82bf180eb48f52d74d2c5c9a2a4db5c5782c6cde3b97059711b0a8bcb6dbf286"
+            "sha256": "4905814c4d805a844bcf32fa54c16178d1d00fbda90114e0c67dfd80808ae131"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -2810,7 +2810,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_moonlit_forest_region/c00-r00/protected-control.json",
-              "sha256": "82bf180eb48f52d74d2c5c9a2a4db5c5782c6cde3b97059711b0a8bcb6dbf286"
+              "sha256": "4905814c4d805a844bcf32fa54c16178d1d00fbda90114e0c67dfd80808ae131"
             },
             "static_inputs": [
               {
@@ -2982,7 +2982,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c00-r00/protected-control.json",
-            "sha256": "11ef4b13a9c3acef7e959bfe5e0d6575a16dcf27d75892de9e5fea45c627f824"
+            "sha256": "5182fbfc33278d00fc0b600ce9b47e8f10a17e0138f2d3070a2b407b7760eb0e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -3078,7 +3078,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c00-r00/protected-control.json",
-              "sha256": "11ef4b13a9c3acef7e959bfe5e0d6575a16dcf27d75892de9e5fea45c627f824"
+              "sha256": "5182fbfc33278d00fc0b600ce9b47e8f10a17e0138f2d3070a2b407b7760eb0e"
             },
             "static_inputs": [
               {
@@ -3189,7 +3189,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c01-r00/protected-control.json",
-            "sha256": "94a6a25f1f151ab50498fa375b303cf0c1593f7de7d0169d65a92ad91ecb4cff"
+            "sha256": "84575dd912a8c4a5cdbf410fc9464446e7e68471e8d75a48d6a72e420db66162"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -3285,7 +3285,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c01-r00/protected-control.json",
-              "sha256": "94a6a25f1f151ab50498fa375b303cf0c1593f7de7d0169d65a92ad91ecb4cff"
+              "sha256": "84575dd912a8c4a5cdbf410fc9464446e7e68471e8d75a48d6a72e420db66162"
             },
             "static_inputs": [
               {
@@ -3422,7 +3422,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c00-r01/protected-control.json",
-            "sha256": "8aa226fcca5de8238badd254cfe56941ad65d019579214d6dfb33a515f9e669d"
+            "sha256": "414a10c41fdd6fbbc27a5af67b2fa082768aaf68ba6bb1cc049e43ad11b7bb38"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -3518,7 +3518,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c00-r01/protected-control.json",
-              "sha256": "8aa226fcca5de8238badd254cfe56941ad65d019579214d6dfb33a515f9e669d"
+              "sha256": "414a10c41fdd6fbbc27a5af67b2fa082768aaf68ba6bb1cc049e43ad11b7bb38"
             },
             "static_inputs": [
               {
@@ -3645,7 +3645,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c01-r01/protected-control.json",
-            "sha256": "d12db906120e56da7747d85d34a1e98ea9167d19d091ad79508ecc46810e8262"
+            "sha256": "d9c60e85584849c7fa8041da1d9bf6f5c45d62ba08f6943f892f72bdd0872bbe"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -3741,7 +3741,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_plains_region/c01-r01/protected-control.json",
-              "sha256": "d12db906120e56da7747d85d34a1e98ea9167d19d091ad79508ecc46810e8262"
+              "sha256": "d9c60e85584849c7fa8041da1d9bf6f5c45d62ba08f6943f892f72bdd0872bbe"
             },
             "static_inputs": [
               {
@@ -3965,7 +3965,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_port_zephia_region/c00-r00/protected-control.json",
-            "sha256": "cfb16c7a8e70c70c02e02971922c980a6590d81c54c686ff8393e91b53678f9a"
+            "sha256": "4cf2ab99f020860f474e98459baed6da6b76d00c39aaa2b1b9a75012e6b235b8"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -4061,7 +4061,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_port_zephia_region/c00-r00/protected-control.json",
-              "sha256": "cfb16c7a8e70c70c02e02971922c980a6590d81c54c686ff8393e91b53678f9a"
+              "sha256": "4cf2ab99f020860f474e98459baed6da6b76d00c39aaa2b1b9a75012e6b235b8"
             },
             "static_inputs": [
               {
@@ -4175,7 +4175,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_port_zephia_region/c01-r00/protected-control.json",
-            "sha256": "0f32c5241280fa301899bc001fc30c6f99dfc149e4bb22d380260e1500829240"
+            "sha256": "35911096f870add721f1f88b7763e2088b87d73f91ba174dd8b2e35931cbb63f"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -4271,7 +4271,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_port_zephia_region/c01-r00/protected-control.json",
-              "sha256": "0f32c5241280fa301899bc001fc30c6f99dfc149e4bb22d380260e1500829240"
+              "sha256": "35911096f870add721f1f88b7763e2088b87d73f91ba174dd8b2e35931cbb63f"
             },
             "static_inputs": [
               {
@@ -4455,7 +4455,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c00-r00/protected-control.json",
-            "sha256": "b9bb70729c001ff3975f7542f2f3648850a39c9e3c5fcc3011b1475ef349b709"
+            "sha256": "2e1d0fbb9221c66382767bf90ec9cf717471d2528e0edfc293e0d1d656158431"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -4551,7 +4551,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c00-r00/protected-control.json",
-              "sha256": "b9bb70729c001ff3975f7542f2f3648850a39c9e3c5fcc3011b1475ef349b709"
+              "sha256": "2e1d0fbb9221c66382767bf90ec9cf717471d2528e0edfc293e0d1d656158431"
             },
             "static_inputs": [
               {
@@ -4659,7 +4659,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c01-r00/protected-control.json",
-            "sha256": "4908c12347e3ab6963fd089165618785097136f69d07bf59d6783dc5f4f190e1"
+            "sha256": "7b5aaa38b10693dfffe0aee28a8d7fb871f1b3d027cbe1ca78307084a75ed3a6"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -4755,7 +4755,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c01-r00/protected-control.json",
-              "sha256": "4908c12347e3ab6963fd089165618785097136f69d07bf59d6783dc5f4f190e1"
+              "sha256": "7b5aaa38b10693dfffe0aee28a8d7fb871f1b3d027cbe1ca78307084a75ed3a6"
             },
             "static_inputs": [
               {
@@ -4877,7 +4877,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c02-r00/protected-control.json",
-            "sha256": "778a390f92ddfc0eb27f0f5b60fc91fe594edb0293bc08d36d4ac212eddd3b70"
+            "sha256": "53bcc9100a3420e41271c11039d089d1ee3209b74adb4c969a366ee488e26aba"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -4973,7 +4973,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c02-r00/protected-control.json",
-              "sha256": "778a390f92ddfc0eb27f0f5b60fc91fe594edb0293bc08d36d4ac212eddd3b70"
+              "sha256": "53bcc9100a3420e41271c11039d089d1ee3209b74adb4c969a366ee488e26aba"
             },
             "static_inputs": [
               {
@@ -5100,7 +5100,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c00-r01/protected-control.json",
-            "sha256": "7e3e27fb55b7f919607b995c6a7b4306dc400d9227e975bae713d8d357888866"
+            "sha256": "1deffdaed23afcb9141beea1e8490f0b87dfa6434e56efbaa0ac9ad686dcf02f"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -5196,7 +5196,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c00-r01/protected-control.json",
-              "sha256": "7e3e27fb55b7f919607b995c6a7b4306dc400d9227e975bae713d8d357888866"
+              "sha256": "1deffdaed23afcb9141beea1e8490f0b87dfa6434e56efbaa0ac9ad686dcf02f"
             },
             "static_inputs": [
               {
@@ -5322,7 +5322,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c01-r01/protected-control.json",
-            "sha256": "ec332980aa157c40cd89fb8f2e51af2e4c2955b05041156930ab00ab2a4deb00"
+            "sha256": "8e7f48bcdcbc201dfc3320a099acd9d4613d431c6ac84fb3809fe46e4ecab900"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -5418,7 +5418,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c01-r01/protected-control.json",
-              "sha256": "ec332980aa157c40cd89fb8f2e51af2e4c2955b05041156930ab00ab2a4deb00"
+              "sha256": "8e7f48bcdcbc201dfc3320a099acd9d4613d431c6ac84fb3809fe46e4ecab900"
             },
             "static_inputs": [
               {
@@ -5559,7 +5559,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c02-r01/protected-control.json",
-            "sha256": "cef47f0264d5092fdc299dcaed981826a398dd791c27152aae5e139a69f9f05f"
+            "sha256": "5f29f2f78a524b1cad0b5f39fca4b4d1c342898a66c3d72663428bf0f08e34c8"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -5655,7 +5655,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c02-r01/protected-control.json",
-              "sha256": "cef47f0264d5092fdc299dcaed981826a398dd791c27152aae5e139a69f9f05f"
+              "sha256": "5f29f2f78a524b1cad0b5f39fca4b4d1c342898a66c3d72663428bf0f08e34c8"
             },
             "static_inputs": [
               {
@@ -5798,7 +5798,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c00-r02/protected-control.json",
-            "sha256": "4be0fde867ff13ede413522c41f2419898d054fa0261c0fc9060d4c53c3024e9"
+            "sha256": "7988fb16246122ca1da2d32c66994f0b70f074da55b14e3c43b2f44d67fc3be9"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -5894,7 +5894,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c00-r02/protected-control.json",
-              "sha256": "4be0fde867ff13ede413522c41f2419898d054fa0261c0fc9060d4c53c3024e9"
+              "sha256": "7988fb16246122ca1da2d32c66994f0b70f074da55b14e3c43b2f44d67fc3be9"
             },
             "static_inputs": [
               {
@@ -6018,7 +6018,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c01-r02/protected-control.json",
-            "sha256": "3d910abfb3bc81295510cd62f44d4f1a0f6798a17bf9b304b06914908459c92f"
+            "sha256": "46dde3ba40633bca05f101f2dfd5dda114069743dceacb6bad8e5558cf818b0f"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -6114,7 +6114,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c01-r02/protected-control.json",
-              "sha256": "3d910abfb3bc81295510cd62f44d4f1a0f6798a17bf9b304b06914908459c92f"
+              "sha256": "46dde3ba40633bca05f101f2dfd5dda114069743dceacb6bad8e5558cf818b0f"
             },
             "static_inputs": [
               {
@@ -6254,7 +6254,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c02-r02/protected-control.json",
-            "sha256": "ecb3439926077306d3123ef4fd29c72f565ed50854c3a39d478da7b61bd32945"
+            "sha256": "1ad9291d14d4dce6046f30a890cc9a928e788b93fa5cb3baabc5003df488ec9d"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -6350,7 +6350,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_lumiera_arch_region/c02-r02/protected-control.json",
-              "sha256": "ecb3439926077306d3123ef4fd29c72f565ed50854c3a39d478da7b61bd32945"
+              "sha256": "1ad9291d14d4dce6046f30a890cc9a928e788b93fa5cb3baabc5003df488ec9d"
             },
             "static_inputs": [
               {
@@ -6557,7 +6557,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c00-r00/protected-control.json",
-            "sha256": "50edbad7043b8d0ebad74058fe72734b5433defbbc962887e6d820fc33897808"
+            "sha256": "255667a5144339610903b9e1d92e16c8b82a7e819f9aae0f2dfd9337527a7ce5"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -6653,7 +6653,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c00-r00/protected-control.json",
-              "sha256": "50edbad7043b8d0ebad74058fe72734b5433defbbc962887e6d820fc33897808"
+              "sha256": "255667a5144339610903b9e1d92e16c8b82a7e819f9aae0f2dfd9337527a7ce5"
             },
             "static_inputs": [
               {
@@ -6765,7 +6765,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c01-r00/protected-control.json",
-            "sha256": "cbeef3b217dd105561bfc532d6aae757ca1dddb914ea67883cab35f2ec308e0d"
+            "sha256": "1b3cf7716b388f0ce31710f4b6caee260d64a47543702ee153935339efa2b41e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -6861,7 +6861,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c01-r00/protected-control.json",
-              "sha256": "cbeef3b217dd105561bfc532d6aae757ca1dddb914ea67883cab35f2ec308e0d"
+              "sha256": "1b3cf7716b388f0ce31710f4b6caee260d64a47543702ee153935339efa2b41e"
             },
             "static_inputs": [
               {
@@ -6987,7 +6987,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c02-r00/protected-control.json",
-            "sha256": "d45c57c7e19a2d5659529382c1a02238fe28ff15397b06f484841a98b07760f4"
+            "sha256": "b7665a72fc44c6e4aa42d1ec67b75b9b4eacb37c3faf68a01bd9e1308809ace7"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -7083,7 +7083,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c02-r00/protected-control.json",
-              "sha256": "d45c57c7e19a2d5659529382c1a02238fe28ff15397b06f484841a98b07760f4"
+              "sha256": "b7665a72fc44c6e4aa42d1ec67b75b9b4eacb37c3faf68a01bd9e1308809ace7"
             },
             "static_inputs": [
               {
@@ -7208,7 +7208,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c00-r01/protected-control.json",
-            "sha256": "2d91ac91dacc7953def4acc4ce32b4e5e19d51ce750c332d407bf6be6a338436"
+            "sha256": "88895ada18ac026af701b9bb4c0c7aceeb13313196cbedd857672b13ac72953e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -7304,7 +7304,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c00-r01/protected-control.json",
-              "sha256": "2d91ac91dacc7953def4acc4ce32b4e5e19d51ce750c332d407bf6be6a338436"
+              "sha256": "88895ada18ac026af701b9bb4c0c7aceeb13313196cbedd857672b13ac72953e"
             },
             "static_inputs": [
               {
@@ -7433,7 +7433,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c01-r01/protected-control.json",
-            "sha256": "624af062962432b82c03804192ba3afa26107a10be7372c4b75d2762881f6a44"
+            "sha256": "d2c8f019a1a67db66130442ed6e1ab60f80f1414529cae546c4ea898db254374"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -7529,7 +7529,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c01-r01/protected-control.json",
-              "sha256": "624af062962432b82c03804192ba3afa26107a10be7372c4b75d2762881f6a44"
+              "sha256": "d2c8f019a1a67db66130442ed6e1ab60f80f1414529cae546c4ea898db254374"
             },
             "static_inputs": [
               {
@@ -7674,7 +7674,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c02-r01/protected-control.json",
-            "sha256": "a287b31a14264c45420a43805ded7309fe441d525ffb6d564541322cbb99bc25"
+            "sha256": "c6176184243ce7af1ee722377ea790090b6890415a34fd0a07cec729fac03eae"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -7770,7 +7770,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c02-r01/protected-control.json",
-              "sha256": "a287b31a14264c45420a43805ded7309fe441d525ffb6d564541322cbb99bc25"
+              "sha256": "c6176184243ce7af1ee722377ea790090b6890415a34fd0a07cec729fac03eae"
             },
             "static_inputs": [
               {
@@ -7914,7 +7914,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c00-r02/protected-control.json",
-            "sha256": "010b48a32bf4b2a775c000899bbdf9921b7ef73250bcd1f880a87e1a53550f6f"
+            "sha256": "4264072dd861ed5d47f0239020c313d03252af82cfca112b9154f1c45c9907ef"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -8010,7 +8010,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c00-r02/protected-control.json",
-              "sha256": "010b48a32bf4b2a775c000899bbdf9921b7ef73250bcd1f880a87e1a53550f6f"
+              "sha256": "4264072dd861ed5d47f0239020c313d03252af82cfca112b9154f1c45c9907ef"
             },
             "static_inputs": [
               {
@@ -8133,7 +8133,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c01-r02/protected-control.json",
-            "sha256": "dc47f122312542029e730dfc9691516cc348659833c662b493612c8dccf76c60"
+            "sha256": "89bd7e42b1b16fbce3267769c9194f79d94bfa7888b70020d28ea0c2d2dc9dac"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -8229,7 +8229,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c01-r02/protected-control.json",
-              "sha256": "dc47f122312542029e730dfc9691516cc348659833c662b493612c8dccf76c60"
+              "sha256": "89bd7e42b1b16fbce3267769c9194f79d94bfa7888b70020d28ea0c2d2dc9dac"
             },
             "static_inputs": [
               {
@@ -8373,7 +8373,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c02-r02/protected-control.json",
-            "sha256": "c14e84b22ab3f5fac8b1eede7b8c03ccde30a6345c301a194203607b0cfa619e"
+            "sha256": "dfd5fbe808ee7ecf234c87784f63d849a3597f940323383afc618b6c34aeb928"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -8469,7 +8469,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_emerald_belt_region/c02-r02/protected-control.json",
-              "sha256": "c14e84b22ab3f5fac8b1eede7b8c03ccde30a6345c301a194203607b0cfa619e"
+              "sha256": "dfd5fbe808ee7ecf234c87784f63d849a3597f940323383afc618b6c34aeb928"
             },
             "static_inputs": [
               {
@@ -8677,7 +8677,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c00-r00/protected-control.json",
-            "sha256": "c7167b04eebfdcfdf2b5dbdf811c7a0bcddc826244aa2520b3163e64e7a8b4da"
+            "sha256": "8094c58dd229aa31c3e66c0aa253e64e7d815f8836dbf133381c4195f46497cf"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -8773,7 +8773,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c00-r00/protected-control.json",
-              "sha256": "c7167b04eebfdcfdf2b5dbdf811c7a0bcddc826244aa2520b3163e64e7a8b4da"
+              "sha256": "8094c58dd229aa31c3e66c0aa253e64e7d815f8836dbf133381c4195f46497cf"
             },
             "static_inputs": [
               {
@@ -8892,7 +8892,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r00/protected-control.json",
-            "sha256": "f3c3758d7b1dce1786c89d7a91db111ec36a505a0b7f782f7bf2906013112b46"
+            "sha256": "72fa82aaa3a54b1b43f65464580dd674a873636366a990703a46af64213465ce"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -8988,7 +8988,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r00/protected-control.json",
-              "sha256": "f3c3758d7b1dce1786c89d7a91db111ec36a505a0b7f782f7bf2906013112b46"
+              "sha256": "72fa82aaa3a54b1b43f65464580dd674a873636366a990703a46af64213465ce"
             },
             "static_inputs": [
               {
@@ -9119,7 +9119,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c02-r00/protected-control.json",
-            "sha256": "9a7d0d4f9cef17800be8d944ba06cdb62ecd5278bc83c24ca9fd2ac8a474e4e5"
+            "sha256": "b5c5b7ca86d85d8b8b9b63bc4c400e6d9a9d31f44ab98bab8f6bbf4d9e910ed8"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -9215,7 +9215,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c02-r00/protected-control.json",
-              "sha256": "9a7d0d4f9cef17800be8d944ba06cdb62ecd5278bc83c24ca9fd2ac8a474e4e5"
+              "sha256": "b5c5b7ca86d85d8b8b9b63bc4c400e6d9a9d31f44ab98bab8f6bbf4d9e910ed8"
             },
             "static_inputs": [
               {
@@ -9343,7 +9343,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c03-r00/protected-control.json",
-            "sha256": "6e7550086900730505b710794eecd4220a6a1984f43a8e4e39e5ebf58e23725a"
+            "sha256": "8fb54597fdc34a52923d20d1d9c71c2be9666181d22de17bc513988455fd0ac6"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -9439,7 +9439,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c03-r00/protected-control.json",
-              "sha256": "6e7550086900730505b710794eecd4220a6a1984f43a8e4e39e5ebf58e23725a"
+              "sha256": "8fb54597fdc34a52923d20d1d9c71c2be9666181d22de17bc513988455fd0ac6"
             },
             "static_inputs": [
               {
@@ -9559,7 +9559,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c00-r01/protected-control.json",
-            "sha256": "d3820489743efe4686043449854b526e42dd5b297f41331043afa72dcd86cf61"
+            "sha256": "26ae0ed91e41423c5da16bb9c2edc4b16925ec4108aa599fc8ea83e1f7d11751"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -9655,7 +9655,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c00-r01/protected-control.json",
-              "sha256": "d3820489743efe4686043449854b526e42dd5b297f41331043afa72dcd86cf61"
+              "sha256": "26ae0ed91e41423c5da16bb9c2edc4b16925ec4108aa599fc8ea83e1f7d11751"
             },
             "static_inputs": [
               {
@@ -9781,7 +9781,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/protected-control.json",
-            "sha256": "6b5152052836ae62edd0153bdf92545e8c8c30ddaba313ee94bdf10089ff1a5b"
+            "sha256": "a5ee9ce4ff617b02047f33d1de3139401adf0abdb4509f66aaa03c12f112d340"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -9877,7 +9877,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r01/protected-control.json",
-              "sha256": "6b5152052836ae62edd0153bdf92545e8c8c30ddaba313ee94bdf10089ff1a5b"
+              "sha256": "a5ee9ce4ff617b02047f33d1de3139401adf0abdb4509f66aaa03c12f112d340"
             },
             "static_inputs": [
               {
@@ -10025,7 +10025,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c02-r01/protected-control.json",
-            "sha256": "dfaa17f2d5326e7ebb6ddbddb6ec5018a47aded7973668286f1b1ce7b9de9f57"
+            "sha256": "ce0d7e7857a93a4b20ebb20a8f3672bd57f96583f5fe96b206ca001a7e297ff4"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -10121,7 +10121,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c02-r01/protected-control.json",
-              "sha256": "dfaa17f2d5326e7ebb6ddbddb6ec5018a47aded7973668286f1b1ce7b9de9f57"
+              "sha256": "ce0d7e7857a93a4b20ebb20a8f3672bd57f96583f5fe96b206ca001a7e297ff4"
             },
             "static_inputs": [
               {
@@ -10267,7 +10267,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c03-r01/protected-control.json",
-            "sha256": "a9d79cd1887c597787a36d7217659c9430dc428b116b414b372aa2a037765bda"
+            "sha256": "8d1a269826f62641fb7cf3806d7af55f6f81cb30e20cccb29d3a30673521e602"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -10363,7 +10363,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c03-r01/protected-control.json",
-              "sha256": "a9d79cd1887c597787a36d7217659c9430dc428b116b414b372aa2a037765bda"
+              "sha256": "8d1a269826f62641fb7cf3806d7af55f6f81cb30e20cccb29d3a30673521e602"
             },
             "static_inputs": [
               {
@@ -10504,7 +10504,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c00-r02/protected-control.json",
-            "sha256": "7760a1190f341a41d4fbe641a30b8e5f2a7b6258b49f60a28e795551992cc8ca"
+            "sha256": "2cd705865a008fac876e09895f15849deb5f922198a026750d29ba633e39fff6"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -10600,7 +10600,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c00-r02/protected-control.json",
-              "sha256": "7760a1190f341a41d4fbe641a30b8e5f2a7b6258b49f60a28e795551992cc8ca"
+              "sha256": "2cd705865a008fac876e09895f15849deb5f922198a026750d29ba633e39fff6"
             },
             "static_inputs": [
               {
@@ -10723,7 +10723,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r02/protected-control.json",
-            "sha256": "c865a2747a791cd2b3b88689956c0b692c1571dd7a88aaaf58c63f81c5cce147"
+            "sha256": "60c9fa99e16810f90122a04942508ca1901035b91b2ac2b908dae2b422f75490"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -10819,7 +10819,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c01-r02/protected-control.json",
-              "sha256": "c865a2747a791cd2b3b88689956c0b692c1571dd7a88aaaf58c63f81c5cce147"
+              "sha256": "60c9fa99e16810f90122a04942508ca1901035b91b2ac2b908dae2b422f75490"
             },
             "static_inputs": [
               {
@@ -10964,7 +10964,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c02-r02/protected-control.json",
-            "sha256": "33bfe09af419aab4d1b1c0a7332497ce2b1e16bfa6221326def717eb1f9abb84"
+            "sha256": "b6c9bb47707b10edade8784e468f402766ef1dcd5e2f8910b9ec977cc504eec9"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -11060,7 +11060,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c02-r02/protected-control.json",
-              "sha256": "33bfe09af419aab4d1b1c0a7332497ce2b1e16bfa6221326def717eb1f9abb84"
+              "sha256": "b6c9bb47707b10edade8784e468f402766ef1dcd5e2f8910b9ec977cc504eec9"
             },
             "static_inputs": [
               {
@@ -11202,7 +11202,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c03-r02/protected-control.json",
-            "sha256": "b417ee8c6f6ac2b32c36c103a2b11a0bba24960e4fc56eaf093e21df1a7c9cbe"
+            "sha256": "09ab8bc8e1c83d763d9f90f1db55913ee3db8341fda048ebfe3497f2dedaf0b8"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -11298,7 +11298,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_red_sea_desert_region/c03-r02/protected-control.json",
-              "sha256": "b417ee8c6f6ac2b32c36c103a2b11a0bba24960e4fc56eaf093e21df1a7c9cbe"
+              "sha256": "09ab8bc8e1c83d763d9f90f1db55913ee3db8341fda048ebfe3497f2dedaf0b8"
             },
             "static_inputs": [
               {
@@ -11514,7 +11514,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_jade_oasis_region/c00-r00/protected-control.json",
-            "sha256": "23ae1e34250f072bbcfae46436607fd440250040e6e5212a9ac3268b92a732ef"
+            "sha256": "b47b7033ca696b5cd10d152571a942bc2e117359464497ccc71b6f1a410183f6"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -11610,7 +11610,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_jade_oasis_region/c00-r00/protected-control.json",
-              "sha256": "23ae1e34250f072bbcfae46436607fd440250040e6e5212a9ac3268b92a732ef"
+              "sha256": "b47b7033ca696b5cd10d152571a942bc2e117359464497ccc71b6f1a410183f6"
             },
             "static_inputs": [
               {
@@ -11724,7 +11724,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_jade_oasis_region/c01-r00/protected-control.json",
-            "sha256": "2dc0a04c61d42a41fcd2b052474a86f713282f4fc3729bfeaa0e7a0aa788656f"
+            "sha256": "cf669eb51c783c84babd10bc8da1909f494dab86a6ea0be4dd7b5003c4ac4a75"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -11820,7 +11820,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_jade_oasis_region/c01-r00/protected-control.json",
-              "sha256": "2dc0a04c61d42a41fcd2b052474a86f713282f4fc3729bfeaa0e7a0aa788656f"
+              "sha256": "cf669eb51c783c84babd10bc8da1909f494dab86a6ea0be4dd7b5003c4ac4a75"
             },
             "static_inputs": [
               {
@@ -12009,7 +12009,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c00-r00/protected-control.json",
-            "sha256": "38952a71406568c3bcbe185438161fea9054a86d28f40254dfbee38dde5d7f71"
+            "sha256": "d1b6ff9f60ef85e6afdbd1c102aec1dca51cdf2b39e6cfdfa63719c84dc3e63f"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -12105,7 +12105,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c00-r00/protected-control.json",
-              "sha256": "38952a71406568c3bcbe185438161fea9054a86d28f40254dfbee38dde5d7f71"
+              "sha256": "d1b6ff9f60ef85e6afdbd1c102aec1dca51cdf2b39e6cfdfa63719c84dc3e63f"
             },
             "static_inputs": [
               {
@@ -12215,7 +12215,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/protected-control.json",
-            "sha256": "79ee321ff6c92dacc6b30bded5cf409137286007da407033afe7d8796587ed33"
+            "sha256": "72cbb385cd77466e05fc316e15538c5a9a1b941fcd4e88c989d06dc4a077111a"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -12311,7 +12311,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r00/protected-control.json",
-              "sha256": "79ee321ff6c92dacc6b30bded5cf409137286007da407033afe7d8796587ed33"
+              "sha256": "72cbb385cd77466e05fc316e15538c5a9a1b941fcd4e88c989d06dc4a077111a"
             },
             "static_inputs": [
               {
@@ -12447,7 +12447,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c00-r01/protected-control.json",
-            "sha256": "5f0c5c0ff5aed56dcbf6686e139bfb3a0d0c04e1bcf406c7f57463dac749dc31"
+            "sha256": "1c20987d6e55360e174e9f49306ab12f0437730c006f7c24d33a4f0a6b1d370e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -12543,7 +12543,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c00-r01/protected-control.json",
-              "sha256": "5f0c5c0ff5aed56dcbf6686e139bfb3a0d0c04e1bcf406c7f57463dac749dc31"
+              "sha256": "1c20987d6e55360e174e9f49306ab12f0437730c006f7c24d33a4f0a6b1d370e"
             },
             "static_inputs": [
               {
@@ -12672,7 +12672,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r01/protected-control.json",
-            "sha256": "7656f9b57ab96879f19993b83acab931e772d8397c8c9653471304bf3095a1bd"
+            "sha256": "38483605b419d37679c977de47386f74ddfb7ad19ef8b45fe20e7776c2b57b38"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -12768,7 +12768,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r01/protected-control.json",
-              "sha256": "7656f9b57ab96879f19993b83acab931e772d8397c8c9653471304bf3095a1bd"
+              "sha256": "38483605b419d37679c977de47386f74ddfb7ad19ef8b45fe20e7776c2b57b38"
             },
             "static_inputs": [
               {
@@ -12915,7 +12915,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c00-r02/protected-control.json",
-            "sha256": "9349f8c327b7c9509bdec628c559cb707e1291181cd090a723d48f1b8408dbd5"
+            "sha256": "276ce8ab3d8fe7ec10e6e1270a9d0b9c851101c4e7f84d9d2a548a0dfcb9b814"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -13011,7 +13011,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c00-r02/protected-control.json",
-              "sha256": "9349f8c327b7c9509bdec628c559cb707e1291181cd090a723d48f1b8408dbd5"
+              "sha256": "276ce8ab3d8fe7ec10e6e1270a9d0b9c851101c4e7f84d9d2a548a0dfcb9b814"
             },
             "static_inputs": [
               {
@@ -13132,7 +13132,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r02/protected-control.json",
-            "sha256": "19cca03371cf8985bc337493edf50123e4d100fec581994b8a623a1dc31fad93"
+            "sha256": "86d8ce7cb94c4cb922ed0a369e58a4227f398bbad2989c6d09b40e1fcab7b895"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -13228,7 +13228,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_marineport_region/c01-r02/protected-control.json",
-              "sha256": "19cca03371cf8985bc337493edf50123e4d100fec581994b8a623a1dc31fad93"
+              "sha256": "86d8ce7cb94c4cb922ed0a369e58a4227f398bbad2989c6d09b40e1fcab7b895"
             },
             "static_inputs": [
               {
@@ -13437,7 +13437,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c00-r00/protected-control.json",
-            "sha256": "e15a6f2996caf4fc725b10aa7da39f1d59a0ba44f09c3269b6fd714a28d7572e"
+            "sha256": "2026b52d9e19371b7f8e06037cf865aed5d4c19074f7bde6196d8f5a5428a87e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -13533,7 +13533,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c00-r00/protected-control.json",
-              "sha256": "e15a6f2996caf4fc725b10aa7da39f1d59a0ba44f09c3269b6fd714a28d7572e"
+              "sha256": "2026b52d9e19371b7f8e06037cf865aed5d4c19074f7bde6196d8f5a5428a87e"
             },
             "static_inputs": [
               {
@@ -13652,7 +13652,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c01-r00/protected-control.json",
-            "sha256": "138945387f986fea4abf3483ba6b7fcfcaa000f25bce4703d44167e7d2901606"
+            "sha256": "54a125a0cb23b1a1d84824ad02e175a167324f443b872d1d49e7ca5e78e6293c"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -13748,7 +13748,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c01-r00/protected-control.json",
-              "sha256": "138945387f986fea4abf3483ba6b7fcfcaa000f25bce4703d44167e7d2901606"
+              "sha256": "54a125a0cb23b1a1d84824ad02e175a167324f443b872d1d49e7ca5e78e6293c"
             },
             "static_inputs": [
               {
@@ -13872,7 +13872,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c00-r01/protected-control.json",
-            "sha256": "10b076ff460f7f7dda009dd8bbd562c48611b1df96c84741ea5262bb2e2d0d72"
+            "sha256": "7bbbcaf109becd0f14f5099eea58a926e237bae15b16402d8953cbc4fa60dde2"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -13968,7 +13968,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c00-r01/protected-control.json",
-              "sha256": "10b076ff460f7f7dda009dd8bbd562c48611b1df96c84741ea5262bb2e2d0d72"
+              "sha256": "7bbbcaf109becd0f14f5099eea58a926e237bae15b16402d8953cbc4fa60dde2"
             },
             "static_inputs": [
               {
@@ -14094,7 +14094,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c01-r01/protected-control.json",
-            "sha256": "9e7964ee9e45c37efe6544cf52fde18588dcad93334eb7bf70b136ccfa5e4a26"
+            "sha256": "67ea4b20dae0be7bb352294ef8d90af539995e3cd83bd1bb3832c4c85395507c"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -14190,7 +14190,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_atlantia_region/c01-r01/protected-control.json",
-              "sha256": "9e7964ee9e45c37efe6544cf52fde18588dcad93334eb7bf70b136ccfa5e4a26"
+              "sha256": "67ea4b20dae0be7bb352294ef8d90af539995e3cd83bd1bb3832c4c85395507c"
             },
             "static_inputs": [
               {
@@ -14393,7 +14393,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_time_port_region/c00-r00/protected-control.json",
-            "sha256": "be8b2b2b6d958cfdc17706045097971c98be4d991bc39ce603107e4049450a30"
+            "sha256": "74d4456401b394ac006f095f967e2fa5db4f6580c9b7b115d0127f7682dfa7ea"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -14489,7 +14489,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_time_port_region/c00-r00/protected-control.json",
-              "sha256": "be8b2b2b6d958cfdc17706045097971c98be4d991bc39ce603107e4049450a30"
+              "sha256": "74d4456401b394ac006f095f967e2fa5db4f6580c9b7b115d0127f7682dfa7ea"
             },
             "static_inputs": [
               {
@@ -14590,7 +14590,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_time_port_region/c01-r00/protected-control.json",
-            "sha256": "736005c9619507b3a35911cd33ddaac2f79745141210fe17b344e0fb710b718e"
+            "sha256": "c2256f400333f1e90ffaf6bca16f7f421179c688cd73975804314111ff8504fb"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -14686,7 +14686,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_time_port_region/c01-r00/protected-control.json",
-              "sha256": "736005c9619507b3a35911cd33ddaac2f79745141210fe17b344e0fb710b718e"
+              "sha256": "c2256f400333f1e90ffaf6bca16f7f421179c688cd73975804314111ff8504fb"
             },
             "static_inputs": [
               {
@@ -14868,7 +14868,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_ethernia_core_region/c00-r00/protected-control.json",
-            "sha256": "71456ed5c17b6d2b3b9ece746806b88d1ed9fc8823257ca5f2b32cc558035a02"
+            "sha256": "9311b89d0ae8e9f43a7224998757d837d1e0b1e1127629ec5788a58a4254e079"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -14964,7 +14964,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_ethernia_core_region/c00-r00/protected-control.json",
-              "sha256": "71456ed5c17b6d2b3b9ece746806b88d1ed9fc8823257ca5f2b32cc558035a02"
+              "sha256": "9311b89d0ae8e9f43a7224998757d837d1e0b1e1127629ec5788a58a4254e079"
             },
             "static_inputs": [
               {
@@ -15065,7 +15065,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_region_ethernia_core_region/c01-r00/protected-control.json",
-            "sha256": "26ff5d20fe4a571cb01440f4cdcd833383661a269aacd1deb85c9bb4a50afb99"
+            "sha256": "96cc60386bf8ce6f0cb2b9f03d4044d26b3630dee5c48da0ad8c16fda36f1554"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -15161,7 +15161,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_region_ethernia_core_region/c01-r00/protected-control.json",
-              "sha256": "26ff5d20fe4a571cb01440f4cdcd833383661a269aacd1deb85c9bb4a50afb99"
+              "sha256": "96cc60386bf8ce6f0cb2b9f03d4044d26b3630dee5c48da0ad8c16fda36f1554"
             },
             "static_inputs": [
               {
@@ -15356,7 +15356,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c00-r00/protected-control.json",
-            "sha256": "ef34927d2bd1904ddad9d315ef5c16a80a7b8872e7c6759fd5e823f25ef04826"
+            "sha256": "5f9a1a113e798fba9fe10967b81a85587756ee8d9768abf7b29e7d9d7e9d31df"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -15452,7 +15452,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c00-r00/protected-control.json",
-              "sha256": "ef34927d2bd1904ddad9d315ef5c16a80a7b8872e7c6759fd5e823f25ef04826"
+              "sha256": "5f9a1a113e798fba9fe10967b81a85587756ee8d9768abf7b29e7d9d7e9d31df"
             },
             "static_inputs": [
               {
@@ -15571,7 +15571,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c01-r00/protected-control.json",
-            "sha256": "2716afe7a79c0a9074c870be775acdeaf57162ec2a3db45a127e17b84a6f1c6d"
+            "sha256": "e1f948992417890d946f52dad69d70c46ad87dfbcb540cdcd86c6fdd7670bfbd"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -15667,7 +15667,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c01-r00/protected-control.json",
-              "sha256": "2716afe7a79c0a9074c870be775acdeaf57162ec2a3db45a127e17b84a6f1c6d"
+              "sha256": "e1f948992417890d946f52dad69d70c46ad87dfbcb540cdcd86c6fdd7670bfbd"
             },
             "static_inputs": [
               {
@@ -15802,7 +15802,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c02-r00/protected-control.json",
-            "sha256": "827c07b4a2fbe767f1efe87edf8a278c884af979edd1fcdcb7b58409cf53b4c5"
+            "sha256": "8232368ca012950a6f08fa5f5ad83dedc80ebada9b573c718a502d9b5cf2fb92"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -15898,7 +15898,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c02-r00/protected-control.json",
-              "sha256": "827c07b4a2fbe767f1efe87edf8a278c884af979edd1fcdcb7b58409cf53b4c5"
+              "sha256": "8232368ca012950a6f08fa5f5ad83dedc80ebada9b573c718a502d9b5cf2fb92"
             },
             "static_inputs": [
               {
@@ -16033,7 +16033,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c03-r00/protected-control.json",
-            "sha256": "8ea5f9810f3ab6c708db0b488a92c8277f2aabd9dc9e899fe7a8be4b2dc6d91d"
+            "sha256": "a74b981edbd73ee06e4ca1c24a8f270180f56c254578c447544af7a3eb8cf138"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -16129,7 +16129,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c03-r00/protected-control.json",
-              "sha256": "8ea5f9810f3ab6c708db0b488a92c8277f2aabd9dc9e899fe7a8be4b2dc6d91d"
+              "sha256": "a74b981edbd73ee06e4ca1c24a8f270180f56c254578c447544af7a3eb8cf138"
             },
             "static_inputs": [
               {
@@ -16262,7 +16262,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r00/protected-control.json",
-            "sha256": "01d8193bda50dc35e1277723fc92cd6e0365f23fac23129c9dae57d0336a9f1a"
+            "sha256": "07ba83220b74cb1d1c1f0879d0dbe8a6f618560a1219b0ee33f6551003027299"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -16358,7 +16358,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r00/protected-control.json",
-              "sha256": "01d8193bda50dc35e1277723fc92cd6e0365f23fac23129c9dae57d0336a9f1a"
+              "sha256": "07ba83220b74cb1d1c1f0879d0dbe8a6f618560a1219b0ee33f6551003027299"
             },
             "static_inputs": [
               {
@@ -16498,7 +16498,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c00-r01/protected-control.json",
-            "sha256": "24a268ec502fef7a99e84a83211e669fb8c4e0f204fea13ab89fcd37533a1cba"
+            "sha256": "728cf61235ea288e6ca9f3571b133fb89d21274a19d567a1712aab3852130c30"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -16594,7 +16594,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c00-r01/protected-control.json",
-              "sha256": "24a268ec502fef7a99e84a83211e669fb8c4e0f204fea13ab89fcd37533a1cba"
+              "sha256": "728cf61235ea288e6ca9f3571b133fb89d21274a19d567a1712aab3852130c30"
             },
             "static_inputs": [
               {
@@ -16734,7 +16734,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c01-r01/protected-control.json",
-            "sha256": "c8bee050e734a9bbaea5bd998c06f69c7ca113ebdef6dcec730e39af8e5bb2c7"
+            "sha256": "42fdd1e42f8df8fa8b0f1cb09393f4a964819458dd730a653cfa0eab76e847bc"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -16830,7 +16830,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c01-r01/protected-control.json",
-              "sha256": "c8bee050e734a9bbaea5bd998c06f69c7ca113ebdef6dcec730e39af8e5bb2c7"
+              "sha256": "42fdd1e42f8df8fa8b0f1cb09393f4a964819458dd730a653cfa0eab76e847bc"
             },
             "static_inputs": [
               {
@@ -16985,7 +16985,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c02-r01/protected-control.json",
-            "sha256": "a579202f1b6d51ed54d34d6c86f41996f613c78638c49eb9b7f052a97141b5cd"
+            "sha256": "f065292fd3f63e5fd73589ecd507063d252b5091494dced1b8b924e1ea9edecd"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -17081,7 +17081,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c02-r01/protected-control.json",
-              "sha256": "a579202f1b6d51ed54d34d6c86f41996f613c78638c49eb9b7f052a97141b5cd"
+              "sha256": "f065292fd3f63e5fd73589ecd507063d252b5091494dced1b8b924e1ea9edecd"
             },
             "static_inputs": [
               {
@@ -17236,7 +17236,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c03-r01/protected-control.json",
-            "sha256": "d58ab16795afb10d26ddaee5a121220cd0be1892325f584fefd596a747f9c64f"
+            "sha256": "42bee4eac7703b857326d909a66008b3c233771cd7476edfe768997b66939ed5"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -17332,7 +17332,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c03-r01/protected-control.json",
-              "sha256": "d58ab16795afb10d26ddaee5a121220cd0be1892325f584fefd596a747f9c64f"
+              "sha256": "42bee4eac7703b857326d909a66008b3c233771cd7476edfe768997b66939ed5"
             },
             "static_inputs": [
               {
@@ -17485,7 +17485,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r01/protected-control.json",
-            "sha256": "0e5d81913cbc010b916f0f47e05f1417360e750c0740f3c00f516cfd50ac695c"
+            "sha256": "14e6d54f11afb48dcd060f4a5ee330a2c49ce15816695cb4b086fdf19c086897"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -17581,7 +17581,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r01/protected-control.json",
-              "sha256": "0e5d81913cbc010b916f0f47e05f1417360e750c0740f3c00f516cfd50ac695c"
+              "sha256": "14e6d54f11afb48dcd060f4a5ee330a2c49ce15816695cb4b086fdf19c086897"
             },
             "static_inputs": [
               {
@@ -17734,7 +17734,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c00-r02/protected-control.json",
-            "sha256": "d349775882759021d560f7a4377b7ad3d3a979f6ef10489d8c695996f7dfb03b"
+            "sha256": "6a314dc724ee38d039f07f261ce75b8ba859e827e22f20aacb0bfd4727bb2307"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -17830,7 +17830,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c00-r02/protected-control.json",
-              "sha256": "d349775882759021d560f7a4377b7ad3d3a979f6ef10489d8c695996f7dfb03b"
+              "sha256": "6a314dc724ee38d039f07f261ce75b8ba859e827e22f20aacb0bfd4727bb2307"
             },
             "static_inputs": [
               {
@@ -17960,7 +17960,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c01-r02/protected-control.json",
-            "sha256": "c7b5c0e59a5c14e98d54ac68e6d72b79e68ba4587f97e9a9315bb5d350af7da3"
+            "sha256": "81b054774e8909dde7acdcfff712b758a594f7aab0b36dc565b56a0b83c4a11d"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -18056,7 +18056,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c01-r02/protected-control.json",
-              "sha256": "c7b5c0e59a5c14e98d54ac68e6d72b79e68ba4587f97e9a9315bb5d350af7da3"
+              "sha256": "81b054774e8909dde7acdcfff712b758a594f7aab0b36dc565b56a0b83c4a11d"
             },
             "static_inputs": [
               {
@@ -18203,7 +18203,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c02-r02/protected-control.json",
-            "sha256": "aa39e5524f9fee9ff82d18ddddac0d6c91835efece102775e2a154d5bceea189"
+            "sha256": "6ca62b5997dcc049f79ee365ac5d048d1871c893171fe0f3a08311151f4b2844"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -18299,7 +18299,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c02-r02/protected-control.json",
-              "sha256": "aa39e5524f9fee9ff82d18ddddac0d6c91835efece102775e2a154d5bceea189"
+              "sha256": "6ca62b5997dcc049f79ee365ac5d048d1871c893171fe0f3a08311151f4b2844"
             },
             "static_inputs": [
               {
@@ -18445,7 +18445,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c03-r02/protected-control.json",
-            "sha256": "6b2533a41d72ff2076cc6ddf601c67d3dd6a1defa424e14c5163dc775299b4b1"
+            "sha256": "20360c2c61522b29099ec64783d6ab7490fa692f6ffe265b34dca7c31a88e412"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -18541,7 +18541,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c03-r02/protected-control.json",
-              "sha256": "6b2533a41d72ff2076cc6ddf601c67d3dd6a1defa424e14c5163dc775299b4b1"
+              "sha256": "20360c2c61522b29099ec64783d6ab7490fa692f6ffe265b34dca7c31a88e412"
             },
             "static_inputs": [
               {
@@ -18687,7 +18687,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/protected-control.json",
-            "sha256": "74b4bbdf3ef9ae2862951e0fb4ec7ecba0015ad271bc061b2a257a71fd0e3248"
+            "sha256": "3726bed4e8af675d705234545493d41d6a39518c6888afdb5ddfa06077270185"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -18783,7 +18783,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/protected-control.json",
-              "sha256": "74b4bbdf3ef9ae2862951e0fb4ec7ecba0015ad271bc061b2a257a71fd0e3248"
+              "sha256": "3726bed4e8af675d705234545493d41d6a39518c6888afdb5ddfa06077270185"
             },
             "static_inputs": [
               {
@@ -18991,7 +18991,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c00-r00/protected-control.json",
-            "sha256": "9c4a7f0ac6eb52d98731e1b7e76ae3cf649577c33fd14047cd675f6af3460124"
+            "sha256": "82084ccf79aa2cd50bab4986d025edb62246b494c8d72c822f1bd8e1597b605e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -19087,7 +19087,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c00-r00/protected-control.json",
-              "sha256": "9c4a7f0ac6eb52d98731e1b7e76ae3cf649577c33fd14047cd675f6af3460124"
+              "sha256": "82084ccf79aa2cd50bab4986d025edb62246b494c8d72c822f1bd8e1597b605e"
             },
             "static_inputs": [
               {
@@ -19202,7 +19202,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c01-r00/protected-control.json",
-            "sha256": "4e12cbd536bced98e2bc746b62736f966f92e1d90f9b7b0325d11764c39cf67d"
+            "sha256": "09dea501f0876a2a8ef5d40fc3b90783b873d39b572a9e1175589e90dd3635f0"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -19298,7 +19298,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c01-r00/protected-control.json",
-              "sha256": "4e12cbd536bced98e2bc746b62736f966f92e1d90f9b7b0325d11764c39cf67d"
+              "sha256": "09dea501f0876a2a8ef5d40fc3b90783b873d39b572a9e1175589e90dd3635f0"
             },
             "static_inputs": [
               {
@@ -19436,7 +19436,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c02-r00/protected-control.json",
-            "sha256": "972162f29fb8b2eebd9efd4cd49b4dc95bf91261976819826faa57496079b2dc"
+            "sha256": "1eea6b0210aa7b4c6e4fed6586e35b01c8f4bfc9fa513eacfe8a170d6c37a7d3"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -19532,7 +19532,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c02-r00/protected-control.json",
-              "sha256": "972162f29fb8b2eebd9efd4cd49b4dc95bf91261976819826faa57496079b2dc"
+              "sha256": "1eea6b0210aa7b4c6e4fed6586e35b01c8f4bfc9fa513eacfe8a170d6c37a7d3"
             },
             "static_inputs": [
               {
@@ -19667,7 +19667,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c03-r00/protected-control.json",
-            "sha256": "964f8ed794eec722d05d62e284a3f0221c1fcae89708678ca71903571b2e1390"
+            "sha256": "05a2aba09278b3f498569dfe99da6199561f588cff67f63842d0675621f5011b"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -19763,7 +19763,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c03-r00/protected-control.json",
-              "sha256": "964f8ed794eec722d05d62e284a3f0221c1fcae89708678ca71903571b2e1390"
+              "sha256": "05a2aba09278b3f498569dfe99da6199561f588cff67f63842d0675621f5011b"
             },
             "static_inputs": [
               {
@@ -19896,7 +19896,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c04-r00/protected-control.json",
-            "sha256": "157b7f69a45c7d642c432b727f9b13947ec93d0d485666153f3d7ee911e782c3"
+            "sha256": "7506dda0f7caefccdb2e4e7d98bd155f07eea9da10d4c837c6b04e90d108727e"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -19992,7 +19992,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c04-r00/protected-control.json",
-              "sha256": "157b7f69a45c7d642c432b727f9b13947ec93d0d485666153f3d7ee911e782c3"
+              "sha256": "7506dda0f7caefccdb2e4e7d98bd155f07eea9da10d4c837c6b04e90d108727e"
             },
             "static_inputs": [
               {
@@ -20125,7 +20125,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c00-r01/protected-control.json",
-            "sha256": "2f99c7b4d9686d284bc5879334075785e44c7d3cdefae2fa3e42897062c739b4"
+            "sha256": "54dedbc03d4494f22b22e388e15cbaeed5ca00dfddca937855849f2d3111bf16"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -20221,7 +20221,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c00-r01/protected-control.json",
-              "sha256": "2f99c7b4d9686d284bc5879334075785e44c7d3cdefae2fa3e42897062c739b4"
+              "sha256": "54dedbc03d4494f22b22e388e15cbaeed5ca00dfddca937855849f2d3111bf16"
             },
             "static_inputs": [
               {
@@ -20355,7 +20355,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c01-r01/protected-control.json",
-            "sha256": "e83f0749adb5fefa8152b4ebc53405f4d38095c21f685bab44c2d49fe7c566ae"
+            "sha256": "e6a6195c3f980a78f79a5ed24402603fe1c7fcd090d7aeecf287079a009b7649"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -20451,7 +20451,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c01-r01/protected-control.json",
-              "sha256": "e83f0749adb5fefa8152b4ebc53405f4d38095c21f685bab44c2d49fe7c566ae"
+              "sha256": "e6a6195c3f980a78f79a5ed24402603fe1c7fcd090d7aeecf287079a009b7649"
             },
             "static_inputs": [
               {
@@ -20607,7 +20607,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c02-r01/protected-control.json",
-            "sha256": "9025c9be89bb001f963267398f3002013b1ea19724bc620c6ac04a37f29edd62"
+            "sha256": "aef286f1ef17fa74136c32d66f0a54b3da24423c9e8183121e1e23ce44b63099"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -20703,7 +20703,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c02-r01/protected-control.json",
-              "sha256": "9025c9be89bb001f963267398f3002013b1ea19724bc620c6ac04a37f29edd62"
+              "sha256": "aef286f1ef17fa74136c32d66f0a54b3da24423c9e8183121e1e23ce44b63099"
             },
             "static_inputs": [
               {
@@ -20857,7 +20857,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c03-r01/protected-control.json",
-            "sha256": "644daad913680c85b216ed57f78f2663770be429baa263dbfdd831a19a92963c"
+            "sha256": "41e46238225dc355518e3200f416c7d55a8751de96407890fa68684031e3d293"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -20953,7 +20953,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c03-r01/protected-control.json",
-              "sha256": "644daad913680c85b216ed57f78f2663770be429baa263dbfdd831a19a92963c"
+              "sha256": "41e46238225dc355518e3200f416c7d55a8751de96407890fa68684031e3d293"
             },
             "static_inputs": [
               {
@@ -21105,7 +21105,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c04-r01/protected-control.json",
-            "sha256": "6430944ffd12fc651a7611d84ad0d2e1360cb2265fc0773272c8c494eed04835"
+            "sha256": "c1d997b9f44ca623bd29b39f739d7e75f41977c89d11fe2b29ec439f39efb3a2"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -21201,7 +21201,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c04-r01/protected-control.json",
-              "sha256": "6430944ffd12fc651a7611d84ad0d2e1360cb2265fc0773272c8c494eed04835"
+              "sha256": "c1d997b9f44ca623bd29b39f739d7e75f41977c89d11fe2b29ec439f39efb3a2"
             },
             "static_inputs": [
               {
@@ -21352,7 +21352,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c00-r02/protected-control.json",
-            "sha256": "74a951b114de55fdbccb81607d92730f6d9263adbba17c9b202800a3cde94d0a"
+            "sha256": "95cd8dd7220c6a5ae065f15a7933dd174c21af86789c097e3ef826e588462a80"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -21448,7 +21448,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c00-r02/protected-control.json",
-              "sha256": "74a951b114de55fdbccb81607d92730f6d9263adbba17c9b202800a3cde94d0a"
+              "sha256": "95cd8dd7220c6a5ae065f15a7933dd174c21af86789c097e3ef826e588462a80"
             },
             "static_inputs": [
               {
@@ -21575,7 +21575,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c01-r02/protected-control.json",
-            "sha256": "fcc73edd861066cf231e2aa7a19f29e811eb7127d24ba3c75b92754202a8a56d"
+            "sha256": "b53b4934223bfd539d4811a2976e9ed64399e35e4049c053a68088d3a74de6ef"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -21671,7 +21671,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c01-r02/protected-control.json",
-              "sha256": "fcc73edd861066cf231e2aa7a19f29e811eb7127d24ba3c75b92754202a8a56d"
+              "sha256": "b53b4934223bfd539d4811a2976e9ed64399e35e4049c053a68088d3a74de6ef"
             },
             "static_inputs": [
               {
@@ -21820,7 +21820,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c02-r02/protected-control.json",
-            "sha256": "5752b95d9ac0ac023de78db713fc82bb8cb62aad43b59929c9a1bfda9e748bdf"
+            "sha256": "87e6378955a73d91ae25a65c6c12526b83ec669185ed1166522046223673673f"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -21916,7 +21916,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c02-r02/protected-control.json",
-              "sha256": "5752b95d9ac0ac023de78db713fc82bb8cb62aad43b59929c9a1bfda9e748bdf"
+              "sha256": "87e6378955a73d91ae25a65c6c12526b83ec669185ed1166522046223673673f"
             },
             "static_inputs": [
               {
@@ -22064,7 +22064,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c03-r02/protected-control.json",
-            "sha256": "e24dc8f14142cbf2fda2a0291874606eff08eb6f892089bd6ddef38a22c0c0b6"
+            "sha256": "6c28e66f8674ca320f3da672603adf77c67d0a04fc1c4431032c5b71dc3c6f83"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -22160,7 +22160,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c03-r02/protected-control.json",
-              "sha256": "e24dc8f14142cbf2fda2a0291874606eff08eb6f892089bd6ddef38a22c0c0b6"
+              "sha256": "6c28e66f8674ca320f3da672603adf77c67d0a04fc1c4431032c5b71dc3c6f83"
             },
             "static_inputs": [
               {
@@ -22306,7 +22306,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c04-r02/protected-control.json",
-            "sha256": "7e8d8123dbb4298fc379629453fc2524c5194c7eb9f5f494ff323a4a10104519"
+            "sha256": "a9efdba7326f00c3930bc995f9e1e4347ef7b11b356a70a41243100386deb930"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -22402,7 +22402,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_astralis/c04-r02/protected-control.json",
-              "sha256": "7e8d8123dbb4298fc379629453fc2524c5194c7eb9f5f494ff323a4a10104519"
+              "sha256": "a9efdba7326f00c3930bc995f9e1e4347ef7b11b356a70a41243100386deb930"
             },
             "static_inputs": [
               {
@@ -22605,7 +22605,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r00/protected-control.json",
-            "sha256": "80e16dddb2ade5bf2d816417b7a0f48d57df1c543ca17bdb3bbcf7b104d7486b"
+            "sha256": "d0eefc086e324056a5458c585e8af844eb9714f9bb63701f5f139a83c76c223d"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -22701,7 +22701,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r00/protected-control.json",
-              "sha256": "80e16dddb2ade5bf2d816417b7a0f48d57df1c543ca17bdb3bbcf7b104d7486b"
+              "sha256": "d0eefc086e324056a5458c585e8af844eb9714f9bb63701f5f139a83c76c223d"
             },
             "static_inputs": [
               {
@@ -22814,7 +22814,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c01-r00/protected-control.json",
-            "sha256": "9b6e76d4f53266c345dd643730961629455a37589932d827468ea8f2fec36526"
+            "sha256": "58c479f96e3139190fda9bd337953585327b13b8a884b1e64dc063a05d5594ad"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -22910,7 +22910,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c01-r00/protected-control.json",
-              "sha256": "9b6e76d4f53266c345dd643730961629455a37589932d827468ea8f2fec36526"
+              "sha256": "58c479f96e3139190fda9bd337953585327b13b8a884b1e64dc063a05d5594ad"
             },
             "static_inputs": [
               {
@@ -23042,7 +23042,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c02-r00/protected-control.json",
-            "sha256": "72448708f2e997db634b2ce3ff29138b51a4e50e4491607e82bf69c3a787e906"
+            "sha256": "e40baa4520afb8537fc30b7eaf1bba0d090bcf3044c327ee32eda3ed7c59f40d"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -23138,7 +23138,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c02-r00/protected-control.json",
-              "sha256": "72448708f2e997db634b2ce3ff29138b51a4e50e4491607e82bf69c3a787e906"
+              "sha256": "e40baa4520afb8537fc30b7eaf1bba0d090bcf3044c327ee32eda3ed7c59f40d"
             },
             "static_inputs": [
               {
@@ -23268,7 +23268,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/protected-control.json",
-            "sha256": "3afd7ca34a1d4f4771d29bbefb8d24a7fe4adc6c3e98d514caea3cda311e3034"
+            "sha256": "228b5ad16ce97c7f60495650056ef7ddd8d67a812b9a5880679802e7dc83abd1"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -23364,7 +23364,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c00-r01/protected-control.json",
-              "sha256": "3afd7ca34a1d4f4771d29bbefb8d24a7fe4adc6c3e98d514caea3cda311e3034"
+              "sha256": "228b5ad16ce97c7f60495650056ef7ddd8d67a812b9a5880679802e7dc83abd1"
             },
             "static_inputs": [
               {
@@ -23495,7 +23495,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c01-r01/protected-control.json",
-            "sha256": "0f74988be6e202b1376af5d9dc30eb81252097048167955e1db4762b5bc250e2"
+            "sha256": "48b296369cdf245cc998d1ea5fa341aaa0b1e5d3c72fc9aadd02be652f87665f"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -23591,7 +23591,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c01-r01/protected-control.json",
-              "sha256": "0f74988be6e202b1376af5d9dc30eb81252097048167955e1db4762b5bc250e2"
+              "sha256": "48b296369cdf245cc998d1ea5fa341aaa0b1e5d3c72fc9aadd02be652f87665f"
             },
             "static_inputs": [
               {
@@ -23741,7 +23741,7 @@
           },
           "protected_control": {
             "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c02-r01/protected-control.json",
-            "sha256": "da6f872f9e627270c0fbae1036cf2560620d8da8fcb1902d8bc45888835a2f7d"
+            "sha256": "11a9788f86506adc60c73c93368c75d694cb915178993823fc594e282a3a8004"
           },
           "authoritative_controls": {
             "land_mask": {
@@ -23837,7 +23837,7 @@
             },
             "postprocess_control": {
               "path": "world/map-production/controls/phase5-metatiles/sheet_settlement_port_zephia/c02-r01/protected-control.json",
-              "sha256": "da6f872f9e627270c0fbae1036cf2560620d8da8fcb1902d8bc45888835a2f7d"
+              "sha256": "11a9788f86506adc60c73c93368c75d694cb915178993823fc594e282a3a8004"
             },
             "static_inputs": [
               {

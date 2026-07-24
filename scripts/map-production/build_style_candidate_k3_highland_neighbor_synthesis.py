@@ -32,8 +32,7 @@ SCRIPTS = ROOT / "scripts/map-production"
 OUT = ROOT / "tmp/map-production/k3-semantic-cleanup-v19-neighbor-synthesis"
 V18 = (
     ROOT
-    / "tmp/map-production/k3-semantic-cleanup-proof-v18"
-    / "style-candidate-k-v3-semantic-cleanup-proof-v18.png"
+    / "world/map-production/style-assets/k3-v18-reconstruction-base.png"
 )
 V15 = (
     ROOT
@@ -64,7 +63,7 @@ EXPECTED = {
     V17: "4f64fcee2d5b1f0932f1d65fe460ba8bb1d4dff1b3ad68eafb75c0b7e72d9626",
     P15: "d52572ef0af1a6801e305bd507ea2c19d224fe23fb1024931ba1e7c85b2c575e",
     P17: "2483b3e00356dc51922f0130ddadfb2da098eaf306efc9008b6d228eb6436454",
-    HARNESS_PATH: "22187f8ba853648c4aa8b75a8d2f7b8cf0d085c6ba49baf044f5ae6865b5a6f4",
+    HARNESS_PATH: "e17f0e03df4d4d1efff27f2fc192b1b70678537b2755cbe45597369d16da377a",
 }
 
 TARGET_BOX = (930, 0, 1536, 560)

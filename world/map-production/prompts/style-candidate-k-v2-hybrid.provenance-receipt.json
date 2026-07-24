@@ -6,7 +6,7 @@
   "scope": "K1-dominant native full-board proof; localized semantic donors plus <=2px canonical warm linework only.",
   "builder": {
     "path": "scripts/map-production/build_style_candidate_k2_hybrid.py",
-    "sha256": "333761820e7ed1167a8b80e6f54a053810e930117ab3a93b4867ad54d7024fa3",
+    "sha256": "f594d686a356b4ca9e041488f5f8cbd3d33d7a9b6cc1ef446b33e10979f7d16c",
     "seed": 120260720
   },
   "inputs": {
@@ -18,9 +18,9 @@
       "path": "world/map-production/controls/style-candidate-k-v2-hybrid/k1-geometry-warp-base.png",
       "sha256": "c21c5c07515f2bcc11d0ab8e613f3a6e52ec407606cb5afac4f5946579e62e9a",
       "builder_path": "scripts/map-production/build_style_candidate_k2_geometry_warp.py",
-      "builder_sha256": "82bd78966d546d242286e27007a9364b04ba5c5a6963c7575efa5370420c7f92",
+      "builder_sha256": "e1d74785ec90bf5c6b3f14f043e3432142dcd7a9cfb0cf2acb4f4dcd7034c624",
       "report_path": "world/map-production/controls/style-candidate-k-v2-hybrid/k1-geometry-warp-report.json",
-      "report_sha256": "11d76e486ed7feecd41987baa89a53ef72950167730e89d6a048aad22dde5c2d",
+      "report_sha256": "5996f71b8cc9ae3de1309f9f32aa33c6653c93ad5271eee8d87afccb5ea9bb2a",
       "role": "seam-free strict-gate geometry base; capital, fields, and highland are byte-identical to K1"
     },
     "i1_geometry_control": {

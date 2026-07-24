@@ -93,6 +93,19 @@ def _sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def _raster_semantic_sha256(image: Image.Image) -> str:
+    """Hash decoded raster identity independently from its PNG encoding."""
+
+    digest = hashlib.sha256()
+    digest.update(b"sstory-raster-semantic-v1\0")
+    digest.update(image.mode.encode("ascii"))
+    digest.update(b"\0")
+    digest.update(image.width.to_bytes(8, "big"))
+    digest.update(image.height.to_bytes(8, "big"))
+    digest.update(image.tobytes())
+    return digest.hexdigest()
+
+
 def _resolve_repo_path(value: Any, label: str) -> Path:
     if not isinstance(value, str) or not value or "\\" in value:
         raise ProtectedReliefError(

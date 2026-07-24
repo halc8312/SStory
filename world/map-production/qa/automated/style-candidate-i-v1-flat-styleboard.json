@@ -12,7 +12,7 @@
   "manifest_mutation": false,
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidate_i1.py",
-    "sha256": "b8ec5ec06d2d77d3b8349723ec90721a5472f22677a7579a67a5a16e063c27dc",
+    "sha256": "75d35fac73ed46fcb464cb7d98d2666af1c4cc921439b705cdbf9668cb22a963",
     "bytes": 19756
   },
   "artifacts": {
@@ -35,7 +35,7 @@
     },
     "generation_receipt": {
       "path": "world/map-production/prompts/style-candidate-i-v1-flat-styleboard.generation-receipt.json",
-      "sha256": "58d1145c9d6cb6cab2434c0a33d721fe923f1a8438ca3065b4bdb2b31c83c7ec",
+      "sha256": "e8682403506f88d9c5d71a8570030388de240a78025ae37de23e6960b9e60c5e",
       "bytes": 2799
     },
     "geometry_only_guide": {
@@ -45,7 +45,7 @@
     },
     "guide_metadata": {
       "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.json",
-      "sha256": "d3d58d040e880cf26164933e69cc1b0de9d032792564dbcba27985ad1fc5a2c4",
+      "sha256": "a357e4e8d6da7b2626b9c4d79a6f69374b7477d97536aa51d981be9914708d79",
       "bytes": 1986
     },
     "sole_style_material_projection_authority": {

@@ -18,6 +18,7 @@ SPEC.loader.exec_module(h15)
 
 class H15Test(unittest.TestCase):
     def test_locked_protected_flat_preview(self) -> None:
+        h15.DEFAULT_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=h15.DEFAULT_OUTPUT.parent) as temporary:
             report = h15.render(output_dir=Path(temporary))
             self.assertEqual(report["full_resolution_protection"]["protected_violation_pixels"], 0)

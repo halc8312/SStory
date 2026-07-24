@@ -18,7 +18,7 @@
   },
   "mask_control": {
     "path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json",
-    "sha256": "6df981917be374637c6d685023e06127db0f9ecb942b52a1f098fd5b749ab407"
+    "sha256": "b437aff4c4ed0ed16b477095562861f66c53bafdfe971e286601dc79caea2775"
   },
   "mask_raster": {
     "path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.png",
@@ -30,7 +30,7 @@
   },
   "mask_audit": {
     "path": "world/map-production/qa/automated/style-candidate-d-v3-mark-mask-v1.json",
-    "sha256": "5e8c6c41889c3d6d9a9d9b02cb4c7f3247f83e6fd7b1bbf34db497b292d39554",
+    "sha256": "0cf41dc6a40c0641eb5f6fd17b49d3e035f17a7dacf7900ad6b4cda56a1d2ca3",
     "automated_candidates": 40,
     "reviewed_true_positives": 39,
     "reviewed_false_positives": 1,

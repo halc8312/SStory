@@ -344,6 +344,7 @@ def render() -> tuple[str, int]:
     METADATA.write_text(
         json.dumps(metadata, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return sha256, len(payload)
 

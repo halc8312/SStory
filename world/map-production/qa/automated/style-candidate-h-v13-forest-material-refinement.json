@@ -11,13 +11,13 @@
   "expected_rejection_evidence": true,
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidates_h10_h13.py",
-    "sha256": "a0db28cb64c0c3e13e204c50cef94efb77f2e6fd962b4d78313afc4157f26db6",
-    "bytes": 17538
+    "sha256": "b78bdbb419f34d4d4f655e3e18436ebb4fcc55543c268fc57208d993ebd9b9f2",
+    "bytes": 17560
   },
   "audit_engine": {
     "path": "scripts/map-production/audit_style_candidate_h4.py",
-    "sha256": "47ac3b6432b04aa56a172c21e1321d8848e82f3f48fd207176697f6634f3ddd2",
-    "bytes": 32036,
+    "sha256": "9dee90fa67570302d01fab0a922e98838f18dfc83b561ff7b1fa287f89d0e389",
+    "bytes": 32058,
     "threshold_policy": "unchanged H4 absolute gates; no threshold drift",
     "raw_final_identity": {
       "applicable": false,

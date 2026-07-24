@@ -6,8 +6,8 @@
   "decision": "automated-gates-passed-pending-vision",
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidate_h4.py",
-    "sha256": "47ac3b6432b04aa56a172c21e1321d8848e82f3f48fd207176697f6634f3ddd2",
-    "bytes": 32036
+    "sha256": "9dee90fa67570302d01fab0a922e98838f18dfc83b561ff7b1fa287f89d0e389",
+    "bytes": 32058
   },
   "artifacts": {
     "final": {

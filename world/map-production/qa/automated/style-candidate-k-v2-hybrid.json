@@ -13,8 +13,8 @@
   "renderer_mutation": false,
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidate_k2_hybrid.py",
-    "sha256": "12ad4f35cdc29b34ba9676265e412506007f995b0062e93fa32ba5e4c1e6f222",
-    "bytes": 39817
+    "sha256": "a069d9acbd2c17d136eb47f78b07d146708b5d883f86367e4e2b6a377210b19e",
+    "bytes": 39839
   },
   "artifacts": {
     "raw": {
@@ -31,13 +31,13 @@
     },
     "provenance_receipt": {
       "path": "world/map-production/prompts/style-candidate-k-v2-hybrid.provenance-receipt.json",
-      "sha256": "dc45c06c8680d2aa3db259fce2707c2a9189252b75c49988ac003a6abdb4fa33",
-      "bytes": 12791
+      "sha256": "221c9e6385223d10ce3abe19736877c95ce78489d326f516c6fa3f5acce73167",
+      "bytes": 12433
     },
     "deterministic_builder": {
       "path": "scripts/map-production/build_style_candidate_k2_hybrid.py",
-      "sha256": "333761820e7ed1167a8b80e6f54a053810e930117ab3a93b4867ad54d7024fa3",
-      "bytes": 31575
+      "sha256": "f594d686a356b4ca9e041488f5f8cbd3d33d7a9b6cc1ef446b33e10979f7d16c",
+      "bytes": 31620
     },
     "canonical_geometry_guide": {
       "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
@@ -765,8 +765,8 @@
     "method": "locked K1 warp helper: fixed guide/candidate cool-water segmentation, 17px transition guard, and bidirectional L2 distance transforms",
     "helper": {
       "path": "scripts/map-production/build_style_candidate_k2_geometry_warp.py",
-      "sha256": "82bd78966d546d242286e27007a9364b04ba5c5a6963c7575efa5370420c7f92",
-      "bytes": 23760
+      "sha256": "e1d74785ec90bf5c6b3f14f043e3432142dcd7a9cfb0cf2acb4f4dcd7034c624",
+      "bytes": 23791
     },
     "limitation": "This color-segmentation proxy covers land/water and its boundary. Root Vision must still inspect exact roads, city, port, and semantic regions."
   },

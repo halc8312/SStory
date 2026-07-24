@@ -39,7 +39,7 @@
     },
     "generation_receipt": {
       "path": "world/map-production/prompts/style-candidate-j-v1-full-board.generation-receipt.json",
-      "sha256": "db88e7ea951d61b49c370926e7a14d600a8a976007f664a27542567ec6d6fddf",
+      "sha256": "5264ffb9d8db9a42ad612fd7b81109cca7d026b69effc0f14343c28d5fa732a8",
       "bytes": 5120
     },
     "approved_preflight": {
@@ -54,7 +54,7 @@
     },
     "guide_metadata": {
       "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.json",
-      "sha256": "d3d58d040e880cf26164933e69cc1b0de9d032792564dbcba27985ad1fc5a2c4",
+      "sha256": "a357e4e8d6da7b2626b9c4d79a6f69374b7477d97536aa51d981be9914708d79",
       "bytes": 1986
     },
     "sole_style_material_authority": {

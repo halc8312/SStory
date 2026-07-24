@@ -410,6 +410,7 @@ def audit_candidate(
     destination.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return report
 

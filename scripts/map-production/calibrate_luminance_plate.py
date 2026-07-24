@@ -92,6 +92,19 @@ def _sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def _raster_semantic_sha256(image: Image.Image) -> str:
+    """Hash mode, dimensions, and decoded pixels without PNG container bytes."""
+
+    digest = hashlib.sha256()
+    digest.update(b"sstory-raster-semantic-v1\0")
+    digest.update(image.mode.encode("ascii"))
+    digest.update(b"\0")
+    digest.update(image.width.to_bytes(8, "big"))
+    digest.update(image.height.to_bytes(8, "big"))
+    digest.update(image.tobytes())
+    return digest.hexdigest()
+
+
 def _png_bytes(image: Image.Image) -> bytes:
     buffer = io.BytesIO()
     image.save(buffer, format="PNG", optimize=True)
@@ -256,14 +269,30 @@ def _validate_inputs(
     composite = relief._load_composite_module()
     rendered_mask = composite.build_mask(transfer_control)
     try:
-        rendered_png = _png_bytes(rendered_mask)
+        rendered_hash = _raster_semantic_sha256(rendered_mask)
+        try:
+            with Image.open(raster_path) as opened:
+                opened.load()
+                if (
+                    opened.format != "PNG"
+                    or opened.mode != rendered_mask.mode
+                    or opened.size != rendered_mask.size
+                ):
+                    raise CalibrationError(
+                        "locked transfer raster encoding does not match the rendered mask"
+                    )
+                expected_raster_hash = _raster_semantic_sha256(opened)
+        except CalibrationError:
+            raise
+        except (OSError, ValueError) as error:
+            raise CalibrationError(
+                f"cannot decode locked transfer raster: {raster_path}: {error}"
+            ) from error
     finally:
         rendered_mask.close()
-    rendered_hash = _sha256_bytes(rendered_png)
-    expected_raster_hash = control["transfer_control"]["raster_sha256"]
     if rendered_hash != expected_raster_hash:
         raise CalibrationError(
-            "rendered transfer mask does not equal the locked raster: "
+            "rendered transfer mask pixels do not equal the locked raster: "
             f"expected {expected_raster_hash}, got {rendered_hash}"
         )
 

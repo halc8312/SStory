@@ -27,7 +27,7 @@ def _load_module(name: str, filename: str):
 H4 = _load_module("style_candidate_h4_compatibility", "audit_style_candidate_h4.py")
 H5 = _load_module("style_candidate_h5_audit", "audit_style_candidate_h5.py")
 EXPECTED_H4_REPORT_SHA256 = (
-    "49cf14b0188dd708af302d6a78bc9d1a5bf5dc876358cf240c3b7c1e6ef20ca1"
+    "05b83500cea3eaa107a4373d0d935b6b0ab785fdd3e33fa22be183172fdbf78f"
 )
 
 

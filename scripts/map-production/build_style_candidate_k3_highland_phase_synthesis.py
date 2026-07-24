@@ -24,7 +24,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = ROOT / "scripts/map-production"
 OUT = ROOT / "tmp/map-production/k3-semantic-cleanup-v19-phase-synthesis"
-V18 = ROOT / "tmp/map-production/k3-semantic-cleanup-proof-v18/style-candidate-k-v3-semantic-cleanup-proof-v18.png"
+V18 = ROOT / "world/map-production/style-assets/k3-v18-reconstruction-base.png"
 V14 = ROOT / "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/highland-planar-v14.png"
 V15 = ROOT / "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/highland-planar-v15.png"
 V17 = ROOT / "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/highland-inverse-aquatint-v17.png"

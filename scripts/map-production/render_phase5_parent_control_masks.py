@@ -11,12 +11,14 @@ master.
 The output root is atomically reserved and may not already exist.  ``index.json``
 hash-locks every input and PNG; ``report.json`` in turn hash-locks the index and
 records the closed-world dependency audit.  ``--verify-existing`` regenerates
-the complete bundle and compares every byte.
+the complete bundle, compares decoded control rasters, and separately verifies
+the committed distribution bytes recorded by the index.
 """
 
 from __future__ import annotations
 
 import argparse
+import copy
 import contextlib
 import hashlib
 import importlib.metadata
@@ -74,6 +76,10 @@ PRODUCTION_COMMON_PATH = GENERATOR_PATH.with_name("production_common.py")
 RENDER_WORLD_MASTER_PATH = GENERATOR_PATH.with_name("render_world_master.py")
 RESOLUTION_VALIDATOR_PATH = GENERATOR_PATH.with_name("validate_resolution_contract.py")
 PNG_OPTIONS = {"format": "PNG", "compress_level": 9, "optimize": False}
+CONTROL_FILENAMES = {
+    "land_sea_control": "land-sea-control.png",
+    "transport_control": "transport-control.png",
+}
 EXPECTED_SOURCE_ROLES = tuple(SOURCE_FILES)
 EXPECTED_EXECUTABLE_ROLES = (
     "generator",
@@ -148,6 +154,56 @@ EXPECTED_CONTROL_SHA256 = {
         "sheet_continent_grimoire",
         "transport_control",
     ): "95e59580297f241ebff01dfe37c6e5ea29b1baacad0876969e8556bdf6020358",
+}
+EXPECTED_CONTROL_RASTER_SHA256 = {
+    (
+        "sheet_world",
+        "land_sea_control",
+    ): "c1a249d60feb00db0a13aeb90179c4893286b859e98699f40a7df4f5a11daa62",
+    (
+        "sheet_world",
+        "transport_control",
+    ): "37d5958cbac96d9cfb5975511cc671202bb7819dd91620462cdd90a8c299bfd0",
+    (
+        "sheet_continent_elysion",
+        "land_sea_control",
+    ): "5a10b7931895fa29abc2d48ba98f5e9dedd00eb49c26bf4187566c723948ee00",
+    (
+        "sheet_continent_elysion",
+        "transport_control",
+    ): "3ef57491212135d7eedefb05108810825098287f3b664daf6f6bce91fe5c8e55",
+    (
+        "sheet_continent_lumiera",
+        "land_sea_control",
+    ): "66e732d7c4f2fa3086122bc124fd6a300a2eda08d5793fa18de73b2f6c05d651",
+    (
+        "sheet_continent_lumiera",
+        "transport_control",
+    ): "9ce4939badb1488e24bb985c79308fa1317a08b15c443fe62f4fe34077182fa7",
+    (
+        "sheet_continent_chaos_ria",
+        "land_sea_control",
+    ): "75abf94c7a3a18a206b0f5516d96168da907447282e40e51bbe4c560c7ebef6a",
+    (
+        "sheet_continent_chaos_ria",
+        "transport_control",
+    ): "6d09c303f8e8bab728c715e7c31c8c3b69f02f3eb8bb74b56bdaf5c87330a591",
+    (
+        "sheet_continent_atlantis",
+        "land_sea_control",
+    ): "8b9821c9639a91de93f5efca7b4842ff6e81747039120b6458a393c009aef581",
+    (
+        "sheet_continent_atlantis",
+        "transport_control",
+    ): "16bf11991e1f610cf5bdffe70b5caa3bf026a10826a96915f846867b3fc6af69",
+    (
+        "sheet_continent_grimoire",
+        "land_sea_control",
+    ): "04f21656a3a6766062be45d9df57e57b273ebe8c901a41d1447e8264e79fc3bd",
+    (
+        "sheet_continent_grimoire",
+        "transport_control",
+    ): "2956b74f585e5ffa6b9a1ce375fc0f9dfe0d111f3b1a956d8a4fae385ac38674",
 }
 
 # This is intentionally a versioned closed set, not a dynamic selection.  A
@@ -620,11 +676,30 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _dump_json_lf(path: Path, value: Any) -> None:
-    """Write canonical JSON bytes with LF newlines on every supported host."""
+def raster_semantic_sha256(image: Image.Image) -> str:
+    """Hash mode, dimensions, and decoded pixels without PNG container bytes."""
 
-    path.parent.mkdir(parents=True, exist_ok=True)
-    payload = (
+    digest = hashlib.sha256()
+    digest.update(b"sstory-raster-semantic-v1\0")
+    digest.update(image.mode.encode("ascii"))
+    digest.update(b"\0")
+    digest.update(image.width.to_bytes(8, "big"))
+    digest.update(image.height.to_bytes(8, "big"))
+    digest.update(image.tobytes())
+    return digest.hexdigest()
+
+
+def raster_semantic_sha256_file(path: Path) -> str:
+    try:
+        with Image.open(path) as opened:
+            opened.load()
+            return raster_semantic_sha256(opened)
+    except (OSError, ValueError) as exc:
+        raise ParentControlError(f"cannot decode control raster {path}: {exc}") from exc
+
+
+def _json_lf_bytes(value: Any) -> bytes:
+    return (
         json.dumps(
             value,
             ensure_ascii=False,
@@ -634,6 +709,13 @@ def _dump_json_lf(path: Path, value: Any) -> None:
         )
         + "\n"
     ).encode("utf-8")
+
+
+def _dump_json_lf(path: Path, value: Any) -> None:
+    """Write canonical JSON bytes with LF newlines on every supported host."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = _json_lf_bytes(value)
     try:
         with path.open("xb") as handle:
             handle.write(payload)
@@ -1898,6 +1980,124 @@ def _validate_expected_control_hashes(index: Mapping[str, Any]) -> None:
         )
 
 
+def _control_records(index: Mapping[str, Any]) -> dict[tuple[str, str], Mapping[str, Any]]:
+    records: dict[tuple[str, str], Mapping[str, Any]] = {}
+    for sheet in index["sheets"]:
+        sheet_id = str(sheet["sheet_id"])
+        for role, record in sheet["qa_controls"].items():
+            key = (sheet_id, str(role))
+            if key in records:
+                raise ParentControlError(f"duplicate parent control record: {key!r}")
+            records[key] = record
+    return records
+
+
+def _control_raster_hashes(
+    index: Mapping[str, Any], files: Mapping[str, Path]
+) -> dict[tuple[str, str], str]:
+    hashes: dict[tuple[str, str], str] = {}
+    for key, record in _control_records(index).items():
+        sheet_id, role = key
+        filename = CONTROL_FILENAMES.get(role)
+        if filename is None:
+            raise ParentControlError(f"unexpected parent control role: {role}")
+        relative = f"{sheet_id}/qa/{filename}"
+        path = files.get(relative)
+        if path is None:
+            raise ParentControlError(f"parent control raster is missing: {relative}")
+        try:
+            with Image.open(path) as opened:
+                opened.load()
+                expected_size = (int(record["width"]), int(record["height"]))
+                if (
+                    opened.format != "PNG"
+                    or opened.mode != "L"
+                    or opened.size != expected_size
+                ):
+                    raise ParentControlError(
+                        "parent control index semantic fields disagree with the "
+                        f"raster contract at {relative}: "
+                        f"format={opened.format}, mode={opened.mode}, size={opened.size}"
+                    )
+                hashes[key] = raster_semantic_sha256(opened)
+        except ParentControlError:
+            raise
+        except (OSError, ValueError) as exc:
+            raise ParentControlError(
+                f"cannot decode parent control raster {relative}: {exc}"
+            ) from exc
+    return hashes
+
+
+def _validate_expected_control_rasters(
+    index: Mapping[str, Any], files: Mapping[str, Path]
+) -> None:
+    actual = _control_raster_hashes(index, files)
+    if actual != EXPECTED_CONTROL_RASTER_SHA256:
+        mismatches = {
+            f"{sheet_id}/{role}": {
+                "expected": EXPECTED_CONTROL_RASTER_SHA256.get((sheet_id, role)),
+                "actual": actual.get((sheet_id, role)),
+            }
+            for sheet_id, role in sorted(
+                set(EXPECTED_CONTROL_RASTER_SHA256) | set(actual)
+            )
+            if EXPECTED_CONTROL_RASTER_SHA256.get((sheet_id, role))
+            != actual.get((sheet_id, role))
+        }
+        raise ParentControlError(
+            "parent control decoded rasters differ from the reviewed canonical set: "
+            f"{mismatches!r}"
+        )
+
+
+def _validate_distribution_bindings(
+    index: Mapping[str, Any],
+    report: Mapping[str, Any],
+    files: Mapping[str, Path],
+) -> None:
+    records = _control_records(index)
+    expected_outputs: dict[tuple[str, str], dict[str, str]] = {}
+    for (sheet_id, role), record in records.items():
+        filename = CONTROL_FILENAMES[role]
+        relative = f"{sheet_id}/qa/{filename}"
+        actual_sha = sha256_file(files[relative])
+        if actual_sha != record["sha256"]:
+            raise ParentControlError(
+                f"parent control distribution SHA-256 mismatch at {relative}: "
+                f"index={record['sha256']}, actual={actual_sha}"
+            )
+        expected_outputs[(sheet_id, role)] = {
+            "sheet_id": sheet_id,
+            "role": role,
+            "path": str(record["path"]),
+            "sha256": str(record["sha256"]),
+        }
+    actual_outputs = {
+        (str(record["sheet_id"]), str(record["role"])): dict(record)
+        for record in report["outputs"]
+    }
+    if actual_outputs != expected_outputs:
+        raise ParentControlError(
+            "parent control report output bindings differ from the index"
+        )
+
+
+def _semantic_index_document(index: Mapping[str, Any]) -> dict[str, Any]:
+    normalized = copy.deepcopy(index)
+    for record in _control_records(normalized).values():
+        record["sha256"] = "0" * 64
+    return normalized
+
+
+def _semantic_report_document(report: Mapping[str, Any]) -> dict[str, Any]:
+    normalized = copy.deepcopy(report)
+    normalized["index"]["sha256"] = "0" * 64
+    for record in normalized["outputs"]:
+        record["sha256"] = "0" * 64
+    return normalized
+
+
 def _load_bundle_documents(
     output: Path,
     *,
@@ -1927,7 +2127,9 @@ def _load_bundle_documents(
     expected_index = _artifact(index_path, logical_root / "index.json")
     if report.get("index") != expected_index:
         raise ParentControlError("parent control report does not hash-lock its index")
+    _validate_distribution_bindings(index, report, actual_files)
     _validate_expected_control_hashes(index)
+    _validate_expected_control_rasters(index, actual_files)
 
     temporary = Path(
         tempfile.mkdtemp(prefix=f".{output.name}.semantic-audit-", dir=output.parent)
@@ -1944,23 +2146,29 @@ def _load_bundle_documents(
             logical_root=logical_root,
             plan_inputs=plan_inputs,
         )
-        _validate_expected_control_hashes(expected_index_document)
-        if index != expected_index_document:
+        _, expected_files = _plain_bundle_entries(expected_root)
+        _validate_expected_control_rasters(expected_index_document, expected_files)
+        if _semantic_index_document(index) != _semantic_index_document(
+            expected_index_document
+        ):
             raise ParentControlError(
                 "parent control index semantic fields are stale or fabricated"
             )
-        if report != expected_report_document:
+        if _semantic_report_document(report) != _semantic_report_document(
+            expected_report_document
+        ):
             raise ParentControlError(
                 "parent control report semantic fields are stale or fabricated"
             )
-        _, expected_files = _plain_bundle_entries(expected_root)
         for relative, expected_path in expected_files.items():
-            actual_sha = sha256_file(actual_files[relative])
-            expected_sha = sha256_file(expected_path)
-            if actual_sha != expected_sha:
+            if not relative.endswith(".png"):
+                continue
+            actual_hash = raster_semantic_sha256_file(actual_files[relative])
+            expected_hash = raster_semantic_sha256_file(expected_path)
+            if actual_hash != expected_hash:
                 raise ParentControlError(
-                    f"parent control bytes differ at {relative}: "
-                    f"actual={actual_sha}, expected={expected_sha}"
+                    f"parent control decoded raster differs at {relative}: "
+                    f"actual={actual_hash}, expected={expected_hash}"
                 )
         return index, report
     finally:
@@ -2034,7 +2242,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--verify-existing",
         action="store_true",
-        help="regenerate and byte-compare the complete existing bundle",
+        help=(
+            "regenerate and compare decoded control rasters while verifying "
+            "the existing distribution hashes"
+        ),
     )
     return parser
 

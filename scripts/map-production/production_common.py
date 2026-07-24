@@ -88,6 +88,7 @@ def dump_json(path: Path, value: Any) -> None:
         )
         + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 

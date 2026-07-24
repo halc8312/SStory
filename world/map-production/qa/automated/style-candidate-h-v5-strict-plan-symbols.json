@@ -10,13 +10,13 @@
   ],
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidate_h5.py",
-    "sha256": "2a2e90e4d57ba5f0a299ed7189988a2015b232ba6189fa5456ebe13266379cf4",
-    "bytes": 10175
+    "sha256": "bbd5c9bee2e100694bbbbdc72895b10d85999d7b48cfb13f3f4b0870e7251471",
+    "bytes": 10197
   },
   "audit_engine": {
     "path": "scripts/map-production/audit_style_candidate_h4.py",
-    "sha256": "47ac3b6432b04aa56a172c21e1321d8848e82f3f48fd207176697f6634f3ddd2",
-    "bytes": 32036,
+    "sha256": "9dee90fa67570302d01fab0a922e98838f18dfc83b561ff7b1fa287f89d0e389",
+    "bytes": 32058,
     "compatibility_contract": "H4 implementation and committed H4 report remain byte-identical"
   },
   "artifacts": {

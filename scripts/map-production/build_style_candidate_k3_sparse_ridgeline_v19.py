@@ -69,7 +69,7 @@ EXPECTED_PNG_SHA256 = (
 EXPECTED_PNG_BYTES = 3_630_310
 
 AUTHORITY_SHA256 = {
-    "canonical-k3-spec": "ffc9c365b93d9738b8d3f0fe4985b907afc61137931715db24e16161ae609232",
+    "canonical-k3-spec": "49d681f16f061583638a778a0fd0fc8b7b3a977d21320ee0c51b9b593040890e",
     "v55-root-vision-review": "626ea739be2aa63a55d73f31064ef697301db4244a6102834b7886930e76cd90",
     "v55-robust-recipe-verification": "64de26a0b9ee59e3a6e100297802a201d3a14db9fff022c097d6e881015a6fd3",
     "v52-control-atlas": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4",

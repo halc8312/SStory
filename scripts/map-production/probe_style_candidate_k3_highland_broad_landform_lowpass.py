@@ -33,8 +33,7 @@ OUT = ROOT / (
     "k3-semantic-cleanup-v19-broad-landform-lowpass-refinement"
 )
 V18 = ROOT / (
-    "tmp/map-production/k3-semantic-cleanup-proof-v18/"
-    "style-candidate-k-v3-semantic-cleanup-proof-v18.png"
+    "world/map-production/style-assets/k3-v18-reconstruction-base.png"
 )
 DONOR = ROOT / (
     "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/"

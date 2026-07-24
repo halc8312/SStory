@@ -62,6 +62,18 @@ G3_RAW = (
 G4_SCHEMA = (
     REPO_ROOT / "world/map-production/schemas/protected-relief-composite-v3.schema.json"
 )
+G4_OUTPUT = (
+    REPO_ROOT
+    / "world/map-production/candidates/style-candidate-g-v4-narrow-protection.png"
+)
+G4_MASK = (
+    REPO_ROOT
+    / "world/map-production/qa/automated/style-candidate-g-v4-edit-mask.png"
+)
+G4_PROTECTION = (
+    REPO_ROOT
+    / "world/map-production/qa/automated/style-candidate-g-v4-protection.png"
+)
 
 LEGACY_ARTIFACTS = (
     (
@@ -100,6 +112,12 @@ LEGACY_ARTIFACTS = (
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _semantic_sha256(path: Path) -> str:
+    with Image.open(path) as opened:
+        opened.load()
+        return MODULE._raster_semantic_sha256(opened)
 
 
 class ProtectedReliefCompositeTest(unittest.TestCase):
@@ -502,7 +520,7 @@ class ProtectedReliefCompositeTest(unittest.TestCase):
             legacy.close()
             narrow.close()
 
-    def test_v3_branch_preserves_all_committed_g1_to_g3_raster_bytes(self) -> None:
+    def test_v3_branch_preserves_all_committed_g1_to_g3_decoded_rasters(self) -> None:
         for (
             control,
             generated,
@@ -527,14 +545,16 @@ class ProtectedReliefCompositeTest(unittest.TestCase):
                     report_path=outputs["report"],
                 )
                 self.assertEqual(
-                    outputs["output"].read_bytes(), expected_output.read_bytes()
+                    _semantic_sha256(outputs["output"]),
+                    _semantic_sha256(expected_output),
                 )
                 self.assertEqual(
-                    outputs["mask"].read_bytes(), expected_mask.read_bytes()
+                    _semantic_sha256(outputs["mask"]),
+                    _semantic_sha256(expected_mask),
                 )
                 self.assertEqual(
-                    outputs["protection"].read_bytes(),
-                    expected_protection.read_bytes(),
+                    _semantic_sha256(outputs["protection"]),
+                    _semantic_sha256(expected_protection),
                 )
 
     def test_g4_narrow_policy_recovers_all_six_landform_footprints(self) -> None:
@@ -571,18 +591,16 @@ class ProtectedReliefCompositeTest(unittest.TestCase):
                 self.assertEqual(metric["changed_pixels"], 0)
                 self.assertEqual(metric["maximum_channel_difference"], 0)
 
-            self.assertEqual(
-                report["output_sha256"],
-                "81ceb76c1cd06edec098ac32b3724775dfd19fd7948cc580e6d8e3b4f6cabcb7",
-            )
-            self.assertEqual(
-                report["mask_sha256"],
-                "7d93e2c44230c54ea53576bb09939642358b9e9c965e459de15c610af3179bfb",
-            )
-            self.assertEqual(
-                report["protection_sha256"],
-                "fecf38fc6977ac01ed6f71c04e9bf7cf50c74f391779e583ba30fc639f46a653",
-            )
+            for role, expected in (
+                ("output", G4_OUTPUT),
+                ("mask", G4_MASK),
+                ("protection", G4_PROTECTION),
+            ):
+                self.assertEqual(
+                    _semantic_sha256(outputs[role]),
+                    _semantic_sha256(expected),
+                )
+                self.assertEqual(report[f"{role}_sha256"], _sha256(outputs[role]))
 
             guide_source_path = (
                 REPO_ROOT / "world/map-production/controls/"
@@ -676,7 +694,10 @@ class ProtectedReliefCompositeTest(unittest.TestCase):
                 report_path=outputs["report"],
             )
 
-            self.assertEqual(outputs["mask"].read_bytes(), G2_MASK.read_bytes())
+            self.assertEqual(
+                _semantic_sha256(outputs["mask"]),
+                _semantic_sha256(G2_MASK),
+            )
             self.assertEqual(report["metrics"]["permission_pixels"], 227663)
             self.assertEqual(
                 report["parameters"]["permission_source_reference_index"], 2
@@ -687,7 +708,46 @@ class ProtectedReliefCompositeTest(unittest.TestCase):
             self.assertEqual(report["skeleton"]["landform_count"], 6)
             self.assertEqual(
                 report["mask_sha256"],
-                _sha256(G2_MASK),
+                _sha256(outputs["mask"]),
+            )
+
+    def test_raster_semantic_hash_ignores_png_encoding_but_detects_one_pixel(self) -> None:
+        with tempfile.TemporaryDirectory(
+            prefix="sstory-raster-semantic-", dir=REPO_ROOT
+        ) as raw:
+            root = Path(raw)
+            first_path = root / "first.png"
+            second_path = root / "second.png"
+            changed_path = root / "changed.png"
+            raster = Image.new("L", (16, 16))
+            raster.putdata(bytes((index * 17) % 256 for index in range(256)))
+            try:
+                raster.save(
+                    first_path, format="PNG", compress_level=0, optimize=False
+                )
+                raster.save(
+                    second_path, format="PNG", compress_level=9, optimize=False
+                )
+                changed = raster.copy()
+                changed.putpixel((7, 9), (changed.getpixel((7, 9)) + 1) % 256)
+                try:
+                    changed.save(
+                        changed_path,
+                        format="PNG",
+                        compress_level=9,
+                        optimize=False,
+                    )
+                finally:
+                    changed.close()
+            finally:
+                raster.close()
+
+            self.assertNotEqual(first_path.read_bytes(), second_path.read_bytes())
+            self.assertEqual(
+                _semantic_sha256(first_path), _semantic_sha256(second_path)
+            )
+            self.assertNotEqual(
+                _semantic_sha256(first_path), _semantic_sha256(changed_path)
             )
 
     def test_g3_reference_three_hash_order_mode_and_dimensions_fail_closed(

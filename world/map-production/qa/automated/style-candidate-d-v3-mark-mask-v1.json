@@ -173,7 +173,7 @@
   "masked_false_positive_pixels": 0,
   "manual_endpoint_core_failures": [],
   "outside_parent_edit_mask_pixels": 0,
-  "control_sha256": "6df981917be374637c6d685023e06127db0f9ecb942b52a1f098fd5b749ab407",
+  "control_sha256": "b437aff4c4ed0ed16b477095562861f66c53bafdfe971e286601dc79caea2775",
   "mask_sha256": "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c",
   "components": [
     {

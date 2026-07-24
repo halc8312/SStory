@@ -16,8 +16,8 @@
   ],
   "generated_by": {
     "path": "scripts/map-production/audit_style_candidate_h9.py",
-    "sha256": "4703b32fe0cbd91164535f4ab9fb6673d37091be8a83eb0560bd4e87cbad593d",
-    "bytes": 35195
+    "sha256": "c654cc202fa1673b1d2b365c53ddd867101a823e41b33e0861f77431ccf16f50",
+    "bytes": 35217
   },
   "artifacts": {
     "final": {
@@ -42,8 +42,8 @@
     },
     "provenance": {
       "path": "world/map-production/qa/automated/style-candidate-h-v9-dense-flat-plan.provenance.json",
-      "sha256": "3ac21e9273f787c13c382a3ec422203efa2fde149101b3b0cc09850ebbc8b86e",
-      "bytes": 9689
+      "sha256": "34bcb70b256445f7ae97ee184b97e1f37df4885a967278dbd0d26658128f4983",
+      "bytes": 9303
     },
     "atlas": {
       "path": "world/map-production/style-assets/phase5-cartographic-material-atlas-v1.png",
@@ -67,8 +67,8 @@
     },
     "renderer": {
       "path": "scripts/map-production/render_candidate_h9_dense_flat_plan.py",
-      "sha256": "4f47a61aab66b41a484487d3ed6a75b70ccaa722d821c470184969b70b97ff46",
-      "bytes": 39825
+      "sha256": "c4e8a94f821122f90b0d5f81b72148e1d72cbc7950773b1f2f015a07e45c4870",
+      "bytes": 39851
     }
   },
   "image_contract": {
@@ -446,7 +446,7 @@
     "generated_by": {
       "id": "sstory-map-production/render_candidate_h9_dense_flat_plan.py@2",
       "path": "scripts/map-production/render_candidate_h9_dense_flat_plan.py",
-      "sha256": "4f47a61aab66b41a484487d3ed6a75b70ccaa722d821c470184969b70b97ff46",
+      "sha256": "c4e8a94f821122f90b0d5f81b72148e1d72cbc7950773b1f2f015a07e45c4870",
       "bytes": 39825
     },
     "outputs_exact": true,

@@ -21,7 +21,7 @@ DEFAULT_H5 = (
 )
 DEFAULT_ATLAS = (
     REPO_ROOT
-    / "tmp/map-production/texture-atlas/phase5-cartographic-material-atlas-v1.png"
+    / "world/map-production/style-assets/phase5-cartographic-material-atlas-v1.png"
 )
 DEFAULT_OUTPUT_ROOT = REPO_ROOT / "tmp/map-production/h8-prototype"
 CANVAS = (1536, 1024)
