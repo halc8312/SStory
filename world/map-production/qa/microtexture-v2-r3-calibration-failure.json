@@ -1,0 +1,103 @@
+{
+  "artifact": "microtexture-v2-r3-calibration-failure-audit",
+  "schema_version": "microtexture-v2-r3-calibration-failure-audit/1",
+  "authority_commit": "bdc95ca47e0662b96ebacdc6a9be27bee46b8779",
+  "evaluated_at": "2026-07-25T13:54:54.783256Z",
+  "outcome": "failed_closed",
+  "one_shot_contract": {
+    "calibration_evaluated_exactly_once": true,
+    "thresholds_frozen": false,
+    "rerun_relabel_retune_or_reuse_for_r3_forbidden": true,
+    "r3_closed": true
+  },
+  "hash_bindings": {
+    "preregistered_spec_sha256": "166eb08f8d2f9de673c29c4c24b4d1c405f0ea3800a04b50ac4124aa84bdb0a1",
+    "implementation_bindings_sha256": "a08e20142ca6d3b797223cfbeee8659396d8f5a08431e79843d5fc7730420ddd",
+    "calibration_manifest_sha256": "24e3f0bf977a84fcffce7f5322f86d8b63e501aebe0f118cc5653679dcaae182",
+    "root_labels_sha256": "5f8663e06d9fd9a9c08c31ac890a1efa4be2cfab3fd780f02c04d2af4739c4bf",
+    "evaluation_started_marker_sha256": "b686696626af63756806ffd36fec7f683ca27f5aecc22918bb216af52d59fb2f",
+    "calibration_report_sha256": "8b8ff33c1d44f934be3a878a22352d168357f2b9b1d35de341027803900fdabd",
+    "blind_key_commitment": "69199557de5c006a1316184d01101262a4e6a25681e24e05294d398e49f996a2"
+  },
+  "vision_labels": {
+    "total": 66,
+    "clean": 22,
+    "warning": 19,
+    "reject": 25,
+    "severity_0": 22,
+    "severity_1": 19,
+    "severity_2": 21,
+    "severity_3": 4,
+    "grain_visible": 16,
+    "speck_visible": 11,
+    "short_line_visible": 17,
+    "parallel_bundle_visible": 8,
+    "reviewed_at_200_percent": 66,
+    "reviewed_at_400_percent": 66
+  },
+  "performance": {
+    "clean_acceptance": 1.0,
+    "warning_acceptance": 0.7894736842105263,
+    "reject_detection": 0.48,
+    "severity_3_detection": 1.0,
+    "hard_metrics": {
+      "fine_to_broad_energy_ratio": {
+        "detected": 12,
+        "target_count": 16,
+        "detection_rate": 0.75,
+        "minimum": 0.75,
+        "passed": true
+      },
+      "speck_density_per_mp": {
+        "detected": 0,
+        "target_count": 2,
+        "detection_rate": 0.0,
+        "minimum": 0.75,
+        "passed": false
+      },
+      "short_ridge_density_per_mp": {
+        "detected": 0,
+        "target_count": 7,
+        "detection_rate": 0.0,
+        "minimum": 0.75,
+        "passed": false
+      },
+      "parallel_bundle_excess_z": {
+        "detected": 0,
+        "target_count": 5,
+        "detection_rate": 0.0,
+        "minimum": 0.6,
+        "passed": false
+      },
+      "parallel_neighbor_pair_fraction": {
+        "detected": 0,
+        "target_count": 5,
+        "detection_rate": 0.0,
+        "minimum": 0.75,
+        "passed": false
+      }
+    }
+  },
+  "root_cause": {
+    "primary": "The metrics evaluated the full 512x384 control while Root's decision-critical 200 percent contact-sheet view showed the center 256x192 window.",
+    "secondary": [
+      "The speck label combined tiny specks with larger microblobs while the hard metric measured only 1-3px components.",
+      "The Hessian ridge detector returned zero for target short-line and parallel controls while responding strongly to clean backgrounds.",
+      "Independent per-metric threshold selection did not constrain the false-reject rate of the complete hard composite."
+    ]
+  },
+  "successor_constraints": {
+    "r3_data_role": "development_only",
+    "r4_requires_fresh_key_controls_labels_and_locked_clean_reference": true,
+    "r4_metric_window_must_match_the_decision_critical_vision_window": true,
+    "r4_thresholds_must_be_selected_for_the_complete_hard_composite": true,
+    "r4_must_separate_tiny_speck_and_microblob_labels": true,
+    "r4_must_replace_the_failed_hessian_line_detector": true
+  },
+  "secret_handling": {
+    "blind_key_present_in_this_artifact": false,
+    "blind_key_persisted_or_logged": false,
+    "temporary_report_or_marker_tracked": false,
+    "temporary_artifact_root": "tmp/map-production/microtexture-v2-r3-artifacts"
+  }
+}

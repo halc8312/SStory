@@ -69,11 +69,11 @@ ImageGenは `ground material` と `eight-system scalar relief` の候補作成�
 
 背景または標高の単独審査で落ちた資産は、合成や数値調整へ進めません。数値gateを通っても、Vision上で地形として読めなければ不採用です。
 
-### Microtexture v2-r3 の先行凍結
+### Microtexture v2-r4 の先行凍結
 
-新しいGolden候補を生成する前に、候補・foundation非依存の `scripts/map-production/microtexture-v2-r3/` をGitへ凍結します。Calibrationとholdoutは各66 controls、200% 11頁、400% 11頁です。私が両scaleの全頁・全codeを匿名状態で確認し、calibration、locked positive、事前登録済み独立reviewer receipt、未使用holdoutをそれぞれ一回だけ実行します。一段でも失敗した版はthresholdを調整せず閉じ、修正版を新しい事前登録として作ります。
+r3は一回限りcalibrationでreject detection 48%となり、不合格のまま閉鎖しました。再実行・再label・retuneは行いません。新しいGolden候補を生成する前に、freshな候補・foundation非依存authority `scripts/map-production/microtexture-v2-r4/` をGitへ凍結します。Calibrationとholdoutは各140 controls、full 200% 24頁と4象限400%各24頁、計120頁です。実装は5 viewのexact ID / order / integer crop / scale、4象限のgap / overlapなし、page間code順をruntimeでも証明します。私が全5 viewの全頁・全codeを匿名状態で確認し、固定regular pathのreviewed label bytesをmarker後・測定前に別の固定pathへexclusive封印して、calibration、fresh ImageGen v7 locked clean reference、事前登録済み独立reviewer receipt、未使用holdoutをそれぞれ一回だけ実行します。全candidate、per-code result、endpoint count / rate、最終passは保存前とauthority再読込時に入力から再計算し、terminal holdoutもactual artifactsとsecret-derived identityまでread-back再結合します。各stageは全検証後にexact-schema completionを最後の操作として書き、normal failも`passed:false`で完了を記録します。例外時はcompletionを欠き、failure reportとの共存もauthority loaderが拒否します。Sparse familyは0..9のexact count、位置は全てsecret-derived、paired polarityは同一reference / unsigned geometryの符号反転だけです。一段でも失敗した版はthresholdを調整せず閉じ、marker後の例外も専用failure reportへ残します。
 
-ImageGen由来のv4は目視smooth anchorだけ、v5はthreshold凍結後のlocked positiveだけに使用します。`k3-v246-imagegen-ground-material-donor-v5.png` は較正から除外し、r3 holdout合格後に新規事前登録するproduction derivationでだけ使用できます。
+r4は、200%で見た領域と完全一致する中央256×192だけを測り、単一の高周波占有率hard gateを完全compositeとして選びます。Blob・finite-line・parallel-pairは非blocking diagnosticです。v7 locked clean referenceはexact metric windowの全4象限400%確認を含めRoot / independent Visionとも97点ですが、freeze前の数値計測、threshold選択、production donor、Golden、最終pixelへの利用を禁止します。Holdout control生成時とholdout marker前の双方で、current receipt HEADにあるv7本体とgeneration chain / receipt、Root / independent Vision QAをtracked bytesとspec SHAへ再照合します。`k3-v246-imagegen-ground-material-donor-v5.png` も較正から除外し、r4 holdout合格後にreference / mask erosion / overlap-seam / color-alpha-resampling / production holdoutを新規事前登録するproduction residual derivationでだけ使用できます。
 
 ## Phase 5: 14地域の生成順
 
@@ -147,7 +147,7 @@ Phase 5 の実制作は、ImageGenを99枚の地理正本そのものへ使う�
 
 自動QAの連続量・正典gateは固定したまま維持します。Primary gateは `coverage50/25 >= 365/338`、`quiet = .908–.925`、`orientation <= .14`、`texture4 = .615–.64`、`texture8 = 1.10–1.20` です。A/unit/totalの `sub8_energy_fraction <= .42`、A/unit repetition `<= .05`、total repetition `<= .07`、各bodyのunit sigma4 energy `>= 29`、sigma8 energy `>= 34`、exact-eight geometry、permission/protected/road/lock不変、closed loop・white crest particleゼロも維持します。
 
-r3 holdout合格後は、旧 `sub8 component == 0`、raw `dash == 0`、raw short-bundle pair `== 0` をlegacy diagnosticへ降格し、粒・fine energy・short ridge・parallel excess・neighbor pairのr3 hard thresholdsで置換します。raw件数はreceiptへ残しますがhard判定へ混ぜません。r3合格前にこの置換を先取りしてはいけません。すべてのthresholdは候補に合わせて変更しません。
+r4 holdout合格後は、旧 `sub8 component == 0`、raw `dash == 0`、raw short-bundle pair `== 0` をlegacy diagnosticへ降格し、preregistered residual referenceとeligible-background mask上の単一 `microartifact_occupancy_per_mp` gateへ置換します。Blob・finite-line・parallel-pairとraw件数はreceiptへ残しますがhard判定へ混ぜません。r4合格前にこの置換を先取りせず、合格後もthresholdを候補に合わせて変更しません。
 
 一画像は最大5回までとします。同じ欠陥が2回続けば画像編集を中止し、制御図かプロンプトを直します。採用画像だけを `masters/` と公開アセットへ昇格し、不採用画像は制作記録として残します。
 

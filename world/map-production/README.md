@@ -50,15 +50,16 @@ planned
 - `k3-v55-topographic-contour-atlas.png`: 正確な8山系の輪郭・峰・鞍部・谷の位相権威です。完成画の背景や4×2配置は転写しません。
 - `k3-v64-integrated-orthographic-relief-donor.png`: 北東高地を周囲へ自然に接続する統合素材と連続した広域起伏のdonorです。反復するシダ状細部と全体図の生画素は使用しません。
 - `k3-v159-scalar-relief-structure-donor.png`: ImageGen由来の条件付き標高構造donorです。各bodyの正規化した低・中周波だけを使用し、生画素、絶対輝度、白い峰、シダ状微細模様、halo、背景は使用しません。
-- `k3-v246-imagegen-ground-material-donor-v5.png`: ImageGen由来の条件付き地表位相donorです。Root Vision 94点で、相対的な低・中周波輝度だけを使用できます。RGB、色相、絶対輝度、12px未満の細部、生画素、意味形状、完成画像への直接転写は禁止します。Microtexture v2-r3の較正からは除外し、holdout合格後に新規事前登録するv246 derivationでだけ使用できます。
+- `k3-v246-imagegen-ground-material-donor-v5.png`: ImageGen由来の条件付き地表位相donorです。Root Vision 94点で、相対的な低・中周波輝度だけを使用できます。RGB、色相、絶対輝度、12px未満の細部、生画素、意味形状、完成画像への直接転写は禁止します。Microtexture v2-r3/r4の較正からは除外し、r4 holdout合格後に新規事前登録するv246 derivationでだけ使用できます。
 - `microtexture-v2-calibration-positive-imagegen-v4.png`: ImageGen由来の目視比較専用smooth anchorです。threshold選択と数値holdoutには使用せず、高密度texture、制作候補、Golden、最終画素にも使用しません。
-- `microtexture-v2-calibration-positive-imagegen-v5.png`: v4へ32–96pxの非周期mottleだけを加えた、閾値凍結後のfalse-reject検証専用sourceです。Root Vision 94点、独立Vision 95点ですが、1–24pxの粒・線・塊を許可する根拠やproduction donorにはなりません。
+- `microtexture-v2-calibration-positive-imagegen-v5.png`: r3で使用済みの旧false-reject sourceです。Root Vision 94点、独立Vision 95点ですが、r3の閉鎖に伴いdevelopment historyへ固定し、r4では数値・locked・productionのいずれにも再利用しません。
+- `microtexture-v2-locked-clean-reference-imagegen-v7.png`: r3資産を参照しないfresh ImageGen chainのr4 locked clean reference候補です。第1案はRoot Visionで棄却し、微細構造を除去した第2案だけを保存しました。Exact metric windowの4象限を個別に400%確認し、Root / independent Visionは双方97点です。Freeze前の数値計測、threshold選択、production donor、Golden、最終画素への利用は禁止します。
 - `highland-detail-exemplar-v1.png`: 拡大時の素材密度の比較用です。正典形状やGolden判定の代用にはしません。
 - `phase5-cartographic-material-atlas-v1.png`: Phase 5 の紙、インク、植生、地表素材の比較用です。
 
 各資産の生成プロンプト、入力順、SHA-256、Root Visionの採用範囲は `prompts/` と `qa/` に固定します。
 
-候補非依存のMicrotexture v2-r3 authorityは `scripts/map-production/microtexture-v2-r3/`、運用契約は `spec/microtexture-v2-calibration.md` に固定します。r3のcalibration、locked positive、独立authority、未使用holdoutがすべて合格するまで、新しいv246候補は生成しません。
+Microtexture v2-r3は一回限りcalibrationで不合格となり、`qa/microtexture-v2-r3-calibration-failure.json`へ証拠を固定して閉鎖しました。後継の候補非依存authorityは `scripts/map-production/microtexture-v2-r4/`、運用契約は `spec/microtexture-v2-calibration.md` です。r4は各split 140 controlsをfull 200%と4象限400%の計120頁で全域確認し、5-viewのgap / overlap / code順をruntime証明します。さらにsparse exact-count 0..9、paired sign symmetry、same-machine runtime hash、固定regular pathからmarker後にexclusive封印するVision label bytes、全candidate / endpoint / passの再計算、post-marker failure auditを要求します。Terminal holdout reportはactual artifacts、sealed labels、marker / freeze / receipt / HEAD / runtime、secret-derived identityへread-back再結合します。Holdout生成と評価の各preflightではv7本体と全provenanceをcurrent receipt HEADへ再照合します。Calibration、locked clean reference、独立authority、未使用holdoutがすべて合格するまで、新しいv246候補は生成しません。
 
 ## Golden 候補の二段階昇格
 

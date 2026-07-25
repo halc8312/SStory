@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "generation_id": "microtexture-v2-locked-clean-reference-imagegen-v7",
+  "status": "approved-vision-only-pending-post-freeze-numeric-validation",
+  "generated_at": "2026-07-25T23:14:00+09:00",
+  "generator": "image_gen.imagegen",
+  "generator_model_name_claimed": false,
+  "operation": "brand-new-generation-followed-by-one-focused-smoothing-edit",
+  "prompt_chain": {
+    "path": "world/map-production/prompts/microtexture-v2-locked-clean-reference-imagegen-v7.generation-chain.txt",
+    "sha256": "edf98d891fdf1a2db5e3d0a5d70a348976b003014cac8c032f625448dd212f21",
+    "exact_step_1_prompt_text_preserved": true,
+    "exact_step_2_prompt_text_preserved": true,
+    "r3_v4_or_v5_reference_used": false,
+    "map_candidate_or_foundation_reference_used": false
+  },
+  "generation_chain": {
+    "step_1": {
+      "operation": "new_generation",
+      "decision": "rejected-by-root-vision",
+      "reason": "The 200 and 400 percent views exposed fine mottling and short-wisp structure.",
+      "tracked_or_authoritative": false
+    },
+    "step_2": {
+      "operation": "single-focused-edit-of-step-1",
+      "input_was_exact_generated_file": true,
+      "decision": "adopted-as-locked-clean-reference-candidate",
+      "final_output_persisted_from_returned_data_url": true
+    }
+  },
+  "output": {
+    "path": "world/map-production/style-assets/microtexture-v2-locked-clean-reference-imagegen-v7.png",
+    "sha256": "667e55d2ab326c666b6087c53512eebc1942c068e397ab0dfa7e86776502c4d3",
+    "bytes": 1778101,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "root_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-locked-clean-reference-imagegen-v7-root-vision.json",
+    "sha256": "214943452445ed56127a138dd7ed7ca7624644bd13ec613d81a9d711a2d24924",
+    "decision": "approved-as-r4-locked-clean-reference-candidate",
+    "score": 97
+  },
+  "independent_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-locked-clean-reference-imagegen-v7-independent-vision.json",
+    "sha256": "b49b7853bf3715a0162e95c253b020fd2fc0f14f5e2cc9ad80aa66d879734df1",
+    "reviewer": "Descartes the 2nd",
+    "decision": "approved-as-r4-locked-clean-reference-candidate",
+    "score": 97
+  },
+  "numeric_isolation": {
+    "numeric_metric_evaluation_performed_before_threshold_freeze": false,
+    "threshold_selection_allowed": false,
+    "calibration_or_holdout_control_use_allowed": false,
+    "post_freeze_one_shot_validation_required": true
+  },
+  "use_contract": {
+    "production_candidate_use_allowed": false,
+    "texture_donor_use_allowed": false,
+    "golden_input_allowed": false,
+    "final_pixel_transfer_allowed": false,
+    "geography_or_semantic_authority": false,
+    "rgb_chroma_or_absolute_luminance_transfer_allowed": false
+  }
+}

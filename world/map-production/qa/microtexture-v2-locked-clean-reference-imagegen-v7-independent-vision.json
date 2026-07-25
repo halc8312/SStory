@@ -1,0 +1,52 @@
+{
+  "schema_version": "microtexture-v2-locked-clean-reference-independent-vision/1",
+  "review_id": "microtexture-v2-locked-clean-reference-imagegen-v7-independent-vision",
+  "reviewed_at": "2026-07-25T23:51:40+09:00",
+  "reviewer": "Descartes the 2nd",
+  "review_mode": "blind-independent-vision-only-clean-reference-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-locked-clean-reference-imagegen-v7.png",
+    "sha256": "667e55d2ab326c666b6087c53512eebc1942c068e397ab0dfa7e86776502c4d3",
+    "bytes": 1778101,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "review_context_excluded": [
+    "previous calibration sources",
+    "generation prompt and chain",
+    "Root Vision review",
+    "numeric detector measurements",
+    "control family identities"
+  ],
+  "views_actually_inspected": [
+    "persisted original",
+    "central 512x384 crop at 200 percent nearest-neighbor",
+    "central 256x192 crop at 400 percent nearest-neighbor",
+    "northwest 128x96 quadrant of the exact metric window at 400 percent nearest-neighbor",
+    "northeast 128x96 quadrant of the exact metric window at 400 percent nearest-neighbor",
+    "southwest 128x96 quadrant of the exact metric window at 400 percent nearest-neighbor",
+    "southeast 128x96 quadrant of the exact metric window at 400 percent nearest-neighbor"
+  ],
+  "numeric_metric_evaluation_performed": false,
+  "score": 97,
+  "threshold": 94,
+  "decision": "approved-as-r4-locked-clean-reference-candidate",
+  "immediate_failure_checks": {
+    "isolated_speck": false,
+    "bounded_microblob": false,
+    "grain_cluster": false,
+    "short_line_ridge_or_parallel_bundle_4_to_24_px": false,
+    "cell_ring_or_contour": false,
+    "periodic_repeat_grid_or_seam": false,
+    "semantic_object": false,
+    "perspective_directional_light_or_3d": false
+  },
+  "observations": [
+    "The original contains only slow, continuous low-frequency warm-neutral mottle on a flat surface.",
+    "At 200 percent the faint diffuse variation does not resolve into bounded spots, grains, or lines.",
+    "At 400 percent the surface remains smooth with no isolated pixel, grain cluster, short ridge, or parallel bundle.",
+    "All four non-overlapping metric-window quadrants pass independently: northwest 97, northeast 96, southwest 96, and southeast 97.",
+    "The faint broad drift in the northeast and southwest is non-periodic, has no local line or seam, and remains acceptable low-frequency mottle."
+  ],
+  "passed_for_declared_source_role": true
+}
