@@ -1,0 +1,23 @@
+{
+  "schema_version": "microtexture-v2-locked-clean-reference-independent-vision/1",
+  "review_id": "microtexture-v2-locked-clean-reference-imagegen-v14-independent-vision",
+  "reviewed_at": "2026-07-26T03:17:23+09:00",
+  "reviewer": "r5_v14_blind_vision",
+  "review_mode": "blind-independent-vision-only-clean-reference-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-locked-clean-reference-imagegen-v14.png",
+    "sha256": "a0a014f87efeb143eb2bb999d4ed03dc27b8bf8fac99f679e99e8d404c1d9b64",
+    "bytes": 1105317,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "review_context_excluded": ["generation prompts", "Root review", "numeric detector measurements", "control identities"],
+  "views_actually_inspected": ["persisted-original", "center-200", "metric-400", "northwest-400", "northeast-400", "southwest-400", "southeast-400"],
+  "numeric_metric_evaluation_performed": false,
+  "score": 99,
+  "quadrant_scores": {"northwest": 99, "northeast": 99, "southwest": 98, "southeast": 99},
+  "threshold": 94,
+  "decision": "approved-as-r5-locked-clean-reference-candidate",
+  "observations": "No isolated speck, distinct microblob, grain, repeat/grid, line, ridge, parallel bundle, ring, cell, seam, semantic content, meaningful vignette, or directional light. Only ultra-faint broad tonal clouding is perceptible.",
+  "passed_for_declared_source_role": true
+}

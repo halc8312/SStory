@@ -160,6 +160,7 @@ worldbuilding
 microtexture
 microartifact
 HMAC
+PRF
 imagegen
 highpass
 lowpass

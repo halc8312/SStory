@@ -1,0 +1,38 @@
+{
+  "schema_version": "microtexture-v2-r5-foundation-generation-receipt/1",
+  "generation_id": "microtexture-v2-r5-foundations-imagegen-v8-v12",
+  "status": "approved-vision-qualified-control-foundations",
+  "generated_at": "2026-07-26T03:17:23+09:00",
+  "generator": "image_gen.imagegen",
+  "generator_model_name_claimed": false,
+  "generation_chain": {
+    "path": "world/map-production/prompts/microtexture-v2-r5-foundations-imagegen-v8-v12.generation-chain.txt",
+    "sha256": "6bb05ef70fe06636cc9014d8c7507a527584992964dfe5c00ca9bd76071de48f",
+    "exact_prompt_text_preserved": true,
+    "brand_new_generation_per_step": true,
+    "r4_raster_reference_used": false
+  },
+  "adopted_outputs": [
+    {"id": "v10", "path": "world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v10.png", "sha256": "df37429388f42649611388172d1dd60890f5a7d6b3437937181f0c078b76b5d5", "bytes": 1337057, "size": [1536, 1024], "mode": "RGB"},
+    {"id": "v11", "path": "world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v11.png", "sha256": "6dbb2126ac795d509cd248d95f81a4c5d91c8258d2a4845ea4030d96fdb0ee2f", "bytes": 1280636, "size": [1536, 1024], "mode": "RGB"},
+    {"id": "v12", "path": "world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v12.png", "sha256": "e05ca849d950d5b8c5eadcf85ba6cb246b1cecaa284a49e6f85722d253a7e44e", "bytes": 1437439, "size": [1536, 1024], "mode": "RGB"}
+  ],
+  "rejected_outputs": [
+    {"id": "v8", "tracked_or_authoritative": false, "reason": "Root Vision found diagonal lattice/repetition."},
+    {"id": "v9", "tracked_or_authoritative": false, "reason": "Blind-independent Vision reproduced faint mesh regularity and scored 92."}
+  ],
+  "review_bindings": [
+    {"role": "root", "path": "world/map-production/qa/microtexture-v2-r5-foundations-root-vision.json", "sha256": "22a68aab972712260ef710d732d048ffae2a1dc20bec1fd88b5a40915883aa5d"},
+    {"role": "independent-a", "path": "world/map-production/qa/microtexture-v2-r5-foundations-independent-vision-a.json", "sha256": "301f5f9564b312e03147122b15df2314b6017b7be81aa74d05f9674be2703126"},
+    {"role": "independent-b", "path": "world/map-production/qa/microtexture-v2-r5-foundations-independent-vision-b.json", "sha256": "c347f77d06c110252f45e0e11ee6a430b04cfb2d72cb5dc7d5e530f8c44b1f86"}
+  ],
+  "use_contract": {
+    "exact_source_crop_xywh": [512, 320, 512, 384],
+    "control_reference_only": true,
+    "production_candidate_use_allowed": false,
+    "texture_donor_use_allowed": false,
+    "golden_input_allowed": false,
+    "final_pixel_transfer_allowed": false,
+    "foundation_substitution_after_freeze_allowed": false
+  }
+}

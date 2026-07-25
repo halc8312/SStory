@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "generation_id": "microtexture-v2-locked-clean-reference-imagegen-v14",
+  "status": "approved-vision-only-pending-post-freeze-numeric-validation",
+  "generated_at": "2026-07-26T03:17:23+09:00",
+  "generator": "image_gen.imagegen",
+  "generator_model_name_claimed": false,
+  "operation": "two-brand-new-generations-first-rejected-second-adopted",
+  "prompt_chain": {
+    "path": "world/map-production/prompts/microtexture-v2-locked-clean-reference-imagegen-v14.generation-chain.txt",
+    "sha256": "43ebd649e2ea09a76e83a864e3136d6852a55a9d40a8b9788512fda63b31a816",
+    "exact_step_1_prompt_text_preserved": true,
+    "exact_step_2_prompt_text_preserved": true,
+    "r5_foundation_reference_used": false,
+    "r4_reference_used": false
+  },
+  "generation_chain": {
+    "step_1": {"id": "v13", "operation": "new_generation", "decision": "rejected-by-root-vision", "reason": "Medium-scale mottling and short cloudlike ridges remained visible at 200 and 400 percent.", "tracked_or_authoritative": false},
+    "step_2": {"id": "v14", "operation": "new_generation", "decision": "adopted-as-locked-clean-reference-candidate", "final_output_persisted_from_returned_data_url": true}
+  },
+  "output": {
+    "path": "world/map-production/style-assets/microtexture-v2-locked-clean-reference-imagegen-v14.png",
+    "sha256": "a0a014f87efeb143eb2bb999d4ed03dc27b8bf8fac99f679e99e8d404c1d9b64",
+    "bytes": 1105317,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "root_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-locked-clean-reference-imagegen-v14-root-vision.json",
+    "sha256": "1528696c30b6fbed055de12f0a2347d969bf317652a9a86f331e4e5517267375",
+    "decision": "approved-as-r5-locked-clean-reference-candidate",
+    "score": 99
+  },
+  "independent_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-locked-clean-reference-imagegen-v14-independent-vision.json",
+    "sha256": "61b3ce4572eff25b82e198d5c447e0f07360290d93e9f86944cd51cd3d7304d9",
+    "reviewer": "r5_v14_blind_vision",
+    "decision": "approved-as-r5-locked-clean-reference-candidate",
+    "score": 99
+  },
+  "numeric_isolation": {
+    "numeric_metric_evaluation_performed_before_threshold_freeze": false,
+    "threshold_selection_allowed": false,
+    "calibration_or_holdout_control_use_allowed": false,
+    "post_freeze_one_shot_validation_required": true
+  },
+  "use_contract": {
+    "production_candidate_use_allowed": false,
+    "texture_donor_use_allowed": false,
+    "golden_input_allowed": false,
+    "final_pixel_transfer_allowed": false,
+    "geography_or_semantic_authority": false,
+    "rgb_chroma_or_absolute_luminance_transfer_allowed": false
+  }
+}

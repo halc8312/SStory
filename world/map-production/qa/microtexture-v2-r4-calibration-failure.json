@@ -1,0 +1,83 @@
+{
+  "artifact": "microtexture-v2-r4-calibration-failure-audit",
+  "schema_version": "microtexture-v2-r4-calibration-failure-audit/1",
+  "authority_commit": "baec1c24af6c011d54bc671e72719729ce1ae98f",
+  "evaluated_at": "2026-07-25T17:56:00.326693Z",
+  "outcome": "failed_closed",
+  "selection_status": "selected-but-endpoint-failed",
+  "one_shot_contract": {
+    "calibration_evaluated_exactly_once": true,
+    "thresholds_frozen": false,
+    "rerun_relabel_retune_or_reuse_for_r4_forbidden": true,
+    "r4_closed": true
+  },
+  "hash_bindings": {
+    "preregistered_spec_sha256": "983ebd87618e7f05a82fb95027eb0fdbb9ca1fd0664015c1f2a28a97b3df6642",
+    "implementation_bindings_sha256": "96ffd619adb7e9921d67c9dfac66f068b863d8179f88b029c8870b285dca31ab",
+    "calibration_manifest_sha256": "866db4d11b5834fd4550fbba847db8ba79867f6889016bef44da77a9914dac40",
+    "sealed_root_labels_sha256": "fc9d65e90996b60b6e21ea94f408809fd986776a3b2c0558de6a9b90196927d5",
+    "evaluation_started_marker_sha256": "113cf3421aaa567d786eb3dadce8c0e6f4793a14ec99847d5932212f5cfedb5d",
+    "calibration_report_sha256": "8c193f0596ad9d054120336463537d2aec0f2f646df8d36b7599beb08a7b4cab",
+    "calibration_completion_sha256": "ba926a6b84cbbcf954589d22c5a7e12803d8f8dbba71432a9be43da2b4a49dfc",
+    "blind_key_commitment": "82ffe374df0248b71d651ac12f882a7db2db7b9f7d7ca62139806236de630830"
+  },
+  "vision_labels": {
+    "records_total": 140,
+    "clean": 19,
+    "warning": 20,
+    "reject": 101,
+    "severity_0": 19,
+    "severity_1": 20,
+    "severity_2": 33,
+    "severity_3": 68,
+    "all_full_200_and_four_quadrant_400_views_reviewed": true
+  },
+  "selected_hard_gate": {
+    "metric": "microartifact_occupancy_per_mp",
+    "direction": "maximum",
+    "threshold": 2400.716145833333
+  },
+  "performance": {
+    "clean_acceptance": 1.0,
+    "warning_acceptance": 1.0,
+    "reject_detection": 0.48333333333333334,
+    "severity3_detection": 0.6,
+    "grain_reject_detection": 0.85,
+    "tiny_speck_reject_detection": 0.0,
+    "microblob_reject_detection": 0.05,
+    "spot_reject_detection": 0.047619047619047616,
+    "short_line_reject_detection": 0.55,
+    "parallel_bundle_reject_detection": 0.7333333333333333
+  },
+  "root_cause": {
+    "primary": "Vision judged the absolute control image including its synthetic foundation, while the hard metric measured only control-reference residual. Foundation artifacts therefore disappeared numerically.",
+    "duplicate_ground_truth_failure": {
+      "zero_delta_records": 12,
+      "zero_delta_labels": {"clean": 8, "warning": 1, "reject": 3},
+      "exact_duplicate_groups": 4,
+      "inconsistent_exact_duplicate_groups": 3,
+      "consequence": "No deterministic delta-only metric can assign different outcomes to byte-identical controls or identical canonical residuals."
+    },
+    "metric_structure_failure": [
+      "A single high-pass occupancy scalar cannot jointly represent low-amplitude periodic grain, sparse 1-3px specks, 4-12px blobs, finite lines, and local parallel bundles.",
+      "The useful finite-line and absolute parallel-pair diagnostic signals were nonblocking.",
+      "The single-sigma blob diagnostic was not scale matched and its occupancy penalty could lower the score as artifact extent increased."
+    ],
+    "coverage_failure": "Only one unique reject tiny-speck cluster existed although the preregistered endpoint required four, so that endpoint could not pass under any threshold."
+  },
+  "successor_constraints": {
+    "r4_data_role": "development_only",
+    "r5_requires_fresh_key_controls_labels_foundations_and_locked_clean_reference": true,
+    "r5_foundations_require_root_and_independent_vision_qualification_before_freeze": true,
+    "r5_artifact_families_forbid_zero_injection_variants": true,
+    "r5_requires_protocol_zero_sentinels_and_premeasurement_duplicate_label_consistency": true,
+    "r5_hard_gate_requires_fixed_bounded_grain_spot_line_and_parallel_channels_with_one_scalar_composite_threshold": true,
+    "r5_holdout_requires_fresh_nonce_seed_conditions_and_one_shot_evaluation": true
+  },
+  "secret_handling": {
+    "blind_key_present_in_this_artifact": false,
+    "blind_key_persisted_or_logged": false,
+    "temporary_report_or_marker_tracked": false,
+    "temporary_artifact_root": "tmp/map-production/microtexture-v2-r4-artifacts"
+  }
+}

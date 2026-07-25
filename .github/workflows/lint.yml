@@ -18,7 +18,7 @@ jobs:
   quality-gates:
     name: Full validation (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -55,6 +55,9 @@ jobs:
 
       - name: Run Python unit tests
         run: npm run test:python
+
+      - name: Run Microtexture v2-r5 authority self-tests
+        run: python scripts/map-production/microtexture-v2-r5/self_test.py
 
       # Keep this as an explicit integrity gate even though the validator step
       # reaches it through npm run validate. This makes accidental removal from

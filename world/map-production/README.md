@@ -4,7 +4,7 @@ category: "maps"
 title: "高精細地図制作"
 version: "1.0.0"
 created: "2026-07-18"
-last_updated: "2026-07-22"
+last_updated: "2026-07-26"
 author: "halc8312"
 tags: ["maps", "deep-zoom", "image-generation", "geojson", "tiles"]
 status: "draft"
@@ -50,16 +50,45 @@ planned
 - `k3-v55-topographic-contour-atlas.png`: 正確な8山系の輪郭・峰・鞍部・谷の位相権威です。完成画の背景や4×2配置は転写しません。
 - `k3-v64-integrated-orthographic-relief-donor.png`: 北東高地を周囲へ自然に接続する統合素材と連続した広域起伏のdonorです。反復するシダ状細部と全体図の生画素は使用しません。
 - `k3-v159-scalar-relief-structure-donor.png`: ImageGen由来の条件付き標高構造donorです。各bodyの正規化した低・中周波だけを使用し、生画素、絶対輝度、白い峰、シダ状微細模様、halo、背景は使用しません。
-- `k3-v246-imagegen-ground-material-donor-v5.png`: ImageGen由来の条件付き地表位相donorです。Root Vision 94点で、相対的な低・中周波輝度だけを使用できます。RGB、色相、絶対輝度、12px未満の細部、生画素、意味形状、完成画像への直接転写は禁止します。Microtexture v2-r3/r4の較正からは除外し、r4 holdout合格後に新規事前登録するv246 derivationでだけ使用できます。
+- `k3-v246-imagegen-ground-material-donor-v5.png`: ImageGen由来の条件付き地表位相donorです。Root Vision 94点で、相対的な低・中周波輝度だけを使用できます。RGB、色相、絶対輝度、12px未満の細部、生画素、意味形状、完成画像への直接転写は禁止します。Microtexture v2-r3/r4/r5の較正からは除外し、r5 holdout合格後にも別途事前登録するproduction derivationでだけ検討できます。
 - `microtexture-v2-calibration-positive-imagegen-v4.png`: ImageGen由来の目視比較専用smooth anchorです。threshold選択と数値holdoutには使用せず、高密度texture、制作候補、Golden、最終画素にも使用しません。
-- `microtexture-v2-calibration-positive-imagegen-v5.png`: r3で使用済みの旧false-reject sourceです。Root Vision 94点、独立Vision 95点ですが、r3の閉鎖に伴いdevelopment historyへ固定し、r4では数値・locked・productionのいずれにも再利用しません。
-- `microtexture-v2-locked-clean-reference-imagegen-v7.png`: r3資産を参照しないfresh ImageGen chainのr4 locked clean reference候補です。第1案はRoot Visionで棄却し、微細構造を除去した第2案だけを保存しました。Exact metric windowの4象限を個別に400%確認し、Root / independent Visionは双方97点です。Freeze前の数値計測、threshold選択、production donor、Golden、最終画素への利用は禁止します。
+- `microtexture-v2-calibration-positive-imagegen-v5.png`: r3で使用済みの旧false-reject sourceです。Root Vision 94点、独立Vision 95点ですが、r3の閉鎖に伴いdevelopment historyへ固定し、r4/r5では数値・locked・productionのいずれにも再利用しません。
+- `microtexture-v2-locked-clean-reference-imagegen-v7.png`: failed-and-closed r4で登録されていた旧locked-clean候補です。r4の閉鎖に伴いhistory-onlyで、r5 authority、threshold、holdout、production、Golden、最終画素には使用しません。
+- `microtexture-v2-r5-foundation-imagegen-v10.png` / `v11.png` / `v12.png`: Rootと独立Visionで事前qualifyしたr5専用のfresh control/reference foundationsです。中央512×384 cropだけをsecret HMACでcontrolへ割り当てます。Control-onlyであり、threshold外の制作評価、production donor、Golden、最終画素への利用は禁止します。
+- `microtexture-v2-locked-clean-reference-imagegen-v14.png`: r5 foundation corpusと独立したfresh locked-clean referenceです。Root / independent Visionは完了していますが、数値validationはcalibration threshold freeze後に一回だけ行うpending stageです。Threshold選択、production donor、Golden、最終画素への利用は禁止します。
 - `highland-detail-exemplar-v1.png`: 拡大時の素材密度の比較用です。正典形状やGolden判定の代用にはしません。
 - `phase5-cartographic-material-atlas-v1.png`: Phase 5 の紙、インク、植生、地表素材の比較用です。
 
 各資産の生成プロンプト、入力順、SHA-256、Root Visionの採用範囲は `prompts/` と `qa/` に固定します。
 
-Microtexture v2-r3は一回限りcalibrationで不合格となり、`qa/microtexture-v2-r3-calibration-failure.json`へ証拠を固定して閉鎖しました。後継の候補非依存authorityは `scripts/map-production/microtexture-v2-r4/`、運用契約は `spec/microtexture-v2-calibration.md` です。r4は各split 140 controlsをfull 200%と4象限400%の計120頁で全域確認し、5-viewのgap / overlap / code順をruntime証明します。さらにsparse exact-count 0..9、paired sign symmetry、same-machine runtime hash、固定regular pathからmarker後にexclusive封印するVision label bytes、全candidate / endpoint / passの再計算、post-marker failure auditを要求します。Terminal holdout reportはactual artifacts、sealed labels、marker / freeze / receipt / HEAD / runtime、secret-derived identityへread-back再結合します。Holdout生成と評価の各preflightではv7本体と全provenanceをcurrent receipt HEADへ再照合します。Calibration、locked clean reference、独立authority、未使用holdoutがすべて合格するまで、新しいv246候補は生成しません。
+Microtexture v2-r3は一回限りcalibrationで不合格となり、`qa/microtexture-v2-r3-calibration-failure.json`へ証拠を固定して閉鎖しました。r4も一回限りcalibrationで不合格となり、`qa/microtexture-v2-r4-calibration-failure.json`へ証拠を固定したfailed-and-closed editionです。r3/r4のcontrols、keys、labels、thresholds、foundations、locked sources、holdoutsはdevelopment historyに限定し、再利用しません。
+
+唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r5/`、運用概要は`spec/microtexture-v2-calibration.md`です。r5は各split 140 records / 78 private clustersで、120 `artifact` records（5 morphology families × 12 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4 duplicate-audit recordsを持ちます。Rootはfull 200% 24頁と4象限400%各24頁、計120頁を全code確認します。Detectorはgrain / spot / finite-line / parallel-bundleの4 branch scoreを最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。順序はfresh calibration一回、Root label、one-shot calibration、freeze後のv14数値validation一回、独立authority receipt、fresh holdout一回、Root label、frozen thresholdでone-shot holdoutです。全stageが合格し、さらにproduction residual derivationを別specで事前登録するまで、新しいv246候補やGolden/最終pixelへ接続しません。
+
+r5のhonest-reviewer blindは運用上の分離であり、technical / cryptographic blindや同じOS principalの悪意ある
+reviewerへのsecrecyは主張しません。blind keyは専用custodian processだけが保持し、Vision processへ継承しません。
+公開manifest schema `/3`はopaque codeとcode別のcontrol/reference/delta HMAC commitments 3件だけを持ち、
+個別control/reference path・file・raw SHAを出しません。marker前のreview surfaceは120 contact-sheet pagesと
+code-only label formだけで、source/code/raw extraction/hash/diff/identity regenerationは禁止です。
+
+各recordのprivate referenceはfull private identityからHMAC PRFの7×9 gridで個別生成し、最大1.75 pxのsmooth
+warpと0.75 Lのtone shiftだけを加えます。140 reference/control SHAと各5-view panelは全件一意です。dark/light
+はdistinct referenceですが、requested deltaとdecoded int16 residualはexact inverse、metricsはexact equalityです。
+正式one-shot前のdevelopment Visionで5 family各12 nonzero conditionsの低・中・高強度coverageを再配分し、
+calibration/holdout別scheduleへfreezeします。fine-grainは各patternの最低強度1 conditionだけmetric-window内
+`support_fraction=0.001`のdeterministic nonzero sparse support、他10 conditionsはfull supportです。これはformal
+labelの事前指定ではなく、endpoint最低population/rate、blind、one-shot契約は不変です。
+duplicate auditはdistinct-reference semantic replicatesで、requested delta、decoded residual、metricsのexact
+equalityを検査します。marker → label seal → in-memory regeneration → exact contact-sheet
+byte binding後だけprivate auditとraw SHA revealを行います。marker write自体をguardの`try`内に置き、各terminal
+completion直後は`require_completion=True`でreloadします。parallel branchは
+raw-delta core-only responseの同一filter内evidenceだけを組み、matched pairsが2未満ならcanonical zeroです。
+spot component、finite-line response、parallel-pair responseのabsolute floorはいずれも`4.5 L`で、coherent fine
+patternはgrain branchが担います。split-specific schedulesとfloorはfresh formal key/controls/labels前の明示的
+non-formal development keysでfreezeしたdevelopment-only設計です。formal labels、threshold、resultsは未確定で
+予告せず、blind、one-shot、endpoint、failed-r3/r4契約も変えません。
+threshold候補はfloor 0を含み、selection/endpointsは`artifact` roleだけです。違反・失敗・欠落completionは
+one-shot editionをfail-closedで消費します。
 
 ## Golden 候補の二段階昇格
 

@@ -1,22 +1,26 @@
 ---
 type: "overview"
 category: "maps"
-title: "Microtexture v2-r4 候補非依存較正契約"
-version: "0.5.0"
+title: "Microtexture v2-r5 候補非依存較正契約"
+version: "0.6.0"
 created: "2026-07-25"
-last_updated: "2026-07-25"
+last_updated: "2026-07-26"
 author: "Codex"
 tags: ["maps", "quality-assurance", "microtexture", "vision-qa", "calibration"]
 status: "review"
 document_kind: "navigation"
-summary: "r3の一回限り不合格を固定し、freshな匿名control、Root Vision、locked clean reference、未使用holdoutでr4 residual-window detectorを凍結する契約です。"
+summary: "r3/r4の一回限り不合格を履歴へ固定し、fresh foundations、匿名control、Root Vision、独立locked-clean、未使用holdoutでr5の四分岐composite thresholdを凍結する運用概要です。"
 ---
 
-# Microtexture v2-r4 候補非依存較正契約
+# Microtexture v2-r5 候補非依存較正契約
 
-## 現在地
+規範的authorityは`scripts/map-production/microtexture-v2-r5/preregistered-spec.json`です。
+この文書は運用navigationであり、矛盾時はr5 JSONと、その
+`implementation-bindings.json`に固定された実装・schema・templateが優先します。
 
-r3は2026-07-25に一回だけcalibrationされ、不合格のまま閉鎖しました。追跡証拠は
+## 履歴と現在地
+
+r3は2026-07-25に一度だけcalibrationされ、不合格のまま閉鎖しました。追跡証拠は
 `world/map-production/qa/microtexture-v2-r3-calibration-failure.json`です。
 
 | r3結果 | 実績 |
@@ -27,226 +31,222 @@ r3は2026-07-25に一回だけcalibrationされ、不合格のまま閉鎖しま
 | severity-3 detection | 4 / 4 = 100% |
 | speck / short / parallel hard detector | 0件検出 |
 
-原因は、Rootが判定した中央256×192とmetricが測った512×384全体の不一致、tiny
-speckとmicroblobを混ぜたlabel、target線へ反応せずclean背景へ反応したHessian
-ridge、metricごとの独立threshold選択です。r3の再実行、再label、再調整、threshold
-凍結、locked検証、holdoutは禁止します。
+r4も2026-07-25に一度だけcalibrationされ、threshold候補は選べたもののendpoint failureで
+failed-and-closedになりました。追跡証拠は
+`world/map-production/qa/microtexture-v2-r4-calibration-failure.json`です。
 
-r4はr3のretuneではなく、新しいspec、実装、blind key、controls、labels、locked
-clean reference、authority receipt、holdoutを持つ独立editionです。
+| r4結果 | 実績 |
+| --- | ---: |
+| clean acceptance | 100% |
+| warning acceptance | 100% |
+| reject detection | 48.3% |
+| severity-3 detection | 60.0% |
+| tiny-speck / microblob detection | 0% / 5.0% |
+| short-line / parallel-bundle detection | 55.0% / 73.3% |
 
-## 目的と適用境界
+r4では、Visionがsynthetic foundationを含むabsolute controlを判定した一方、単一occupancy
+metricはcontrol-reference residualだけを測りました。そのためfoundation上のアーティファクトが数値上消え、
+zero/duplicate protocol recordsにも不整合labelが生じました。また1 scalar channelではgrain、
+sparse spot、blob、finite line、parallel bundleを同時に表現できず、tiny-speckの必要cluster数も不足しました。
 
-Vision上の即時不合格である粒、点、微小塊、短線、平行線束、周期模様を、候補画像を
-見ずに較正します。候補、foundation、permission mask、過去候補順位はcontrol生成、
-label、formula、thresholdへ入力しません。
+r3/r4の再実行、再label、retune、threshold freeze、locked validation、holdoutは禁止です。両editionの
+controls、keys、labels、thresholds、foundations、locked sources、holdoutsはdevelopment-onlyです。
+r4 corpusはr5の固定morphology channelsとreference constantsを設計する開発資料に限って参照され、
+r5の正式判断へpixelや数値を持ち込みません。
 
-r4が測るのは、別途作られた256×192の背景luminance residualです。道路、河川、
-海岸、文字、記号、集落、正典geometryを含む生のmap pixelへ直接使いません。holdout
-合格後も、production referenceとeligible-background maskを別specで事前登録するまで
-制作候補へ接続しません。
+現在の唯一のsuccessor authorityはr5です。r5はfresh spec、key、foundations、controls、labels、
+locked-clean reference、authority receipt、holdoutを持つ独立one-shot editionです。
 
-## Authority
+## ImageGen input authority
 
-実行可能なrootは`scripts/map-production/microtexture-v2-r4/`です。normative JSON、
-実装、docs、templates、self-testは`implementation-bindings.json`でbyte固定します。
-各操作は次をすべて要求します。
+r5のfresh foundation corpusは、Rootと独立Visionで事前qualifyしSHA固定したImageGen `v10`、
+`v11`、`v12`だけです。各sourceは1536×1024で、control/referenceへ使用できるのは中央
+`[512,320,512,384]` cropだけです。その内部のdetector/Vision unitは
+`[128,96,256,192]`です。
 
-- HEADがcurrent branch upstreamと一致
-- authority working bytesがcaptured HEADと一致
-- exact code rootとexact成果物root
-- spec、bindings、runtime、blind-key commitmentの一致
-- 操作中のHEAD不変
+foundationはsecret HMACで3画像へ割り当てますが、各recordはfull private record identity（polarityと
+replicateを含む）を入力とするfull-output HMAC-SHA-256 counter-mode PRFで固有のprivate referenceを作ります。
+7×9 coefficient gridを滑らかに補間し、最大1.75 pxのwarpと最大0.75 Lのtone shiftだけを加えます。各splitの
+140 reference SHA、140 control SHA、および5 viewそれぞれの140 panel SHAは全件一意でなければなりません。
+`v10`～`v12`はcontrol-onlyであり、production art、
+texture donor、Golden input、final pixelsへ使用・転送しません。
 
-Formal stageは同一machineと同一runtime fingerprintを要求します。Fingerprintはplatform、
-Python executable hash、Python / NumPy / SciPy / Pillow / zlibのversionに加え、実際にloadしたNumPy core、SciPy
-ndimage、Pillow imaging binaryのSHA-256を含みます。Calibration HEADをfrozen authorityへ
-固定し、locked validationは同じHEADだけ、holdoutはそのHEADをancestorに持つtracked
-receipt commitだけで実行できます。
+公開manifest schemaは`microtexture-v2-r5-control-manifest/3`です。各recordが公開するのはopaque codeと、
+`control` / `reference` / `delta`のper-code/per-lane HMAC-SHA-256 commitment 3件だけです。420 commitmentsを
+全件一意にし、個別control/referenceのpath、file、raw bytes、raw SHAをmarker前に作成・公開しません。raw
+SHAはdurable markerとlabel seal後のprivate revealだけへ出します。
 
-UbuntuとWindows CIが同じauthority commitで成功するまでformal controlを生成しません。
+このblindの目的はhonest reviewerが指定されたsurfaceだけを見る運用分離です。technical / cryptographic
+blindや、同じOS principalで悪意あるreviewerに対するsecrecyは主張しません。fresh keyは専用の長寿命
+custodian processだけが保持し、Vision processへ継承・公開しません。marker前のreview surfaceは120
+contact-sheet pagesとcode-only label formだけです。label sealまではsource、authority code、個別
+control/reference、raw extraction、filesystem、hash/diff、identity regenerationをVision processから禁止します。
 
-## Exact Vision / metric unit
+ImageGen `v14`はfoundation corpusと独立したfresh locked-clean referenceです。Root / independent Vision
+qualificationは完了していますが、数値validationは未実行のpending post-freeze stageです。calibration
+populationとthreshold selectionから除外し、threshold freeze前のdecode・測定・数値参照を禁止します。
+freeze後に中央256×192を一度だけ測定し、hard compositeがacceptしなければr5を閉鎖します。
+`v14`もproduction donor、Golden input、final pixelsには使用しません。
 
-Control canvasは512×384 L-modeです。metricは中央`[128,96,256,192]`だけをcropし、
-その後にreflect filterを適用します。この256×192は200% contact-sheet panelのsource
-全体と完全一致します。400%は北西・北東・南西・南東の非重複128×96へ4分割し、
-4 viewの和が256×192全域と完全一致します。実装は5 viewのID順、exact-int scale / crop、
-nearest resize、4象限のmetric内包含、重複なし、gapなし、同一page indexのcode順一致を
-runtimeでも検証し、1pxのずれやbool / floatへの型変化もfail closedにします。
+foundation候補`v8`、`v9`とlocked-clean predecessor `v13`はVisionで不採用です。r4の旧`v7`を含め、
+r5 control、reference、threshold、holdout、productionへ再利用しません。
 
-sparse speck、microblob、short dash、parallel bundleは各splitでexact integer 0..9個を
-1条件ずつ持ちます。0は真の無注入境界です。非zeroの位置と角度は全てsecret-derivedで、
-中央固定や固定軸はありません。全geometryをmetric window内へ収め、外側canvasはmetricへ
-影響しません。Countとsize / amplitude / width / spacingは単調増加させず、low-countの
-大きく強い条件とhigh-countの小さく中程度の条件を交差配置します。
+## Control corpus: 140 records / 78 clusters
 
-## Hard gate
+calibrationとholdoutはそれぞれ140 records、78 unique private condition clustersです。
 
-blocking metricは1件だけです。
+| private role | records | clusters | 用途 |
+| --- | ---: | ---: | --- |
+| `artifact` | 120 | 60 | threshold selectionとendpoint evaluation |
+| protocol-zero | 16 | 16 | exact-zero foundation/label protocol sentinel |
+| duplicate-audit | 4 | 2 | distinct-reference semantic-replicate consistency audit |
+
+120 `artifact` recordsは5 morphology familiesから成ります。
+
+- `artifact-fine-grain`
+- `artifact-speck`
+- `artifact-microblob`
+- `artifact-short-dash`
+- `artifact-parallel-bundle`
+
+formal one-shot前のdevelopment Visionで、各familyの12 nonzero conditionsを低・中・高強度へ再配分し、
+corpus coverageとして固定します。calibrationとholdoutはsplit別のfrozen schedulesを使います。fine-grainは
+fine-band / halftoneの各patternにつき最低強度の1 conditionだけをmetric-window内のdeterministic nonzero
+sparse support（`support_fraction=0.001`）とし、残り10 conditionsはfull supportです。これはformal labelの
+期待値や事前指定ではなく、endpoint最低population/rate、blind、one-shot契約は不変です。
+
+各familyは12 nonzero conditions、各conditionはdark/lightのpaired polaritiesを持つため24 recordsです。
+60 `artifact` clustersの全controlはreferenceと異なり、zero-count `artifact` conditionはありません。
+polarity pairは異なるprivate referenceを使いますが、position、angle、unsigned geometryからrequested deltaを
+exact sign inverseとして作ります。decoded `control-reference` int16 residualもexact inverse、対応metricsも
+exact equalityでなければ生成を拒否します。polarityは独立clusterとして数えません。
+
+16 protocol-zero recordsはcontrol bytesとreference bytesが完全一致します。Rootは必ずclean、severity 0、
+visible flagsなしとlabelしなければなりません。duplicate-auditはcleanと`obvious-artifact`の2 groupsで、
+各groupに異なるopaque codeの2 semantic replicatesがあります。replicate間のprivate reference/controlは
+異なり、requested delta、decoded residual、metricsはexact equalityです。Rootのdisposition、severity、
+全visible flagsも一致しなければfail closedです。protocol-zeroとduplicate-auditは
+threshold candidates、selection objective、`artifact` endpointsから除外します。
+
+sentinel membershipやraw hash equalityはmarker前のlabel補正に使いません。semantic auditは必ず
+durable marker → exact label-byte seal → 全control/referenceのin-memory regeneration → exact contact-sheet byte
+binding → private audit → control/reference measurement
+の順です。protocol-zeroとclean duplicateはclean、`obvious-artifact` duplicateは両方ともseverity 2/3 rejectかつ
+`short_line_visible=true`を要求します。違反はpost-marker failureとしてone-shot editionを閉じます。
+
+calibrationとholdoutはpublic/parameter nonce、HMAC identities、opaque codes、control IDs、delta hashesを
+分離します。endpoint performanceはeligibleな`artifact` recordsをcluster内で平均し、その後unique clustersを
+等重みで集計します。
+
+## Root Vision: 120 pages / split
+
+control canvasは512×384 L-modeで、decision-critical cropは中央`[128,96,256,192]`です。Rootは各splitの
+全140 anonymous codesを次の5 viewsで確認します。
+
+- `full-200`: metric window全体を200%表示、24 pages
+- `northwest-400`: 北西128×96を400%表示、24 pages
+- `northeast-400`: 北東128×96を400%表示、24 pages
+- `southwest-400`: 南西128×96を400%表示、24 pages
+- `southeast-400`: 南東128×96を400%表示、24 pages
+
+合計は120 pages / splitです。4 quadrantはgapとoverlapなくmetric window全域を覆います。実装はview ID、
+順序、integer crop/scale、nearest-neighbor resize、pageごとのcode順をruntimeで再検証します。
+
+Root labelは`clean|warning|reject`、grain/tiny-speck/microblob/short-line/parallel-bundleの5 visible flags、
+severity 0..3、200% review、全400% quadrant review、notesを要求します。全120 pagesと全codesを確認するまで
+評価を開始しません。validated label fileはgeneratorが出したexact regular pathだけから読み、marker直後、
+新しいdecode/reveal/measurementより前にsplit別sealed pathへexclusive copyします。
+
+## Four branches, one threshold
+
+r5は中央256×192 luminance residualの固定raw metricsから4 branch scoresを作ります。
+
+1. `grain_score`
+2. `spot_score`
+3. `finite_line_score`
+4. `parallel_bundle_score`
+
+spot component floor、finite-line response floor、parallel-pair response floorはいずれもabsolute `4.5 L`です。
+coherent fine patternはdirectional coherenceを含むgrain branchが担当します。split-specific schedulesとこれらの
+floorは、fresh formal key、controls、labelsより前に明示的なnon-formal development keysでfreezeしました。
+そのcorpusはdevelopment-onlyで、formal labels、threshold、resultsは未確定であり予告しません。既存のblind、
+one-shot、endpoint、failed-r3/r4契約は不変です。
+
+parallel branchはraw deltaへcore-only line kernelを適用します。weaker-pair peakとmatched-pair countは同一の
+angle/length filter内でcoupleし、別filterのpeak/countを混ぜません。matched pairsが2未満ならcanonical
+`parallel_pair_peak_l=0`、`parallel_matched_pair_count=0`です。
+
+唯一のhard scalarは次です。
 
 ```text
-delta = control - reference
-highpass = delta - Gaussian(delta, sigma=4, reflect, truncate=4)
-microartifact_occupancy_per_mp =
-  count(abs(highpass) >= 3.0 L) * 1,000,000 / 49,152
-reject = occupancy > frozen threshold
+hard_composite_score = max(
+  grain_score,
+  spot_score,
+  finite_line_score,
+  parallel_bundle_score
+)
+reject = hard_composite_score > frozen scalar threshold
 ```
 
-Blob、finite-line、parallel-pair scoreは原因帰属用diagnosticです。threshold選択、
-reject、freeze、holdout passへ混ぜません。これによりmetricごとのfalse rejectがORで
-累積する構造をなくします。
+branch別thresholdや追加OR gateはありません。raw/diagnostic metricsを独立hard rejectorにしません。
+calibrationはexact floor `0`、distinctなnonnegative minimum-epsilon、adjacent-value midpoints、upper outward sentinelから候補を作り、
+clean-cluster acceptance 0.95以上かつwarning-cluster acceptance 0.75以上の候補だけを許可します。
+その上で、5 Vision morphology endpointsの最小detection、combined spot、overall reject、severity-3、clean、
+warning、より厳しいthresholdの固定順で一意に選びます。
 
-## Control corpusと独立cluster
+threshold candidates、selection、全endpointに入るprivate roleは`artifact`だけです。protocol-zeroと
+duplicate-auditは完全に除外します。全endpointのminimum cluster countとrateはblockingです。不足population、0 denominator、vacuous pass、
+admissible candidate不在、endpoint failureはthreshold freezeを禁止してeditionを閉じます。holdoutはfreezeした
+1 thresholdを変更せず使います。
 
-各splitは140 recordsです。
+## Authorityとone-shot
 
-| 区分 | Family | parameter clusters | records |
-| --- | --- | ---: | ---: |
-| clean | zero / lowpass / Matérn-like / broad shoulder / multiscale | 20 | 20 |
-| grain | fine band / halftone | 20 | 40 |
-| spot | tiny speck / microblob | 20 | 40 |
-| line | short dash / parallel bundle | 20 | 40 |
-| 合計 | 11 family | 80 | 140 |
+実行rootは`scripts/map-production/microtexture-v2-r5/`です。各formal operationは次を要求します。
 
-異常clusterはdark/light polarityの2 recordsを持ちますが、polarityは独立標本数へ
-加えません。cluster内record correctnessを平均し、その後clusterを等重みで平均します。
-Dark/lightはbyte-identical referenceと同一のposition / angle / unsigned deltaを共有し、
-最後の符号だけを反転します。Calibrationとholdoutはnonce、parameters、背景、配置を分離します。
+- HEADがcurrent branch upstreamと一致し、authority working bytesがcaptured HEADと一致する
+- code rootと`artifact root`がspec固定のexact pathである
+- foundation/locked provenanceとVision reviewsがtracked SHAへ一致する
+- 全formal stagesが同一machineと同一runtime fingerprintを使う
+- blind keyが暗号学的に安全なfresh 32 bytesで、専用の長寿命custodian processだけが保持し、Vision processへ
+  継承・公開・保存・log出力されない
+- 操作中のHEADが不変である
 
-anonymous code順に1頁6件、full 200%を24頁、4象限400%を各24頁、計120頁 / splitです。
-私が全5 viewの全頁・全codeを見ない限りlabelは受理されません。
+Ubuntu/Windows CIはstatic、unit、golden-vector preflightであり、formal controlsを作ったりformal runを
+継続したりしません。両CIがauthority commitで成功してから開始します。
 
-## Root Vision labels
+各stageはmarker write自体をpost-marker failure guardの`try`内で行い、durable markerをcurrent target decode、
+private identity reveal、新しいnumeric measurement、threshold selection、endpoint evaluationより前に書きます。
+calibration/holdoutではlabel seal、in-memory regeneration、exact contact-sheet byte binding、private sentinel
+auditsもmarker後かつmeasurement前です。terminal completionを書いた直後は`require_completion=True`でauthorityを
+reloadします。marker後のexception、通常endpoint failure、
+completion欠落はいずれもeditionを消費します。失敗後のregeneration、relabel、remeasurement、rerun、
+threshold changeは禁止です。reportはsealed labels、manifest、regenerated control/reference SHA、exact contact-sheet bytes、marker、
+HEAD/runtime、threshold/receipt、secret-derived identityへ再結合してから最終completionを書きます。
 
-visible flagは次の5件です。
+## Formal execution order
 
-- `grain_visible`
-- `tiny_speck_visible`
-- `microblob_visible`
-- `short_line_visible`
-- `parallel_bundle_visible`
+1. r5 authority、v10～v12 foundations、v14、全generation provenance、Root/independent Vision reviewsを
+   commit/pushし、tracked bytes・upstream HEAD・Ubuntu/Windows CIをpreflightする。
+2. 同一machine/runtimeを固定し、fresh 32-byte blind keyを専用custodian processだけに置き、Vision processへ
+   継承させない。exact `artifact root`はformal processへ設定する。
+3. calibration 140 controlsを一度だけ生成する。
+4. Rootがcalibrationの全120 pages / 140 codesを匿名状態でlabelする。
+5. calibrationを一度だけ評価する。失敗時はr5を閉じ、thresholdをfreezeしない。
+6. pass時だけ1 scalar thresholdをfreezeし、`v14` locked-cleanを一度だけ数値validationする。
+7. eligible independent authorityがfrozen calibrationとlocked-clean reportを監査し、tracked receiptを作る。
+8. receiptをcommit/pushし、そのHEADでUbuntu/Windows CIを再度通す。
+9. receiptと`v14` provenance/reviewsを再検証し、fresh holdout 140 controlsを一度だけ生成する。
+10. Rootがholdoutの全120 pages / 140 codesを匿名状態でlabelする。
+11. frozen thresholdを変えず、holdoutを一度だけ評価する。失敗しても変更・再実行しない。
+12. r5 pass後も、production residual derivationとuntouched production holdoutを別specで事前登録する。
 
-Disposition整合は固定です。
+## Production / Golden boundary
 
-- clean: severity 0、visible flagなし
-- warning: severity 1、visible flagを1件以上
-- reject: severity 2または3、visible flagを1件以上
+r5 detectorが扱うのは、別途preregisterされたbackground referenceから得る完全な256×192 float32
+luminance residual windowです。道路、河川、海岸、文字、記号、集落、正典geometryをprotected-feature maskと
+filter-support erosionで除外し、partial windowやdenominator renormalizationを禁止します。
 
-full 200%と全4象限400%のreviewed flag、全exact keys、全code coverageを要求します。旧
-`speck_visible` schemaはfail closedです。validated labelsとexclusive one-shot markerが
-作られる前のidentity / cluster revealは禁止します。Reviewed label inputはlink / junction /
-reparse pointを含まないregular fileとしてspec固定の
-`controls/calibration/labels-calibration.json`または
-`controls/holdout/labels-holdout.json`だけから読みます。Marker直後かつ新規decode / reveal /
-measurement前に、そのvalidated bytesを`sealed-inputs/`以下のsplit別固定pathへexclusiveに
-封印し、bytes SHAをreportへ結合します。Calibration authorityとterminal holdout reportの
-再読込時にもsealed bytesを読み、manifest、measurements、revealed clusterから全endpoint
-count / rateとselector結果を再計算します。
-
-## Threshold selectionと合格条件
-
-候補thresholdは`max(0, minimum-epsilon)`の非負lower boundary、隣接値midpoint、
-`maximum+epsilon`のupper outward sentinelです。完全hard gateで
-clean cluster acceptance `>= .95`、warning cluster acceptance `>= .75`を満たす候補だけ
-を許可し、次の順で一意に選びます。
-
-1. grain / tiny-speck / microblob / short-line / parallel-bundleの最小cluster detectionを最大化
-2. combined spot cluster detectionを最大化
-3. overall reject cluster detectionを最大化
-4. severity-3 cluster detectionを最大化
-5. clean acceptanceを最大化
-6. warning acceptanceを最大化
-7. より厳しい低thresholdを選択
-
-Calibration / holdoutはそれぞれ次を要求します。
-
-| endpoint | minimum clusters | calibration | holdout |
-| --- | ---: | ---: | ---: |
-| clean acceptance | 15 | .95 | .95 |
-| warning acceptance | 10 | .75 | .75 |
-| overall reject detection | 30 | .95 | .95 |
-| severity-3 detection | 4 | 1.00 | 1.00 |
-| grain reject detection | 8 | .80 | .75 |
-| tiny-speck reject detection | 4 | .75 | .75 |
-| microblob reject detection | 4 | .75 | .75 |
-| spot reject detection | 8 | .80 | .75 |
-| short-line reject detection | 8 | .80 | .75 |
-| parallel-bundle reject detection | 6 | .80 | .75 |
-
-不足population、0分母、vacuous passは禁止です。全threshold候補のadmissibility auditを
-reportへ残すため、候補が1件も許可されない場合も原因を追跡できます。Calibration失敗でも
-reportは残しますが、thresholds-frozenは作りません。候補が1件もadmissibleでない場合、
-`hard_threshold`はnull、endpoint / per-code resultsは昇順candidateの最後であるupper
-sentinelに結合し、`passed=false`とします。失敗したeditionは閉鎖します。
-
-これはconfidence intervalや無制限母集団の推定ではなく、exact finite corpusに対する
-決定論的coverage gateです。Endpoint間の独立性は主張せず、合格の意味を「同じ単一gateが
-事前登録した全count/rateをcalibrationとholdoutの双方で満たした」に限定します。
-
-## Fresh ImageGen locked clean reference
-
-`microtexture-v2-locked-clean-reference-imagegen-v7.png`はr3 v4/v5を参照しないfresh
-chainです。第1案は私が200% / 400%の細かなmottleと短いwispを見て棄却し、第2案だけを
-保存しました。第2案はexact metric windowの4象限を個別に400%確認し、Root Vision 97、
-独立Vision 97で、original / 200% / 全4象限400%の点、塊、短線、平行束、反復、seamなしを
-確認しています。
-
-この画像はthreshold選択から除外し、freeze前の数値計測を禁止します。Freeze後に中央
-256×192だけを一回評価し、hard gateがacceptしなければr4を閉じます。Production donor、
-Golden input、最終pixelには使いません。
-
-## 技術的blindとone-shot chain
-
-- 32 cryptographic random bytesを一時環境変数で渡し、値をartifactやlogへ保存しない
-- render seed、private control ID、private cluster ID、anonymous codeをHMAC-SHA-256で導出
-- public manifest / labelsへidentityとclusterを出さない
-- manifestをcode、control SHA、reference SHA、requested-delta SHAへ結合
-- contact-sheet bytes、SHA、code順、crop、scaleをsecret-derived corpusから再生成
-- marker、control directory、report、frozen threshold、最終completionをexactなregular non-link pathへexclusive write
-- marker SHAをreportとfrozen authorityへ結合
-- markerへruntime、captured HEAD、started_at、one-shot consumedをexact-schemaで結合
-- 次stageのmarker前には既に消費済みのreport / labels / stored metrics / receiptをauthorityとして
-  再計算できますが、旧source imageを再測定せず、新stageのtarget decode / measurement / revealはmarker後だけ
-- normal pass / normal endpoint failの双方で、全read-backとHEAD確認後にstage completionを最後の操作として
-  書き、normal failは`passed:false`とする。Authority loaderはcompletion必須かつfailure reportとの共存を拒否
-- marker後のcatch可能な例外はstage別exclusive failure reportへphase、type、sanitized messageとhashの
-  記録を試み、persistenceや`add_note`自体が失敗してもoriginal throwableを置換せず、markerとcompletion欠如を閉鎖証拠とする
-- normal reportは保存前にnested numeric / bool / rate、全candidate、objective、per-code result、
-  endpoint、最終passを入力から再計算し、authority再読込でもcalibrationを再計算
-- terminal holdout reportはfinal completion前にread-backし、actual control / reference / sheet、sealed
-  labels、marker、freeze、tracked receipt、HEAD / runtime、secret-derived exact identityへ再結合し、
-  completion writer自身も書込み後のexact non-link bytesを検証
-- holdout前にfreeze、locked-clean report、reviewer receiptをhash結合
-- holdout control生成時とholdout marker前の双方で、current receipt HEADにあるv7本体、
-  generation chain / receipt、Root / independent Vision QAの5ファイルをtracked bytesとspec SHAへ再照合
-
-## 実行順序
-
-1. r4 authority、v7画像、prompt receipt、Root / independent Vision QA、本文書をcommit / push
-2. Ubuntu / Windows CI成功を確認
-3. fresh blind keyを安全に作り、calibration 140 controlsを一回生成
-4. 私がcalibration 120頁・140 codeを匿名状態でlabel
-5. calibrationを一回評価。失敗ならr4閉鎖
-6. 合格時だけthresholdをfreezeし、v7 locked cleanを一回評価
-7. eligible independent reviewerがexact hashesを監査し、tracked authority receiptを作成
-8. receiptをcommit / pushし、Ubuntu / Windows CI成功を確認
-9. v7と全provenanceを再検証後、未使用holdout 140 controlsを一回生成
-10. 私がholdout 120頁・140 codeを同じ規則でlabel
-11. v7と全provenanceを再検証後、holdoutを一回評価。失敗しても変更・再実行しない
-12. 合格時だけproduction residual derivationとv246 terminal familyを別specで事前登録
-
-Production側の別specは、reference/source hash、semantic maskとerosion、eligible pixel不足時の
-無効化、tile overlap / halo / seam、zoom / DPI、color / alpha / resampling、windowからmasterへ
-昇格する集約規則、地域・地形別の未使用production holdoutを全て固定します。r4の合格だけで
-制作pixelへの適用は許可しません。
-
-## Golden / Phase 5への接続
-
-新v246はfamily、candidate数、seed、donor変換、residual reference、eligible mask、合成、
-gate、停止条件を事前登録します。Golden候補は同一native PNGから
-`native/full25/full50/highland200/highland400`のexact-fiveを作り、私が5枚全てを
-Vision確認します。異なる二名のSHA-blind reviewerも双方94点以上でなければ昇格しません。
-
-Golden固定後は`17 direct -> idx17 -> 5 continent -> idx22 -> world -> idx23 ->
-23 masters / 1350 tiles`の順で制作し、採用する各masterを私がVision確認します。
+r5のsynthetic holdout passだけではproduction derivation、v246 family、Golden candidate、final pixelsを
+承認しません。production source/reference、mask、filter support、tile overlap/halo/seam、boundary、color/alpha/
+resampling、zoom/tile coverage、deterministic outputs、window-to-master aggregation、untouched production holdoutを
+候補測定前に別途固定し、同じ実装とfrozen thresholdでsynthetic/production holdoutの両方を通過する必要があります。

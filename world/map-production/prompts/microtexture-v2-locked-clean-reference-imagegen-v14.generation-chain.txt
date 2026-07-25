@@ -1,0 +1,28 @@
+MICROTEXTURE V2 R5 LOCKED CLEAN REFERENCE V14 — INDEPENDENT IMAGEGEN CHAIN
+
+Role
+----
+Independent post-calibration false-reject validation source for r5. It is
+excluded from r5 control foundations, threshold selection, calibration,
+holdout, production artwork, Golden artwork, and final pixels.
+
+Step 1 — v13, rejected by Root Vision
+-------------------------------------
+Generate a brand-new independent locked-clean validation reference for a fantasy-map microartifact detector. Do not derive from or imitate any earlier generated calibration foundation. Landscape 3:2, target 1536×1024, opaque RGB. Flat orthographic edge-to-edge warm neutral parchment/mineral ground, refined and understated. It must remain visually clean under nearest-neighbor 200% and 400% enlargement. Permit only broad, softly blended, non-periodic tonal structures larger than about 180 pixels, with low contrast and no bounded local shapes. Hard exclusions: no visible detail below 32 pixels; no grain, noise, dither, dots, specks, pores, microblobs, stipple, fibers, scratches, brush marks, short dashes, ridges, lines, hatching, parallel bundles, diagonal weave, checker, lattice, cells, rings, rosettes, fingerprints, contours, repeated stamps, tiling, seams, borders, panels, vignette, directional lighting, highlights, shadows, folds, stains, perspective, relief, objects, map geography, symbols, labels, or text. Smooth matte digital mineral wash, quiet across the center and every edge, not photographed paper.
+
+Decision: rejected. Original, center-200, metric-400, and every quadrant-400
+view contained visible medium-scale mottling and short cloudlike ridges. It is
+not tracked and is not an authority input.
+
+Step 2 — v14, adopted locked-clean candidate
+---------------------------------------------
+Generate a completely new locked-clean validation image, not an edit and not derived from any previous image. Landscape 3:2, target 1536×1024, opaque RGB. A smooth matte warm-neutral ivory digital color field suitable only as a detector clean baseline. The entire central 512×384 region must appear almost featureless at native size and under nearest-neighbor 200% and 400% enlargement. Do not simulate parchment, paper, mineral, watercolor, or any physical texture. Allow only a barely perceptible, non-periodic color drift at scales larger than 400 pixels. Strictly no grain, noise, dither, mottling, cloudy patches, blobs, blooms, wisps, ridges, dots, specks, pores, fibers, scratches, brush marks, short lines, parallel lines, diagonal weave, checker, lattice, rings, cells, contours, repeated pattern, seams, borders, vignette, edge shading, directional light, stains, folds, objects, geography, symbols, labels, or text. Uniform low-noise airbrushed digital fill with quiet center and edges.
+
+Adopted output
+--------------
+`world/map-production/style-assets/microtexture-v2-locked-clean-reference-imagegen-v14.png`
+SHA-256: `a0a014f87efeb143eb2bb999d4ed03dc27b8bf8fac99f679e99e8d404c1d9b64`
+
+This source must remain numerically unread until r5 calibration has selected
+and frozen its one scalar threshold. It cannot be used as a control foundation
+or to tune any metric definition or reference constant.
