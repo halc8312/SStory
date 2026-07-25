@@ -33,7 +33,10 @@ function collectMarkdownFiles(rootDir = REPO_ROOT) {
     for (const entry of entries) {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
-        if (!IGNORED_DIRECTORIES.has(entry.name)) {
+        if (
+          !IGNORED_DIRECTORIES.has(entry.name)
+          && !entry.name.toLowerCase().startsWith('tmp')
+        ) {
           walk(fullPath);
         }
       } else if (entry.isFile() && entry.name.toLowerCase().endsWith('.md')) {

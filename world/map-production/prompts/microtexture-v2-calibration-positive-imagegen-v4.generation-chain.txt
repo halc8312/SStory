@@ -1,0 +1,58 @@
+MICROTEXTURE V2 CALIBRATION-ONLY POSITIVE — IMAGEGEN PROMPT CHAIN
+
+Role boundary
+-------------
+This chain created a calibration-only visual-positive experiment. Its retained
+v4 output is now restricted further to qualitative smooth-anchor comparison.
+It is forbidden in threshold selection, numeric holdout, production map donor,
+Golden input, geography source, and final-pixel source.
+Only the final fourth image is retained. The first three conversation images
+were rejected by Root Vision and are not promoted.
+
+Step 1 — new generation
+-----------------------
+Create one calibration-only raster texture sheet for evaluating a professional fantasy-map deep-zoom material detector.
+
+Canvas and viewpoint:
+- A completely flat, orthographic, edge-to-edge rectangular surface.
+- No horizon, perspective, lighting direction, relief extrusion, frame, margin, vignette, or panel boundary.
+- Neutral light warm-gray / desaturated parchment luminance, restrained contrast.
+
+Material character:
+- Dense but visually clean, continuous, nonperiodic cartographic ground material.
+- Rich multi-scale variation: broad soft masses, medium irregular mottling, and subtle fine structure that remains natural at 200% and 400% zoom.
+- Fine structure must be continuous and embedded in broader parent forms, never isolated noise.
+- No recognizable geography or objects.
+
+Strict exclusions:
+- no text, labels, symbols, roads, rivers, coastlines, borders, mountains, buildings, vegetation icons, or semantic shapes
+- no dots, specks, particles, pores, holes, craters, salt-and-pepper grain
+- no short dashes, hatching, contour lines, parallel bundles, fishbones, veins, roots, fern shapes, ribbons, fingerprints
+- no cells, rings, rosettes, scales, cobblestones, checkerboards, halftone, tiles, stamps, grids, seams, or repeating motifs
+- no pure white or pure black marks
+- no sharp outlines, halos, embossed edges, cast shadows, or directional highlights
+
+This image is NOT production art and will never be copied into the final map. Its sole role is a visually clean, high-detail positive control for a blinded microtexture calibration. Prioritize artifact-free natural continuity over dramatic texture.
+
+Root Vision disposition: rejected. Sand-like micrograin and brush/filament
+structure remained visible.
+
+Step 2 — edit of immediately preceding image
+------------------------------------------------
+Edit the immediately preceding calibration texture with exactly one focused change: remove the visible sand-like micrograin, isolated pinprick flecks, scratch/brush filaments, tiny curls, and cell-like fine boundaries. Replace those sub-12-pixel artifacts with smooth continuous transitions that remain supported by broader irregular forms. Preserve the existing flat orthographic edge-to-edge composition, overall warm-gray luminance, broad masses, medium nonperiodic mottling, size, and every other exclusion. Do not add any geography, objects, lines, dots, cells, repeats, seams, lighting, or 3D relief.
+
+Root Vision disposition: rejected. Faint cell/fingerprint boundaries remained.
+
+Step 3 — edit of immediately preceding image
+------------------------------------------------
+Edit the immediately preceding image with exactly one focused change: eliminate every remaining faint cell, ring, rosette, fingerprint, lace, curl, and scalloped-boundary motif across the surface. Replace those motifs with genuinely amorphous, continuous, nonperiodic tonal transitions whose fine variation has no closed outlines or recognizable repeated shapes. Preserve the existing flat orthographic edge-to-edge canvas, warm neutral luminance, broad masses, medium mottling, soft contrast, dimensions, and all prior exclusions. Add no dots, grain, scratches, lines, hatching, bundles, objects, geography, seams, lighting, or relief.
+
+Root Vision disposition: rejected. Weak closed micro-boundaries remained.
+
+Step 4 — edit of immediately preceding image
+------------------------------------------------
+Edit the immediately preceding image with one decisive change: remove and smooth away ALL spatial structure smaller than 24 pixels, everywhere. The result must contain only broad and medium amorphous tonal fields with soft continuous boundaries; there must be no visible microtexture, grain, closed loop, scallop, cell, curl, filament, speck, line, or repeated motif even at 400% zoom. Preserve the flat orthographic edge-to-edge warm-neutral field, overall broad composition, dimensions, and lack of semantic content. Do not add any new element.
+
+Root Vision disposition: approved only as a qualitative low/mid-frequency
+smooth anchor. It does not qualify as a calibration threshold input,
+post-freeze numeric validation input, or high-density positive.

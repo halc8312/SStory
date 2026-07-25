@@ -31,10 +31,14 @@ test('collectMarkdownFiles is recursive and excludes dependency directories', ()
     fs.mkdirSync(path.join(dir, 'nested'));
     fs.mkdirSync(path.join(dir, 'evaluation'));
     fs.mkdirSync(path.join(dir, 'node_modules'));
+    fs.mkdirSync(path.join(dir, 'tmp'));
+    fs.mkdirSync(path.join(dir, 'tmp-map-production'));
     fs.writeFileSync(path.join(dir, 'root.md'), '# root');
     fs.writeFileSync(path.join(dir, 'nested', 'child.md'), '# child');
     fs.writeFileSync(path.join(dir, 'node_modules', 'ignored.md'), '# ignored');
     fs.writeFileSync(path.join(dir, 'evaluation', 'ignored.md'), '# ignored');
+    fs.writeFileSync(path.join(dir, 'tmp', 'ignored.md'), '# ignored');
+    fs.writeFileSync(path.join(dir, 'tmp-map-production', 'ignored.md'), '# ignored');
     fs.writeFileSync(path.join(dir, 'nested', 'ignored.txt'), 'ignored');
 
     const files = collectMarkdownFiles(dir).map(file => path.relative(dir, file));

@@ -2,9 +2,9 @@
 type: "overview"
 category: "maps"
 title: "高精細ディープズーム地図 Phase 0–7 制作計画"
-version: "1.1.0"
+version: "1.2.0"
 created: "2026-07-19"
-last_updated: "2026-07-22"
+last_updated: "2026-07-25"
 author: "Codex"
 tags: ["maps", "deep-zoom", "image-generation", "vision-qa", "github-pages"]
 status: "draft"
@@ -68,6 +68,12 @@ ImageGenは `ground material` と `eight-system scalar relief` の候補作成�
 ```
 
 背景または標高の単独審査で落ちた資産は、合成や数値調整へ進めません。数値gateを通っても、Vision上で地形として読めなければ不採用です。
+
+### Microtexture v2-r3 の先行凍結
+
+新しいGolden候補を生成する前に、候補・foundation非依存の `scripts/map-production/microtexture-v2-r3/` をGitへ凍結します。Calibrationとholdoutは各66 controls、200% 11頁、400% 11頁です。私が両scaleの全頁・全codeを匿名状態で確認し、calibration、locked positive、事前登録済み独立reviewer receipt、未使用holdoutをそれぞれ一回だけ実行します。一段でも失敗した版はthresholdを調整せず閉じ、修正版を新しい事前登録として作ります。
+
+ImageGen由来のv4は目視smooth anchorだけ、v5はthreshold凍結後のlocked positiveだけに使用します。`k3-v246-imagegen-ground-material-donor-v5.png` は較正から除外し、r3 holdout合格後に新規事前登録するproduction derivationでだけ使用できます。
 
 ## Phase 5: 14地域の生成順
 
@@ -139,7 +145,9 @@ Phase 5 の実制作は、ImageGenを99枚の地理正本そのものへ使う�
 - 200%から400%で意味のある地理情報が増えない状態
 - protected geometry の移動、欠落、追加、または許可外のピクセル差分
 
-自動QAは固定基準として、overview coverage、quiet fraction、dash bundle、orientation coherence、4倍/8倍texture gainを測定します。Golden候補は `coverage >= 360/334`、`quiet >= .905`、`dash = 0`、`orientation <= .16`、`texture4 >= .61`、`texture8 = .75–1.22` をすべて満たす必要があります。閾値は候補に合わせて変更しません。
+自動QAの連続量・正典gateは固定したまま維持します。Primary gateは `coverage50/25 >= 365/338`、`quiet = .908–.925`、`orientation <= .14`、`texture4 = .615–.64`、`texture8 = 1.10–1.20` です。A/unit/totalの `sub8_energy_fraction <= .42`、A/unit repetition `<= .05`、total repetition `<= .07`、各bodyのunit sigma4 energy `>= 29`、sigma8 energy `>= 34`、exact-eight geometry、permission/protected/road/lock不変、closed loop・white crest particleゼロも維持します。
+
+r3 holdout合格後は、旧 `sub8 component == 0`、raw `dash == 0`、raw short-bundle pair `== 0` をlegacy diagnosticへ降格し、粒・fine energy・short ridge・parallel excess・neighbor pairのr3 hard thresholdsで置換します。raw件数はreceiptへ残しますがhard判定へ混ぜません。r3合格前にこの置換を先取りしてはいけません。すべてのthresholdは候補に合わせて変更しません。
 
 一画像は最大5回までとします。同じ欠陥が2回続けば画像編集を中止し、制御図かプロンプトを直します。採用画像だけを `masters/` と公開アセットへ昇格し、不採用画像は制作記録として残します。
 

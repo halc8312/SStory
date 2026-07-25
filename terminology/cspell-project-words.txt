@@ -158,6 +158,15 @@ WGS
 Windstoker
 worldbuilding
 microtexture
+HMAC
+imagegen
+lowpass
+Matérn
+microblob
+multiscale
+nonblocking
+RGB
+unpushed
 Zander
 Zephia
 Zephyros

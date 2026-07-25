@@ -1,0 +1,19 @@
+{
+  "artifact": "microtexture-v2-r3-implementation-bindings",
+  "schema_version": "microtexture-v2-r3-implementation-bindings/1",
+  "authority": true,
+  "spec_sha256": "166eb08f8d2f9de673c29c4c24b4d1c405f0ea3800a04b50ac4124aa84bdb0a1",
+  "files": {
+    "preregistered-spec.json": "166eb08f8d2f9de673c29c4c24b4d1c405f0ea3800a04b50ac4124aa84bdb0a1",
+    "PREREGISTERED-SPEC.md": "b022c19e54906e092a3841584c1b2cbfbcd3441683dc3adc35a90b29a622c534",
+    "README.md": "fc1edde711d6d4408eb4edbe083e9ac59e041592dfc0fe09c77a6df4f41236d7",
+    "common.py": "dc032d81c5892695fc1107841bc727bd8b727a098bbe597c1143096ea32fe567",
+    "control_catalog.py": "7c71a8bbc12fe4053f0cc4ca1f7afb6cebe5a7ceb1b725a7bff765b004bfd200",
+    "metrics_v2_r3.py": "d1da224ef9e037d54c6e5d1449d67e69fe224a6023d183f60e82e8261acc6f0e",
+    "generate_controls.py": "a47dbfabf0608b77e2bd01580e84c3006ba220587cfeff558abe0e036683f8ca",
+    "calibration_harness.py": "627ffa5bf0badb222cfaf5ca637b2efe97e2409bb3f738be5c6747c774d9a5b3",
+    "labels-calibration.template.json": "6e4169478fc0ef80b788fc86b6f1188db19d1f9e4447f9314472b42a9ddf0be7",
+    "labels-holdout.template.json": "3a02e1b21c618bcc9ca4431bac4a259442c76e6d171598a822fb24256503c69a",
+    "threshold-authority.template.json": "a00438e48ad5c4df1304d8691d43a436bb9ac0a23fd439b49a19e2779497c660"
+  }
+}

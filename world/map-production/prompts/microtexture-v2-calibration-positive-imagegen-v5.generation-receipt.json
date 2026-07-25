@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "generation_id": "microtexture-v2-calibration-positive-imagegen-v5",
+  "status": "approved-restricted-locked-validation-source",
+  "generated_at": "2026-07-25T16:24:00+09:00",
+  "generator": "image_gen.imagegen",
+  "generator_model_name_claimed": false,
+  "operation": "single-change-edit-of-approved-restricted-v4",
+  "prompt_chain": {
+    "path": "world/map-production/prompts/microtexture-v2-calibration-positive-imagegen-v5.generation-chain.txt",
+    "sha256": "a81553fe8e2bef7238a91b0077824ca9b742d62ff9d54045b60e5a120a3b8b66",
+    "base_chain_path": "world/map-production/prompts/microtexture-v2-calibration-positive-imagegen-v4.generation-chain.txt",
+    "base_chain_sha256": "55e35ca721a394ed6005bb75a4f7649d6057ff756cbb2d83f692f8fce96c1b79",
+    "base_generation_receipt_path": "world/map-production/prompts/microtexture-v2-calibration-positive-imagegen-v4.generation-receipt.json",
+    "base_generation_receipt_sha256": "e24e3b191bd824f41abaa632e65b845a4fe2fec1418c6eb36b42b7c855bc5b42",
+    "base_image_sha256": "c83ea94d5e82a1b00e86a9357df443ed38f86a58b2c98e511f068ff7201b5575",
+    "exact_step_5_prompt_text_preserved": true
+  },
+  "reference_chain": {
+    "step_5": "the immediately preceding v4 conversation image",
+    "byte_exact_base_image_persisted": true,
+    "conversation_input_byte_exact_identity_claimed": false,
+    "final_output_persisted_from_returned_data_url": true
+  },
+  "output": {
+    "path": "world/map-production/style-assets/microtexture-v2-calibration-positive-imagegen-v5.png",
+    "sha256": "b9e21a0e32cf88d099f81503915c5649affc192c9ae025ce3f893dce472a88e7",
+    "bytes": 1543707,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "root_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-calibration-positive-imagegen-v5-root-vision.json",
+    "sha256": "6dfbed56a9ff3ba70709985e60e0f120be002933fae792e09ac0b826d76a93e2",
+    "decision": "approved-only-as-calibration-low-mid-frequency-locked-validation-source",
+    "score": 94
+  },
+  "independent_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-calibration-positive-imagegen-v5-independent-vision.json",
+    "sha256": "0e1c0d9aaaa10b21c418c7df7d0d18087dc78525b9d9d1af55f0538bc50feb07",
+    "decision": "approved-only-as-post-freeze-low-mid-frequency-clean-positive",
+    "score": 95
+  },
+  "use_contract": {
+    "threshold_selection_allowed": false,
+    "post_freeze_false_reject_validation_only": true,
+    "production_candidate_use_allowed": false,
+    "golden_input_allowed": false,
+    "final_pixel_transfer_allowed": false,
+    "geography_or_semantic_authority": false,
+    "rgb_chroma_or_absolute_luminance_transfer_allowed": false
+  }
+}

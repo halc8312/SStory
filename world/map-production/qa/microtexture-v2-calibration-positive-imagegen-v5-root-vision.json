@@ -1,0 +1,52 @@
+{
+  "schema_version": "microtexture-v2-calibration-source-root-vision/1",
+  "review_id": "microtexture-v2-calibration-positive-imagegen-v5-root-vision",
+  "reviewed_at": "2026-07-25T16:24:00+09:00",
+  "reviewer": "Codex Root Vision",
+  "review_mode": "calibration-source-role-visual-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-calibration-positive-imagegen-v5.png",
+    "sha256": "b9e21a0e32cf88d099f81503915c5649affc192c9ae025ce3f893dce472a88e7",
+    "bytes": 1543707,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "views_actually_inspected": [
+    {"view": "generation-output-full-frame", "detail": "native conversation image"},
+    {"view": "workspace-original", "detail": "view_image original on persisted SHA-bound PNG"}
+  ],
+  "score": 94,
+  "threshold": 94,
+  "decision": "approved-only-as-calibration-low-mid-frequency-locked-validation-source",
+  "production_use_allowed": false,
+  "high_density_positive_claimed": false,
+  "immediate_failure_checks": {
+    "text_symbol_or_geography": false,
+    "perspective_or_3d_relief": false,
+    "directional_light_or_cast_shadow": false,
+    "hard_outline_or_contour": false,
+    "dot_particle_hole_or_crater": false,
+    "cell_ring_rosette_or_fingerprint": false,
+    "vein_root_fern_fishbone_or_ribbon": false,
+    "dash_hatching_or_short_line_bundle": false,
+    "stamp_grid_symmetry_or_repeat": false,
+    "pure_white_or_pure_black_feature": false,
+    "visible_rectangular_panel_or_edge_seam": false
+  },
+  "observations": {
+    "accepted": [
+      "The added medium-scale variation remains amorphous, continuous, and nonperiodic.",
+      "No isolated grain, microblob, short line, bundle, closed cell, or tiling seam is visible in the persisted original.",
+      "The surface remains flat and contains no semantic geography or object shape."
+    ],
+    "limitations": [
+      "The source is still deliberately soft and does not establish tolerance for dense sub-24px texture.",
+      "It is reserved for post-freeze false-reject validation and cannot influence production candidate generation.",
+      "RGB chroma, absolute luminance, semantic geometry, and direct pixels are forbidden in production."
+    ]
+  },
+  "allowed_calibration_use": [
+    "locked post-freeze low/mid-frequency false-reject validation"
+  ],
+  "passed_for_declared_source_role": true
+}

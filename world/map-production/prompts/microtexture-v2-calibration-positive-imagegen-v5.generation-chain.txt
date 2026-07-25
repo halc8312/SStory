@@ -1,0 +1,18 @@
+MICROTEXTURE V2 CALIBRATION-ONLY POSITIVE V5 — IMAGEGEN CHAIN EXTENSION
+
+Base chain
+----------
+The exact new-generation plus three-edit chain is preserved at:
+`world/map-production/prompts/microtexture-v2-calibration-positive-imagegen-v4.generation-chain.txt`
+
+Base image
+----------
+`world/map-production/style-assets/microtexture-v2-calibration-positive-imagegen-v4.png`
+SHA-256: `c83ea94d5e82a1b00e86a9357df443ed38f86a58b2c98e511f068ff7201b5575`
+
+Step 5 — edit of immediately preceding v4 conversation image
+------------------------------------------------------------
+Edit the immediately preceding smooth calibration-only field with exactly one focused change: introduce restrained, genuinely amorphous nonperiodic tonal variation only in the 32–96 pixel wavelength range, embedded continuously inside the existing broader 128–600 pixel masses. The added medium-scale structure must have soft open transitions and irregular scale, never closed blobs, outlines, cells, rings, curls, ridges, or repeated stamps. Preserve the strict absence of every feature below 24 pixels, including grain, specks, dots, microblobs, short lines, hatching, parallel bundles, seams, and halftone. Preserve the flat orthographic edge-to-edge warm-neutral surface, low contrast, dimensions, and absence of semantic content, lighting, and 3D relief.
+
+Root Vision disposition: approved only as a calibration-only low/mid-frequency
+locked validation source. It is not a production donor or high-density positive.
