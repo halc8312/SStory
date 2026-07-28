@@ -36,7 +36,7 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "290b59349b813935d3e04a8df67cb4b469929b53a993f84e15e9e087b2bc62b1"
+SPEC_SHA256 = "d5c370a7f87d334a261d197adfd6e1929801436d7b4247affb766a5a5ef162f6"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
 
 
@@ -339,10 +339,10 @@ VISION_SEMANTIC_RUBRIC = {
 }
 
 POPULATION_ANCHOR_SCHEDULE = {
-    "revision": "dev-r9-speck-population-schedule-v1",
-    "fresh_from_closed_dev_r8": True,
-    "r8_parameter_nonce_reuse_forbidden": True,
-    "r9_per_family_residue_rotation": {
+    "revision": "dev-r10-grain-coherence-support-schedule-v1",
+    "fresh_from_closed_dev_r9": True,
+    "r9_parameter_nonce_reuse_forbidden": True,
+    "r10_per_family_residue_rotation": {
         "calibration": {
             "artifact-fine-grain": 2,
             "artifact-speck": 4,
@@ -358,13 +358,13 @@ POPULATION_ANCHOR_SCHEDULE = {
             "artifact-parallel-bundle": 11,
         },
     },
-    "r9_parameter_nonce_bases": {
-        "calibration_artifact": 173000,
-        "holdout_artifact": 183000,
-        "calibration_protocol_zero": 151000,
-        "holdout_protocol_zero": 161000,
-        "calibration_duplicate_audit": [191000, 191001, 191002],
-        "holdout_duplicate_audit": [201000, 201001, 201002],
+    "r10_parameter_nonce_bases": {
+        "calibration_artifact": 273000,
+        "holdout_artifact": 283000,
+        "calibration_protocol_zero": 251000,
+        "holdout_protocol_zero": 261000,
+        "calibration_duplicate_audit": [291000, 291001, 291002],
+        "holdout_duplicate_audit": [301000, 301001, 301002],
     },
     "private_until_one_shot_marker": True,
     "public_manifest_exposure_forbidden": True,
@@ -406,6 +406,47 @@ POPULATION_ANCHOR_SCHEDULE = {
         "shoulder_fraction": 0.08,
         "amplitude_l_maximum": 12.0,
         "split_morphology_tuples_disjoint": True,
+    },
+    "grain_reject_anchor_conditions_per_split": 11,
+    "grain_reject_anchor_truth_guarantee_claimed": False,
+    "grain_reject_anchor_schedule": {
+        "metric_coherence_period_bounds_px": [2, 13],
+        "preferred_reject_period_bounds_px": [3, 12],
+        "calibration": {
+            "clear": [
+                ["fine-band", 8.8],
+                ["halftone", 11],
+                ["fine-band", 12.0],
+                ["fine-band", 6.7],
+                ["halftone", 10],
+                ["fine-band", 11.6],
+                ["fine-band", 4.1],
+            ],
+            "dominant": [
+                ["halftone", 7],
+                ["fine-band", 4.8],
+                ["fine-band", 8.0],
+                ["fine-band", 3.0],
+            ],
+        },
+        "holdout": {
+            "clear": [
+                ["halftone", 9],
+                ["fine-band", 11.4],
+                ["fine-band", 7.1],
+                ["fine-band", 11.8],
+                ["halftone", 12],
+                ["fine-band", 4.5],
+                ["fine-band", 9.2],
+            ],
+            "dominant": [
+                ["fine-band", 5.1],
+                ["fine-band", 8.4],
+                ["fine-band", 3.3],
+                ["halftone", 8],
+            ],
+        },
+        "split_pattern_period_tuples_disjoint": True,
     },
     "blind_key_selection_forbidden_for": [
         "split",
@@ -640,15 +681,31 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "microtexture-v2-r6-dev-r8-development-failure.json"
         or history.get("dev_r8_failure_audit_sha256")
         != "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d"
-        or history.get("dev_r9_status") != "fresh-development-only"
+        or history.get("dev_r9_status")
+        != "failed-and-closed-after-measurement"
         or history.get("dev_r9_role")
+        != "development-only threshold-feasibility failure evidence; both splits "
+        "passed every population floor and were measured once, but calibration had "
+        "no scalar threshold satisfying warning acceptance at least 0.75 together "
+        "with severity-3 detection exactly 1.0, no threshold was selected, holdout "
+        "endpoint performance was not evaluated, and no dev-r9 key, control, label, "
+        "pixel, identity, measurement, threshold diagnostic, nonce, commitment, or "
+        "artifact root is reusable"
+        or history.get("dev_r9_failure_audit")
+        != "world/map-production/qa/"
+        "microtexture-v2-r6-dev-r9-development-failure.json"
+        or history.get("dev_r9_failure_audit_sha256")
+        != "10c832fb2b7131b942cad54c7412672a98a2f0401db1aae31ce2b1383952f202"
+        or history.get("dev_r10_status") != "fresh-development-only"
+        or history.get("dev_r10_role")
         != "fresh one-shot development role used only to verify the unchanged "
-        "preregistered soft-unit metric and the frozen dev-r9 speck-population "
-        "schedule before formal r6 generation; it requires a tracked runner, a fresh "
-        "isolated root, a fresh cryptographic blind key, revision-4 public, render, "
-        "code, and cluster domains, revision-5 public commitments, newly generated "
-        "controls and anonymous identities, and fresh sealed Root plus independent "
-        "Vision labels, and it can never become or supply formal authority"
+        "preregistered soft-unit metric and the frozen dev-r10 "
+        "grain-coherence-support schedule before formal r6 generation; it requires "
+        "a tracked runner, a fresh isolated root, a fresh cryptographic blind key, "
+        "revision-5 public, render, code, and cluster domains, revision-6 public "
+        "commitments, newly generated controls and anonymous identities, and fresh "
+        "sealed Root plus independent Vision labels, and it can never become or "
+        "supply formal authority"
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -666,9 +723,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": "non-authority dev-r9 only; no development key, root, output, or commitment can become formal authority",
+        "scope": "non-authority dev-r10 only; no development key, root, output, or commitment can become formal authority",
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r9/private/development-key.bin",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r10/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -918,9 +975,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "raw_metrics_unchanged": True,
             "branch_composition_unchanged": True,
             "endpoint_counts_and_rates_unchanged": True,
-            "fresh_dev_r9_required": True,
+            "dev_r9_completed_failed_closed": True,
+            "fresh_dev_r10_required": True,
             "dev_r7_threshold_or_measurement_reuse_for_formal_forbidden": True,
             "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent": True,
+            "dev_r9_measurement_threshold_diagnostic_or_holdout_reuse_forbidden": True,
         }
     ):
         raise RuntimeError("r6 soft-unit reference provenance drift")
@@ -1102,6 +1161,20 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         != derived_safety_floors
         or sum(anchor_schedule["tier_counts_per_artifact_family"].values()) != 20
         or len(anchor_schedule["artifact_families_covered"]) != 5
+        or anchor_schedule["grain_reject_anchor_conditions_per_split"] != 11
+        or anchor_schedule["grain_reject_anchor_truth_guarantee_claimed"] is not False
+        or anchor_schedule["grain_reject_anchor_schedule"][
+            "metric_coherence_period_bounds_px"
+        ]
+        != [2, 13]
+        or anchor_schedule["grain_reject_anchor_schedule"][
+            "preferred_reject_period_bounds_px"
+        ]
+        != [3, 12]
+        or anchor_schedule["grain_reject_anchor_schedule"][
+            "split_pattern_period_tuples_disjoint"
+        ]
+        is not True
     ):
         raise RuntimeError("r6 population-anchor arithmetic/cardinality drift")
 
@@ -1147,6 +1220,15 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         != "the 20 conditions in every sparse family cross count, size or length, "
         "amplitude, width, and spacing through frozen nonmonotone permutations; "
         "calibration and holdout use different offsets and nonce ranges"
+        or rendering.get("fine_grain_contract")
+        != "artifact-fine-grain contains exactly 20 frozen nonzero oriented "
+        "fine-band or halftone conditions per split with split-specific scale, "
+        "amplitude, pattern, and metric-window support schedules; any sparse-support "
+        "candidate retains deterministic nonzero support, every remaining condition "
+        "retains its frozen full-support contract, and all eleven full-support "
+        "reject-tier grain periods per split are statically constrained to the "
+        "inclusive 3..12 pixel guard-banded interior of the unchanged 2..13 pixel "
+        "coherence support"
     ):
         raise RuntimeError("r6 rendering population cardinality drift")
 
@@ -1315,28 +1397,28 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v4"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v5"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
             raise RuntimeError(f"r6 split replicate contract drift: {split_name}")
     blind = value.get("blind_derivation", {})
     if (
-        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v3"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v4/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v4/"
+        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v4"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v5/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v5/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-4 blind derivation domain drift")
+        raise RuntimeError("r6 revision-5 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v4/"
+        != "microtexture-v2-r6/private-condition-cluster/v5/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v5/"
+        != "microtexture-v2-r6/public-payload-commitment/v6/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-4/5 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-5/6 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -2063,10 +2145,471 @@ def validate_dev_r8_failure_audit(value: Any) -> None:
         raise RuntimeError(f"{context} secret-handling drift")
 
 
+def validate_dev_r9_failure_audit(value: Any) -> None:
+    """Validate the sanitized, tracked dev-r9 post-measurement failure evidence."""
+
+    context = "closed dev-r9 failure audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "measurement_started",
+            "selection_status",
+            "development_hard_threshold",
+            "holdout_endpoint_performance",
+            "one_shot_contract",
+            "vision_review",
+            "population_audit",
+            "threshold_failure",
+            "hash_bindings",
+            "measurement_artifacts",
+            "root_cause",
+            "successor_constraints",
+            "secret_handling",
+        },
+        context,
+    )
+    parse_utc_timestamp(value["audit_recorded_at"], f"{context}.audit_recorded_at")
+    if (
+        value["artifact"]
+        != "microtexture-v2-r6-dev-r9-development-failure-audit"
+        or value["schema_version"]
+        != "microtexture-v2-r6-development-failure-audit/2"
+        or value["authority"] is not False
+        or value["formal_use_forbidden"] is not True
+        or value["development_edition"] != "r9"
+        or value["outcome"] != "failed_closed"
+        or value["measurement_started"] is not True
+        or value["selection_status"] != "no-endpoint-admissible-threshold"
+        or value["development_hard_threshold"] is not None
+        or value["holdout_endpoint_performance"] is not None
+    ):
+        raise RuntimeError(f"{context} header/outcome drift")
+
+    if value["one_shot_contract"] != {
+        "generation_completed_exactly_once": True,
+        "root_vision_completed_before_private_reveal": True,
+        "independent_vision_completed_before_private_reveal": True,
+        "labels_sealed_before_private_reveal": True,
+        "population_audit_passed_before_measurement": True,
+        "analysis_started_exactly_once": True,
+        "numeric_metric_called": True,
+        "threshold_search_started": True,
+        "threshold_frozen": False,
+        "formal_cli_invoked": False,
+        "formal_marker_created": False,
+        "formal_threshold_created": False,
+        "locked_clean_v18_decoded_or_measured": False,
+        "postmortem_invoked": False,
+        "rerun_relabel_retune_subset_topup_resample_or_reuse_for_r9_forbidden": True,
+        "r9_closed": True,
+    }:
+        raise RuntimeError(f"{context} one-shot closure drift")
+
+    vision = value["vision_review"]
+    require_exact_keys(
+        vision,
+        {
+            "calibration_records_reviewed_by_root",
+            "holdout_records_reviewed_by_root",
+            "calibration_records_reviewed_independently",
+            "holdout_records_reviewed_independently",
+            "calibration_review_boards_reviewed_by_root",
+            "holdout_review_boards_reviewed_by_root",
+            "calibration_review_boards_reviewed_independently",
+            "holdout_review_boards_reviewed_independently",
+            "logical_comparison_fields",
+            "notes_and_ev3_locators_excluded_from_logical_comparison",
+            "contemporaneous_blind_comparison",
+            "reproducible_final_root_vs_immutable_initial_independent",
+            "root_reinspected_every_contemporaneous_logical_difference",
+            "root_and_independent_logical_decisions_reconciled",
+            "canonical_root_and_final_independent_bytes_identical_after_reconciliation",
+            "calibration_root_decisions_sha256",
+            "calibration_initial_independent_decisions_sha256",
+            "calibration_final_independent_decisions_sha256",
+            "calibration_canonical_decisions_sha256",
+            "calibration_sealed_labels_sha256",
+            "calibration_record_dispositions",
+            "holdout_root_decisions_sha256",
+            "holdout_initial_independent_decisions_sha256",
+            "holdout_final_independent_decisions_sha256",
+            "holdout_canonical_decisions_sha256",
+            "holdout_sealed_labels_sha256",
+            "holdout_record_dispositions",
+        },
+        f"{context}.vision_review",
+    )
+    if (
+        any(
+            vision[field] != 220
+            for field in (
+                "calibration_records_reviewed_by_root",
+                "holdout_records_reviewed_by_root",
+                "calibration_records_reviewed_independently",
+                "holdout_records_reviewed_independently",
+            )
+        )
+        or any(
+            vision[field] != 37
+            for field in (
+                "calibration_review_boards_reviewed_by_root",
+                "holdout_review_boards_reviewed_by_root",
+                "calibration_review_boards_reviewed_independently",
+                "holdout_review_boards_reviewed_independently",
+            )
+        )
+        or vision["logical_comparison_fields"]
+        != ["page", "row", "anonymous_code", "disposition", "severity", "flags"]
+        or vision["notes_and_ev3_locators_excluded_from_logical_comparison"] is not True
+        or vision["root_reinspected_every_contemporaneous_logical_difference"]
+        is not True
+        or vision["root_and_independent_logical_decisions_reconciled"] is not True
+        or vision[
+            "canonical_root_and_final_independent_bytes_identical_after_reconciliation"
+        ]
+        is not True
+        or vision["calibration_record_dispositions"]
+        != {"clean": 75, "warning": 51, "reject": 94}
+        or vision["holdout_record_dispositions"]
+        != {"clean": 71, "warning": 37, "reject": 112}
+    ):
+        raise RuntimeError(f"{context} Vision review cardinality/closure drift")
+    contemporaneous = vision["contemporaneous_blind_comparison"]
+    require_exact_keys(
+        contemporaneous,
+        {
+            "calibration_logical_difference_count_recorded_before_reconciliation",
+            "holdout_logical_difference_count_recorded_before_reconciliation",
+            "initial_root_snapshot_persisted_immutably",
+            "interpretation",
+        },
+        f"{context}.vision_review.contemporaneous_blind_comparison",
+    )
+    if (
+        contemporaneous.get(
+            "calibration_logical_difference_count_recorded_before_reconciliation"
+        )
+        != 47
+        or contemporaneous.get(
+            "holdout_logical_difference_count_recorded_before_reconciliation"
+        )
+        != 60
+        or contemporaneous.get("initial_root_snapshot_persisted_immutably") is not False
+    ):
+        raise RuntimeError(f"{context} contemporaneous Vision comparison drift")
+    reproducible = vision[
+        "reproducible_final_root_vs_immutable_initial_independent"
+    ]
+    require_exact_keys(
+        reproducible,
+        {
+            "calibration_logical_difference_count",
+            "calibration_difference_breakdown",
+            "holdout_logical_difference_count",
+            "holdout_difference_breakdown",
+            "interpretation",
+        },
+        f"{context}.vision_review.reproducible_comparison",
+    )
+    require_exact_keys(
+        reproducible["calibration_difference_breakdown"],
+        {"identity", "disposition", "severity", "flags"},
+        f"{context}.vision_review.calibration_difference_breakdown",
+    )
+    require_exact_keys(
+        reproducible["holdout_difference_breakdown"],
+        {"identity", "disposition", "severity", "flags"},
+        f"{context}.vision_review.holdout_difference_breakdown",
+    )
+    if (
+        reproducible.get("calibration_logical_difference_count") != 63
+        or reproducible.get("calibration_difference_breakdown")
+        != {"identity": 0, "disposition": 21, "severity": 39, "flags": 38}
+        or reproducible.get("holdout_logical_difference_count") != 69
+        or reproducible.get("holdout_difference_breakdown")
+        != {"identity": 0, "disposition": 23, "severity": 54, "flags": 35}
+    ):
+        raise RuntimeError(f"{context} reproducible Vision comparison drift")
+    expected_vision_hashes = {
+        "calibration_root_decisions_sha256": "4530db591b601d27c9ca486f91f635bd79af0a27baceee46b4de64f7d0995fd5",
+        "calibration_initial_independent_decisions_sha256": "df9c2b26861c781652fbb720d01eea01b4bea1f23543ffa1e859902dc104f7fb",
+        "calibration_final_independent_decisions_sha256": "4530db591b601d27c9ca486f91f635bd79af0a27baceee46b4de64f7d0995fd5",
+        "calibration_canonical_decisions_sha256": "4530db591b601d27c9ca486f91f635bd79af0a27baceee46b4de64f7d0995fd5",
+        "calibration_sealed_labels_sha256": "0e93ae0760d1581774d3e6bc5dc849a183c856faac3562d24143b08295976e87",
+        "holdout_root_decisions_sha256": "61d1edac14007d116df1abe5d7051917b88677496b2b750d70aabc653175d2a5",
+        "holdout_initial_independent_decisions_sha256": "52413e0afa2084c1256a5f892426dc8c0be256de99e85393cd7d66183a213502",
+        "holdout_final_independent_decisions_sha256": "61d1edac14007d116df1abe5d7051917b88677496b2b750d70aabc653175d2a5",
+        "holdout_canonical_decisions_sha256": "61d1edac14007d116df1abe5d7051917b88677496b2b750d70aabc653175d2a5",
+        "holdout_sealed_labels_sha256": "56163027b7bfb303a15e5676b2f648d21a0c42797f1e7cc9af9a33179adbcb3a",
+    }
+    if any(vision.get(field) != expected for field, expected in expected_vision_hashes.items()):
+        raise RuntimeError(f"{context} Vision hash binding drift")
+
+    population = value["population_audit"]
+    require_exact_keys(
+        population,
+        {
+            "eligible_artifact_condition_clusters_per_split",
+            "all_eligible_artifact_condition_clusters_exact_polarity_pairs",
+            "all_formal_endpoint_population_minimums_passed",
+            "all_development_safety_floors_passed",
+            "calibration",
+            "holdout",
+        },
+        f"{context}.population_audit",
+    )
+    if (
+        population.get("eligible_artifact_condition_clusters_per_split") != 100
+        or population.get("all_eligible_artifact_condition_clusters_exact_polarity_pairs")
+        is not True
+        or population.get("all_formal_endpoint_population_minimums_passed") is not True
+        or population.get("all_development_safety_floors_passed") is not True
+    ):
+        raise RuntimeError(f"{context} population header drift")
+    expected_population = {
+        "calibration": {
+            "disposition_clusters": {"clean": 27, "warning": 18, "reject": 55},
+            "counts": [27, 18, 55, 26, 12, 11, 11, 22, 21, 11],
+        },
+        "holdout": {
+            "disposition_clusters": {"clean": 25, "warning": 16, "reject": 59},
+            "counts": [25, 16, 59, 16, 13, 13, 12, 25, 21, 10],
+        },
+    }
+    floors = [19, 13, 38, 6, 10, 6, 6, 10, 10, 8]
+    for split, expected in expected_population.items():
+        split_value = population.get(split, {})
+        require_exact_keys(
+            split_value,
+            {"passed", "disposition_clusters", "endpoints"},
+            f"{context}.population_audit.{split}",
+        )
+        require_exact_keys(
+            split_value["disposition_clusters"],
+            {"clean", "warning", "reject"},
+            f"{context}.population_audit.{split}.disposition_clusters",
+        )
+        require_exact_keys(
+            split_value["endpoints"],
+            set(EXPECTED_ENDPOINT_IDS),
+            f"{context}.population_audit.{split}.endpoints",
+        )
+        for endpoint in EXPECTED_ENDPOINT_IDS:
+            require_exact_keys(
+                split_value["endpoints"][endpoint],
+                {"clusters", "development_floor"},
+                f"{context}.population_audit.{split}.endpoints.{endpoint}",
+            )
+        if (
+            split_value.get("passed") is not True
+            or split_value.get("disposition_clusters") != expected["disposition_clusters"]
+            or list(split_value.get("endpoints", {})) != EXPECTED_ENDPOINT_IDS
+            or [
+                split_value["endpoints"][endpoint]["clusters"]
+                for endpoint in EXPECTED_ENDPOINT_IDS
+            ]
+            != expected["counts"]
+            or [
+                split_value["endpoints"][endpoint]["development_floor"]
+                for endpoint in EXPECTED_ENDPOINT_IDS
+            ]
+            != floors
+        ):
+            raise RuntimeError(f"{context} population evidence drift: {split}")
+
+    threshold = value["threshold_failure"]
+    require_exact_keys(
+        threshold,
+        {
+            "candidate_count",
+            "endpoint_admissible_candidate_count",
+            "diagnostic_candidate_count",
+            "diagnostic_best_threshold",
+            "diagnostic_best_endpoint_rates",
+            "minimal_impossibility",
+            "holdout_interpretation",
+        },
+        f"{context}.threshold_failure",
+    )
+    require_exact_keys(
+        threshold["diagnostic_best_endpoint_rates"],
+        set(EXPECTED_ENDPOINT_IDS),
+        f"{context}.threshold_failure.diagnostic_best_endpoint_rates",
+    )
+    require_exact_keys(
+        threshold["minimal_impossibility"],
+        {
+            "highest_threshold_preserving_severity3_rate_1",
+            "warning_acceptance_at_that_threshold",
+            "first_candidate_reaching_warning_rate_0_75",
+            "severity3_at_that_candidate",
+            "conclusion",
+        },
+        f"{context}.threshold_failure.minimal_impossibility",
+    )
+    require_exact_keys(
+        threshold["minimal_impossibility"]["warning_acceptance_at_that_threshold"],
+        {"accepted", "eligible", "rate"},
+        f"{context}.threshold_failure.warning_at_severity3_boundary",
+    )
+    require_exact_keys(
+        threshold["minimal_impossibility"]["severity3_at_that_candidate"],
+        {"detected", "eligible", "rate"},
+        f"{context}.threshold_failure.severity3_at_warning_boundary",
+    )
+    if (
+        threshold.get("candidate_count") != 69
+        or threshold.get("endpoint_admissible_candidate_count") != 0
+        or threshold.get("diagnostic_candidate_count") != 44
+        or threshold.get("diagnostic_best_threshold") != 0.7661276645021775
+        or threshold.get("diagnostic_best_endpoint_rates", {})
+        .get("severity3_detection")
+        != {
+            "rate": 0.9615384615384616,
+            "minimum": 1.0,
+            "passed": False,
+            "detected_clusters": 25,
+            "eligible_clusters": 26,
+        }
+        or threshold.get("minimal_impossibility", {}).get(
+            "highest_threshold_preserving_severity3_rate_1"
+        )
+        != 0.6194246388563148
+        or threshold.get("minimal_impossibility", {})
+        .get("warning_acceptance_at_that_threshold")
+        != {"accepted": 12, "eligible": 18, "rate": 0.6666666666666666}
+        or threshold.get("minimal_impossibility", {}).get(
+            "first_candidate_reaching_warning_rate_0_75"
+        )
+        != 0.7661276645021775
+        or threshold.get("minimal_impossibility", {}).get(
+            "severity3_at_that_candidate"
+        )
+        != {"detected": 25, "eligible": 26, "rate": 0.9615384615384616}
+        or threshold["minimal_impossibility"]["conclusion"]
+        != "No scalar threshold can simultaneously satisfy calibration warning "
+        "acceptance >= 0.75 and severity-3 detection = 1.0."
+        or threshold["holdout_interpretation"]
+        != "Holdout records were measured as part of the one-shot analysis, but "
+        "holdout endpoint performance was not evaluated because calibration "
+        "selected no endpoint-admissible threshold."
+    ):
+        raise RuntimeError(f"{context} threshold impossibility drift")
+    endpoint_rates = threshold["diagnostic_best_endpoint_rates"]
+    expected_rates = {
+        "clean_acceptance": (1.0, 0.95, True),
+        "warning_acceptance": (0.7777777777777778, 0.75, True),
+        "reject_detection": (0.9818181818181818, 0.95, True),
+        "grain_reject_detection": (0.9166666666666666, 0.8, True),
+        "tiny_speck_reject_detection": (1.0, 0.75, True),
+        "microblob_reject_detection": (1.0, 0.75, True),
+        "spot_reject_detection": (1.0, 0.8, True),
+        "short_line_reject_detection": (1.0, 0.8, True),
+        "parallel_bundle_reject_detection": (1.0, 0.8, True),
+    }
+    if set(endpoint_rates) != set(EXPECTED_ENDPOINT_IDS):
+        raise RuntimeError(f"{context} diagnostic endpoint set drift")
+    require_exact_keys(
+        endpoint_rates["severity3_detection"],
+        {"rate", "minimum", "passed", "detected_clusters", "eligible_clusters"},
+        f"{context}.threshold_failure.severity3_detection",
+    )
+    for endpoint, (rate, minimum, passed) in expected_rates.items():
+        require_exact_keys(
+            endpoint_rates[endpoint],
+            {"rate", "minimum", "passed"},
+            f"{context}.threshold_failure.{endpoint}",
+        )
+        if endpoint_rates[endpoint] != {
+            "rate": rate,
+            "minimum": minimum,
+            "passed": passed,
+        }:
+            raise RuntimeError(f"{context} diagnostic endpoint drift: {endpoint}")
+
+    expected_bindings = {
+        "captured_repository_head": "9b3b8bb6154f3e13c5e734229f06690e9ab1f740",
+        "preregistered_spec_sha256": "290b59349b813935d3e04a8df67cb4b469929b53a993f84e15e9e087b2bc62b1",
+        "implementation_bindings_sha256": "d4a381c995ca972f7c01a82650ae4397f9494f497e391ce5f7f4772ee4cfe795",
+        "dev_r8_failure_audit_sha256": "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d",
+        "development_boundary_sha256": "f093bd41c3f5b00722ceb701e6106f2ecf4942e45764f5d753e446fe424691a0",
+        "generation_summary_sha256": "412793d5952ab884973d632018f96d9848c4a1af242677a80ddadb3ce0661436",
+        "blind_key_commitment": "9c2d6e3829fd6e243415fcf3c1ecb5388eab3d2e6c8433f102a8ba6edeea425b",
+        "calibration_manifest_sha256": "1c0d795ba838b234d085424c8c922e8fe9767bf3cb84d395a9713a54ef40ad3f",
+        "calibration_blank_labels_sha256": "f615b119816706d3810366f78173404693c017a6dbb0de4ad32683386437ffd5",
+        "calibration_review_index_sha256": "52d0f598ee09d21435d94670054df1b4d0b061e286e2fefc8e425460b68f813c",
+        "holdout_manifest_sha256": "e37dc376bc856c7ba16c9b332808105d15ec790e287220c88a017104ffe801ca",
+        "holdout_blank_labels_sha256": "1ca556053cdd426c032f333e8c33f6ebebeedc0a3238a828e24b50895b915b90",
+        "holdout_review_index_sha256": "c8b5a8205544fa173e71e01197dc6255a49dbc6049dd4bb8c49ed790dac00d36",
+        "label_seal_receipt_sha256": "6361be6009c437c0a82ee25c5e88108588c8aef44fea8aa3e9c26edb9fa65713",
+        "population_audit_sha256": "a6b59ed95d34e826a6aaca00149ce4c19fdb9a4822d74619faed0f33a04e46bf",
+        "calibration_measurements_sha256": "0db0705653d5c851074bb2221032c5d462235d17e4e29a185f44bd022e984803",
+        "holdout_measurements_sha256": "6f0887312bbb63c81d691583ab4c85502a8dab288cc0cb6b59b208455d7ff944",
+        "analysis_result_sha256": "3052bff4871e371688adf6f477ca103812b1fab423372dee5af1095f7f95ee0b",
+        "failure_marker_sha256": "ab3a9259d5e2324b135cde88dcc4a3719a973101f81493b10a06afccb5829bd5",
+    }
+    if value["hash_bindings"] != expected_bindings:
+        raise RuntimeError(f"{context} authority hash binding drift")
+    if value["measurement_artifacts"] != {
+        "calibration_measurements_present": True,
+        "holdout_measurements_present": True,
+        "analysis_result_present": True,
+        "failure_marker_present": True,
+        "holdout_endpoint_result_present": False,
+    }:
+        raise RuntimeError(f"{context} measurement artifact-state drift")
+
+    if value["root_cause"] != {
+        "population_feasibility": "Both splits passed every formal population minimum and every stricter development-only safety floor; population was not the cause.",
+        "threshold_impossibility": "The calibration warning-acceptance and severity-3-detection constraints occupy disjoint scalar-threshold ranges under the frozen metric.",
+        "single_limiting_endpoint": "At the diagnostic-best candidate every endpoint except severity-3 detection passed; severity-3 detected 25 of 26 clusters where 26 of 26 was required.",
+        "generic_failure_message_clarification": "The runner's message mentions calibration and holdout generically. The evidence shows calibration selected no threshold; holdout endpoint performance was therefore not evaluated, rather than evaluated and failed.",
+        "post_label_repair_forbidden": "The sealed outcome cannot be repaired by relabeling, subsetting, top-up, replacement, key resampling, regeneration, retuning, or rerunning r9.",
+    }:
+        raise RuntimeError(f"{context} root-cause drift")
+
+    successor = value["successor_constraints"]
+    if successor != {
+        "r9_data_role": "development_only_failure_evidence",
+        "formal_r6_must_not_start_from_r9_failure": True,
+        "successor_requires_fresh_preregistered_revision": True,
+        "successor_requires_fresh_root_key_nonces_controls_identities_labels_and_measurements": True,
+        "r9_key_controls_labels_pixels_identities_measurements_threshold_diagnostics_nonces_commitments_and_root_reuse_forbidden": True,
+        "successor_must_be_committed_pushed_and_ci_green_before_generation": True,
+        "formal_r6_root_and_environment_must_remain_absent": True,
+        "formal_endpoint_population_and_rate_minima_must_not_be_weakened": True,
+        "development_safety_floors_must_not_be_weakened": True,
+        "diagnostic_threshold_must_not_be_promoted_or_reused": True,
+        "holdout_measurements_must_not_be_examined_reused_or_tuned_against": True,
+    }:
+        raise RuntimeError(f"{context} successor constraint drift")
+    secret = value["secret_handling"]
+    if secret != {
+        "blind_key_present_in_this_artifact": False,
+        "blind_key_value_logged_or_tracked": False,
+        "development_blind_key_persisted_in_ignored_closed_private_root": True,
+        "development_blind_key_path": "tmp/map-production/microtexture-v2-r6-dev-r9/private/development-key.bin",
+        "development_blind_key_bytes": 32,
+        "development_blind_key_bytes_disclosed_in_this_audit": False,
+        "development_blind_key_reuse_forbidden": True,
+        "private_labels_measurements_identities_or_pixels_tracked": False,
+        "postmortem_raw_output_tracked": False,
+        "closed_temporary_artifact_root": "tmp/map-production/microtexture-v2-r6-dev-r9",
+    }:
+        raise RuntimeError(f"{context} secret-handling drift")
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind the closed dev-r7 and dev-r8 audits without exposing private corpora."""
+    """Bind closed dev-r7 through dev-r9 audits without private corpora."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -2133,6 +2676,12 @@ def verify_tracked_development_history(
     if sha256_bytes(dev_r8_payload) != history["dev_r8_failure_audit_sha256"]:
         raise RuntimeError("closed dev-r8 failure audit tracked SHA drift")
     validate_dev_r8_failure_audit(json.loads(dev_r8_payload.decode("utf-8")))
+
+    relative = history["dev_r9_failure_audit"]
+    dev_r9_payload = _tracked_worktree_bytes(repository, captured_head, relative)
+    if sha256_bytes(dev_r9_payload) != history["dev_r9_failure_audit_sha256"]:
+        raise RuntimeError("closed dev-r9 failure audit tracked SHA drift")
+    validate_dev_r9_failure_audit(json.loads(dev_r9_payload.decode("utf-8")))
 
     # Preserve the historical return contract; callers use this function for its
     # fail-closed checks, but earlier code returned the dev-r7 payload.

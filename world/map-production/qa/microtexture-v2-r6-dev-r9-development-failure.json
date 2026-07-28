@@ -1,0 +1,205 @@
+{
+  "artifact": "microtexture-v2-r6-dev-r9-development-failure-audit",
+  "schema_version": "microtexture-v2-r6-development-failure-audit/2",
+  "authority": false,
+  "formal_use_forbidden": true,
+  "audit_recorded_at": "2026-07-28T22:31:31.4268783Z",
+  "development_edition": "r9",
+  "outcome": "failed_closed",
+  "measurement_started": true,
+  "selection_status": "no-endpoint-admissible-threshold",
+  "development_hard_threshold": null,
+  "holdout_endpoint_performance": null,
+  "one_shot_contract": {
+    "generation_completed_exactly_once": true,
+    "root_vision_completed_before_private_reveal": true,
+    "independent_vision_completed_before_private_reveal": true,
+    "labels_sealed_before_private_reveal": true,
+    "population_audit_passed_before_measurement": true,
+    "analysis_started_exactly_once": true,
+    "numeric_metric_called": true,
+    "threshold_search_started": true,
+    "threshold_frozen": false,
+    "formal_cli_invoked": false,
+    "formal_marker_created": false,
+    "formal_threshold_created": false,
+    "locked_clean_v18_decoded_or_measured": false,
+    "postmortem_invoked": false,
+    "rerun_relabel_retune_subset_topup_resample_or_reuse_for_r9_forbidden": true,
+    "r9_closed": true
+  },
+  "vision_review": {
+    "calibration_records_reviewed_by_root": 220,
+    "holdout_records_reviewed_by_root": 220,
+    "calibration_records_reviewed_independently": 220,
+    "holdout_records_reviewed_independently": 220,
+    "calibration_review_boards_reviewed_by_root": 37,
+    "holdout_review_boards_reviewed_by_root": 37,
+    "calibration_review_boards_reviewed_independently": 37,
+    "holdout_review_boards_reviewed_independently": 37,
+    "logical_comparison_fields": ["page", "row", "anonymous_code", "disposition", "severity", "flags"],
+    "notes_and_ev3_locators_excluded_from_logical_comparison": true,
+    "contemporaneous_blind_comparison": {
+      "calibration_logical_difference_count_recorded_before_reconciliation": 47,
+      "holdout_logical_difference_count_recorded_before_reconciliation": 60,
+      "initial_root_snapshot_persisted_immutably": false,
+      "interpretation": "These are the contemporaneous blind-review comparison counts. The Root file was updated during adjudication, so these two counts cannot be reconstructed from the final Root file alone."
+    },
+    "reproducible_final_root_vs_immutable_initial_independent": {
+      "calibration_logical_difference_count": 63,
+      "calibration_difference_breakdown": {
+        "identity": 0,
+        "disposition": 21,
+        "severity": 39,
+        "flags": 38
+      },
+      "holdout_logical_difference_count": 69,
+      "holdout_difference_breakdown": {
+        "identity": 0,
+        "disposition": 23,
+        "severity": 54,
+        "flags": 35
+      },
+      "interpretation": "These counts are reproducible from the final reconciled Root decisions and the immutable initial independent decisions; they are not presented as the prereconciliation Root-versus-independent count."
+    },
+    "root_reinspected_every_contemporaneous_logical_difference": true,
+    "root_and_independent_logical_decisions_reconciled": true,
+    "canonical_root_and_final_independent_bytes_identical_after_reconciliation": true,
+    "calibration_root_decisions_sha256": "4530db591b601d27c9ca486f91f635bd79af0a27baceee46b4de64f7d0995fd5",
+    "calibration_initial_independent_decisions_sha256": "df9c2b26861c781652fbb720d01eea01b4bea1f23543ffa1e859902dc104f7fb",
+    "calibration_final_independent_decisions_sha256": "4530db591b601d27c9ca486f91f635bd79af0a27baceee46b4de64f7d0995fd5",
+    "calibration_canonical_decisions_sha256": "4530db591b601d27c9ca486f91f635bd79af0a27baceee46b4de64f7d0995fd5",
+    "calibration_sealed_labels_sha256": "0e93ae0760d1581774d3e6bc5dc849a183c856faac3562d24143b08295976e87",
+    "calibration_record_dispositions": {"clean": 75, "warning": 51, "reject": 94},
+    "holdout_root_decisions_sha256": "61d1edac14007d116df1abe5d7051917b88677496b2b750d70aabc653175d2a5",
+    "holdout_initial_independent_decisions_sha256": "52413e0afa2084c1256a5f892426dc8c0be256de99e85393cd7d66183a213502",
+    "holdout_final_independent_decisions_sha256": "61d1edac14007d116df1abe5d7051917b88677496b2b750d70aabc653175d2a5",
+    "holdout_canonical_decisions_sha256": "61d1edac14007d116df1abe5d7051917b88677496b2b750d70aabc653175d2a5",
+    "holdout_sealed_labels_sha256": "56163027b7bfb303a15e5676b2f648d21a0c42797f1e7cc9af9a33179adbcb3a",
+    "holdout_record_dispositions": {"clean": 71, "warning": 37, "reject": 112}
+  },
+  "population_audit": {
+    "eligible_artifact_condition_clusters_per_split": 100,
+    "all_eligible_artifact_condition_clusters_exact_polarity_pairs": true,
+    "all_formal_endpoint_population_minimums_passed": true,
+    "all_development_safety_floors_passed": true,
+    "calibration": {
+      "passed": true,
+      "disposition_clusters": {"clean": 27, "warning": 18, "reject": 55},
+      "endpoints": {
+        "clean_acceptance": {"clusters": 27, "development_floor": 19},
+        "warning_acceptance": {"clusters": 18, "development_floor": 13},
+        "reject_detection": {"clusters": 55, "development_floor": 38},
+        "severity3_detection": {"clusters": 26, "development_floor": 6},
+        "grain_reject_detection": {"clusters": 12, "development_floor": 10},
+        "tiny_speck_reject_detection": {"clusters": 11, "development_floor": 6},
+        "microblob_reject_detection": {"clusters": 11, "development_floor": 6},
+        "spot_reject_detection": {"clusters": 22, "development_floor": 10},
+        "short_line_reject_detection": {"clusters": 21, "development_floor": 10},
+        "parallel_bundle_reject_detection": {"clusters": 11, "development_floor": 8}
+      }
+    },
+    "holdout": {
+      "passed": true,
+      "disposition_clusters": {"clean": 25, "warning": 16, "reject": 59},
+      "endpoints": {
+        "clean_acceptance": {"clusters": 25, "development_floor": 19},
+        "warning_acceptance": {"clusters": 16, "development_floor": 13},
+        "reject_detection": {"clusters": 59, "development_floor": 38},
+        "severity3_detection": {"clusters": 16, "development_floor": 6},
+        "grain_reject_detection": {"clusters": 13, "development_floor": 10},
+        "tiny_speck_reject_detection": {"clusters": 13, "development_floor": 6},
+        "microblob_reject_detection": {"clusters": 12, "development_floor": 6},
+        "spot_reject_detection": {"clusters": 25, "development_floor": 10},
+        "short_line_reject_detection": {"clusters": 21, "development_floor": 10},
+        "parallel_bundle_reject_detection": {"clusters": 10, "development_floor": 8}
+      }
+    }
+  },
+  "threshold_failure": {
+    "candidate_count": 69,
+    "endpoint_admissible_candidate_count": 0,
+    "diagnostic_candidate_count": 44,
+    "diagnostic_best_threshold": 0.7661276645021775,
+    "diagnostic_best_endpoint_rates": {
+      "clean_acceptance": {"rate": 1.0, "minimum": 0.95, "passed": true},
+      "warning_acceptance": {"rate": 0.7777777777777778, "minimum": 0.75, "passed": true},
+      "reject_detection": {"rate": 0.9818181818181818, "minimum": 0.95, "passed": true},
+      "severity3_detection": {"rate": 0.9615384615384616, "minimum": 1.0, "passed": false, "detected_clusters": 25, "eligible_clusters": 26},
+      "grain_reject_detection": {"rate": 0.9166666666666666, "minimum": 0.8, "passed": true},
+      "tiny_speck_reject_detection": {"rate": 1.0, "minimum": 0.75, "passed": true},
+      "microblob_reject_detection": {"rate": 1.0, "minimum": 0.75, "passed": true},
+      "spot_reject_detection": {"rate": 1.0, "minimum": 0.8, "passed": true},
+      "short_line_reject_detection": {"rate": 1.0, "minimum": 0.8, "passed": true},
+      "parallel_bundle_reject_detection": {"rate": 1.0, "minimum": 0.8, "passed": true}
+    },
+    "minimal_impossibility": {
+      "highest_threshold_preserving_severity3_rate_1": 0.6194246388563148,
+      "warning_acceptance_at_that_threshold": {"accepted": 12, "eligible": 18, "rate": 0.6666666666666666},
+      "first_candidate_reaching_warning_rate_0_75": 0.7661276645021775,
+      "severity3_at_that_candidate": {"detected": 25, "eligible": 26, "rate": 0.9615384615384616},
+      "conclusion": "No scalar threshold can simultaneously satisfy calibration warning acceptance >= 0.75 and severity-3 detection = 1.0."
+    },
+    "holdout_interpretation": "Holdout records were measured as part of the one-shot analysis, but holdout endpoint performance was not evaluated because calibration selected no endpoint-admissible threshold."
+  },
+  "hash_bindings": {
+    "captured_repository_head": "9b3b8bb6154f3e13c5e734229f06690e9ab1f740",
+    "preregistered_spec_sha256": "290b59349b813935d3e04a8df67cb4b469929b53a993f84e15e9e087b2bc62b1",
+    "implementation_bindings_sha256": "d4a381c995ca972f7c01a82650ae4397f9494f497e391ce5f7f4772ee4cfe795",
+    "dev_r8_failure_audit_sha256": "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d",
+    "development_boundary_sha256": "f093bd41c3f5b00722ceb701e6106f2ecf4942e45764f5d753e446fe424691a0",
+    "generation_summary_sha256": "412793d5952ab884973d632018f96d9848c4a1af242677a80ddadb3ce0661436",
+    "blind_key_commitment": "9c2d6e3829fd6e243415fcf3c1ecb5388eab3d2e6c8433f102a8ba6edeea425b",
+    "calibration_manifest_sha256": "1c0d795ba838b234d085424c8c922e8fe9767bf3cb84d395a9713a54ef40ad3f",
+    "calibration_blank_labels_sha256": "f615b119816706d3810366f78173404693c017a6dbb0de4ad32683386437ffd5",
+    "calibration_review_index_sha256": "52d0f598ee09d21435d94670054df1b4d0b061e286e2fefc8e425460b68f813c",
+    "holdout_manifest_sha256": "e37dc376bc856c7ba16c9b332808105d15ec790e287220c88a017104ffe801ca",
+    "holdout_blank_labels_sha256": "1ca556053cdd426c032f333e8c33f6ebebeedc0a3238a828e24b50895b915b90",
+    "holdout_review_index_sha256": "c8b5a8205544fa173e71e01197dc6255a49dbc6049dd4bb8c49ed790dac00d36",
+    "label_seal_receipt_sha256": "6361be6009c437c0a82ee25c5e88108588c8aef44fea8aa3e9c26edb9fa65713",
+    "population_audit_sha256": "a6b59ed95d34e826a6aaca00149ce4c19fdb9a4822d74619faed0f33a04e46bf",
+    "calibration_measurements_sha256": "0db0705653d5c851074bb2221032c5d462235d17e4e29a185f44bd022e984803",
+    "holdout_measurements_sha256": "6f0887312bbb63c81d691583ab4c85502a8dab288cc0cb6b59b208455d7ff944",
+    "analysis_result_sha256": "3052bff4871e371688adf6f477ca103812b1fab423372dee5af1095f7f95ee0b",
+    "failure_marker_sha256": "ab3a9259d5e2324b135cde88dcc4a3719a973101f81493b10a06afccb5829bd5"
+  },
+  "measurement_artifacts": {
+    "calibration_measurements_present": true,
+    "holdout_measurements_present": true,
+    "analysis_result_present": true,
+    "failure_marker_present": true,
+    "holdout_endpoint_result_present": false
+  },
+  "root_cause": {
+    "population_feasibility": "Both splits passed every formal population minimum and every stricter development-only safety floor; population was not the cause.",
+    "threshold_impossibility": "The calibration warning-acceptance and severity-3-detection constraints occupy disjoint scalar-threshold ranges under the frozen metric.",
+    "single_limiting_endpoint": "At the diagnostic-best candidate every endpoint except severity-3 detection passed; severity-3 detected 25 of 26 clusters where 26 of 26 was required.",
+    "generic_failure_message_clarification": "The runner's message mentions calibration and holdout generically. The evidence shows calibration selected no threshold; holdout endpoint performance was therefore not evaluated, rather than evaluated and failed.",
+    "post_label_repair_forbidden": "The sealed outcome cannot be repaired by relabeling, subsetting, top-up, replacement, key resampling, regeneration, retuning, or rerunning r9."
+  },
+  "successor_constraints": {
+    "r9_data_role": "development_only_failure_evidence",
+    "formal_r6_must_not_start_from_r9_failure": true,
+    "successor_requires_fresh_preregistered_revision": true,
+    "successor_requires_fresh_root_key_nonces_controls_identities_labels_and_measurements": true,
+    "r9_key_controls_labels_pixels_identities_measurements_threshold_diagnostics_nonces_commitments_and_root_reuse_forbidden": true,
+    "successor_must_be_committed_pushed_and_ci_green_before_generation": true,
+    "formal_r6_root_and_environment_must_remain_absent": true,
+    "formal_endpoint_population_and_rate_minima_must_not_be_weakened": true,
+    "development_safety_floors_must_not_be_weakened": true,
+    "diagnostic_threshold_must_not_be_promoted_or_reused": true,
+    "holdout_measurements_must_not_be_examined_reused_or_tuned_against": true
+  },
+  "secret_handling": {
+    "blind_key_present_in_this_artifact": false,
+    "blind_key_value_logged_or_tracked": false,
+    "development_blind_key_persisted_in_ignored_closed_private_root": true,
+    "development_blind_key_path": "tmp/map-production/microtexture-v2-r6-dev-r9/private/development-key.bin",
+    "development_blind_key_bytes": 32,
+    "development_blind_key_bytes_disclosed_in_this_audit": false,
+    "development_blind_key_reuse_forbidden": true,
+    "private_labels_measurements_identities_or_pixels_tracked": false,
+    "postmortem_raw_output_tracked": false,
+    "closed_temporary_artifact_root": "tmp/map-production/microtexture-v2-r6-dev-r9"
+  }
+}

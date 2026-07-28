@@ -18,14 +18,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r9"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r10"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r9"
+DEVELOPMENT_EDITION = "r10"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100

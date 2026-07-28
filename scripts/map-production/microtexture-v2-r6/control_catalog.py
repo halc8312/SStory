@@ -104,6 +104,21 @@ _HEX_GLYPHS = {
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
+_SCHEDULE_REVISION = "dev-r10-grain-coherence-support-schedule-v1"
+_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
+    b"microtexture-v2-r6/public-payload-commitment/v6/"
+)
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v5/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v4"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v4"
+_DELTA_LANE = "delta-v4"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v4/"
+_ARTIFACT_NONCE_BASES = {"calibration": 273000, "holdout": 283000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 251000, "holdout": 261000}
+_DUPLICATE_AUDIT_NONCES = {
+    "calibration": (291000, 291001, 291002),
+    "holdout": (301000, 301001, 301002),
+}
 _FOUNDATIONS = (
     (
         "v15",
@@ -195,7 +210,7 @@ def _public_payload_commitment(
         raise RuntimeError("invalid r6 public payload-commitment lane")
     return blind_hmac(
         key,
-        b"microtexture-v2-r6/public-payload-commitment/v5/"
+        _PUBLIC_PAYLOAD_COMMITMENT_PREFIX
         + lane.encode("ascii")
         + b"/"
         + anonymous_code.encode("ascii")
@@ -220,7 +235,7 @@ def _hmac_prf_grid(
     identity_bytes = canonical_json_bytes(identity)
     domain = (
         prefix.encode("ascii")
-        + b"private-reference-transform-v4/"
+        + _PRIVATE_REFERENCE_TRANSFORM_PREFIX
         + lane.encode("ascii")
         + b"/"
         + identity_bytes
@@ -738,7 +753,7 @@ def _render_unsigned_delta(
 
 def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     if split == "calibration":
-        nonce_base = 173000
+        nonce_base = _ARTIFACT_NONCE_BASES[split]
         grain = [
             {
                 "design_tier": "clean-candidate",
@@ -876,7 +891,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             {
                 "design_tier": "clear-reject-candidate",
                 "pattern": "fine-band",
-                "wavelength_px": 14.0,
+                "wavelength_px": 11.6,
                 "rms_l": 4.50,
                 "support_fraction_in_metric_window": 1.0,
             },
@@ -1550,7 +1565,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             },
         ]
     elif split == "holdout":
-        nonce_base = 183000
+        nonce_base = _ARTIFACT_NONCE_BASES[split]
         grain = [
             {
                 "design_tier": "clear-reject-candidate",
@@ -1653,7 +1668,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             {
                 "design_tier": "clear-reject-candidate",
                 "pattern": "fine-band",
-                "wavelength_px": 12.6,
+                "wavelength_px": 11.4,
                 "rms_l": 4.00,
                 "support_fraction_in_metric_window": 1.0,
             },
@@ -1688,7 +1703,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             {
                 "design_tier": "clear-reject-candidate",
                 "pattern": "fine-band",
-                "wavelength_px": 14.6,
+                "wavelength_px": 11.8,
                 "rms_l": 4.70,
                 "support_fraction_in_metric_window": 1.0,
             },
@@ -2418,7 +2433,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             continue
         tier_index = speck_reject_tier_indices[tier]
         if tier_index >= len(tier_counts):
-            raise RuntimeError(f"r9 speck reject-tier count overflow: {split}/{tier}")
+            raise RuntimeError(f"r10 speck reject-tier count overflow: {split}/{tier}")
         parameters["count_in_metric_window"] = tier_counts[tier_index]
         parameters["minimum_separation_px"] = 10
         speck_reject_tier_indices[tier] += 1
@@ -2429,7 +2444,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             if parameters["design_tier"] == tier
         )
         if actual_counts != expected_counts:
-            raise RuntimeError(f"r9 speck reject-tier schedule drift: {split}/{tier}")
+            raise RuntimeError(f"r10 speck reject-tier schedule drift: {split}/{tier}")
 
     family_nonce_offsets = {
         "artifact-fine-grain": 0,
@@ -2440,7 +2455,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     }
     for family, variants in result.items():
         for index, parameters in enumerate(variants):
-            parameters["schedule_revision"] = "dev-r9-speck-population-schedule-v1"
+            parameters["schedule_revision"] = _SCHEDULE_REVISION
             parameters["condition_nonce"] = (
                 nonce_base + family_nonce_offsets[family] + index
             )
@@ -2473,7 +2488,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     return result
 
 
-def _validate_dev_r9_speck_morphology_disjointness() -> None:
+def _validate_dev_r10_morphology_schedules() -> None:
     morphology_fields = (
         "diameter_px",
         "amplitude_l",
@@ -2489,7 +2504,70 @@ def _validate_dev_r9_speck_morphology_disjointness() -> None:
         }
     overlap = morphology_by_split["calibration"] & morphology_by_split["holdout"]
     if overlap:
-        raise RuntimeError("r9 calibration/holdout speck morphology tuple overlap")
+        raise RuntimeError("r10 calibration/holdout speck morphology tuple overlap")
+
+    expected_grain_periods = {
+        "calibration": {
+            "clear-reject-candidate": (
+                ("fine-band", 8.8),
+                ("halftone", 11),
+                ("fine-band", 12.0),
+                ("fine-band", 6.7),
+                ("halftone", 10),
+                ("fine-band", 11.6),
+                ("fine-band", 4.1),
+            ),
+            "dominant-reject-candidate": (
+                ("halftone", 7),
+                ("fine-band", 4.8),
+                ("fine-band", 8.0),
+                ("fine-band", 3.0),
+            ),
+        },
+        "holdout": {
+            "clear-reject-candidate": (
+                ("halftone", 9),
+                ("fine-band", 11.4),
+                ("fine-band", 7.1),
+                ("fine-band", 11.8),
+                ("halftone", 12),
+                ("fine-band", 4.5),
+                ("fine-band", 9.2),
+            ),
+            "dominant-reject-candidate": (
+                ("fine-band", 5.1),
+                ("fine-band", 8.4),
+                ("fine-band", 3.3),
+                ("halftone", 8),
+            ),
+        },
+    }
+    split_tuples: dict[str, set[tuple[str, float]]] = {}
+    for split, expected_by_tier in expected_grain_periods.items():
+        grain = _artifact_variants(split)["artifact-fine-grain"]
+        split_tuples[split] = set()
+        for tier, expected in expected_by_tier.items():
+            actual = tuple(
+                (
+                    str(parameters["pattern"]),
+                    float(
+                        parameters.get(
+                            "wavelength_px", parameters.get("cell_px")
+                        )
+                    ),
+                )
+                for parameters in grain
+                if parameters["design_tier"] == tier
+            )
+            if actual != expected:
+                raise RuntimeError(f"r10 grain reject period drift: {split}/{tier}")
+            if any(not 2.0 < period < 13.0 for _, period in actual):
+                raise RuntimeError(
+                    f"r10 grain reject period escaped metric support: {split}/{tier}"
+                )
+            split_tuples[split].update(actual)
+    if split_tuples["calibration"] & split_tuples["holdout"]:
+        raise RuntimeError("r10 calibration/holdout grain pattern-period overlap")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -2548,7 +2626,7 @@ def _expected_controls_bounded(
                 "family": family,
             }
             foundation_offset = int.from_bytes(
-                _hmac_material(key, prefix, assignment_scope, "foundation-offset-v3")[
+                _hmac_material(key, prefix, assignment_scope, _FOUNDATION_OFFSET_LANE)[
                     :8
                 ],
                 "big",
@@ -2557,7 +2635,7 @@ def _expected_controls_bounded(
         else:
             foundation_index = int.from_bytes(
                 _hmac_material(
-                    key, prefix, cluster_seed_identity, "foundation-assignment-v3"
+                    key, prefix, cluster_seed_identity, _FOUNDATION_ASSIGNMENT_LANE
                 )[:8],
                 "big",
             ) % len(_FOUNDATIONS)
@@ -2567,7 +2645,7 @@ def _expected_controls_bounded(
             "foundation_id": foundation_id,
         }
         delta_seed = int.from_bytes(
-            _hmac_material(key, prefix, cluster_identity, "delta-v3"), "big"
+            _hmac_material(key, prefix, cluster_identity, _DELTA_LANE), "big"
         )
         unsigned = _render_unsigned_delta(
             render_family,
@@ -2632,7 +2710,7 @@ def _expected_controls_bounded(
             key, code_prefix.encode("ascii") + identity_bytes
         ).hex()[: int(spec["blind_derivation"]["opaque_code_hex_characters"])]
         control_id = blind_hmac(
-            key, b"microtexture-v2-r6/private-control-id/v3/" + identity_bytes
+            key, _PRIVATE_CONTROL_ID_PREFIX + identity_bytes
         ).hex()[:24]
         condition_cluster_id = blind_hmac(
             key,
@@ -2677,7 +2755,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r9_speck_morphology_disjointness()
+    _validate_dev_r10_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):
@@ -2693,7 +2771,7 @@ def _expected_controls_bounded(
                     render_family=family,
                 )
 
-    zero_nonce_base = 151000 if split == "calibration" else 161000
+    zero_nonce_base = _PROTOCOL_ZERO_NONCE_BASES[split]
     for variant_index in range(16):
         emit(
             private_role="protocol-zero",
@@ -2702,23 +2780,26 @@ def _expected_controls_bounded(
             replicate=0,
             polarity=1,
             parameters={
-                "schedule_revision": "dev-r9-speck-population-schedule-v1",
+                "schedule_revision": _SCHEDULE_REVISION,
                 "protocol_nonce": zero_nonce_base + variant_index,
             },
             duplicate_audit_group=None,
             render_family="protocol-zero",
         )
 
+    clean_audit_nonce, artifact_audit_nonce, artifact_condition_nonce = (
+        _DUPLICATE_AUDIT_NONCES[split]
+    )
     clean_audit_parameters = {
-        "schedule_revision": "dev-r9-speck-population-schedule-v1",
-        "audit_nonce": 191000 if split == "calibration" else 201000,
+        "schedule_revision": _SCHEDULE_REVISION,
+        "audit_nonce": clean_audit_nonce,
         "audit_kind": "clean-isomorphic-replicate",
     }
     artifact_audit_parameters = {
-        "schedule_revision": "dev-r9-speck-population-schedule-v1",
-        "audit_nonce": 191001 if split == "calibration" else 201001,
+        "schedule_revision": _SCHEDULE_REVISION,
+        "audit_nonce": artifact_audit_nonce,
         "audit_kind": "obvious-artifact-isomorphic-replicate",
-        "condition_nonce": 191002 if split == "calibration" else 201002,
+        "condition_nonce": artifact_condition_nonce,
         "length_px": 18 if split == "calibration" else 20,
         "width_px": 3,
         "amplitude_l": 10.4 if split == "calibration" else 10.8,

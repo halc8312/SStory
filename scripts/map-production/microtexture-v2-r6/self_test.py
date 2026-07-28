@@ -25,6 +25,16 @@ import generate_controls
 from calibration_harness import _cluster_macro_rate, _threshold_candidates
 from common import write_json_exclusive
 from control_catalog import (
+    _ARTIFACT_NONCE_BASES,
+    _DELTA_LANE,
+    _DUPLICATE_AUDIT_NONCES,
+    _FOUNDATION_ASSIGNMENT_LANE,
+    _FOUNDATION_OFFSET_LANE,
+    _PRIVATE_CONTROL_ID_PREFIX,
+    _PRIVATE_REFERENCE_TRANSFORM_PREFIX,
+    _PROTOCOL_ZERO_NONCE_BASES,
+    _PUBLIC_PAYLOAD_COMMITMENT_PREFIX,
+    _SCHEDULE_REVISION,
     _artifact_variants,
     _draw_hex_label,
     _render_unsigned_delta,
@@ -54,6 +64,12 @@ DEV_R8_FAILURE_AUDIT_RELATIVE = (
 )
 DEV_R8_FAILURE_AUDIT_SHA256 = (
     "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d"
+)
+DEV_R9_FAILURE_AUDIT_RELATIVE = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r9-development-failure.json"
+)
+DEV_R9_FAILURE_AUDIT_SHA256 = (
+    "10c832fb2b7131b942cad54c7412672a98a2f0401db1aae31ce2b1383952f202"
 )
 
 
@@ -359,9 +375,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         }
         self.assertEqual(anchor, common.POPULATION_ANCHOR_SCHEDULE)
         self.assertEqual(anchor["tier_counts_per_artifact_family"], dict(expected_tiers))
-        self.assertEqual(anchor["revision"], "dev-r9-speck-population-schedule-v1")
+        self.assertEqual(anchor["revision"], _SCHEDULE_REVISION)
         self.assertEqual(
-            anchor["r9_per_family_residue_rotation"],
+            anchor["r10_per_family_residue_rotation"],
             {
                 "calibration": {
                     "artifact-fine-grain": 2,
@@ -380,14 +396,56 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             },
         )
         self.assertEqual(
-            anchor["r9_parameter_nonce_bases"],
+            anchor["r10_parameter_nonce_bases"],
             {
-                "calibration_artifact": 173000,
-                "holdout_artifact": 183000,
-                "calibration_protocol_zero": 151000,
-                "holdout_protocol_zero": 161000,
-                "calibration_duplicate_audit": [191000, 191001, 191002],
-                "holdout_duplicate_audit": [201000, 201001, 201002],
+                "calibration_artifact": 273000,
+                "holdout_artifact": 283000,
+                "calibration_protocol_zero": 251000,
+                "holdout_protocol_zero": 261000,
+                "calibration_duplicate_audit": [291000, 291001, 291002],
+                "holdout_duplicate_audit": [301000, 301001, 301002],
+            },
+        )
+        self.assertEqual(
+            anchor["grain_reject_anchor_schedule"],
+            {
+                "metric_coherence_period_bounds_px": [2, 13],
+                "preferred_reject_period_bounds_px": [3, 12],
+                "calibration": {
+                    "clear": [
+                        ["fine-band", 8.8],
+                        ["halftone", 11],
+                        ["fine-band", 12.0],
+                        ["fine-band", 6.7],
+                        ["halftone", 10],
+                        ["fine-band", 11.6],
+                        ["fine-band", 4.1],
+                    ],
+                    "dominant": [
+                        ["halftone", 7],
+                        ["fine-band", 4.8],
+                        ["fine-band", 8.0],
+                        ["fine-band", 3.0],
+                    ],
+                },
+                "holdout": {
+                    "clear": [
+                        ["halftone", 9],
+                        ["fine-band", 11.4],
+                        ["fine-band", 7.1],
+                        ["fine-band", 11.8],
+                        ["halftone", 12],
+                        ["fine-band", 4.5],
+                        ["fine-band", 9.2],
+                    ],
+                    "dominant": [
+                        ["fine-band", 5.1],
+                        ["fine-band", 8.4],
+                        ["fine-band", 3.3],
+                        ["halftone", 8],
+                    ],
+                },
+                "split_pattern_period_tuples_disjoint": True,
             },
         )
         self.assertEqual(
@@ -426,7 +484,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 self.assertTrue(
                     all(
                         item["schedule_revision"]
-                        == "dev-r9-speck-population-schedule-v1"
+                        == _SCHEDULE_REVISION
                         for item in variants
                     ),
                     (split, family),
@@ -506,51 +564,178 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.assertTrue(np.all(delta[outside] == 0))
                     self.assertGreater(np.count_nonzero(np.rint(delta)), 0)
         self.assertTrue(split_nonces["calibration"].isdisjoint(split_nonces["holdout"]))
-        self.assertEqual(min(split_nonces["calibration"]), 173000)
-        self.assertEqual(max(split_nonces["calibration"]), 173419)
-        self.assertEqual(min(split_nonces["holdout"]), 183000)
-        self.assertEqual(max(split_nonces["holdout"]), 183419)
+        self.assertEqual(min(split_nonces["calibration"]), 273000)
+        self.assertEqual(max(split_nonces["calibration"]), 273419)
+        self.assertEqual(min(split_nonces["holdout"]), 283000)
+        self.assertEqual(max(split_nonces["holdout"]), 283419)
         self.assertEqual(
             self.spec["splits"]["calibration"]["public_nonce"],
-            "r6-calibration-v4",
+            "r6-calibration-v5",
         )
         self.assertEqual(
-            self.spec["splits"]["holdout"]["public_nonce"], "r6-holdout-v4"
+            self.spec["splits"]["holdout"]["public_nonce"], "r6-holdout-v5"
         )
         self.assertEqual(
             self.spec["independent_condition_clusters"]["message_prefix"],
-            "microtexture-v2-r6/private-condition-cluster/v4/",
+            "microtexture-v2-r6/private-condition-cluster/v5/",
         )
         self.assertEqual(
             self.spec["blind_derivation"]["seed_message_prefix"],
-            "microtexture-v2-r6/render-seed/v4/",
+            "microtexture-v2-r6/render-seed/v5/",
         )
         self.assertEqual(
             self.spec["blind_derivation"]["code_message_prefix"],
-            "microtexture-v2-r6/opaque-code/v4/",
+            "microtexture-v2-r6/opaque-code/v5/",
         )
         self.assertEqual(
             self.spec["rendering"]["public_commitment_domain"],
-            "microtexture-v2-r6/public-payload-commitment/v5/"
+            "microtexture-v2-r6/public-payload-commitment/v6/"
             "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
         )
         self.assertEqual(
             self.spec["blind_derivation"]["key_commitment_message"],
-            "microtexture-v2-r6/key-commitment/v3",
+            "microtexture-v2-r6/key-commitment/v4",
         )
         self.assertEqual(
             self.spec["rendering"]["hard_speck_reject_anchor_contract"],
             common.RENDERING_INVARIANTS["hard_speck_reject_anchor_contract"],
         )
 
-    def test_dev_r9_runner_is_tracked_authority_with_isolated_root(self) -> None:
-        self.assertEqual(development_probe.DEVELOPMENT_EDITION, "r9")
+    def test_dev_r10_grain_reject_periods_are_inside_metric_support(self) -> None:
+        anchor = self.spec["population_anchor_schedule"][
+            "grain_reject_anchor_schedule"
+        ]
+        metric_minimum, metric_maximum = anchor[
+            "metric_coherence_period_bounds_px"
+        ]
+        preferred_minimum, preferred_maximum = anchor[
+            "preferred_reject_period_bounds_px"
+        ]
+        split_pattern_periods: dict[str, set[tuple[str, float]]] = {}
+        for split in ("calibration", "holdout"):
+            variants = _artifact_variants(split)["artifact-fine-grain"]
+            split_pattern_periods[split] = set()
+            for tier, anchor_key, expected_count in (
+                ("clear-reject-candidate", "clear", 7),
+                ("dominant-reject-candidate", "dominant", 4),
+            ):
+                actual = [
+                    [
+                        parameters["pattern"],
+                        parameters.get(
+                            "wavelength_px", parameters.get("cell_px")
+                        ),
+                    ]
+                    for parameters in variants
+                    if parameters["design_tier"] == tier
+                ]
+                self.assertEqual(actual, anchor[split][anchor_key])
+                self.assertEqual(len(actual), expected_count)
+                self.assertTrue(
+                    all(
+                        metric_minimum < float(period) < metric_maximum
+                        and preferred_minimum <= float(period) <= preferred_maximum
+                        for _, period in actual
+                    )
+                )
+                split_pattern_periods[split].update(
+                    (str(pattern), float(period)) for pattern, period in actual
+                )
+        self.assertTrue(anchor["split_pattern_period_tuples_disjoint"])
+        self.assertTrue(
+            split_pattern_periods["calibration"].isdisjoint(
+                split_pattern_periods["holdout"]
+            )
+        )
+
+    def test_dev_r10_domains_and_nonce_ranges_are_fresh_and_exact(self) -> None:
+        self.assertEqual(
+            _PUBLIC_PAYLOAD_COMMITMENT_PREFIX,
+            b"microtexture-v2-r6/public-payload-commitment/v6/",
+        )
+        self.assertEqual(
+            _PRIVATE_REFERENCE_TRANSFORM_PREFIX,
+            b"private-reference-transform-v5/",
+        )
+        self.assertEqual(_FOUNDATION_OFFSET_LANE, "foundation-offset-v4")
+        self.assertEqual(_FOUNDATION_ASSIGNMENT_LANE, "foundation-assignment-v4")
+        self.assertEqual(_DELTA_LANE, "delta-v4")
+        self.assertEqual(
+            _PRIVATE_CONTROL_ID_PREFIX,
+            b"microtexture-v2-r6/private-control-id/v4/",
+        )
+        self.assertEqual(
+            _ARTIFACT_NONCE_BASES,
+            {"calibration": 273000, "holdout": 283000},
+        )
+        self.assertEqual(
+            _PROTOCOL_ZERO_NONCE_BASES,
+            {"calibration": 251000, "holdout": 261000},
+        )
+        self.assertEqual(
+            _DUPLICATE_AUDIT_NONCES,
+            {
+                "calibration": (291000, 291001, 291002),
+                "holdout": (301000, 301001, 301002),
+            },
+        )
+        nonce_ranges = [
+            set(range(251000, 251016)),
+            set(range(261000, 261016)),
+            set(range(273000, 273420)),
+            set(range(283000, 283420)),
+            {291000, 291001, 291002},
+            {301000, 301001, 301002},
+        ]
+        self.assertTrue(
+            all(
+                left.isdisjoint(right)
+                for index, left in enumerate(nonce_ranges)
+                for right in nonce_ranges[index + 1 :]
+            )
+        )
+
+    def test_dev_r10_morphology_schedule_hashes_are_exact(self) -> None:
+        expected = {
+            "calibration": {
+                "artifact-fine-grain": "add2823835c0e47be63cc92632eb728f3caa1a9a7f96d0bd2e2af49e051aedd8",
+                "artifact-speck": "1434ef9a53775d8923b0fb5389e366828f4287929b52f3a288cfd5ccf89a082d",
+                "artifact-microblob": "adaa1f7e42abd265deaae7b06bcd2df9101920507bedc333e88cc042e80b213c",
+                "artifact-short-dash": "6bd52e94a7a8d24f625cad97ebf84251562a01e0c86cda2a6036cc9faea056fc",
+                "artifact-parallel-bundle": "1f8fc76ba749e51cf3b333080760820cbfd7652065c51e89bdf81ca9e136a825",
+            },
+            "holdout": {
+                "artifact-fine-grain": "1e1551e20f212acca19d502b055bf34722c4c4bafb6d698ab4b81e8ab5dcb88d",
+                "artifact-speck": "6d989752093bde6fe73abc03f845cb36790f294db0c6cab96e23f8c964b5fe4c",
+                "artifact-microblob": "988a52ac8a2901ef0ecc9e50d51dd2139bb2273aa2974e8d490088a385df179f",
+                "artifact-short-dash": "a64fb774a50aac33008ab3f077c791bf60552ff4d56a3700ab7b150db0b9ebbd",
+                "artifact-parallel-bundle": "a4dc764c9219432df0879ddb365b5bce35db5a7eb4219e66281c0bf5941c8b37",
+            },
+        }
+        for split in ("calibration", "holdout"):
+            for family, variants in _artifact_variants(split).items():
+                morphology = [
+                    {
+                        key: value
+                        for key, value in parameters.items()
+                        if key not in {"schedule_revision", "condition_nonce"}
+                    }
+                    for parameters in variants
+                ]
+                self.assertEqual(
+                    hashlib.sha256(common.canonical_json_bytes(morphology)).hexdigest(),
+                    expected[split][family],
+                    (split, family),
+                )
+
+    def test_dev_r10_runner_is_tracked_authority_with_isolated_root(self) -> None:
+        self.assertEqual(development_probe.DEVELOPMENT_EDITION, "r10")
         self.assertEqual(
             development_probe.DEV_ROOT,
             common.repository_root()
             / "tmp"
             / "map-production"
-            / "microtexture-v2-r6-dev-r9",
+            / "microtexture-v2-r6-dev-r10",
         )
         self.assertEqual(
             development_probe.FORMAL_ROOT,
@@ -598,7 +783,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             development_probe.DEV_ROOT / "private" / "development-key.bin",
         )
 
-    def test_dev_r9_runner_rejects_unignored_private_key_path(self) -> None:
+    def test_dev_r10_runner_rejects_unignored_private_key_path(self) -> None:
         completed = development_probe.subprocess.CompletedProcess
         captured_head = development_probe._git_head()
         with (
@@ -621,7 +806,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.spec, captured_head
                 )
 
-    def test_dev_r9_runner_rejects_nontracked_ignore_source(self) -> None:
+    def test_dev_r10_runner_rejects_nontracked_ignore_source(self) -> None:
         completed = development_probe.subprocess.CompletedProcess
         key_relative = self.spec["development_probe_secret_handling"][
             "ignored_private_key_required_repo_relative"
@@ -703,7 +888,10 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(
             history["dev_r8_failure_audit_sha256"], DEV_R8_FAILURE_AUDIT_SHA256
         )
-        self.assertEqual(history["dev_r9_status"], "fresh-development-only")
+        self.assertEqual(
+            history["dev_r9_status"], "failed-and-closed-after-measurement"
+        )
+        self.assertEqual(history["dev_r10_status"], "fresh-development-only")
 
         payload = (repository / DEV_R8_FAILURE_AUDIT_RELATIVE).read_bytes()
         self.assertEqual(hashlib.sha256(payload).hexdigest(), DEV_R8_FAILURE_AUDIT_SHA256)
@@ -802,7 +990,120 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, message):
                 common.validate_dev_r8_failure_audit(mutation)
 
-    def test_dev_r8_history_and_dev_r9_guardrails_are_fail_closed(self) -> None:
+    def test_dev_r9_failure_audit_is_bound_closed_and_fail_closed(self) -> None:
+        repository = common.repository_root()
+        history = self.spec["history"]
+        self.assertEqual(
+            history["dev_r9_status"], "failed-and-closed-after-measurement"
+        )
+        self.assertEqual(
+            history["dev_r9_failure_audit"], DEV_R9_FAILURE_AUDIT_RELATIVE
+        )
+        self.assertEqual(
+            history["dev_r9_failure_audit_sha256"], DEV_R9_FAILURE_AUDIT_SHA256
+        )
+
+        payload = (repository / DEV_R9_FAILURE_AUDIT_RELATIVE).read_bytes()
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), DEV_R9_FAILURE_AUDIT_SHA256)
+        audit = json.loads(payload.decode("utf-8"))
+        common.validate_dev_r9_failure_audit(audit)
+
+        self.assertEqual(audit["outcome"], "failed_closed")
+        self.assertTrue(audit["measurement_started"])
+        self.assertEqual(
+            audit["selection_status"], "no-endpoint-admissible-threshold"
+        )
+        self.assertIsNone(audit["development_hard_threshold"])
+        self.assertIsNone(audit["holdout_endpoint_performance"])
+        self.assertTrue(audit["one_shot_contract"]["r9_closed"])
+        self.assertTrue(
+            audit["population_audit"]["all_formal_endpoint_population_minimums_passed"]
+        )
+        self.assertTrue(
+            audit["population_audit"]["all_development_safety_floors_passed"]
+        )
+        self.assertEqual(audit["threshold_failure"]["candidate_count"], 69)
+        severity3 = audit["threshold_failure"]["diagnostic_best_endpoint_rates"][
+            "severity3_detection"
+        ]
+        self.assertEqual(severity3["detected_clusters"], 25)
+        self.assertEqual(severity3["eligible_clusters"], 26)
+        self.assertFalse(severity3["passed"])
+        self.assertFalse(audit["secret_handling"]["blind_key_present_in_this_artifact"])
+        self.assertTrue(
+            audit["successor_constraints"][
+                "r9_key_controls_labels_pixels_identities_measurements_threshold_diagnostics_nonces_commitments_and_root_reuse_forbidden"
+            ]
+        )
+
+        mutations: list[tuple[str, dict[str, object]]] = []
+        changed = copy.deepcopy(audit)
+        changed["outcome"] = "passed"
+        mutations.append(("outcome", changed))
+        changed = copy.deepcopy(audit)
+        changed["measurement_started"] = False
+        mutations.append(("measurement_started", changed))
+        changed = copy.deepcopy(audit)
+        changed["selection_status"] = "selected-and-passed"
+        mutations.append(("selection_status", changed))
+        changed = copy.deepcopy(audit)
+        changed["development_hard_threshold"] = 0.7661276645021775
+        mutations.append(("development_hard_threshold", changed))
+        changed = copy.deepcopy(audit)
+        changed["one_shot_contract"]["r9_closed"] = False
+        mutations.append(("one_shot_contract.r9_closed", changed))
+        changed = copy.deepcopy(audit)
+        changed["population_audit"]["calibration"]["passed"] = False
+        mutations.append(("population_audit.calibration.passed", changed))
+        changed = copy.deepcopy(audit)
+        changed["threshold_failure"]["candidate_count"] = 68
+        mutations.append(("threshold_failure.candidate_count", changed))
+        changed = copy.deepcopy(audit)
+        changed["threshold_failure"]["diagnostic_best_endpoint_rates"][
+            "severity3_detection"
+        ]["detected_clusters"] = 26
+        mutations.append(("severity3 diagnostic", changed))
+        changed = copy.deepcopy(audit)
+        changed["hash_bindings"]["captured_repository_head"] = "0" * 40
+        mutations.append(("hash binding", changed))
+        changed = copy.deepcopy(audit)
+        changed["secret_handling"]["blind_key_present_in_this_artifact"] = True
+        mutations.append(("key secrecy", changed))
+        changed = copy.deepcopy(audit)
+        changed["successor_constraints"][
+            "r9_key_controls_labels_pixels_identities_measurements_threshold_diagnostics_nonces_commitments_and_root_reuse_forbidden"
+        ] = False
+        mutations.append(("reuse constraints", changed))
+        for label, path in (
+            ("root cause unknown field", ("root_cause",)),
+            ("secret unknown field", ("secret_handling",)),
+            ("successor unknown field", ("successor_constraints",)),
+            (
+                "population endpoint unknown field",
+                (
+                    "population_audit",
+                    "calibration",
+                    "endpoints",
+                    "clean_acceptance",
+                ),
+            ),
+            ("threshold unknown field", ("threshold_failure",)),
+            (
+                "minimal impossibility unknown field",
+                ("threshold_failure", "minimal_impossibility"),
+            ),
+        ):
+            changed = copy.deepcopy(audit)
+            target = changed
+            for component in path:
+                target = target[component]
+            target["unexpected"] = "forbidden"
+            mutations.append((label, changed))
+        for label, mutation in mutations:
+            with self.subTest(label=label), self.assertRaises(RuntimeError):
+                common.validate_dev_r9_failure_audit(mutation)
+
+    def test_dev_r8_history_and_dev_r10_guardrails_are_fail_closed(self) -> None:
         history = self.spec["history"]
         self.assertEqual(
             history["dev_r8_failure_audit"], DEV_R8_FAILURE_AUDIT_RELATIVE
@@ -817,25 +1118,25 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             self.spec["metric_definition"]["score_reference_revision"],
             "dev-r8-soft-unit-robustness-v1",
         )
-        self.assertEqual(
-            guardrails["basis"],
-            "aggregate-only closed dev-r7 development diagnostics before fresh "
-            "dev-r8 generation; dev-r8 stopped before measurement and therefore "
-            "supplied no score or threshold evidence",
-        )
-        self.assertTrue(guardrails["fresh_dev_r9_required"])
+        self.assertTrue(guardrails["fresh_dev_r10_required"])
         self.assertTrue(
             guardrails[
                 "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent"
             ]
         )
+        self.assertTrue(
+            guardrails[
+                "dev_r9_measurement_threshold_diagnostic_or_holdout_reuse_forbidden"
+            ]
+        )
+        self.assertNotIn("fresh_dev_r9_required", guardrails)
         self.assertNotIn("fresh_dev_r8_required", guardrails)
 
         for field, drift in (
             ("dev_r8_status", "failed-and-closed-after-measurement"),
             ("dev_r8_failure_audit", DEV_R7_FAILURE_AUDIT_RELATIVE),
             ("dev_r8_failure_audit_sha256", DEV_R7_FAILURE_AUDIT_SHA256),
-            ("dev_r9_status", "formal-authority"),
+            ("dev_r10_status", "formal-authority"),
         ):
             changed = copy.deepcopy(self.spec)
             changed["history"][field] = drift
