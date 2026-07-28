@@ -66,24 +66,30 @@ planned
 Microtexture v2-r3、r4、r5は一回限りcalibrationで不合格となり、各failure auditへ証拠を固定した
 failed-and-closed editionsです。pre-formal `dev-r6`はpopulation不足で測定前に閉鎖し、`dev-r7`は全440 recordsの
 Root/独立Visionと一回限り測定後、hard-clamp score saturationによりendpoint-admissible thresholdが存在せず閉鎖しました。
-`dev-r7`のsanitized証拠は`qa/microtexture-v2-r6-dev-r7-development-failure.json`です。過去editionのcontrols、keys、
-labels、pixels、identities、measurements、thresholds、foundations、locked sources、holdouts、development rootsは再利用しません。
+`dev-r8`もfresh root/keyで全440 recordsをRoot/独立Vision確認しましたが、pre-measurement population gateで
+tiny-speck-visible rejectがcalibration 3件、holdout 1件となり、測定前に閉鎖しました。sanitized証拠は
+`qa/microtexture-v2-r6-dev-r7-development-failure.json`と
+`qa/microtexture-v2-r6-dev-r8-development-failure.json`です。過去editionのcontrols、keys、
+labels、pixels、identities、measurements、thresholds、holdouts、development rootsは再利用しません。r6用として既に
+qualify済みのImageGen foundation authorityは、fresh controls/referencesの入力としてのみ継続します。
 
 唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r6/`、運用概要は
 `spec/microtexture-v2-calibration.md`です。r6は各split 220 records / 118 private clustersで、200 injection records
 （5 morphology families × 20 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4
 duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185 view-pages相当を全code確認し、fresh
-`dev-r8`では独立Visionも全件確認します。Detectorはgrain / spot / finite-line / parallel-bundleの4 branchを、固定
+`dev-r8`では独立Visionも全件確認しました。Detectorはgrain / spot / finite-line / parallel-bundleの4 branchを、固定
 half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
 r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
-持ち、個別control/reference path・raw SHAをmarker前に出しません。dev-r8入力authorityはtracked runnerを含めて
-commit/pushしUbuntu/Windows CIを通した後にのみ一度生成します。dev-r8成功後、formal authorityを別commitで最終
-freezeし、fresh calibration、v18 locked-clean validation、独立threshold authority receipt、fresh holdoutを各一度だけ
+持ち、個別control/reference path・raw SHAをmarker前に出しません。dev-r8はfailed-and-closedでformalへ昇格できません。
+fresh successor development editionは、tracked runnerを含む入力authorityを事前登録・commit/pushし、Ubuntu/Windows
+CIを通した後にだけ生成できます。そのdevelopment成功後、formal authorityを別commitで最終freezeし、fresh calibration、
+v18 locked-clean validation、独立threshold authority receipt、fresh holdoutを各一度だけ
 実行します。全stageと別途preregisterするproduction residual derivationが合格するまで、v246候補、Golden、master、
 最終pixelへ接続しません。
-dev-r8のfresh keyはGit-ignored private development rootだけに保持して生成・analysis・閉鎖後監査を結び、値のlog・
-Git追跡・Visionでの読取り・後続edition/formalへの再利用を禁止します。runnerは書込み前にroot `.gitignore`を
+closed dev-r8のkeyは旧Git-ignored private development rootだけに封印し、fresh dev-r9 keyは別のGit-ignored
+private rootだけに保持して生成・analysis・閉鎖後監査を結びます。両方とも値のlog・Git追跡・Visionでの読取り・
+後続edition/formalへの再利用を禁止します。runnerは書込み前にroot `.gitignore`を
 captured HEADへbyte-bindし、exact pathのHEAD/index非存在とexact `/tmp*/` ignoreを検証します。formal keyは
 生成物やlogへ永続化しません。
 

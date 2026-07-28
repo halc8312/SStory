@@ -23,8 +23,12 @@
     "dev_r7_role": "development-only score-saturation failure evidence; both splits passed the population gate, measurement ran once, no endpoint-admissible threshold existed, and no dev-r7 key, control, label, pixel, identity, measurement, threshold diagnostic, parameter nonce, or artifact root is reusable",
     "dev_r7_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r7-development-failure.json",
     "dev_r7_failure_audit_sha256": "00ab198c5e0be28775436d22927e9bd8523304f41e2c310d6e81c0cf2ea7131f",
-    "dev_r8_status": "fresh-development-only",
-    "dev_r8_role": "fresh one-shot development role used only to verify the preregistered soft-unit metric and revision-3 schedule before formal r6 generation; it requires a tracked runner, a fresh isolated root, a fresh cryptographic blind key, revision-3 public and parameter nonces, newly generated controls and anonymous identities, and fresh sealed Root plus independent Vision labels, and it can never become or supply formal authority"
+    "dev_r8_status": "failed-and-closed-before-measurement",
+    "dev_r8_role": "development-only population-feasibility failure evidence; both splits failed only the tiny-speck-visible reject population endpoint after all 440 records were blindly reviewed and reconciled, the edition closed before any numeric metric call, and no dev-r8 key, control, label, pixel, identity, placement, parameter nonce, measurement, threshold, commitment, or artifact root is reusable",
+    "dev_r8_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json",
+    "dev_r8_failure_audit_sha256": "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d",
+    "dev_r9_status": "fresh-development-only",
+    "dev_r9_role": "fresh one-shot development role used only to verify the unchanged preregistered soft-unit metric and the frozen dev-r9 speck-population schedule before formal r6 generation; it requires a tracked runner, a fresh isolated root, a fresh cryptographic blind key, revision-4 public, render, code, and cluster domains, revision-5 public commitments, newly generated controls and anonymous identities, and fresh sealed Root plus independent Vision labels, and it can never become or supply formal authority"
   },
   "roots": {
     "blind_key_environment": "MICROTEXTURE_V2_R6_BLIND_KEY",
@@ -37,9 +41,9 @@
     "code_root_policy": "CODE_ROOT must equal the exact required tracked repository path; every authority byte must be tracked and identical to one captured upstream Git HEAD"
   },
   "development_probe_secret_handling": {
-    "scope": "non-authority dev-r8 only; no development key, root, output, or commitment can become formal authority",
+    "scope": "non-authority dev-r9 only; no development key, root, output, or commitment can become formal authority",
     "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-    "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r8/private/development-key.bin",
+    "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r9/private/development-key.bin",
     "gitignore_required_repo_relative": ".gitignore",
     "gitignore_required_pattern": "/tmp*/",
     "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": true,
@@ -140,8 +144,8 @@
     }
   },
   "splits": {
-    "calibration": {"public_nonce": "r6-calibration-v3", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2},
-    "holdout": {"public_nonce": "r6-holdout-v3", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2, "generation_once_only": true, "evaluation_once_only": true}
+    "calibration": {"public_nonce": "r6-calibration-v4", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2},
+    "holdout": {"public_nonce": "r6-holdout-v4", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2, "generation_once_only": true, "evaluation_once_only": true}
   },
   "runtime_contract": {
     "all_formal_stages_same_machine_and_exact_runtime_fingerprint_required": true,
@@ -179,7 +183,7 @@
   },
   "independent_condition_clusters": {
     "private_cluster_id_primitive": "HMAC-SHA-256",
-    "message_prefix": "microtexture-v2-r6/private-condition-cluster/v3/",
+    "message_prefix": "microtexture-v2-r6/private-condition-cluster/v4/",
     "identity_includes": ["split", "public_nonce", "private_role", "family", "variant_index", "parameters", "duplicate_audit_group", "foundation_id"],
     "identity_excludes": ["polarity", "replicate"],
     "public_manifest_or_labels_must_not_expose_cluster_id": true,
@@ -221,11 +225,11 @@
     }
   },
   "population_anchor_schedule": {
-    "revision": "dev-r8-soft-unit-schedule-v1",
-    "fresh_from_closed_dev_r7": true,
-    "r7_parameter_nonce_reuse_forbidden": true,
-    "r8_per_family_residue_rotation": {"calibration": {"artifact-fine-grain": 1, "artifact-speck": 3, "artifact-microblob": 5, "artifact-short-dash": 7, "artifact-parallel-bundle": 9}, "holdout": {"artifact-fine-grain": 2, "artifact-speck": 4, "artifact-microblob": 6, "artifact-short-dash": 8, "artifact-parallel-bundle": 10}},
-    "r8_parameter_nonce_bases": {"calibration_artifact": 73000, "holdout_artifact": 83000, "calibration_protocol_zero": 51000, "holdout_protocol_zero": 61000, "calibration_duplicate_audit": [91000, 91001, 91002], "holdout_duplicate_audit": [101000, 101001, 101002]},
+    "revision": "dev-r9-speck-population-schedule-v1",
+    "fresh_from_closed_dev_r8": true,
+    "r8_parameter_nonce_reuse_forbidden": true,
+    "r9_per_family_residue_rotation": {"calibration": {"artifact-fine-grain": 2, "artifact-speck": 4, "artifact-microblob": 6, "artifact-short-dash": 8, "artifact-parallel-bundle": 10}, "holdout": {"artifact-fine-grain": 3, "artifact-speck": 5, "artifact-microblob": 7, "artifact-short-dash": 9, "artifact-parallel-bundle": 11}},
+    "r9_parameter_nonce_bases": {"calibration_artifact": 173000, "holdout_artifact": 183000, "calibration_protocol_zero": 151000, "holdout_protocol_zero": 161000, "calibration_duplicate_audit": [191000, 191001, 191002], "holdout_duplicate_audit": [201000, 201001, 201002]},
     "private_until_one_shot_marker": true,
     "public_manifest_exposure_forbidden": true,
     "generation_design_tiers_are_truth": false,
@@ -238,6 +242,10 @@
     "replacement_forbidden": true,
     "key_resampling_forbidden": true,
     "actual_sealed_vision_labels_are_decisive": true,
+    "speck_reject_anchor_conditions_per_split": 11,
+    "speck_reject_anchor_structural_miss_budget_against_development_floor": 5,
+    "speck_reject_anchor_truth_guarantee_claimed": false,
+    "speck_reject_anchor_schedule": {"calibration": {"clear_counts": [32, 36, 40, 44, 48, 52, 56], "dominant_counts": [64, 72, 80, 88]}, "holdout": {"clear_counts": [34, 38, 42, 46, 50, 54, 58], "dominant_counts": [68, 76, 84, 90]}, "diameter_px": 1, "minimum_separation_px": 10, "shoulder_fraction": 0.08, "amplitude_l_maximum": 12.0, "split_morphology_tuples_disjoint": true},
     "blind_key_selection_forbidden_for": ["split", "family", "generation-design-tier", "variant-index", "parameter-tuple"],
     "blind_key_allowed_uses": ["foundation-assignment", "private-reference-transform", "sparse-placement-within-frozen-packing-invariants", "private-identities-and-anonymous-codes", "public-record-order"],
     "development_premeasurement_safety_floor_formula": "max(M+2,ceil(1.25*M)) for each unchanged formal endpoint minimum M",
@@ -277,8 +285,8 @@
   "blind_derivation": {
     "primitive": "HMAC-SHA-256",
     "key_commitment_message": "microtexture-v2-r6/key-commitment/v3",
-    "seed_message_prefix": "microtexture-v2-r6/render-seed/v3/",
-    "code_message_prefix": "microtexture-v2-r6/opaque-code/v3/",
+    "seed_message_prefix": "microtexture-v2-r6/render-seed/v4/",
+    "code_message_prefix": "microtexture-v2-r6/opaque-code/v4/",
     "opaque_code_hex_characters": 24,
     "formal_secret_value_artifact_or_log_persistence_forbidden": true,
     "same_key_commitment_required_for_calibration_freeze_locked_clean_reference_receipt_holdout": true
@@ -288,7 +296,7 @@
     "requested_delta_hash": "SHA-256 over contiguous little-endian float32 requested delta bytes",
     "encoded_png_hash": "SHA-256 over deterministic Pillow L-mode PNG bytes",
     "public_payload_binding": "the public manifest exposes only opaque codes and per-code, per-lane HMAC-SHA-256 commitments over each private raw payload SHA; no raw control path, reference path, control bytes, or reference bytes exist as individual pre-marker artifacts, and raw control/reference/delta hashes are revealed only after the durable marker",
-    "public_commitment_domain": "microtexture-v2-r6/public-payload-commitment/v4/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
+    "public_commitment_domain": "microtexture-v2-r6/public-payload-commitment/v5/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
     "commitment_equality_hiding": "domain separation plus the opaque code makes all 660 commitments unique even when private requested deltas repeat; repeated or cross-lane commitments are rejected",
     "single_read_validation": "read each contact sheet once and validate the same in-memory bytes; regenerate every private control/reference only after the marker from the frozen catalog and blind key",
     "sparse_injection_domain": "all specks, microblobs, short dashes, and parallel bundles are positioned completely inside the exact metric window",
@@ -299,6 +307,7 @@
     "hard_speck_integer_core_contract": "artifact-speck uses an unblurred exact one-pixel core at an integer-lattice center whose unsigned requested-delta peak equals amplitude_l; shoulder_fraction is tier-bound to clean=0, warning=0.05, and both reject tiers=0.08 on only the four axial neighbours; every encoded core remains the unique local extremum of its polarity",
     "hard_speck_separation_contract": "artifact-speck requires minimum_separation_px at least 10 and integer centers whose pairwise Chebyshev separation is at least that frozen parameter, so core and optional four-neighbour supports are disjoint with uninjected pixels between them",
     "hard_speck_quadrant_stratification_contract": "artifact-speck integer centers use deterministic round-robin packing across the four exact metric-window quadrants with quadrant counts differing by at most one; a count of at least four covers every quadrant",
+    "hard_speck_reject_anchor_contract": "the eleven clear- and dominant-reject design-tier conditions per split retain the one-pixel core, tier-bound 0.08 axial shoulder, amplitude at most 12 L, exact polarity, and actual-label-decisive contracts; the schedule increases only the fixed core count while fixing minimum separation at 10 pixels for deterministic packing; this is a preregistered coverage anchor, not assigned Vision truth, and it cannot bypass the post-seal population gate",
     "microblob_separation_contract": "artifact-microblob uses integer centers and a finite Gaussian truncated at explicit support_radius_px; minimum_separation_px is at least 2*support_radius_px+1, supports have a positive uninjected gap, and every center has unsigned requested-delta peak amplitude_l",
     "parallel_geometry_contract": "each artifact-parallel-bundle pair uses an exact 0- or 90-degree axis, equal even-integer length_px, even-integer centerline spacing_px, zero axial offset and therefore 100 percent axial overlap; edge gap equals spacing_px-width_px and satisfies 1<=gap<=length_px; every same-polarity non-touching pair is wholly contained in exactly one 400-percent quadrant",
     "sparse_deterministic_packing_contract": "speck, microblob, short-dash, and parallel-bundle centers use a bounded deterministic candidate permutation and deterministic first-fit acceptance stratified across the four exact quadrants with count difference at most one; short-dash separation is at least ceil(length_px)+width_px+3 and parallel-bundle separation is at least max(length_px,spacing_px)+width_px+3; failure to place the full requested count raises without adaptive count, parameter, tier, split, or key replacement",
@@ -451,13 +460,13 @@
     },
     "score_reference_revision": "dev-r8-soft-unit-robustness-v1",
     "score_reference_changes_from_closed_dev_r7": {"grain_rms_l": {"from": 0.7, "to": 0.875}, "tiny_mass_l": {"from": 20.0, "to": 15.0}, "finite_line_top4_mean_l": {"from": 4.5, "to": 2.25}},
-    "score_reference_revision_guardrails": {"basis": "aggregate-only closed dev-r7 development diagnostics before fresh dev-r8 generation", "single_reference_candidates_passed": 0, "two_reference_candidates_passed": 1, "chosen_three_reference_diagnostic_threshold": 0.7027857840028129, "chosen_three_reference_calibration_score_gap": 0.025614718437003, "chosen_three_reference_holdout_score_gap": 0.025614718437003, "chosen_third_reference_purpose": "increase the minimum calibration/holdout decision-boundary distance without changing endpoint results", "raw_metrics_unchanged": true, "branch_composition_unchanged": true, "endpoint_counts_and_rates_unchanged": true, "fresh_dev_r8_required": true, "dev_r7_threshold_or_measurement_reuse_for_formal_forbidden": true},
+    "score_reference_revision_guardrails": {"basis": "aggregate-only closed dev-r7 development diagnostics before fresh dev-r8 generation; dev-r8 stopped before measurement and therefore supplied no score or threshold evidence", "single_reference_candidates_passed": 0, "two_reference_candidates_passed": 1, "chosen_three_reference_diagnostic_threshold": 0.7027857840028129, "chosen_three_reference_calibration_score_gap": 0.025614718437003, "chosen_three_reference_holdout_score_gap": 0.025614718437003, "chosen_third_reference_purpose": "increase the minimum calibration/holdout decision-boundary distance without changing endpoint results", "raw_metrics_unchanged": true, "branch_composition_unchanged": true, "endpoint_counts_and_rates_unchanged": true, "fresh_dev_r9_required": true, "dev_r7_threshold_or_measurement_reuse_for_formal_forbidden": true, "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent": true},
     "score_normalization": "unit_soft(x, reference)=0 when x<=0 else (2/pi)*atan(x/reference), where reference is a frozen fixed half-scale and every finite positive input maps strictly monotonically into (0,1); grain=max(min(unit_soft occupancy,unit_soft rms),coherence_0_to_1*unit_soft rms); spot=max(unit_soft tiny mass,unit_soft tiny component count,unit_soft multiscale blob); finite-line=max(unit_soft peak,unit_soft top4); parallel=min(unit_soft absolute weaker-pair peak,unit_soft matched-pair count); hard=max four branches",
     "raw_metric_recomputation_required": true,
     "parallel_pair_ratio_diagnostic_only": true,
     "diagnostic_branch_flag_cutoff": 0.5,
     "artifact_dependent_score_denominators_forbidden": true,
-    "development_basis": "reference constants, strictly monotone bounded soft-unit score structure, worst-case truth aggregation, fixed filters, and split-specific coverage were designed from the revealed failed r5 report plus closed non-formal dev-r6/dev-r7 evidence before the fresh dev-r8 and formal r6 keys, controls, labels, or one-shot measurements existed; dev-r7 proved that hard clipping structurally collapsed warning and reject magnitudes at 1.0, and all prior corpora remain development-only"
+    "development_basis": "reference constants, strictly monotone bounded soft-unit score structure, worst-case truth aggregation, and fixed filters were designed from the revealed failed r5 report plus closed non-formal dev-r6/dev-r7 evidence; dev-r8 then stopped before measurement because tiny-speck-visible rejects were 3 and 1 clusters, so dev-r9 changes only the preregistered reject-tier speck count coverage and fresh identity domains while all prior corpora remain development-only"
   },
   "threshold_selection": {
     "endpoint_eligible_private_role": "artifact",
@@ -558,7 +567,7 @@
     "authority_reload_secret_rebinding_required": true,
     "blindness_scope": "operational honest-reviewer blindness: opaque code assignment and private identities are hidden from the Vision review surface; no information-theoretic or same-OS-principal adversarial secrecy is claimed for visible morphology",
     "review_surface": "only the 185 anonymous contact-sheet pages and the code-only label form; individual controls, references, source foundations, authority code, private key, filesystem comparisons, automated image differencing, and identity-regeneration tools are outside the review surface",
-    "reviewer_access_contract": "the formal blind key remains only in a dedicated custodian process; the dev-r8 blind key remains only in its Git-ignored private probe root and tracked custodian runner; the Root Vision review process must not read or inherit either key and must use visual page inspection only until all labels are complete and sealed",
+    "reviewer_access_contract": "the formal blind key remains only in a dedicated custodian process; the dev-r9 blind key remains only in its Git-ignored private probe root and tracked custodian runner; the Root Vision review process must not read or inherit either key and must use visual page inspection only until all labels are complete and sealed",
     "same_principal_attack_non_claim": "a reviewer who deliberately uses arbitrary local process or filesystem access is outside the preregistered threat model; HMAC commitments prevent accidental/public metadata disclosure, not compromise by the key custodian or a malicious same-principal reviewer"
   },
   "timestamps": {

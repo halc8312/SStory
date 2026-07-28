@@ -16,16 +16,26 @@ calibrationのwarning 8/19 clustersとreject 55/56 clustersが同じscore `1.0`�
 thresholdが存在しなかったためfailed-and-closedです。thresholdは`null`、holdout endpoint performanceは未評価です。
 sanitized evidenceは`world/map-production/qa/microtexture-v2-r6-dev-r7-development-failure.json`へ固定します。
 
-fresh `dev-r8` は、追跡済み`development_probe.py`、revision-3 public/HMAC/parameter nonce domain、新しいroot、
-新しいkey、新規controls/identities/labels/measurementsを使う独立した一回限りのdevelopment probeです。r7の
-key、controls、labels、pixels、identities、measurements、diagnostic threshold、parameter nonce、artifact rootを
-再利用せず、subsetting、合格例だけの採用、top-up、key resampling、relabel、rerunを禁止します。
-development keyはtracked runnerが`secrets.token_bytes(32)`で生成し、生成・一回限りのanalysis・閉鎖後監査を
-結ぶため`tmp/map-production/microtexture-v2-r6-dev-r8/private/development-key.bin`だけに保持します。このpathは
-Git-ignoredで、値のlog・Git追跡・Vision processでの読取り・formalまたは後続editionへの再利用を禁止します。
-key生成前に`.gitignore`がcaptured HEADとbyte-identicalであること、exact key pathがHEAD/indexに存在せず、
-root `.gitignore`のexact `/tmp*/` patternで実際にignoreされることをrunnerが検証します。閉鎖rootはforensic
-reproducibilityのため不変のまま保持します。formal keyの非永続化契約は変更しません。
+fresh `dev-r8` は両splitの全440 recordsを新規生成・全件Vision・sealした後、最初の数値metric callより前の
+population gateでfailed-and-closed-before-measurementになりました。tiny-speck-visible reject clusterは
+calibration `3`、holdout `1`で、両方ともdevelopment-only floor `6`に届きませんでした。残る全
+development-only population endpointは両splitで合格しました。`measurement_started=false`のまま、raw metrics、
+hard composite score、threshold candidate search、development holdout endpoint evaluationを一度も実行せず、thresholdを
+作成していません。sanitized auditは
+`world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json`へ固定します。dev-r8のroot、key、
+controls、references、pixels、identities、codes、labels、measurements、noncesはformalまたは後続editionへ
+再利用せず、閉鎖rootだけをforensic reproducibilityのため不変のまま保持します。
+
+fresh `dev-r9` は次の一回限りdevelopment probeとして事前登録する予定です。exact rootは
+`tmp/map-production/microtexture-v2-r6-dev-r9`、keyはそのroot専用のfresh cryptographic 32-byte keyとし、
+public noncesは`r6-calibration-v4` / `r6-holdout-v4`、HMAC cluster/render/code domainsはv4、public commitment domainはv5と
+します。parameter nonce basesはcalibrationがartifact `173000`、protocol-zero `151000`、duplicate-audit
+`191000..191002`、holdoutがartifact `183000`、protocol-zero `161000`、duplicate-audit `201000..201002`です。
+family-order residue rotationsはcalibration `2/4/6/8/10`、holdout `3/5/7/9/11`とします。calibration / holdoutの
+各220 recordsはcontrols、references、placements、identities、opaque codes、labels、measurements、public viewsを全て
+freshに作ります。schedule revisionは`dev-r9-speck-population-schedule-v1`ですが、これを規範JSON、
+bindings、code、tests、runnerにfreezeしcommit/push/Ubuntu/Windows CIを通すまでgenerateの権限はありません。
+formal keyの非永続化契約は変更しません。
 
 ## ImageGen authority
 
@@ -44,7 +54,8 @@ record identity（polarity と replicate を含む）を入力とする full-out
 この blind は、honest reviewer が割り当てられた review surface だけを見るための**運用上の blind**です。
 technical / cryptographic blind や、同じ OS principal で悪意ある reviewer に対する secrecy は主張しません。
 formal fresh key は専用の長寿命 custodian process だけが保持し、artifactやlogへ永続化せず、Vision processへ
-継承・公開しません。dev-r8 keyは前述のGit-ignored private rootとtracked custodian runnerだけが扱います。marker 前の
+継承・公開しません。closed dev-r8 keyはdev-r8のGit-ignored private rootにだけ保持し、planned dev-r9 keyは別のfresh
+Git-ignored rootと将来のtracked custodian runnerだけが扱います。marker 前の
 review surface は185 contact-sheet view-pages（各view 37 pages）とcode-only label formだけです。manifest schema
 `microtexture-v2-r6-control-manifest/3` が公開する record 情報は opaque code と code別の
 `control` / `reference` / `delta` HMAC commitment 3件だけで、個別control/referenceのpath、file、raw bytes、
@@ -87,6 +98,15 @@ split別のfrozen scheduleとpublic nonceを使います。tierはperceptual mar
 `clean`、`warning`、`reject`、severityその他のVision truthを予告・割当するものではありません。
 全scheduleを一体として生成・blind reviewし、結果を見てsubsetting、top-up、key resamplingしてはいけません。
 
+planned dev-r9では、`artifact-speck`の20 conditionsだけscheduleを強化します。reject-tierは11 conditionsで、
+clear speck countを32～58、dominant speck countを64～90とし、calibrationとholdoutのparameter tuplesは完全に
+disjointにします。全artifact-speckはinteger-lattice centerのexact one-pixel core（`diameter_px=1`）と
+`amplitude_l <= 12`を守り、reject-tierではcoreの上下左右4近傍だけに`shoulder_fraction=0.08`を置き、既存の
+separation/packing契約も満たします。この生成scheduleはVision truth、
+endpoint membership、label expectationではなく、既存corpusへのtop-upでもありません。全20 conditionsと各split
+220 recordsをfreshに一体生成してblind reviewし、development-only tiny-speck-visible reject floor 6を含む
+全population gateをall-or-nothingで適用します。
+
 family identityを保つmorphology invariantsも全tierで不変です。fine-grainはfield-wideな反復/coherenceを保ち、
 spotやlineへ形態を移しません。speckは互いに分離した同程度のpoint-like hard coreを3個以上保ち、blurでmicroblob化
 させません。microblobはcompactな中心/境界を保ち、diffuse cloudやspeck列へ変えません。short-dashは有限の
@@ -119,9 +139,9 @@ condition clusterごとに `reject > warning > clean` のworst-case disposition�
 保守的に集約し、metric-equivalent pairには1 predictionだけを割り当てます。その後unique clustersを等重みで
 集計します。1 clusterをaccept/reject endpointの双方へ入れることは禁止です。
 
-`dev-r8` の一回限りの analysis には、formal spec の endpoint最低populationを一切変更せず、さらに厳しい
-development-only safety floorを上乗せします。label bytesを両splitともsealし、private identityをrevealして
-semantic auditを終えた後、最初のmetric callより前にcondition-cluster truthで次を検査します。
+closed `dev-r8` とplanned `dev-r9` の一回限りのanalysisには、formal specのendpoint最低populationを一切変更せず、
+さらに厳しいdevelopment-only safety floorを上乗せします。label bytesを両splitともsealし、private identityを
+revealしてsemantic auditを終えた後、最初のmetric callより前にcondition-cluster truthで次を検査します。
 
 | development-only population | minimum unique clusters / split |
 |---|---:|
@@ -136,9 +156,17 @@ semantic auditを終えた後、最初のmetric callより前にcondition-cluste
 | short-line-visible reject | 10 |
 | parallel-bundle-visible reject | 8 |
 
-一つでも不足すれば`measurement_started=false`で`dev-r8`を消費・閉鎖し、測定、threshold探索、ラベル修正、
-top-up、別keyでの再生成へ進みません。このmargin gateはdevelopment scheduleのfeasibility確認専用であり、
-formal common endpoint minima、rate、candidate selection、one-shot契約を変更しません。
+`dev-r8`ではtiny-speck-visible rejectがcalibration 3、holdout 1でfloor 6を下回り、他の全population endpointは
+passしました。したがってgate全体をfailとして`measurement_started=false`のまま
+`failed-and-closed-before-measurement`で消費・閉鎖しました。raw metrics、composite、candidate、threshold探索、
+holdout endpoint evaluationは一切行わず、authority thresholdも作っていません。sanitized failure evidenceは
+`world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json`です。dev-r8のkey、controls、
+references、pixels、identities、opaque codes、labels、measurementsはdev-r9またはformalへ再利用しません。
+
+planned dev-r9でも一つでも不足すれば同じく`measurement_started=false`で消費・閉鎖し、測定、threshold探索、
+ラベル修正、top-up、別keyでの再生成へ進みません。このmargin gateとspeck生成scheduleはdevelopment scheduleの
+feasibility確認専用であり、Vision truthではありません。formal common endpoint minima、rate、metric、candidate
+selection、one-shot契約を変更しません。
 
 ## Root Vision review
 
@@ -202,9 +230,11 @@ detector は中央 256×192 luminance-residual window に対し、固定 raw met
 spot component floor、finite-line response floor、parallel-pair response floor はすべてabsolute `4.5 L`です。
 coherent fine patternはspot/line branchではなく、directional coherenceを含むgrain branchが担当します。
 split-specific morphology schedulesとこれらのabsolute floorは、fresh formal key、controls、labelsより前に
-明示的なnon-formal development keysでfreezeします。closed `dev-r6`/`dev-r7` corporaは正式判断に使わず、fresh
-`dev-r8` のrevision-3全scheduleをsubsettingなしで一回だけ確認します。formal labels、threshold、resultsは未確定であり
-予告しません。既存のblind、one-shot、endpoint、failed-r3/r4/r5およびclosed development境界は不変です。
+明示的なnon-formal development keysでfreezeします。closed `dev-r6`/`dev-r7`/`dev-r8` corporaは正式判断に使わず、
+planned `dev-r9` の`dev-r9-speck-population-schedule-v1`全scheduleをsubsettingなしで一回だけ確認します。
+dev-r9で変更するのはspeckの生成population scheduleだけです。formal labels、threshold、resultsは未確定であり
+予告しません。既存のmetric、half-scale、absolute floor、endpoint minima/rate、blind、one-shot、failed-r3/r4/r5
+およびclosed development境界は不変です。
 
 各 branch は固定half-scale referenceに対する
 `unit_soft(x,ref)=0 (x<=0), otherwise (2/pi)*atan(x/ref)` で正規化します。有限の正の証拠に対して厳密単調で
@@ -214,7 +244,8 @@ split-specific morphology schedulesとこれらのabsolute floorは、fresh form
 r7の閉鎖済みaggregate診断から変更するhalf-scaleは3件だけです。`grain_rms_l: 0.7 -> 0.875`、
 `tiny_mass_l: 20 -> 15`、`finite_line_top4_mean_l: 4.5 -> 2.25` とし、他6件、raw metrics、branch構成、
 単一threshold、全endpoint count/rateは不変です。単一reference変更は全候補不合格、2-reference変更で唯一通った組へ、
-判定境界を広げるgrain 1件を加えたrevisionです。r7のthreshold/measurement自体はformalへ使用しません。
+判定境界を広げるgrain 1件を加えたrevisionです。dev-r8はpopulation gateでmeasurement前に閉鎖したため、このmetricを
+一度も呼びませんでした。planned dev-r9はこのmetricを変更せず継承し、r7のthreshold/measurementもformalへ使用しません。
 
 ```text
 hard_composite_score = max(
@@ -239,39 +270,31 @@ post-marker failureとしてauthority thresholdを作らず閉鎖します。cou
 candidateがなければ`hard_threshold:null`で閉鎖します。最良の不合格候補はdiagnostic auditにだけ記録し、
 freezeや後続stageへ渡しません。
 
-## Dev-r8 operator order
+## Development closure and planned dev-r9 operator order
 
-このsectionはformal r6ではなく、formal前の一回限りdevelopment probeです。dev-r8入力authorityをcommit/pushし、
-branch upstream HEADと一致しUbuntu/Windows CIが成功するまで実行しません。formal root/environmentと
-`tmp/map-production/microtexture-v2-r6-dev-r8`が存在しないことを確認した後、次を一度だけ実行します。
+dev-r8は全440 decisionsをreview、seal、private auditした後、最初のmetric callより前のpopulation gateで
+`failed-and-closed-before-measurement`となりました。tiny-speck-visible rejectはcalibration 3、holdout 1で、
+他のdevelopment-only population endpointsは全てpassしました。失敗後のgenerate/analyze再実行、decision変更、
+別key、subsetting、top-up、artifact再利用は禁止です。
 
-```powershell
-python scripts/map-production/microtexture-v2-r6/development_probe.py generate
-```
+dev-r9はformal r6ではなく、formal前の新しい一回限りdevelopment probeとしてのみ計画されています。このREADMEの
+記述だけでは実行権限になりません。`dev-r9-speck-population-schedule-v1`、新しいroot/key、全nonce/domain、
+parameter schedule、bindings、code、tests、tracked custodian runnerを規範JSONへfreezeし、別commitをpushして
+branch upstream HEADと一致させ、Ubuntu/Windows CIを両方passさせるまでgenerateしてはいけません。
 
-Rootと独立Visionは両splitの全37 review boards（各boardは同pageの5 view）を別々に確認し、各220 decisionsを
-`decisions-root.dev.txt`と`decisions-independent.dev.txt`へ記録します。Rootが画像へ戻って差分をreconcileしたexact
-Root decisionsを`vision-decisions.dev.txt`として固定します。preflightは3ファイルの全code/printed-code bindingを
-検証し、Root/独立decisionが全220件でexact logical agreementになっていなければ停止します。labelやkeyは書きません。
-
-```powershell
-python scripts/map-production/microtexture-v2-r6/development_probe.py preflight
-```
-
-全件確認とpreflight合格後だけ、次を一度だけ実行します。これはlabelsをexclusive sealし、private auditとpopulation
-gate後にだけmetricを呼び、calibrationで1 thresholdを選び、その値をholdoutへ変更せず適用します。
-
-```powershell
-python scripts/map-production/microtexture-v2-r6/development_probe.py analyze
-```
-
-失敗・例外後のgenerate/analyze再実行、decision変更、別key、top-upは禁止です。成功時もdev-r8 thresholdは
-formal authorityではなく、success auditをGitへ固定してdev-r8を閉じた後、formal r6 authorityを別commitで
-最終freezeします。
+freeze後の順序は、fresh rootの不存在確認 → fresh 32-byte keyによる両split各220 recordsの一回限り生成 →
+Root/独立Visionによる全37 review boardsと各220 decisionsの独立確認 → exact Root decision reconciliation →
+code/printed-code bindingと全件logical agreementのpreflight → exclusive label seal → private audit →
+all-or-nothing population gateです。全floorがpassした場合に限り最初のmetric callへ進み、calibrationで1 thresholdを
+選び、その値をholdoutへ変更せず適用します。一つでも失敗すればdev-r9を消費・閉鎖し、rerun、relabel、別key、
+subsetting、top-upをしません。成功時もdev-r9 thresholdはformal authorityではなく、success auditをGitへ固定して
+dev-r9を閉じた後にのみ、formal r6 authorityを別commitで最終freezeできます。
 
 ## Formal operator order
 
-順序を入れ替えたり、失敗後にやり直したりしてはいけません。
+dev-r9が上記の全population gate、metric、calibration、holdout endpointsを一回でpassし、hash-bound success auditを
+commit/pushして両CIを通すまで、以下のformal stageを一つも開始してはいけません。その成功はformal authorityではなく、
+formal authorityはその後の別commitでfreezeします。順序を入れ替えたり、失敗後にやり直したりしてはいけません。
 
 1. authority files、implementation bindings、foundation/locked provenance、Vision reviews を Git で freeze し、
    working tree の対象 bytes、captured upstream HEAD、tracked SHA を preflight します。Ubuntu/Windows CI は

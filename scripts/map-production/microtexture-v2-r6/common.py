@@ -36,7 +36,7 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "9de51e74c8aec518b2b9c6f08201244f06eaf3df9ceba61907efad4044ea6587"
+SPEC_SHA256 = "290b59349b813935d3e04a8df67cb4b469929b53a993f84e15e9e087b2bc62b1"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
 
 
@@ -339,32 +339,32 @@ VISION_SEMANTIC_RUBRIC = {
 }
 
 POPULATION_ANCHOR_SCHEDULE = {
-    "revision": "dev-r8-soft-unit-schedule-v1",
-    "fresh_from_closed_dev_r7": True,
-    "r7_parameter_nonce_reuse_forbidden": True,
-    "r8_per_family_residue_rotation": {
+    "revision": "dev-r9-speck-population-schedule-v1",
+    "fresh_from_closed_dev_r8": True,
+    "r8_parameter_nonce_reuse_forbidden": True,
+    "r9_per_family_residue_rotation": {
         "calibration": {
-            "artifact-fine-grain": 1,
-            "artifact-speck": 3,
-            "artifact-microblob": 5,
-            "artifact-short-dash": 7,
-            "artifact-parallel-bundle": 9,
-        },
-        "holdout": {
             "artifact-fine-grain": 2,
             "artifact-speck": 4,
             "artifact-microblob": 6,
             "artifact-short-dash": 8,
             "artifact-parallel-bundle": 10,
         },
+        "holdout": {
+            "artifact-fine-grain": 3,
+            "artifact-speck": 5,
+            "artifact-microblob": 7,
+            "artifact-short-dash": 9,
+            "artifact-parallel-bundle": 11,
+        },
     },
-    "r8_parameter_nonce_bases": {
-        "calibration_artifact": 73000,
-        "holdout_artifact": 83000,
-        "calibration_protocol_zero": 51000,
-        "holdout_protocol_zero": 61000,
-        "calibration_duplicate_audit": [91000, 91001, 91002],
-        "holdout_duplicate_audit": [101000, 101001, 101002],
+    "r9_parameter_nonce_bases": {
+        "calibration_artifact": 173000,
+        "holdout_artifact": 183000,
+        "calibration_protocol_zero": 151000,
+        "holdout_protocol_zero": 161000,
+        "calibration_duplicate_audit": [191000, 191001, 191002],
+        "holdout_duplicate_audit": [201000, 201001, 201002],
     },
     "private_until_one_shot_marker": True,
     "public_manifest_exposure_forbidden": True,
@@ -389,6 +389,24 @@ POPULATION_ANCHOR_SCHEDULE = {
     "replacement_forbidden": True,
     "key_resampling_forbidden": True,
     "actual_sealed_vision_labels_are_decisive": True,
+    "speck_reject_anchor_conditions_per_split": 11,
+    "speck_reject_anchor_structural_miss_budget_against_development_floor": 5,
+    "speck_reject_anchor_truth_guarantee_claimed": False,
+    "speck_reject_anchor_schedule": {
+        "calibration": {
+            "clear_counts": [32, 36, 40, 44, 48, 52, 56],
+            "dominant_counts": [64, 72, 80, 88],
+        },
+        "holdout": {
+            "clear_counts": [34, 38, 42, 46, 50, 54, 58],
+            "dominant_counts": [68, 76, 84, 90],
+        },
+        "diameter_px": 1,
+        "minimum_separation_px": 10,
+        "shoulder_fraction": 0.08,
+        "amplitude_l_maximum": 12.0,
+        "split_morphology_tuples_disjoint": True,
+    },
     "blind_key_selection_forbidden_for": [
         "split",
         "family",
@@ -438,6 +456,14 @@ RENDERING_INVARIANTS = {
         "artifact-speck integer centers use deterministic round-robin packing "
         "across the four exact metric-window quadrants with quadrant counts differing "
         "by at most one; a count of at least four covers every quadrant"
+    ),
+    "hard_speck_reject_anchor_contract": (
+        "the eleven clear- and dominant-reject design-tier conditions per split "
+        "retain the one-pixel core, tier-bound 0.08 axial shoulder, amplitude at "
+        "most 12 L, exact polarity, and actual-label-decisive contracts; the schedule "
+        "increases only the fixed core count while fixing minimum separation at 10 "
+        "pixels for deterministic packing; this is a preregistered coverage anchor, "
+        "not assigned Vision truth, and it cannot bypass the post-seal population gate"
     ),
     "microblob_separation_contract": (
         "artifact-microblob uses integer centers and a finite Gaussian truncated at "
@@ -600,14 +626,29 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         != "world/map-production/qa/microtexture-v2-r6-dev-r7-development-failure.json"
         or history.get("dev_r7_failure_audit_sha256")
         != "00ab198c5e0be28775436d22927e9bd8523304f41e2c310d6e81c0cf2ea7131f"
-        or history.get("dev_r8_status") != "fresh-development-only"
+        or history.get("dev_r8_status")
+        != "failed-and-closed-before-measurement"
         or history.get("dev_r8_role")
-        != "fresh one-shot development role used only to verify the preregistered "
-        "soft-unit metric and revision-3 schedule before formal r6 generation; it "
-        "requires a tracked runner, a fresh isolated root, a fresh cryptographic "
-        "blind key, revision-3 public and parameter nonces, newly generated controls "
-        "and anonymous identities, and fresh sealed Root plus independent Vision "
-        "labels, and it can never become or supply formal authority"
+        != "development-only population-feasibility failure evidence; both splits "
+        "failed only the tiny-speck-visible reject population endpoint after all 440 "
+        "records were blindly reviewed and reconciled, the edition closed before any "
+        "numeric metric call, and no dev-r8 key, control, label, pixel, identity, "
+        "placement, parameter nonce, measurement, threshold, commitment, or artifact "
+        "root is reusable"
+        or history.get("dev_r8_failure_audit")
+        != "world/map-production/qa/"
+        "microtexture-v2-r6-dev-r8-development-failure.json"
+        or history.get("dev_r8_failure_audit_sha256")
+        != "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d"
+        or history.get("dev_r9_status") != "fresh-development-only"
+        or history.get("dev_r9_role")
+        != "fresh one-shot development role used only to verify the unchanged "
+        "preregistered soft-unit metric and the frozen dev-r9 speck-population "
+        "schedule before formal r6 generation; it requires a tracked runner, a fresh "
+        "isolated root, a fresh cryptographic blind key, revision-4 public, render, "
+        "code, and cluster domains, revision-5 public commitments, newly generated "
+        "controls and anonymous identities, and fresh sealed Root plus independent "
+        "Vision labels, and it can never become or supply formal authority"
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -625,9 +666,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": "non-authority dev-r8 only; no development key, root, output, or commitment can become formal authority",
+        "scope": "non-authority dev-r9 only; no development key, root, output, or commitment can become formal authority",
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r8/private/development-key.bin",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r9/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -865,7 +906,8 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or definition.get("score_reference_revision_guardrails")
         != {
             "basis": "aggregate-only closed dev-r7 development diagnostics before "
-            "fresh dev-r8 generation",
+            "fresh dev-r8 generation; dev-r8 stopped before measurement and therefore "
+            "supplied no score or threshold evidence",
             "single_reference_candidates_passed": 0,
             "two_reference_candidates_passed": 1,
             "chosen_three_reference_diagnostic_threshold": 0.7027857840028129,
@@ -876,8 +918,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "raw_metrics_unchanged": True,
             "branch_composition_unchanged": True,
             "endpoint_counts_and_rates_unchanged": True,
-            "fresh_dev_r8_required": True,
+            "fresh_dev_r9_required": True,
             "dev_r7_threshold_or_measurement_reuse_for_formal_forbidden": True,
+            "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent": True,
         }
     ):
         raise RuntimeError("r6 soft-unit reference provenance drift")
@@ -1079,6 +1122,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "hard_speck_integer_core_contract",
         "hard_speck_separation_contract",
         "hard_speck_quadrant_stratification_contract",
+        "hard_speck_reject_anchor_contract",
         "microblob_separation_contract",
         "parallel_geometry_contract",
         "sparse_deterministic_packing_contract",
@@ -1271,7 +1315,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v3"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v4"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
@@ -1279,20 +1323,20 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     blind = value.get("blind_derivation", {})
     if (
         blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v3"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v3/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v3/"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v4/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v4/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-3 blind derivation domain drift")
+        raise RuntimeError("r6 revision-4 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v3/"
+        != "microtexture-v2-r6/private-condition-cluster/v4/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v4/"
+        != "microtexture-v2-r6/public-payload-commitment/v5/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-3 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-4/5 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -1742,17 +1786,294 @@ def _tracked_worktree_bytes(
     return working
 
 
+def validate_dev_r8_failure_audit(value: Any) -> None:
+    """Validate the sanitized, tracked dev-r8 premeasurement failure evidence."""
+
+    context = "closed dev-r8 failure audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "measurement_started",
+            "selection_status",
+            "development_hard_threshold",
+            "holdout_endpoint_performance",
+            "one_shot_contract",
+            "vision_review",
+            "population_audit",
+            "hash_bindings",
+            "absent_measurement_artifacts",
+            "root_cause",
+            "successor_constraints",
+            "secret_handling",
+        },
+        context,
+    )
+    parse_utc_timestamp(value["audit_recorded_at"], f"{context}.audit_recorded_at")
+    if (
+        value["artifact"]
+        != "microtexture-v2-r6-dev-r8-development-failure-audit"
+        or value["schema_version"]
+        != "microtexture-v2-r6-development-failure-audit/2"
+        or value["authority"] is not False
+        or value["formal_use_forbidden"] is not True
+        or value["development_edition"] != "r8"
+        or value["outcome"] != "failed_closed"
+        or value["measurement_started"] is not False
+        or value["selection_status"] != "not_started_population_gate_failed"
+        or value["development_hard_threshold"] is not None
+        or value["holdout_endpoint_performance"] is not None
+    ):
+        raise RuntimeError(f"{context} header/outcome drift")
+
+    if value["one_shot_contract"] != {
+        "generation_completed_exactly_once": True,
+        "root_vision_completed_before_private_reveal": True,
+        "independent_vision_completed_before_private_reveal": True,
+        "labels_sealed_before_private_reveal": True,
+        "analysis_started_exactly_once": True,
+        "population_audit_passed_before_measurement": False,
+        "numeric_metric_called": False,
+        "threshold_search_started": False,
+        "formal_cli_invoked": False,
+        "formal_marker_created": False,
+        "formal_threshold_created": False,
+        "locked_clean_v18_decoded_or_measured": False,
+        "rerun_relabel_retune_subset_topup_resample_or_reuse_for_r8_forbidden": True,
+        "r8_closed": True,
+    }:
+        raise RuntimeError(f"{context} one-shot closure drift")
+
+    if value["vision_review"] != {
+        "calibration_records_reviewed_by_root": 220,
+        "holdout_records_reviewed_by_root": 220,
+        "calibration_records_reviewed_independently": 220,
+        "holdout_records_reviewed_independently": 220,
+        "logical_comparison_fields": [
+            "page",
+            "row",
+            "anonymous_code",
+            "disposition",
+            "severity",
+            "flags",
+        ],
+        "notes_and_ev3_locators_excluded_from_initial_logical_comparison": True,
+        "root_and_initial_independent_exact_logical_agreement": False,
+        "calibration_root_independent_initial_logical_difference_count": 32,
+        "calibration_initial_difference_breakdown": {
+            "identity": 0,
+            "disposition": 23,
+            "severity": 31,
+            "flags": 3,
+        },
+        "holdout_root_independent_initial_logical_difference_count": 28,
+        "holdout_initial_difference_breakdown": {
+            "identity": 0,
+            "disposition": 11,
+            "severity": 24,
+            "flags": 7,
+        },
+        "root_reinspected_every_initial_logical_difference": True,
+        "root_and_independent_logical_decisions_reconciled": True,
+        "canonical_root_and_final_independent_bytes_identical_after_reconciliation": True,
+        "calibration_root_decisions_sha256": (
+            "a27a038bd9310670d58b5bfb81367a83910cd3a70977cce63b9a4ac7fee3656e"
+        ),
+        "calibration_initial_independent_decisions_sha256": (
+            "d9136e4836a574c7035c64277589644550a7512197b1fa0f4bc0f034196021d6"
+        ),
+        "calibration_final_independent_decisions_sha256": (
+            "a27a038bd9310670d58b5bfb81367a83910cd3a70977cce63b9a4ac7fee3656e"
+        ),
+        "calibration_canonical_decisions_sha256": (
+            "a27a038bd9310670d58b5bfb81367a83910cd3a70977cce63b9a4ac7fee3656e"
+        ),
+        "calibration_sealed_labels_sha256": (
+            "5598120ff0a84e3170803ced7ce44f2f339a921c1f4c3d0987439d4c1f1790ad"
+        ),
+        "holdout_root_decisions_sha256": (
+            "7bbe9ebb6016bb369c194fb4c766be0c25678143f45c2386f2111bc9bc853693"
+        ),
+        "holdout_initial_independent_decisions_sha256": (
+            "93303d2ce6ce6737e60c6593b546c48125cb8d4023d715abd458057fbc175d85"
+        ),
+        "holdout_final_independent_decisions_sha256": (
+            "7bbe9ebb6016bb369c194fb4c766be0c25678143f45c2386f2111bc9bc853693"
+        ),
+        "holdout_canonical_decisions_sha256": (
+            "7bbe9ebb6016bb369c194fb4c766be0c25678143f45c2386f2111bc9bc853693"
+        ),
+        "holdout_sealed_labels_sha256": (
+            "38b5f3f79ee9dcd4a4483f18114a6d51d0fba1f89d6ee826727336374a35ed4d"
+        ),
+    }:
+        raise RuntimeError(f"{context} Vision reconciliation/hash drift")
+
+    if value["population_audit"] != {
+        "eligible_artifact_condition_clusters_per_split": 100,
+        "all_eligible_artifact_condition_clusters_exact_polarity_pairs": True,
+        "calibration": {
+            "passed": False,
+            "disposition_clusters": {"clean": 24, "warning": 26, "reject": 50},
+            "severity3_reject_clusters": 33,
+            "grain_reject_clusters": 12,
+            "tiny_speck_reject_clusters": 3,
+            "microblob_reject_clusters": 13,
+            "spot_reject_clusters": 16,
+            "short_line_reject_clusters": 22,
+            "parallel_bundle_reject_clusters": 11,
+            "formal_minimum_failures": ["tiny_speck_reject_detection:3<4"],
+            "development_safety_floor_failures": [
+                "tiny_speck_reject_detection:3<6"
+            ],
+        },
+        "holdout": {
+            "passed": False,
+            "disposition_clusters": {"clean": 25, "warning": 27, "reject": 48},
+            "severity3_reject_clusters": 31,
+            "grain_reject_clusters": 11,
+            "tiny_speck_reject_clusters": 1,
+            "microblob_reject_clusters": 13,
+            "spot_reject_clusters": 14,
+            "short_line_reject_clusters": 23,
+            "parallel_bundle_reject_clusters": 12,
+            "formal_minimum_failures": ["tiny_speck_reject_detection:1<4"],
+            "development_safety_floor_failures": [
+                "tiny_speck_reject_detection:1<6"
+            ],
+        },
+        "all_non_tiny_speck_formal_endpoint_minimums_passed": True,
+        "all_non_tiny_speck_development_safety_floors_passed": True,
+    }:
+        raise RuntimeError(f"{context} population evidence drift")
+
+    if value["hash_bindings"] != {
+        "captured_repository_head": "2ad457bf67eb2fb08d3781277ea3e0a094cbac3b",
+        "preregistered_spec_sha256": (
+            "9de51e74c8aec518b2b9c6f08201244f06eaf3df9ceba61907efad4044ea6587"
+        ),
+        "implementation_bindings_sha256": (
+            "ddf97277bcc8c5fcb3a3bd2b08fec9b82efab6e0d5104ca779d7e160e062ef5e"
+        ),
+        "dev_r7_failure_audit_sha256": (
+            "00ab198c5e0be28775436d22927e9bd8523304f41e2c310d6e81c0cf2ea7131f"
+        ),
+        "development_boundary_sha256": (
+            "0a19b23aa9137aebe7ed36ea5833593e27a1fdea4cb4b87c8529188064c3e43a"
+        ),
+        "generation_summary_sha256": (
+            "7a6aad2ef0b2e33ba16ff93ba40f51d1566e501125263f3ff5f55603f161cf91"
+        ),
+        "blind_key_commitment": (
+            "cc5d41fbe35e99dd9c6c111c5c4fd728777ad0c1deb66c65b83c9b42eae376ab"
+        ),
+        "calibration_manifest_sha256": (
+            "91b349c3de58988df8a887badd56f985afaedb4ad65da50a9ee493b84dd4f2c2"
+        ),
+        "calibration_blank_labels_sha256": (
+            "f98deb7dff75c63e7cbebef9d13cdf0454f180d5630c9089a0d309c2d43ecffe"
+        ),
+        "calibration_review_index_sha256": (
+            "52e03a736b20493e45c6234912bdd0c7c135d9a9c833abf5be897f46fcf3cceb"
+        ),
+        "holdout_manifest_sha256": (
+            "cb9f5b4ebeb83d7614e4c9213c09e3bf25efb68cc4a2c3cbd52bb3e155759971"
+        ),
+        "holdout_blank_labels_sha256": (
+            "728e2330d6c686ea9616c5b27efafbcd9883e95fbac853f0e625f86e101c0257"
+        ),
+        "holdout_review_index_sha256": (
+            "bc5492add9f9e68db34cb6f2cad1257b7a90655e2b21071681dcb9de50cc8e98"
+        ),
+        "label_seal_receipt_sha256": (
+            "acdec32d2c99d0dd65891260e09fefa0b5375bca0e9f3115d622ea3c279fe7b4"
+        ),
+        "population_audit_sha256": (
+            "7ce4b03e4ebc832612b8c5d972275bcf7324556e22938435d7e9e41608c26df3"
+        ),
+        "failure_marker_sha256": (
+            "94f4b3319784d191b4972a8f6630a973ff398194120339740ded25da0fe84833"
+        ),
+    }:
+        raise RuntimeError(f"{context} authority hash binding drift")
+
+    if value["absent_measurement_artifacts"] != {
+        "calibration_measurements_present": False,
+        "holdout_measurements_present": False,
+        "analysis_result_present": False,
+    }:
+        raise RuntimeError(f"{context} premeasurement artifact-absence drift")
+    if value["root_cause"] != {
+        "population_feasibility": (
+            "Both splits failed only the tiny-speck-visible reject population "
+            "endpoint. Every other formal population minimum and every other "
+            "stricter development-only safety floor passed."
+        ),
+        "premature_measurement_ruled_out": (
+            "The fail-close occurred before the first numeric metric call; no score, "
+            "threshold candidate, selected threshold, or holdout endpoint result "
+            "exists."
+        ),
+        "schedule_limitation": (
+            "The frozen design tiers explored speck morphology but did not "
+            "structurally guarantee that at least six distinct condition clusters "
+            "per split would be judged both reject and tiny-speck-visible under "
+            "blind Vision truth."
+        ),
+        "post_label_repair_forbidden": (
+            "The sealed outcome cannot be repaired by relabeling, subsetting, "
+            "top-up, replacement, key resampling, regeneration, or rerunning r8."
+        ),
+    }:
+        raise RuntimeError(f"{context} root-cause drift")
+    if value["successor_constraints"] != {
+        "r8_data_role": "development_only_failure_evidence",
+        "formal_r6_must_not_start_from_r8_failure": True,
+        "successor_requires_fresh_preregistered_revision": True,
+        "successor_requires_fresh_root_key_nonces_controls_identities_labels_and_measurements": True,
+        "r8_key_controls_labels_pixels_identities_measurements_and_root_reuse_forbidden": True,
+        "successor_must_be_committed_pushed_and_ci_green_before_generation": True,
+        "formal_r6_root_and_environment_must_remain_absent": True,
+        "formal_endpoint_population_and_rate_minima_must_not_be_weakened": True,
+        "development_safety_floors_must_not_be_weakened": True,
+    }:
+        raise RuntimeError(f"{context} successor constraint drift")
+    if value["secret_handling"] != {
+        "blind_key_present_in_this_artifact": False,
+        "blind_key_value_logged_or_tracked": False,
+        "development_blind_key_persisted_in_ignored_closed_private_root": True,
+        "development_blind_key_path": (
+            "tmp/map-production/microtexture-v2-r6-dev-r8/private/"
+            "development-key.bin"
+        ),
+        "development_blind_key_bytes": 32,
+        "development_blind_key_bytes_disclosed_in_this_audit": False,
+        "development_blind_key_reuse_forbidden": True,
+        "private_labels_measurements_identities_or_pixels_tracked": False,
+        "closed_temporary_artifact_root": (
+            "tmp/map-production/microtexture-v2-r6-dev-r8"
+        ),
+    }:
+        raise RuntimeError(f"{context} secret-handling drift")
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind the closed dev-r7 audit without exposing its private corpus."""
+    """Bind the closed dev-r7 and dev-r8 audits without exposing private corpora."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
-    payload = _tracked_worktree_bytes(repository, captured_head, relative)
-    if sha256_bytes(payload) != history["dev_r7_failure_audit_sha256"]:
+    dev_r7_payload = _tracked_worktree_bytes(repository, captured_head, relative)
+    if sha256_bytes(dev_r7_payload) != history["dev_r7_failure_audit_sha256"]:
         raise RuntimeError("closed dev-r7 failure audit tracked SHA drift")
-    value = json.loads(payload.decode("utf-8"))
+    value = json.loads(dev_r7_payload.decode("utf-8"))
     if (
         value.get("artifact") != "microtexture-v2-r6-dev-r7-development-failure-audit"
         or value.get("schema_version")
@@ -1806,7 +2127,16 @@ def verify_tracked_development_history(
         is not True
     ):
         raise RuntimeError("closed dev-r7 failure audit semantic drift")
-    return payload
+
+    relative = history["dev_r8_failure_audit"]
+    dev_r8_payload = _tracked_worktree_bytes(repository, captured_head, relative)
+    if sha256_bytes(dev_r8_payload) != history["dev_r8_failure_audit_sha256"]:
+        raise RuntimeError("closed dev-r8 failure audit tracked SHA drift")
+    validate_dev_r8_failure_audit(json.loads(dev_r8_payload.decode("utf-8")))
+
+    # Preserve the historical return contract; callers use this function for its
+    # fail-closed checks, but earlier code returned the dev-r7 payload.
+    return dev_r7_payload
 
 
 def assert_head_unchanged(captured_head: str) -> None:

@@ -195,7 +195,7 @@ def _public_payload_commitment(
         raise RuntimeError("invalid r6 public payload-commitment lane")
     return blind_hmac(
         key,
-        b"microtexture-v2-r6/public-payload-commitment/v4/"
+        b"microtexture-v2-r6/public-payload-commitment/v5/"
         + lane.encode("ascii")
         + b"/"
         + anonymous_code.encode("ascii")
@@ -738,7 +738,7 @@ def _render_unsigned_delta(
 
 def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     if split == "calibration":
-        nonce_base = 73000
+        nonce_base = 173000
         grain = [
             {
                 "design_tier": "clean-candidate",
@@ -1550,7 +1550,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             },
         ]
     elif split == "holdout":
-        nonce_base = 83000
+        nonce_base = 183000
         grain = [
             {
                 "design_tier": "clear-reject-candidate",
@@ -2373,18 +2373,18 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     }
     rotations = {
         "calibration": {
-            "artifact-fine-grain": 1,
-            "artifact-speck": 3,
-            "artifact-microblob": 5,
-            "artifact-short-dash": 7,
-            "artifact-parallel-bundle": 9,
-        },
-        "holdout": {
             "artifact-fine-grain": 2,
             "artifact-speck": 4,
             "artifact-microblob": 6,
             "artifact-short-dash": 8,
             "artifact-parallel-bundle": 10,
+        },
+        "holdout": {
+            "artifact-fine-grain": 3,
+            "artifact-speck": 5,
+            "artifact-microblob": 7,
+            "artifact-short-dash": 9,
+            "artifact-parallel-bundle": 11,
         },
     }[split]
     for family, offset in rotations.items():
@@ -2399,6 +2399,38 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
         if any(item is None for item in permuted):
             raise RuntimeError(f"r6 residue-preserving permutation drift: {family}")
         result[family] = [item for item in permuted if item is not None]
+
+    speck_reject_counts = {
+        "calibration": {
+            "clear-reject-candidate": (32, 36, 40, 44, 48, 52, 56),
+            "dominant-reject-candidate": (64, 72, 80, 88),
+        },
+        "holdout": {
+            "clear-reject-candidate": (34, 38, 42, 46, 50, 54, 58),
+            "dominant-reject-candidate": (68, 76, 84, 90),
+        },
+    }[split]
+    speck_reject_tier_indices: Counter[str] = Counter()
+    for parameters in result["artifact-speck"]:
+        tier = str(parameters["design_tier"])
+        tier_counts = speck_reject_counts.get(tier)
+        if tier_counts is None:
+            continue
+        tier_index = speck_reject_tier_indices[tier]
+        if tier_index >= len(tier_counts):
+            raise RuntimeError(f"r9 speck reject-tier count overflow: {split}/{tier}")
+        parameters["count_in_metric_window"] = tier_counts[tier_index]
+        parameters["minimum_separation_px"] = 10
+        speck_reject_tier_indices[tier] += 1
+    for tier, expected_counts in speck_reject_counts.items():
+        actual_counts = tuple(
+            int(parameters["count_in_metric_window"])
+            for parameters in result["artifact-speck"]
+            if parameters["design_tier"] == tier
+        )
+        if actual_counts != expected_counts:
+            raise RuntimeError(f"r9 speck reject-tier schedule drift: {split}/{tier}")
+
     family_nonce_offsets = {
         "artifact-fine-grain": 0,
         "artifact-speck": 100,
@@ -2408,7 +2440,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     }
     for family, variants in result.items():
         for index, parameters in enumerate(variants):
-            parameters["schedule_revision"] = "dev-r8-soft-unit-schedule-v1"
+            parameters["schedule_revision"] = "dev-r9-speck-population-schedule-v1"
             parameters["condition_nonce"] = (
                 nonce_base + family_nonce_offsets[family] + index
             )
@@ -2439,6 +2471,25 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
                     f"r6 design tier lacks mod-3 foundation coverage: {family}/{tier}"
                 )
     return result
+
+
+def _validate_dev_r9_speck_morphology_disjointness() -> None:
+    morphology_fields = (
+        "diameter_px",
+        "amplitude_l",
+        "count_in_metric_window",
+        "shoulder_fraction",
+        "minimum_separation_px",
+    )
+    morphology_by_split: dict[str, set[tuple[Any, ...]]] = {}
+    for split in ("calibration", "holdout"):
+        morphology_by_split[split] = {
+            tuple(parameters[field] for field in morphology_fields)
+            for parameters in _artifact_variants(split)["artifact-speck"]
+        }
+    overlap = morphology_by_split["calibration"] & morphology_by_split["holdout"]
+    if overlap:
+        raise RuntimeError("r9 calibration/holdout speck morphology tuple overlap")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -2626,7 +2677,9 @@ def _expected_controls_bounded(
             )
         )
 
-    for family, variants in _artifact_variants(split).items():
+    _validate_dev_r9_speck_morphology_disjointness()
+    artifact_variants = _artifact_variants(split)
+    for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):
             for polarity in (-1, 1):
                 emit(
@@ -2640,7 +2693,7 @@ def _expected_controls_bounded(
                     render_family=family,
                 )
 
-    zero_nonce_base = 51000 if split == "calibration" else 61000
+    zero_nonce_base = 151000 if split == "calibration" else 161000
     for variant_index in range(16):
         emit(
             private_role="protocol-zero",
@@ -2649,7 +2702,7 @@ def _expected_controls_bounded(
             replicate=0,
             polarity=1,
             parameters={
-                "schedule_revision": "dev-r8-soft-unit-schedule-v1",
+                "schedule_revision": "dev-r9-speck-population-schedule-v1",
                 "protocol_nonce": zero_nonce_base + variant_index,
             },
             duplicate_audit_group=None,
@@ -2657,15 +2710,15 @@ def _expected_controls_bounded(
         )
 
     clean_audit_parameters = {
-        "schedule_revision": "dev-r8-soft-unit-schedule-v1",
-        "audit_nonce": 91000 if split == "calibration" else 101000,
+        "schedule_revision": "dev-r9-speck-population-schedule-v1",
+        "audit_nonce": 191000 if split == "calibration" else 201000,
         "audit_kind": "clean-isomorphic-replicate",
     }
     artifact_audit_parameters = {
-        "schedule_revision": "dev-r8-soft-unit-schedule-v1",
-        "audit_nonce": 91001 if split == "calibration" else 101001,
+        "schedule_revision": "dev-r9-speck-population-schedule-v1",
+        "audit_nonce": 191001 if split == "calibration" else 201001,
         "audit_kind": "obvious-artifact-isomorphic-replicate",
-        "condition_nonce": 91002 if split == "calibration" else 101002,
+        "condition_nonce": 191002 if split == "calibration" else 201002,
         "length_px": 18 if split == "calibration" else 20,
         "width_px": 3,
         "amplitude_l": 10.4 if split == "calibration" else 10.8,

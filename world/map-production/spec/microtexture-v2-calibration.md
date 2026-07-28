@@ -2,7 +2,7 @@
 type: "overview"
 category: "maps"
 title: "Microtexture v2-r6 候補非依存較正契約"
-version: "0.7.0"
+version: "0.8.0"
 created: "2026-07-25"
 last_updated: "2026-07-28"
 author: "Codex"
@@ -29,8 +29,15 @@ summary: "Google Maps級deep zoom用の微細表現を、画像生成・Root/独
   thresholdは`null`、holdout endpoint performanceは未評価です。
 - dev-r7 sanitized evidence:
   `world/map-production/qa/microtexture-v2-r6-dev-r7-development-failure.json`
-- dev-r8: generation前。tracked runner、soft-unit metric、revision-3 schedule/nonces、fresh-root契約を
-  commit/pushしUbuntu/Windows CIが成功した後にだけ開始します。
+- dev-r8: fresh root/keyで一度だけ生成し、Rootと独立Visionが全440 recordsを匿名確認・照合しました。
+  label seal後のpre-measurement population gateでtiny-speck-visible rejectがcalibration `3 < 6`、
+  holdout `1 < 6`となり、`measurement_started=false`のままfailed-and-closedです。再生成、再label、
+  top-up、subset、key resampling、rerunは禁止します。
+- dev-r8 sanitized evidence:
+  `world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json`
+- dev-r9: dev-r8 failure aggregateだけを根拠に、reject-tier speckの固定個数を強化するfresh successorを
+  事前登録中です。fresh specification/root/key/nonces/controls/labelsをcommit/pushしUbuntu/Windows CIが
+  成功するまで生成を開始しません。
 - formal r6: 未開始。formal CLI、one-shot marker、threshold freeze、v18 numeric measurementはいずれも未使用です。
 
 ## ImageGen入力の境界
@@ -52,6 +59,10 @@ Golden input、master、tile、最終pixelへ転送しません。
 5. 不合格画像は別versionとして残し、既存採用画像を上書きしない。
 
 ## dev-r8 control population
+
+この節は閉鎖済みdev-r8の事前登録契約を記録します。実行結果は、両splitでtiny-speck-visible rejectだけが
+development safety floorとformal minimumを下回り、その他のpopulation endpointはすべて合格でした。
+metric、threshold探索、holdout endpoint評価は開始していません。
 
 各splitは220 records、118 private condition clustersです。
 
@@ -83,6 +94,26 @@ dev-r7のkey、controls、labels、pixels、identities、measurements、diagnost
 development rootはdev-r8にもformal r6にも渡しません。
 development rootはGit-ignored private evidenceとして閉鎖後も不変に保持し、formal keyは従来どおりartifact/logへ
 永続化しません。
+
+## dev-r9 successor schedule
+
+dev-r9はmetric、rubric、formal endpoint minimum、development safety floorを変更しません。dev-r8で
+tiny-speck自体は全11 reject-tier speck conditionに認識された一方、calibrationでは3件、holdoutでは1件だけが
+rejectとなったaggregate failureを根拠に、次の固定個数へ変更します。
+
+| split | clear-reject 7 conditions | dominant-reject 4 conditions |
+|---|---|---|
+| calibration | 32, 36, 40, 44, 48, 52, 56 | 64, 72, 80, 88 |
+| holdout | 34, 38, 42, 46, 50, 54, 58 | 68, 76, 84, 90 |
+
+1px hard core、最大12 L、0.08 axial shoulder、exact polarity、4象限stratificationは維持し、packing用の
+minimum separationを10pxに固定します。9件のclean/warning speck条件と他4 familyの形態範囲は変更しません。
+11 anchors対floor 6なので構造上のmiss budgetは5ですが、design tierをVision truthとは扱いません。実際のsealed
+labelsが両splitでfloorを満たしたときだけ測定し、不足時はdev-r9全体を測定前に閉鎖します。
+
+fresh境界はroot `tmp/map-production/microtexture-v2-r6-dev-r9`、public nonce v4、private cluster/render/code
+domain v4、public payload commitment v5、新しいparameter nonce領域です。dev-r8のkey、control、label、pixel、
+identity、placement、nonce、commitment、rootを読み替え・再利用しません。
 
 ## 全件Visionとmeasurement gate
 
@@ -124,7 +155,8 @@ raw filterは維持し、唯一のhard metricは4 branchの最大です。
 
 closed dev-r7のaggregate-only診断から変更するhalf-scaleは `grain_rms_l 0.7 -> 0.875`、
 `tiny_mass_l 20 -> 15`、`finite_line_top4_mean_l 4.5 -> 2.25` の3件だけです。他6 reference、raw metrics、
-branch構成、単一threshold、endpoint count/rateは不変で、fresh dev-r8によるblindな再検証を必須とします。
+branch構成、単一threshold、endpoint count/rateは不変です。dev-r8はmetric call前に閉鎖したため、fresh dev-r9での
+blindな再検証を必須とします。
 
 ```text
 reject = max(grain_score, spot_score,
@@ -137,16 +169,16 @@ warning acceptance 0.75を含む全endpoint count/rateを満たす候補だけ�
 
 ## 安全な実行順序
 
-1. dev-r7 failure audit、r8 spec/code/tests/runner、ImageGen provenance、Root/独立Vision QAをcommitする。
+1. dev-r8 failure audit、r9 spec/code/tests/runner、既存ImageGen provenance、Root/独立Vision QA authorityをcommitする。
 2. branchへpushし、Ubuntu/Windows CIの成功を確認する。
-3. formal root/environmentとdev-r8 rootが存在しないことを確認する。
-4. fresh keyでdev-r8 calibration/holdout controlsを一度だけ生成する。
+3. formal root/environmentとdev-r9 rootが存在しないことを確認する。
+4. fresh keyでdev-r9 calibration/holdout controlsを一度だけ生成する。
 5. Rootと独立Visionが全440 recordsを匿名確認し、Root decisionsを画像へ戻ってreconcileする。
 6. 両splitのlabelsをsealし、private auditとpopulation safety floorを実行する。
 7. gate合格時だけcalibrationを測定し、thresholdを一度だけ選択する。
 8. calibration選択thresholdを変えずdevelopment holdoutへ一度だけ適用する。
-9. dev-r8失敗時はsanitized failure auditをcommitし、formalへ進まない。
-10. dev-r8成功時はdevelopment-only success auditをcommitし、dev-r8を閉じる。
+9. dev-r9失敗時はsanitized failure auditをcommitし、formalへ進まない。
+10. dev-r9成功時はdevelopment-only success auditをcommitし、dev-r9を閉じる。
 11. spec SHA、trust-root tests、全implementation hashesを再計算し、formal authority freeze commitを作る。
 12. push後、Ubuntu/Windows CIが再度成功してからfresh formal key/rootを作る。
 13. formal calibration生成・Root Vision・one-shot評価を各一度だけ行う。
@@ -155,6 +187,9 @@ warning acceptance 0.75を含む全endpoint count/rateを満たす候補だけ�
 16. receipt commit/push/CI成功後、fresh formal holdoutを一度だけ生成・Root Vision・評価する。
 17. formal holdout pass後も、production residual derivationとuntouched production holdoutを別specで固定する。
 18. その後にのみGolden、master、deep-zoom tilesへ接続する。
+
+dev-r8は旧手順9へ到達して閉鎖しました。上記はfresh dev-r9から再開する順序であり、dev-r9が合格するまで
+手順11以降へ進めません。
 
 marker後の例外、通常endpoint failure、completion欠落はeditionを消費します。失敗後のregeneration、
 relabel、remeasurement、rerun、threshold変更は禁止です。

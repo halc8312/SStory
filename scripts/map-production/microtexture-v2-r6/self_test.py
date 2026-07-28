@@ -43,6 +43,20 @@ from metrics_v2_r6 import (
 )
 
 
+DEV_R7_FAILURE_AUDIT_RELATIVE = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r7-development-failure.json"
+)
+DEV_R7_FAILURE_AUDIT_SHA256 = (
+    "00ab198c5e0be28775436d22927e9bd8523304f41e2c310d6e81c0cf2ea7131f"
+)
+DEV_R8_FAILURE_AUDIT_RELATIVE = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json"
+)
+DEV_R8_FAILURE_AUDIT_SHA256 = (
+    "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d"
+)
+
+
 def _vision_item(
     code: str,
     disposition: str,
@@ -328,6 +342,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             )
 
     def test_population_anchor_schedule_and_speck_hard_cores_are_exact(self) -> None:
+        anchor = self.spec["population_anchor_schedule"]
         expected_tiers = Counter(
             {
                 "clean-candidate": 5,
@@ -342,13 +357,56 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             "clear-reject-candidate": 0.08,
             "dominant-reject-candidate": 0.08,
         }
+        self.assertEqual(anchor, common.POPULATION_ANCHOR_SCHEDULE)
+        self.assertEqual(anchor["tier_counts_per_artifact_family"], dict(expected_tiers))
+        self.assertEqual(anchor["revision"], "dev-r9-speck-population-schedule-v1")
         self.assertEqual(
-            self.spec["population_anchor_schedule"]["tier_counts_per_artifact_family"],
-            dict(expected_tiers),
+            anchor["r9_per_family_residue_rotation"],
+            {
+                "calibration": {
+                    "artifact-fine-grain": 2,
+                    "artifact-speck": 4,
+                    "artifact-microblob": 6,
+                    "artifact-short-dash": 8,
+                    "artifact-parallel-bundle": 10,
+                },
+                "holdout": {
+                    "artifact-fine-grain": 3,
+                    "artifact-speck": 5,
+                    "artifact-microblob": 7,
+                    "artifact-short-dash": 9,
+                    "artifact-parallel-bundle": 11,
+                },
+            },
         )
         self.assertEqual(
-            self.spec["population_anchor_schedule"]["revision"],
-            "dev-r8-soft-unit-schedule-v1",
+            anchor["r9_parameter_nonce_bases"],
+            {
+                "calibration_artifact": 173000,
+                "holdout_artifact": 183000,
+                "calibration_protocol_zero": 151000,
+                "holdout_protocol_zero": 161000,
+                "calibration_duplicate_audit": [191000, 191001, 191002],
+                "holdout_duplicate_audit": [201000, 201001, 201002],
+            },
+        )
+        self.assertEqual(
+            anchor["speck_reject_anchor_schedule"],
+            {
+                "calibration": {
+                    "clear_counts": [32, 36, 40, 44, 48, 52, 56],
+                    "dominant_counts": [64, 72, 80, 88],
+                },
+                "holdout": {
+                    "clear_counts": [34, 38, 42, 46, 50, 54, 58],
+                    "dominant_counts": [68, 76, 84, 90],
+                },
+                "diameter_px": 1,
+                "minimum_separation_px": 10,
+                "shoulder_fraction": 0.08,
+                "amplitude_l_maximum": 12.0,
+                "split_morphology_tuples_disjoint": True,
+            },
         )
         split_nonces: dict[str, set[int]] = {}
         roi = (128, 96, 256, 192)
@@ -367,7 +425,8 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 self.assertEqual(len(variants), 20, (split, family))
                 self.assertTrue(
                     all(
-                        item["schedule_revision"] == "dev-r8-soft-unit-schedule-v1"
+                        item["schedule_revision"]
+                        == "dev-r9-speck-population-schedule-v1"
                         for item in variants
                     ),
                     (split, family),
@@ -397,7 +456,24 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     "clear-reject-candidate",
                     "dominant-reject-candidate",
                 }:
-                    self.assertGreaterEqual(parameters["count_in_metric_window"], 6)
+                    expected_counts = anchor["speck_reject_anchor_schedule"][split][
+                        "clear_counts"
+                        if tier == "clear-reject-candidate"
+                        else "dominant_counts"
+                    ]
+                    tier_parameters = [
+                        item
+                        for item in catalog["artifact-speck"]
+                        if item["design_tier"] == tier
+                    ]
+                    self.assertEqual(
+                        [item["count_in_metric_window"] for item in tier_parameters],
+                        expected_counts,
+                    )
+                    self.assertEqual(parameters["diameter_px"], 1)
+                    self.assertEqual(parameters["minimum_separation_px"], 10)
+                    self.assertEqual(parameters["shoulder_fraction"], 0.08)
+                    self.assertLessEqual(parameters["amplitude_l"], 12.0)
                     self.assertGreaterEqual(parameters["amplitude_l"], 10.0)
                 for seed_offset in range(4):
                     delta = _render_unsigned_delta(
@@ -430,26 +506,51 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.assertTrue(np.all(delta[outside] == 0))
                     self.assertGreater(np.count_nonzero(np.rint(delta)), 0)
         self.assertTrue(split_nonces["calibration"].isdisjoint(split_nonces["holdout"]))
-        self.assertEqual(min(split_nonces["calibration"]), 73000)
-        self.assertEqual(max(split_nonces["calibration"]), 73419)
-        self.assertEqual(min(split_nonces["holdout"]), 83000)
-        self.assertEqual(max(split_nonces["holdout"]), 83419)
+        self.assertEqual(min(split_nonces["calibration"]), 173000)
+        self.assertEqual(max(split_nonces["calibration"]), 173419)
+        self.assertEqual(min(split_nonces["holdout"]), 183000)
+        self.assertEqual(max(split_nonces["holdout"]), 183419)
         self.assertEqual(
             self.spec["splits"]["calibration"]["public_nonce"],
-            "r6-calibration-v3",
+            "r6-calibration-v4",
         )
         self.assertEqual(
-            self.spec["splits"]["holdout"]["public_nonce"], "r6-holdout-v3"
+            self.spec["splits"]["holdout"]["public_nonce"], "r6-holdout-v4"
+        )
+        self.assertEqual(
+            self.spec["independent_condition_clusters"]["message_prefix"],
+            "microtexture-v2-r6/private-condition-cluster/v4/",
+        )
+        self.assertEqual(
+            self.spec["blind_derivation"]["seed_message_prefix"],
+            "microtexture-v2-r6/render-seed/v4/",
+        )
+        self.assertEqual(
+            self.spec["blind_derivation"]["code_message_prefix"],
+            "microtexture-v2-r6/opaque-code/v4/",
+        )
+        self.assertEqual(
+            self.spec["rendering"]["public_commitment_domain"],
+            "microtexture-v2-r6/public-payload-commitment/v5/"
+            "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
+        )
+        self.assertEqual(
+            self.spec["blind_derivation"]["key_commitment_message"],
+            "microtexture-v2-r6/key-commitment/v3",
+        )
+        self.assertEqual(
+            self.spec["rendering"]["hard_speck_reject_anchor_contract"],
+            common.RENDERING_INVARIANTS["hard_speck_reject_anchor_contract"],
         )
 
-    def test_dev_r8_runner_is_tracked_authority_with_isolated_root(self) -> None:
-        self.assertEqual(development_probe.DEVELOPMENT_EDITION, "r8")
+    def test_dev_r9_runner_is_tracked_authority_with_isolated_root(self) -> None:
+        self.assertEqual(development_probe.DEVELOPMENT_EDITION, "r9")
         self.assertEqual(
             development_probe.DEV_ROOT,
             common.repository_root()
             / "tmp"
             / "map-production"
-            / "microtexture-v2-r6-dev-r8",
+            / "microtexture-v2-r6-dev-r9",
         )
         self.assertEqual(
             development_probe.FORMAL_ROOT,
@@ -497,7 +598,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             development_probe.DEV_ROOT / "private" / "development-key.bin",
         )
 
-    def test_dev_r8_runner_rejects_unignored_private_key_path(self) -> None:
+    def test_dev_r9_runner_rejects_unignored_private_key_path(self) -> None:
         completed = development_probe.subprocess.CompletedProcess
         captured_head = development_probe._git_head()
         with (
@@ -520,7 +621,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.spec, captured_head
                 )
 
-    def test_dev_r8_runner_rejects_nontracked_ignore_source(self) -> None:
+    def test_dev_r9_runner_rejects_nontracked_ignore_source(self) -> None:
         completed = development_probe.subprocess.CompletedProcess
         key_relative = self.spec["development_probe_secret_handling"][
             "ignored_private_key_required_repo_relative"
@@ -555,12 +656,16 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self,
     ) -> None:
         repository = common.repository_root()
-        relative = self.spec["history"]["dev_r7_failure_audit"]
-        payload = (repository / relative).read_bytes()
+        history = self.spec["history"]
         self.assertEqual(
-            hashlib.sha256(payload).hexdigest(),
-            self.spec["history"]["dev_r7_failure_audit_sha256"],
+            history["dev_r7_failure_audit"], DEV_R7_FAILURE_AUDIT_RELATIVE
         )
+        self.assertEqual(
+            history["dev_r7_failure_audit_sha256"], DEV_R7_FAILURE_AUDIT_SHA256
+        )
+        relative = history["dev_r7_failure_audit"]
+        payload = (repository / relative).read_bytes()
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), DEV_R7_FAILURE_AUDIT_SHA256)
         audit = json.loads(payload.decode("utf-8"))
         self.assertEqual(
             audit["schema_version"],
@@ -585,6 +690,159 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             secret["development_blind_key_persisted_in_ignored_closed_private_root"]
         )
         self.assertTrue(secret["development_blind_key_reuse_forbidden"])
+
+    def test_dev_r8_failure_audit_is_bound_closed_and_premeasurement(self) -> None:
+        repository = common.repository_root()
+        history = self.spec["history"]
+        self.assertEqual(
+            history["dev_r8_status"], "failed-and-closed-before-measurement"
+        )
+        self.assertEqual(
+            history["dev_r8_failure_audit"], DEV_R8_FAILURE_AUDIT_RELATIVE
+        )
+        self.assertEqual(
+            history["dev_r8_failure_audit_sha256"], DEV_R8_FAILURE_AUDIT_SHA256
+        )
+        self.assertEqual(history["dev_r9_status"], "fresh-development-only")
+
+        payload = (repository / DEV_R8_FAILURE_AUDIT_RELATIVE).read_bytes()
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), DEV_R8_FAILURE_AUDIT_SHA256)
+        audit = json.loads(payload.decode("utf-8"))
+        common.validate_dev_r8_failure_audit(audit)
+
+        self.assertEqual(
+            audit["schema_version"],
+            "microtexture-v2-r6-development-failure-audit/2",
+        )
+        self.assertEqual(
+            audit["selection_status"], "not_started_population_gate_failed"
+        )
+        self.assertFalse(audit["measurement_started"])
+        self.assertIsNone(audit["development_hard_threshold"])
+        self.assertIsNone(audit["holdout_endpoint_performance"])
+        one_shot = audit["one_shot_contract"]
+        self.assertTrue(one_shot["r8_closed"])
+        self.assertFalse(one_shot["numeric_metric_called"])
+        self.assertFalse(one_shot["threshold_search_started"])
+        self.assertTrue(
+            one_shot[
+                "rerun_relabel_retune_subset_topup_resample_or_reuse_for_r8_forbidden"
+            ]
+        )
+
+        population = audit["population_audit"]
+        self.assertTrue(
+            population["all_non_tiny_speck_formal_endpoint_minimums_passed"]
+        )
+        self.assertTrue(
+            population[
+                "all_non_tiny_speck_development_safety_floors_passed"
+            ]
+        )
+        for split, count in (("calibration", 3), ("holdout", 1)):
+            split_population = population[split]
+            self.assertFalse(split_population["passed"])
+            self.assertEqual(split_population["tiny_speck_reject_clusters"], count)
+            self.assertEqual(
+                split_population["formal_minimum_failures"],
+                [f"tiny_speck_reject_detection:{count}<4"],
+            )
+            self.assertEqual(
+                split_population["development_safety_floor_failures"],
+                [f"tiny_speck_reject_detection:{count}<6"],
+            )
+
+        self.assertEqual(
+            audit["absent_measurement_artifacts"],
+            {
+                "calibration_measurements_present": False,
+                "holdout_measurements_present": False,
+                "analysis_result_present": False,
+            },
+        )
+        successor = audit["successor_constraints"]
+        self.assertTrue(
+            successor[
+                "r8_key_controls_labels_pixels_identities_measurements_and_root_reuse_forbidden"
+            ]
+        )
+        secret = audit["secret_handling"]
+        self.assertFalse(secret["blind_key_present_in_this_artifact"])
+        self.assertFalse(secret["blind_key_value_logged_or_tracked"])
+        self.assertFalse(secret["development_blind_key_bytes_disclosed_in_this_audit"])
+        self.assertFalse(secret["private_labels_measurements_identities_or_pixels_tracked"])
+        self.assertTrue(secret["development_blind_key_reuse_forbidden"])
+
+        mutations: list[tuple[dict[str, object], str]] = []
+        changed = copy.deepcopy(audit)
+        changed["selection_status"] = "selected-and-passed"
+        mutations.append((changed, "header/outcome"))
+        changed = copy.deepcopy(audit)
+        changed["absent_measurement_artifacts"][
+            "calibration_measurements_present"
+        ] = True
+        mutations.append((changed, "artifact-absence"))
+        changed = copy.deepcopy(audit)
+        changed["population_audit"]["calibration"]["formal_minimum_failures"] = [
+            "grain_reject_detection:3<8"
+        ]
+        mutations.append((changed, "population evidence"))
+        changed = copy.deepcopy(audit)
+        changed["successor_constraints"][
+            "r8_key_controls_labels_pixels_identities_measurements_and_root_reuse_forbidden"
+        ] = False
+        mutations.append((changed, "successor constraint"))
+        changed = copy.deepcopy(audit)
+        changed["secret_handling"]["blind_key_present_in_this_artifact"] = True
+        mutations.append((changed, "secret-handling"))
+        changed = copy.deepcopy(audit)
+        changed["unexpected"] = True
+        mutations.append((changed, "keyset drift"))
+        for mutation, message in mutations:
+            with self.assertRaisesRegex(RuntimeError, message):
+                common.validate_dev_r8_failure_audit(mutation)
+
+    def test_dev_r8_history_and_dev_r9_guardrails_are_fail_closed(self) -> None:
+        history = self.spec["history"]
+        self.assertEqual(
+            history["dev_r8_failure_audit"], DEV_R8_FAILURE_AUDIT_RELATIVE
+        )
+        self.assertEqual(
+            history["dev_r8_failure_audit_sha256"], DEV_R8_FAILURE_AUDIT_SHA256
+        )
+        guardrails = self.spec["metric_definition"][
+            "score_reference_revision_guardrails"
+        ]
+        self.assertEqual(
+            self.spec["metric_definition"]["score_reference_revision"],
+            "dev-r8-soft-unit-robustness-v1",
+        )
+        self.assertEqual(
+            guardrails["basis"],
+            "aggregate-only closed dev-r7 development diagnostics before fresh "
+            "dev-r8 generation; dev-r8 stopped before measurement and therefore "
+            "supplied no score or threshold evidence",
+        )
+        self.assertTrue(guardrails["fresh_dev_r9_required"])
+        self.assertTrue(
+            guardrails[
+                "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent"
+            ]
+        )
+        self.assertNotIn("fresh_dev_r8_required", guardrails)
+
+        for field, drift in (
+            ("dev_r8_status", "failed-and-closed-after-measurement"),
+            ("dev_r8_failure_audit", DEV_R7_FAILURE_AUDIT_RELATIVE),
+            ("dev_r8_failure_audit_sha256", DEV_R7_FAILURE_AUDIT_SHA256),
+            ("dev_r9_status", "formal-authority"),
+        ):
+            changed = copy.deepcopy(self.spec)
+            changed["history"][field] = drift
+            with self.assertRaisesRegex(
+                RuntimeError, "closed-development provenance contract drift"
+            ):
+                common.validate_preregistered_spec(changed)
 
     def test_population_anchor_authority_is_exact_and_fail_closed(self) -> None:
         common.validate_preregistered_spec(self.spec)
