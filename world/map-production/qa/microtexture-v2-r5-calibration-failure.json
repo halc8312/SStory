@@ -1,0 +1,89 @@
+{
+  "artifact": "microtexture-v2-r5-calibration-failure-audit",
+  "schema_version": "microtexture-v2-r5-calibration-failure-audit/1",
+  "authority_commit": "cec2112c77656b42ba40201a92a5c5c7929e1c71",
+  "evaluated_at": "2026-07-25T22:19:04.48888Z",
+  "outcome": "failed_closed",
+  "selection_status": "selected-but-endpoint-failed",
+  "one_shot_contract": {
+    "calibration_evaluated_exactly_once": true,
+    "thresholds_frozen": false,
+    "locked_clean_reference_measured": false,
+    "holdout_generated_or_evaluated": false,
+    "rerun_relabel_retune_or_reuse_for_r5_forbidden": true,
+    "r5_closed": true
+  },
+  "hash_bindings": {
+    "preregistered_spec_sha256": "0f8769bad73c1de70bc46061776a9443b9459990b7fa58a322b18f0d6679fff1",
+    "implementation_bindings_sha256": "6a95e6e8c8146edd3385550c96878d311fd67912e87ea7fc78b07a38a1361a4b",
+    "calibration_manifest_sha256": "f81e45ba02d4813e44b2fd67e3a6aba49f110240f83593c2b26ae421a0796af6",
+    "sealed_root_labels_sha256": "03141df7939c7366495cb7e597d4d2479998a49a9c42237476bfdb24b54338d2",
+    "evaluation_started_marker_sha256": "88f4c12902ee090312c882f683056495db147dadafd1ea82ab8569b72d306515",
+    "calibration_report_sha256": "fae50012b98e5d98fec94ac47746186807c64403252998acf4e733f93bb90c5e",
+    "calibration_completion_sha256": "0c7b8ed60988c7143868a08fd3cd3956b2f3c09b605214f9cc09d628f7a78f4a",
+    "blind_key_commitment": "90751048119f12810422bb0adf2430f6067ebf5640ff27f5ed43e55f7a20577d"
+  },
+  "vision_labels": {
+    "records_total": 140,
+    "clean": 62,
+    "warning": 16,
+    "reject": 62,
+    "severity_0": 62,
+    "severity_1": 16,
+    "severity_2": 38,
+    "severity_3": 24,
+    "all_full_200_and_four_quadrant_400_views_reviewed": true
+  },
+  "selected_diagnostic_hard_gate": {
+    "metric": "hard_composite_score",
+    "direction": "maximum",
+    "threshold": 0.6920726332491038,
+    "authority": false
+  },
+  "performance": {
+    "clean_acceptance": 1.0,
+    "warning_acceptance": 0.8,
+    "reject_detection": 0.78125,
+    "severity3_detection": 0.8571428571428571,
+    "grain_reject_detection": 0.6666666666666666,
+    "tiny_speck_reject_detection": 0.6666666666666666,
+    "microblob_reject_detection": 1.0,
+    "spot_reject_detection": 0.7272727272727273,
+    "short_line_reject_detection": 1.0,
+    "parallel_bundle_reject_detection": 0.8
+  },
+  "population_counts": {
+    "clean_unique_clusters": 22,
+    "warning_unique_clusters": 10,
+    "reject_unique_clusters": 32,
+    "severity3_unique_clusters": 14,
+    "grain_visible_reject_unique_clusters": 6,
+    "tiny_speck_visible_reject_unique_clusters": 9,
+    "microblob_visible_reject_unique_clusters": 5,
+    "spot_visible_reject_unique_clusters": 11,
+    "short_line_visible_reject_unique_clusters": 8,
+    "parallel_bundle_visible_reject_unique_clusters": 10
+  },
+  "root_cause": {
+    "population_feasibility_failure": "Only six unique grain-visible reject clusters existed although the preregistered endpoint required eight; the endpoint was structurally unable to pass under any threshold.",
+    "unreachable_grain_branch": "The coherence branch used sat(coherence, 0.6), whose theoretical maximum is 0.625 for coherence bounded to 1.0. The selected diagnostic threshold was 0.6920726332491038, so coherence could never independently cross the gate.",
+    "weak_spot_scaling": "Tiny-speck mass and blob-strength normalization left several visually rejected spot clusters below the diagnostic threshold.",
+    "metric_equivalent_truth_conflict": "Four polarity-paired artifact conditions contained warning/reject splits even though paired residual metrics were equal. The record-subset endpoint aggregation could therefore demand acceptance and rejection from one identical metric value, making the endpoint system contradictory.",
+    "threshold_selection_contract_gap": "The r5 selector could choose a clean/warning-admissible diagnostic threshold before all endpoint counts and rates were known to pass; the selected value was correctly prevented from freezing, but should never have been called an authority candidate."
+  },
+  "successor_constraints": {
+    "r5_data_role": "development_only",
+    "r6_requires_fresh_key_controls_labels_foundations_locked_clean_reference_roots_and_nonces": true,
+    "r6_requires_worst_case_condition_cluster_truth_aggregation": true,
+    "r6_requires_preselection_population_feasibility_validation": true,
+    "r6_threshold_candidates_must_pass_every_endpoint_count_and_rate_before_selection": true,
+    "r6_requires_bounded_unit_normalization_with_reachable_branches": true,
+    "r6_requires_pre_freeze_coverage_margin_plus_post_seal_validation_for_the_eight_grain_and_ten_warning_cluster_minima": true
+  },
+  "secret_handling": {
+    "blind_key_present_in_this_artifact": false,
+    "blind_key_persisted_or_logged": false,
+    "temporary_report_or_marker_tracked": false,
+    "temporary_artifact_root": "tmp/map-production/microtexture-v2-r5-artifacts"
+  }
+}

@@ -1,0 +1,75 @@
+MICROTEXTURE V2 R6 CONTROL FOUNDATIONS — IMAGEGEN V15–V17 CHAIN
+
+Role
+----
+Fresh, independent, Vision-qualified QA reference foundations for the r6
+blinded synthetic calibration and holdout controls. These images are not
+production art, Golden inputs, texture donors, semantic authority, or final
+pixels. No earlier microtexture raster was used as a generation reference.
+
+Prompt record status
+--------------------
+The original byte-for-byte generator request strings were not retained in the
+available record. Each instruction below is a faithful, self-contained
+reconstruction of the recorded prompt intent and is not represented as an
+exact transcript.
+
+Step 1 — v15, adopted foundation
+---------------------------------
+Generate a brand-new independent 3:2 QA control-foundation image, target
+1536×1024, opaque RGB. Create an extremely smooth warm-ivory,
+parchment-like color field; “parchment-like” describes the restrained warm
+palette only and must not introduce a physical paper surface. Allow only
+barely perceptible, irregular, non-repeating, broad low-frequency tonal
+variation. Keep the center and every edge calm and evenly illuminated.
+Strictly exclude all microtexture, grain, noise, dither, dots, specks, pores,
+stipple, bounded blobs, mottling, cloudlike patches, blooms, fibers,
+scratches, brush marks, short lines, ridges, parallel lines or bundles,
+hatching, diagonal weave, checker or lattice patterns, bands, rings,
+contours, repeated texture, seams, panels, borders, frames, vignette, edge
+shading, halos, ringing, compression artifacts, text, labels, symbols,
+objects, geography, or terrain. Produce a clean low-noise digital color field.
+
+Step 2 — v16, adopted foundation
+---------------------------------
+Generate another brand-new independent 3:2 QA control-foundation image,
+target 1536×1024, opaque RGB. Use a pale warm-gray to light-oatmeal color
+field with an extremely smooth matte appearance. Permit only extremely broad,
+low-contrast, non-periodic tonal variation. The central 512×384 region and
+all outer edges must remain visually uniform. Strictly exclude microtexture,
+grain, noise, dither, dots, specks, pores, stipple, bounded blobs, mottling,
+cloudlike patches, blooms, fibers, scratches, brush marks, short lines,
+ridges, parallel lines or bundles, hatching, diagonal weave, checker or
+lattice patterns, bands, rings, contours, repeats, seams, panels, borders,
+frames, vignette, directional lighting, halos, ringing, compression
+artifacts, text, labels, symbols, objects, geography, and terrain. Render a
+quiet digital fill, not a photographed material.
+
+Step 3 — v17, adopted foundation
+---------------------------------
+Generate a third brand-new independent 3:2 QA control-foundation image,
+target 1536×1024, opaque RGB. Create a pale sunlit-sand to muted-cream field,
+smooth, matte, understated, and evenly illuminated. Allow only barely visible
+broad low-frequency tonal drift that is irregular and non-repeating. Keep the
+central 512×384 region and every edge clean. Strictly exclude microtexture,
+grain, noise, dither, dots, specks, pores, stipple, bounded blobs, mottling,
+cloudlike patches, blooms, fibers, scratches, brush marks, short lines,
+ridges, parallel lines or bundles, hatching, directional or periodic pattern,
+checker, lattice, banding, rings, contours, repeated texture, seams, panels,
+borders, frames, vignette, edge shading, halos, ringing, compression
+artifacts, text, labels, symbols, objects, geography, and terrain. Produce an
+almost featureless low-noise digital field.
+
+Adopted outputs
+---------------
+- `world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v15.png`
+  SHA-256 `15695cf533d0aa495a83cbd35657e1d68244538e79028e83bbb32d952db0379f`
+- `world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v16.png`
+  SHA-256 `4e6cd844c88cf550d8f85da65d63525f99c58fd599a06d7a568c38412e54712f`
+- `world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v17.png`
+  SHA-256 `fa08d0921ee319a279038e84e5318a8b0e759ff3ac55fb439a635329c9e8b6ea`
+
+Only the exact central source crop xywh `[512,320,512,384]` of each adopted
+image may be used as an r6 control foundation. Every formal control must
+retain its exact corresponding reference bytes; metrics operate only on
+control minus reference. Foundation substitution after freeze is forbidden.

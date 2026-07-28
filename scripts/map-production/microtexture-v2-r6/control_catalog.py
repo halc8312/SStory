@@ -1,0 +1,2961 @@
+"""Secret-keyed deterministic private control catalog for r6."""
+
+from __future__ import annotations
+
+import hashlib
+import io
+import json
+import math
+from collections import Counter
+from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+from PIL import Image, ImageDraw
+from scipy import ndimage
+
+from common import (
+    blind_hmac,
+    canonical_json_bytes,
+    sha256_bytes,
+    validate_contact_sheet_view_partition,
+)
+
+
+@dataclass(frozen=True)
+class ExpectedControl:
+    family: str
+    private_role: str
+    foundation_id: str
+    duplicate_audit_group: str | None
+    control_id: str
+    condition_cluster_id: str
+    variant_index: int
+    replicate: int
+    polarity: int
+    parameters: dict[str, Any]
+    anonymous_code: str
+    reference: np.ndarray
+    requested_delta: np.ndarray
+    control: np.ndarray
+    reference_png: bytes
+    control_png: bytes
+    reference_sha256: str
+    control_sha256: str
+    delta_float32_sha256: str
+    control_commitment: str
+    reference_commitment: str
+    delta_commitment: str
+
+    @property
+    def public_binding_tuple(self) -> tuple[str, str, str, str]:
+        return (
+            self.anonymous_code,
+            self.control_commitment,
+            self.reference_commitment,
+            self.delta_commitment,
+        )
+
+
+@dataclass(frozen=True)
+class ContactSheetPage:
+    view_id: str
+    scale_percent: int
+    source_crop_xywh: tuple[int, int, int, int]
+    page_index: int
+    path: str
+    item_codes: tuple[str, ...]
+    png_bytes: bytes
+    sha256: str
+
+    def manifest_entry(self) -> dict[str, Any]:
+        return {
+            "view_id": self.view_id,
+            "scale_percent": self.scale_percent,
+            "source_crop_xywh": list(self.source_crop_xywh),
+            "page_index": self.page_index,
+            "path": self.path,
+            "sha256": self.sha256,
+            "item_codes": list(self.item_codes),
+        }
+
+
+_HEX_GLYPHS = {
+    "0": ("111", "101", "101", "101", "111"),
+    "1": ("010", "110", "010", "010", "111"),
+    "2": ("111", "001", "111", "100", "111"),
+    "3": ("111", "001", "111", "001", "111"),
+    "4": ("101", "101", "111", "001", "001"),
+    "5": ("111", "100", "111", "001", "111"),
+    "6": ("111", "100", "111", "101", "111"),
+    "7": ("111", "001", "010", "010", "010"),
+    "8": ("111", "101", "111", "101", "111"),
+    "9": ("111", "101", "111", "001", "111"),
+    "a": ("010", "101", "111", "101", "101"),
+    "b": ("110", "101", "110", "101", "110"),
+    "c": ("111", "100", "100", "100", "111"),
+    "d": ("110", "101", "101", "101", "110"),
+    "e": ("111", "100", "110", "100", "111"),
+    "f": ("111", "100", "110", "100", "100"),
+}
+
+
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+_FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
+_FOUNDATIONS = (
+    (
+        "v15",
+        "world/map-production/style-assets/"
+        "microtexture-v2-r6-foundation-imagegen-v15.png",
+        "15695cf533d0aa495a83cbd35657e1d68244538e79028e83bbb32d952db0379f",
+    ),
+    (
+        "v16",
+        "world/map-production/style-assets/"
+        "microtexture-v2-r6-foundation-imagegen-v16.png",
+        "4e6cd844c88cf550d8f85da65d63525f99c58fd599a06d7a568c38412e54712f",
+    ),
+    (
+        "v17",
+        "world/map-production/style-assets/"
+        "microtexture-v2-r6-foundation-imagegen-v17.png",
+        "fa08d0921ee319a279038e84e5318a8b0e759ff3ac55fb439a635329c9e8b6ea",
+    ),
+)
+
+
+@lru_cache(maxsize=1)
+def _foundation_bank() -> dict[str, np.ndarray]:
+    left, top, width, height = _FOUNDATION_SOURCE_CROP_XYWH
+    bank: dict[str, np.ndarray] = {}
+    for foundation_id, relative_path, expected_sha256 in _FOUNDATIONS:
+        path = _REPO_ROOT / relative_path
+        payload = path.read_bytes()
+        if hashlib.sha256(payload).hexdigest() != expected_sha256:
+            raise RuntimeError(f"r6 foundation SHA drift: {foundation_id}")
+        with Image.open(io.BytesIO(payload)) as opened:
+            opened.load()
+            if opened.mode != "RGB" or opened.size != (1536, 1024):
+                raise RuntimeError(
+                    f"r6 foundation image contract drift: {foundation_id}"
+                )
+            rgb = np.asarray(
+                opened.crop((left, top, left + width, top + height)),
+                dtype=np.uint8,
+            )
+        if rgb.shape != (height, width, 3):
+            raise RuntimeError(f"r6 foundation crop geometry drift: {foundation_id}")
+        values = rgb.astype(np.float32)
+        luminance = (
+            np.float32(0.299) * values[:, :, 0]
+            + np.float32(0.587) * values[:, :, 1]
+            + np.float32(0.114) * values[:, :, 2]
+        ).astype(np.float32)
+        luminance.setflags(write=False)
+        bank[foundation_id] = luminance
+    if set(bank) != {"v15", "v16", "v17"}:
+        raise RuntimeError("r6 foundation allowlist drift")
+    return bank
+
+
+def _draw_hex_label(
+    sheet: np.ndarray, code: str, origin_x: int, origin_y: int, fill: int
+) -> None:
+    glyph_scale = 2
+    advance = 8
+    for character_index, character in enumerate(code):
+        glyph = _HEX_GLYPHS[character]
+        x_base = origin_x + character_index * advance
+        for row, bits in enumerate(glyph):
+            for column, bit in enumerate(bits):
+                if bit == "1":
+                    y0 = origin_y + row * glyph_scale
+                    x0 = x_base + column * glyph_scale
+                    sheet[y0 : y0 + glyph_scale, x0 : x0 + glyph_scale] = np.uint8(fill)
+
+
+def _hmac_material(
+    key: bytes, prefix: str, identity: dict[str, Any], lane: str
+) -> bytes:
+    return blind_hmac(
+        key,
+        prefix.encode("ascii")
+        + lane.encode("ascii")
+        + b"/"
+        + canonical_json_bytes(identity),
+    )
+
+
+def _public_payload_commitment(
+    key: bytes, anonymous_code: str, lane: str, payload_sha256: str
+) -> str:
+    if lane not in {"control", "reference", "delta"}:
+        raise RuntimeError("invalid r6 public payload-commitment lane")
+    return blind_hmac(
+        key,
+        b"microtexture-v2-r6/public-payload-commitment/v4/"
+        + lane.encode("ascii")
+        + b"/"
+        + anonymous_code.encode("ascii")
+        + b"/"
+        + bytes.fromhex(payload_sha256),
+    ).hex()
+
+
+def _hmac_prf_grid(
+    *,
+    key: bytes,
+    prefix: str,
+    identity: dict[str, Any],
+    lane: str,
+    shape: tuple[int, int],
+) -> np.ndarray:
+    """Derive a coefficient grid directly from an HMAC-SHA-256 PRF."""
+
+    count = shape[0] * shape[1]
+    values: list[float] = []
+    counter = 0
+    identity_bytes = canonical_json_bytes(identity)
+    domain = (
+        prefix.encode("ascii")
+        + b"private-reference-transform-v4/"
+        + lane.encode("ascii")
+        + b"/"
+        + identity_bytes
+        + b"/"
+    )
+    while len(values) < count:
+        digest = blind_hmac(key, domain + counter.to_bytes(4, "big"))
+        for offset in range(0, len(digest), 8):
+            integer = int.from_bytes(digest[offset : offset + 8], "big")
+            values.append((integer / float((1 << 64) - 1)) * 2.0 - 1.0)
+            if len(values) == count:
+                break
+        counter += 1
+    return np.asarray(values, dtype=np.float32).reshape(shape)
+
+
+def _private_reference_transform(
+    reference: np.ndarray,
+    *,
+    key: bytes,
+    prefix: str,
+    identity: dict[str, Any],
+    settings: dict[str, Any],
+) -> np.ndarray:
+    """Create a unique clean private reference without a public equality oracle."""
+
+    if reference.ndim != 2 or reference.dtype != np.float32:
+        raise RuntimeError("invalid r6 private reference-transform source")
+    grid_height, grid_width = [int(value) for value in settings["control_grid_hw"]]
+    maximum_displacement = float(settings["maximum_displacement_px"])
+    maximum_tone = float(settings["maximum_tone_l"])
+    interpolation_order = int(settings["interpolation_order"])
+    coefficient_interpolation_order = int(settings["coefficient_interpolation_order"])
+    boundary_mode = str(settings["boundary_mode"])
+    safety_minimum = int(settings["encoded_luminance_minimum"])
+    safety_maximum = int(settings["encoded_luminance_maximum"])
+    if (
+        (grid_height, grid_width) != (7, 9)
+        or maximum_displacement != 1.75
+        or maximum_tone != 0.75
+        or interpolation_order != 1
+        or coefficient_interpolation_order != 3
+        or boundary_mode != "reflect"
+        or (safety_minimum, safety_maximum) != (16, 243)
+    ):
+        raise RuntimeError("r6 private reference-transform parameter drift")
+
+    height, width = reference.shape
+    target_y, target_x = np.meshgrid(
+        np.linspace(0.0, grid_height - 1, height, dtype=np.float32),
+        np.linspace(0.0, grid_width - 1, width, dtype=np.float32),
+        indexing="ij",
+    )
+
+    def field(lane: str, scale: float) -> np.ndarray:
+        grid = _hmac_prf_grid(
+            key=key,
+            prefix=prefix,
+            identity=identity,
+            lane=lane,
+            shape=(grid_height, grid_width),
+        )
+        expanded = ndimage.map_coordinates(
+            grid,
+            (target_y, target_x),
+            order=coefficient_interpolation_order,
+            mode=boundary_mode,
+            prefilter=True,
+        )
+        return np.clip(expanded, -1.0, 1.0).astype(np.float32) * np.float32(scale)
+
+    displacement_y = field("displacement-y", maximum_displacement)
+    displacement_x = field("displacement-x", maximum_displacement)
+    tone = field("tone", maximum_tone)
+    source_y, source_x = np.meshgrid(
+        np.arange(height, dtype=np.float32),
+        np.arange(width, dtype=np.float32),
+        indexing="ij",
+    )
+    warped = ndimage.map_coordinates(
+        reference,
+        (source_y + displacement_y, source_x + displacement_x),
+        order=interpolation_order,
+        mode=boundary_mode,
+        prefilter=False,
+    )
+    encoded = np.clip(np.rint(warped + tone), safety_minimum, safety_maximum).astype(
+        np.uint8
+    )
+    if encoded.shape != reference.shape:
+        raise RuntimeError("r6 private reference-transform geometry drift")
+    return encoded
+
+
+def _normalize_rms(values: np.ndarray, target: float) -> np.ndarray:
+    centered = values.astype(np.float32) - np.float32(values.mean())
+    rms = float(np.sqrt(np.mean(centered * centered)))
+    return centered * np.float32(target / max(rms, 1e-12))
+
+
+def _metric_quadrants(
+    metric_window_xywh: tuple[int, int, int, int],
+) -> tuple[tuple[int, int, int, int], ...]:
+    left, top, width, height = metric_window_xywh
+    if width <= 0 or height <= 0 or width % 2 or height % 2:
+        raise RuntimeError("r6 metric window cannot form four exact quadrants")
+    half_width, half_height = width // 2, height // 2
+    return (
+        (left, top, half_width, half_height),
+        (left + half_width, top, half_width, half_height),
+        (left, top + half_height, half_width, half_height),
+        (left + half_width, top + half_height, half_width, half_height),
+    )
+
+
+def _chebyshev_distance(first: tuple[int, int], second: tuple[int, int]) -> int:
+    return max(abs(first[0] - second[0]), abs(first[1] - second[1]))
+
+
+def _stratified_separated_integer_positions(
+    rng: np.random.Generator,
+    count: int,
+    metric_window_xywh: tuple[int, int, int, int],
+    *,
+    margin: int,
+    minimum_separation_px: int,
+) -> list[tuple[int, int]]:
+    """Pack seeded integer centers evenly across the four exact 400% quadrants."""
+
+    if count <= 0:
+        raise RuntimeError("sparse-control count must be positive")
+    if margin < 0 or minimum_separation_px <= 0:
+        raise RuntimeError("invalid r6 deterministic-packing geometry")
+    quadrants = _metric_quadrants(metric_window_xywh)
+    quadrant_order = [int(value) for value in rng.permutation(len(quadrants))]
+
+    def lattice_fallback() -> list[tuple[int, int]]:
+        # Keep centers away from the two internal quadrant boundaries far enough
+        # that independently selected quadrant lattices cannot violate the global
+        # Chebyshev separation.  Outer boundaries retain the caller's support
+        # margin.  The centered, sep-spaced grids make this path bounded rather
+        # than another randomized packing attempt.
+        internal_guard = max(
+            0,
+            math.ceil(
+                (minimum_separation_px - (2 * margin + 1)) / 2,
+            ),
+        )
+        quadrant_counts = Counter(
+            quadrant_order[item_index % len(quadrants)] for item_index in range(count)
+        )
+        lattice_pools: dict[int, list[tuple[int, int]]] = {}
+        for quadrant_index, (left, top, width, height) in enumerate(quadrants):
+            x_min, x_max = left + margin, left + width - margin - 1
+            y_min, y_max = top + margin, top + height - margin - 1
+            if quadrant_index % 2 == 0:
+                x_max -= internal_guard
+            else:
+                x_min += internal_guard
+            if quadrant_index < 2:
+                y_max -= internal_guard
+            else:
+                y_min += internal_guard
+            if x_min > x_max or y_min > y_max:
+                raise RuntimeError("r6 fallback guard consumes a 400% quadrant")
+
+            x_slack = (x_max - x_min) % minimum_separation_px
+            y_slack = (y_max - y_min) % minimum_separation_px
+            x_start = x_min + x_slack // 2
+            y_start = y_min + y_slack // 2
+            candidates = [
+                (x, y)
+                for y in range(y_start, y_max + 1, minimum_separation_px)
+                for x in range(x_start, x_max + 1, minimum_separation_px)
+            ]
+            required = quadrant_counts[quadrant_index]
+            if len(candidates) < required:
+                raise RuntimeError(
+                    "r6 deterministic sparse lattice lacks quadrant capacity"
+                )
+            permutation = rng.permutation(len(candidates))
+            lattice_pools[quadrant_index] = [
+                candidates[int(index)] for index in permutation[:required]
+            ]
+
+        return [
+            lattice_pools[quadrant_order[item_index % len(quadrants)]].pop()
+            for item_index in range(count)
+        ]
+
+    candidate_pools: dict[int, list[tuple[int, int]]] = {}
+    for quadrant_index, (left, top, width, height) in enumerate(quadrants):
+        x_min, x_max = left + margin, left + width - margin - 1
+        y_min, y_max = top + margin, top + height - margin - 1
+        if x_min > x_max or y_min > y_max:
+            raise RuntimeError("r6 packing margin consumes a 400% quadrant")
+        candidates = [
+            (x, y) for y in range(y_min, y_max + 1) for x in range(x_min, x_max + 1)
+        ]
+        permutation = rng.permutation(len(candidates))
+        candidate_pools[quadrant_index] = [
+            candidates[int(index)] for index in permutation
+        ]
+
+    selected: list[tuple[int, int]] = []
+    selected_quadrants: list[int] = []
+    for item_index in range(count):
+        quadrant_index = quadrant_order[item_index % len(quadrants)]
+        pool = candidate_pools[quadrant_index]
+        position: tuple[int, int] | None = None
+        while pool:
+            candidate = pool.pop()
+            if all(
+                _chebyshev_distance(candidate, existing) >= minimum_separation_px
+                for existing in selected
+            ):
+                position = candidate
+                break
+        if position is None:
+            selected = lattice_fallback()
+            break
+        selected.append(position)
+        selected_quadrants.append(quadrant_index)
+
+    if len(selected) == count and len(selected_quadrants) != count:
+        selected_quadrants = [
+            quadrant_order[item_index % len(quadrants)] for item_index in range(count)
+        ]
+
+    quadrant_counts = Counter(selected_quadrants)
+    counts = [quadrant_counts[index] for index in range(4)]
+    if max(counts) - min(counts) > 1:
+        raise RuntimeError("r6 sparse packing lost four-quadrant stratification")
+    if any(
+        _chebyshev_distance(first, second) < minimum_separation_px
+        for first_index, first in enumerate(selected)
+        for second in selected[first_index + 1 :]
+    ):
+        raise RuntimeError("r6 sparse packing violated Chebyshev separation")
+    return selected
+
+
+def _line_mask(
+    height: int, width: int, lines: list[tuple[float, float, float, float, int]]
+) -> np.ndarray:
+    image = Image.new("L", (width, height), 0)
+    draw = ImageDraw.Draw(image)
+    for x0, y0, x1, y1, line_width in lines:
+        draw.line((x0, y0, x1, y1), fill=255, width=max(1, line_width))
+    return np.asarray(image, dtype=np.float32) / np.float32(255.0)
+
+
+def _retain_metric_support(
+    field: np.ndarray,
+    rng: np.random.Generator,
+    metric_window_xywh: tuple[int, int, int, int],
+    support_fraction: float,
+) -> np.ndarray:
+    if not 0.0 < support_fraction <= 1.0:
+        raise RuntimeError("r6 fine-grain support fraction must be within (0, 1]")
+    if support_fraction == 1.0:
+        return field
+    left, top, width, height = metric_window_xywh
+    region = field[top : top + height, left : left + width]
+    candidate_y, candidate_x = np.nonzero(np.abs(region) > np.float32(0.5001))
+    if not candidate_y.size:
+        raise RuntimeError("r6 fine-grain sparse support has no encodable candidate")
+    target_count = min(
+        candidate_y.size,
+        max(1, int(math.ceil(width * height * support_fraction))),
+    )
+    selected = rng.choice(candidate_y.size, size=target_count, replace=False)
+    retained = np.zeros_like(field)
+    retained[top + candidate_y[selected], left + candidate_x[selected]] = region[
+        candidate_y[selected], candidate_x[selected]
+    ]
+    return retained
+
+
+def _render_unsigned_delta(
+    family: str,
+    parameters: dict[str, Any],
+    rng: np.random.Generator,
+    height: int,
+    width: int,
+    metric_window_xywh: tuple[int, int, int, int],
+) -> np.ndarray:
+    zero = np.zeros((height, width), dtype=np.float32)
+    if family == "protocol-zero":
+        return zero
+    if family == "artifact-speck":
+        count = int(parameters["count_in_metric_window"])
+        amplitude = float(parameters["amplitude_l"])
+        separation = int(parameters["minimum_separation_px"])
+        shoulder_fraction = float(parameters["shoulder_fraction"])
+        if (
+            int(parameters["diameter_px"]) != 1
+            or separation < 10
+            or not 0.0 <= shoulder_fraction < 1.0
+        ):
+            raise RuntimeError("r6 hard-core speck parameter drift")
+        tier = str(parameters["design_tier"])
+        expected_shoulder = {
+            "clean-candidate": 0.0,
+            "warning-candidate": 0.05,
+            "clear-reject-candidate": 0.08,
+            "dominant-reject-candidate": 0.08,
+        }.get(tier)
+        if expected_shoulder is None or not math.isclose(
+            shoulder_fraction, expected_shoulder, abs_tol=1e-12
+        ):
+            raise RuntimeError("r6 tier-bound speck shoulder contract drift")
+        if tier == "clean-candidate" and not (count <= 2 and 0.8 <= amplitude <= 1.4):
+            raise RuntimeError("r6 clean-candidate speck contract drift")
+        if tier in {"clear-reject-candidate", "dominant-reject-candidate"} and not (
+            count >= 6 and 10.0 <= amplitude <= 12.0
+        ):
+            raise RuntimeError("r6 strong speck contract drift")
+        centers = _stratified_separated_integer_positions(
+            rng,
+            count,
+            metric_window_xywh,
+            margin=1,
+            minimum_separation_px=separation,
+        )
+        field = zero.copy()
+        for x, y in centers:
+            field[y, x] = np.float32(1.0)
+            if shoulder_fraction > 0.0:
+                shoulder = np.float32(shoulder_fraction)
+                field[y - 1, x] = max(field[y - 1, x], shoulder)
+                field[y + 1, x] = max(field[y + 1, x], shoulder)
+                field[y, x - 1] = max(field[y, x - 1], shoulder)
+                field[y, x + 1] = max(field[y, x + 1], shoulder)
+        expected_support = count * (5 if shoulder_fraction > 0.0 else 1)
+        if (
+            int(np.count_nonzero(field == np.float32(1.0))) != count
+            or int(np.count_nonzero(field)) != expected_support
+        ):
+            raise RuntimeError("r6 speck core/4-neighbour support drift")
+        return field * np.float32(amplitude)
+    if family == "artifact-microblob":
+        count = int(parameters["count_in_metric_window"])
+        diameter = int(parameters["diameter_px"])
+        support_radius = int(parameters["support_radius_px"])
+        separation = int(parameters["minimum_separation_px"])
+        if diameter < 4 or support_radius < 2 or separation < 2 * support_radius + 1:
+            raise RuntimeError("r6 finite microblob parameter drift")
+        yy, xx = np.mgrid[0:height, 0:width]
+        field = zero.copy()
+        centers = _stratified_separated_integer_positions(
+            rng,
+            count,
+            metric_window_xywh,
+            margin=support_radius + 1,
+            minimum_separation_px=separation,
+        )
+        sigma = max(0.75, diameter / 2.355)
+        for x, y in centers:
+            distance_squared = (xx - x) ** 2 + (yy - y) ** 2
+            blob = (
+                np.exp(-distance_squared / (2 * sigma**2))
+                * (distance_squared <= support_radius**2)
+            ).astype(np.float32)
+            field = np.maximum(field, blob)
+        if int(np.count_nonzero(field == np.float32(1.0))) != count:
+            raise RuntimeError("r6 finite microblob center cardinality drift")
+        return field * np.float32(parameters["amplitude_l"])
+    if family == "artifact-fine-grain":
+        yy, xx = np.mgrid[0:height, 0:width]
+        if parameters["pattern"] == "fine-band":
+            angle, phase = (
+                float(rng.uniform(0, math.pi)),
+                float(rng.uniform(0, 2 * math.pi)),
+            )
+            wave = np.sin(
+                2
+                * math.pi
+                * (xx * math.cos(angle) + yy * math.sin(angle))
+                / float(parameters["wavelength_px"])
+                + phase
+            )
+            field = _normalize_rms(wave.astype(np.float32), float(parameters["rms_l"]))
+            return _retain_metric_support(
+                field,
+                rng,
+                metric_window_xywh,
+                float(parameters["support_fraction_in_metric_window"]),
+            )
+        if parameters["pattern"] == "halftone":
+            field = np.sin(math.pi * xx / float(parameters["cell_px"])) * np.sin(
+                math.pi * yy / float(parameters["cell_px"])
+            )
+            return _retain_metric_support(
+                field.astype(np.float32) * np.float32(parameters["amplitude_l"]),
+                rng,
+                metric_window_xywh,
+                float(parameters["support_fraction_in_metric_window"]),
+            )
+        raise RuntimeError("unknown r6 fine-grain pattern")
+    if family == "artifact-short-dash":
+        count = int(parameters["count_in_metric_window"])
+        length = float(parameters["length_px"])
+        line_width = int(parameters["width_px"])
+        separation = int(parameters["minimum_separation_px"])
+        if separation < int(math.ceil(length)) + line_width + 3:
+            raise RuntimeError("r6 short-dash separation contract drift")
+        centers = _stratified_separated_integer_positions(
+            rng,
+            count,
+            metric_window_xywh,
+            margin=int(math.ceil(length / 2)) + line_width + 2,
+            minimum_separation_px=separation,
+        )
+        lines = []
+        for x, y in centers:
+            angle = float(rng.uniform(0, math.pi))
+            dx, dy = math.cos(angle) * length / 2, math.sin(angle) * length / 2
+            lines.append((x - dx, y - dy, x + dx, y + dy, line_width))
+        return _line_mask(height, width, lines) * np.float32(parameters["amplitude_l"])
+    if family == "artifact-parallel-bundle":
+        count = int(parameters["pair_count_in_metric_window"])
+        length, spacing = (
+            float(parameters["length_px"]),
+            float(parameters["spacing_px"]),
+        )
+        line_width = int(parameters["width_px"])
+        edge_gap = spacing - line_width
+        if not (1.0 <= edge_gap <= length):
+            raise RuntimeError("r6 parallel edge-gap contract drift")
+        if int(length) % 2 or int(spacing) % 2:
+            raise RuntimeError("r6 parallel deterministic integer geometry drift")
+        bundle_separation = int(parameters["minimum_bundle_separation_px"])
+        if bundle_separation < int(max(length, spacing)) + line_width + 3:
+            raise RuntimeError("r6 parallel bundle packing contract drift")
+        containment_margin = (
+            int(math.ceil(max(length, spacing) / 2 + line_width / 2)) + 2
+        )
+        centers = _stratified_separated_integer_positions(
+            rng,
+            count,
+            metric_window_xywh,
+            margin=containment_margin,
+            minimum_separation_px=bundle_separation,
+        )
+        quadrants = _metric_quadrants(metric_window_xywh)
+        lines = []
+        fully_contained_pairs = 0
+        for pair_index, (x, y) in enumerate(centers):
+            angle = 0.0 if int(rng.integers(0, 2)) == 0 else math.pi / 2
+            ux, uy, nx, ny = (
+                math.cos(angle),
+                math.sin(angle),
+                -math.sin(angle),
+                math.cos(angle),
+            )
+            pair_lines = []
+            for offset in (-spacing / 2, spacing / 2):
+                cx, cy = x + nx * offset, y + ny * offset
+                pair_lines.append(
+                    (
+                        cx - ux * length / 2,
+                        cy - uy * length / 2,
+                        cx + ux * length / 2,
+                        cy + uy * length / 2,
+                        line_width,
+                    )
+                )
+            first, second = pair_lines
+            first_axis = (first[2] - first[0]) * ux + (first[3] - first[1]) * uy
+            second_axis = (second[2] - second[0]) * ux + (second[3] - second[1]) * uy
+            first_midpoint = ((first[0] + first[2]) / 2, (first[1] + first[3]) / 2)
+            second_midpoint = (
+                (second[0] + second[2]) / 2,
+                (second[1] + second[3]) / 2,
+            )
+            perpendicular_distance = abs(
+                (second_midpoint[0] - first_midpoint[0]) * nx
+                + (second_midpoint[1] - first_midpoint[1]) * ny
+            )
+            axial_offset = abs(
+                (second_midpoint[0] - first_midpoint[0]) * ux
+                + (second_midpoint[1] - first_midpoint[1]) * uy
+            )
+            if not (
+                math.isclose(first_axis, length, abs_tol=1e-9)
+                and math.isclose(second_axis, length, abs_tol=1e-9)
+                and math.isclose(perpendicular_distance, spacing, abs_tol=1e-9)
+                and math.isclose(axial_offset, 0.0, abs_tol=1e-9)
+            ):
+                raise RuntimeError(f"r6 parallel pair geometry drift: {pair_index}")
+            containing_quadrants = 0
+            extent = line_width / 2 + 1
+            for left, top, quadrant_width, quadrant_height in quadrants:
+                right, bottom = left + quadrant_width, top + quadrant_height
+                if all(
+                    left <= min(x0, x1) - extent
+                    and max(x0, x1) + extent < right
+                    and top <= min(y0, y1) - extent
+                    and max(y0, y1) + extent < bottom
+                    for x0, y0, x1, y1, _ in pair_lines
+                ):
+                    containing_quadrants += 1
+            if containing_quadrants != 1:
+                raise RuntimeError(
+                    f"r6 parallel pair escaped exact 400% quadrant: {pair_index}"
+                )
+            fully_contained_pairs += 1
+            lines.extend(pair_lines)
+        if fully_contained_pairs < 1:
+            raise RuntimeError("r6 parallel corpus lacks a quadrant-contained pair")
+        return _line_mask(height, width, lines) * np.float32(parameters["amplitude_l"])
+    raise RuntimeError(f"unknown family: {family}")
+
+
+def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
+    if split == "calibration":
+        nonce_base = 73000
+        grain = [
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 3.2,
+                "rms_l": 0.58,
+                "support_fraction_in_metric_window": 0.0010,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 7.4,
+                "rms_l": 1.30,
+                "support_fraction_in_metric_window": 0.35,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 4.1,
+                "rms_l": 3.20,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 3.0,
+                "rms_l": 6.80,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "halftone",
+                "cell_px": 9,
+                "amplitude_l": 0.90,
+                "support_fraction_in_metric_window": 0.0010,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "halftone",
+                "cell_px": 13,
+                "amplitude_l": 3.00,
+                "support_fraction_in_metric_window": 0.25,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 8.8,
+                "rms_l": 3.50,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "halftone",
+                "cell_px": 7,
+                "amplitude_l": 10.00,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 11.0,
+                "rms_l": 0.62,
+                "support_fraction_in_metric_window": 0.0020,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 5.6,
+                "rms_l": 1.80,
+                "support_fraction_in_metric_window": 0.45,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "halftone",
+                "cell_px": 11,
+                "amplitude_l": 6.80,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 4.8,
+                "rms_l": 7.20,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "halftone",
+                "cell_px": 15,
+                "amplitude_l": 1.00,
+                "support_fraction_in_metric_window": 0.0015,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 12.0,
+                "rms_l": 3.80,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "halftone",
+                "cell_px": 8,
+                "amplitude_l": 3.80,
+                "support_fraction_in_metric_window": 0.40,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 6.7,
+                "rms_l": 4.20,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 9.6,
+                "rms_l": 0.65,
+                "support_fraction_in_metric_window": 0.0010,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "halftone",
+                "cell_px": 10,
+                "amplitude_l": 7.50,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 8.0,
+                "rms_l": 7.80,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 14.0,
+                "rms_l": 4.50,
+                "support_fraction_in_metric_window": 1.0,
+            },
+        ]
+        speck = [
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 0.8,
+                "count_in_metric_window": 1,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 4.5,
+                "count_in_metric_window": 3,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 10.0,
+                "count_in_metric_window": 6,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 16,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 1.0,
+                "count_in_metric_window": 2,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 5.2,
+                "count_in_metric_window": 4,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 10.4,
+                "count_in_metric_window": 7,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.8,
+                "count_in_metric_window": 18,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 1.2,
+                "count_in_metric_window": 1,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 6.2,
+                "count_in_metric_window": 5,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 10.8,
+                "count_in_metric_window": 8,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 14,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 1.4,
+                "count_in_metric_window": 2,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.0,
+                "count_in_metric_window": 10,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 7.2,
+                "count_in_metric_window": 4,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.4,
+                "count_in_metric_window": 12,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 0.9,
+                "count_in_metric_window": 1,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 20,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 10.2,
+                "count_in_metric_window": 6,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 20,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.6,
+                "count_in_metric_window": 12,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 20,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.8,
+                "count_in_metric_window": 9,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 20,
+            },
+        ]
+        microblob = [
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 4,
+                "amplitude_l": 0.8,
+                "count_in_metric_window": 1,
+                "support_radius_px": 4,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 6,
+                "amplitude_l": 4.0,
+                "count_in_metric_window": 3,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 8,
+                "amplitude_l": 9.0,
+                "count_in_metric_window": 6,
+                "support_radius_px": 7,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 14,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 14,
+                "support_radius_px": 12,
+                "minimum_separation_px": 28,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 5,
+                "amplitude_l": 1.0,
+                "count_in_metric_window": 2,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 7,
+                "amplitude_l": 5.0,
+                "count_in_metric_window": 4,
+                "support_radius_px": 6,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 9,
+                "amplitude_l": 9.5,
+                "count_in_metric_window": 7,
+                "support_radius_px": 8,
+                "minimum_separation_px": 20,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 12,
+                "amplitude_l": 11.5,
+                "count_in_metric_window": 16,
+                "support_radius_px": 10,
+                "minimum_separation_px": 24,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 6,
+                "amplitude_l": 1.2,
+                "count_in_metric_window": 1,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 8,
+                "amplitude_l": 5.8,
+                "count_in_metric_window": 5,
+                "support_radius_px": 7,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 10,
+                "amplitude_l": 10.0,
+                "count_in_metric_window": 8,
+                "support_radius_px": 8,
+                "minimum_separation_px": 20,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 16,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 12,
+                "support_radius_px": 13,
+                "minimum_separation_px": 30,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 4,
+                "amplitude_l": 1.4,
+                "count_in_metric_window": 2,
+                "support_radius_px": 4,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 11,
+                "amplitude_l": 10.4,
+                "count_in_metric_window": 9,
+                "support_radius_px": 9,
+                "minimum_separation_px": 22,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 5,
+                "amplitude_l": 6.2,
+                "count_in_metric_window": 4,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 13,
+                "amplitude_l": 10.8,
+                "count_in_metric_window": 10,
+                "support_radius_px": 11,
+                "minimum_separation_px": 26,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 5,
+                "amplitude_l": 0.9,
+                "count_in_metric_window": 1,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 7,
+                "amplitude_l": 9.2,
+                "count_in_metric_window": 6,
+                "support_radius_px": 6,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 15,
+                "amplitude_l": 11.8,
+                "count_in_metric_window": 14,
+                "support_radius_px": 12,
+                "minimum_separation_px": 28,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 12,
+                "amplitude_l": 11.0,
+                "count_in_metric_window": 8,
+                "support_radius_px": 10,
+                "minimum_separation_px": 24,
+            },
+        ]
+        short_dash = [
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 4,
+                "width_px": 1,
+                "amplitude_l": 0.8,
+                "count_in_metric_window": 1,
+                "minimum_separation_px": 8,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 7,
+                "width_px": 1,
+                "amplitude_l": 4.0,
+                "count_in_metric_window": 2,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 12,
+                "width_px": 2,
+                "amplitude_l": 9.0,
+                "count_in_metric_window": 5,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 24,
+                "width_px": 3,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 12,
+                "minimum_separation_px": 32,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 5,
+                "width_px": 1,
+                "amplitude_l": 1.0,
+                "count_in_metric_window": 2,
+                "minimum_separation_px": 10,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 8,
+                "width_px": 1,
+                "amplitude_l": 4.8,
+                "count_in_metric_window": 3,
+                "minimum_separation_px": 13,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 14,
+                "width_px": 2,
+                "amplitude_l": 9.5,
+                "count_in_metric_window": 6,
+                "minimum_separation_px": 20,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 22,
+                "width_px": 3,
+                "amplitude_l": 11.5,
+                "count_in_metric_window": 14,
+                "minimum_separation_px": 30,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 6,
+                "width_px": 1,
+                "amplitude_l": 1.2,
+                "count_in_metric_window": 1,
+                "minimum_separation_px": 11,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 10,
+                "width_px": 2,
+                "amplitude_l": 5.5,
+                "count_in_metric_window": 4,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 16,
+                "width_px": 2,
+                "amplitude_l": 10.0,
+                "count_in_metric_window": 7,
+                "minimum_separation_px": 22,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 26,
+                "width_px": 3,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 10,
+                "minimum_separation_px": 34,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 7,
+                "width_px": 1,
+                "amplitude_l": 1.4,
+                "count_in_metric_window": 2,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 18,
+                "width_px": 2,
+                "amplitude_l": 10.5,
+                "count_in_metric_window": 8,
+                "minimum_separation_px": 24,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 6,
+                "width_px": 1,
+                "amplitude_l": 6.0,
+                "count_in_metric_window": 3,
+                "minimum_separation_px": 11,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 20,
+                "width_px": 3,
+                "amplitude_l": 11.0,
+                "count_in_metric_window": 9,
+                "minimum_separation_px": 26,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 5,
+                "width_px": 1,
+                "amplitude_l": 0.9,
+                "count_in_metric_window": 1,
+                "minimum_separation_px": 10,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 10,
+                "width_px": 2,
+                "amplitude_l": 9.2,
+                "count_in_metric_window": 5,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 20,
+                "width_px": 3,
+                "amplitude_l": 11.8,
+                "count_in_metric_window": 12,
+                "minimum_separation_px": 28,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 14,
+                "width_px": 2,
+                "amplitude_l": 10.8,
+                "count_in_metric_window": 6,
+                "minimum_separation_px": 20,
+            },
+        ]
+        parallel = [
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 8,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 0.8,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 14,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 10,
+                "width_px": 1,
+                "spacing_px": 4,
+                "amplitude_l": 4.5,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 16,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 14,
+                "width_px": 2,
+                "spacing_px": 4,
+                "amplitude_l": 10.0,
+                "pair_count_in_metric_window": 3,
+                "minimum_bundle_separation_px": 20,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 26,
+                "width_px": 3,
+                "spacing_px": 8,
+                "amplitude_l": 12.0,
+                "pair_count_in_metric_window": 9,
+                "minimum_bundle_separation_px": 34,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 10,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 1.0,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 16,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 12,
+                "width_px": 2,
+                "spacing_px": 4,
+                "amplitude_l": 5.0,
+                "pair_count_in_metric_window": 2,
+                "minimum_bundle_separation_px": 18,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 16,
+                "width_px": 2,
+                "spacing_px": 6,
+                "amplitude_l": 10.4,
+                "pair_count_in_metric_window": 4,
+                "minimum_bundle_separation_px": 22,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 24,
+                "width_px": 3,
+                "spacing_px": 10,
+                "amplitude_l": 11.7,
+                "pair_count_in_metric_window": 10,
+                "minimum_bundle_separation_px": 32,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 12,
+                "width_px": 1,
+                "spacing_px": 4,
+                "amplitude_l": 1.2,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 18,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 14,
+                "width_px": 2,
+                "spacing_px": 6,
+                "amplitude_l": 6.0,
+                "pair_count_in_metric_window": 2,
+                "minimum_bundle_separation_px": 20,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 18,
+                "width_px": 2,
+                "spacing_px": 8,
+                "amplitude_l": 10.8,
+                "pair_count_in_metric_window": 5,
+                "minimum_bundle_separation_px": 24,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 28,
+                "width_px": 3,
+                "spacing_px": 12,
+                "amplitude_l": 12.0,
+                "pair_count_in_metric_window": 8,
+                "minimum_bundle_separation_px": 36,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 8,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 1.4,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 20,
+                "width_px": 3,
+                "spacing_px": 6,
+                "amplitude_l": 11.0,
+                "pair_count_in_metric_window": 6,
+                "minimum_bundle_separation_px": 26,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 8,
+                "width_px": 1,
+                "spacing_px": 4,
+                "amplitude_l": 6.5,
+                "pair_count_in_metric_window": 2,
+                "minimum_bundle_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 22,
+                "width_px": 2,
+                "spacing_px": 10,
+                "amplitude_l": 11.2,
+                "pair_count_in_metric_window": 5,
+                "minimum_bundle_separation_px": 28,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 10,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 0.9,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 16,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 12,
+                "width_px": 2,
+                "spacing_px": 4,
+                "amplitude_l": 10.2,
+                "pair_count_in_metric_window": 3,
+                "minimum_bundle_separation_px": 18,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 22,
+                "width_px": 3,
+                "spacing_px": 8,
+                "amplitude_l": 11.8,
+                "pair_count_in_metric_window": 9,
+                "minimum_bundle_separation_px": 30,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 16,
+                "width_px": 2,
+                "spacing_px": 6,
+                "amplitude_l": 11.5,
+                "pair_count_in_metric_window": 4,
+                "minimum_bundle_separation_px": 22,
+            },
+        ]
+    elif split == "holdout":
+        nonce_base = 83000
+        grain = [
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "halftone",
+                "cell_px": 12,
+                "amplitude_l": 7.10,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 3.4,
+                "rms_l": 0.60,
+                "support_fraction_in_metric_window": 0.0012,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 7.8,
+                "rms_l": 1.45,
+                "support_fraction_in_metric_window": 0.30,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 3.3,
+                "rms_l": 7.00,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 4.5,
+                "rms_l": 3.35,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "halftone",
+                "cell_px": 10,
+                "amplitude_l": 0.95,
+                "support_fraction_in_metric_window": 0.0010,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "halftone",
+                "cell_px": 14,
+                "amplitude_l": 3.20,
+                "support_fraction_in_metric_window": 0.28,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "halftone",
+                "cell_px": 8,
+                "amplitude_l": 10.40,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 9.2,
+                "rms_l": 3.65,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 11.6,
+                "rms_l": 0.64,
+                "support_fraction_in_metric_window": 0.0018,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 6.0,
+                "rms_l": 1.95,
+                "support_fraction_in_metric_window": 0.42,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 5.1,
+                "rms_l": 7.40,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "halftone",
+                "cell_px": 9,
+                "amplitude_l": 7.60,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "halftone",
+                "cell_px": 16,
+                "amplitude_l": 1.05,
+                "support_fraction_in_metric_window": 0.0014,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 12.6,
+                "rms_l": 4.00,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "pattern": "halftone",
+                "cell_px": 9,
+                "amplitude_l": 4.00,
+                "support_fraction_in_metric_window": 0.38,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 8.4,
+                "rms_l": 8.00,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 10.2,
+                "rms_l": 0.68,
+                "support_fraction_in_metric_window": 0.0010,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 7.1,
+                "rms_l": 4.35,
+                "support_fraction_in_metric_window": 1.0,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "pattern": "fine-band",
+                "wavelength_px": 14.6,
+                "rms_l": 4.70,
+                "support_fraction_in_metric_window": 1.0,
+            },
+        ]
+        speck = [
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 10.3,
+                "count_in_metric_window": 7,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 13,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 0.9,
+                "count_in_metric_window": 1,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 13,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 4.8,
+                "count_in_metric_window": 3,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 13,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.9,
+                "count_in_metric_window": 17,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 13,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 10.6,
+                "count_in_metric_window": 8,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 15,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 1.1,
+                "count_in_metric_window": 2,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 15,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 5.5,
+                "count_in_metric_window": 4,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 15,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 15,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 15,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.0,
+                "count_in_metric_window": 9,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 17,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 1.3,
+                "count_in_metric_window": 1,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 17,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 6.5,
+                "count_in_metric_window": 5,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 17,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.7,
+                "count_in_metric_window": 13,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 17,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.3,
+                "count_in_metric_window": 11,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 19,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 1.4,
+                "count_in_metric_window": 2,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 19,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 10.1,
+                "count_in_metric_window": 6,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 19,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 7.0,
+                "count_in_metric_window": 4,
+                "shoulder_fraction": 0.05,
+                "minimum_separation_px": 19,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.8,
+                "count_in_metric_window": 12,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 21,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 0.8,
+                "count_in_metric_window": 1,
+                "shoulder_fraction": 0.0,
+                "minimum_separation_px": 21,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.6,
+                "count_in_metric_window": 10,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 21,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 1,
+                "amplitude_l": 11.9,
+                "count_in_metric_window": 8,
+                "shoulder_fraction": 0.08,
+                "minimum_separation_px": 21,
+            },
+        ]
+        microblob = [
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 9,
+                "amplitude_l": 9.3,
+                "count_in_metric_window": 7,
+                "support_radius_px": 8,
+                "minimum_separation_px": 20,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 4,
+                "amplitude_l": 0.9,
+                "count_in_metric_window": 1,
+                "support_radius_px": 4,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 6,
+                "amplitude_l": 4.3,
+                "count_in_metric_window": 3,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 15,
+                "amplitude_l": 11.9,
+                "count_in_metric_window": 15,
+                "support_radius_px": 12,
+                "minimum_separation_px": 28,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 8,
+                "amplitude_l": 9.7,
+                "count_in_metric_window": 6,
+                "support_radius_px": 7,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 5,
+                "amplitude_l": 1.1,
+                "count_in_metric_window": 2,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 7,
+                "amplitude_l": 5.2,
+                "count_in_metric_window": 4,
+                "support_radius_px": 6,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 13,
+                "amplitude_l": 11.6,
+                "count_in_metric_window": 16,
+                "support_radius_px": 11,
+                "minimum_separation_px": 26,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 11,
+                "amplitude_l": 10.2,
+                "count_in_metric_window": 9,
+                "support_radius_px": 9,
+                "minimum_separation_px": 22,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 6,
+                "amplitude_l": 1.3,
+                "count_in_metric_window": 1,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 8,
+                "amplitude_l": 6.0,
+                "count_in_metric_window": 5,
+                "support_radius_px": 7,
+                "minimum_separation_px": 18,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 16,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 13,
+                "support_radius_px": 13,
+                "minimum_separation_px": 30,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 12,
+                "amplitude_l": 10.6,
+                "count_in_metric_window": 10,
+                "support_radius_px": 10,
+                "minimum_separation_px": 24,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 4,
+                "amplitude_l": 1.4,
+                "count_in_metric_window": 2,
+                "support_radius_px": 4,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 7,
+                "amplitude_l": 9.1,
+                "count_in_metric_window": 6,
+                "support_radius_px": 6,
+                "minimum_separation_px": 16,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "diameter_px": 5,
+                "amplitude_l": 6.4,
+                "count_in_metric_window": 4,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "diameter_px": 14,
+                "amplitude_l": 11.8,
+                "count_in_metric_window": 14,
+                "support_radius_px": 12,
+                "minimum_separation_px": 28,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "diameter_px": 5,
+                "amplitude_l": 0.8,
+                "count_in_metric_window": 1,
+                "support_radius_px": 5,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 13,
+                "amplitude_l": 11.0,
+                "count_in_metric_window": 8,
+                "support_radius_px": 11,
+                "minimum_separation_px": 26,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "diameter_px": 10,
+                "amplitude_l": 10.8,
+                "count_in_metric_window": 8,
+                "support_radius_px": 8,
+                "minimum_separation_px": 20,
+            },
+        ]
+        short_dash = [
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 13,
+                "width_px": 2,
+                "amplitude_l": 9.3,
+                "count_in_metric_window": 5,
+                "minimum_separation_px": 19,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 4,
+                "width_px": 1,
+                "amplitude_l": 0.9,
+                "count_in_metric_window": 1,
+                "minimum_separation_px": 8,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 7,
+                "width_px": 1,
+                "amplitude_l": 4.3,
+                "count_in_metric_window": 2,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 25,
+                "width_px": 3,
+                "amplitude_l": 11.9,
+                "count_in_metric_window": 13,
+                "minimum_separation_px": 33,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 15,
+                "width_px": 2,
+                "amplitude_l": 9.7,
+                "count_in_metric_window": 6,
+                "minimum_separation_px": 21,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 5,
+                "width_px": 1,
+                "amplitude_l": 1.1,
+                "count_in_metric_window": 2,
+                "minimum_separation_px": 10,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 9,
+                "width_px": 1,
+                "amplitude_l": 5.0,
+                "count_in_metric_window": 3,
+                "minimum_separation_px": 14,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 23,
+                "width_px": 3,
+                "amplitude_l": 11.6,
+                "count_in_metric_window": 14,
+                "minimum_separation_px": 31,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 17,
+                "width_px": 2,
+                "amplitude_l": 10.2,
+                "count_in_metric_window": 7,
+                "minimum_separation_px": 23,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 6,
+                "width_px": 1,
+                "amplitude_l": 1.3,
+                "count_in_metric_window": 1,
+                "minimum_separation_px": 11,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 11,
+                "width_px": 2,
+                "amplitude_l": 5.8,
+                "count_in_metric_window": 4,
+                "minimum_separation_px": 17,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 27,
+                "width_px": 3,
+                "amplitude_l": 12.0,
+                "count_in_metric_window": 10,
+                "minimum_separation_px": 35,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 19,
+                "width_px": 2,
+                "amplitude_l": 10.7,
+                "count_in_metric_window": 8,
+                "minimum_separation_px": 25,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 7,
+                "width_px": 1,
+                "amplitude_l": 1.4,
+                "count_in_metric_window": 2,
+                "minimum_separation_px": 12,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 11,
+                "width_px": 2,
+                "amplitude_l": 9.1,
+                "count_in_metric_window": 5,
+                "minimum_separation_px": 17,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 6,
+                "width_px": 1,
+                "amplitude_l": 6.2,
+                "count_in_metric_window": 3,
+                "minimum_separation_px": 11,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 21,
+                "width_px": 3,
+                "amplitude_l": 11.8,
+                "count_in_metric_window": 12,
+                "minimum_separation_px": 29,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 5,
+                "width_px": 1,
+                "amplitude_l": 0.8,
+                "count_in_metric_window": 1,
+                "minimum_separation_px": 10,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 21,
+                "width_px": 3,
+                "amplitude_l": 11.2,
+                "count_in_metric_window": 9,
+                "minimum_separation_px": 27,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 15,
+                "width_px": 2,
+                "amplitude_l": 10.9,
+                "count_in_metric_window": 6,
+                "minimum_separation_px": 21,
+            },
+        ]
+        parallel = [
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 16,
+                "width_px": 2,
+                "spacing_px": 6,
+                "amplitude_l": 10.2,
+                "pair_count_in_metric_window": 4,
+                "minimum_bundle_separation_px": 22,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 8,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 0.9,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 14,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 10,
+                "width_px": 1,
+                "spacing_px": 4,
+                "amplitude_l": 4.8,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 16,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 26,
+                "width_px": 3,
+                "spacing_px": 10,
+                "amplitude_l": 11.9,
+                "pair_count_in_metric_window": 9,
+                "minimum_bundle_separation_px": 34,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 14,
+                "width_px": 2,
+                "spacing_px": 4,
+                "amplitude_l": 10.0,
+                "pair_count_in_metric_window": 3,
+                "minimum_bundle_separation_px": 20,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 10,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 1.1,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 16,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 12,
+                "width_px": 2,
+                "spacing_px": 4,
+                "amplitude_l": 5.3,
+                "pair_count_in_metric_window": 2,
+                "minimum_bundle_separation_px": 18,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 24,
+                "width_px": 3,
+                "spacing_px": 8,
+                "amplitude_l": 11.7,
+                "pair_count_in_metric_window": 10,
+                "minimum_bundle_separation_px": 32,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 20,
+                "width_px": 3,
+                "spacing_px": 6,
+                "amplitude_l": 10.8,
+                "pair_count_in_metric_window": 6,
+                "minimum_bundle_separation_px": 26,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 12,
+                "width_px": 1,
+                "spacing_px": 4,
+                "amplitude_l": 1.3,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 18,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 14,
+                "width_px": 2,
+                "spacing_px": 6,
+                "amplitude_l": 6.2,
+                "pair_count_in_metric_window": 2,
+                "minimum_bundle_separation_px": 20,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 28,
+                "width_px": 3,
+                "spacing_px": 12,
+                "amplitude_l": 12.0,
+                "pair_count_in_metric_window": 8,
+                "minimum_bundle_separation_px": 36,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 18,
+                "width_px": 2,
+                "spacing_px": 8,
+                "amplitude_l": 11.0,
+                "pair_count_in_metric_window": 5,
+                "minimum_bundle_separation_px": 24,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 8,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 1.4,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 14,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 12,
+                "width_px": 2,
+                "spacing_px": 4,
+                "amplitude_l": 10.1,
+                "pair_count_in_metric_window": 3,
+                "minimum_bundle_separation_px": 18,
+            },
+            {
+                "design_tier": "warning-candidate",
+                "length_px": 8,
+                "width_px": 1,
+                "spacing_px": 4,
+                "amplitude_l": 6.7,
+                "pair_count_in_metric_window": 2,
+                "minimum_bundle_separation_px": 14,
+            },
+            {
+                "design_tier": "dominant-reject-candidate",
+                "length_px": 22,
+                "width_px": 3,
+                "spacing_px": 8,
+                "amplitude_l": 11.8,
+                "pair_count_in_metric_window": 9,
+                "minimum_bundle_separation_px": 30,
+            },
+            {
+                "design_tier": "clean-candidate",
+                "length_px": 10,
+                "width_px": 1,
+                "spacing_px": 2,
+                "amplitude_l": 0.8,
+                "pair_count_in_metric_window": 1,
+                "minimum_bundle_separation_px": 16,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 22,
+                "width_px": 2,
+                "spacing_px": 10,
+                "amplitude_l": 11.4,
+                "pair_count_in_metric_window": 5,
+                "minimum_bundle_separation_px": 28,
+            },
+            {
+                "design_tier": "clear-reject-candidate",
+                "length_px": 16,
+                "width_px": 2,
+                "spacing_px": 6,
+                "amplitude_l": 11.6,
+                "pair_count_in_metric_window": 4,
+                "minimum_bundle_separation_px": 22,
+            },
+        ]
+    else:
+        raise ValueError("invalid split")
+
+    result = {
+        "artifact-fine-grain": grain,
+        "artifact-speck": speck,
+        "artifact-microblob": microblob,
+        "artifact-short-dash": short_dash,
+        "artifact-parallel-bundle": parallel,
+    }
+    rotations = {
+        "calibration": {
+            "artifact-fine-grain": 1,
+            "artifact-speck": 3,
+            "artifact-microblob": 5,
+            "artifact-short-dash": 7,
+            "artifact-parallel-bundle": 9,
+        },
+        "holdout": {
+            "artifact-fine-grain": 2,
+            "artifact-speck": 4,
+            "artifact-microblob": 6,
+            "artifact-short-dash": 8,
+            "artifact-parallel-bundle": 10,
+        },
+    }[split]
+    for family, offset in rotations.items():
+        variants = result[family]
+        permuted: list[dict[str, Any] | None] = [None] * len(variants)
+        for residue in range(3):
+            indices = list(range(residue, len(variants), 3))
+            shift = offset % len(indices)
+            sources = indices[shift:] + indices[:shift]
+            for target, source in zip(indices, sources, strict=True):
+                permuted[target] = variants[source]
+        if any(item is None for item in permuted):
+            raise RuntimeError(f"r6 residue-preserving permutation drift: {family}")
+        result[family] = [item for item in permuted if item is not None]
+    family_nonce_offsets = {
+        "artifact-fine-grain": 0,
+        "artifact-speck": 100,
+        "artifact-microblob": 200,
+        "artifact-short-dash": 300,
+        "artifact-parallel-bundle": 400,
+    }
+    for family, variants in result.items():
+        for index, parameters in enumerate(variants):
+            parameters["schedule_revision"] = "dev-r8-soft-unit-schedule-v1"
+            parameters["condition_nonce"] = (
+                nonce_base + family_nonce_offsets[family] + index
+            )
+    if any(len(variants) != 20 for variants in result.values()):
+        raise RuntimeError("r6 bounded artifact variant contract drift")
+    expected_tier_counts = Counter(
+        {
+            "clean-candidate": 5,
+            "warning-candidate": 4,
+            "clear-reject-candidate": 7,
+            "dominant-reject-candidate": 4,
+        }
+    )
+    for family, variants in result.items():
+        if len({canonical_json_bytes(item) for item in variants}) != 20:
+            raise RuntimeError(f"r6 duplicate artifact condition: {family}")
+        tier_counts = Counter(str(item["design_tier"]) for item in variants)
+        if tier_counts != expected_tier_counts:
+            raise RuntimeError(f"r6 design-tier cardinality drift: {family}")
+        for tier in expected_tier_counts:
+            residues = {
+                index % len(_FOUNDATIONS)
+                for index, item in enumerate(variants)
+                if item["design_tier"] == tier
+            }
+            if residues != {0, 1, 2}:
+                raise RuntimeError(
+                    f"r6 design tier lacks mod-3 foundation coverage: {family}/{tier}"
+                )
+    return result
+
+
+def _encode_png(values: np.ndarray, compression: int) -> bytes:
+    stream = io.BytesIO()
+    Image.fromarray(values.astype(np.uint8), mode="L").save(
+        stream, format="PNG", compress_level=compression, optimize=False
+    )
+    return stream.getvalue()
+
+
+def _expected_controls_bounded(
+    spec: dict[str, Any], split: str, key: bytes
+) -> list[ExpectedControl]:
+    if split not in {"calibration", "holdout"}:
+        raise ValueError("invalid split")
+    height, width = int(spec["canvas"]["height"]), int(spec["canvas"]["width"])
+    if (width, height) != (512, 384):
+        raise RuntimeError("r6 foundation canvas contract drift")
+    metric_window_xywh = tuple(
+        int(value) for value in spec["canvas"]["metric_window"]["xywh"]
+    )
+    if metric_window_xywh != (128, 96, 256, 192):
+        raise RuntimeError("r6 exact metric-window geometry drift")
+    bank = _foundation_bank()
+    prefix = spec["blind_derivation"]["seed_message_prefix"]
+    code_prefix = spec["blind_derivation"]["code_message_prefix"]
+    public_nonce = spec["splits"][split]["public_nonce"]
+    compression = int(spec["canvas"]["png_compress_level"])
+    controls: list[ExpectedControl] = []
+
+    def emit(
+        *,
+        private_role: str,
+        family: str,
+        variant_index: int,
+        replicate: int,
+        polarity: int,
+        parameters: dict[str, Any],
+        duplicate_audit_group: str | None,
+        render_family: str,
+    ) -> None:
+        cluster_seed_identity = {
+            "split": split,
+            "public_nonce": public_nonce,
+            "private_role": private_role,
+            "family": family,
+            "variant_index": variant_index,
+            "parameters": parameters,
+            "duplicate_audit_group": duplicate_audit_group,
+        }
+        if private_role in {"artifact", "protocol-zero"}:
+            assignment_scope = {
+                "split": split,
+                "public_nonce": public_nonce,
+                "private_role": private_role,
+                "family": family,
+            }
+            foundation_offset = int.from_bytes(
+                _hmac_material(key, prefix, assignment_scope, "foundation-offset-v3")[
+                    :8
+                ],
+                "big",
+            ) % len(_FOUNDATIONS)
+            foundation_index = (variant_index + foundation_offset) % len(_FOUNDATIONS)
+        else:
+            foundation_index = int.from_bytes(
+                _hmac_material(
+                    key, prefix, cluster_seed_identity, "foundation-assignment-v3"
+                )[:8],
+                "big",
+            ) % len(_FOUNDATIONS)
+        foundation_id = _FOUNDATIONS[foundation_index][0]
+        cluster_identity = {
+            **cluster_seed_identity,
+            "foundation_id": foundation_id,
+        }
+        delta_seed = int.from_bytes(
+            _hmac_material(key, prefix, cluster_identity, "delta-v3"), "big"
+        )
+        unsigned = _render_unsigned_delta(
+            render_family,
+            parameters,
+            np.random.default_rng(delta_seed),
+            height,
+            width,
+            metric_window_xywh,
+        ).astype(np.float32)
+        requested = (unsigned * np.float32(polarity)).astype(np.float32)
+        reference_float = bank[foundation_id]
+        reference_identity = {
+            **cluster_identity,
+            "replicate": replicate,
+            "polarity": polarity,
+        }
+        reference = _private_reference_transform(
+            reference_float,
+            key=key,
+            prefix=prefix,
+            identity=reference_identity,
+            settings=spec["control_catalog_authority"]["private_reference_transform"],
+        )
+        encoded_requested = np.rint(requested).astype(np.int16)
+        encoded_control = reference.astype(np.int16) + encoded_requested
+        if np.any(encoded_control < 0) or np.any(encoded_control > 255):
+            raise RuntimeError(
+                "r6 encoded control exceeded the luminance safety margin"
+            )
+        control = encoded_control.astype(np.uint8)
+        if private_role == "protocol-zero" or (
+            private_role == "duplicate-audit" and duplicate_audit_group == "clean"
+        ):
+            if np.any(requested != 0) or not np.array_equal(control, reference):
+                raise RuntimeError("r6 zero protocol control/reference drift")
+        else:
+            if not np.any(requested != 0) or np.array_equal(control, reference):
+                raise RuntimeError(
+                    "r6 nonzero artifact collapsed during encoding: "
+                    f"{split}/{family}/v{variant_index}/r{replicate}/p{polarity}"
+                )
+        if render_family in {
+            "artifact-speck",
+            "artifact-microblob",
+            "artifact-short-dash",
+            "artifact-parallel-bundle",
+        }:
+            left, top, window_width, window_height = metric_window_xywh
+            outside = requested.copy()
+            outside[top : top + window_height, left : left + window_width] = 0
+            if np.any(outside != 0):
+                raise RuntimeError(f"{split}/{render_family} escaped metric window")
+        reference_png = _encode_png(reference, compression)
+        control_png = _encode_png(control, compression)
+        identity = {
+            **cluster_identity,
+            "replicate": replicate,
+            "polarity": polarity,
+        }
+        identity_bytes = canonical_json_bytes(identity)
+        anonymous_code = blind_hmac(
+            key, code_prefix.encode("ascii") + identity_bytes
+        ).hex()[: int(spec["blind_derivation"]["opaque_code_hex_characters"])]
+        control_id = blind_hmac(
+            key, b"microtexture-v2-r6/private-control-id/v3/" + identity_bytes
+        ).hex()[:24]
+        condition_cluster_id = blind_hmac(
+            key,
+            spec["independent_condition_clusters"]["message_prefix"].encode("ascii")
+            + canonical_json_bytes(cluster_identity),
+        ).hex()[:24]
+        reference_sha256 = sha256_bytes(reference_png)
+        control_sha256 = sha256_bytes(control_png)
+        delta_float32_sha256 = sha256_bytes(
+            np.ascontiguousarray(requested, dtype="<f4").tobytes()
+        )
+        controls.append(
+            ExpectedControl(
+                family=family,
+                private_role=private_role,
+                foundation_id=foundation_id,
+                duplicate_audit_group=duplicate_audit_group,
+                control_id=control_id,
+                condition_cluster_id=condition_cluster_id,
+                variant_index=variant_index,
+                replicate=replicate,
+                polarity=polarity,
+                parameters=json.loads(json.dumps(parameters)),
+                anonymous_code=anonymous_code,
+                reference=reference,
+                requested_delta=requested,
+                control=control,
+                reference_png=reference_png,
+                control_png=control_png,
+                reference_sha256=reference_sha256,
+                control_sha256=control_sha256,
+                delta_float32_sha256=delta_float32_sha256,
+                control_commitment=_public_payload_commitment(
+                    key, anonymous_code, "control", control_sha256
+                ),
+                reference_commitment=_public_payload_commitment(
+                    key, anonymous_code, "reference", reference_sha256
+                ),
+                delta_commitment=_public_payload_commitment(
+                    key, anonymous_code, "delta", delta_float32_sha256
+                ),
+            )
+        )
+
+    for family, variants in _artifact_variants(split).items():
+        for variant_index, parameters in enumerate(variants):
+            for polarity in (-1, 1):
+                emit(
+                    private_role="artifact",
+                    family=family,
+                    variant_index=variant_index,
+                    replicate=0,
+                    polarity=polarity,
+                    parameters=parameters,
+                    duplicate_audit_group=None,
+                    render_family=family,
+                )
+
+    zero_nonce_base = 51000 if split == "calibration" else 61000
+    for variant_index in range(16):
+        emit(
+            private_role="protocol-zero",
+            family="protocol-zero",
+            variant_index=variant_index,
+            replicate=0,
+            polarity=1,
+            parameters={
+                "schedule_revision": "dev-r8-soft-unit-schedule-v1",
+                "protocol_nonce": zero_nonce_base + variant_index,
+            },
+            duplicate_audit_group=None,
+            render_family="protocol-zero",
+        )
+
+    clean_audit_parameters = {
+        "schedule_revision": "dev-r8-soft-unit-schedule-v1",
+        "audit_nonce": 91000 if split == "calibration" else 101000,
+        "audit_kind": "clean-isomorphic-replicate",
+    }
+    artifact_audit_parameters = {
+        "schedule_revision": "dev-r8-soft-unit-schedule-v1",
+        "audit_nonce": 91001 if split == "calibration" else 101001,
+        "audit_kind": "obvious-artifact-isomorphic-replicate",
+        "condition_nonce": 91002 if split == "calibration" else 101002,
+        "length_px": 18 if split == "calibration" else 20,
+        "width_px": 3,
+        "amplitude_l": 10.4 if split == "calibration" else 10.8,
+        "count_in_metric_window": 10 if split == "calibration" else 11,
+        "minimum_separation_px": 26 if split == "calibration" else 28,
+    }
+    for replicate in range(2):
+        emit(
+            private_role="duplicate-audit",
+            family="duplicate-audit",
+            variant_index=0,
+            replicate=replicate,
+            polarity=1,
+            parameters=clean_audit_parameters,
+            duplicate_audit_group="clean",
+            render_family="protocol-zero",
+        )
+        emit(
+            private_role="duplicate-audit",
+            family="duplicate-audit",
+            variant_index=1,
+            replicate=replicate,
+            polarity=1,
+            parameters=artifact_audit_parameters,
+            duplicate_audit_group="artifact",
+            render_family="artifact-short-dash",
+        )
+
+    if len(controls) != 220:
+        raise RuntimeError("r6 bounded corpus record count drift")
+    role_counts = Counter(control.private_role for control in controls)
+    if role_counts != Counter(
+        {"artifact": 200, "protocol-zero": 16, "duplicate-audit": 4}
+    ):
+        raise RuntimeError("r6 private-role cardinality drift")
+    if {control.foundation_id for control in controls} - {"v15", "v16", "v17"}:
+        raise RuntimeError("r6 rejected foundation entered corpus")
+    zero_foundations = {
+        control.foundation_id
+        for control in controls
+        if control.private_role == "protocol-zero"
+    }
+    if zero_foundations != {"v15", "v16", "v17"}:
+        raise RuntimeError("r6 protocol-zero foundation coverage drift")
+    codes = [control.anonymous_code for control in controls]
+    control_ids = [control.control_id for control in controls]
+    if len(codes) != len(set(codes)) or len(control_ids) != len(set(control_ids)):
+        raise RuntimeError("r6 private identity collision")
+    if len({control.control_sha256 for control in controls}) != len(controls):
+        raise RuntimeError("r6 public control payload equality leak")
+    if len({control.reference_sha256 for control in controls}) != len(controls):
+        raise RuntimeError("r6 private reference-instance cardinality drift")
+    for view in spec["contact_sheets"]["views"]:
+        left, top, view_width, view_height = [
+            int(value) for value in view["source_crop_xywh"]
+        ]
+        view_hashes = {
+            sha256_bytes(
+                np.ascontiguousarray(
+                    control.control[top : top + view_height, left : left + view_width]
+                ).tobytes()
+            )
+            for control in controls
+        }
+        if len(view_hashes) != len(controls):
+            raise RuntimeError(
+                f"r6 public contact-sheet panel equality leak: {view['id']}"
+            )
+
+    artifact_clusters: dict[str, list[ExpectedControl]] = {}
+    for control in controls:
+        if control.private_role == "artifact":
+            artifact_clusters.setdefault(control.condition_cluster_id, []).append(
+                control
+            )
+    if len(artifact_clusters) != 100:
+        raise RuntimeError("r6 artifact cluster cardinality drift")
+    family_clusters = Counter(group[0].family for group in artifact_clusters.values())
+    if set(family_clusters.values()) != {20} or len(family_clusters) != 5:
+        raise RuntimeError("r6 artifact family cluster cardinality drift")
+    for cluster_id, pair in artifact_clusters.items():
+        if len(pair) != 2 or {item.polarity for item in pair} != {-1, 1}:
+            raise RuntimeError(f"r6 polarity pair drift: {cluster_id}")
+        dark = next(item for item in pair if item.polarity == -1)
+        light = next(item for item in pair if item.polarity == 1)
+        if dark.reference_png == light.reference_png or not np.array_equal(
+            dark.requested_delta, -light.requested_delta
+        ):
+            raise RuntimeError(f"r6 polarity render drift: {cluster_id}")
+        dark_encoded = dark.control.astype(np.int16) - dark.reference.astype(np.int16)
+        light_encoded = light.control.astype(np.int16) - light.reference.astype(
+            np.int16
+        )
+        if not np.array_equal(dark_encoded, -light_encoded):
+            raise RuntimeError(f"r6 encoded polarity symmetry drift: {cluster_id}")
+
+    for group_name in ("clean", "artifact"):
+        pair = [
+            control
+            for control in controls
+            if control.duplicate_audit_group == group_name
+        ]
+        if len(pair) != 2 or len({item.anonymous_code for item in pair}) != 2:
+            raise RuntimeError(f"r6 duplicate audit membership drift: {group_name}")
+        left, right = pair
+        if (
+            left.condition_cluster_id != right.condition_cluster_id
+            or left.foundation_id != right.foundation_id
+            or left.delta_float32_sha256 != right.delta_float32_sha256
+            or not np.array_equal(left.requested_delta, right.requested_delta)
+            or left.reference_png == right.reference_png
+            or left.control_png == right.control_png
+        ):
+            raise RuntimeError(f"r6 semantic replicate audit drift: {group_name}")
+        left_encoded = left.control.astype(np.int16) - left.reference.astype(np.int16)
+        right_encoded = right.control.astype(np.int16) - right.reference.astype(
+            np.int16
+        )
+        if not np.array_equal(left_encoded, right_encoded):
+            raise RuntimeError(
+                f"r6 semantic replicate encoded-residual drift: {group_name}"
+            )
+        if group_name == "clean":
+            if (
+                left.control_png != left.reference_png
+                or right.control_png != right.reference_png
+            ):
+                raise RuntimeError("r6 clean semantic replicate is not exact-zero")
+        elif (
+            left.control_png == left.reference_png
+            or right.control_png == right.reference_png
+        ):
+            raise RuntimeError(
+                "r6 artifact semantic replicate collapsed during encoding"
+            )
+    return controls
+
+
+def expected_controls(
+    spec: dict[str, Any], split: str, key: bytes
+) -> list[ExpectedControl]:
+    return _expected_controls_bounded(spec, split, key)
+
+
+def contact_sheet_pages(
+    spec: dict[str, Any], split: str, controls: list[ExpectedControl]
+) -> list[ContactSheetPage]:
+    settings = spec["contact_sheets"]
+    validate_contact_sheet_view_partition(
+        settings, spec["canvas"]["metric_window"]["xywh"]
+    )
+    metric_window = tuple(
+        int(value) for value in spec["canvas"]["metric_window"]["xywh"]
+    )
+    expected_count = int(settings["expected_controls_per_split"])
+    if len(controls) != expected_count:
+        raise RuntimeError(f"{split} control count must be exactly {expected_count}")
+    by_code = {control.anonymous_code: control for control in controls}
+    if len(by_code) != len(controls):
+        raise RuntimeError("contact-sheet opaque code collision")
+    codes = sorted(by_code)
+    columns = int(settings["columns"])
+    rows = int(settings["rows_per_page"])
+    per_page = columns * rows
+    panel_width, panel_height = [int(value) for value in settings["panel_dimensions"]]
+    label_height = int(settings["label_height"])
+    sheet_width, sheet_height = [int(value) for value in settings["sheet_dimensions"]]
+    if sheet_width != columns * panel_width or sheet_height != rows * (
+        panel_height + label_height
+    ):
+        raise RuntimeError("contact-sheet dimensions disagree with panel grid")
+    label_x, label_y = [int(value) for value in settings["label_origin_in_slot"]]
+    panel_x, panel_y = [int(value) for value in settings["panel_origin_in_slot"]]
+    pages: list[ContactSheetPage] = []
+    expected_view_ids: set[str] = set()
+    for view in settings["views"]:
+        view_id = str(view["id"])
+        if not view_id or view_id in expected_view_ids:
+            raise RuntimeError(
+                "contact-sheet view identifiers must be unique/non-empty"
+            )
+        expected_view_ids.add(view_id)
+        scale = int(view["scale_percent"])
+        crop_xywh = tuple(int(value) for value in view["source_crop_xywh"])
+        left, top, crop_width, crop_height = crop_xywh
+        integer_scale = int(scale) // 100
+        if (
+            int(scale) % 100
+            or crop_width * integer_scale != panel_width
+            or crop_height * integer_scale != panel_height
+        ):
+            raise RuntimeError("contact-sheet scale/crop does not exactly fill panel")
+        if (
+            left < 0
+            or top < 0
+            or crop_width <= 0
+            or crop_height <= 0
+            or left + crop_width > int(spec["canvas"]["width"])
+            or top + crop_height > int(spec["canvas"]["height"])
+        ):
+            raise RuntimeError(f"contact-sheet view {view_id} escapes the canvas")
+        if view_id == "full-200" and crop_xywh != metric_window:
+            raise RuntimeError("full-200 sheet is not the exact metric window")
+        for page_index, start in enumerate(range(0, len(codes), per_page), 1):
+            item_codes = tuple(codes[start : start + per_page])
+            sheet = np.full(
+                (sheet_height, sheet_width),
+                int(settings["sheet_background_l"]),
+                dtype=np.uint8,
+            )
+            for slot, code in enumerate(item_codes):
+                source = by_code[code].control
+                crop = source[top : top + crop_height, left : left + crop_width]
+                display = np.repeat(
+                    np.repeat(crop, integer_scale, axis=0), integer_scale, axis=1
+                )
+                column, row = slot % columns, slot // columns
+                slot_x = column * panel_width
+                slot_y = row * (panel_height + label_height)
+                x, y = slot_x + panel_x, slot_y + panel_y
+                sheet[y : y + panel_height, x : x + panel_width] = display
+                _draw_hex_label(
+                    sheet,
+                    code,
+                    slot_x + label_x,
+                    slot_y + label_y,
+                    int(settings["label_fill_l"]),
+                )
+            payload = _encode_png(sheet, int(spec["canvas"]["png_compress_level"]))
+            relative = (
+                f"controls/{split}/contact-sheets/{view_id}-page-{page_index:03d}.png"
+            )
+            pages.append(
+                ContactSheetPage(
+                    view_id,
+                    int(scale),
+                    crop_xywh,
+                    page_index,
+                    relative,
+                    item_codes,
+                    payload,
+                    sha256_bytes(payload),
+                )
+            )
+    expected_pages = int(settings["expected_pages_per_split"])
+    if len(pages) != expected_pages:
+        raise RuntimeError(
+            f"{split} must have exactly {expected_pages} contact-sheet pages"
+        )
+    for view_id in expected_view_ids:
+        if sum(page.view_id == view_id for page in pages) != int(
+            settings["expected_pages_per_view"]
+        ):
+            raise RuntimeError(f"{split}/{view_id} contact-sheet page count drift")
+    for page_index in range(1, int(settings["expected_pages_per_view"]) + 1):
+        item_bundles = {
+            page.item_codes for page in pages if page.page_index == page_index
+        }
+        if len(item_bundles) != 1:
+            raise RuntimeError(
+                f"{split}/page-{page_index:03d} view item-code order drift"
+            )
+    return pages
+
+
+def validate_manifest_public_bindings(
+    manifest: dict[str, Any], expected: list[ExpectedControl]
+) -> None:
+    expected_counter = Counter(control.public_binding_tuple for control in expected)
+    actual_counter = Counter(
+        (
+            record["anonymous_code"],
+            record["control_commitment"],
+            record["reference_commitment"],
+            record["delta_commitment"],
+        )
+        for record in manifest["records"]
+    )
+    if expected_counter != actual_counter or any(
+        count != 1 for count in expected_counter.values()
+    ):
+        raise RuntimeError("secret-derived exact public binding tuple multiset drift")
+
+
+def bind_manifest_to_expected(
+    manifest: dict[str, Any], spec: dict[str, Any], split: str, key: bytes
+) -> dict[tuple[str, str, str, str], ExpectedControl]:
+    expected = expected_controls(spec, split, key)
+    validate_manifest_public_bindings(manifest, expected)
+    expected_codes = {control.anonymous_code for control in expected}
+    if expected_codes != {record["anonymous_code"] for record in manifest["records"]}:
+        raise RuntimeError("secret-derived opaque code set drift")
+    return {control.public_binding_tuple: control for control in expected}

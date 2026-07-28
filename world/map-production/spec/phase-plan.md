@@ -69,11 +69,24 @@ ImageGenは `ground material` と `eight-system scalar relief` の候補作成�
 
 背景または標高の単独審査で落ちた資産は、合成や数値調整へ進めません。数値gateを通っても、Vision上で地形として読めなければ不採用です。
 
-### Microtexture v2-r4 の先行凍結
+### Microtexture v2-r6 の先行凍結
 
-r3は一回限りcalibrationでreject detection 48%となり、不合格のまま閉鎖しました。再実行・再label・retuneは行いません。新しいGolden候補を生成する前に、freshな候補・foundation非依存authority `scripts/map-production/microtexture-v2-r4/` をGitへ凍結します。Calibrationとholdoutは各140 controls、full 200% 24頁と4象限400%各24頁、計120頁です。実装は5 viewのexact ID / order / integer crop / scale、4象限のgap / overlapなし、page間code順をruntimeでも証明します。私が全5 viewの全頁・全codeを匿名状態で確認し、固定regular pathのreviewed label bytesをmarker後・測定前に別の固定pathへexclusive封印して、calibration、fresh ImageGen v7 locked clean reference、事前登録済み独立reviewer receipt、未使用holdoutをそれぞれ一回だけ実行します。全candidate、per-code result、endpoint count / rate、最終passは保存前とauthority再読込時に入力から再計算し、terminal holdoutもactual artifactsとsecret-derived identityまでread-back再結合します。各stageは全検証後にexact-schema completionを最後の操作として書き、normal failも`passed:false`で完了を記録します。例外時はcompletionを欠き、failure reportとの共存もauthority loaderが拒否します。Sparse familyは0..9のexact count、位置は全てsecret-derived、paired polarityは同一reference / unsigned geometryの符号反転だけです。一段でも失敗した版はthresholdを調整せず閉じ、marker後の例外も専用failure reportへ残します。
+r3、r4、r5は一回限りcalibrationで不合格となり、再実行・再label・retuneせず閉鎖しました。pre-formal
+`dev-r6`もpopulation gateで測定前に閉鎖し、`dev-r7`は全440 recordsのRoot/独立Visionと一回限り測定後、
+hard-clamp score saturationのためendpoint-admissible thresholdなしで閉鎖しました。新しいGolden候補を生成する前に、
+freshな候補・foundation非依存authority `scripts/map-production/microtexture-v2-r6/` をGitへ凍結します。
 
-r4は、200%で見た領域と完全一致する中央256×192だけを測り、単一の高周波占有率hard gateを完全compositeとして選びます。Blob・finite-line・parallel-pairは非blocking diagnosticです。v7 locked clean referenceはexact metric windowの全4象限400%確認を含めRoot / independent Visionとも97点ですが、freeze前の数値計測、threshold選択、production donor、Golden、最終pixelへの利用を禁止します。Holdout control生成時とholdout marker前の双方で、current receipt HEADにあるv7本体とgeneration chain / receipt、Root / independent Vision QAをtracked bytesとspec SHAへ再照合します。`k3-v246-imagegen-ground-material-donor-v5.png` も較正から除外し、r4 holdout合格後にreference / mask erosion / overlap-seam / color-alpha-resampling / production holdoutを新規事前登録するproduction residual derivationでだけ使用できます。
+fresh `dev-r8`は各split 220 controls、full 200%と4象限400%の計185 view-pages相当です。追跡済みrunner、revision-3
+public/HMAC/parameter nonce domain、fresh root/key/controls/identities/labels/measurementsを使い、私と独立Visionが全件を
+匿名確認します。固定half-scale arctangent soft-unit、grain / spot / finite-line / parallel-bundleの最大composite、
+単一scalar threshold、既存のendpoint minimum count/rateは生成前に固定し、subsetting、top-up、key resampling、
+relabel、rerunを禁止します。dev-r8入力commitをpushしてUbuntu/Windows CIが通るまで生成しません。
+
+dev-r8成功後にformal authorityを別commitで最終freezeし、fresh calibration、ImageGen v18 locked-clean reference、
+事前登録済み独立threshold authority receipt、fresh holdoutを各一度だけ実行します。一段でも失敗すればthresholdを
+調整せずeditionを閉じます。`k3-v246-imagegen-ground-material-donor-v5.png`は較正から除外し、r6 formal holdout後も
+reference / mask erosion / overlap-seam / color-alpha-resampling / production holdoutを別途事前登録するproduction
+residual derivationでだけ使用できます。
 
 ## Phase 5: 14地域の生成順
 

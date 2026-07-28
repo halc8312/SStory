@@ -50,45 +50,42 @@ planned
 - `k3-v55-topographic-contour-atlas.png`: 正確な8山系の輪郭・峰・鞍部・谷の位相権威です。完成画の背景や4×2配置は転写しません。
 - `k3-v64-integrated-orthographic-relief-donor.png`: 北東高地を周囲へ自然に接続する統合素材と連続した広域起伏のdonorです。反復するシダ状細部と全体図の生画素は使用しません。
 - `k3-v159-scalar-relief-structure-donor.png`: ImageGen由来の条件付き標高構造donorです。各bodyの正規化した低・中周波だけを使用し、生画素、絶対輝度、白い峰、シダ状微細模様、halo、背景は使用しません。
-- `k3-v246-imagegen-ground-material-donor-v5.png`: ImageGen由来の条件付き地表位相donorです。Root Vision 94点で、相対的な低・中周波輝度だけを使用できます。RGB、色相、絶対輝度、12px未満の細部、生画素、意味形状、完成画像への直接転写は禁止します。Microtexture v2-r3/r4/r5の較正からは除外し、r5 holdout合格後にも別途事前登録するproduction derivationでだけ検討できます。
+- `k3-v246-imagegen-ground-material-donor-v5.png`: ImageGen由来の条件付き地表位相donorです。Root Vision 94点で、相対的な低・中周波輝度だけを使用できます。RGB、色相、絶対輝度、12px未満の細部、生画素、意味形状、完成画像への直接転写は禁止します。Microtexture v2-r3～r6の較正からは除外し、r6 formal holdout合格後にも別途事前登録するproduction derivationでだけ検討できます。
 - `microtexture-v2-calibration-positive-imagegen-v4.png`: ImageGen由来の目視比較専用smooth anchorです。threshold選択と数値holdoutには使用せず、高密度texture、制作候補、Golden、最終画素にも使用しません。
 - `microtexture-v2-calibration-positive-imagegen-v5.png`: r3で使用済みの旧false-reject sourceです。Root Vision 94点、独立Vision 95点ですが、r3の閉鎖に伴いdevelopment historyへ固定し、r4/r5では数値・locked・productionのいずれにも再利用しません。
 - `microtexture-v2-locked-clean-reference-imagegen-v7.png`: failed-and-closed r4で登録されていた旧locked-clean候補です。r4の閉鎖に伴いhistory-onlyで、r5 authority、threshold、holdout、production、Golden、最終画素には使用しません。
 - `microtexture-v2-r5-foundation-imagegen-v10.png` / `v11.png` / `v12.png`: Rootと独立Visionで事前qualifyしたr5専用のfresh control/reference foundationsです。中央512×384 cropだけをsecret HMACでcontrolへ割り当てます。Control-onlyであり、threshold外の制作評価、production donor、Golden、最終画素への利用は禁止します。
 - `microtexture-v2-locked-clean-reference-imagegen-v14.png`: r5 foundation corpusと独立したfresh locked-clean referenceです。Root / independent Visionは完了していますが、数値validationはcalibration threshold freeze後に一回だけ行うpending stageです。Threshold選択、production donor、Golden、最終画素への利用は禁止します。
+- `microtexture-v2-r6-foundation-imagegen-v15.png` / `v16.png` / `v17.png`: Rootと2件の独立Visionで94点以上を確認したr6専用fresh control/reference foundationsです。中央512×384 cropだけをsecret HMACで割り当て、control-onlyとして使用します。
+- `microtexture-v2-r6-locked-clean-reference-imagegen-v18.png`: r6 foundation corpusと独立したfresh locked-clean referenceです。Rootと独立Visionによる事前qualification済みですが、正式threshold freeze前のdecode・数値測定は禁止します。
 - `highland-detail-exemplar-v1.png`: 拡大時の素材密度の比較用です。正典形状やGolden判定の代用にはしません。
 - `phase5-cartographic-material-atlas-v1.png`: Phase 5 の紙、インク、植生、地表素材の比較用です。
 
 各資産の生成プロンプト、入力順、SHA-256、Root Visionの採用範囲は `prompts/` と `qa/` に固定します。
 
-Microtexture v2-r3は一回限りcalibrationで不合格となり、`qa/microtexture-v2-r3-calibration-failure.json`へ証拠を固定して閉鎖しました。r4も一回限りcalibrationで不合格となり、`qa/microtexture-v2-r4-calibration-failure.json`へ証拠を固定したfailed-and-closed editionです。r3/r4のcontrols、keys、labels、thresholds、foundations、locked sources、holdoutsはdevelopment historyに限定し、再利用しません。
+Microtexture v2-r3、r4、r5は一回限りcalibrationで不合格となり、各failure auditへ証拠を固定した
+failed-and-closed editionsです。pre-formal `dev-r6`はpopulation不足で測定前に閉鎖し、`dev-r7`は全440 recordsの
+Root/独立Visionと一回限り測定後、hard-clamp score saturationによりendpoint-admissible thresholdが存在せず閉鎖しました。
+`dev-r7`のsanitized証拠は`qa/microtexture-v2-r6-dev-r7-development-failure.json`です。過去editionのcontrols、keys、
+labels、pixels、identities、measurements、thresholds、foundations、locked sources、holdouts、development rootsは再利用しません。
 
-唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r5/`、運用概要は`spec/microtexture-v2-calibration.md`です。r5は各split 140 records / 78 private clustersで、120 `artifact` records（5 morphology families × 12 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4 duplicate-audit recordsを持ちます。Rootはfull 200% 24頁と4象限400%各24頁、計120頁を全code確認します。Detectorはgrain / spot / finite-line / parallel-bundleの4 branch scoreを最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。順序はfresh calibration一回、Root label、one-shot calibration、freeze後のv14数値validation一回、独立authority receipt、fresh holdout一回、Root label、frozen thresholdでone-shot holdoutです。全stageが合格し、さらにproduction residual derivationを別specで事前登録するまで、新しいv246候補やGolden/最終pixelへ接続しません。
+唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r6/`、運用概要は
+`spec/microtexture-v2-calibration.md`です。r6は各split 220 records / 118 private clustersで、200 injection records
+（5 morphology families × 20 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4
+duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185 view-pages相当を全code確認し、fresh
+`dev-r8`では独立Visionも全件確認します。Detectorはgrain / spot / finite-line / parallel-bundleの4 branchを、固定
+half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
-r5のhonest-reviewer blindは運用上の分離であり、technical / cryptographic blindや同じOS principalの悪意ある
-reviewerへのsecrecyは主張しません。blind keyは専用custodian processだけが保持し、Vision processへ継承しません。
-公開manifest schema `/3`はopaque codeとcode別のcontrol/reference/delta HMAC commitments 3件だけを持ち、
-個別control/reference path・file・raw SHAを出しません。marker前のreview surfaceは120 contact-sheet pagesと
-code-only label formだけで、source/code/raw extraction/hash/diff/identity regenerationは禁止です。
-
-各recordのprivate referenceはfull private identityからHMAC PRFの7×9 gridで個別生成し、最大1.75 pxのsmooth
-warpと0.75 Lのtone shiftだけを加えます。140 reference/control SHAと各5-view panelは全件一意です。dark/light
-はdistinct referenceですが、requested deltaとdecoded int16 residualはexact inverse、metricsはexact equalityです。
-正式one-shot前のdevelopment Visionで5 family各12 nonzero conditionsの低・中・高強度coverageを再配分し、
-calibration/holdout別scheduleへfreezeします。fine-grainは各patternの最低強度1 conditionだけmetric-window内
-`support_fraction=0.001`のdeterministic nonzero sparse support、他10 conditionsはfull supportです。これはformal
-labelの事前指定ではなく、endpoint最低population/rate、blind、one-shot契約は不変です。
-duplicate auditはdistinct-reference semantic replicatesで、requested delta、decoded residual、metricsのexact
-equalityを検査します。marker → label seal → in-memory regeneration → exact contact-sheet
-byte binding後だけprivate auditとraw SHA revealを行います。marker write自体をguardの`try`内に置き、各terminal
-completion直後は`require_completion=True`でreloadします。parallel branchは
-raw-delta core-only responseの同一filter内evidenceだけを組み、matched pairsが2未満ならcanonical zeroです。
-spot component、finite-line response、parallel-pair responseのabsolute floorはいずれも`4.5 L`で、coherent fine
-patternはgrain branchが担います。split-specific schedulesとfloorはfresh formal key/controls/labels前の明示的
-non-formal development keysでfreezeしたdevelopment-only設計です。formal labels、threshold、resultsは未確定で
-予告せず、blind、one-shot、endpoint、failed-r3/r4契約も変えません。
-threshold候補はfloor 0を含み、selection/endpointsは`artifact` roleだけです。違反・失敗・欠落completionは
-one-shot editionをfail-closedで消費します。
+r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
+持ち、個別control/reference path・raw SHAをmarker前に出しません。dev-r8入力authorityはtracked runnerを含めて
+commit/pushしUbuntu/Windows CIを通した後にのみ一度生成します。dev-r8成功後、formal authorityを別commitで最終
+freezeし、fresh calibration、v18 locked-clean validation、独立threshold authority receipt、fresh holdoutを各一度だけ
+実行します。全stageと別途preregisterするproduction residual derivationが合格するまで、v246候補、Golden、master、
+最終pixelへ接続しません。
+dev-r8のfresh keyはGit-ignored private development rootだけに保持して生成・analysis・閉鎖後監査を結び、値のlog・
+Git追跡・Visionでの読取り・後続edition/formalへの再利用を禁止します。runnerは書込み前にroot `.gitignore`を
+captured HEADへbyte-bindし、exact pathのHEAD/index非存在とexact `/tmp*/` ignoreを検証します。formal keyは
+生成物やlogへ永続化しません。
 
 ## Golden 候補の二段階昇格
 

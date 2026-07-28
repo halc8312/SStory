@@ -169,8 +169,10 @@ microblob
 multiscale
 ndimage
 nonblocking
+nonuniformity
 RGB
 retunes
+subsetting
 catchable
 unpushed
 Zander

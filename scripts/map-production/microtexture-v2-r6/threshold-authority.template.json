@@ -1,0 +1,18 @@
+{
+  "artifact": "microtexture-v2-r6-threshold-authority",
+  "schema_version": "microtexture-v2-r6-threshold-authority/2",
+  "approval": "approved-for-holdout",
+  "reviewer_id": "FILL_INDEPENDENT_REVIEWER_ID",
+  "review_mode": "blind-independent-authority",
+  "reviewed_at": "FILL_ISO8601_TIMESTAMP",
+  "spec_sha256": "FILL_ACTUAL_SHA256",
+  "frozen_thresholds_sha256": "FILL_ACTUAL_SHA256",
+  "calibration_report_sha256": "FILL_ACTUAL_SHA256",
+  "calibration_manifest_sha256": "FILL_ACTUAL_SHA256",
+  "locked_clean_reference_report_sha256": "FILL_ACTUAL_SHA256",
+  "implementation_bindings_sha256": "FILL_ACTUAL_SHA256",
+  "blind_key_commitment": "FILL_ACTUAL_COMMITMENT",
+  "runtime": {},
+  "calibration_captured_git_head": "FILL_40_HEX_GIT_HEAD",
+  "locked_clean_reference_captured_git_head": "FILL_SAME_40_HEX_GIT_HEAD"
+}

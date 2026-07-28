@@ -56,8 +56,8 @@ jobs:
       - name: Run Python unit tests
         run: npm run test:python
 
-      - name: Run Microtexture v2-r5 authority self-tests
-        run: python scripts/map-production/microtexture-v2-r5/self_test.py
+      - name: Run Microtexture v2-r6 authority self-tests
+        run: python scripts/map-production/microtexture-v2-r6/self_test.py
 
       # Keep this as an explicit integrity gate even though the validator step
       # reaches it through npm run validate. This makes accidental removal from

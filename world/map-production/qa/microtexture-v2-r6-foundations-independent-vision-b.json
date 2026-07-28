@@ -1,0 +1,17 @@
+{
+  "schema_version": "microtexture-v2-r6-foundation-corpus-independent-vision/1",
+  "review_id": "microtexture-v2-r6-foundations-independent-vision-b",
+  "documented_at": "2026-07-26T07:53:43+09:00",
+  "review_completion_time_exactly_attested": false,
+  "reviewer": "Ohm the 2nd",
+  "review_mode": "blind-independent-vision-only-foundation-qualification",
+  "review_context_excluded": ["generation prompts", "Root scores", "numeric detector measurements", "control identities", "other independent review"],
+  "all_six_views_per_candidate_inspected": true,
+  "threshold": 94,
+  "results": [
+    {"id": "v15", "sha256": "15695cf533d0aa495a83cbd35657e1d68244538e79028e83bbb32d952db0379f", "score": 98, "decision": "approved", "observation": "Smooth warm-ivory field; no point, blob, grain, repeat, short line, bundle, hard edge, compression trace, or semantic element."},
+    {"id": "v16", "sha256": "4e6cd844c88cf550d8f85da65d63525f99c58fd599a06d7a568c38412e54712f", "score": 99, "decision": "approved", "observation": "Exceptionally even and nonperiodic across the original, center, and all four native corner crops."},
+    {"id": "v17", "sha256": "fa08d0921ee319a279038e84e5318a8b0e759ff3ac55fb439a635329c9e8b6ea", "score": 97, "decision": "approved", "observation": "Diffuse low-frequency warmth only; no local or repeated microstructure, seam, ringing, banding, object, text, or terrain."}
+  ],
+  "passed_for_declared_source_role": true
+}
