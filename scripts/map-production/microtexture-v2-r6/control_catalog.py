@@ -104,20 +104,20 @@ _HEX_GLYPHS = {
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
-_SCHEDULE_REVISION = "dev-r11-grain-coherence-support-schedule-v1"
+_SCHEDULE_REVISION = "dev-r12-grain-coherence-support-schedule-v1"
 _PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
-    b"microtexture-v2-r6/public-payload-commitment/v7/"
+    b"microtexture-v2-r6/public-payload-commitment/v8/"
 )
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v6/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v5"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v5"
-_DELTA_LANE = "delta-v5"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v5/"
-_ARTIFACT_NONCE_BASES = {"calibration": 373000, "holdout": 383000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 351000, "holdout": 361000}
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v7/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v6"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v6"
+_DELTA_LANE = "delta-v6"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v6/"
+_ARTIFACT_NONCE_BASES = {"calibration": 473000, "holdout": 483000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 451000, "holdout": 461000}
 _DUPLICATE_AUDIT_NONCES = {
-    "calibration": (391000, 391001, 391002),
-    "holdout": (401000, 401001, 401002),
+    "calibration": (491000, 491001, 491002),
+    "holdout": (501000, 501001, 501002),
 }
 _FOUNDATIONS = (
     (
@@ -2433,7 +2433,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             continue
         tier_index = speck_reject_tier_indices[tier]
         if tier_index >= len(tier_counts):
-            raise RuntimeError(f"r11 speck reject-tier count overflow: {split}/{tier}")
+            raise RuntimeError(f"r12 speck reject-tier count overflow: {split}/{tier}")
         parameters["count_in_metric_window"] = tier_counts[tier_index]
         parameters["minimum_separation_px"] = 10
         speck_reject_tier_indices[tier] += 1
@@ -2444,7 +2444,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             if parameters["design_tier"] == tier
         )
         if actual_counts != expected_counts:
-            raise RuntimeError(f"r11 speck reject-tier schedule drift: {split}/{tier}")
+            raise RuntimeError(f"r12 speck reject-tier schedule drift: {split}/{tier}")
 
     family_nonce_offsets = {
         "artifact-fine-grain": 0,
@@ -2488,7 +2488,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     return result
 
 
-def _validate_dev_r11_morphology_schedules() -> None:
+def _validate_dev_r12_morphology_schedules() -> None:
     morphology_fields = (
         "diameter_px",
         "amplitude_l",
@@ -2504,7 +2504,7 @@ def _validate_dev_r11_morphology_schedules() -> None:
         }
     overlap = morphology_by_split["calibration"] & morphology_by_split["holdout"]
     if overlap:
-        raise RuntimeError("r11 calibration/holdout speck morphology tuple overlap")
+        raise RuntimeError("r12 calibration/holdout speck morphology tuple overlap")
 
     expected_grain_periods = {
         "calibration": {
@@ -2560,14 +2560,14 @@ def _validate_dev_r11_morphology_schedules() -> None:
                 if parameters["design_tier"] == tier
             )
             if actual != expected:
-                raise RuntimeError(f"r11 grain reject period drift: {split}/{tier}")
+                raise RuntimeError(f"r12 grain reject period drift: {split}/{tier}")
             if any(not 2.0 < period < 13.0 for _, period in actual):
                 raise RuntimeError(
-                    f"r11 grain reject period escaped metric support: {split}/{tier}"
+                    f"r12 grain reject period escaped metric support: {split}/{tier}"
                 )
             split_tuples[split].update(actual)
     if split_tuples["calibration"] & split_tuples["holdout"]:
-        raise RuntimeError("r11 calibration/holdout grain pattern-period overlap")
+        raise RuntimeError("r12 calibration/holdout grain pattern-period overlap")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -2755,7 +2755,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r11_morphology_schedules()
+    _validate_dev_r12_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):

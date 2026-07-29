@@ -36,7 +36,7 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "4cbfe943d0938aa0df4cbb03db253ccd169e7bf8dcf65e4ea0bbf102836fc59f"
+SPEC_SHA256 = "c912d32e64aa773a1f199126b81a3de0a358f80fa885549567ae015582000f39"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
 
 
@@ -58,6 +58,31 @@ def require_exact_keys(value: Any, keys: set[str], context: str) -> None:
             f"{context} keyset drift: missing={sorted(keys - actual)}, "
             f"extra={sorted(actual - keys)}"
         )
+
+
+def _require_exact_json_value(value: Any, expected: Any, context: str) -> None:
+    """Require exact JSON types, key sets, list ordering, and scalar values."""
+
+    if type(value) is not type(expected):
+        raise RuntimeError(
+            f"{context} type drift: expected={type(expected).__name__}, "
+            f"actual={type(value).__name__}"
+        )
+    if isinstance(expected, dict):
+        require_exact_keys(value, set(expected), context)
+        for key, expected_item in expected.items():
+            _require_exact_json_value(value[key], expected_item, f"{context}.{key}")
+        return
+    if isinstance(expected, list):
+        if len(value) != len(expected):
+            raise RuntimeError(
+                f"{context} length drift: expected={len(expected)}, actual={len(value)}"
+            )
+        for index, (item, expected_item) in enumerate(zip(value, expected)):
+            _require_exact_json_value(item, expected_item, f"{context}[{index}]")
+        return
+    if value != expected:
+        raise RuntimeError(f"{context} value drift")
 
 
 def require_exact_int(value: Any, context: str, minimum: int = 0) -> int:
@@ -248,11 +273,13 @@ VISION_SEMANTIC_RUBRIC = {
     ),
     "tiny_speck_visible": (
         "at least three independently locatable separated point-like hard cores of "
-        "similar footprint and polarity; every counted core is uniquely locatable at "
-        "400 percent, returns toward local background in every direction within roughly "
-        "one core width, is clearly sharper or higher contrast than the soft substrate, "
-        "and matches the same visible center at full-200; diffuse, feathered, irregular "
-        "soft flecks, solitary cores, and mere tonal extrema are excluded"
+        "similar footprint and polarity; every counted core is directly visible "
+        "without enhancement in the native full-200 panel, is uniquely locatable at "
+        "400 percent, returns toward local background in every direction within "
+        "roughly one core width, is clearly sharper or higher contrast than the soft "
+        "substrate, and matches the same visible center at full-200; diffuse, "
+        "feathered, irregular soft flecks, solitary cores, mere tonal extrema, and "
+        "extremely faint point impressions inferred only from 400 percent are excluded"
     ),
     "microblob_visible": (
         "localized compact blobs with separable centers or boundaries; broad edge-free "
@@ -339,10 +366,10 @@ VISION_SEMANTIC_RUBRIC = {
 }
 
 POPULATION_ANCHOR_SCHEDULE = {
-    "revision": "dev-r11-grain-coherence-support-schedule-v1",
-    "fresh_from_closed_dev_r10": True,
-    "r10_parameter_nonce_reuse_forbidden": True,
-    "r11_per_family_residue_rotation": {
+    "revision": "dev-r12-grain-coherence-support-schedule-v1",
+    "fresh_from_closed_dev_r11": True,
+    "r11_parameter_nonce_reuse_forbidden": True,
+    "r12_per_family_residue_rotation": {
         "calibration": {
             "artifact-fine-grain": 2,
             "artifact-speck": 4,
@@ -358,13 +385,13 @@ POPULATION_ANCHOR_SCHEDULE = {
             "artifact-parallel-bundle": 11,
         },
     },
-    "r11_parameter_nonce_bases": {
-        "calibration_artifact": 373000,
-        "holdout_artifact": 383000,
-        "calibration_protocol_zero": 351000,
-        "holdout_protocol_zero": 361000,
-        "calibration_duplicate_audit": [391000, 391001, 391002],
-        "holdout_duplicate_audit": [401000, 401001, 401002],
+    "r12_parameter_nonce_bases": {
+        "calibration_artifact": 473000,
+        "holdout_artifact": 483000,
+        "calibration_protocol_zero": 451000,
+        "holdout_protocol_zero": 461000,
+        "calibration_duplicate_audit": [491000, 491001, 491002],
+        "holdout_duplicate_audit": [501000, 501001, 501002],
     },
     "private_until_one_shot_marker": True,
     "public_manifest_exposure_forbidden": True,
@@ -680,6 +707,10 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "dev_r10_failure_audit_sha256",
             "dev_r11_status",
             "dev_r11_role",
+            "dev_r11_failure_audit",
+            "dev_r11_failure_audit_sha256",
+            "dev_r12_status",
+            "dev_r12_role",
         },
         "r6 development history",
     )
@@ -743,16 +774,31 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "microtexture-v2-r6-dev-r10-development-failure.json"
         or history.get("dev_r10_failure_audit_sha256")
         != "9e5533453e7ec25bed75b54a67cb63129329aca392c1c7db4bf60d9c0a7393fa"
-        or history.get("dev_r11_status") != "fresh-development-only"
+        or history.get("dev_r11_status")
+        != "failed-and-closed-before-measurement"
         or history.get("dev_r11_role")
+        != "development-only premeasurement Vision-gate failure evidence; "
+        "generation and both blind reviews completed, labels were sealed, and the "
+        "private sentinel audit then found one sealed holdout false positive on an "
+        "exact-zero protocol sentinel before population aggregation or numeric "
+        "measurement; no dev-r11 root, key, control, reference, pixel, identity, "
+        "code, commitment, label, measurement, nonce, or public surface is reusable"
+        or history.get("dev_r11_failure_audit")
+        != "world/map-production/qa/"
+        "microtexture-v2-r6-dev-r11-development-failure.json"
+        or history.get("dev_r11_failure_audit_sha256")
+        != "a1dcf2354ec6b0bc81ae89f75eadc11f1a522be73de66032f94048d1a411ef04"
+        or history.get("dev_r12_status") != "fresh-development-only"
+        or history.get("dev_r12_role")
         != "fresh one-shot development role used only to verify the unchanged "
         "preregistered soft-unit metric and unchanged grain-coherence-support "
         "morphology schedule before formal r6 generation; it requires a tracked "
-        "runner, a fresh isolated root, a fresh cryptographic blind key, revision-6 "
-        "public, render, code, and cluster domains, revision-7 public commitments, "
-        "newly generated controls and anonymous identities, and fresh sealed Root "
-        "plus independent Vision labels, and it can never become or supply formal "
-        "authority"
+        "runner, a fresh isolated root, a fresh cryptographic blind key, revision-7 "
+        "public, render, code, cluster, and private-reference-transform domains, "
+        "revision-8 public commitments, revision-6 key commitment, foundation, "
+        "delta, and private-control-id lanes, newly generated controls and anonymous "
+        "identities, and fresh sealed Root plus independent Vision labels, and it "
+        "can never become or supply formal authority"
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -770,9 +816,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": "non-authority dev-r11 only; no development key, root, output, or commitment can become formal authority",
+        "scope": "non-authority dev-r12 only; no development key, root, output, or commitment can become formal authority",
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r11/private/development-key.bin",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r12/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -1029,11 +1075,13 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "endpoint_counts_and_rates_unchanged": True,
             "dev_r9_completed_failed_closed": True,
             "dev_r10_generation_interrupted_failed_closed": True,
-            "fresh_dev_r11_required": True,
+            "dev_r11_premeasurement_vision_gate_failed_closed": True,
+            "fresh_dev_r12_required": True,
             "dev_r7_threshold_or_measurement_reuse_for_formal_forbidden": True,
             "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent": True,
             "dev_r9_measurement_threshold_diagnostic_or_holdout_reuse_forbidden": True,
             "dev_r10_measurement_or_threshold_reuse_forbidden_because_absent": True,
+            "dev_r11_measurement_or_threshold_reuse_forbidden_because_absent": True,
         }
     ):
         raise RuntimeError("r6 soft-unit reference provenance drift")
@@ -1346,6 +1394,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "duplicate_audit_contract",
             "split_separation",
             "foundation_assignment",
+            "private_identity_domains",
             "private_reference_transform",
         },
         "r6 control catalog authority",
@@ -1358,10 +1407,19 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "duplicate-audit": 4,
     }:
         raise RuntimeError("r6 control catalog cardinality drift")
-    if catalog.get("artifact_contract") != (
-        "five morphology families, exactly 20 nonzero conditions per family, paired "
-        "dark/light polarities, one replicate per polarity, and no zero-count "
+    if (
+        catalog.get("exact_variant_source")
+        != "the frozen tracked control_catalog.py named by implementation-bindings.json; "
+        "its byte hash is authority and every report is rebound to a fresh secret-key "
+        "regeneration of that catalog; every dev-r12 control, reference, identity, "
+        "code, and commitment is newly generated and no dev-r11 material is reusable"
+        or catalog.get("artifact_contract")
+        != "five morphology families, exactly 20 nonzero conditions per family, "
+        "paired dark/light polarities, one replicate per polarity, and no zero-count "
         "artifact condition"
+        or catalog.get("foundation_assignment")
+        != "secret-HMAC-derived; cluster mates may share a v15/v16/v17 source asset "
+        "but every record receives a distinct keyed private reference transform"
     ):
         raise RuntimeError("r6 artifact catalog contract drift")
     if catalog.get("split_separation") != (
@@ -1394,6 +1452,14 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         ),
     }:
         raise RuntimeError("r6 private reference-transform contract drift")
+    if catalog.get("private_identity_domains") != {
+        "private_reference_transform_prefix": "private-reference-transform-v7/",
+        "foundation_offset_lane": "foundation-offset-v6",
+        "foundation_assignment_lane": "foundation-assignment-v6",
+        "delta_lane": "delta-v6",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v6/",
+    }:
+        raise RuntimeError("r6 private identity domain contract drift")
 
     expected_families = {
         "artifact-fine-grain": ("artifact", [-1, 1], 20, 40),
@@ -1451,28 +1517,28 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v6"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v7"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
             raise RuntimeError(f"r6 split replicate contract drift: {split_name}")
     blind = value.get("blind_derivation", {})
     if (
-        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v5"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v6/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v6/"
+        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v6"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v7/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v7/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-6 blind derivation domain drift")
+        raise RuntimeError("r6 revision-7 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v6/"
+        != "microtexture-v2-r6/private-condition-cluster/v7/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v7/"
+        != "microtexture-v2-r6/public-payload-commitment/v8/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-6/7 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-7/8 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -2829,10 +2895,286 @@ def validate_dev_r10_generation_failure_audit(value: Any) -> None:
         raise RuntimeError(f"{context} secret-handling drift")
 
 
+def validate_dev_r11_premeasurement_failure_audit(value: Any) -> None:
+    """Validate sanitized, closed dev-r11 premeasurement Vision-gate evidence."""
+
+    context = "closed dev-r11 premeasurement failure audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "failure_phase",
+            "failure_class",
+            "measurement_started",
+            "development_hard_threshold",
+            "holdout_endpoint_performance",
+            "one_shot_contract",
+            "vision_review",
+            "private_audit_failure",
+            "measurement_artifacts",
+            "hash_bindings",
+            "root_cause",
+            "successor_constraints",
+            "secret_handling",
+        },
+        context,
+    )
+    timestamp = value["audit_recorded_at"]
+    if not isinstance(timestamp, str) or re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z", timestamp
+    ) is None:
+        raise RuntimeError(f"{context}.audit_recorded_at must be canonical UTC text")
+    parse_utc_timestamp(timestamp, f"{context}.audit_recorded_at")
+    expected_header = {
+        "artifact": "microtexture-v2-r6-dev-r11-development-premeasurement-failure-audit",
+        "schema_version": "microtexture-v2-r6-development-premeasurement-failure-audit/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "development_edition": "r11",
+        "outcome": "failed_closed",
+        "failure_phase": "private-sentinel-audit-before-population-audit",
+        "failure_class": "sealed-vision-false-positive-on-protocol-zero-sentinel",
+        "measurement_started": False,
+        "development_hard_threshold": None,
+        "holdout_endpoint_performance": None,
+    }
+    for field, expected in expected_header.items():
+        _require_exact_json_value(value[field], expected, f"{context}.{field}")
+
+    _require_exact_json_value(
+        value["one_shot_contract"],
+        {
+            "generation_completed_exactly_once": True,
+            "root_vision_completed_before_private_reveal": True,
+            "independent_vision_completed_before_private_reveal": True,
+            "all_440_records_reviewed_by_each_reviewer": True,
+            "root_and_independent_decisions_reconciled_before_preflight": True,
+            "review_preflight_invoked_exactly_once": True,
+            "review_preflight_passed": True,
+            "labels_sealed_before_private_reveal": True,
+            "private_reveal_started_after_label_seal": True,
+            "private_sentinel_audit_passed": False,
+            "population_audit_started": False,
+            "population_audit_passed": False,
+            "analysis_started_exactly_once": True,
+            "numeric_metric_called": False,
+            "threshold_search_started": False,
+            "threshold_frozen": False,
+            "postmortem_invoked": False,
+            "formal_cli_invoked": False,
+            "formal_marker_created": False,
+            "formal_threshold_created": False,
+            "locked_clean_v18_decoded_or_measured": False,
+            "rerun_resume_relabel_retune_subset_topup_resample_or_reuse_for_r11_forbidden": True,
+            "r11_closed": True,
+        },
+        f"{context}.one_shot_contract",
+    )
+
+    vision = value["vision_review"]
+    _require_exact_json_value(
+        vision,
+        {
+            "calibration_records_reviewed_by_root": 220,
+            "holdout_records_reviewed_by_root": 220,
+            "calibration_records_reviewed_independently": 220,
+            "holdout_records_reviewed_independently": 220,
+            "calibration_review_boards_reviewed_by_root": 37,
+            "holdout_review_boards_reviewed_by_root": 37,
+            "calibration_review_boards_reviewed_independently": 37,
+            "holdout_review_boards_reviewed_independently": 37,
+            "logical_comparison_fields": [
+                "page",
+                "row",
+                "anonymous_code",
+                "disposition",
+                "severity",
+                "flags",
+            ],
+            "notes_and_ev3_locators_excluded_from_initial_logical_comparison": True,
+            "contemporaneous_blind_difference_counts_before_reconciliation": {
+                "calibration": 66,
+                "holdout": 88,
+                "initial_root_snapshot_persisted_immutably": False,
+            },
+            "reproducible_final_root_vs_immutable_initial_independent": {
+                "calibration_logical_difference_count": 66,
+                "calibration_difference_breakdown": {
+                    "identity": 0,
+                    "disposition": 19,
+                    "severity": 64,
+                    "flags": 12,
+                },
+                "holdout_logical_difference_count": 84,
+                "holdout_difference_breakdown": {
+                    "identity": 0,
+                    "disposition": 22,
+                    "severity": 80,
+                    "flags": 15,
+                },
+            },
+            "root_reinspected_every_contemporaneous_logical_difference": True,
+            "root_and_independent_logical_decisions_reconciled": True,
+            "canonical_root_and_final_independent_bytes_identical_after_reconciliation": True,
+            "calibration_root_decisions_sha256": "e293eb3432c61d787017bdb1e7852fe9225439cace89d494712b1e7ed37151df",
+            "calibration_initial_independent_decisions_sha256": "89df8c754382d253fbd7000a41a53f8090e64ec929d3f3f8d15b26eab33c65f4",
+            "calibration_final_independent_decisions_sha256": "e293eb3432c61d787017bdb1e7852fe9225439cace89d494712b1e7ed37151df",
+            "calibration_canonical_decisions_sha256": "e293eb3432c61d787017bdb1e7852fe9225439cace89d494712b1e7ed37151df",
+            "calibration_completed_labels_sha256": "f803c5bc02b1e657451ec8a2208fc0efc8ff06e68bf9aef03c3ae8f74cb175e8",
+            "calibration_record_dispositions": {
+                "clean": 80,
+                "warning": 27,
+                "reject": 113,
+            },
+            "holdout_root_decisions_sha256": "e85329b7d16bd4954df38dcd5d6315cc4ecb98ce20de95510c4215f69d2e50ca",
+            "holdout_initial_independent_decisions_sha256": "99e993c901d17679d7049a8bcda8a937687b2480ebec10dc112f2b8e14824e22",
+            "holdout_final_independent_decisions_sha256": "e85329b7d16bd4954df38dcd5d6315cc4ecb98ce20de95510c4215f69d2e50ca",
+            "holdout_canonical_decisions_sha256": "e85329b7d16bd4954df38dcd5d6315cc4ecb98ce20de95510c4215f69d2e50ca",
+            "holdout_completed_labels_sha256": "4162b170e2dd6bf2d30fb1052b32988f3f58eb67d19ee923fac436d640c62937",
+            "holdout_record_dispositions": {
+                "clean": 78,
+                "warning": 16,
+                "reject": 126,
+            },
+        },
+        f"{context}.vision_review",
+    )
+    vision_hash_fields = {
+        field for field in vision if field.endswith("_sha256")
+    }
+    if vision_hash_fields != {
+        "calibration_root_decisions_sha256",
+        "calibration_initial_independent_decisions_sha256",
+        "calibration_final_independent_decisions_sha256",
+        "calibration_canonical_decisions_sha256",
+        "calibration_completed_labels_sha256",
+        "holdout_root_decisions_sha256",
+        "holdout_initial_independent_decisions_sha256",
+        "holdout_final_independent_decisions_sha256",
+        "holdout_canonical_decisions_sha256",
+        "holdout_completed_labels_sha256",
+    } or any(
+        re.fullmatch(r"[0-9a-f]{64}", vision[field]) is None
+        for field in vision_hash_fields
+    ):
+        raise RuntimeError(f"{context}.vision_review SHA-256 binding drift")
+    for split in ("calibration", "holdout"):
+        root_sha = vision[f"{split}_root_decisions_sha256"]
+        if (
+            root_sha != vision[f"{split}_final_independent_decisions_sha256"]
+            or root_sha != vision[f"{split}_canonical_decisions_sha256"]
+            or root_sha == vision[f"{split}_initial_independent_decisions_sha256"]
+        ):
+            raise RuntimeError(f"{context}.{split} reconciliation hash drift")
+
+    _require_exact_json_value(
+        value["private_audit_failure"],
+        {
+            "affected_split": "holdout",
+            "affected_record_count": 1,
+            "expected_private_role": "protocol-zero",
+            "sealed_disposition_was_nonclean": True,
+            "sealed_visible_flag_included_tiny_speck": True,
+            "anonymous_code_page_row_private_identity_or_pixel_binding_tracked": False,
+            "interpretation": "One sealed holdout Vision decision counted extremely faint point impressions as cross-scale tiny-speck morphology. Secret regeneration then proved that record was an exact-zero protocol sentinel, so the edition failed closed before population aggregation or any numeric metric call.",
+        },
+        f"{context}.private_audit_failure",
+    )
+    _require_exact_json_value(
+        value["measurement_artifacts"],
+        {
+            "population_audit_present": False,
+            "calibration_measurements_present": False,
+            "holdout_measurements_present": False,
+            "analysis_result_present": False,
+            "failure_marker_present": True,
+        },
+        f"{context}.measurement_artifacts",
+    )
+
+    bindings = value["hash_bindings"]
+    _require_exact_json_value(
+        bindings,
+        {
+            "captured_repository_head": "44cc6ec2c2d2f26784843835e63bdf90d81e2fb0",
+            "preregistered_spec_sha256": "4cbfe943d0938aa0df4cbb03db253ccd169e7bf8dcf65e4ea0bbf102836fc59f",
+            "implementation_bindings_sha256": "4f5ce900fcf1da857aa34b39466cf8660ec0374bedfab0702a874d7b85ef0b12",
+            "development_boundary_sha256": "71b929aee554fa83b7e290c5e4445b1190b04cf08d1d44cabb2769d5505aa3e3",
+            "generation_start_sha256": "4a7bde9113d6c3431347aff053f2a487e347ae2203980606e9d0d9f17ff38c06",
+            "generation_summary_sha256": "75d0d8c80106a306f5492ede9a324ddb732bc9bc33d9ded4c3c97003405ad296",
+            "generation_seal_sha256": "699a5e982475d35a19d711782b8bd91f965bad7a1699108cb8ee9d50cd72c785",
+            "generation_completion_sha256": "a25f3a0851a0355be040a49f241bede1031d2e4e498cc66ada87797bf49edaae",
+            "blind_key_commitment": "a43d64581445094b2cc550b6476280fe94498a6c11df111e58c1eef3ba248a39",
+            "calibration_manifest_sha256": "7b2ad19a6cf9bdebd7168584da8526e5b238b19ca31a1ea1d3fd914fbd9690f5",
+            "calibration_blank_labels_sha256": "e7665cc2faa43c1af9a9b947aa10cf7edcc618c0eafc199167ccbe00e73ec8b5",
+            "calibration_review_index_sha256": "704c30f698eead31ec573181261ffa82b2fc48f3480ae064e79d6700a915f1a9",
+            "holdout_manifest_sha256": "92567c207fa3ea58d48dfd96d4074634cb6b4a7d35d25b4bda0197b4e8660939",
+            "holdout_blank_labels_sha256": "b2980977351a4dc451b6c1c41ee1e989b048e41aa53a1027b2e272c6ceee989b",
+            "holdout_review_index_sha256": "63292a039d16fc7d64aef8ddfbe4bff51132c27f40bdc6ee98f882b95db05177",
+            "label_seal_receipt_sha256": "488a4fd3507e6ba721d6ae70f1851305952caa96db274b1e2f3da6cac2ae4f5a",
+            "failure_marker_sha256": "83e135ebee60748b08687ec8037568ced1d5f92cf812030209f1388fba077154",
+        },
+        f"{context}.hash_bindings",
+    )
+    if re.fullmatch(r"[0-9a-f]{40}", bindings["captured_repository_head"]) is None:
+        raise RuntimeError(f"{context} captured repository HEAD drift")
+    for field, digest in bindings.items():
+        if field == "captured_repository_head":
+            continue
+        if re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+            raise RuntimeError(f"{context}.{field} must be lowercase SHA-like hex")
+
+    _require_exact_json_value(
+        value["root_cause"],
+        {
+            "generation_or_runtime_failure": False,
+            "decision_reconciliation_failure": False,
+            "population_or_metric_failure_evaluated": False,
+            "vision_gate_failure": "A private exact-zero sentinel received a sealed nonclean label because extremely faint 400-percent point impressions were over-counted as morphology despite the preregistered requirement that each core be directly visible without enhancement in full-200.",
+            "post_label_repair_forbidden": "The sealed dev-r11 outcome cannot be repaired by relabeling, rerunning, resuming, replacing, subsetting, topping up, resampling the key, or reusing any dev-r11 control or decision.",
+        },
+        f"{context}.root_cause",
+    )
+    _require_exact_json_value(
+        value["successor_constraints"],
+        {
+            "r11_data_role": "development_only_premeasurement_vision_gate_failure_evidence",
+            "formal_r6_must_not_start_from_r11_failure": True,
+            "successor_requires_fresh_preregistered_revision": True,
+            "successor_requires_fresh_root_key_public_nonces_hmac_domains_parameter_nonces_controls_references_identities_codes_commitments_labels_and_measurements": True,
+            "r11_root_key_controls_references_pixels_identities_codes_commitments_labels_measurements_nonces_and_public_surfaces_reuse_forbidden": True,
+            "unchanged_preregistered_morphology_metric_threshold_population_and_rate_contract_required": True,
+            "full_200_direct_visibility_gate_must_be_applied_without_enhancement_or_400_only_inference": True,
+            "successor_authority_must_be_committed_pushed_and_dual_ci_green_before_generation": True,
+            "formal_r6_root_and_environment_must_remain_absent": True,
+        },
+        f"{context}.successor_constraints",
+    )
+    _require_exact_json_value(
+        value["secret_handling"],
+        {
+            "blind_key_present_in_this_artifact": False,
+            "blind_key_value_logged_or_tracked": False,
+            "anonymous_code_to_private_identity_mapping_tracked": False,
+            "private_labels_identities_or_pixels_tracked": False,
+            "postmortem_invoked": False,
+            "development_blind_key_and_private_material_reuse_forbidden": True,
+            "closed_temporary_artifact_root": "tmp/map-production/microtexture-v2-r6-dev-r11",
+        },
+        f"{context}.secret_handling",
+    )
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind closed dev-r7 through dev-r10 audits without private corpora."""
+    """Bind closed dev-r7 through dev-r11 audits without private corpora."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -2912,6 +3254,14 @@ def verify_tracked_development_history(
         raise RuntimeError("closed dev-r10 failure audit tracked SHA drift")
     validate_dev_r10_generation_failure_audit(
         json.loads(dev_r10_payload.decode("utf-8"))
+    )
+
+    relative = history["dev_r11_failure_audit"]
+    dev_r11_payload = _tracked_worktree_bytes(repository, captured_head, relative)
+    if sha256_bytes(dev_r11_payload) != history["dev_r11_failure_audit_sha256"]:
+        raise RuntimeError("closed dev-r11 failure audit tracked SHA drift")
+    validate_dev_r11_premeasurement_failure_audit(
+        json.loads(dev_r11_payload.decode("utf-8"))
     )
 
     # Preserve the historical return contract; callers use this function for its

@@ -20,14 +20,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r11"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r12"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r11"
+DEVELOPMENT_EDITION = "r12"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
@@ -35,6 +35,7 @@ EXPECTED_REVIEW_PAGES_PER_SPLIT = 37
 EXPECTED_CONTACT_SHEETS_PER_SPLIT = 185
 REVIEW_ROWS_PER_PAGE = 6
 REVIEW_HEADER_HEIGHT = 30
+REVIEW_PANEL_WIDTH = 512
 REVIEW_PANEL_HEIGHT = 384
 REVIEW_ROW_HEIGHT = REVIEW_HEADER_HEIGHT + REVIEW_PANEL_HEIGHT
 DEVELOPMENT_POPULATION_FLOORS = {
@@ -675,7 +676,16 @@ def _require_sha256(value: Any, context: str) -> None:
 
 def _sanitized_error_message(error: BaseException) -> str:
     message = str(error).strip() or "exception without a message"
-    return re.sub(r"(?i)\b[0-9a-f]{64}\b", "[redacted-64-hex]", message)[:512]
+    message = re.sub(
+        r"(?i)(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])",
+        "[redacted-key-like-value]",
+        message,
+    )
+    return re.sub(
+        r"(?i)(?<![0-9a-f])[0-9a-f]{24}(?![0-9a-f])",
+        "[redacted-opaque-code]",
+        message,
+    )[:512]
 
 
 def _expected_generation_split_paths(split: str) -> dict[str, str]:
@@ -2027,7 +2037,7 @@ def generate() -> None:
     DEV_ROOT.mkdir(parents=True, exist_ok=False)
     (DEV_ROOT / "private").mkdir()
     # The root is the earliest durable consumed-edition evidence. Sample the key
-    # only after it exists so an interruption can never silently resample r11.
+    # only after it exists so an interruption can never silently resample r12.
     key = secrets.token_bytes(32)
     state = {
         "development_edition": DEVELOPMENT_EDITION,
@@ -2282,6 +2292,20 @@ def review_crops(split: str, page_index: int) -> None:
             output = output_root / f"review-page-{page_index:03d}-row-{row}.png"
             board.crop((0, top, 2560, top + REVIEW_ROW_HEIGHT)).save(
                 output, format="PNG", compress_level=6, optimize=False
+            )
+            native_output = (
+                output_root
+                / f"review-page-{page_index:03d}-row-{row}-full-200-native.png"
+            )
+            board.crop(
+                (
+                    0,
+                    top + REVIEW_HEADER_HEIGHT,
+                    REVIEW_PANEL_WIDTH,
+                    top + REVIEW_ROW_HEIGHT,
+                )
+            ).save(
+                native_output, format="PNG", compress_level=6, optimize=False
             )
 
 

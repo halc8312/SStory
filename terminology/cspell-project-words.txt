@@ -169,7 +169,9 @@ microblob
 multiscale
 ndimage
 nonblocking
+nonclean
 nonuniformity
+premeasurement
 RGB
 retunes
 subsetting

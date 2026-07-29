@@ -80,6 +80,17 @@ Root/独立Vision、label seal、private reveal、analysis、測定、threshold�
 identities、measurements、thresholds、holdouts、development rootsは、閉鎖証拠として保持する場合を除き再利用しません。
 r6用として既にqualify済みのImageGen foundation authorityは、fresh controls/referencesの入力としてのみ継続します。
 
+`dev-r11`はgenerationと全440 recordsのRoot/独立Vision review、reconciliation、preflight、label sealを一度だけ
+完了しましたが、private reveal直後、population auditより前のsentinel auditで、holdoutのexact-zero protocol
+sentinel 1件にsealed nonclean / tiny-speck判定があることを検出しました。400%での極めて薄い点状印象を、無補正の
+`full-200`で各coreが直接見えるというrubricを満たさないまま数えたVision false positiveです。population aggregation、
+数値metric、threshold search、holdout endpoint evaluationは未開始で、`measurement_started=false`、thresholdとholdout
+performanceは`null`のままfailed-and-closedです。sanitized evidenceは
+`world/map-production/qa/microtexture-v2-r6-dev-r11-development-failure.json`です。匿名code/page/rowからprivate identity/pixelへのbinding、
+blind key、private labels/identities/pixelsを追跡せず、raw private postmortemを起動・記録しません。rerun、resume、
+relabel、retune、subset、top-up、key resampling、root削除後の再生成、およびdev-r11のroot/key/control/reference/pixel/
+identity/code/commitment/label/decision/measurement/nonce/public surfaceの後続edition・formalへの再利用を禁止します。
+
 唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r6/`、運用概要は
 `spec/microtexture-v2-calibration.md`です。r6は各split 220 records / 118 private clustersで、200 injection records
 （5 morphology families × 20 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4
@@ -88,23 +99,28 @@ duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185
 half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
 r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
-持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r10`はformalへ昇格できません。
+持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r11`はformalへ昇格できません。
 
-fresh successorは`dev-r11`です。development rootは
-`tmp/map-production/microtexture-v2-r6-dev-r11`、keyはそのroot内の
-`private/development-key.bin`だけに置きます。public nonceは`r6-calibration-v6` / `r6-holdout-v6`、
-cluster/render/code/private-reference-transform domainはv6、public commitment domainはv7、key commitment、
-foundation offset/assignment/delta lanes、private-control-id domainはv5です。protocol nonceはcalibration
-`351000..351015` / holdout `361000..361015`、欠陥候補用nonceは`373000..373419` / `383000..383419`、
-duplicate-audit nonceは`391000..391002` / `401000..401002`へ固定します。schedule metadataは
-`dev-r11-grain-coherence-support-schedule-v1`です。dev-r10向けに事前登録済みだったmorphology変更をそのまま継承し、
-morphology、metric、唯一のscalar threshold、population gateはdev-r10部分生成物から調整しません。
+fresh successorは`dev-r12`です。development rootは`tmp/map-production/microtexture-v2-r6-dev-r12`、keyはそのroot内の
+`private/development-key.bin`だけに置き、schedule metadataを`dev-r12-grain-coherence-support-schedule-v1`へ固定します。
+public noncesは`r6-calibration-v7` / `r6-holdout-v7`、cluster/render/code domainsは
+`microtexture-v2-r6/private-condition-cluster/v7/`、`microtexture-v2-r6/render-seed/v7/`、
+`microtexture-v2-r6/opaque-code/v7/`、private-reference-transform domainは`private-reference-transform-v7/`です。
+public commitmentは
+`microtexture-v2-r6/public-payload-commitment/v8/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
+`microtexture-v2-r6/key-commitment/v6`、foundation lanesは`foundation-offset-v6` / `foundation-assignment-v6`、delta
+laneは`delta-v6`、private-control-idは`microtexture-v2-r6/private-control-id/v6/`です。protocol nonceはcalibration
+`451000..451015` / holdout `461000..461015`、欠陥候補用nonceは`473000..473419` / `483000..483419`、
+duplicate-audit nonceは`491000..491002` / `501000..501002`です。dev-r11と同じresidue rotationとmorphologyを継承し、
+morphology、metric、唯一のscalar threshold、population floors、endpoint counts/ratesはdev-r11の失敗から調整しません。
 
-dev-r11生成は、tracked authorityとrunnerをcommit/pushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
+dev-r12生成は、tracked authorityとrunnerをauthority commitへfreezeしてpushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
 fresh root/keyを作り、公開byteを一つでも書く前に排他的な`generation-start.dev.json`を確定し、両splitを生成してから
 summary → seal → completionの順に排他的に確定します。catchableな失敗は排他的なfailureへ固定し、failure/completionの
 共存、summary/seal/completionの欠落、または外部中断はそのeditionを消費済みとして閉鎖します。transaction検証前には
-Vision/analysisを開始しません。閉鎖editionの続行、再生成、key再利用、部分出力流用は禁止です。development成功後も
+Vision/analysisを開始しません。`review-crops`が同じcontact-sheet bytesからcrop-onlyで各rowへ出すnative 512×384
+full-200 cropを無補正で先に判定し、
+400%は同位置の再同定だけに使います。閉鎖editionの続行、再生成、key再利用、部分出力流用は禁止です。development成功後も
 証拠をcommit/pushしてUbuntu/Windowsの両CIを通し、その後にだけformal authorityを別commitで最終freezeします。
 fresh calibration、v18 locked-clean validation、独立threshold authority receipt、fresh holdoutは各一度だけ実行します。
 全stageと別途preregisterするproduction residual derivationが合格するまで、v246候補、Golden、master、最終pixelへ
