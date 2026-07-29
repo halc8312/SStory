@@ -2,9 +2,9 @@
 type: "overview"
 category: "maps"
 title: "Microtexture v2-r6 候補非依存較正契約"
-version: "0.8.0"
+version: "0.9.0"
 created: "2026-07-25"
-last_updated: "2026-07-28"
+last_updated: "2026-07-30"
 author: "Codex"
 tags: ["maps", "quality-assurance", "microtexture", "vision-qa", "calibration"]
 status: "review"
@@ -35,9 +35,18 @@ summary: "Google Maps級deep zoom用の微細表現を、画像生成・Root/独
   top-up、subset、key resampling、rerunは禁止します。
 - dev-r8 sanitized evidence:
   `world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json`
-- dev-r9: dev-r8 failure aggregateだけを根拠に、reject-tier speckの固定個数を強化するfresh successorを
-  事前登録中です。fresh specification/root/key/nonces/controls/labelsをcommit/pushしUbuntu/Windows CIが
-  成功するまで生成を開始しません。
+- dev-r9: reject-tier speckの固定個数を強化し、両splitのpopulation floorを通過して一度だけ測定しました。
+  calibrationでwarning acceptanceとseverity-3 detectionを同時に満たすscalar thresholdがなく、thresholdと
+  holdout endpoint performanceを`null`のまま測定後に閉鎖しました。
+- dev-r9 sanitized evidence:
+  `world/map-production/qa/microtexture-v2-r6-dev-r9-development-failure.json`
+- dev-r10: 一回限りgenerationを開始しましたが、monitor session喪失後に対応process不在を確認し、終了原因を特定しないままsummary / seal / completionへ未到達。
+  generation未完了、Vision review、label seal、private reveal、analysis、measurement、threshold search未開始のまま
+  消費・閉鎖しました。rootを不変に保持し、rerun、resume、top-up、root削除、別key、partial output流用を禁止します。
+- dev-r10 sanitized closure evidence:
+  `world/map-production/qa/microtexture-v2-r6-dev-r10-development-failure.json`
+- dev-r11: dev-r10と同じmorphology、metric、threshold、population契約をfresh identityで一回だけ確認するsuccessorです。
+  specification/code/tests/runnerをcommit/pushし、Ubuntu/Windows CIが両方成功するまで生成を開始しません。
 - formal r6: 未開始。formal CLI、one-shot marker、threshold freeze、v18 numeric measurementはいずれも未使用です。
 
 ## ImageGen入力の境界
@@ -95,11 +104,13 @@ development rootはdev-r8にもformal r6にも渡しません。
 development rootはGit-ignored private evidenceとして閉鎖後も不変に保持し、formal keyは従来どおりartifact/logへ
 永続化しません。
 
-## dev-r9 successor schedule
+## dev-r11 successor schedule
 
-dev-r9はmetric、rubric、formal endpoint minimum、development safety floorを変更しません。dev-r8で
-tiny-speck自体は全11 reject-tier speck conditionに認識された一方、calibrationでは3件、holdoutでは1件だけが
-rejectとなったaggregate failureを根拠に、次の固定個数へ変更します。
+dev-r9はdev-r8のaggregate failureだけを根拠に次の固定speck個数へ変更し、両splitのpopulation floorを通過しました。
+dev-r10は`artifact-fine-grain`のfull-support reject-tier 3 periodをcoherence support `2..13`の内側`3..12`へ事前登録
+しましたが、generation中断でVision/analysisへ到達していません。dev-r11はdev-r10 partial outputを評価・調整へ使わず、
+このspeck schedule、grain period、全morphology、metric、rubric、formal endpoint minimum、development safety floorを
+変更しません。
 
 | split | clear-reject 7 conditions | dominant-reject 4 conditions |
 |---|---|---|
@@ -109,11 +120,23 @@ rejectとなったaggregate failureを根拠に、次の固定個数へ変更し
 1px hard core、最大12 L、0.08 axial shoulder、exact polarity、4象限stratificationは維持し、packing用の
 minimum separationを10pxに固定します。9件のclean/warning speck条件と他4 familyの形態範囲は変更しません。
 11 anchors対floor 6なので構造上のmiss budgetは5ですが、design tierをVision truthとは扱いません。実際のsealed
-labelsが両splitでfloorを満たしたときだけ測定し、不足時はdev-r9全体を測定前に閉鎖します。
+labelsが両splitでfloorを満たしたときだけ測定し、不足時はdev-r11全体を測定前に閉鎖します。
 
-fresh境界はroot `tmp/map-production/microtexture-v2-r6-dev-r9`、public nonce v4、private cluster/render/code
-domain v4、public payload commitment v5、新しいparameter nonce領域です。dev-r8のkey、control、label、pixel、
-identity、placement、nonce、commitment、rootを読み替え・再利用しません。
+fresh dev-r11境界は次のexact identityです。
+
+- root: `tmp/map-production/microtexture-v2-r6-dev-r11`
+- key: `tmp/map-production/microtexture-v2-r6-dev-r11/private/development-key.bin`
+- public nonce: `r6-calibration-v6` / `r6-holdout-v6`
+- cluster/render/code/private-reference-transform domains: v6
+- public commitment domain: v7
+- key commitment、foundation offset/assignment/delta lanes、private-control-id: v5
+- protocol-zero nonces: calibration `351000..351015`、holdout `361000..361015`
+- artifact nonces: calibration `373000..373419`、holdout `383000..383419`
+- duplicate-audit nonces: calibration `391000..391002`、holdout `401000..401002`
+- schedule revision: `dev-r11-grain-coherence-support-schedule-v1`
+
+dev-r8/dev-r9/dev-r10のkey、control、label、pixel、identity、placement、nonce、commitment、rootを読み替え・
+再利用しません。
 
 ## 全件Visionとmeasurement gate
 
@@ -155,8 +178,8 @@ raw filterは維持し、唯一のhard metricは4 branchの最大です。
 
 closed dev-r7のaggregate-only診断から変更するhalf-scaleは `grain_rms_l 0.7 -> 0.875`、
 `tiny_mass_l 20 -> 15`、`finite_line_top4_mean_l 4.5 -> 2.25` の3件だけです。他6 reference、raw metrics、
-branch構成、単一threshold、endpoint count/rateは不変です。dev-r8はmetric call前に閉鎖したため、fresh dev-r9での
-blindな再検証を必須とします。
+branch構成、単一threshold、endpoint count/rateは不変です。dev-r8はmetric call前、dev-r9はthreshold選択失敗後、
+dev-r10はgeneration中断でmetric call前に閉鎖したため、fresh dev-r11でのblindな再検証を必須とします。
 
 ```text
 reject = max(grain_score, spot_score,
@@ -169,30 +192,35 @@ warning acceptance 0.75を含む全endpoint count/rateを満たす候補だけ�
 
 ## 安全な実行順序
 
-1. dev-r8 failure audit、r9 spec/code/tests/runner、既存ImageGen provenance、Root/独立Vision QA authorityをcommitする。
-2. branchへpushし、Ubuntu/Windows CIの成功を確認する。
-3. formal root/environmentとdev-r9 rootが存在しないことを確認する。
-4. fresh keyでdev-r9 calibration/holdout controlsを一度だけ生成する。
-5. Rootと独立Visionが全440 recordsを匿名確認し、Root decisionsを画像へ戻ってreconcileする。
-6. 両splitのlabelsをsealし、private auditとpopulation safety floorを実行する。
-7. gate合格時だけcalibrationを測定し、thresholdを一度だけ選択する。
-8. calibration選択thresholdを変えずdevelopment holdoutへ一度だけ適用する。
-9. dev-r9失敗時はsanitized failure auditをcommitし、formalへ進まない。
-10. dev-r9成功時はdevelopment-only success auditをcommitし、dev-r9を閉じる。
-11. spec SHA、trust-root tests、全implementation hashesを再計算し、formal authority freeze commitを作る。
-12. push後、Ubuntu/Windows CIが再度成功してからfresh formal key/rootを作る。
-13. formal calibration生成・Root Vision・one-shot評価を各一度だけ行う。
-14. pass時だけthresholdをfreezeし、v18 locked-cleanを一度だけ数値validateする。
-15. preregistered independent authorityがcalibration/v18を監査し、tracked receiptを作る。
-16. receipt commit/push/CI成功後、fresh formal holdoutを一度だけ生成・Root Vision・評価する。
-17. formal holdout pass後も、production residual derivationとuntouched production holdoutを別specで固定する。
-18. その後にのみGolden、master、deep-zoom tilesへ接続する。
+1. dev-r7/r8/r9 failure auditsとdev-r10 generation-interruption audit、dev-r11 spec/code/tests/runner、既存ImageGen
+   provenance、Root/独立Vision QA authorityをcommitする。
+2. branchへpushし、Ubuntu/Windows CIの両方が成功したことを確認する。
+3. formal root/environmentとdev-r11 root/keyが存在せず、closed dev-r10 rootが不変に保持されていることを確認する。
+4. fresh keyを作り、public byteより前にexclusive `generation-start.dev.json`を書く。
+5. dev-r11 calibration/holdout controlsを一度だけ生成し、generation summary → seal → exclusive completionの順で閉じる。
+   catchableな失敗はexclusive failureへ記録し、failure/completion共存またはsummary/seal/completion欠落を拒否する。
+6. complete generation transactionを検証してから、Rootと独立Visionが全440 recordsを匿名確認し、Root decisionsを
+   画像へ戻ってreconcileする。
+7. 両splitのlabelsをsealし、private auditとpopulation safety floorを実行する。
+8. gate合格時だけcalibrationを測定し、thresholdを一度だけ選択する。
+9. calibration選択thresholdを変えずdevelopment holdoutへ一度だけ適用する。
+10. dev-r11失敗時はsanitized failure auditをcommitし、formalへ進まない。
+11. dev-r11成功時はdevelopment-only success auditをcommitし、dev-r11を閉じる。
+12. success auditをpushし、Ubuntu/Windows CIの両方を再度成功させる。
+13. spec SHA、trust-root tests、全implementation hashesを再計算し、formal authority freeze commitを作る。
+14. push後、Ubuntu/Windows CIが再度成功してからfresh formal key/rootを作る。
+15. formal calibration生成・Root Vision・one-shot評価を各一度だけ行う。
+16. pass時だけthresholdをfreezeし、v18 locked-cleanを一度だけ数値validateする。
+17. preregistered independent authorityがcalibration/v18を監査し、tracked receiptを作る。
+18. receipt commit/push/CI成功後、fresh formal holdoutを一度だけ生成・Root Vision・評価する。
+19. formal holdout pass後も、production residual derivationとuntouched production holdoutを別specで固定する。
+20. その後にのみGolden、master、deep-zoom tilesへ接続する。
 
-dev-r8は旧手順9へ到達して閉鎖しました。上記はfresh dev-r9から再開する順序であり、dev-r9が合格するまで
-手順11以降へ進めません。
+dev-r8/dev-r9は各failure gateで、dev-r10はgeneration中断で閉鎖しました。上記はfresh dev-r11から再開する順序であり、
+dev-r11 success auditをcommit/pushして両CIを通すまで手順13以降へ進めません。
 
-marker後の例外、通常endpoint failure、completion欠落はeditionを消費します。失敗後のregeneration、
-relabel、remeasurement、rerun、threshold変更は禁止です。
+generation start後、marker後の例外、通常endpoint failure、completion欠落はeditionを消費します。失敗後のresume、
+regeneration、relabel、remeasurement、rerun、別key、threshold変更は禁止です。
 
 ## Production / Golden boundary
 

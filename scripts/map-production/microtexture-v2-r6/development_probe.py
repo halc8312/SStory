@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import secrets
 import subprocess
 import sys
@@ -19,14 +20,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r10"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r11"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r10"
+DEVELOPMENT_EDITION = "r11"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
@@ -56,6 +57,16 @@ _GENERATION_STATE_KEYS = {
     "blind_key_commitment",
     "captured_git_head",
     "runtime",
+}
+_GENERATION_START_KEYS = {
+    "artifact",
+    "schema_version",
+    "authority",
+    "formal_use_forbidden",
+    "one_shot_consumed",
+    "started_at",
+    "development_boundary_sha256",
+    "state",
 }
 _GENERATION_SUMMARY_KEYS = {
     "artifact",
@@ -90,11 +101,37 @@ _GENERATION_SEAL_KEYS = {
     "schema_version",
     "authority",
     "formal_use_forbidden",
+    "generation_start_sha256",
     "generation_summary_sha256",
     "spec_sha256",
     "implementation_bindings_sha256",
     "blind_key_commitment",
     "captured_git_head",
+}
+_GENERATION_COMPLETION_KEYS = {
+    "artifact",
+    "schema_version",
+    "authority",
+    "formal_use_forbidden",
+    "completed_at",
+    "generation_start_sha256",
+    "generation_summary_sha256",
+    "generation_seal_sha256",
+    "spec_sha256",
+    "implementation_bindings_sha256",
+    "blind_key_commitment",
+    "captured_git_head",
+}
+_GENERATION_FAILURE_KEYS = {
+    "artifact",
+    "schema_version",
+    "authority",
+    "formal_use_forbidden",
+    "failed_at",
+    "generation_start_sha256",
+    "error_type",
+    "message",
+    "development_closed",
 }
 _REVIEW_INDEX_KEYS = {
     "artifact",
@@ -154,17 +191,21 @@ def _json_bytes(value: Any) -> bytes:
     return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
 
-def _write_json(path: Path, value: Any) -> str:
-    payload = _json_bytes(value)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(payload)
-    return _sha256(payload)
-
-
 def _write_json_exclusive(path: Path, value: Any) -> str:
     if path.exists() or path.is_symlink():
         raise RuntimeError(f"development artifact already exists: {path}")
     payload = _json_bytes(value)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("xb") as output:
+        output.write(payload)
+        output.flush()
+        os.fsync(output.fileno())
+    return _sha256(payload)
+
+
+def _write_bytes_exclusive(path: Path, payload: bytes) -> str:
+    if path.exists() or path.is_symlink():
+        raise RuntimeError(f"development artifact already exists: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("xb") as output:
         output.write(payload)
@@ -255,7 +296,8 @@ def _assert_private_analysis_boundary(*, analysis_must_exist: bool) -> None:
 def _load_spec() -> tuple[dict[str, Any], str]:
     payload = (CODE_ROOT / "preregistered-spec.json").read_bytes()
     digest = _sha256(payload)
-    common.SPEC_SHA256 = digest
+    if digest != common.SPEC_SHA256:
+        raise RuntimeError("development preregistered spec SHA drift")
     value = json.loads(payload.decode("utf-8"))
     common.validate_preregistered_spec(value)
     return value, digest
@@ -451,9 +493,7 @@ def _review_board(
     output: Path,
 ) -> tuple[list[str], str]:
     codes, payload = _review_board_payload(controls, views, page_index)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_bytes(payload)
-    return codes, _sha256(payload)
+    return codes, _write_bytes_exclusive(output, payload)
 
 
 def _generate_split(
@@ -484,7 +524,7 @@ def _generate_split(
     for page in pages:
         name = Path(page.path).name
         target = sheet_root / name
-        target.write_bytes(page.png_bytes)
+        _write_bytes_exclusive(target, page.png_bytes)
         entry = page.manifest_entry()
         entry["path"] = target.relative_to(DEV_ROOT).as_posix()
         sheet_bundle.append(entry)
@@ -515,7 +555,7 @@ def _generate_split(
         "warning": "DEVELOPMENT ONLY; not a formal r6 manifest or authority artifact.",
     }
     manifest_path = public_root / "manifest.dev.json"
-    manifest_sha = _write_json(manifest_path, manifest)
+    manifest_sha = _write_json_exclusive(manifest_path, manifest)
     labels = {
         "artifact": "microtexture-v2-r6-root-vision-labels",
         "schema_version": "microtexture-v2-r6-root-vision-labels/2",
@@ -544,7 +584,7 @@ def _generate_split(
             for control in controls
         ],
     }
-    labels_sha = _write_json(public_root / "labels.blank.dev.json", labels)
+    labels_sha = _write_json_exclusive(public_root / "labels.blank.dev.json", labels)
 
     board_root = public_root / "review-boards"
     review_pages = []
@@ -572,7 +612,9 @@ def _generate_split(
         "layout": "one anonymous code per row with a black header above its panels; full-200 plus all four 400-percent quadrants",
         "pages": review_pages,
     }
-    review_index_sha = _write_json(public_root / "review-index.dev.json", review_index)
+    review_index_sha = _write_json_exclusive(
+        public_root / "review-index.dev.json", review_index
+    )
     return {
         "split": split,
         "record_count": len(controls),
@@ -629,6 +671,11 @@ def _require_sha256(value: Any, context: str) -> None:
         character not in "0123456789abcdef" for character in value
     ):
         raise RuntimeError(f"{context} must be a lowercase SHA-256 digest")
+
+
+def _sanitized_error_message(error: BaseException) -> str:
+    message = str(error).strip() or "exception without a message"
+    return re.sub(r"(?i)\b[0-9a-f]{64}\b", "[redacted-64-hex]", message)[:512]
 
 
 def _expected_generation_split_paths(split: str) -> dict[str, str]:
@@ -729,20 +776,41 @@ def _load_generation_state(
     dict[str, Any], dict[str, dict[str, Any]], dict[str, str]
 ]:
     boundary_path = DEV_ROOT / "DEV-ONLY.json"
+    start_path = DEV_ROOT / "generation-start.dev.json"
     summary_path = DEV_ROOT / "generation-summary.dev.json"
     seal_path = DEV_ROOT / "generation-seal.dev.json"
+    completion_path = DEV_ROOT / "generation-completion.dev.json"
+    failure_path = DEV_ROOT / "generation-failure.dev.json"
+    if failure_path.exists() or failure_path.is_symlink():
+        raise RuntimeError("development generation is failed and closed")
+    required_paths = (
+        boundary_path,
+        start_path,
+        summary_path,
+        seal_path,
+        completion_path,
+    )
+    if any(not path.is_file() or path.is_symlink() for path in required_paths):
+        raise RuntimeError("development generation terminal artifacts are incomplete")
     boundary_payload = boundary_path.read_bytes()
+    start_payload = start_path.read_bytes()
     summary_payload = summary_path.read_bytes()
     seal_payload = seal_path.read_bytes()
+    completion_payload = completion_path.read_bytes()
     boundary = _read_json_payload(boundary_payload, str(boundary_path))
+    start = _read_json_payload(start_payload, str(start_path))
     summary = _read_json_payload(summary_payload, str(summary_path))
     seal = _read_json_payload(seal_payload, str(seal_path))
+    completion = _read_json_payload(completion_payload, str(completion_path))
+    generation_start_sha = _sha256(start_payload)
     generation_summary_sha = _sha256(summary_payload)
     generation_seal_sha = _sha256(seal_payload)
+    generation_completion_sha = _sha256(completion_payload)
     state = summary.get("state")
     if not isinstance(state, dict):
         raise RuntimeError("development generation state is missing")
     common.require_exact_keys(state, _GENERATION_STATE_KEYS, "development generation state")
+    common.require_exact_keys(start, _GENERATION_START_KEYS, "development generation start")
     common.require_exact_keys(
         boundary,
         {
@@ -761,6 +829,11 @@ def _load_generation_state(
         "development generation boundary",
     )
     common.require_exact_keys(seal, _GENERATION_SEAL_KEYS, "development generation seal")
+    common.require_exact_keys(
+        completion,
+        _GENERATION_COMPLETION_KEYS,
+        "development generation completion",
+    )
     expected_bindings_sha = _sha256_file(CODE_ROOT / "implementation-bindings.json")
     if (
         boundary.get("artifact")
@@ -783,6 +856,21 @@ def _load_generation_state(
         or {field: boundary[field] for field in _GENERATION_STATE_KEYS} != state
     ):
         raise RuntimeError("development generation boundary/state drift")
+    if (
+        start.get("artifact")
+        != "microtexture-v2-r6-development-generation-start"
+        or start.get("schema_version")
+        != "microtexture-v2-r6-development-generation-start/1"
+        or start.get("authority") is not False
+        or start.get("formal_use_forbidden") is not True
+        or start.get("one_shot_consumed") is not True
+        or start.get("development_boundary_sha256") != _sha256(boundary_payload)
+        or start.get("state") != state
+    ):
+        raise RuntimeError("development generation start drift")
+    started_at = common.parse_utc_timestamp(
+        start.get("started_at"), "development generation start.started_at"
+    )
     for field in (
         "spec_sha256",
         "implementation_bindings_sha256",
@@ -795,6 +883,7 @@ def _load_generation_state(
         != "microtexture-v2-r6-development-generation-seal/1"
         or seal.get("authority") is not False
         or seal.get("formal_use_forbidden") is not True
+        or seal.get("generation_start_sha256") != generation_start_sha
         or seal.get("generation_summary_sha256") != generation_summary_sha
         or seal.get("spec_sha256") != state["spec_sha256"]
         or seal.get("implementation_bindings_sha256")
@@ -803,14 +892,49 @@ def _load_generation_state(
         or seal.get("captured_git_head") != state["captured_git_head"]
     ):
         raise RuntimeError("development generation seal drift")
-    _require_sha256(
-        seal.get("generation_summary_sha256"),
-        "development generation seal.generation_summary_sha256",
+    for field in ("generation_start_sha256", "generation_summary_sha256"):
+        _require_sha256(
+            seal.get(field),
+            f"development generation seal.{field}",
+        )
+    if (
+        completion.get("artifact")
+        != "microtexture-v2-r6-development-generation-completion"
+        or completion.get("schema_version")
+        != "microtexture-v2-r6-development-generation-completion/1"
+        or completion.get("authority") is not False
+        or completion.get("formal_use_forbidden") is not True
+        or completion.get("generation_start_sha256") != generation_start_sha
+        or completion.get("generation_summary_sha256") != generation_summary_sha
+        or completion.get("generation_seal_sha256") != generation_seal_sha
+        or completion.get("spec_sha256") != state["spec_sha256"]
+        or completion.get("implementation_bindings_sha256")
+        != state["implementation_bindings_sha256"]
+        or completion.get("blind_key_commitment") != state["blind_key_commitment"]
+        or completion.get("captured_git_head") != state["captured_git_head"]
+    ):
+        raise RuntimeError("development generation completion drift")
+    completed_at = common.parse_utc_timestamp(
+        completion.get("completed_at"),
+        "development generation completion.completed_at",
     )
+    if completed_at < started_at:
+        raise RuntimeError("development generation timestamp order drift")
+    for field in (
+        "generation_start_sha256",
+        "generation_summary_sha256",
+        "generation_seal_sha256",
+    ):
+        _require_sha256(
+            completion.get(field),
+            f"development generation completion.{field}",
+        )
     receipts = _validate_generation_summary(summary, state)
     return state, receipts, {
+        "generation_start_sha256": generation_start_sha,
         "generation_summary_sha256": generation_summary_sha,
         "generation_seal_sha256": generation_seal_sha,
+        "generation_completion_sha256": generation_completion_sha,
     }
 
 
@@ -969,11 +1093,68 @@ def _verify_contact_sheet_layout(
             )
 
 
+def _validate_blank_labels(
+    value: dict[str, Any],
+    split: str,
+    manifest: dict[str, Any],
+    manifest_sha: str,
+    state: dict[str, Any],
+    expected_codes: list[str],
+) -> None:
+    context = f"{split} development blank labels"
+    common.require_exact_keys(value, common.VISION_LABEL_KEYS, context)
+    common._forbid_public_identity(value, context)
+    if (
+        value.get("artifact") != "microtexture-v2-r6-root-vision-labels"
+        or value.get("schema_version")
+        != "microtexture-v2-r6-root-vision-labels/2"
+        or value.get("split") != split
+        or value.get("spec_sha256") != state["spec_sha256"]
+        or value.get("manifest_sha256") != manifest_sha
+        or value.get("implementation_bindings_sha256")
+        != state["implementation_bindings_sha256"]
+        or value.get("blind_key_commitment") != state["blind_key_commitment"]
+        or value.get("runtime") != state["runtime"]
+        or value.get("runtime") != manifest["runtime"]
+        or value.get("contact_sheet_bundle") != manifest["contact_sheet_bundle"]
+        or value.get("reviewer") != "Root"
+    ):
+        raise RuntimeError(f"{context} metadata/binding drift")
+    items = value.get("items")
+    if not isinstance(items, list) or len(items) != EXPECTED_RECORDS_PER_SPLIT:
+        raise RuntimeError(f"{context} item-count drift")
+    null_fields = (
+        "disposition",
+        "grain_visible",
+        "tiny_speck_visible",
+        "microblob_visible",
+        "short_line_visible",
+        "parallel_bundle_visible",
+        "severity_0_to_3",
+        "reviewed_at_200_percent",
+        "reviewed_at_all_400_percent_quadrants",
+    )
+    for index, (item, expected_code) in enumerate(zip(items, expected_codes)):
+        common.require_exact_keys(
+            item,
+            common.VISION_LABEL_ITEM_KEYS,
+            f"{context}[{index}]",
+        )
+        if (
+            item.get("anonymous_code") != expected_code
+            or any(item.get(field) is not None for field in null_fields)
+            or item.get("notes") != ""
+        ):
+            raise RuntimeError(f"{context} code/order/null-state drift: {index}")
+
+
 def _prepare_public_split(
     spec: dict[str, Any],
     state: dict[str, Any],
     split: str,
     generation_receipt: dict[str, Any],
+    *,
+    require_completed_decisions: bool = True,
 ) -> dict[str, Any]:
     public_root = DEV_ROOT / "public" / split
     manifest_path = public_root / "manifest.dev.json"
@@ -1046,6 +1227,14 @@ def _prepare_public_split(
         or codes != sorted(codes)
     ):
         raise RuntimeError(f"{split} development manifest code drift")
+    _validate_blank_labels(
+        blank_labels,
+        split,
+        manifest,
+        manifest_sha,
+        state,
+        codes,
+    )
     contact_sheet_payloads = _verify_bundle_files(
         manifest["contact_sheet_bundle"], f"{split} contact sheet"
     )
@@ -1126,6 +1315,19 @@ def _prepare_public_split(
         or set(indexed_codes) != set(codes)
     ):
         raise RuntimeError(f"{split} review-index code coverage drift")
+
+    if not require_completed_decisions:
+        return {
+            "split": split,
+            "manifest": manifest,
+            "manifest_sha256": manifest_sha,
+            "blank_labels": blank_labels,
+            "blank_labels_sha256": _sha256(blank_labels_payload),
+            "review_index": review_index,
+            "review_index_sha256": _sha256(review_index_payload),
+            "contact_sheet_payloads": contact_sheet_payloads,
+            "review_board_payloads": review_board_payloads,
+        }
 
     decision_relatives = {
         "canonical": f"public/{split}/vision-decisions.dev.txt",
@@ -1209,8 +1411,11 @@ def _prepare_public_split(
     }
 
 
-def _public_preflight() -> tuple[
-    dict[str, Any], dict[str, Any], dict[str, str], dict[str, Any]
+def _generation_preflight() -> tuple[
+    dict[str, Any],
+    dict[str, Any],
+    dict[str, str],
+    dict[str, dict[str, Any]],
 ]:
     _assert_development_boundary(root_must_not_exist=False)
     spec, spec_sha = _load_spec()
@@ -1226,9 +1431,33 @@ def _public_preflight() -> tuple[
         raise RuntimeError(
             "development captured authority or runtime changed after generation"
         )
+    return spec, state, generation_binding, generation_receipts
+
+
+def _public_preflight() -> tuple[
+    dict[str, Any], dict[str, Any], dict[str, str], dict[str, Any]
+]:
+    spec, state, generation_binding, generation_receipts = _generation_preflight()
     prepared = {
         split: _prepare_public_split(
             spec, state, split, generation_receipts[split]
+        )
+        for split in ("calibration", "holdout")
+    }
+    return spec, state, generation_binding, prepared
+
+
+def _review_preflight() -> tuple[
+    dict[str, Any], dict[str, Any], dict[str, str], dict[str, Any]
+]:
+    spec, state, generation_binding, generation_receipts = _generation_preflight()
+    prepared = {
+        split: _prepare_public_split(
+            spec,
+            state,
+            split,
+            generation_receipts[split],
+            require_completed_decisions=False,
         )
         for split in ("calibration", "holdout")
     }
@@ -1701,7 +1930,7 @@ def analyze() -> None:
                     "development_closed": True,
                     "measurement_started": measurement_started,
                     "error_type": type(error).__name__,
-                    "message": str(error)[:512] or "exception without a message",
+                    "message": _sanitized_error_message(error),
                 },
             )
         _assert_development_boundary(root_must_not_exist=False)
@@ -1795,6 +2024,10 @@ def generate() -> None:
     spec, spec_sha = _load_spec()
     captured_head, bindings_sha = _tracked_input_preflight(spec, spec_sha)
     key_path = _validate_development_key_git_boundary(spec, captured_head)
+    DEV_ROOT.mkdir(parents=True, exist_ok=False)
+    (DEV_ROOT / "private").mkdir()
+    # The root is the earliest durable consumed-edition evidence. Sample the key
+    # only after it exists so an interruption can never silently resample r11.
     key = secrets.token_bytes(32)
     state = {
         "development_edition": DEVELOPMENT_EDITION,
@@ -1805,9 +2038,10 @@ def generate() -> None:
         "captured_git_head": captured_head,
         "runtime": common.runtime_fingerprint(),
     }
-    DEV_ROOT.mkdir(parents=True, exist_ok=False)
-    (DEV_ROOT / "private").mkdir()
-    key_path.write_bytes(key)
+    with key_path.open("xb") as output:
+        output.write(key)
+        output.flush()
+        os.fsync(output.fileno())
     boundary = {
         "artifact": "microtexture-v2-r6-development-only-boundary",
         "schema_version": "microtexture-v2-r6-development-only-boundary/1",
@@ -1821,76 +2055,161 @@ def generate() -> None:
         "formal_environment_absent_before_generation": True,
         **state,
     }
-    _write_json(DEV_ROOT / "DEV-ONLY.json", boundary)
-    results = [
-        _generate_split(spec, split, key, state) for split in ("calibration", "holdout")
-    ]
-    calibration, holdout = results
-    for field in ("codes", "control_ids", "cluster_ids", "nonzero_delta_hashes"):
-        if set(calibration[field]) & set(holdout[field]):
-            raise RuntimeError(f"development split separation failed: {field}")
-    calibration_zero = set(calibration["zero_delta_hashes"])
-    holdout_zero = set(holdout["zero_delta_hashes"])
-    if len(calibration_zero) != 1 or calibration_zero != holdout_zero:
-        raise RuntimeError("canonical all-zero requested-delta hash contract drift")
-    public_results = [
+    boundary_sha = _write_json_exclusive(DEV_ROOT / "DEV-ONLY.json", boundary)
+    generation_start_sha = _write_json_exclusive(
+        DEV_ROOT / "generation-start.dev.json",
         {
-            key: value
-            for key, value in result.items()
-            if key
-            not in {
-                "codes",
-                "control_ids",
-                "cluster_ids",
-                "nonzero_delta_hashes",
-                "zero_delta_hashes",
-            }
-        }
-        for result in results
-    ]
-    generation_summary = {
-        "artifact": "microtexture-v2-r6-development-generation-summary",
-        "schema_version": "microtexture-v2-r6-development-generation-summary/1",
-        "authority": False,
-        "formal_use_forbidden": True,
-        "state": state,
-        "split_separation": {
-            "codes_disjoint": True,
-            "control_ids_disjoint": True,
-            "cluster_ids_disjoint": True,
-            "nonzero_delta_hashes_disjoint": True,
-            "canonical_all_zero_delta_hash_shared": True,
-        },
-        "splits": public_results,
-    }
-    generation_summary_sha = _write_json_exclusive(
-        DEV_ROOT / "generation-summary.dev.json", generation_summary
-    )
-    generation_seal_sha = _write_json_exclusive(
-        DEV_ROOT / "generation-seal.dev.json",
-        {
-            "artifact": "microtexture-v2-r6-development-generation-seal",
-            "schema_version": "microtexture-v2-r6-development-generation-seal/1",
+            "artifact": "microtexture-v2-r6-development-generation-start",
+            "schema_version": "microtexture-v2-r6-development-generation-start/1",
             "authority": False,
             "formal_use_forbidden": True,
-            "generation_summary_sha256": generation_summary_sha,
-            "spec_sha256": state["spec_sha256"],
-            "implementation_bindings_sha256": state[
-                "implementation_bindings_sha256"
-            ],
-            "blind_key_commitment": state["blind_key_commitment"],
-            "captured_git_head": state["captured_git_head"],
+            "one_shot_consumed": True,
+            "started_at": common.utc_timestamp(),
+            "development_boundary_sha256": boundary_sha,
+            "state": state,
         },
     )
-    _assert_development_boundary(root_must_not_exist=False)
+    try:
+        results = [
+            _generate_split(spec, split, key, state)
+            for split in ("calibration", "holdout")
+        ]
+        calibration, holdout = results
+        for field in ("codes", "control_ids", "cluster_ids", "nonzero_delta_hashes"):
+            if set(calibration[field]) & set(holdout[field]):
+                raise RuntimeError(f"development split separation failed: {field}")
+        calibration_zero = set(calibration["zero_delta_hashes"])
+        holdout_zero = set(holdout["zero_delta_hashes"])
+        if len(calibration_zero) != 1 or calibration_zero != holdout_zero:
+            raise RuntimeError("canonical all-zero requested-delta hash contract drift")
+        public_results = [
+            {
+                key: value
+                for key, value in result.items()
+                if key
+                not in {
+                    "codes",
+                    "control_ids",
+                    "cluster_ids",
+                    "nonzero_delta_hashes",
+                    "zero_delta_hashes",
+                }
+            }
+            for result in results
+        ]
+        generation_summary = {
+            "artifact": "microtexture-v2-r6-development-generation-summary",
+            "schema_version": "microtexture-v2-r6-development-generation-summary/1",
+            "authority": False,
+            "formal_use_forbidden": True,
+            "state": state,
+            "split_separation": {
+                "codes_disjoint": True,
+                "control_ids_disjoint": True,
+                "cluster_ids_disjoint": True,
+                "nonzero_delta_hashes_disjoint": True,
+                "canonical_all_zero_delta_hash_shared": True,
+            },
+            "splits": public_results,
+        }
+        generation_summary_sha = _write_json_exclusive(
+            DEV_ROOT / "generation-summary.dev.json", generation_summary
+        )
+        generation_seal_sha = _write_json_exclusive(
+            DEV_ROOT / "generation-seal.dev.json",
+            {
+                "artifact": "microtexture-v2-r6-development-generation-seal",
+                "schema_version": "microtexture-v2-r6-development-generation-seal/1",
+                "authority": False,
+                "formal_use_forbidden": True,
+                "generation_start_sha256": generation_start_sha,
+                "generation_summary_sha256": generation_summary_sha,
+                "spec_sha256": state["spec_sha256"],
+                "implementation_bindings_sha256": state[
+                    "implementation_bindings_sha256"
+                ],
+                "blind_key_commitment": state["blind_key_commitment"],
+                "captured_git_head": state["captured_git_head"],
+            },
+        )
+        _assert_development_boundary(root_must_not_exist=False)
+        generation_completion_sha = _write_json_exclusive(
+            DEV_ROOT / "generation-completion.dev.json",
+            {
+                "artifact": "microtexture-v2-r6-development-generation-completion",
+                "schema_version": (
+                    "microtexture-v2-r6-development-generation-completion/1"
+                ),
+                "authority": False,
+                "formal_use_forbidden": True,
+                "completed_at": common.utc_timestamp(),
+                "generation_start_sha256": generation_start_sha,
+                "generation_summary_sha256": generation_summary_sha,
+                "generation_seal_sha256": generation_seal_sha,
+                "spec_sha256": state["spec_sha256"],
+                "implementation_bindings_sha256": state[
+                    "implementation_bindings_sha256"
+                ],
+                "blind_key_commitment": state["blind_key_commitment"],
+                "captured_git_head": state["captured_git_head"],
+            },
+        )
+        (
+            verified_spec,
+            verified_state,
+            verified_generation_binding,
+            verified_surfaces,
+        ) = _review_preflight()
+        expected_generation_binding = {
+            "generation_start_sha256": generation_start_sha,
+            "generation_summary_sha256": generation_summary_sha,
+            "generation_seal_sha256": generation_seal_sha,
+            "generation_completion_sha256": generation_completion_sha,
+        }
+        if (
+            verified_spec != spec
+            or verified_state != state
+            or verified_generation_binding != expected_generation_binding
+            or set(verified_surfaces) != {"calibration", "holdout"}
+        ):
+            raise RuntimeError("development generation post-completion reload drift")
+    except BaseException as error:
+        try:
+            _write_json_exclusive(
+                DEV_ROOT / "generation-failure.dev.json",
+                {
+                    "artifact": "microtexture-v2-r6-development-generation-failure",
+                    "schema_version": (
+                        "microtexture-v2-r6-development-generation-failure/1"
+                    ),
+                    "authority": False,
+                    "formal_use_forbidden": True,
+                    "failed_at": common.utc_timestamp(),
+                    "generation_start_sha256": generation_start_sha,
+                    "error_type": type(error).__name__,
+                    "message": _sanitized_error_message(error),
+                    "development_closed": True,
+                },
+            )
+        except BaseException as reporting_error:
+            try:
+                error.add_note(
+                    "generation failure reporting also failed: "
+                    f"{type(reporting_error).__name__}: {reporting_error}"
+                )
+            except BaseException:
+                pass
+        raise
     print(
         json.dumps(
             {
                 "development_root": str(DEV_ROOT),
                 "authority": False,
                 "formal_root_absent": True,
+                "generation_start_sha256": generation_start_sha,
                 "generation_summary_sha256": generation_summary_sha,
                 "generation_seal_sha256": generation_seal_sha,
+                "generation_completion_sha256": generation_completion_sha,
                 "splits": public_results,
             },
             ensure_ascii=False,
@@ -1899,20 +2218,17 @@ def generate() -> None:
 
 
 def review_crops(split: str, page_index: int) -> None:
-    _assert_development_boundary(root_must_not_exist=False)
     if (
         split not in {"calibration", "holdout"}
         or not 1 <= page_index <= EXPECTED_REVIEW_PAGES_PER_SPLIT
     ):
         raise RuntimeError("review crop split/page drift")
-    source = (
-        DEV_ROOT
-        / "public"
-        / split
-        / "review-boards"
-        / f"review-page-{page_index:03d}.png"
+    _spec, _state, _generation_binding, prepared = _review_preflight()
+    relative = (
+        f"public/{split}/review-boards/review-page-{page_index:03d}.png"
     )
-    with Image.open(source) as board:
+    payload = prepared[split]["review_board_payloads"][relative]
+    with Image.open(io.BytesIO(payload)) as board:
         if board.size != (2560, REVIEW_ROW_HEIGHT * REVIEW_ROWS_PER_PAGE):
             raise RuntimeError("review board dimensions drift")
         output_root = DEV_ROOT / "public" / split / "review-crops"

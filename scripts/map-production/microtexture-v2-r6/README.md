@@ -34,13 +34,24 @@ severity-3を`26/26`に保てる候補ではwarning acceptanceが最大`12/18`�
 `world/map-production/qa/microtexture-v2-r6-dev-r9-development-failure.json`へ固定します。dev-r9のroot、key、
 controls、labels、pixels、identities、measurements、diagnostic threshold、nonces、commitmentsは再利用しません。
 
-fresh `dev-r10` を次の一回限りdevelopment probeとして事前登録します。exact rootは
-`tmp/map-production/microtexture-v2-r6-dev-r10`、public noncesは`r6-calibration-v5` / `r6-holdout-v5`、
-HMAC cluster/render/code domainsはv5、public commitment domainはv6です。parameter nonce basesはcalibrationが
-artifact `273000`、protocol-zero `251000`、duplicate-audit `291000..291002`、holdoutがartifact `283000`、
-protocol-zero `261000`、duplicate-audit `301000..301002`です。schedule revisionは
-`dev-r10-grain-coherence-support-schedule-v1`です。規範JSON、bindings、code、tests、runnerを別commitへfreezeし、
-push後にUbuntu/Windows CIを両方通すまでgenerateしてはいけません。formal keyの非永続化契約は変更しません。
+fresh `dev-r10` は一回限りのgenerationを開始しましたが、monitor session喪失後に対応process不在を確認し、terminal
+generation summary / seal / completionへ到達しませんでした。終了原因は特定していません。generationは未完了、Vision review、label seal、private reveal、
+analysis、measurement、threshold searchは未開始です。dev-r10はこの時点で消費・閉鎖し、exact root
+`tmp/map-production/microtexture-v2-r6-dev-r10`を不変のまま保持します。generateの再実行、途中からのresume、
+欠損splitのtop-up、root削除後の再生成、別key、partial controls / references / pixels / codes / commitmentsの流用を
+禁止します。sanitized closure evidenceは
+`world/map-production/qa/microtexture-v2-r6-dev-r10-development-failure.json`へhash-bindします。
+
+fresh `dev-r11` を次の一回限りdevelopment probeとして事前登録します。exact rootは
+`tmp/map-production/microtexture-v2-r6-dev-r11`、key pathはその`private/development-key.bin`、public noncesは
+`r6-calibration-v6` / `r6-holdout-v6`です。HMAC cluster/render/code/private-reference-transform domainsはv6、
+public commitment domainはv7、key commitment、foundation offset/assignment/delta lanes、private-control-idはv5です。
+parameter nonce rangesはcalibrationがartifact `373000..373419`、protocol-zero `351000..351015`、
+duplicate-audit `391000..391002`、holdoutがartifact `383000..383419`、protocol-zero `361000..361015`、
+duplicate-audit `401000..401002`です。
+schedule revisionは`dev-r11-grain-coherence-support-schedule-v1`です。規範JSON、bindings、code、tests、runnerを
+別commitへfreezeし、push後にUbuntu/Windows CIを両方通すまでgenerateしてはいけません。formal keyの
+非永続化契約は変更しません。
 
 ## ImageGen authority
 
@@ -59,8 +70,8 @@ record identity（polarity と replicate を含む）を入力とする full-out
 この blind は、honest reviewer が割り当てられた review surface だけを見るための**運用上の blind**です。
 technical / cryptographic blind や、同じ OS principal で悪意ある reviewer に対する secrecy は主張しません。
 formal fresh key は専用の長寿命 custodian process だけが保持し、artifactやlogへ永続化せず、Vision processへ
-継承・公開しません。closed dev-r8/dev-r9 keyは各Git-ignored private rootにだけ保持して再利用せず、planned dev-r10
-keyは別のfresh Git-ignored rootとtracked custodian runnerだけが扱います。marker 前の
+継承・公開しません。closed dev-r8/dev-r9/dev-r10 keyは各Git-ignored private rootにだけ保持して再利用せず、
+planned dev-r11 keyは別のfresh Git-ignored rootとtracked custodian runnerだけが扱います。marker 前の
 review surface は185 contact-sheet view-pages（各view 37 pages）とcode-only label formだけです。manifest schema
 `microtexture-v2-r6-control-manifest/3` が公開する record 情報は opaque code と code別の
 `control` / `reference` / `delta` HMAC commitment 3件だけで、個別control/referenceのpath、file、raw bytes、
@@ -103,13 +114,14 @@ split別のfrozen scheduleとpublic nonceを使います。tierはperceptual mar
 `clean`、`warning`、`reject`、severityその他のVision truthを予告・割当するものではありません。
 全scheduleを一体として生成・blind reviewし、結果を見てsubsetting、top-up、key resamplingしてはいけません。
 
-dev-r9で固定したspeck scheduleはpopulation floorを両splitで通過したため、dev-r10でも同じ非適応的morphology
-coverageをfresh controlsとして生成します。dev-r10が変更するmorphologyは`artifact-fine-grain`のfull-support
-reject-tier 3条件だけです。calibrationのperiod `14.0`を`11.6`、holdoutの`12.6`を`11.4`、`14.6`を`11.8`
-へ置き換え、全11 reject-tier grain conditionsを、変更しないcoherence metric support `2..13`のguard-bandedな
-内側`3..12`へ固定します。metric、score reference、threshold rule、tier数`5/4/7/4`、全endpoint count/rate、
-他4 familyは変更しません。このscheduleはVision truthやlabel expectationではなく、全20 conditionsと各split
-220 recordsをfreshに一体生成してblind reviewし、全population gateをall-or-nothingで適用します。
+dev-r9で固定したspeck scheduleはpopulation floorを両splitで通過しました。dev-r10では
+`artifact-fine-grain`のfull-support reject-tier 3条件だけを事前に変更し、calibrationのperiod `14.0`を`11.6`、
+holdoutの`12.6`を`11.4`、`14.6`を`11.8`へ置き換えました。これにより全11 reject-tier grain conditionsは、
+変更しないcoherence metric support `2..13`のguard-bandedな内側`3..12`へ入ります。ただしdev-r10はgeneration中断で
+Vision/analysisへ到達しておらず、このpartial corpusからscheduleを評価・調整しません。dev-r11はこのmorphology、
+speck coverage、metric、score reference、threshold rule、tier数`5/4/7/4`、全endpoint count/rate、他4 familyを
+一切変更せず、fresh identityだけで全20 conditionsと各split 220 recordsを一体生成・blind reviewし、全population
+gateをall-or-nothingで適用します。
 
 family identityを保つmorphology invariantsも全tierで不変です。fine-grainはfield-wideな反復/coherenceを保ち、
 spotやlineへ形態を移しません。speckは互いに分離した同程度のpoint-like hard coreを3個以上保ち、blurでmicroblob化
@@ -143,8 +155,9 @@ condition clusterごとに `reject > warning > clean` のworst-case disposition�
 保守的に集約し、metric-equivalent pairには1 predictionだけを割り当てます。その後unique clustersを等重みで
 集計します。1 clusterをaccept/reject endpointの双方へ入れることは禁止です。
 
-closed `dev-r8` / `dev-r9` とplanned `dev-r10` の一回限りのanalysisには、formal specのendpoint最低populationを一切変更せず、
-さらに厳しいdevelopment-only safety floorを上乗せします。label bytesを両splitともsealし、private identityを
+closed `dev-r8` / `dev-r9` とplanned `dev-r11` の一回限りのanalysisには、formal specのendpoint最低populationを
+一切変更せず、さらに厳しいdevelopment-only safety floorを上乗せします。dev-r10はanalysis前に閉鎖したため、この
+gateの結果を持ちません。label bytesを両splitともsealし、private identityを
 revealしてsemantic auditを終えた後、最初のmetric callより前にcondition-cluster truthで次を検査します。
 
 | development-only population | minimum unique clusters / split |
@@ -165,10 +178,11 @@ passしました。したがってgate全体をfailとして`measurement_started
 `failed-and-closed-before-measurement`で消費・閉鎖しました。raw metrics、composite、candidate、threshold探索、
 holdout endpoint evaluationは一切行わず、authority thresholdも作っていません。sanitized failure evidenceは
 `world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json`です。dev-r8のkey、controls、
-references、pixels、identities、opaque codes、labels、measurementsはdev-r9、dev-r10、formalへ再利用しません。
+references、pixels、identities、opaque codes、labels、measurementsはdev-r9、dev-r10、dev-r11、formalへ再利用しません。
 
 dev-r9はこのgateを両splitで通過しましたが、calibrationでendpoint-admissible thresholdが存在せず、測定後に
-閉鎖しました。planned dev-r10でもpopulationが一つでも不足すれば`measurement_started=false`で消費・閉鎖し、
+閉鎖しました。dev-r10はgeneration中断のためgateへ到達していません。planned dev-r11でもpopulationが一つでも
+不足すれば`measurement_started=false`で消費・閉鎖し、
 測定、threshold探索、ラベル修正、top-up、別keyでの再生成へ進みません。population通過後も全endpointを同時に
 満たせなければthresholdを作らず閉鎖します。このmargin gateとgrain support scheduleはdevelopment専用であり、
 Vision truthではありません。formal common endpoint minima、rate、metric、candidate selection、one-shot契約を
@@ -236,11 +250,12 @@ detector は中央 256×192 luminance-residual window に対し、固定 raw met
 spot component floor、finite-line response floor、parallel-pair response floor はすべてabsolute `4.5 L`です。
 coherent fine patternはspot/line branchではなく、directional coherenceを含むgrain branchが担当します。
 split-specific morphology schedulesとこれらのabsolute floorは、fresh formal key、controls、labelsより前に
-明示的なnon-formal development keysでfreezeします。closed `dev-r6`～`dev-r9` corporaは正式判断に使わず、
-planned `dev-r10` の`dev-r10-grain-coherence-support-schedule-v1`全scheduleをsubsettingなしで一回だけ確認します。
-dev-r10で変更するmorphologyは前述のgrain period 3件だけです。formal labels、threshold、resultsは未確定であり
-予告しません。既存のmetric、half-scale、absolute floor、endpoint minima/rate、blind、one-shot、failed-r3/r4/r5
-およびclosed development境界は不変です。
+明示的なnon-formal development keysでfreezeします。closed `dev-r6`～`dev-r10` corporaは正式判断に使いません。
+dev-r10はgeneration中断でVision/analysis evidenceを持たず、partial outputをschedule選択へ利用しません。planned
+`dev-r11` の`dev-r11-grain-coherence-support-schedule-v1`全scheduleをsubsettingなしで一回だけ確認します。
+morphologyはdev-r10に事前登録したgrain period 3件を含めて完全に同一です。formal labels、threshold、resultsは
+未確定であり予告しません。既存のmetric、half-scale、absolute floor、endpoint minima/rate、blind、one-shot、
+failed-r3/r4/r5およびclosed development境界は不変です。
 
 各 branch は固定half-scale referenceに対する
 `unit_soft(x,ref)=0 (x<=0), otherwise (2/pi)*atan(x/ref)` で正規化します。有限の正の証拠に対して厳密単調で
@@ -251,8 +266,9 @@ r7の閉鎖済みaggregate診断から変更するhalf-scaleは3件だけです�
 `tiny_mass_l: 20 -> 15`、`finite_line_top4_mean_l: 4.5 -> 2.25` とし、他6件、raw metrics、branch構成、
 単一threshold、全endpoint count/rateは不変です。単一reference変更は全候補不合格、2-reference変更で唯一通った組へ、
 判定境界を広げるgrain 1件を加えたrevisionです。dev-r8はpopulation gateでmeasurement前に閉鎖し、dev-r9は
-同じmetricを一度だけ実行したもののthresholdを選べず閉鎖しました。planned dev-r10はmetricを変更せず継承し、
-dev-r7/dev-r9のthreshold、diagnostic、measurementをformalへ使用しません。
+同じmetricを一度だけ実行したもののthresholdを選べず閉鎖しました。dev-r10はmetricを呼ぶ前のgeneration中断で
+閉鎖しました。planned dev-r11はmetricを変更せず継承し、dev-r7/dev-r9のthreshold、diagnostic、measurement、
+dev-r10のpartial generation outputをformalへ使用しません。
 
 ```text
 hard_composite_score = max(
@@ -277,7 +293,7 @@ post-marker failureとしてauthority thresholdを作らず閉鎖します。cou
 candidateがなければ`hard_threshold:null`で閉鎖します。最良の不合格候補はdiagnostic auditにだけ記録し、
 freezeや後続stageへ渡しません。
 
-## Development closure and planned dev-r10 operator order
+## Development closure and planned dev-r11 operator order
 
 dev-r8は全440 decisionsをreview、seal、private auditした後、最初のmetric callより前のpopulation gateで
 `failed-and-closed-before-measurement`となりました。tiny-speck-visible rejectはcalibration 3、holdout 1で、
@@ -288,25 +304,32 @@ dev-r9も一回限りで測定後に閉鎖しました。両population gateはpa
 detectionを同時に満たすcalibration thresholdはありませんでした。dev-r9の再実行、再label、別key、subset、top-up、
 diagnostic threshold昇格、holdout measurementの再解析を禁止します。
 
-dev-r10はformal r6ではなく、formal前の新しい一回限りdevelopment probeとしてのみ計画されています。このREADMEの
-記述だけでは実行権限になりません。`dev-r10-grain-coherence-support-schedule-v1`、新しいroot/key、全nonce/domain、
+dev-r10は一回だけgenerationを開始しましたが、monitor session喪失後に対応process不在を確認し、終了原因を特定しないままsummary / seal / completionへ到達せず、
+Vision、label seal、private reveal、analysis、measurementを開始せず消費・閉鎖しました。closed rootは不変に保持し、
+generateの再実行、resume、欠損分top-up、root削除、別key、partial outputの再利用を禁止します。
+
+dev-r11はformal r6ではなく、formal前の新しい一回限りdevelopment probeとしてのみ計画されています。このREADMEの
+記述だけでは実行権限になりません。`dev-r11-grain-coherence-support-schedule-v1`、新しいroot/key、全nonce/domain、
 parameter schedule、bindings、code、tests、tracked custodian runnerを規範JSONへfreezeし、別commitをpushして
 branch upstream HEADと一致させ、Ubuntu/Windows CIを両方passさせるまでgenerateしてはいけません。
 generate時に記録したmachine/exact runtime fingerprintはpreflight/analyze完了まで完全一致を必須とし、途中で変化した
 場合は継続・再生成せずfail-closedに停止します。
 
-freeze後の順序は、fresh rootの不存在確認 → fresh 32-byte keyによる両split各220 recordsの一回限り生成 →
-生成時manifest / blank-label / review-indexのSHAをexclusive generation sealへ固定 → Root/独立Visionによる全37
+freeze後の順序は、fresh rootの不存在確認 → fresh 32-byte key作成 → public byteより前のexclusive
+`generation-start.dev.json` → 両split各220 recordsの一回限り生成 → generation summary → summaryをbindするseal →
+sealをbindするexclusive completionです。start後のcatchableな例外はexclusive failureへ記録し、failureとcompletionの
+共存、summary / seal / completionの欠落、hard killを含む中断はdev-r11を消費・閉鎖します。その後に限り、
+Root/独立Visionによる全37
 review boardsと各220 decisionsの独立確認 → exact Root decision reconciliation → code/printed-code binding、生成時SHA、
 全件logical agreementのpreflight → exclusive label seal → key read後の全185 contact sheets / 37 review boardsの
 secret-derived exact byte・code-order再生成照合 → private audit → all-or-nothing population gateです。全floorがpassした場合に限り最初のmetric callへ進み、calibrationで1 thresholdを
-選び、その値をholdoutへ変更せず適用します。一つでも失敗すればdev-r10を消費・閉鎖し、rerun、relabel、別key、
-subsetting、top-upをしません。成功時もdev-r10 thresholdはformal authorityではなく、success auditをGitへ固定して
-dev-r10を閉じた後にのみ、formal r6 authorityを別commitで最終freezeできます。
+選び、その値をholdoutへ変更せず適用します。一つでも失敗すればdev-r11を消費・閉鎖し、rerun、resume、relabel、
+別key、subsetting、top-upをしません。成功時もdev-r11 thresholdはformal authorityではなく、success auditをGitへ
+固定してdev-r11を閉じた後にのみ、formal r6 authorityを別commitで最終freezeできます。
 
 ## Formal operator order
 
-dev-r10が上記の全population gate、metric、calibration、holdout endpointsを一回でpassし、hash-bound success auditを
+dev-r11が上記の全population gate、metric、calibration、holdout endpointsを一回でpassし、hash-bound success auditを
 commit/pushして両CIを通すまで、以下のformal stageを一つも開始してはいけません。その成功はformal authorityではなく、
 formal authorityはその後の別commitでfreezeします。順序を入れ替えたり、失敗後にやり直したりしてはいけません。
 

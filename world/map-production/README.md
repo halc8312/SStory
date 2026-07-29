@@ -2,9 +2,9 @@
 type: "overview"
 category: "maps"
 title: "高精細地図制作"
-version: "1.0.0"
+version: "1.1.0"
 created: "2026-07-18"
-last_updated: "2026-07-26"
+last_updated: "2026-07-30"
 author: "halc8312"
 tags: ["maps", "deep-zoom", "image-generation", "geojson", "tiles"]
 status: "draft"
@@ -67,31 +67,50 @@ Microtexture v2-r3、r4、r5は一回限りcalibrationで不合格となり、�
 failed-and-closed editionsです。pre-formal `dev-r6`はpopulation不足で測定前に閉鎖し、`dev-r7`は全440 recordsの
 Root/独立Visionと一回限り測定後、hard-clamp score saturationによりendpoint-admissible thresholdが存在せず閉鎖しました。
 `dev-r8`もfresh root/keyで全440 recordsをRoot/独立Vision確認しましたが、pre-measurement population gateで
-tiny-speck-visible rejectがcalibration 3件、holdout 1件となり、測定前に閉鎖しました。sanitized証拠は
-`qa/microtexture-v2-r6-dev-r7-development-failure.json`と
-`qa/microtexture-v2-r6-dev-r8-development-failure.json`です。過去editionのcontrols、keys、
-labels、pixels、identities、measurements、thresholds、holdouts、development rootsは再利用しません。r6用として既に
-qualify済みのImageGen foundation authorityは、fresh controls/referencesの入力としてのみ継続します。
+tiny-speck-visible rejectがcalibration 3件、holdout 1件となり、測定前に閉鎖しました。`dev-r9`は一回限りの
+測定まで完了したもののendpoint-admissible thresholdを得られず閉鎖しました。既存履歴のsanitized証拠は
+`qa/microtexture-v2-r6-dev-r7-development-failure.json`、
+`qa/microtexture-v2-r6-dev-r8-development-failure.json`、
+`qa/microtexture-v2-r6-dev-r9-development-failure.json`です。
+
+`dev-r10`は生成中のmonitor session喪失後に対応process不在を確認し、終了原因を特定しないままterminal summary、seal、completionへ到達せず、消費済み・閉鎖となりました。
+Rootは閉鎖証拠として保持しますが、再実行、resume、top-up、root削除、同じkeyの使用、部分生成物の流用を禁止します。
+Root/独立Vision、label seal、private reveal、analysis、測定、threshold探索は開始していません。sanitized closure証拠は
+`qa/microtexture-v2-r6-dev-r10-development-failure.json`です。過去editionのcontrols、keys、labels、pixels、
+identities、measurements、thresholds、holdouts、development rootsは、閉鎖証拠として保持する場合を除き再利用しません。
+r6用として既にqualify済みのImageGen foundation authorityは、fresh controls/referencesの入力としてのみ継続します。
 
 唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r6/`、運用概要は
 `spec/microtexture-v2-calibration.md`です。r6は各split 220 records / 118 private clustersで、200 injection records
 （5 morphology families × 20 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4
-duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185 view-pages相当を全code確認し、fresh
+duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185 view-pages相当を全code確認し、closed
 `dev-r8`では独立Visionも全件確認しました。Detectorはgrain / spot / finite-line / parallel-bundleの4 branchを、固定
 half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
 r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
-持ち、個別control/reference path・raw SHAをmarker前に出しません。dev-r8はfailed-and-closedでformalへ昇格できません。
-fresh successor development editionは、tracked runnerを含む入力authorityを事前登録・commit/pushし、Ubuntu/Windows
-CIを通した後にだけ生成できます。そのdevelopment成功後、formal authorityを別commitで最終freezeし、fresh calibration、
-v18 locked-clean validation、独立threshold authority receipt、fresh holdoutを各一度だけ
-実行します。全stageと別途preregisterするproduction residual derivationが合格するまで、v246候補、Golden、master、
-最終pixelへ接続しません。
-closed dev-r8のkeyは旧Git-ignored private development rootだけに封印し、fresh dev-r9 keyは別のGit-ignored
-private rootだけに保持して生成・analysis・閉鎖後監査を結びます。両方とも値のlog・Git追跡・Visionでの読取り・
-後続edition/formalへの再利用を禁止します。runnerは書込み前にroot `.gitignore`を
-captured HEADへbyte-bindし、exact pathのHEAD/index非存在とexact `/tmp*/` ignoreを検証します。formal keyは
-生成物やlogへ永続化しません。
+持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r10`はformalへ昇格できません。
+
+fresh successorは`dev-r11`です。development rootは
+`tmp/map-production/microtexture-v2-r6-dev-r11`、keyはそのroot内の
+`private/development-key.bin`だけに置きます。public nonceは`r6-calibration-v6` / `r6-holdout-v6`、
+cluster/render/code/private-reference-transform domainはv6、public commitment domainはv7、key commitment、
+foundation offset/assignment/delta lanes、private-control-id domainはv5です。protocol nonceはcalibration
+`351000..351015` / holdout `361000..361015`、欠陥候補用nonceは`373000..373419` / `383000..383419`、
+duplicate-audit nonceは`391000..391002` / `401000..401002`へ固定します。schedule metadataは
+`dev-r11-grain-coherence-support-schedule-v1`です。dev-r10向けに事前登録済みだったmorphology変更をそのまま継承し、
+morphology、metric、唯一のscalar threshold、population gateはdev-r10部分生成物から調整しません。
+
+dev-r11生成は、tracked authorityとrunnerをcommit/pushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
+fresh root/keyを作り、公開byteを一つでも書く前に排他的な`generation-start.dev.json`を確定し、両splitを生成してから
+summary → seal → completionの順に排他的に確定します。catchableな失敗は排他的なfailureへ固定し、failure/completionの
+共存、summary/seal/completionの欠落、または外部中断はそのeditionを消費済みとして閉鎖します。transaction検証前には
+Vision/analysisを開始しません。閉鎖editionの続行、再生成、key再利用、部分出力流用は禁止です。development成功後も
+証拠をcommit/pushしてUbuntu/Windowsの両CIを通し、その後にだけformal authorityを別commitで最終freezeします。
+fresh calibration、v18 locked-clean validation、独立threshold authority receipt、fresh holdoutは各一度だけ実行します。
+全stageと別途preregisterするproduction residual derivationが合格するまで、v246候補、Golden、master、最終pixelへ
+接続しません。runnerは書込み前にroot `.gitignore`をcaptured HEADへbyte-bindし、exact pathのHEAD/index非存在と
+exact `/tmp*/` ignoreを検証します。development keyは値のlog・Git追跡・Visionでの読取り・後続edition/formalへの
+再利用を禁止し、formal keyは生成物やlogへ永続化しません。
 
 ## Golden 候補の二段階昇格
 

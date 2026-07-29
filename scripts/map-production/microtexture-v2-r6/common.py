@@ -36,7 +36,7 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "d5c370a7f87d334a261d197adfd6e1929801436d7b4247affb766a5a5ef162f6"
+SPEC_SHA256 = "4cbfe943d0938aa0df4cbb03db253ccd169e7bf8dcf65e4ea0bbf102836fc59f"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
 
 
@@ -339,10 +339,10 @@ VISION_SEMANTIC_RUBRIC = {
 }
 
 POPULATION_ANCHOR_SCHEDULE = {
-    "revision": "dev-r10-grain-coherence-support-schedule-v1",
-    "fresh_from_closed_dev_r9": True,
-    "r9_parameter_nonce_reuse_forbidden": True,
-    "r10_per_family_residue_rotation": {
+    "revision": "dev-r11-grain-coherence-support-schedule-v1",
+    "fresh_from_closed_dev_r10": True,
+    "r10_parameter_nonce_reuse_forbidden": True,
+    "r11_per_family_residue_rotation": {
         "calibration": {
             "artifact-fine-grain": 2,
             "artifact-speck": 4,
@@ -358,13 +358,13 @@ POPULATION_ANCHOR_SCHEDULE = {
             "artifact-parallel-bundle": 11,
         },
     },
-    "r10_parameter_nonce_bases": {
-        "calibration_artifact": 273000,
-        "holdout_artifact": 283000,
-        "calibration_protocol_zero": 251000,
-        "holdout_protocol_zero": 261000,
-        "calibration_duplicate_audit": [291000, 291001, 291002],
-        "holdout_duplicate_audit": [301000, 301001, 301002],
+    "r11_parameter_nonce_bases": {
+        "calibration_artifact": 373000,
+        "holdout_artifact": 383000,
+        "calibration_protocol_zero": 351000,
+        "holdout_protocol_zero": 361000,
+        "calibration_duplicate_audit": [391000, 391001, 391002],
+        "holdout_duplicate_audit": [401000, 401001, 401002],
     },
     "private_until_one_shot_marker": True,
     "public_manifest_exposure_forbidden": True,
@@ -648,8 +648,41 @@ def validate_contact_sheet_view_partition(
 
 def validate_preregistered_spec(value: dict[str, Any]) -> None:
     history = value.get("history")
-    if not isinstance(history, dict):
-        raise RuntimeError("r6 development history must be an object")
+    require_exact_keys(
+        history,
+        {
+            "r3_status",
+            "r3_role",
+            "r3_failure_audit",
+            "r4_status",
+            "r4_role",
+            "r4_failure_audit",
+            "r5_status",
+            "r5_role",
+            "r5_failure_audit",
+            "dev_r6_status",
+            "dev_r6_role",
+            "dev_r7_status",
+            "dev_r7_role",
+            "dev_r7_failure_audit",
+            "dev_r7_failure_audit_sha256",
+            "dev_r8_status",
+            "dev_r8_role",
+            "dev_r8_failure_audit",
+            "dev_r8_failure_audit_sha256",
+            "dev_r9_status",
+            "dev_r9_role",
+            "dev_r9_failure_audit",
+            "dev_r9_failure_audit_sha256",
+            "dev_r10_status",
+            "dev_r10_role",
+            "dev_r10_failure_audit",
+            "dev_r10_failure_audit_sha256",
+            "dev_r11_status",
+            "dev_r11_role",
+        },
+        "r6 development history",
+    )
     if (
         history.get("dev_r6_status") != "failed-and-closed-before-measurement"
         or history.get("dev_r6_role")
@@ -696,16 +729,30 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "microtexture-v2-r6-dev-r9-development-failure.json"
         or history.get("dev_r9_failure_audit_sha256")
         != "10c832fb2b7131b942cad54c7412672a98a2f0401db1aae31ce2b1383952f202"
-        or history.get("dev_r10_status") != "fresh-development-only"
+        or history.get("dev_r10_status")
+        != "failed-and-closed-during-generation"
         or history.get("dev_r10_role")
+        != "development-only generation-interruption evidence; one-shot generation "
+        "started with a fresh key and produced the calibration public surface only; "
+        "the required two-split generation did not reach terminal summary, seal, or "
+        "completion, no Vision review or analysis started, and no dev-r10 root, key, "
+        "control, reference, pixel, identity, code, commitment, label, measurement, "
+        "nonce, or public surface is reusable"
+        or history.get("dev_r10_failure_audit")
+        != "world/map-production/qa/"
+        "microtexture-v2-r6-dev-r10-development-failure.json"
+        or history.get("dev_r10_failure_audit_sha256")
+        != "9e5533453e7ec25bed75b54a67cb63129329aca392c1c7db4bf60d9c0a7393fa"
+        or history.get("dev_r11_status") != "fresh-development-only"
+        or history.get("dev_r11_role")
         != "fresh one-shot development role used only to verify the unchanged "
-        "preregistered soft-unit metric and the frozen dev-r10 "
-        "grain-coherence-support schedule before formal r6 generation; it requires "
-        "a tracked runner, a fresh isolated root, a fresh cryptographic blind key, "
-        "revision-5 public, render, code, and cluster domains, revision-6 public "
-        "commitments, newly generated controls and anonymous identities, and fresh "
-        "sealed Root plus independent Vision labels, and it can never become or "
-        "supply formal authority"
+        "preregistered soft-unit metric and unchanged grain-coherence-support "
+        "morphology schedule before formal r6 generation; it requires a tracked "
+        "runner, a fresh isolated root, a fresh cryptographic blind key, revision-6 "
+        "public, render, code, and cluster domains, revision-7 public commitments, "
+        "newly generated controls and anonymous identities, and fresh sealed Root "
+        "plus independent Vision labels, and it can never become or supply formal "
+        "authority"
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -723,9 +770,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": "non-authority dev-r10 only; no development key, root, output, or commitment can become formal authority",
+        "scope": "non-authority dev-r11 only; no development key, root, output, or commitment can become formal authority",
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r10/private/development-key.bin",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r11/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -736,6 +783,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "same_principal_attack_non_claim_applies": True,
         "closed_private_root_retained_for_forensic_reproducibility": True,
         "key_reuse_in_any_successor_or_formal_operation_forbidden": True,
+        "development_root_existence_is_consumed_evidence": True,
+        "generation_start_required_before_public_output": True,
+        "catchable_post_start_generation_failure_uses_exclusive_failure_report": True,
+        "generation_success_requires_summary_seal_and_completion": True,
+        "public_generation_writes_are_exclusive": True,
     }
     if (
         value.get("development_probe_secret_handling")
@@ -976,10 +1028,12 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "branch_composition_unchanged": True,
             "endpoint_counts_and_rates_unchanged": True,
             "dev_r9_completed_failed_closed": True,
-            "fresh_dev_r10_required": True,
+            "dev_r10_generation_interrupted_failed_closed": True,
+            "fresh_dev_r11_required": True,
             "dev_r7_threshold_or_measurement_reuse_for_formal_forbidden": True,
             "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent": True,
             "dev_r9_measurement_threshold_diagnostic_or_holdout_reuse_forbidden": True,
+            "dev_r10_measurement_or_threshold_reuse_forbidden_because_absent": True,
         }
     ):
         raise RuntimeError("r6 soft-unit reference provenance drift")
@@ -1397,28 +1451,28 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v5"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v6"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
             raise RuntimeError(f"r6 split replicate contract drift: {split_name}")
     blind = value.get("blind_derivation", {})
     if (
-        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v4"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v5/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v5/"
+        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v5"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v6/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v6/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-5 blind derivation domain drift")
+        raise RuntimeError("r6 revision-6 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v5/"
+        != "microtexture-v2-r6/private-condition-cluster/v6/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v6/"
+        != "microtexture-v2-r6/public-payload-commitment/v7/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-5/6 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-6/7 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -2606,10 +2660,179 @@ def validate_dev_r9_failure_audit(value: Any) -> None:
         raise RuntimeError(f"{context} secret-handling drift")
 
 
+def validate_dev_r10_generation_failure_audit(value: Any) -> None:
+    """Validate the sanitized tracked dev-r10 generation-interruption evidence."""
+
+    context = "closed dev-r10 generation-interruption audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "failure_phase",
+            "failure_class",
+            "process_exit_code",
+            "termination_cause_inferred",
+            "operator_observation",
+            "measurement_started",
+            "development_hard_threshold",
+            "holdout_endpoint_performance",
+            "one_shot_contract",
+            "observed_public_state",
+            "captured_generation_binding",
+            "successor_constraints",
+            "secret_handling",
+        },
+        context,
+    )
+    parse_utc_timestamp(value["audit_recorded_at"], f"{context}.audit_recorded_at")
+    if (
+        value["artifact"]
+        != "microtexture-v2-r6-dev-r10-development-generation-interruption-audit"
+        or value["schema_version"]
+        != "microtexture-v2-r6-development-generation-interruption-audit/1"
+        or value["authority"] is not False
+        or value["formal_use_forbidden"] is not True
+        or value["development_edition"] != "r10"
+        or value["outcome"] != "failed_closed"
+        or value["failure_phase"] != "generation"
+        or value["failure_class"]
+        != "unknown-process-termination-after-monitor-loss"
+        or value["process_exit_code"] is not None
+        or value["termination_cause_inferred"] is not False
+        or value["operator_observation"]
+        != "The execution-monitor session became unavailable; a subsequent "
+        "operating-system process scan found no matching development_probe.py "
+        "generate process. The terminal generation summary, seal, and completion "
+        "artifacts were absent."
+        or value["measurement_started"] is not False
+        or value["development_hard_threshold"] is not None
+        or value["holdout_endpoint_performance"] is not None
+    ):
+        raise RuntimeError(f"{context} header/outcome drift")
+    if value["one_shot_contract"] != {
+        "generation_invocation_started_exactly_once": True,
+        "fresh_key_sampling_started_exactly_once": True,
+        "development_root_created": True,
+        "generation_completed": False,
+        "root_vision_started": False,
+        "independent_vision_started": False,
+        "labels_sealed": False,
+        "private_reveal_started": False,
+        "preflight_invoked": False,
+        "analysis_started": False,
+        "numeric_metric_called": False,
+        "threshold_search_started": False,
+        "threshold_frozen": False,
+        "postmortem_invoked": False,
+        "formal_cli_invoked": False,
+        "formal_marker_created": False,
+        "formal_threshold_created": False,
+        "locked_clean_v18_decoded_or_measured": False,
+        "rerun_resume_topup_relabel_key_resampling_or_reuse_for_r10_forbidden": True,
+        "closed_root_retained_unchanged": True,
+        "r10_closed": True,
+    }:
+        raise RuntimeError(f"{context} one-shot contract drift")
+    observed = value["observed_public_state"]
+    require_exact_keys(
+        observed,
+        {
+            "closed_development_root",
+            "development_boundary_present",
+            "development_boundary_last_write_utc",
+            "development_boundary_sha256",
+            "generation_summary_present",
+            "generation_seal_present",
+            "generation_completion_present",
+            "completed_public_splits",
+            "missing_public_splits",
+            "calibration_records",
+            "calibration_contact_sheet_pngs",
+            "calibration_review_board_pngs",
+            "holdout_records",
+            "holdout_contact_sheet_pngs",
+            "holdout_review_board_pngs",
+            "calibration_manifest_sha256",
+            "calibration_blank_labels_sha256",
+            "calibration_review_index_sha256",
+            "generated_pixels_vision_reviewed_for_this_audit",
+            "private_root_contents_inspected_for_this_audit",
+        },
+        f"{context}.observed_public_state",
+    )
+    parse_utc_timestamp(
+        observed["development_boundary_last_write_utc"],
+        f"{context}.development_boundary_last_write_utc",
+    )
+    if observed != {
+        "closed_development_root": "tmp/map-production/microtexture-v2-r6-dev-r10",
+        "development_boundary_present": True,
+        "development_boundary_last_write_utc": "2026-07-29T02:07:56.7630737Z",
+        "development_boundary_sha256": "e0ddba922a9f2d02e2af43397674860b4e8fb5f85a705f9f304a70c20f4da07b",
+        "generation_summary_present": False,
+        "generation_seal_present": False,
+        "generation_completion_present": False,
+        "completed_public_splits": ["calibration"],
+        "missing_public_splits": ["holdout"],
+        "calibration_records": 220,
+        "calibration_contact_sheet_pngs": 185,
+        "calibration_review_board_pngs": 37,
+        "holdout_records": 0,
+        "holdout_contact_sheet_pngs": 0,
+        "holdout_review_board_pngs": 0,
+        "calibration_manifest_sha256": "54d665b91a15ae950adb80d93f8471d17a9d8d9b247c2a6c79921b43ac4d8b94",
+        "calibration_blank_labels_sha256": "e8e462ab06b85216139d2bf61ad434b1b46669b65473df00b3e2357bfa5c996a",
+        "calibration_review_index_sha256": "8d6d3876eb86b6782e26ccc77829e39da519bf0903e8e8ce3c39e698a0d8be0d",
+        "generated_pixels_vision_reviewed_for_this_audit": False,
+        "private_root_contents_inspected_for_this_audit": False,
+    }:
+        raise RuntimeError(f"{context} observed public state drift")
+    if value["captured_generation_binding"] != {
+        "captured_repository_head": "80a7c2f41b77edc56e19ad0880c4352a8aea2d18",
+        "preregistered_spec_sha256": "d5c370a7f87d334a261d197adfd6e1929801436d7b4247affb766a5a5ef162f6",
+        "implementation_bindings_sha256": "e920acd8fd56559cc90bad43e9c80f667d5daffa445f22a341f9a54c4f4db750",
+        "development_runner_sha256": "23d82f9fe467f2682ea32397d195686113bfa292c2086652201622d524e69d53",
+        "blind_key_commitment": "8f2e2e235376fa35a308043448f783374ad526292178a08772cd513c3b45e9fd",
+        "public_nonces": {
+            "calibration": "r6-calibration-v5",
+            "holdout": "r6-holdout-v5",
+        },
+        "runtime_fingerprint_sha256": "6e29f4219eb5e13085ab992894f57095b5e5802dc549f96fe628c353d8503e2d",
+    }:
+        raise RuntimeError(f"{context} captured binding drift")
+    if value["successor_constraints"] != {
+        "r10_data_role": "development_only_generation_interruption_evidence",
+        "formal_r6_must_not_start_from_r10_failure": True,
+        "successor_requires_fresh_preregistered_revision": True,
+        "successor_requires_fresh_root_key_public_nonces_hmac_domains_parameter_nonces_controls_references_identities_codes_commitments_labels_and_measurements": True,
+        "r10_root_key_controls_references_pixels_identities_codes_commitments_labels_measurements_nonces_and_partial_public_surfaces_reuse_forbidden": True,
+        "r10_public_pixels_labels_or_outputs_must_not_be_used_for_successor_tuning": True,
+        "unchanged_preregistered_morphology_metric_threshold_population_and_rate_contract_required": True,
+        "successor_authority_must_be_committed_pushed_and_dual_ci_green_before_generation": True,
+        "formal_r6_root_and_environment_must_remain_absent": True,
+    }:
+        raise RuntimeError(f"{context} successor constraint drift")
+    if value["secret_handling"] != {
+        "blind_key_present_in_this_artifact": False,
+        "blind_key_value_logged_or_tracked": False,
+        "blind_key_bytes_or_private_identity_inspected_for_this_audit": False,
+        "private_labels_measurements_identities_or_pixels_tracked": False,
+        "development_blind_key_and_private_material_reuse_forbidden": True,
+        "closed_temporary_artifact_root": "tmp/map-production/microtexture-v2-r6-dev-r10",
+    }:
+        raise RuntimeError(f"{context} secret-handling drift")
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind closed dev-r7 through dev-r9 audits without private corpora."""
+    """Bind closed dev-r7 through dev-r10 audits without private corpora."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -2682,6 +2905,14 @@ def verify_tracked_development_history(
     if sha256_bytes(dev_r9_payload) != history["dev_r9_failure_audit_sha256"]:
         raise RuntimeError("closed dev-r9 failure audit tracked SHA drift")
     validate_dev_r9_failure_audit(json.loads(dev_r9_payload.decode("utf-8")))
+
+    relative = history["dev_r10_failure_audit"]
+    dev_r10_payload = _tracked_worktree_bytes(repository, captured_head, relative)
+    if sha256_bytes(dev_r10_payload) != history["dev_r10_failure_audit_sha256"]:
+        raise RuntimeError("closed dev-r10 failure audit tracked SHA drift")
+    validate_dev_r10_generation_failure_audit(
+        json.loads(dev_r10_payload.decode("utf-8"))
+    )
 
     # Preserve the historical return contract; callers use this function for its
     # fail-closed checks, but earlier code returned the dev-r7 payload.
