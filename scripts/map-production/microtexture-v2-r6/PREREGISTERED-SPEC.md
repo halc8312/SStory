@@ -44,6 +44,8 @@ cluster/render/code domainsはv5、public commitment domainはv6です。paramet
 `dev-r10-grain-coherence-support-schedule-v1`です。規範JSON、bindings、code、tests、tracked runnerを別commitへ
 freezeし、push後にUbuntu/Windows CIを両方通すまでgenerateしてはいけません。development keyはfresh Git-ignored
 private rootだけへ保持し、値のlog・Git追跡・Vision processでの読取り・formal/後続editionへの再利用を禁止します。
+generate時に記録したmachine/exact runtime fingerprintはpreflight/analyze完了まで完全一致を必須とし、途中のruntime
+変更を検出した場合は継続・再生成せずfail-closedに停止します。
 
 fresh foundation corpus は、非数値の Vision review を通過し SHA-bind された ImageGen `v15`、`v16`、`v17`
 のみです。source は 1536×1024、許可される foundation crop は `[512,320,512,384]`、その中の metric window は

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import os
 import secrets
@@ -32,6 +33,9 @@ EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
 EXPECTED_REVIEW_PAGES_PER_SPLIT = 37
 EXPECTED_CONTACT_SHEETS_PER_SPLIT = 185
 REVIEW_ROWS_PER_PAGE = 6
+REVIEW_HEADER_HEIGHT = 30
+REVIEW_PANEL_HEIGHT = 384
+REVIEW_ROW_HEIGHT = REVIEW_HEADER_HEIGHT + REVIEW_PANEL_HEIGHT
 DEVELOPMENT_POPULATION_FLOORS = {
     "clean_acceptance": 19,
     "warning_acceptance": 13,
@@ -43,6 +47,97 @@ DEVELOPMENT_POPULATION_FLOORS = {
     "spot_reject_detection": 10,
     "short_line_reject_detection": 10,
     "parallel_bundle_reject_detection": 8,
+}
+_GENERATION_STATE_KEYS = {
+    "development_edition",
+    "spec_sha256",
+    "public_nonces",
+    "implementation_bindings_sha256",
+    "blind_key_commitment",
+    "captured_git_head",
+    "runtime",
+}
+_GENERATION_SUMMARY_KEYS = {
+    "artifact",
+    "schema_version",
+    "authority",
+    "formal_use_forbidden",
+    "state",
+    "split_separation",
+    "splits",
+}
+_GENERATION_SPLIT_SEPARATION_KEYS = {
+    "codes_disjoint",
+    "control_ids_disjoint",
+    "cluster_ids_disjoint",
+    "nonzero_delta_hashes_disjoint",
+    "canonical_all_zero_delta_hash_shared",
+}
+_GENERATION_SPLIT_RECEIPT_KEYS = {
+    "split",
+    "record_count",
+    "contact_sheet_count",
+    "review_board_count",
+    "manifest_path",
+    "manifest_sha256",
+    "blank_labels_path",
+    "blank_labels_sha256",
+    "review_index_path",
+    "review_index_sha256",
+}
+_GENERATION_SEAL_KEYS = {
+    "artifact",
+    "schema_version",
+    "authority",
+    "formal_use_forbidden",
+    "generation_summary_sha256",
+    "spec_sha256",
+    "implementation_bindings_sha256",
+    "blind_key_commitment",
+    "captured_git_head",
+}
+_REVIEW_INDEX_KEYS = {
+    "artifact",
+    "schema_version",
+    "authority",
+    "formal_use_forbidden",
+    "split",
+    "spec_sha256",
+    "views",
+    "layout",
+    "pages",
+}
+_REVIEW_INDEX_PAGE_KEYS = {"page_index", "path", "sha256", "item_codes"}
+_DEVELOPMENT_MANIFEST_KEYS = {
+    "artifact",
+    "schema_version",
+    "authority",
+    "formal_use_forbidden",
+    "split",
+    "spec_sha256",
+    "implementation_bindings_sha256",
+    "blind_key_commitment",
+    "captured_git_head",
+    "runtime",
+    "record_count",
+    "records",
+    "contact_sheet_bundle",
+    "warning",
+}
+_DEVELOPMENT_MANIFEST_RECORD_KEYS = {
+    "anonymous_code",
+    "control_commitment",
+    "reference_commitment",
+    "delta_commitment",
+}
+_DEVELOPMENT_CONTACT_SHEET_KEYS = {
+    "view_id",
+    "scale_percent",
+    "source_crop_xywh",
+    "page_index",
+    "path",
+    "sha256",
+    "item_codes",
 }
 sys.path.insert(0, str(CODE_ROOT))
 
@@ -77,9 +172,13 @@ def _write_json_exclusive(path: Path, value: Any) -> str:
 
 
 def _read_json(path: Path) -> dict[str, Any]:
-    value = json.loads(path.read_text(encoding="utf-8"))
+    return _read_json_payload(path.read_bytes(), str(path))
+
+
+def _read_json_payload(payload: bytes, context: str) -> dict[str, Any]:
+    value = json.loads(payload.decode("utf-8"))
     if not isinstance(value, dict):
-        raise RuntimeError(f"development JSON root must be an object: {path}")
+        raise RuntimeError(f"development JSON root must be an object: {context}")
     return value
 
 
@@ -308,14 +407,13 @@ def _tracked_input_preflight(spec: dict[str, Any], spec_sha: str) -> tuple[str, 
     return captured_head, _sha256_file(CODE_ROOT / "implementation-bindings.json")
 
 
-def _review_board(
+def _review_board_payload(
     controls: list[Any],
     views: list[dict[str, Any]],
     page_index: int,
-    output: Path,
-) -> tuple[list[str], str]:
-    panel_width, panel_height = 512, 384
-    header_height = 36
+) -> tuple[list[str], bytes]:
+    panel_width, panel_height = 512, REVIEW_PANEL_HEIGHT
+    header_height = REVIEW_HEADER_HEIGHT
     rows = REVIEW_ROWS_PER_PAGE
     selected = controls[(page_index - 1) * rows : page_index * rows]
     canvas = Image.new(
@@ -341,10 +439,21 @@ def _review_board(
                 font=font,
             )
             canvas.paste(display, (x, y + header_height))
+    stream = io.BytesIO()
+    canvas.save(stream, format="PNG", compress_level=6, optimize=False)
+    return [item.anonymous_code for item in selected], stream.getvalue()
+
+
+def _review_board(
+    controls: list[Any],
+    views: list[dict[str, Any]],
+    page_index: int,
+    output: Path,
+) -> tuple[list[str], str]:
+    codes, payload = _review_board_payload(controls, views, page_index)
     output.parent.mkdir(parents=True, exist_ok=True)
-    canvas.save(output, format="PNG", compress_level=6, optimize=False)
-    payload = output.read_bytes()
-    return [item.anonymous_code for item in selected], _sha256(payload)
+    output.write_bytes(payload)
+    return codes, _sha256(payload)
 
 
 def _generate_split(
@@ -515,45 +624,207 @@ def _checked_dev_file(relative: str, context: str) -> Path:
     return path
 
 
-def _load_generation_state(spec: dict[str, Any], spec_sha: str) -> dict[str, Any]:
-    boundary = _read_json(DEV_ROOT / "DEV-ONLY.json")
-    summary = _read_json(DEV_ROOT / "generation-summary.dev.json")
+def _require_sha256(value: Any, context: str) -> None:
+    if not isinstance(value, str) or len(value) != 64 or any(
+        character not in "0123456789abcdef" for character in value
+    ):
+        raise RuntimeError(f"{context} must be a lowercase SHA-256 digest")
+
+
+def _expected_generation_split_paths(split: str) -> dict[str, str]:
+    prefix = f"public/{split}"
+    return {
+        "manifest_path": f"{prefix}/manifest.dev.json",
+        "blank_labels_path": f"{prefix}/labels.blank.dev.json",
+        "review_index_path": f"{prefix}/review-index.dev.json",
+    }
+
+
+def _validate_generation_summary(
+    summary: dict[str, Any], state: dict[str, Any]
+) -> dict[str, dict[str, Any]]:
+    common.require_exact_keys(
+        summary, _GENERATION_SUMMARY_KEYS, "development generation summary"
+    )
+    if (
+        summary.get("artifact")
+        != "microtexture-v2-r6-development-generation-summary"
+        or summary.get("schema_version")
+        != "microtexture-v2-r6-development-generation-summary/1"
+        or summary.get("authority") is not False
+        or summary.get("formal_use_forbidden") is not True
+        or summary.get("state") != state
+    ):
+        raise RuntimeError("development generation summary metadata drift")
+
+    separation = summary.get("split_separation")
+    common.require_exact_keys(
+        separation,
+        _GENERATION_SPLIT_SEPARATION_KEYS,
+        "development generation split separation",
+    )
+    if any(separation[field] is not True for field in _GENERATION_SPLIT_SEPARATION_KEYS):
+        raise RuntimeError("development generation split separation drift")
+
+    raw_receipts = summary.get("splits")
+    if not isinstance(raw_receipts, list) or len(raw_receipts) != 2:
+        raise RuntimeError("development generation split receipt count drift")
+    if [receipt.get("split") for receipt in raw_receipts if isinstance(receipt, dict)] != [
+        "calibration",
+        "holdout",
+    ]:
+        raise RuntimeError("development generation split receipt order drift")
+    receipts: dict[str, dict[str, Any]] = {}
+    for index, receipt in enumerate(raw_receipts):
+        context = f"development generation split receipt[{index}]"
+        common.require_exact_keys(receipt, _GENERATION_SPLIT_RECEIPT_KEYS, context)
+        split = receipt.get("split")
+        if split not in {"calibration", "holdout"} or split in receipts:
+            raise RuntimeError(f"{context} split drift")
+        expected_paths = _expected_generation_split_paths(split)
+        if (
+            type(receipt.get("record_count")) is not int
+            or receipt.get("record_count") != EXPECTED_RECORDS_PER_SPLIT
+            or type(receipt.get("contact_sheet_count")) is not int
+            or receipt.get("contact_sheet_count")
+            != EXPECTED_CONTACT_SHEETS_PER_SPLIT
+            or type(receipt.get("review_board_count")) is not int
+            or receipt.get("review_board_count")
+            != EXPECTED_REVIEW_PAGES_PER_SPLIT
+            or any(receipt.get(field) != value for field, value in expected_paths.items())
+        ):
+            raise RuntimeError(f"{context} count/path drift")
+        for field in (
+            "manifest_sha256",
+            "blank_labels_sha256",
+            "review_index_sha256",
+        ):
+            _require_sha256(receipt.get(field), f"{context}.{field}")
+        receipts[split] = receipt
+    if set(receipts) != {"calibration", "holdout"}:
+        raise RuntimeError("development generation split receipt coverage drift")
+    return receipts
+
+
+def _verify_public_generation_receipt(
+    split: str, receipt: dict[str, Any]
+) -> dict[str, bytes]:
+    expected_paths = _expected_generation_split_paths(split)
+    captured: dict[str, bytes] = {}
+    for path_field, expected_relative in expected_paths.items():
+        if receipt.get(path_field) != expected_relative:
+            raise RuntimeError(f"{split} generation receipt path drift: {path_field}")
+        sha_field = path_field.replace("_path", "_sha256")
+        path = _checked_dev_file(expected_relative, f"{split} generation receipt")
+        payload = path.read_bytes()
+        if _sha256(payload) != receipt.get(sha_field):
+            raise RuntimeError(f"{split} generation receipt SHA drift: {path_field}")
+        captured[path_field] = payload
+    return captured
+
+
+def _load_generation_state(
+    spec: dict[str, Any], spec_sha: str
+) -> tuple[
+    dict[str, Any], dict[str, dict[str, Any]], dict[str, str]
+]:
+    boundary_path = DEV_ROOT / "DEV-ONLY.json"
+    summary_path = DEV_ROOT / "generation-summary.dev.json"
+    seal_path = DEV_ROOT / "generation-seal.dev.json"
+    boundary_payload = boundary_path.read_bytes()
+    summary_payload = summary_path.read_bytes()
+    seal_payload = seal_path.read_bytes()
+    boundary = _read_json_payload(boundary_payload, str(boundary_path))
+    summary = _read_json_payload(summary_payload, str(summary_path))
+    seal = _read_json_payload(seal_payload, str(seal_path))
+    generation_summary_sha = _sha256(summary_payload)
+    generation_seal_sha = _sha256(seal_payload)
     state = summary.get("state")
     if not isinstance(state, dict):
         raise RuntimeError("development generation state is missing")
+    common.require_exact_keys(state, _GENERATION_STATE_KEYS, "development generation state")
+    common.require_exact_keys(
+        boundary,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "formal_cli_invoked",
+            "formal_marker_created",
+            "formal_threshold_created",
+            "locked_clean_v18_decoded_or_measured",
+            "exact_formal_root_absent_before_generation",
+            "formal_environment_absent_before_generation",
+            *_GENERATION_STATE_KEYS,
+        },
+        "development generation boundary",
+    )
+    common.require_exact_keys(seal, _GENERATION_SEAL_KEYS, "development generation seal")
     expected_bindings_sha = _sha256_file(CODE_ROOT / "implementation-bindings.json")
     if (
-        boundary.get("authority") is not False
+        boundary.get("artifact")
+        != "microtexture-v2-r6-development-only-boundary"
+        or boundary.get("schema_version")
+        != "microtexture-v2-r6-development-only-boundary/1"
+        or boundary.get("authority") is not False
         or boundary.get("formal_use_forbidden") is not True
         or boundary.get("formal_cli_invoked") is not False
         or boundary.get("formal_marker_created") is not False
         or boundary.get("formal_threshold_created") is not False
         or boundary.get("locked_clean_v18_decoded_or_measured") is not False
+        or boundary.get("exact_formal_root_absent_before_generation") is not True
+        or boundary.get("formal_environment_absent_before_generation") is not True
         or state.get("development_edition") != DEVELOPMENT_EDITION
-        or boundary.get("development_edition") != DEVELOPMENT_EDITION
         or state.get("spec_sha256") != spec_sha
         or state.get("public_nonces") != _public_nonces(spec)
         or state.get("implementation_bindings_sha256") != expected_bindings_sha
-        or boundary.get("spec_sha256") != spec_sha
-        or boundary.get("public_nonces") != state.get("public_nonces")
-        or boundary.get("implementation_bindings_sha256") != expected_bindings_sha
-        or boundary.get("blind_key_commitment") != state.get("blind_key_commitment")
+        or not isinstance(state.get("runtime"), dict)
+        or {field: boundary[field] for field in _GENERATION_STATE_KEYS} != state
     ):
         raise RuntimeError("development generation boundary/state drift")
-    return state
-
-
-def _parse_decisions(path: Path) -> dict[tuple[int, int], dict[str, Any]]:
-    decisions: dict[tuple[int, int], dict[str, Any]] = {}
-    for line_number, raw_line in enumerate(
-        path.read_text(encoding="utf-8").splitlines(), start=1
+    for field in (
+        "spec_sha256",
+        "implementation_bindings_sha256",
+        "blind_key_commitment",
     ):
+        _require_sha256(state.get(field), f"development generation state.{field}")
+    if (
+        seal.get("artifact") != "microtexture-v2-r6-development-generation-seal"
+        or seal.get("schema_version")
+        != "microtexture-v2-r6-development-generation-seal/1"
+        or seal.get("authority") is not False
+        or seal.get("formal_use_forbidden") is not True
+        or seal.get("generation_summary_sha256") != generation_summary_sha
+        or seal.get("spec_sha256") != state["spec_sha256"]
+        or seal.get("implementation_bindings_sha256")
+        != state["implementation_bindings_sha256"]
+        or seal.get("blind_key_commitment") != state["blind_key_commitment"]
+        or seal.get("captured_git_head") != state["captured_git_head"]
+    ):
+        raise RuntimeError("development generation seal drift")
+    _require_sha256(
+        seal.get("generation_summary_sha256"),
+        "development generation seal.generation_summary_sha256",
+    )
+    receipts = _validate_generation_summary(summary, state)
+    return state, receipts, {
+        "generation_summary_sha256": generation_summary_sha,
+        "generation_seal_sha256": generation_seal_sha,
+    }
+
+
+def _parse_decisions_payload(
+    payload: bytes, context: str
+) -> dict[tuple[int, int], dict[str, Any]]:
+    decisions: dict[tuple[int, int], dict[str, Any]] = {}
+    for line_number, raw_line in enumerate(payload.decode("utf-8").splitlines(), start=1):
         line = raw_line.strip()
         if not line or line.startswith("#"):
             continue
         parts = line.split(maxsplit=6)
         if len(parts) != 7:
-            raise RuntimeError(f"decision DSL field drift: {path}:{line_number}")
+            raise RuntimeError(f"decision DSL field drift: {context}:{line_number}")
         (
             page_text,
             row_text,
@@ -568,30 +839,30 @@ def _parse_decisions(path: Path) -> dict[tuple[int, int], dict[str, Any]]:
             or not row_text.isdigit()
             or not severity_text.isdigit()
         ):
-            raise RuntimeError(f"decision DSL numeric drift: {path}:{line_number}")
+            raise RuntimeError(f"decision DSL numeric drift: {context}:{line_number}")
         page, row, severity = int(page_text), int(row_text), int(severity_text)
         key = (page, row)
         if key in decisions:
-            raise RuntimeError(f"duplicate decision: {path}:{page_text}/{row_text}")
+            raise RuntimeError(f"duplicate decision: {context}:{page_text}/{row_text}")
         if len(anonymous_code) != 24 or any(
             character not in "0123456789abcdef" for character in anonymous_code
         ):
             raise RuntimeError(
-                f"decision DSL anonymous-code drift: {path}:{line_number}"
+                f"decision DSL anonymous-code drift: {context}:{line_number}"
             )
         if flags_text == "-":
             flags: set[str] = set()
         else:
             flags = set(flags_text.split(","))
             if "" in flags or not flags.issubset(_FLAG_FIELDS):
-                raise RuntimeError(f"decision DSL flag drift: {path}:{line_number}")
+                raise RuntimeError(f"decision DSL flag drift: {context}:{line_number}")
         consistent = (
             (disposition == "clean" and severity == 0 and not flags)
             or (disposition == "warning" and severity == 1 and bool(flags))
             or (disposition == "reject" and severity in {2, 3} and bool(flags))
         )
         if not consistent or not notes:
-            raise RuntimeError(f"decision DSL semantic drift: {path}:{line_number}")
+            raise RuntimeError(f"decision DSL semantic drift: {context}:{line_number}")
         decisions[key] = {
             "anonymous_code": anonymous_code,
             "disposition": disposition,
@@ -602,12 +873,11 @@ def _parse_decisions(path: Path) -> dict[tuple[int, int], dict[str, Any]]:
             "notes": notes,
         }
     return decisions
-
-
-def _verify_bundle_files(entries: Any, context: str) -> None:
+def _verify_bundle_files(entries: Any, context: str) -> dict[str, bytes]:
     if not isinstance(entries, list) or not entries:
         raise RuntimeError(f"{context} bundle is empty")
     seen_paths: set[str] = set()
+    captured: dict[str, bytes] = {}
     for index, entry in enumerate(entries):
         if not isinstance(entry, dict):
             raise RuntimeError(f"{context} bundle entry drift: {index}")
@@ -616,37 +886,69 @@ def _verify_bundle_files(entries: Any, context: str) -> None:
             raise RuntimeError(f"{context} duplicate/invalid path: {index}")
         seen_paths.add(relative)
         path = _checked_dev_file(relative, f"{context}[{index}]")
-        if _sha256_file(path) != expected_sha:
+        payload = path.read_bytes()
+        if _sha256(payload) != expected_sha:
             raise RuntimeError(f"{context} SHA drift: {relative}")
+        captured[relative] = payload
+    return captured
 
 
 def _verify_contact_sheet_layout(
-    entries: list[dict[str, Any]], spec: dict[str, Any], split: str
+    entries: list[dict[str, Any]],
+    spec: dict[str, Any],
+    split: str,
+    expected_codes: list[str],
 ) -> None:
-    expected_views = [str(view["id"]) for view in spec["contact_sheets"]["views"]]
+    configured_views = spec["contact_sheets"]["views"]
+    expected_views = [str(view["id"]) for view in configured_views]
     if len(expected_views) != 5 or len(set(expected_views)) != 5:
         raise RuntimeError(f"{split} development contact-sheet view drift")
     by_view_page: dict[tuple[str, int], list[str]] = {}
-    for entry in entries:
+    for entry_index, entry in enumerate(entries):
+        common.require_exact_keys(
+            entry,
+            _DEVELOPMENT_CONTACT_SHEET_KEYS,
+            f"{split} development contact sheet[{entry_index}]",
+        )
+        expected_view_position = entry_index // EXPECTED_REVIEW_PAGES_PER_SPLIT
+        expected_page_index = entry_index % EXPECTED_REVIEW_PAGES_PER_SPLIT + 1
+        expected_view = configured_views[expected_view_position]
+        expected_view_id = str(expected_view["id"])
         view_id = entry.get("view_id")
         page_index = entry.get("page_index")
         item_codes = entry.get("item_codes")
         key = (view_id, page_index)
+        expected_path = (
+            f"public/{split}/contact-sheets/"
+            f"{expected_view_id}-page-{expected_page_index:03d}.png"
+        )
         if (
-            view_id not in expected_views
+            view_id != expected_view_id
             or type(page_index) is not int
-            or not 1 <= page_index <= EXPECTED_REVIEW_PAGES_PER_SPLIT
+            or page_index != expected_page_index
+            or entry.get("scale_percent") != int(expected_view["scale_percent"])
+            or entry.get("source_crop_xywh")
+            != [int(value) for value in expected_view["source_crop_xywh"]]
+            or entry.get("path") != expected_path
             or key in by_view_page
             or not isinstance(item_codes, list)
         ):
             raise RuntimeError(f"{split} development contact-sheet layout drift")
+        _require_sha256(
+            entry.get("sha256"),
+            f"{split} development contact sheet[{entry_index}].sha256",
+        )
         remaining = EXPECTED_RECORDS_PER_SPLIT - (
             (page_index - 1) * REVIEW_ROWS_PER_PAGE
         )
         expected_count = min(REVIEW_ROWS_PER_PAGE, remaining)
-        if len(item_codes) != expected_count:
+        expected_item_codes = expected_codes[
+            (page_index - 1) * REVIEW_ROWS_PER_PAGE : page_index
+            * REVIEW_ROWS_PER_PAGE
+        ]
+        if len(item_codes) != expected_count or item_codes != expected_item_codes:
             raise RuntimeError(
-                f"{split}/{view_id} contact-sheet row-count drift: {page_index}"
+                f"{split}/{view_id} contact-sheet code-order drift: {page_index}"
             )
         by_view_page[key] = item_codes
     expected_keys = {
@@ -668,7 +970,10 @@ def _verify_contact_sheet_layout(
 
 
 def _prepare_public_split(
-    spec: dict[str, Any], state: dict[str, Any], split: str
+    spec: dict[str, Any],
+    state: dict[str, Any],
+    split: str,
+    generation_receipt: dict[str, Any],
 ) -> dict[str, Any]:
     public_root = DEV_ROOT / "public" / split
     manifest_path = public_root / "manifest.dev.json"
@@ -677,63 +982,141 @@ def _prepare_public_split(
     decisions_path = public_root / "vision-decisions.dev.txt"
     root_decisions_path = public_root / "decisions-root.dev.txt"
     independent_decisions_path = public_root / "decisions-independent.dev.txt"
-    manifest = _read_json(manifest_path)
-    blank_labels = _read_json(blank_labels_path)
-    review_index = _read_json(review_index_path)
-    manifest_sha = _sha256_file(manifest_path)
+    generation_payloads = _verify_public_generation_receipt(split, generation_receipt)
+    manifest_payload = generation_payloads["manifest_path"]
+    blank_labels_payload = generation_payloads["blank_labels_path"]
+    review_index_payload = generation_payloads["review_index_path"]
+    manifest = _read_json_payload(manifest_payload, str(manifest_path))
+    blank_labels = _read_json_payload(blank_labels_payload, str(blank_labels_path))
+    review_index = _read_json_payload(review_index_payload, str(review_index_path))
+    manifest_sha = _sha256(manifest_payload)
+    common.require_exact_keys(
+        manifest, _DEVELOPMENT_MANIFEST_KEYS, f"{split} development manifest"
+    )
     records = manifest.get("records")
     if (
-        manifest.get("authority") is not False
+        manifest.get("artifact")
+        != "microtexture-v2-r6-development-control-manifest"
+        or manifest.get("schema_version")
+        != "microtexture-v2-r6-development-control-manifest/1"
+        or manifest.get("authority") is not False
         or manifest.get("formal_use_forbidden") is not True
         or manifest.get("split") != split
         or manifest.get("spec_sha256") != state["spec_sha256"]
         or manifest.get("implementation_bindings_sha256")
         != state["implementation_bindings_sha256"]
         or manifest.get("blind_key_commitment") != state["blind_key_commitment"]
+        or manifest.get("captured_git_head") != state["captured_git_head"]
+        or manifest.get("runtime") != state["runtime"]
+        or manifest.get("warning")
+        != "DEVELOPMENT ONLY; not a formal r6 manifest or authority artifact."
         or not isinstance(records, list)
         or len(records) != EXPECTED_RECORDS_PER_SPLIT
+        or type(manifest.get("record_count")) is not int
         or manifest.get("record_count") != EXPECTED_RECORDS_PER_SPLIT
         or not isinstance(manifest.get("contact_sheet_bundle"), list)
         or len(manifest["contact_sheet_bundle"]) != EXPECTED_CONTACT_SHEETS_PER_SPLIT
     ):
         raise RuntimeError(f"{split} development manifest drift")
-    codes = [
-        record.get("anonymous_code") for record in records if isinstance(record, dict)
-    ]
+    codes: list[str] = []
+    for index, record in enumerate(records):
+        common.require_exact_keys(
+            record,
+            _DEVELOPMENT_MANIFEST_RECORD_KEYS,
+            f"{split} development manifest record[{index}]",
+        )
+        code = record.get("anonymous_code")
+        if not isinstance(code, str) or len(code) != 24 or any(
+            character not in "0123456789abcdef" for character in code
+        ):
+            raise RuntimeError(f"{split} development manifest code format drift")
+        for field in (
+            "control_commitment",
+            "reference_commitment",
+            "delta_commitment",
+        ):
+            _require_sha256(
+                record.get(field),
+                f"{split} development manifest record[{index}].{field}",
+            )
+        codes.append(code)
     if (
         len(codes) != EXPECTED_RECORDS_PER_SPLIT
         or len(set(codes)) != EXPECTED_RECORDS_PER_SPLIT
+        or codes != sorted(codes)
     ):
         raise RuntimeError(f"{split} development manifest code drift")
-    _verify_bundle_files(manifest["contact_sheet_bundle"], f"{split} contact sheet")
-    _verify_contact_sheet_layout(manifest["contact_sheet_bundle"], spec, split)
+    contact_sheet_payloads = _verify_bundle_files(
+        manifest["contact_sheet_bundle"], f"{split} contact sheet"
+    )
+    _verify_contact_sheet_layout(
+        manifest["contact_sheet_bundle"], spec, split, codes
+    )
 
+    common.require_exact_keys(
+        review_index, _REVIEW_INDEX_KEYS, f"{split} development review-index"
+    )
     pages = review_index.get("pages")
+    expected_review_views = [
+        str(view["id"]) for view in spec["contact_sheets"]["views"]
+    ]
     if (
-        review_index.get("authority") is not False
+        review_index.get("artifact")
+        != "microtexture-v2-r6-development-review-index"
+        or review_index.get("schema_version")
+        != "microtexture-v2-r6-development-review-index/1"
+        or review_index.get("authority") is not False
         or review_index.get("formal_use_forbidden") is not True
         or review_index.get("split") != split
         or review_index.get("spec_sha256") != state["spec_sha256"]
+        or review_index.get("views") != expected_review_views
+        or review_index.get("layout")
+        != "one anonymous code per row with a black header above its panels; full-200 plus all four 400-percent quadrants"
         or not isinstance(pages, list)
         or len(pages) != EXPECTED_REVIEW_PAGES_PER_SPLIT
     ):
         raise RuntimeError(f"{split} development review-index drift")
     page_rows: dict[tuple[int, int], str] = {}
     indexed_codes: list[str] = []
+    review_board_payloads: dict[str, bytes] = {}
     for expected_page, page in enumerate(pages, start=1):
-        if not isinstance(page, dict) or page.get("page_index") != expected_page:
+        common.require_exact_keys(
+            page,
+            _REVIEW_INDEX_PAGE_KEYS,
+            f"{split} review page[{expected_page}]",
+        )
+        if (
+            type(page.get("page_index")) is not int
+            or page.get("page_index") != expected_page
+        ):
             raise RuntimeError(f"{split} review page ordering drift")
         item_codes = page.get("item_codes")
         remaining = EXPECTED_RECORDS_PER_SPLIT - (
             (expected_page - 1) * REVIEW_ROWS_PER_PAGE
         )
         expected_count = min(REVIEW_ROWS_PER_PAGE, remaining)
-        if not isinstance(item_codes, list) or len(item_codes) != expected_count:
+        expected_page_codes = codes[
+            (expected_page - 1) * REVIEW_ROWS_PER_PAGE : expected_page
+            * REVIEW_ROWS_PER_PAGE
+        ]
+        if (
+            not isinstance(item_codes, list)
+            or len(item_codes) != expected_count
+            or item_codes != expected_page_codes
+        ):
             raise RuntimeError(f"{split} review page row-count drift: {expected_page}")
         relative = page.get("path")
+        expected_relative = (
+            f"public/{split}/review-boards/review-page-{expected_page:03d}.png"
+        )
+        if relative != expected_relative:
+            raise RuntimeError(f"{split} review page path drift: {expected_page}")
         path = _checked_dev_file(relative, f"{split} review page {expected_page}")
-        if _sha256_file(path) != page.get("sha256"):
+        _require_sha256(page.get("sha256"), f"{split} review page SHA")
+        payload = path.read_bytes()
+        if _sha256(payload) != page.get("sha256"):
             raise RuntimeError(f"{split} review page SHA drift: {expected_page}")
+        review_board_payloads[relative] = payload
         for row, code in enumerate(item_codes, start=1):
             page_rows[(expected_page, row)] = code
             indexed_codes.append(code)
@@ -744,9 +1127,26 @@ def _prepare_public_split(
     ):
         raise RuntimeError(f"{split} review-index code coverage drift")
 
-    decisions = _parse_decisions(decisions_path)
-    root_decisions = _parse_decisions(root_decisions_path)
-    independent_decisions = _parse_decisions(independent_decisions_path)
+    decision_relatives = {
+        "canonical": f"public/{split}/vision-decisions.dev.txt",
+        "root": f"public/{split}/decisions-root.dev.txt",
+        "independent": f"public/{split}/decisions-independent.dev.txt",
+    }
+    decision_payloads = {
+        reviewer: _checked_dev_file(
+            relative, f"{split} {reviewer} Vision decisions"
+        ).read_bytes()
+        for reviewer, relative in decision_relatives.items()
+    }
+    decisions = _parse_decisions_payload(
+        decision_payloads["canonical"], str(decisions_path)
+    )
+    root_decisions = _parse_decisions_payload(
+        decision_payloads["root"], str(root_decisions_path)
+    )
+    independent_decisions = _parse_decisions_payload(
+        decision_payloads["independent"], str(independent_decisions_path)
+    )
     for reviewer, reviewed in (
         ("canonical Root", decisions),
         ("Root", root_decisions),
@@ -791,37 +1191,52 @@ def _prepare_public_split(
         "split": split,
         "manifest": manifest,
         "manifest_sha256": manifest_sha,
+        "blank_labels_sha256": _sha256(blank_labels_payload),
+        "review_index": review_index,
+        "contact_sheet_payloads": contact_sheet_payloads,
+        "review_board_payloads": review_board_payloads,
         "completed_labels": completed,
         "labels": labels,
         "completed_labels_sha256": _sha256(_json_bytes(completed)),
-        "review_index_sha256": _sha256_file(review_index_path),
-        "decisions_sha256": _sha256_file(decisions_path),
-        "root_decisions_sha256": _sha256_file(root_decisions_path),
-        "independent_decisions_sha256": _sha256_file(independent_decisions_path),
+        "review_index_sha256": _sha256(review_index_payload),
+        "decisions_sha256": _sha256(decision_payloads["canonical"]),
+        "root_decisions_sha256": _sha256(decision_payloads["root"]),
+        "independent_decisions_sha256": _sha256(
+            decision_payloads["independent"]
+        ),
         "root_independent_logical_difference_count": logical_difference_count,
         "dispositions": dict(Counter(item["disposition"] for item in labels.values())),
     }
 
 
-def _public_preflight() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+def _public_preflight() -> tuple[
+    dict[str, Any], dict[str, Any], dict[str, str], dict[str, Any]
+]:
     _assert_development_boundary(root_must_not_exist=False)
     spec, spec_sha = _load_spec()
-    state = _load_generation_state(spec, spec_sha)
+    state, generation_receipts, generation_binding = _load_generation_state(
+        spec, spec_sha
+    )
     captured_head, bindings_sha = _tracked_input_preflight(spec, spec_sha)
     if (
         state.get("captured_git_head") != captured_head
         or state.get("implementation_bindings_sha256") != bindings_sha
+        or state.get("runtime") != common.runtime_fingerprint()
     ):
-        raise RuntimeError("development captured authority changed after generation")
+        raise RuntimeError(
+            "development captured authority or runtime changed after generation"
+        )
     prepared = {
-        split: _prepare_public_split(spec, state, split)
+        split: _prepare_public_split(
+            spec, state, split, generation_receipts[split]
+        )
         for split in ("calibration", "holdout")
     }
-    return spec, state, prepared
+    return spec, state, generation_binding, prepared
 
 
 def preflight() -> None:
-    _spec, _state, prepared = _public_preflight()
+    _spec, _state, _generation_binding, prepared = _public_preflight()
     _assert_development_boundary(root_must_not_exist=False)
     print(
         json.dumps(
@@ -873,6 +1288,74 @@ def _regenerate_controls(
     if manifest_codes != set(by_code):
         raise RuntimeError(f"{split} regenerated manifest code drift")
     return controls
+
+
+def _verify_regenerated_review_surfaces(
+    spec: dict[str, Any],
+    split: str,
+    controls: list[Any],
+    manifest: dict[str, Any],
+    review_index: dict[str, Any],
+    contact_sheet_payloads: dict[str, bytes],
+    review_board_payloads: dict[str, bytes],
+) -> None:
+    regenerated_sheets = contact_sheet_pages(spec, split, controls)
+    recorded_sheets = manifest.get("contact_sheet_bundle")
+    if (
+        not isinstance(recorded_sheets, list)
+        or len(recorded_sheets) != EXPECTED_CONTACT_SHEETS_PER_SPLIT
+        or len(regenerated_sheets) != EXPECTED_CONTACT_SHEETS_PER_SPLIT
+    ):
+        raise RuntimeError(f"{split} regenerated contact-sheet coverage drift")
+    expected_sheet_paths: set[str] = set()
+    for index, (regenerated, recorded) in enumerate(
+        zip(regenerated_sheets, recorded_sheets, strict=True)
+    ):
+        expected_entry = regenerated.manifest_entry()
+        expected_entry["path"] = (
+            f"public/{split}/contact-sheets/{Path(regenerated.path).name}"
+        )
+        if recorded != expected_entry:
+            raise RuntimeError(
+                f"{split} regenerated contact-sheet manifest drift: {index}"
+            )
+        expected_sheet_paths.add(expected_entry["path"])
+        if contact_sheet_payloads.get(expected_entry["path"]) != regenerated.png_bytes:
+            raise RuntimeError(
+                f"{split} regenerated contact-sheet byte drift: {index}"
+            )
+    if set(contact_sheet_payloads) != expected_sheet_paths:
+        raise RuntimeError(f"{split} regenerated contact-sheet capture drift")
+
+    recorded_boards = review_index.get("pages")
+    if (
+        not isinstance(recorded_boards, list)
+        or len(recorded_boards) != EXPECTED_REVIEW_PAGES_PER_SPLIT
+    ):
+        raise RuntimeError(f"{split} regenerated review-board coverage drift")
+    expected_board_paths: set[str] = set()
+    for page_index, recorded in enumerate(recorded_boards, start=1):
+        codes, payload = _review_board_payload(
+            controls, spec["contact_sheets"]["views"], page_index
+        )
+        expected_path = f"public/{split}/review-boards/review-page-{page_index:03d}.png"
+        if (
+            type(recorded.get("page_index")) is not int
+            or recorded.get("page_index") != page_index
+            or recorded.get("path") != expected_path
+            or recorded.get("sha256") != _sha256(payload)
+            or recorded.get("item_codes") != codes
+        ):
+            raise RuntimeError(
+                f"{split} regenerated review-board index drift: {page_index}"
+            )
+        expected_board_paths.add(expected_path)
+        if review_board_payloads.get(expected_path) != payload:
+            raise RuntimeError(
+                f"{split} regenerated review-board byte drift: {page_index}"
+            )
+    if set(review_board_payloads) != expected_board_paths:
+        raise RuntimeError(f"{split} regenerated review-board capture drift")
 
 
 def _eligible_clusters(controls: list[Any], spec: dict[str, Any]) -> dict[str, str]:
@@ -987,8 +1470,56 @@ def _population_audit(
     }
 
 
+def _regenerate_and_audit_population(
+    spec: dict[str, Any],
+    key: bytes,
+    prepared: dict[str, dict[str, Any]],
+) -> tuple[
+    dict[str, list[Any]],
+    dict[str, dict[str, str]],
+    dict[str, Any],
+]:
+    controls: dict[str, list[Any]] = {}
+    for split, result in prepared.items():
+        split_controls = _regenerate_controls(spec, key, split, result["manifest"])
+        controls[split] = split_controls
+        _verify_regenerated_review_surfaces(
+            spec,
+            split,
+            split_controls,
+            result["manifest"],
+            result["review_index"],
+            result["contact_sheet_payloads"],
+            result["review_board_payloads"],
+        )
+
+    clusters: dict[str, dict[str, str]] = {}
+    for split, result in prepared.items():
+        split_controls = controls[split]
+        common.validate_private_vision_label_audits(
+            result["labels"],
+            [
+                {
+                    "anonymous_code": control.anonymous_code,
+                    "private_role": control.private_role,
+                    "duplicate_audit_group": control.duplicate_audit_group,
+                }
+                for control in split_controls
+            ],
+            f"{split} development sealed labels",
+        )
+        clusters[split] = _eligible_clusters(split_controls, spec)
+
+    population: dict[str, Any] = {}
+    for split, result in prepared.items():
+        population[split] = _population_audit(
+            result["labels"], clusters[split], spec, split
+        )
+    return controls, clusters, population
+
+
 def analyze() -> None:
-    spec, state, prepared = _public_preflight()
+    spec, state, generation_binding, prepared = _public_preflight()
     _assert_private_analysis_boundary(analysis_must_exist=False)
     if PRIVATE_ANALYSIS_ROOT.exists() or PRIVATE_ANALYSIS_ROOT.is_symlink():
         raise RuntimeError(
@@ -1010,6 +1541,7 @@ def analyze() -> None:
                 "path": relative.as_posix(),
                 "sha256": digest,
                 "manifest_sha256": result["manifest_sha256"],
+                "blank_labels_sha256": result["blank_labels_sha256"],
                 "review_index_sha256": result["review_index_sha256"],
                 "decisions_sha256": result["decisions_sha256"],
                 "root_decisions_sha256": result["root_decisions_sha256"],
@@ -1022,7 +1554,7 @@ def analyze() -> None:
             }
         seal_receipt = {
             "artifact": "microtexture-v2-r6-development-label-seal",
-            "schema_version": "microtexture-v2-r6-development-label-seal/1",
+            "schema_version": "microtexture-v2-r6-development-label-seal/2",
             "authority": False,
             "formal_use_forbidden": True,
             "root_vision_blind_during_all_decisions": True,
@@ -1030,6 +1562,7 @@ def analyze() -> None:
             "spec_sha256": state["spec_sha256"],
             "implementation_bindings_sha256": state["implementation_bindings_sha256"],
             "blind_key_commitment": state["blind_key_commitment"],
+            **generation_binding,
             "splits": sealed,
         }
         seal_sha = _write_json_exclusive(
@@ -1043,28 +1576,9 @@ def analyze() -> None:
         ):
             raise RuntimeError("development blind-key commitment drift")
 
-        controls: dict[str, list[Any]] = {}
-        clusters: dict[str, dict[str, str]] = {}
-        population: dict[str, Any] = {}
-        for split, result in prepared.items():
-            split_controls = _regenerate_controls(spec, key, split, result["manifest"])
-            controls[split] = split_controls
-            common.validate_private_vision_label_audits(
-                result["labels"],
-                [
-                    {
-                        "anonymous_code": control.anonymous_code,
-                        "private_role": control.private_role,
-                        "duplicate_audit_group": control.duplicate_audit_group,
-                    }
-                    for control in split_controls
-                ],
-                f"{split} development sealed labels",
-            )
-            clusters[split] = _eligible_clusters(split_controls, spec)
-            population[split] = _population_audit(
-                result["labels"], clusters[split], spec, split
-            )
+        controls, clusters, population = _regenerate_and_audit_population(
+            spec, key, prepared
+        )
         population_artifact = {
             "artifact": "microtexture-v2-r6-development-premeasurement-population-audit",
             "schema_version": "microtexture-v2-r6-development-premeasurement-population-audit/1",
@@ -1199,7 +1713,7 @@ def postmortem() -> None:
     failure = PRIVATE_ANALYSIS_ROOT / "FAILED.dev.json"
     if not failure.is_file():
         raise RuntimeError("development postmortem requires a closed failed probe")
-    spec, state, prepared = _public_preflight()
+    spec, state, _generation_binding, prepared = _public_preflight()
     key = (DEV_ROOT / "private" / "development-key.bin").read_bytes()
     if len(key) != 32 or common.blind_commitment(key) != state["blind_key_commitment"]:
         raise RuntimeError("development blind-key commitment drift")
@@ -1334,22 +1848,38 @@ def generate() -> None:
         }
         for result in results
     ]
-    _write_json(
-        DEV_ROOT / "generation-summary.dev.json",
+    generation_summary = {
+        "artifact": "microtexture-v2-r6-development-generation-summary",
+        "schema_version": "microtexture-v2-r6-development-generation-summary/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "state": state,
+        "split_separation": {
+            "codes_disjoint": True,
+            "control_ids_disjoint": True,
+            "cluster_ids_disjoint": True,
+            "nonzero_delta_hashes_disjoint": True,
+            "canonical_all_zero_delta_hash_shared": True,
+        },
+        "splits": public_results,
+    }
+    generation_summary_sha = _write_json_exclusive(
+        DEV_ROOT / "generation-summary.dev.json", generation_summary
+    )
+    generation_seal_sha = _write_json_exclusive(
+        DEV_ROOT / "generation-seal.dev.json",
         {
-            "artifact": "microtexture-v2-r6-development-generation-summary",
-            "schema_version": "microtexture-v2-r6-development-generation-summary/1",
+            "artifact": "microtexture-v2-r6-development-generation-seal",
+            "schema_version": "microtexture-v2-r6-development-generation-seal/1",
             "authority": False,
             "formal_use_forbidden": True,
-            "state": state,
-            "split_separation": {
-                "codes_disjoint": True,
-                "control_ids_disjoint": True,
-                "cluster_ids_disjoint": True,
-                "nonzero_delta_hashes_disjoint": True,
-                "canonical_all_zero_delta_hash_shared": True,
-            },
-            "splits": public_results,
+            "generation_summary_sha256": generation_summary_sha,
+            "spec_sha256": state["spec_sha256"],
+            "implementation_bindings_sha256": state[
+                "implementation_bindings_sha256"
+            ],
+            "blind_key_commitment": state["blind_key_commitment"],
+            "captured_git_head": state["captured_git_head"],
         },
     )
     _assert_development_boundary(root_must_not_exist=False)
@@ -1359,6 +1889,8 @@ def generate() -> None:
                 "development_root": str(DEV_ROOT),
                 "authority": False,
                 "formal_root_absent": True,
+                "generation_summary_sha256": generation_summary_sha,
+                "generation_seal_sha256": generation_seal_sha,
                 "splits": public_results,
             },
             ensure_ascii=False,
@@ -1381,7 +1913,7 @@ def review_crops(split: str, page_index: int) -> None:
         / f"review-page-{page_index:03d}.png"
     )
     with Image.open(source) as board:
-        if board.size != (2560, 2520):
+        if board.size != (2560, REVIEW_ROW_HEIGHT * REVIEW_ROWS_PER_PAGE):
             raise RuntimeError("review board dimensions drift")
         output_root = DEV_ROOT / "public" / split / "review-crops"
         output_root.mkdir(parents=True, exist_ok=True)
@@ -1390,7 +1922,7 @@ def review_crops(split: str, page_index: int) -> None:
         evidence_font = ImageFont.load_default(size=14)
         quadrant_ids = ("NW", "NE", "SW", "SE")
         for row_index in range(REVIEW_ROWS_PER_PAGE):
-            image_top = row_index * 420 + 36
+            image_top = row_index * REVIEW_ROW_HEIGHT + REVIEW_HEADER_HEIGHT
             for quadrant_column, quadrant_id in enumerate(quadrant_ids, start=1):
                 panel_left = quadrant_column * 512
                 for division in (1, 2):
@@ -1430,9 +1962,9 @@ def review_crops(split: str, page_index: int) -> None:
             optimize=False,
         )
         for row in range(1, REVIEW_ROWS_PER_PAGE + 1):
-            top = (row - 1) * 420
+            top = (row - 1) * REVIEW_ROW_HEIGHT
             output = output_root / f"review-page-{page_index:03d}-row-{row}.png"
-            board.crop((0, top, 2560, top + 420)).save(
+            board.crop((0, top, 2560, top + REVIEW_ROW_HEIGHT)).save(
                 output, format="PNG", compress_level=6, optimize=False
             )
 

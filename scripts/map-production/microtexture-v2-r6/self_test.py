@@ -171,6 +171,89 @@ def _private_label_audit_fixture() -> tuple[
     return labels, rows
 
 
+def _development_generation_documents(
+    spec: dict[str, object],
+) -> tuple[
+    dict[str, object],
+    dict[str, object],
+    dict[str, object],
+    dict[str, object],
+]:
+    bindings_sha = hashlib.sha256(
+        (development_probe.CODE_ROOT / "implementation-bindings.json").read_bytes()
+    ).hexdigest()
+    state: dict[str, object] = {
+        "development_edition": "r10",
+        "spec_sha256": common.SPEC_SHA256,
+        "public_nonces": development_probe._public_nonces(spec),
+        "implementation_bindings_sha256": bindings_sha,
+        "blind_key_commitment": "b" * 64,
+        "captured_git_head": "c" * 40,
+        "runtime": {"test_fixture": True},
+    }
+    boundary: dict[str, object] = {
+        "artifact": "microtexture-v2-r6-development-only-boundary",
+        "schema_version": "microtexture-v2-r6-development-only-boundary/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "formal_cli_invoked": False,
+        "formal_marker_created": False,
+        "formal_threshold_created": False,
+        "locked_clean_v18_decoded_or_measured": False,
+        "exact_formal_root_absent_before_generation": True,
+        "formal_environment_absent_before_generation": True,
+        **state,
+    }
+    receipts: list[dict[str, object]] = []
+    for split, fill in (("calibration", "1"), ("holdout", "2")):
+        prefix = f"public/{split}"
+        receipts.append(
+            {
+                "split": split,
+                "record_count": 220,
+                "contact_sheet_count": 185,
+                "review_board_count": 37,
+                "manifest_path": f"{prefix}/manifest.dev.json",
+                "manifest_sha256": fill * 64,
+                "blank_labels_path": f"{prefix}/labels.blank.dev.json",
+                "blank_labels_sha256": fill * 64,
+                "review_index_path": f"{prefix}/review-index.dev.json",
+                "review_index_sha256": fill * 64,
+            }
+        )
+    summary: dict[str, object] = {
+        "artifact": "microtexture-v2-r6-development-generation-summary",
+        "schema_version": "microtexture-v2-r6-development-generation-summary/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "state": state,
+        "split_separation": {
+            "codes_disjoint": True,
+            "control_ids_disjoint": True,
+            "cluster_ids_disjoint": True,
+            "nonzero_delta_hashes_disjoint": True,
+            "canonical_all_zero_delta_hash_shared": True,
+        },
+        "splits": receipts,
+    }
+    seal: dict[str, object] = {
+        "artifact": "microtexture-v2-r6-development-generation-seal",
+        "schema_version": "microtexture-v2-r6-development-generation-seal/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "generation_summary_sha256": hashlib.sha256(
+            development_probe._json_bytes(summary)
+        ).hexdigest(),
+        "spec_sha256": state["spec_sha256"],
+        "implementation_bindings_sha256": state[
+            "implementation_bindings_sha256"
+        ],
+        "blind_key_commitment": state["blind_key_commitment"],
+        "captured_git_head": state["captured_git_head"],
+    }
+    return state, boundary, summary, seal
+
+
 class MicrotextureR6SelfTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -836,6 +919,568 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 development_probe._validate_development_key_git_boundary(
                     self.spec, captured_head
                 )
+
+    def test_dev_r10_generation_summary_is_exact_and_sealed(self) -> None:
+        state, boundary, summary, seal = _development_generation_documents(self.spec)
+
+        def write_documents(
+            root: Path,
+            current_boundary: dict[str, object],
+            current_summary: dict[str, object],
+            current_seal: dict[str, object],
+        ) -> None:
+            root.mkdir(parents=True, exist_ok=True)
+            (root / "DEV-ONLY.json").write_bytes(
+                development_probe._json_bytes(current_boundary)
+            )
+            (root / "generation-summary.dev.json").write_bytes(
+                development_probe._json_bytes(current_summary)
+            )
+            (root / "generation-seal.dev.json").write_bytes(
+                development_probe._json_bytes(current_seal)
+            )
+
+        def resign(
+            current_summary: dict[str, object], current_seal: dict[str, object]
+        ) -> None:
+            current_seal["generation_summary_sha256"] = hashlib.sha256(
+                development_probe._json_bytes(current_summary)
+            ).hexdigest()
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "dev-r10"
+            with mock.patch.object(development_probe, "DEV_ROOT", root):
+                write_documents(root, boundary, summary, seal)
+                loaded_state, receipts, binding = (
+                    development_probe._load_generation_state(
+                        self.spec, common.SPEC_SHA256
+                    )
+                )
+                self.assertEqual(loaded_state, state)
+                self.assertEqual(set(receipts), {"calibration", "holdout"})
+                self.assertEqual(
+                    binding["generation_summary_sha256"],
+                    seal["generation_summary_sha256"],
+                )
+
+                cases = [
+                    (
+                        "summary unknown field",
+                        lambda _boundary, current_summary, _seal: current_summary.update(
+                            {"unexpected": True}
+                        ),
+                        True,
+                    ),
+                    (
+                        "boundary unknown field",
+                        lambda current_boundary, _summary, _seal: current_boundary.update(
+                            {"unexpected": True}
+                        ),
+                        False,
+                    ),
+                    (
+                        "seal unknown field",
+                        lambda _boundary, _summary, current_seal: current_seal.update(
+                            {"unexpected": True}
+                        ),
+                        False,
+                    ),
+                    (
+                        "false split separation",
+                        lambda _boundary, current_summary, _seal: current_summary[
+                            "split_separation"
+                        ].update({"codes_disjoint": False}),
+                        True,
+                    ),
+                    (
+                        "duplicate split",
+                        lambda _boundary, current_summary, _seal: current_summary.update(
+                            {
+                                "splits": [
+                                    copy.deepcopy(current_summary["splits"][0]),
+                                    copy.deepcopy(current_summary["splits"][0]),
+                                ]
+                            }
+                        ),
+                        True,
+                    ),
+                    (
+                        "split order drift",
+                        lambda _boundary, current_summary, _seal: current_summary[
+                            "splits"
+                        ].reverse(),
+                        True,
+                    ),
+                    (
+                        "record count drift",
+                        lambda _boundary, current_summary, _seal: current_summary[
+                            "splits"
+                        ][0].update({"record_count": 219}),
+                        True,
+                    ),
+                    (
+                        "noninteger record count",
+                        lambda _boundary, current_summary, _seal: current_summary[
+                            "splits"
+                        ][0].update({"record_count": 220.0}),
+                        True,
+                    ),
+                    (
+                        "noncanonical path",
+                        lambda _boundary, current_summary, _seal: current_summary[
+                            "splits"
+                        ][0].update({"review_index_path": "../review-index.dev.json"}),
+                        True,
+                    ),
+                ]
+                for label, mutate, should_resign in cases:
+                    with self.subTest(label=label):
+                        current_boundary = copy.deepcopy(boundary)
+                        current_summary = copy.deepcopy(summary)
+                        current_seal = copy.deepcopy(seal)
+                        mutate(current_boundary, current_summary, current_seal)
+                        if should_resign:
+                            resign(current_summary, current_seal)
+                        write_documents(
+                            root, current_boundary, current_summary, current_seal
+                        )
+                        with self.assertRaises(RuntimeError):
+                            development_probe._load_generation_state(
+                                self.spec, common.SPEC_SHA256
+                            )
+
+                changed_summary = copy.deepcopy(summary)
+                changed_summary["authority"] = True
+                write_documents(root, boundary, changed_summary, seal)
+                with self.assertRaisesRegex(RuntimeError, "generation seal drift"):
+                    development_probe._load_generation_state(
+                        self.spec, common.SPEC_SHA256
+                    )
+
+    def test_dev_r10_public_preflight_requires_exact_generation_runtime(self) -> None:
+        state, _boundary, summary, _seal = _development_generation_documents(self.spec)
+        receipts = {
+            receipt["split"]: receipt for receipt in summary["splits"]
+        }
+        binding = {
+            "generation_summary_sha256": "1" * 64,
+            "generation_seal_sha256": "2" * 64,
+        }
+        with (
+            mock.patch.object(development_probe, "_assert_development_boundary"),
+            mock.patch.object(
+                development_probe,
+                "_load_spec",
+                return_value=(self.spec, common.SPEC_SHA256),
+            ),
+            mock.patch.object(
+                development_probe,
+                "_load_generation_state",
+                return_value=(state, receipts, binding),
+            ),
+            mock.patch.object(
+                development_probe,
+                "_tracked_input_preflight",
+                return_value=(
+                    state["captured_git_head"],
+                    state["implementation_bindings_sha256"],
+                ),
+            ),
+            mock.patch.object(
+                common, "runtime_fingerprint", return_value={"different": True}
+            ),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "runtime changed"):
+                development_probe._public_preflight()
+
+        with (
+            mock.patch.object(development_probe, "_assert_development_boundary"),
+            mock.patch.object(
+                development_probe,
+                "_load_spec",
+                return_value=(self.spec, common.SPEC_SHA256),
+            ),
+            mock.patch.object(
+                development_probe,
+                "_load_generation_state",
+                return_value=(state, receipts, binding),
+            ),
+            mock.patch.object(
+                development_probe,
+                "_tracked_input_preflight",
+                return_value=(
+                    state["captured_git_head"],
+                    state["implementation_bindings_sha256"],
+                ),
+            ),
+            mock.patch.object(common, "runtime_fingerprint", return_value=state["runtime"]),
+            mock.patch.object(
+                development_probe,
+                "_prepare_public_split",
+                side_effect=lambda _spec, _state, split, _receipt: {"split": split},
+            ),
+        ):
+            loaded_spec, loaded_state, loaded_binding, prepared = (
+                development_probe._public_preflight()
+            )
+        self.assertIs(loaded_spec, self.spec)
+        self.assertEqual(loaded_state, state)
+        self.assertEqual(loaded_binding, binding)
+        self.assertEqual(set(prepared), {"calibration", "holdout"})
+
+    def test_dev_r10_generation_receipt_detects_post_generation_public_rewrites(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "dev-r10"
+            public_root = root / "public" / "calibration"
+            public_root.mkdir(parents=True)
+            payloads = {
+                "manifest_path": b"manifest-at-generation\n",
+                "blank_labels_path": b"blank-labels-at-generation\n",
+                "review_index_path": b"review-index-at-generation\n",
+            }
+            paths = development_probe._expected_generation_split_paths("calibration")
+            receipt: dict[str, object] = {
+                "split": "calibration",
+                "record_count": 220,
+                "contact_sheet_count": 185,
+                "review_board_count": 37,
+            }
+            for field, relative in paths.items():
+                target = root / Path(relative)
+                target.write_bytes(payloads[field])
+                receipt[field] = relative
+                receipt[field.replace("_path", "_sha256")] = hashlib.sha256(
+                    payloads[field]
+                ).hexdigest()
+
+            with mock.patch.object(development_probe, "DEV_ROOT", root):
+                captured = development_probe._verify_public_generation_receipt(
+                    "calibration", receipt
+                )
+                self.assertEqual(captured, payloads)
+
+                for field, relative in paths.items():
+                    with self.subTest(field=field):
+                        target = root / Path(relative)
+                        original = target.read_bytes()
+                        target.write_bytes(original + b"joint-rewrite")
+                        with self.assertRaisesRegex(RuntimeError, "receipt SHA drift"):
+                            development_probe._verify_public_generation_receipt(
+                                "calibration", receipt
+                            )
+                        target.write_bytes(original)
+
+                wrong_path = copy.deepcopy(receipt)
+                wrong_path["review_index_path"] = "public/holdout/review-index.dev.json"
+                with self.assertRaisesRegex(RuntimeError, "receipt path drift"):
+                    development_probe._verify_public_generation_receipt(
+                        "calibration", wrong_path
+                    )
+
+    def test_dev_r10_secret_regeneration_binds_preflight_surface_bytes(self) -> None:
+        split = "calibration"
+        regenerated_sheets: list[types.SimpleNamespace] = []
+        recorded_sheets: list[dict[str, object]] = []
+        contact_payloads: dict[str, bytes] = {}
+        for index in range(185):
+            source_path = f"controls/{split}/contact-sheets/sheet-{index:03d}.png"
+            payload = f"sheet-{index}".encode("ascii")
+            entry = {
+                "path": source_path,
+                "sha256": hashlib.sha256(payload).hexdigest(),
+                "item_codes": [f"{index:024x}"],
+            }
+            regenerated_sheets.append(
+                types.SimpleNamespace(
+                    path=source_path,
+                    png_bytes=payload,
+                    manifest_entry=lambda entry=entry: copy.deepcopy(entry),
+                )
+            )
+            recorded = copy.deepcopy(entry)
+            recorded["path"] = f"public/{split}/contact-sheets/{Path(source_path).name}"
+            recorded_sheets.append(recorded)
+            contact_payloads[recorded["path"]] = payload
+
+        board_payloads: dict[str, bytes] = {}
+        board_results: dict[int, tuple[list[str], bytes]] = {}
+        board_pages: list[dict[str, object]] = []
+        for page_index in range(1, 38):
+            path = f"public/{split}/review-boards/review-page-{page_index:03d}.png"
+            codes = [f"{page_index:024x}"]
+            payload = f"board-{page_index}".encode("ascii")
+            board_results[page_index] = (codes, payload)
+            board_payloads[path] = payload
+            board_pages.append(
+                {
+                    "page_index": page_index,
+                    "path": path,
+                    "sha256": hashlib.sha256(payload).hexdigest(),
+                    "item_codes": codes,
+                }
+            )
+
+        def board_payload(
+            _controls: list[object], _views: list[dict[str, object]], page_index: int
+        ) -> tuple[list[str], bytes]:
+            return board_results[page_index]
+
+        manifest = {"contact_sheet_bundle": recorded_sheets}
+        review_index = {"pages": board_pages}
+        with (
+            mock.patch.object(
+                development_probe,
+                "contact_sheet_pages",
+                return_value=regenerated_sheets,
+            ),
+            mock.patch.object(
+                development_probe, "_review_board_payload", side_effect=board_payload
+            ),
+        ):
+            development_probe._verify_regenerated_review_surfaces(
+                self.spec,
+                split,
+                [object()],
+                manifest,
+                review_index,
+                contact_payloads,
+                board_payloads,
+            )
+
+            changed_sheets = dict(contact_payloads)
+            first_sheet = next(iter(changed_sheets))
+            changed_sheets[first_sheet] += b"rewritten"
+            with self.assertRaisesRegex(RuntimeError, "contact-sheet byte drift"):
+                development_probe._verify_regenerated_review_surfaces(
+                    self.spec,
+                    split,
+                    [object()],
+                    manifest,
+                    review_index,
+                    changed_sheets,
+                    board_payloads,
+                )
+
+            changed_boards = dict(board_payloads)
+            first_board = next(iter(changed_boards))
+            changed_boards[first_board] += b"rewritten"
+            with self.assertRaisesRegex(RuntimeError, "review-board byte drift"):
+                development_probe._verify_regenerated_review_surfaces(
+                    self.spec,
+                    split,
+                    [object()],
+                    manifest,
+                    review_index,
+                    contact_payloads,
+                    changed_boards,
+                )
+
+            boolean_page_index = copy.deepcopy(review_index)
+            boolean_page_index["pages"][0]["page_index"] = True
+            with self.assertRaisesRegex(RuntimeError, "review-board index drift"):
+                development_probe._verify_regenerated_review_surfaces(
+                    self.spec,
+                    split,
+                    [object()],
+                    manifest,
+                    boolean_page_index,
+                    contact_payloads,
+                    board_payloads,
+                )
+
+    def test_dev_r10_contact_sheet_layout_is_canonical_and_code_ordered(self) -> None:
+        split = "calibration"
+        codes = [f"{index:024x}" for index in range(220)]
+        entries: list[dict[str, object]] = []
+        for view in self.spec["contact_sheets"]["views"]:
+            view_id = str(view["id"])
+            for page_index in range(1, 38):
+                entries.append(
+                    {
+                        "view_id": view_id,
+                        "scale_percent": int(view["scale_percent"]),
+                        "source_crop_xywh": [
+                            int(value) for value in view["source_crop_xywh"]
+                        ],
+                        "page_index": page_index,
+                        "path": (
+                            f"public/{split}/contact-sheets/"
+                            f"{view_id}-page-{page_index:03d}.png"
+                        ),
+                        "sha256": "a" * 64,
+                        "item_codes": codes[
+                            (page_index - 1) * 6 : page_index * 6
+                        ],
+                    }
+                )
+        development_probe._verify_contact_sheet_layout(
+            entries, self.spec, split, codes
+        )
+
+        cases = []
+        unknown = copy.deepcopy(entries)
+        unknown[0]["unexpected"] = True
+        cases.append(("unknown field", unknown))
+        wrong_path = copy.deepcopy(entries)
+        wrong_path[0]["path"] = "public/holdout/contact-sheets/wrong.png"
+        cases.append(("noncanonical path", wrong_path))
+        wrong_order = copy.deepcopy(entries)
+        wrong_order[0]["item_codes"][:2] = reversed(
+            wrong_order[0]["item_codes"][:2]
+        )
+        cases.append(("code order", wrong_order))
+        reordered_entries = copy.deepcopy(entries)
+        reordered_entries[0], reordered_entries[1] = (
+            reordered_entries[1],
+            reordered_entries[0],
+        )
+        cases.append(("entry order", reordered_entries))
+        wrong_geometry = copy.deepcopy(entries)
+        wrong_geometry[0]["source_crop_xywh"][0] += 1
+        cases.append(("view geometry", wrong_geometry))
+        boolean_page = copy.deepcopy(entries)
+        boolean_page[0]["page_index"] = True
+        cases.append(("boolean page index", boolean_page))
+        for label, candidate in cases:
+            with self.subTest(label=label):
+                with self.assertRaises(RuntimeError):
+                    development_probe._verify_contact_sheet_layout(
+                        candidate, self.spec, split, codes
+                    )
+
+    def test_dev_r10_review_board_uses_contractual_30px_headers(self) -> None:
+        self.assertEqual(development_probe.REVIEW_HEADER_HEIGHT, 30)
+        self.assertEqual(development_probe.REVIEW_ROW_HEIGHT, 414)
+        control = types.SimpleNamespace(
+            anonymous_code="0" * 24,
+            control=np.zeros(
+                (
+                    int(self.spec["canvas"]["height"]),
+                    int(self.spec["canvas"]["width"]),
+                ),
+                dtype=np.uint8,
+            ),
+        )
+        codes, payload = development_probe._review_board_payload(
+            [control], self.spec["contact_sheets"]["views"], 1
+        )
+        self.assertEqual(codes, ["0" * 24])
+        with Image.open(io.BytesIO(payload)) as board:
+            self.assertEqual(board.size, (2560, 2484))
+
+    def test_dev_r10_all_surfaces_precede_any_private_population_audit(self) -> None:
+        events: list[str] = []
+        prepared = {
+            split: {
+                "manifest": {},
+                "review_index": {},
+                "contact_sheet_payloads": {},
+                "review_board_payloads": {},
+                "labels": {},
+            }
+            for split in ("calibration", "holdout")
+        }
+
+        def regenerate(
+            _spec: dict[str, object],
+            _key: bytes,
+            split: str,
+            _manifest: dict[str, object],
+        ) -> list[types.SimpleNamespace]:
+            events.append(f"regenerate:{split}")
+            return [
+                types.SimpleNamespace(
+                    anonymous_code=f"{len(events):024x}",
+                    private_role="artifact",
+                    duplicate_audit_group=None,
+                )
+            ]
+
+        def verify(
+            _spec: dict[str, object],
+            split: str,
+            *_arguments: object,
+        ) -> None:
+            events.append(f"surface:{split}")
+
+        def private_audit(
+            _labels: dict[str, object],
+            _records: list[dict[str, object]],
+            context: str,
+        ) -> None:
+            events.append(f"private:{context.split()[0]}")
+
+        def eligible(
+            _controls: list[types.SimpleNamespace],
+            _spec: dict[str, object],
+        ) -> dict[str, str]:
+            split = "calibration" if "private:calibration" in events else "holdout"
+            events.append(f"eligible:{split}")
+            return {"code": "cluster"}
+
+        def population(
+            _labels: dict[str, object],
+            _clusters: dict[str, str],
+            _spec: dict[str, object],
+            split: str,
+        ) -> dict[str, object]:
+            events.append(f"population:{split}")
+            return {"passed": True}
+
+        with (
+            mock.patch.object(
+                development_probe, "_regenerate_controls", side_effect=regenerate
+            ),
+            mock.patch.object(
+                development_probe,
+                "_verify_regenerated_review_surfaces",
+                side_effect=verify,
+            ),
+            mock.patch.object(
+                common,
+                "validate_private_vision_label_audits",
+                side_effect=private_audit,
+            ),
+            mock.patch.object(
+                development_probe, "_eligible_clusters", side_effect=eligible
+            ),
+            mock.patch.object(
+                development_probe, "_population_audit", side_effect=population
+            ),
+        ):
+            development_probe._regenerate_and_audit_population(
+                self.spec, b"key", prepared
+            )
+
+        first_private = next(
+            index for index, event in enumerate(events) if event.startswith("private:")
+        )
+        self.assertEqual(
+            events[:first_private],
+            [
+                "regenerate:calibration",
+                "surface:calibration",
+                "regenerate:holdout",
+                "surface:holdout",
+            ],
+        )
+        self.assertEqual(
+            [event for event in events if event.startswith("private:")],
+            ["private:calibration", "private:holdout"],
+        )
+        first_population = next(
+            index for index, event in enumerate(events) if event.startswith("population:")
+        )
+        self.assertEqual(
+            [
+                event
+                for event in events[:first_population]
+                if event.startswith("private:")
+            ],
+            ["private:calibration", "private:holdout"],
+        )
 
     def test_dev_r7_failure_audit_preserves_initial_and_reconciled_evidence(
         self,

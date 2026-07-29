@@ -292,11 +292,14 @@ dev-r10はformal r6ではなく、formal前の新しい一回限りdevelopment p
 記述だけでは実行権限になりません。`dev-r10-grain-coherence-support-schedule-v1`、新しいroot/key、全nonce/domain、
 parameter schedule、bindings、code、tests、tracked custodian runnerを規範JSONへfreezeし、別commitをpushして
 branch upstream HEADと一致させ、Ubuntu/Windows CIを両方passさせるまでgenerateしてはいけません。
+generate時に記録したmachine/exact runtime fingerprintはpreflight/analyze完了まで完全一致を必須とし、途中で変化した
+場合は継続・再生成せずfail-closedに停止します。
 
 freeze後の順序は、fresh rootの不存在確認 → fresh 32-byte keyによる両split各220 recordsの一回限り生成 →
-Root/独立Visionによる全37 review boardsと各220 decisionsの独立確認 → exact Root decision reconciliation →
-code/printed-code bindingと全件logical agreementのpreflight → exclusive label seal → private audit →
-all-or-nothing population gateです。全floorがpassした場合に限り最初のmetric callへ進み、calibrationで1 thresholdを
+生成時manifest / blank-label / review-indexのSHAをexclusive generation sealへ固定 → Root/独立Visionによる全37
+review boardsと各220 decisionsの独立確認 → exact Root decision reconciliation → code/printed-code binding、生成時SHA、
+全件logical agreementのpreflight → exclusive label seal → key read後の全185 contact sheets / 37 review boardsの
+secret-derived exact byte・code-order再生成照合 → private audit → all-or-nothing population gateです。全floorがpassした場合に限り最初のmetric callへ進み、calibrationで1 thresholdを
 選び、その値をholdoutへ変更せず適用します。一つでも失敗すればdev-r10を消費・閉鎖し、rerun、relabel、別key、
 subsetting、top-upをしません。成功時もdev-r10 thresholdはformal authorityではなく、success auditをGitへ固定して
 dev-r10を閉じた後にのみ、formal r6 authorityを別commitで最終freezeできます。
