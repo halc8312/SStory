@@ -91,6 +91,15 @@ blind key、private labels/identities/pixelsを追跡せず、raw private postmo
 relabel、retune、subset、top-up、key resampling、root削除後の再生成、およびdev-r11のroot/key/control/reference/pixel/
 identity/code/commitment/label/decision/measurement/nonce/public surfaceの後続edition・formalへの再利用を禁止します。
 
+`dev-r12`はgeneration、全440 recordsのRoot/独立Vision review、reconciliation、preflight、label seal、両splitのprivate
+auditを一度だけ完了し、両private auditはpassしました。しかしpre-measurement population auditでcalibration warningは
+`10`（formal minimum `10` pass / development floor `13` fail）、holdout warningは`9`（formal minimum `10` / development
+floor `13`ともにfail）でした。他の全population endpointはformal minimumとdevelopment floorをpassしました。
+`measurement_started=false`のままmetric、threshold search、holdout endpoint evaluationを開始せず、thresholdとholdout
+performanceは`null`です。閉鎖後にsanitized read-only postmortemを一度だけ実行しました。sanitized evidenceは
+`world/map-production/qa/microtexture-v2-r6-dev-r12-development-failure.json`です。dev-r12 rootを不変に保持し、rerun、
+resume、relabel、retune、subset、top-up、key resamplingと、全素材・identity・nonce・public surfaceの再利用を禁止します。
+
 唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r6/`、運用概要は
 `spec/microtexture-v2-calibration.md`です。r6は各split 220 records / 118 private clustersで、200 injection records
 （5 morphology families × 20 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4
@@ -99,22 +108,27 @@ duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185
 half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
 r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
-持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r11`はformalへ昇格できません。
+持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r12`はformalへ昇格できません。
 
-fresh successorは`dev-r12`です。development rootは`tmp/map-production/microtexture-v2-r6-dev-r12`、keyはそのroot内の
-`private/development-key.bin`だけに置き、schedule metadataを`dev-r12-grain-coherence-support-schedule-v1`へ固定します。
-public noncesは`r6-calibration-v7` / `r6-holdout-v7`、cluster/render/code domainsは
-`microtexture-v2-r6/private-condition-cluster/v7/`、`microtexture-v2-r6/render-seed/v7/`、
-`microtexture-v2-r6/opaque-code/v7/`、private-reference-transform domainは`private-reference-transform-v7/`です。
+fresh successorは`dev-r13`です。development rootは`tmp/map-production/microtexture-v2-r6-dev-r13`、keyはそのroot内の
+`private/development-key.bin`だけに置き、schedule metadataを`dev-r13-warning-acceptance-anchor-schedule-v1`へ固定します。
+public noncesは`r6-calibration-v8` / `r6-holdout-v8`、cluster/render/code domainsは
+`microtexture-v2-r6/private-condition-cluster/v8/`、`microtexture-v2-r6/render-seed/v8/`、
+`microtexture-v2-r6/opaque-code/v8/`、private-reference-transform domainは`private-reference-transform-v8/`です。
 public commitmentは
-`microtexture-v2-r6/public-payload-commitment/v8/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
-`microtexture-v2-r6/key-commitment/v6`、foundation lanesは`foundation-offset-v6` / `foundation-assignment-v6`、delta
-laneは`delta-v6`、private-control-idは`microtexture-v2-r6/private-control-id/v6/`です。protocol nonceはcalibration
-`451000..451015` / holdout `461000..461015`、欠陥候補用nonceは`473000..473419` / `483000..483419`、
-duplicate-audit nonceは`491000..491002` / `501000..501002`です。dev-r11と同じresidue rotationとmorphologyを継承し、
-morphology、metric、唯一のscalar threshold、population floors、endpoint counts/ratesはdev-r11の失敗から調整しません。
+`microtexture-v2-r6/public-payload-commitment/v9/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
+`microtexture-v2-r6/key-commitment/v7`、foundation lanesは`foundation-offset-v7` / `foundation-assignment-v7`、delta
+laneは`delta-v7`、private-control-idは`microtexture-v2-r6/private-control-id/v7/`です。protocol nonceはcalibration
+`551000..551015` / holdout `561000..561015`、欠陥候補用nonceは`573000..573419` / `583000..583419`、
+duplicate-audit nonceは`591000..591002` / `601000..601002`です。
 
-dev-r12生成は、tracked authorityとrunnerをauthority commitへfreezeしてpushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
+dev-r13はtier数`5/4/7/4`を維持し、speck、microblob、short-dash、parallel-bundleの既存warning-candidateをsplitごとに各4件、
+計16件だけfamily invariant内の弱いが直接知覚可能なmorphology anchorへ実パラメータ変更します。fine-grain warning、
+全clean-candidate、全clear/dominant-reject morphologyは変更しません。splitごとの16 anchors対development floor 13の構造上のmiss
+budgetは3ですが、design tierはVision truthやwarning labelを保証しません。metric、唯一のscalar threshold、population
+floors、endpoint counts/ratesは変更しません。
+
+dev-r13生成は、tracked authorityとrunnerをauthority commitへfreezeしてpushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
 fresh root/keyを作り、公開byteを一つでも書く前に排他的な`generation-start.dev.json`を確定し、両splitを生成してから
 summary → seal → completionの順に排他的に確定します。catchableな失敗は排他的なfailureへ固定し、failure/completionの
 共存、summary/seal/completionの欠落、または外部中断はそのeditionを消費済みとして閉鎖します。transaction検証前には

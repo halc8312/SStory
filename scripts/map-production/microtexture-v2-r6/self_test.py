@@ -35,6 +35,7 @@ from control_catalog import (
     _PROTOCOL_ZERO_NONCE_BASES,
     _PUBLIC_PAYLOAD_COMMITMENT_PREFIX,
     _SCHEDULE_REVISION,
+    _WARNING_ACCEPTANCE_ANCHORS,
     _artifact_variants,
     _draw_hex_label,
     _render_unsigned_delta,
@@ -83,6 +84,142 @@ DEV_R11_FAILURE_AUDIT_RELATIVE = (
 DEV_R11_FAILURE_AUDIT_SHA256 = (
     "a1dcf2354ec6b0bc81ae89f75eadc11f1a522be73de66032f94048d1a411ef04"
 )
+DEV_R12_FAILURE_AUDIT_RELATIVE = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r12-development-failure.json"
+)
+DEV_R12_FAILURE_AUDIT_SHA256 = (
+    "d972da0d73d3e9b057a37941b186e0b7b16eaefe1e18a28ed3a7f9bbdadb60f6"
+)
+
+
+def _expected_warning_acceptance_anchors() -> dict[
+    str, dict[str, dict[int, dict[str, object]]]
+]:
+    def speck(amplitude: float, separation: int) -> dict[str, object]:
+        return {
+            "design_tier": "warning-candidate",
+            "diameter_px": 1,
+            "amplitude_l": amplitude,
+            "count_in_metric_window": 3,
+            "shoulder_fraction": 0.05,
+            "minimum_separation_px": separation,
+        }
+
+    def microblob(
+        diameter: int,
+        amplitude: float,
+        support_radius: int,
+        separation: int,
+    ) -> dict[str, object]:
+        return {
+            "design_tier": "warning-candidate",
+            "diameter_px": diameter,
+            "amplitude_l": amplitude,
+            "count_in_metric_window": 2,
+            "support_radius_px": support_radius,
+            "minimum_separation_px": separation,
+        }
+
+    def short_dash(
+        length: int, amplitude: float, separation: int
+    ) -> dict[str, object]:
+        return {
+            "design_tier": "warning-candidate",
+            "length_px": length,
+            "width_px": 1,
+            "amplitude_l": amplitude,
+            "count_in_metric_window": 1,
+            "minimum_separation_px": separation,
+        }
+
+    def parallel_bundle(
+        length: int,
+        spacing: int,
+        amplitude: float,
+        separation: int,
+    ) -> dict[str, object]:
+        return {
+            "design_tier": "warning-candidate",
+            "length_px": length,
+            "width_px": 1,
+            "spacing_px": spacing,
+            "amplitude_l": amplitude,
+            "pair_count_in_metric_window": 1,
+            "minimum_bundle_separation_px": separation,
+        }
+
+    return {
+        "calibration": {
+            "artifact-speck": {
+                2: speck(6.6, 12),
+                10: speck(6.8, 14),
+                11: speck(7.0, 16),
+                18: speck(7.2, 18),
+            },
+            "artifact-microblob": {
+                4: microblob(5, 5.2, 5, 14),
+                5: microblob(6, 5.4, 5, 14),
+                12: microblob(7, 5.6, 6, 16),
+                14: microblob(8, 5.8, 7, 18),
+            },
+            "artifact-short-dash": {
+                6: short_dash(8, 6.0, 12),
+                8: short_dash(10, 6.2, 14),
+                17: short_dash(12, 6.4, 16),
+                19: short_dash(14, 6.6, 18),
+            },
+            "artifact-parallel-bundle": {
+                0: parallel_bundle(8, 4, 5.4, 12),
+                2: parallel_bundle(10, 4, 5.4, 14),
+                11: parallel_bundle(12, 4, 5.4, 16),
+                13: parallel_bundle(12, 6, 5.4, 16),
+            },
+        },
+        "holdout": {
+            "artifact-speck": {
+                0: speck(6.7, 13),
+                5: speck(6.9, 15),
+                12: speck(7.1, 17),
+                16: speck(7.3, 19),
+            },
+            "artifact-microblob": {
+                6: microblob(5, 5.3, 5, 14),
+                10: microblob(6, 5.5, 5, 14),
+                15: microblob(7, 5.7, 6, 16),
+                17: microblob(8, 5.9, 7, 18),
+            },
+            "artifact-short-dash": {
+                0: short_dash(8, 6.1, 12),
+                4: short_dash(10, 6.3, 14),
+                9: short_dash(12, 6.5, 16),
+                11: short_dash(14, 6.7, 18),
+            },
+            "artifact-parallel-bundle": {
+                3: parallel_bundle(8, 4, 5.3, 12),
+                5: parallel_bundle(10, 6, 5.3, 14),
+                15: parallel_bundle(12, 4, 5.3, 16),
+                19: parallel_bundle(12, 6, 5.3, 16),
+            },
+        },
+    }
+
+
+def _warning_acceptance_anchor_manifest(
+    anchors: dict[str, dict[str, dict[int, dict[str, object]]]],
+) -> dict[str, object]:
+    return {
+        "revision": "dev-r13-localized-sparse-warning-v1",
+        "splits": {
+            split: {
+                family: [
+                    {"variant_index": index, "parameters": parameters}
+                    for index, parameters in sorted(rows.items())
+                ]
+                for family, rows in families.items()
+            }
+            for split, families in anchors.items()
+        },
+    }
 
 
 def _vision_item(
@@ -197,7 +334,7 @@ def _development_generation_documents(
         (development_probe.CODE_ROOT / "implementation-bindings.json").read_bytes()
     ).hexdigest()
     state: dict[str, object] = {
-        "development_edition": "r12",
+        "development_edition": "r13",
         "spec_sha256": common.SPEC_SHA256,
         "public_nonces": development_probe._public_nonces(spec),
         "implementation_bindings_sha256": bindings_sha,
@@ -545,14 +682,14 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(anchor, common.POPULATION_ANCHOR_SCHEDULE)
         self.assertEqual(
             _SCHEDULE_REVISION,
-            "dev-r12-grain-coherence-support-schedule-v1",
+            "dev-r13-warning-acceptance-anchor-schedule-v1",
         )
         self.assertEqual(anchor["tier_counts_per_artifact_family"], dict(expected_tiers))
         self.assertEqual(anchor["revision"], _SCHEDULE_REVISION)
-        self.assertTrue(anchor["fresh_from_closed_dev_r11"])
-        self.assertTrue(anchor["r11_parameter_nonce_reuse_forbidden"])
+        self.assertTrue(anchor["fresh_from_closed_dev_r12"])
+        self.assertTrue(anchor["r12_parameter_nonce_reuse_forbidden"])
         self.assertEqual(
-            anchor["r12_per_family_residue_rotation"],
+            anchor["r13_per_family_residue_rotation"],
             {
                 "calibration": {
                     "artifact-fine-grain": 2,
@@ -571,14 +708,14 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             },
         )
         self.assertEqual(
-            anchor["r12_parameter_nonce_bases"],
+            anchor["r13_parameter_nonce_bases"],
             {
-                "calibration_artifact": 473000,
-                "holdout_artifact": 483000,
-                "calibration_protocol_zero": 451000,
-                "holdout_protocol_zero": 461000,
-                "calibration_duplicate_audit": [491000, 491001, 491002],
-                "holdout_duplicate_audit": [501000, 501001, 501002],
+                "calibration_artifact": 573000,
+                "holdout_artifact": 583000,
+                "calibration_protocol_zero": 551000,
+                "holdout_protocol_zero": 561000,
+                "calibration_duplicate_audit": [591000, 591001, 591002],
+                "holdout_duplicate_audit": [601000, 601001, 601002],
             },
         )
         self.assertEqual(
@@ -739,44 +876,148 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.assertTrue(np.all(delta[outside] == 0))
                     self.assertGreater(np.count_nonzero(np.rint(delta)), 0)
         self.assertTrue(split_nonces["calibration"].isdisjoint(split_nonces["holdout"]))
-        self.assertEqual(min(split_nonces["calibration"]), 473000)
-        self.assertEqual(max(split_nonces["calibration"]), 473419)
-        self.assertEqual(min(split_nonces["holdout"]), 483000)
-        self.assertEqual(max(split_nonces["holdout"]), 483419)
+        self.assertEqual(min(split_nonces["calibration"]), 573000)
+        self.assertEqual(max(split_nonces["calibration"]), 573419)
+        self.assertEqual(min(split_nonces["holdout"]), 583000)
+        self.assertEqual(max(split_nonces["holdout"]), 583419)
         self.assertEqual(
             self.spec["splits"]["calibration"]["public_nonce"],
-            "r6-calibration-v7",
+            "r6-calibration-v8",
         )
         self.assertEqual(
-            self.spec["splits"]["holdout"]["public_nonce"], "r6-holdout-v7"
+            self.spec["splits"]["holdout"]["public_nonce"], "r6-holdout-v8"
         )
         self.assertEqual(
             self.spec["independent_condition_clusters"]["message_prefix"],
-            "microtexture-v2-r6/private-condition-cluster/v7/",
+            "microtexture-v2-r6/private-condition-cluster/v8/",
         )
         self.assertEqual(
             self.spec["blind_derivation"]["seed_message_prefix"],
-            "microtexture-v2-r6/render-seed/v7/",
+            "microtexture-v2-r6/render-seed/v8/",
         )
         self.assertEqual(
             self.spec["blind_derivation"]["code_message_prefix"],
-            "microtexture-v2-r6/opaque-code/v7/",
+            "microtexture-v2-r6/opaque-code/v8/",
         )
         self.assertEqual(
             self.spec["rendering"]["public_commitment_domain"],
-            "microtexture-v2-r6/public-payload-commitment/v8/"
+            "microtexture-v2-r6/public-payload-commitment/v9/"
             "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
         )
         self.assertEqual(
             self.spec["blind_derivation"]["key_commitment_message"],
-            "microtexture-v2-r6/key-commitment/v6",
+            "microtexture-v2-r6/key-commitment/v7",
         )
         self.assertEqual(
             self.spec["rendering"]["hard_speck_reject_anchor_contract"],
             common.RENDERING_INVARIANTS["hard_speck_reject_anchor_contract"],
         )
 
-    def test_dev_r12_grain_reject_periods_are_inside_metric_support(self) -> None:
+    def test_dev_r13_warning_acceptance_anchor_matrix_is_exact(self) -> None:
+        expected = _expected_warning_acceptance_anchors()
+        self.assertEqual(
+            _WARNING_ACCEPTANCE_ANCHORS,
+            {
+                "revision": "dev-r13-localized-sparse-warning-v1",
+                "splits": expected,
+            },
+        )
+        manifest = _warning_acceptance_anchor_manifest(expected)
+        manifest_sha = hashlib.sha256(
+            common.canonical_json_bytes(manifest)
+        ).hexdigest()
+        self.assertEqual(
+            manifest_sha,
+            "d9216ce6809f95dc3435f3aefdad6a0518bd789fa8c62a21b081a1058d6378b6",
+        )
+
+        anchor = self.spec["population_anchor_schedule"]
+        self.assertEqual(
+            anchor["warning_acceptance_anchor_revision"],
+            "dev-r13-localized-sparse-warning-v1",
+        )
+        self.assertEqual(anchor["warning_acceptance_anchor_conditions_per_split"], 16)
+        self.assertEqual(
+            anchor["warning_acceptance_anchor_conditions_per_family"],
+            {
+                "artifact-speck": 4,
+                "artifact-microblob": 4,
+                "artifact-short-dash": 4,
+                "artifact-parallel-bundle": 4,
+            },
+        )
+        self.assertEqual(
+            anchor[
+                "warning_acceptance_anchor_structural_miss_budget_against_development_floor"
+            ],
+            3,
+        )
+        self.assertFalse(anchor["warning_acceptance_anchor_truth_guarantee_claimed"])
+        self.assertTrue(anchor["nonwarning_morphology_change_forbidden"])
+        self.assertEqual(
+            anchor["warning_acceptance_anchor_schedule_sha256"], manifest_sha
+        )
+
+        nonwarning = {
+            split: {
+                family: [
+                    {
+                        key: value
+                        for key, value in parameters.items()
+                        if key not in {"schedule_revision", "condition_nonce"}
+                    }
+                    for parameters in variants
+                    if parameters["design_tier"] != "warning-candidate"
+                ]
+                for family, variants in _artifact_variants(split).items()
+            }
+            for split in ("calibration", "holdout")
+        }
+        nonwarning_sha = hashlib.sha256(
+            common.canonical_json_bytes(nonwarning)
+        ).hexdigest()
+        self.assertEqual(
+            nonwarning_sha,
+            "6abbe6d639554c9f9911df7f123b699662ced606884d1c364b2559ad00a6f897",
+        )
+        self.assertEqual(
+            anchor["predecessor_nonwarning_morphology_sha256"], nonwarning_sha
+        )
+
+        for split in ("calibration", "holdout"):
+            catalog = _artifact_variants(split)
+            self.assertEqual(
+                sum(len(rows) for rows in expected[split].values()), 16, split
+            )
+            self.assertNotIn("artifact-fine-grain", expected[split])
+            for family, rows in expected[split].items():
+                warning_indices = {
+                    index
+                    for index, parameters in enumerate(catalog[family])
+                    if parameters["design_tier"] == "warning-candidate"
+                }
+                self.assertEqual(warning_indices, set(rows), (split, family))
+                self.assertEqual({index % 3 for index in rows}, {0, 1, 2})
+                for index, parameters in rows.items():
+                    actual = {
+                        key: value
+                        for key, value in catalog[family][index].items()
+                        if key not in {"schedule_revision", "condition_nonce"}
+                    }
+                    self.assertEqual(actual, parameters, (split, family, index))
+
+        for family in expected["calibration"]:
+            calibration = {
+                common.canonical_json_bytes(parameters)
+                for parameters in expected["calibration"][family].values()
+            }
+            holdout = {
+                common.canonical_json_bytes(parameters)
+                for parameters in expected["holdout"][family].values()
+            }
+            self.assertTrue(calibration.isdisjoint(holdout), family)
+
+    def test_dev_r13_grain_reject_periods_are_inside_metric_support(self) -> None:
         anchor = self.spec["population_anchor_schedule"][
             "grain_reject_anchor_schedule"
         ]
@@ -823,38 +1064,53 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             )
         )
 
-    def test_dev_r12_domains_and_nonce_ranges_are_fresh_and_exact(self) -> None:
+    def test_dev_r13_domains_and_nonce_ranges_are_fresh_and_exact(self) -> None:
         self.assertEqual(
             _PUBLIC_PAYLOAD_COMMITMENT_PREFIX,
-            b"microtexture-v2-r6/public-payload-commitment/v8/",
+            b"microtexture-v2-r6/public-payload-commitment/v9/",
         )
         self.assertEqual(
             _PRIVATE_REFERENCE_TRANSFORM_PREFIX,
-            b"private-reference-transform-v7/",
+            b"private-reference-transform-v8/",
         )
-        self.assertEqual(_FOUNDATION_OFFSET_LANE, "foundation-offset-v6")
-        self.assertEqual(_FOUNDATION_ASSIGNMENT_LANE, "foundation-assignment-v6")
-        self.assertEqual(_DELTA_LANE, "delta-v6")
+        self.assertEqual(_FOUNDATION_OFFSET_LANE, "foundation-offset-v7")
+        self.assertEqual(_FOUNDATION_ASSIGNMENT_LANE, "foundation-assignment-v7")
+        self.assertEqual(_DELTA_LANE, "delta-v7")
         self.assertEqual(
             _PRIVATE_CONTROL_ID_PREFIX,
-            b"microtexture-v2-r6/private-control-id/v6/",
+            b"microtexture-v2-r6/private-control-id/v7/",
         )
         self.assertEqual(
             _ARTIFACT_NONCE_BASES,
-            {"calibration": 473000, "holdout": 483000},
+            {"calibration": 573000, "holdout": 583000},
         )
         self.assertEqual(
             _PROTOCOL_ZERO_NONCE_BASES,
-            {"calibration": 451000, "holdout": 461000},
+            {"calibration": 551000, "holdout": 561000},
         )
         self.assertEqual(
             _DUPLICATE_AUDIT_NONCES,
             {
-                "calibration": (491000, 491001, 491002),
-                "holdout": (501000, 501001, 501002),
+                "calibration": (591000, 591001, 591002),
+                "holdout": (601000, 601001, 601002),
             },
         )
         nonce_ranges = [
+            set(range(551000, 551016)),
+            set(range(561000, 561016)),
+            set(range(573000, 573420)),
+            set(range(583000, 583420)),
+            {591000, 591001, 591002},
+            {601000, 601001, 601002},
+        ]
+        self.assertTrue(
+            all(
+                left.isdisjoint(right)
+                for index, left in enumerate(nonce_ranges)
+                for right in nonce_ranges[index + 1 :]
+            )
+        )
+        closed_r12_ranges = [
             set(range(451000, 451016)),
             set(range(461000, 461016)),
             set(range(473000, 473420)),
@@ -864,42 +1120,27 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         ]
         self.assertTrue(
             all(
-                left.isdisjoint(right)
-                for index, left in enumerate(nonce_ranges)
-                for right in nonce_ranges[index + 1 :]
-            )
-        )
-        closed_r11_ranges = [
-            set(range(351000, 351016)),
-            set(range(361000, 361016)),
-            set(range(373000, 373420)),
-            set(range(383000, 383420)),
-            {391000, 391001, 391002},
-            {401000, 401001, 401002},
-        ]
-        self.assertTrue(
-            all(
                 fresh.isdisjoint(closed)
                 for fresh in nonce_ranges
-                for closed in closed_r11_ranges
+                for closed in closed_r12_ranges
             )
         )
 
-    def test_dev_r12_morphology_schedule_hashes_are_exact(self) -> None:
+    def test_dev_r13_morphology_schedule_hashes_are_exact(self) -> None:
         expected = {
             "calibration": {
                 "artifact-fine-grain": "add2823835c0e47be63cc92632eb728f3caa1a9a7f96d0bd2e2af49e051aedd8",
-                "artifact-speck": "1434ef9a53775d8923b0fb5389e366828f4287929b52f3a288cfd5ccf89a082d",
-                "artifact-microblob": "adaa1f7e42abd265deaae7b06bcd2df9101920507bedc333e88cc042e80b213c",
-                "artifact-short-dash": "6bd52e94a7a8d24f625cad97ebf84251562a01e0c86cda2a6036cc9faea056fc",
-                "artifact-parallel-bundle": "1f8fc76ba749e51cf3b333080760820cbfd7652065c51e89bdf81ca9e136a825",
+                "artifact-speck": "3e3a1f5efca36d2cab6203e46bb9558eaff1036c62930cad3b84f13e4c8cbfaa",
+                "artifact-microblob": "30ac05ca2fd1b9b2a1ec5bbb354de15651501e5c7b932d00b5c9654b47f7bf0c",
+                "artifact-short-dash": "ca1d4cea6106584c1a7672bbf1bff106b4da1c237bfc438418d67d0c5b90099d",
+                "artifact-parallel-bundle": "275b8c08f366cd0112b73e0be4919cd13bd9e7753bf7478069f50a0049107593",
             },
             "holdout": {
                 "artifact-fine-grain": "1e1551e20f212acca19d502b055bf34722c4c4bafb6d698ab4b81e8ab5dcb88d",
-                "artifact-speck": "6d989752093bde6fe73abc03f845cb36790f294db0c6cab96e23f8c964b5fe4c",
-                "artifact-microblob": "988a52ac8a2901ef0ecc9e50d51dd2139bb2273aa2974e8d490088a385df179f",
-                "artifact-short-dash": "a64fb774a50aac33008ab3f077c791bf60552ff4d56a3700ab7b150db0b9ebbd",
-                "artifact-parallel-bundle": "a4dc764c9219432df0879ddb365b5bce35db5a7eb4219e66281c0bf5941c8b37",
+                "artifact-speck": "0e2cf5ead2f98c4f0dc4b79f47cec4981d581d7c69f07ac58c87e4220656562e",
+                "artifact-microblob": "e6d3b3d122ccaf18afc09ba226bf2d2d30a66ff1063c4bb1eb5c537f337afbd4",
+                "artifact-short-dash": "94108528574f05ed8e52902c01493b2e003f7ae3bceddff06edfc8a5417c060d",
+                "artifact-parallel-bundle": "af12a5a83dca39f6b5fec9378bde1c581a4fa6cb2c23572847f8450d1838b078",
             },
         }
         for split in ("calibration", "holdout"):
@@ -918,14 +1159,14 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     (split, family),
                 )
 
-    def test_dev_r12_runner_is_tracked_authority_with_isolated_root(self) -> None:
-        self.assertEqual(development_probe.DEVELOPMENT_EDITION, "r12")
+    def test_dev_r13_runner_is_tracked_authority_with_isolated_root(self) -> None:
+        self.assertEqual(development_probe.DEVELOPMENT_EDITION, "r13")
         self.assertEqual(
             development_probe.DEV_ROOT,
             common.repository_root()
             / "tmp"
             / "map-production"
-            / "microtexture-v2-r6-dev-r12",
+            / "microtexture-v2-r6-dev-r13",
         )
         self.assertEqual(
             development_probe.FORMAL_ROOT,
@@ -973,7 +1214,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             development_probe.DEV_ROOT / "private" / "development-key.bin",
         )
 
-    def test_dev_r12_runner_rejects_spec_bytes_outside_frozen_sha(self) -> None:
+    def test_dev_r13_runner_rejects_spec_bytes_outside_frozen_sha(self) -> None:
         frozen_sha = common.SPEC_SHA256
         with tempfile.TemporaryDirectory() as directory:
             code_root = Path(directory)
@@ -986,7 +1227,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     development_probe._load_spec()
         self.assertEqual(common.SPEC_SHA256, frozen_sha)
 
-    def test_dev_r12_runner_rejects_unignored_private_key_path(self) -> None:
+    def test_dev_r13_runner_rejects_unignored_private_key_path(self) -> None:
         completed = development_probe.subprocess.CompletedProcess
         captured_head = development_probe._git_head()
         with (
@@ -1009,7 +1250,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.spec, captured_head
                 )
 
-    def test_dev_r12_runner_rejects_nontracked_ignore_source(self) -> None:
+    def test_dev_r13_runner_rejects_nontracked_ignore_source(self) -> None:
         completed = development_probe.subprocess.CompletedProcess
         key_relative = self.spec["development_probe_secret_handling"][
             "ignored_private_key_required_repo_relative"
@@ -1040,7 +1281,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.spec, captured_head
                 )
 
-    def test_dev_r12_generation_transaction_is_exact_and_sealed(self) -> None:
+    def test_dev_r13_generation_transaction_is_exact_and_sealed(self) -> None:
         state, boundary, start, summary, seal, completion = (
             _development_generation_documents(self.spec)
         )
@@ -1089,7 +1330,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ).hexdigest()
 
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             with mock.patch.object(development_probe, "DEV_ROOT", root):
                 write_documents(root, boundary, start, summary, seal, completion)
                 loaded_state, receipts, binding = (
@@ -1261,9 +1502,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                         self.spec, common.SPEC_SHA256
                     )
 
-    def test_dev_r12_generate_success_reloads_exact_terminal_chain(self) -> None:
+    def test_dev_r13_generate_success_reloads_exact_terminal_chain(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             key_path = root / "private" / "development-key.bin"
             bindings_sha = hashlib.sha256(
                 (
@@ -1350,7 +1591,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     )
                 )
             review_preflight.assert_called_once_with()
-            self.assertEqual(loaded_state["development_edition"], "r12")
+            self.assertEqual(loaded_state["development_edition"], "r13")
             self.assertEqual(set(receipts), {"calibration", "holdout"})
             self.assertFalse((root / "generation-failure.dev.json").exists())
             for name in (
@@ -1371,9 +1612,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 self.assertEqual(binding[field], digest)
                 self.assertEqual(printed[field], digest)
 
-    def test_dev_r12_postcompletion_reload_failure_is_closed(self) -> None:
+    def test_dev_r13_postcompletion_reload_failure_is_closed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             key_path = root / "private" / "development-key.bin"
             with (
                 mock.patch.object(development_probe, "DEV_ROOT", root),
@@ -1445,7 +1686,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                         self.spec, common.SPEC_SHA256
                     )
 
-    def test_dev_r12_generate_failures_are_durably_closed(self) -> None:
+    def test_dev_r13_generate_failures_are_durably_closed(self) -> None:
         secret_like = "a" * 64
         opaque_code_like = "c" * 24
         for error in (
@@ -1456,7 +1697,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ),
         ):
             with self.subTest(error=type(error).__name__), tempfile.TemporaryDirectory() as directory:
-                root = Path(directory) / "dev-r12"
+                root = Path(directory) / "dev-r13"
                 key_path = root / "private" / "development-key.bin"
                 with (
                     mock.patch.object(development_probe, "DEV_ROOT", root),
@@ -1522,9 +1763,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.assertIn("[redacted-opaque-code]", failure["message"])
                 self.assertTrue(failure["development_closed"])
 
-    def test_dev_r12_root_is_consumed_before_key_sampling(self) -> None:
+    def test_dev_r13_root_is_consumed_before_key_sampling(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             key_path = root / "private" / "development-key.bin"
             with (
                 mock.patch.object(development_probe, "DEV_ROOT", root),
@@ -1559,7 +1800,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 root.mkdir(parents=True, exist_ok=False)
 
-    def test_dev_r12_generation_stage_interruptions_never_create_completion(
+    def test_dev_r13_generation_stage_interruptions_never_create_completion(
         self,
     ) -> None:
         split_results = _development_generation_split_results()
@@ -1569,7 +1810,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             "generation-completion.dev.json",
         ):
             with self.subTest(failed_name=failed_name), tempfile.TemporaryDirectory() as directory:
-                root = Path(directory) / "dev-r12"
+                root = Path(directory) / "dev-r13"
                 key_path = root / "private" / "development-key.bin"
                 original_write = development_probe._write_json_exclusive
 
@@ -1633,9 +1874,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 with self.assertRaises(FileExistsError):
                     root.mkdir(parents=True, exist_ok=False)
 
-    def test_dev_r12_generation_failure_reporting_preserves_original_error(self) -> None:
+    def test_dev_r13_generation_failure_reporting_preserves_original_error(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             key_path = root / "private" / "development-key.bin"
             original_write = development_probe._write_json_exclusive
 
@@ -1701,7 +1942,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 )
             )
 
-    def test_dev_r12_generation_failure_messages_are_sanitized(self) -> None:
+    def test_dev_r13_generation_failure_messages_are_sanitized(self) -> None:
         secret_like = "a" * 64
         opaque_code_like = "c" * 24
         message = development_probe._sanitized_error_message(
@@ -1719,7 +1960,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             "exception without a message",
         )
 
-    def test_dev_r12_exclusive_binary_write_rejects_existing_path(self) -> None:
+    def test_dev_r13_exclusive_binary_write_rejects_existing_path(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "surface.png"
             first = development_probe._write_bytes_exclusive(path, b"first")
@@ -1728,7 +1969,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 development_probe._write_bytes_exclusive(path, b"second")
             self.assertEqual(path.read_bytes(), b"first")
 
-    def test_dev_r12_public_preflight_requires_exact_generation_runtime(self) -> None:
+    def test_dev_r13_public_preflight_requires_exact_generation_runtime(self) -> None:
         state, _boundary, _start, summary, _seal, _completion = (
             _development_generation_documents(self.spec)
         )
@@ -1803,7 +2044,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(loaded_binding, binding)
         self.assertEqual(set(prepared), {"calibration", "holdout"})
 
-    def test_dev_r12_review_preflight_validates_both_splits_before_vision(self) -> None:
+    def test_dev_r13_review_preflight_validates_both_splits_before_vision(self) -> None:
         state, _boundary, _start, summary, _seal, _completion = (
             _development_generation_documents(self.spec)
         )
@@ -1857,11 +2098,11 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ],
         )
 
-    def test_dev_r12_generation_receipt_detects_post_generation_public_rewrites(
+    def test_dev_r13_generation_receipt_detects_post_generation_public_rewrites(
         self,
     ) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             public_root = root / "public" / "calibration"
             public_root.mkdir(parents=True)
             payloads = {
@@ -1908,7 +2149,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                         "calibration", wrong_path
                     )
 
-    def test_dev_r12_secret_regeneration_binds_preflight_surface_bytes(self) -> None:
+    def test_dev_r13_secret_regeneration_binds_preflight_surface_bytes(self) -> None:
         split = "calibration"
         regenerated_sheets: list[types.SimpleNamespace] = []
         recorded_sheets: list[dict[str, object]] = []
@@ -2019,7 +2260,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     board_payloads,
                 )
 
-    def test_dev_r12_contact_sheet_layout_is_canonical_and_code_ordered(self) -> None:
+    def test_dev_r13_contact_sheet_layout_is_canonical_and_code_ordered(self) -> None:
         split = "calibration"
         codes = [f"{index:024x}" for index in range(220)]
         entries: list[dict[str, object]] = []
@@ -2079,7 +2320,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                         candidate, self.spec, split, codes
                     )
 
-    def test_dev_r12_blank_labels_are_exact_private_free_and_unreviewed(self) -> None:
+    def test_dev_r13_blank_labels_are_exact_private_free_and_unreviewed(self) -> None:
         codes = [f"{index:024x}" for index in range(220)]
         state = {
             "spec_sha256": common.SPEC_SHA256,
@@ -2164,7 +2405,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     codes,
                 )
 
-    def test_dev_r12_review_board_uses_contractual_30px_headers(self) -> None:
+    def test_dev_r13_review_board_uses_contractual_30px_headers(self) -> None:
         self.assertEqual(development_probe.REVIEW_HEADER_HEIGHT, 30)
         self.assertEqual(development_probe.REVIEW_ROW_HEIGHT, 414)
         control = types.SimpleNamespace(
@@ -2184,9 +2425,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         with Image.open(io.BytesIO(payload)) as board:
             self.assertEqual(board.size, (2560, 2484))
 
-    def test_dev_r12_review_crops_require_complete_generation_preflight(self) -> None:
+    def test_dev_r13_review_crops_require_complete_generation_preflight(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             with (
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(
@@ -2203,7 +2444,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             open_image.assert_not_called()
             self.assertFalse((root / "public" / "calibration" / "review-crops").exists())
 
-    def test_dev_r12_review_crops_emit_native_full_200_without_resizing(self) -> None:
+    def test_dev_r13_review_crops_emit_native_full_200_without_resizing(self) -> None:
         split = "calibration"
         page_index = 1
         relative = "public/calibration/review-boards/review-page-001.png"
@@ -2229,7 +2470,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         }
 
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r12"
+            root = Path(directory) / "dev-r13"
             with (
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(
@@ -2252,7 +2493,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 self.assertEqual(native.mode, "RGB")
                 self.assertTrue(np.array_equal(np.asarray(native), source_values))
 
-    def test_dev_r12_all_surfaces_precede_any_private_population_audit(self) -> None:
+    def test_dev_r13_all_surfaces_precede_any_private_population_audit(self) -> None:
         events: list[str] = []
         prepared = {
             split: {
@@ -2424,7 +2665,10 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(
             history["dev_r11_status"], "failed-and-closed-before-measurement"
         )
-        self.assertEqual(history["dev_r12_status"], "fresh-development-only")
+        self.assertEqual(
+            history["dev_r12_status"], "failed-and-closed-before-measurement"
+        )
+        self.assertEqual(history["dev_r13_status"], "fresh-development-only")
 
         payload = (repository / DEV_R8_FAILURE_AUDIT_RELATIVE).read_bytes()
         self.assertEqual(hashlib.sha256(payload).hexdigest(), DEV_R8_FAILURE_AUDIT_SHA256)
@@ -2653,7 +2897,10 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(
             history["dev_r11_status"], "failed-and-closed-before-measurement"
         )
-        self.assertEqual(history["dev_r12_status"], "fresh-development-only")
+        self.assertEqual(
+            history["dev_r12_status"], "failed-and-closed-before-measurement"
+        )
+        self.assertEqual(history["dev_r13_status"], "fresh-development-only")
 
         payload = (repository / DEV_R10_FAILURE_AUDIT_RELATIVE).read_bytes()
         self.assertEqual(
@@ -2777,7 +3024,10 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(
             history["dev_r11_failure_audit_sha256"], DEV_R11_FAILURE_AUDIT_SHA256
         )
-        self.assertEqual(history["dev_r12_status"], "fresh-development-only")
+        self.assertEqual(
+            history["dev_r12_status"], "failed-and-closed-before-measurement"
+        )
+        self.assertEqual(history["dev_r13_status"], "fresh-development-only")
         payload = (
             common.repository_root() / DEV_R11_FAILURE_AUDIT_RELATIVE
         ).read_bytes()
@@ -2935,13 +3185,267 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             with self.subTest(label=label), self.assertRaises(RuntimeError):
                 common.validate_dev_r11_premeasurement_failure_audit(changed)
 
-    def test_tracked_development_history_reads_through_dev_r11_in_order(self) -> None:
+    def test_dev_r12_population_failure_audit_is_strict_closed_and_private_free(
+        self,
+    ) -> None:
+        history = self.spec["history"]
+        self.assertEqual(
+            history["dev_r12_status"], "failed-and-closed-before-measurement"
+        )
+        self.assertEqual(
+            history["dev_r12_failure_audit"], DEV_R12_FAILURE_AUDIT_RELATIVE
+        )
+        self.assertEqual(
+            history["dev_r12_failure_audit_sha256"], DEV_R12_FAILURE_AUDIT_SHA256
+        )
+        self.assertEqual(history["dev_r13_status"], "fresh-development-only")
+        payload = (
+            common.repository_root() / DEV_R12_FAILURE_AUDIT_RELATIVE
+        ).read_bytes()
+        self.assertEqual(
+            hashlib.sha256(payload).hexdigest(), DEV_R12_FAILURE_AUDIT_SHA256
+        )
+        audit = json.loads(payload.decode("utf-8"))
+
+        common.validate_dev_r12_premeasurement_population_failure_audit(audit)
+
+        self.assertEqual(
+            audit["failure_phase"],
+            "private-audits-passed-then-premeasurement-population-audit",
+        )
+        self.assertEqual(
+            audit["failure_class"], "warning-cluster-population-shortfall"
+        )
+        self.assertFalse(audit["measurement_started"])
+        self.assertEqual(
+            audit["selection_status"], "not_started_population_gate_failed"
+        )
+        self.assertIsNone(audit["development_hard_threshold"])
+        self.assertIsNone(audit["calibration_endpoint_performance"])
+        self.assertIsNone(audit["holdout_endpoint_performance"])
+        self.assertIsNone(audit["threshold_selection_audit"])
+
+        one_shot = audit["one_shot_contract"]
+        self.assertTrue(one_shot["generation_completed_exactly_once"])
+        self.assertTrue(one_shot["review_preflight_invoked_exactly_once"])
+        self.assertTrue(one_shot["private_sentinel_audit_passed"])
+        self.assertTrue(one_shot["population_audit_started_exactly_once"])
+        self.assertFalse(one_shot["population_audit_passed"])
+        self.assertFalse(one_shot["numeric_metric_called"])
+        self.assertTrue(one_shot["postmortem_invoked_exactly_once"])
+        self.assertTrue(one_shot["r12_closed"])
+
+        self.assertTrue(audit["private_audit"]["all_splits_passed"])
+        population = audit["population_audit"]
+        self.assertFalse(population["passed"])
+        expected_warning_counts = {"calibration": 10, "holdout": 9}
+        for split, count in expected_warning_counts.items():
+            split_population = population["splits"][split]
+            formal = split_population["formal_endpoint_minimums"]
+            development = split_population["development_safety_floors"]
+            self.assertEqual(
+                formal["warning_acceptance"]["unique_cluster_count"], count
+            )
+            self.assertEqual(
+                development["warning_acceptance"]["unique_cluster_count"], count
+            )
+            self.assertEqual(
+                development["warning_acceptance"][
+                    "development_minimum_unique_clusters"
+                ],
+                13,
+            )
+            self.assertFalse(
+                development["warning_acceptance"]["count_passed"]
+            )
+            self.assertEqual(
+                [
+                    endpoint_id
+                    for endpoint_id, endpoint in development.items()
+                    if not endpoint["count_passed"]
+                ],
+                ["warning_acceptance"],
+            )
+        self.assertTrue(
+            population["splits"]["calibration"]["formal_endpoint_minimums_passed"]
+        )
+        self.assertFalse(
+            population["splits"]["holdout"]["formal_endpoint_minimums_passed"]
+        )
+        self.assertTrue(audit["postmortem"]["read_only"])
+        self.assertFalse(audit["postmortem"]["raw_output_tracked"])
+        self.assertFalse(
+            audit["postmortem"][
+                "used_to_relabel_resample_subset_topup_retune_or_select_a_threshold"
+            ]
+        )
+        self.assertFalse(
+            audit["secret_handling"]["blind_key_present_in_this_artifact"]
+        )
+        self.assertFalse(
+            audit["secret_handling"][
+                "anonymous_code_to_private_identity_mapping_tracked"
+            ]
+        )
+
+    def test_dev_r12_population_failure_audit_mutations_fail_closed(self) -> None:
+        payload = (
+            common.repository_root() / DEV_R12_FAILURE_AUDIT_RELATIVE
+        ).read_bytes()
+        audit = json.loads(payload.decode("utf-8"))
+        mutations: list[tuple[str, tuple[str, ...], object]] = [
+            ("outcome", ("outcome",), "passed"),
+            (
+                "noncanonical timestamp",
+                ("audit_recorded_at",),
+                "2026-07-29T23:53:58.7591905+00:00",
+            ),
+            ("measurement", ("measurement_started",), True),
+            (
+                "metric call",
+                ("one_shot_contract", "numeric_metric_called"),
+                True,
+            ),
+            (
+                "population pass",
+                ("one_shot_contract", "population_audit_passed"),
+                True,
+            ),
+            (
+                "postmortem count",
+                ("one_shot_contract", "postmortem_invoked_exactly_once"),
+                False,
+            ),
+            (
+                "review exact type",
+                ("vision_review", "records_per_split_per_reviewer"),
+                True,
+            ),
+            (
+                "reconciliation SHA syntax",
+                (
+                    "vision_review",
+                    "splits",
+                    "calibration",
+                    "canonical_final_decisions_sha256",
+                ),
+                "G" * 64,
+            ),
+            (
+                "private mapping",
+                (
+                    "private_audit",
+                    "anonymous_code_page_row_private_identity_or_pixel_binding_tracked",
+                ),
+                True,
+            ),
+            (
+                "warning population count",
+                (
+                    "population_audit",
+                    "splits",
+                    "holdout",
+                    "formal_endpoint_minimums",
+                    "warning_acceptance",
+                    "unique_cluster_count",
+                ),
+                10,
+            ),
+            (
+                "development floor weakening",
+                (
+                    "population_audit",
+                    "splits",
+                    "calibration",
+                    "development_safety_floors",
+                    "warning_acceptance",
+                    "development_minimum_unique_clusters",
+                ),
+                12,
+            ),
+            (
+                "captured HEAD syntax",
+                ("hash_bindings", "captured_repository_head"),
+                "0" * 39,
+            ),
+            (
+                "measurement artifact",
+                (
+                    "absent_measurement_artifacts",
+                    "calibration_measurements_present",
+                ),
+                True,
+            ),
+            (
+                "postmortem output tracked",
+                ("postmortem", "raw_output_tracked"),
+                True,
+            ),
+            (
+                "successor reuse",
+                (
+                    "successor_constraints",
+                    "r12_root_key_controls_references_pixels_identities_codes_commitments_labels_measurements_nonces_public_surfaces_and_postmortem_output_reuse_forbidden",
+                ),
+                False,
+            ),
+            (
+                "blind key disclosure",
+                ("secret_handling", "blind_key_present_in_this_artifact"),
+                True,
+            ),
+        ]
+        for label, path, replacement in mutations:
+            changed = copy.deepcopy(audit)
+            target = changed
+            for component in path[:-1]:
+                target = target[component]
+            target[path[-1]] = replacement
+            with self.subTest(label=label), self.assertRaises(RuntimeError):
+                common.validate_dev_r12_premeasurement_population_failure_audit(
+                    changed
+                )
+
+        for label, path in (
+            ("top-level unknown field", ()),
+            ("one-shot unknown field", ("one_shot_contract",)),
+            ("vision unknown field", ("vision_review",)),
+            ("vision split unknown field", ("vision_review", "splits", "holdout")),
+            ("private-audit unknown field", ("private_audit",)),
+            (
+                "private split unknown field",
+                ("private_audit", "splits", "calibration"),
+            ),
+            ("population unknown field", ("population_audit",)),
+            (
+                "population split unknown field",
+                ("population_audit", "splits", "holdout"),
+            ),
+            ("failure-marker unknown field", ("failure_marker_summary",)),
+            ("hash-binding unknown field", ("hash_bindings",)),
+            ("absent-artifact unknown field", ("absent_measurement_artifacts",)),
+            ("postmortem unknown field", ("postmortem",)),
+            ("root-cause unknown field", ("root_cause",)),
+            ("successor unknown field", ("successor_constraints",)),
+            ("secret unknown field", ("secret_handling",)),
+        ):
+            changed = copy.deepcopy(audit)
+            target = changed
+            for component in path:
+                target = target[component]
+            target["unexpected"] = "forbidden"
+            with self.subTest(label=label), self.assertRaises(RuntimeError):
+                common.validate_dev_r12_premeasurement_population_failure_audit(
+                    changed
+                )
+
+    def test_tracked_development_history_reads_through_dev_r12_in_order(self) -> None:
         repository = common.repository_root()
         captured_head = "c" * 40
         history = self.spec["history"]
         relatives = [
             history[f"dev_r{edition}_failure_audit"]
-            for edition in (7, 8, 9, 10, 11)
+            for edition in (7, 8, 9, 10, 11, 12)
         ]
         payloads = {
             relative: (repository / relative).read_bytes() for relative in relatives
@@ -2969,18 +3473,18 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         )
 
         changed = copy.deepcopy(self.spec)
-        changed["history"]["dev_r11_failure_audit_sha256"] = "0" * 64
+        changed["history"]["dev_r12_failure_audit_sha256"] = "0" * 64
         with (
             mock.patch.object(
                 common, "_tracked_worktree_bytes", side_effect=tracked_bytes
             ),
-            self.assertRaisesRegex(RuntimeError, "dev-r11 failure audit tracked SHA"),
+            self.assertRaisesRegex(RuntimeError, "dev-r12 failure audit tracked SHA"),
         ):
             common.verify_tracked_development_history(
                 repository, captured_head, changed
             )
 
-    def test_dev_r11_history_and_dev_r12_guardrails_are_fail_closed(self) -> None:
+    def test_dev_r12_history_and_dev_r13_guardrails_are_fail_closed(self) -> None:
         history = self.spec["history"]
         self.assertEqual(
             history["dev_r8_failure_audit"], DEV_R8_FAILURE_AUDIT_RELATIVE
@@ -2997,7 +3501,16 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(
             history["dev_r11_failure_audit_sha256"], DEV_R11_FAILURE_AUDIT_SHA256
         )
-        self.assertEqual(history["dev_r12_status"], "fresh-development-only")
+        self.assertEqual(
+            history["dev_r12_status"], "failed-and-closed-before-measurement"
+        )
+        self.assertEqual(
+            history["dev_r12_failure_audit"], DEV_R12_FAILURE_AUDIT_RELATIVE
+        )
+        self.assertEqual(
+            history["dev_r12_failure_audit_sha256"], DEV_R12_FAILURE_AUDIT_SHA256
+        )
+        self.assertEqual(history["dev_r13_status"], "fresh-development-only")
         guardrails = self.spec["metric_definition"][
             "score_reference_revision_guardrails"
         ]
@@ -3009,7 +3522,10 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertTrue(
             guardrails["dev_r11_premeasurement_vision_gate_failed_closed"]
         )
-        self.assertTrue(guardrails["fresh_dev_r12_required"])
+        self.assertTrue(
+            guardrails["dev_r12_premeasurement_population_gate_failed_closed"]
+        )
+        self.assertTrue(guardrails["fresh_successor_after_dev_r12_required"])
         self.assertTrue(
             guardrails[
                 "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent"
@@ -3030,6 +3546,12 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 "dev_r11_measurement_or_threshold_reuse_forbidden_because_absent"
             ]
         )
+        self.assertTrue(
+            guardrails[
+                "dev_r12_measurement_or_threshold_reuse_forbidden_because_absent"
+            ]
+        )
+        self.assertNotIn("fresh_dev_r12_required", guardrails)
         self.assertNotIn("fresh_dev_r11_required", guardrails)
         self.assertNotIn("fresh_dev_r10_required", guardrails)
         self.assertNotIn("fresh_dev_r9_required", guardrails)
@@ -3045,7 +3567,10 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ("dev_r11_status", "formal-authority"),
             ("dev_r11_failure_audit", DEV_R10_FAILURE_AUDIT_RELATIVE),
             ("dev_r11_failure_audit_sha256", DEV_R10_FAILURE_AUDIT_SHA256),
-            ("dev_r12_status", "formal-authority"),
+            ("dev_r12_status", "fresh-development-only"),
+            ("dev_r12_failure_audit", DEV_R11_FAILURE_AUDIT_RELATIVE),
+            ("dev_r12_failure_audit_sha256", DEV_R11_FAILURE_AUDIT_SHA256),
+            ("dev_r13_status", "formal-authority"),
         ):
             changed = copy.deepcopy(self.spec)
             changed["history"][field] = drift
