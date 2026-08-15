@@ -104,8 +104,11 @@ _HEX_GLYPHS = {
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
-_SCHEDULE_REVISION = "dev-r17-protocol-zero-reference-prequalification-schedule-v1"
-_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v13/"
+_R17_SCHEDULE_REVISION = (
+    "dev-r17-protocol-zero-reference-prequalification-schedule-v1"
+)
+_SCHEDULE_REVISION = "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1"
+_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v14/"
 _PUBLIC_R15_WARNING_ANCHOR_REVISION = (
     "dev-r14-quantized-direct-visible-sparse-warning-v1"
 )
@@ -118,16 +121,16 @@ _PUBLIC_WARNING_CONVERSION_REVISION = (
 _PUBLIC_MICROBLOB_REJECT_ANCHOR_REVISION = (
     "dev-r15-calibration-quantized-microblob-reject-v1"
 )
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v12/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v11"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v11"
-_DELTA_LANE = "delta-v11"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v11/"
-_ARTIFACT_NONCE_BASES = {"calibration": 973000, "holdout": 983000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 951000, "holdout": 961000}
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v13/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v12"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v12"
+_DELTA_LANE = "delta-v12"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v12/"
+_ARTIFACT_NONCE_BASES = {"calibration": 1073000, "holdout": 1083000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1051000, "holdout": 1061000}
 _DUPLICATE_AUDIT_NONCES = {
-    "calibration": (991000, 991001, 991002),
-    "holdout": (1001000, 1001001, 1001002),
+    "calibration": (1091000, 1091001, 1091002),
+    "holdout": (1101000, 1101001, 1101002),
 }
 _R17_REFERENCE_PREQUALIFICATION_REVISION = (
     "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1"
@@ -171,6 +174,97 @@ _R17_REFERENCE_PREQUALIFICATION_STATIC_SCORES_SHA256 = (
 _R17_REFERENCE_PREQUALIFICATION_STATIC_SELECTED_INDEX = 1
 _R17_PRESERVED_R16_ARTIFACT_MORPHOLOGY_SHA256 = (
     "c60917c79ae36278d17cc7ccaa93d798cac17500d2d678b41b0cdea34ff66b30"
+)
+_R18_SPECK_REINFORCEMENT_REVISION = (
+    "dev-r18-symmetric-reject-speck-direct-visible-cross-v1"
+)
+_R18_SPECK_REINFORCEMENT_MANIFEST = {
+    "revision": _R18_SPECK_REINFORCEMENT_REVISION,
+    "inherited_schedule_revision": _R17_SCHEDULE_REVISION,
+    "schedule_revision": _SCHEDULE_REVISION,
+    "sanitized_r17_basis": {
+        "calibration_formal_and_development_endpoint_floors_passed": True,
+        "holdout": {
+            "tiny_speck_reject_detection": {
+                "observed": 0,
+                "formal_minimum": 4,
+                "development_minimum": 6,
+            },
+            "spot_reject_detection": {
+                "observed": 9,
+                "formal_minimum": 8,
+                "development_minimum": 10,
+            },
+            "all_other_endpoints_passed": True,
+        },
+        "private_audits_passed": True,
+        "metric_or_threshold_evaluation_performed": False,
+    },
+    "family": "artifact-speck",
+    "target_tiers": ["clear-reject-candidate", "dominant-reject-candidate"],
+    "target_conditions_per_split": 10,
+    "clear_reject_conditions_per_split": 6,
+    "dominant_reject_conditions_per_split": 4,
+    "tiny_speck_development_floor": 6,
+    "tiny_speck_structural_miss_budget": 4,
+    "spot_development_floor": 10,
+    "spot_endpoint_relation": "tiny_speck_visible OR microblob_visible",
+    "direct_visibility_contract": {
+        "diameter_px": 1,
+        "minimum_core_count": 4,
+        "maximum_core_count": 7,
+        "minimum_center_amplitude_l": 11.2,
+        "maximum_center_amplitude_l": 12.0,
+        "minimum_encoded_axial_shoulder_l": 5,
+        "minimum_separation_px": 30,
+        "quadrant_stratified": True,
+        "returns_to_uninjected_background_outside_one_axial_neighbor": True,
+        "microblob_blur_forbidden": True,
+        "vision_truth_guaranteed": False,
+    },
+    "preservation_contract": {
+        "clean_morphologies_unchanged": True,
+        "warning_morphologies_unchanged": True,
+        "all_non_speck_morphologies_unchanged": True,
+        "design_tier_membership_unchanged": True,
+        "artifact_condition_count_per_split_unchanged": 100,
+        "metric_threshold_population_and_rate_contracts_unchanged": True,
+    },
+    "splits": {
+        "calibration": {
+            3: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.2, "count_in_metric_window": 4, "shoulder_fraction": 0.42, "minimum_separation_px": 30},
+            5: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.4, "count_in_metric_window": 4, "shoulder_fraction": 0.44, "minimum_separation_px": 32},
+            6: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 11.8, "count_in_metric_window": 4, "shoulder_fraction": 0.50, "minimum_separation_px": 34},
+            7: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.3, "count_in_metric_window": 5, "shoulder_fraction": 0.46, "minimum_separation_px": 30},
+            8: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.5, "count_in_metric_window": 5, "shoulder_fraction": 0.48, "minimum_separation_px": 32},
+            12: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 11.9, "count_in_metric_window": 5, "shoulder_fraction": 0.52, "minimum_separation_px": 34},
+            15: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.4, "count_in_metric_window": 6, "shoulder_fraction": 0.50, "minimum_separation_px": 30},
+            16: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 6, "shoulder_fraction": 0.54, "minimum_separation_px": 34},
+            17: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 7, "shoulder_fraction": 0.56, "minimum_separation_px": 36},
+            19: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.6, "count_in_metric_window": 6, "shoulder_fraction": 0.52, "minimum_separation_px": 32},
+        },
+        "holdout": {
+            1: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 11.9, "count_in_metric_window": 4, "shoulder_fraction": 0.50, "minimum_separation_px": 35},
+            3: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.3, "count_in_metric_window": 4, "shoulder_fraction": 0.42, "minimum_separation_px": 31},
+            4: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.5, "count_in_metric_window": 4, "shoulder_fraction": 0.44, "minimum_separation_px": 33},
+            6: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.4, "count_in_metric_window": 5, "shoulder_fraction": 0.46, "minimum_separation_px": 31},
+            9: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 5, "shoulder_fraction": 0.52, "minimum_separation_px": 35},
+            10: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.6, "count_in_metric_window": 5, "shoulder_fraction": 0.48, "minimum_separation_px": 33},
+            11: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.5, "count_in_metric_window": 6, "shoulder_fraction": 0.50, "minimum_separation_px": 31},
+            13: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 11.9, "count_in_metric_window": 6, "shoulder_fraction": 0.54, "minimum_separation_px": 35},
+            14: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 7, "shoulder_fraction": 0.56, "minimum_separation_px": 37},
+            18: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 11.7, "count_in_metric_window": 6, "shoulder_fraction": 0.52, "minimum_separation_px": 33},
+        },
+    },
+}
+_R18_SPECK_REINFORCEMENT_MANIFEST_SHA256 = (
+    "355c6c588c3d698288a3545752c13cea734db85e1e7a9a95416cbe3163f633d4"
+)
+_R18_FULL_ARTIFACT_MORPHOLOGY_SHA256 = (
+    "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365"
+)
+_R18_PRESERVED_R17_MORPHOLOGY_SHA256 = (
+    "03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf"
 )
 _R15_WARNING_ACCEPTANCE_ANCHORS = {
     "revision": _PUBLIC_R15_WARNING_ANCHOR_REVISION,
@@ -419,6 +513,7 @@ def _hmac_prf_grid_integers(
     lane: str,
     shape: tuple[int, int],
     candidate_index: int,
+    private_reference_transform_prefix: bytes | None = None,
 ) -> tuple[int, ...]:
     """Derive exact uint64 coefficient material for one r17 candidate."""
 
@@ -441,7 +536,11 @@ def _hmac_prf_grid_integers(
     candidate_domain = f"candidate/{candidate_index:02d}/".encode("ascii")
     domain = (
         prefix.encode("ascii")
-        + _PRIVATE_REFERENCE_TRANSFORM_PREFIX
+        + (
+            _PRIVATE_REFERENCE_TRANSFORM_PREFIX
+            if private_reference_transform_prefix is None
+            else private_reference_transform_prefix
+        )
         + candidate_domain
         + lane.encode("ascii")
         + b"/"
@@ -467,6 +566,7 @@ def _hmac_prf_grid(
     lane: str,
     shape: tuple[int, int],
     candidate_index: int,
+    private_reference_transform_prefix: bytes | None = None,
 ) -> np.ndarray:
     """Map exact r17 candidate material to the established float32 grid."""
 
@@ -478,6 +578,7 @@ def _hmac_prf_grid(
         lane=lane,
         shape=shape,
         candidate_index=candidate_index,
+        private_reference_transform_prefix=private_reference_transform_prefix,
     )
     values = [(integer / maximum) * 2.0 - 1.0 for integer in integers]
     return np.asarray(values, dtype=np.float32).reshape(shape)
@@ -488,6 +589,7 @@ def _reference_prequalification_candidate_scores(
     key: bytes,
     prefix: str,
     identity: dict[str, Any],
+    private_reference_transform_prefix: bytes | None = None,
 ) -> tuple[tuple[int, int, int, int, int], ...]:
     """Score HMAC coefficient candidates without pixels, labels, or deltas."""
 
@@ -507,6 +609,9 @@ def _reference_prequalification_candidate_scores(
                 lane=str(lane),
                 shape=(grid_height, grid_width),
                 candidate_index=candidate_index,
+                private_reference_transform_prefix=(
+                    private_reference_transform_prefix
+                ),
             )
             for y in range(grid_height):
                 for x in range(grid_width):
@@ -538,11 +643,13 @@ def _select_reference_prequalification_candidate(
     key: bytes,
     prefix: str,
     identity: dict[str, Any],
+    private_reference_transform_prefix: bytes | None = None,
 ) -> tuple[int, tuple[tuple[int, int, int, int, int], ...]]:
     scores = _reference_prequalification_candidate_scores(
         key=key,
         prefix=prefix,
         identity=identity,
+        private_reference_transform_prefix=private_reference_transform_prefix,
     )
     selected_index = min(range(len(scores)), key=scores.__getitem__)
     if scores[selected_index] > scores[0]:
@@ -609,7 +716,7 @@ def _validate_dev_r17_reference_prequalification_design() -> None:
         "family": "protocol-zero",
         "variant_index": 0,
         "parameters": {
-            "schedule_revision": _SCHEDULE_REVISION,
+            "schedule_revision": _R17_SCHEDULE_REVISION,
             "protocol_nonce": 951000,
         },
         "duplicate_audit_group": None,
@@ -621,6 +728,7 @@ def _validate_dev_r17_reference_prequalification_design() -> None:
         key=static_key,
         prefix="microtexture-v2-r6/render-seed/v12/",
         identity=static_identity,
+        private_reference_transform_prefix=b"private-reference-transform-v12/",
     )
     scores_sha = sha256_bytes(
         canonical_json_bytes(
@@ -932,22 +1040,43 @@ def _render_unsigned_delta(
         ):
             raise RuntimeError("r6 hard-core speck parameter drift")
         tier = str(parameters["design_tier"])
-        expected_shoulder = {
-            "clean-candidate": 0.0,
-            "warning-candidate": 0.05,
-            "clear-reject-candidate": 0.08,
-            "dominant-reject-candidate": 0.08,
-        }.get(tier)
-        if expected_shoulder is None or not math.isclose(
-            shoulder_fraction, expected_shoulder, abs_tol=1e-12
-        ):
-            raise RuntimeError("r6 tier-bound speck shoulder contract drift")
-        if tier == "clean-candidate" and not (count <= 2 and 0.8 <= amplitude <= 1.4):
-            raise RuntimeError("r6 clean-candidate speck contract drift")
-        if tier in {"clear-reject-candidate", "dominant-reject-candidate"} and not (
-            count >= 6 and 10.0 <= amplitude <= 12.0
-        ):
-            raise RuntimeError("r6 strong speck contract drift")
+        reinforcement_revision = parameters.get(
+            "direct_visibility_reinforcement_revision"
+        )
+        if reinforcement_revision is None:
+            expected_shoulder = {
+                "clean-candidate": 0.0,
+                "warning-candidate": 0.05,
+                "clear-reject-candidate": 0.08,
+                "dominant-reject-candidate": 0.08,
+            }.get(tier)
+            if expected_shoulder is None or not math.isclose(
+                shoulder_fraction, expected_shoulder, abs_tol=1e-12
+            ):
+                raise RuntimeError("r6 tier-bound speck shoulder contract drift")
+            if tier == "clean-candidate" and not (
+                count <= 2 and 0.8 <= amplitude <= 1.4
+            ):
+                raise RuntimeError("r6 clean-candidate speck contract drift")
+            if tier in {
+                "clear-reject-candidate",
+                "dominant-reject-candidate",
+            } and not (count >= 6 and 10.0 <= amplitude <= 12.0):
+                raise RuntimeError("r6 strong speck contract drift")
+        elif reinforcement_revision == _R18_SPECK_REINFORCEMENT_REVISION:
+            encoded_shoulder_l = int(np.rint(amplitude * shoulder_fraction))
+            if (
+                tier
+                not in {"clear-reject-candidate", "dominant-reject-candidate"}
+                or not 4 <= count <= 7
+                or not 11.2 <= amplitude <= 12.0
+                or not 0.42 <= shoulder_fraction <= 0.56
+                or separation < 30
+                or encoded_shoulder_l < 5
+            ):
+                raise RuntimeError("r18 direct-visible speck contract drift")
+        else:
+            raise RuntimeError("unknown speck reinforcement revision")
         centers = _stratified_separated_integer_positions(
             rng,
             count,
@@ -1146,7 +1275,10 @@ def _render_unsigned_delta(
 
 
 def _artifact_variants(
-    split: str, *, _include_r16_warning_rebalance: bool = True
+    split: str,
+    *,
+    _include_r16_warning_rebalance: bool = True,
+    _include_r18_speck_reinforcement: bool = True,
 ) -> dict[str, list[dict[str, Any]]]:
     if split == "calibration":
         nonce_base = _ARTIFACT_NONCE_BASES[split]
@@ -2906,6 +3038,25 @@ def _artifact_variants(
                     )
                 result[family][index] = dict(replacement)
 
+    if _include_r18_speck_reinforcement:
+        replacements = _R18_SPECK_REINFORCEMENT_MANIFEST["splits"][split]
+        if len(replacements) != 10:
+            raise RuntimeError(f"r18 speck replacement cardinality drift: {split}")
+        for index, replacement in replacements.items():
+            source = result["artifact-speck"][index]
+            if source["design_tier"] != replacement["design_tier"] or source[
+                "design_tier"
+            ] not in {"clear-reject-candidate", "dominant-reject-candidate"}:
+                raise RuntimeError(
+                    f"r18 speck replacement source-tier drift: {split}/{index}"
+                )
+            result["artifact-speck"][index] = {
+                **replacement,
+                "direct_visibility_reinforcement_revision": (
+                    _R18_SPECK_REINFORCEMENT_REVISION
+                ),
+            }
+
     family_nonce_offsets = {
         "artifact-fine-grain": 0,
         "artifact-speck": 100,
@@ -2913,9 +3064,14 @@ def _artifact_variants(
         "artifact-short-dash": 300,
         "artifact-parallel-bundle": 400,
     }
+    schedule_revision = (
+        _SCHEDULE_REVISION
+        if _include_r18_speck_reinforcement
+        else _R17_SCHEDULE_REVISION
+    )
     for family, variants in result.items():
         for index, parameters in enumerate(variants):
-            parameters["schedule_revision"] = _SCHEDULE_REVISION
+            parameters["schedule_revision"] = schedule_revision
             parameters["condition_nonce"] = (
                 nonce_base + family_nonce_offsets[family] + index
             )
@@ -3009,7 +3165,7 @@ def _validate_dev_r17_morphology_schedules() -> None:
         return min(capacities)
 
     if (
-        _SCHEDULE_REVISION
+        _R17_SCHEDULE_REVISION
         != "dev-r17-protocol-zero-reference-prequalification-schedule-v1"
         or _PUBLIC_WARNING_ANCHOR_REVISION
         != "dev-r16-six-per-sparse-family-direct-visible-warning-v1"
@@ -3017,28 +3173,23 @@ def _validate_dev_r17_morphology_schedules() -> None:
         != "dev-r16-one-clean-one-clear-per-sparse-family-v1"
         or _PUBLIC_MICROBLOB_REJECT_ANCHOR_REVISION
         != "dev-r15-calibration-quantized-microblob-reject-v1"
-        or _PUBLIC_PAYLOAD_COMMITMENT_PREFIX
-        != b"microtexture-v2-r6/public-payload-commitment/v13/"
-        or _PRIVATE_REFERENCE_TRANSFORM_PREFIX != b"private-reference-transform-v12/"
-        or _FOUNDATION_OFFSET_LANE != "foundation-offset-v11"
-        or _FOUNDATION_ASSIGNMENT_LANE != "foundation-assignment-v11"
-        or _DELTA_LANE != "delta-v11"
-        or _PRIVATE_CONTROL_ID_PREFIX != b"microtexture-v2-r6/private-control-id/v11/"
-        or _ARTIFACT_NONCE_BASES != {"calibration": 973000, "holdout": 983000}
-        or _PROTOCOL_ZERO_NONCE_BASES != {"calibration": 951000, "holdout": 961000}
-        or _DUPLICATE_AUDIT_NONCES
-        != {
-            "calibration": (991000, 991001, 991002),
-            "holdout": (1001000, 1001001, 1001002),
-        }
     ):
-        raise RuntimeError("r17 schedule/domain/nonce authority drift")
+        raise RuntimeError("r17 inherited morphology authority drift")
 
     predecessor = {
-        split: _artifact_variants(split, _include_r16_warning_rebalance=False)
+        split: _artifact_variants(
+            split,
+            _include_r16_warning_rebalance=False,
+            _include_r18_speck_reinforcement=False,
+        )
         for split in splits
     }
-    current = {split: _artifact_variants(split) for split in splits}
+    current = {
+        split: _artifact_variants(
+            split, _include_r18_speck_reinforcement=False
+        )
+        for split in splits
+    }
     current_morphology = {
         split: {
             family: [morphology(parameters) for parameters in variants]
@@ -3621,7 +3772,9 @@ def _validate_dev_r17_morphology_schedules() -> None:
     }
     split_tuples: dict[str, set[tuple[str, float]]] = {}
     for split, expected_by_tier in expected_grain_periods.items():
-        grain = _artifact_variants(split)["artifact-fine-grain"]
+        grain = _artifact_variants(
+            split, _include_r18_speck_reinforcement=False
+        )["artifact-fine-grain"]
         split_tuples[split] = set()
         for tier, expected in expected_by_tier.items():
             actual = tuple(
@@ -3641,6 +3794,428 @@ def _validate_dev_r17_morphology_schedules() -> None:
             split_tuples[split].update(actual)
     if split_tuples["calibration"] & split_tuples["holdout"]:
         raise RuntimeError("r16 calibration/holdout grain pattern-period overlap")
+
+
+def dev_r18_authority_binding() -> dict[str, Any]:
+    """Return the tracked, public r18 catalog authority without runtime material."""
+
+    return {
+        "schedule_revision": _SCHEDULE_REVISION,
+        "public_payload_commitment_prefix": (
+            _PUBLIC_PAYLOAD_COMMITMENT_PREFIX.decode("ascii")
+        ),
+        "private_reference_transform_prefix": (
+            _PRIVATE_REFERENCE_TRANSFORM_PREFIX.decode("ascii")
+        ),
+        "foundation_offset_lane": _FOUNDATION_OFFSET_LANE,
+        "foundation_assignment_lane": _FOUNDATION_ASSIGNMENT_LANE,
+        "delta_lane": _DELTA_LANE,
+        "private_control_id_prefix": _PRIVATE_CONTROL_ID_PREFIX.decode("ascii"),
+        "artifact_nonce_bases": dict(_ARTIFACT_NONCE_BASES),
+        "protocol_zero_nonce_bases": dict(_PROTOCOL_ZERO_NONCE_BASES),
+        "duplicate_audit_nonces": {
+            split: list(values) for split, values in _DUPLICATE_AUDIT_NONCES.items()
+        },
+        "speck_reinforcement_revision": _R18_SPECK_REINFORCEMENT_REVISION,
+        "speck_reinforcement_manifest_sha256": (
+            _R18_SPECK_REINFORCEMENT_MANIFEST_SHA256
+        ),
+        "full_artifact_morphology_sha256": (
+            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "preserved_r17_morphology_sha256": (
+            _R18_PRESERVED_R17_MORPHOLOGY_SHA256
+        ),
+    }
+
+
+def _validate_dev_r18_morphology_schedules() -> None:
+    """Prove the bounded r18 overlay and its unchanged r17 complement."""
+
+    _validate_dev_r17_morphology_schedules()
+    splits = ("calibration", "holdout")
+    family = "artifact-speck"
+
+    if (
+        _SCHEDULE_REVISION
+        != "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1"
+        or _PUBLIC_PAYLOAD_COMMITMENT_PREFIX
+        != b"microtexture-v2-r6/public-payload-commitment/v14/"
+        or _PRIVATE_REFERENCE_TRANSFORM_PREFIX
+        != b"private-reference-transform-v13/"
+        or _FOUNDATION_OFFSET_LANE != "foundation-offset-v12"
+        or _FOUNDATION_ASSIGNMENT_LANE != "foundation-assignment-v12"
+        or _DELTA_LANE != "delta-v12"
+        or _PRIVATE_CONTROL_ID_PREFIX
+        != b"microtexture-v2-r6/private-control-id/v12/"
+        or _ARTIFACT_NONCE_BASES
+        != {"calibration": 1073000, "holdout": 1083000}
+        or _PROTOCOL_ZERO_NONCE_BASES
+        != {"calibration": 1051000, "holdout": 1061000}
+        or _DUPLICATE_AUDIT_NONCES
+        != {
+            "calibration": (1091000, 1091001, 1091002),
+            "holdout": (1101000, 1101001, 1101002),
+        }
+    ):
+        raise RuntimeError("r18 schedule/domain/nonce authority drift")
+
+    r18_nonces: dict[str, set[int]] = {}
+    r17_nonces: dict[str, set[int]] = {}
+    for split in splits:
+        r18_nonces[split] = {
+            _ARTIFACT_NONCE_BASES[split] + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {
+            _PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
+        } | set(_DUPLICATE_AUDIT_NONCES[split])
+        r17_artifact_base = 973000 if split == "calibration" else 983000
+        r17_zero_base = 951000 if split == "calibration" else 961000
+        r17_duplicate = (
+            (991000, 991001, 991002)
+            if split == "calibration"
+            else (1001000, 1001001, 1001002)
+        )
+        r17_nonces[split] = {
+            r17_artifact_base + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {r17_zero_base + index for index in range(16)} | set(r17_duplicate)
+        if len(r18_nonces[split]) != 119 or r18_nonces[split] & r17_nonces[split]:
+            raise RuntimeError(f"r18 fresh nonce-space drift: {split}")
+    if r18_nonces["calibration"] & r18_nonces["holdout"]:
+        raise RuntimeError("r18 calibration/holdout nonce-space overlap")
+
+    manifest = _R18_SPECK_REINFORCEMENT_MANIFEST
+    if set(manifest) != {
+        "revision",
+        "inherited_schedule_revision",
+        "schedule_revision",
+        "sanitized_r17_basis",
+        "family",
+        "target_tiers",
+        "target_conditions_per_split",
+        "clear_reject_conditions_per_split",
+        "dominant_reject_conditions_per_split",
+        "tiny_speck_development_floor",
+        "tiny_speck_structural_miss_budget",
+        "spot_development_floor",
+        "spot_endpoint_relation",
+        "direct_visibility_contract",
+        "preservation_contract",
+        "splits",
+    }:
+        raise RuntimeError("r18 speck manifest top-level schema drift")
+    basis = manifest["sanitized_r17_basis"]
+    holdout_basis = basis.get("holdout", {})
+    if (
+        set(basis)
+        != {
+            "calibration_formal_and_development_endpoint_floors_passed",
+            "holdout",
+            "private_audits_passed",
+            "metric_or_threshold_evaluation_performed",
+        }
+        or basis["calibration_formal_and_development_endpoint_floors_passed"]
+        is not True
+        or basis["private_audits_passed"] is not True
+        or basis["metric_or_threshold_evaluation_performed"] is not False
+        or set(holdout_basis)
+        != {
+            "tiny_speck_reject_detection",
+            "spot_reject_detection",
+            "all_other_endpoints_passed",
+        }
+        or holdout_basis["all_other_endpoints_passed"] is not True
+        or holdout_basis["tiny_speck_reject_detection"]
+        != {"observed": 0, "formal_minimum": 4, "development_minimum": 6}
+        or holdout_basis["spot_reject_detection"]
+        != {"observed": 9, "formal_minimum": 8, "development_minimum": 10}
+    ):
+        raise RuntimeError("r18 sanitized r17 aggregate drift")
+    direct_contract = manifest["direct_visibility_contract"]
+    preservation_contract = manifest["preservation_contract"]
+    if (
+        manifest["revision"] != _R18_SPECK_REINFORCEMENT_REVISION
+        or manifest["inherited_schedule_revision"] != _R17_SCHEDULE_REVISION
+        or manifest["schedule_revision"] != _SCHEDULE_REVISION
+        or manifest["family"] != family
+        or manifest["target_tiers"]
+        != ["clear-reject-candidate", "dominant-reject-candidate"]
+        or manifest["target_conditions_per_split"] != 10
+        or manifest["clear_reject_conditions_per_split"] != 6
+        or manifest["dominant_reject_conditions_per_split"] != 4
+        or manifest["tiny_speck_development_floor"] != 6
+        or manifest["tiny_speck_structural_miss_budget"] != 4
+        or manifest["spot_development_floor"] != 10
+        or manifest["spot_endpoint_relation"]
+        != "tiny_speck_visible OR microblob_visible"
+        or manifest["target_conditions_per_split"]
+        - manifest["tiny_speck_development_floor"]
+        != manifest["tiny_speck_structural_miss_budget"]
+        or manifest["spot_development_floor"]
+        - holdout_basis["spot_reject_detection"]["observed"]
+        != 1
+        or manifest["target_conditions_per_split"]
+        < manifest["spot_development_floor"]
+        or direct_contract
+        != {
+            "diameter_px": 1,
+            "minimum_core_count": 4,
+            "maximum_core_count": 7,
+            "minimum_center_amplitude_l": 11.2,
+            "maximum_center_amplitude_l": 12.0,
+            "minimum_encoded_axial_shoulder_l": 5,
+            "minimum_separation_px": 30,
+            "quadrant_stratified": True,
+            "returns_to_uninjected_background_outside_one_axial_neighbor": True,
+            "microblob_blur_forbidden": True,
+            "vision_truth_guaranteed": False,
+        }
+        or preservation_contract
+        != {
+            "clean_morphologies_unchanged": True,
+            "warning_morphologies_unchanged": True,
+            "all_non_speck_morphologies_unchanged": True,
+            "design_tier_membership_unchanged": True,
+            "artifact_condition_count_per_split_unchanged": 100,
+            "metric_threshold_population_and_rate_contracts_unchanged": True,
+        }
+        or set(manifest["splits"]) != set(splits)
+        or sha256_bytes(canonical_json_bytes(manifest))
+        != _R18_SPECK_REINFORCEMENT_MANIFEST_SHA256
+    ):
+        raise RuntimeError("r18 speck reinforcement authority drift")
+
+    expected_indices = {
+        "calibration": {3, 5, 6, 7, 8, 12, 15, 16, 17, 19},
+        "holdout": {1, 3, 4, 6, 9, 10, 11, 13, 14, 18},
+    }
+    replacement_keys = {
+        "design_tier",
+        "diameter_px",
+        "amplitude_l",
+        "count_in_metric_window",
+        "shoulder_fraction",
+        "minimum_separation_px",
+    }
+    for split in splits:
+        replacements = manifest["splits"][split]
+        if set(replacements) != expected_indices[split] or any(
+            set(replacement) != replacement_keys
+            for replacement in replacements.values()
+        ):
+            raise RuntimeError(f"r18 speck replacement schema drift: {split}")
+
+    def morphology(parameters: dict[str, Any]) -> dict[str, Any]:
+        return {
+            key: value
+            for key, value in parameters.items()
+            if key not in {"schedule_revision", "condition_nonce"}
+        }
+
+    inherited = {
+        split: _artifact_variants(
+            split, _include_r18_speck_reinforcement=False
+        )
+        for split in splits
+    }
+    current = {split: _artifact_variants(split) for split in splits}
+    expected_change_set = {
+        (split, family, index)
+        for split in splits
+        for index in expected_indices[split]
+    }
+    actual_change_set = {
+        (split, candidate_family, index)
+        for split in splits
+        for candidate_family, variants in current[split].items()
+        for index, parameters in enumerate(variants)
+        if morphology(parameters)
+        != morphology(inherited[split][candidate_family][index])
+    }
+    if actual_change_set != expected_change_set or len(actual_change_set) != 20:
+        raise RuntimeError("r18 exact speck morphology change-set drift")
+
+    preserved_r17: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    full_r18: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    target_profiles: dict[str, Counter[tuple[str, int, float]]] = {}
+    target_geometry: dict[
+        str, dict[tuple[str, int, float], tuple[float, int]]
+    ] = {}
+    target_tuples: dict[str, set[bytes]] = {}
+    expected_total_tiers = Counter(
+        {
+            "clean-candidate": 21,
+            "warning-candidate": 28,
+            "clear-reject-candidate": 31,
+            "dominant-reject-candidate": 20,
+        }
+    )
+    for split in splits:
+        preserved_r17[split] = {}
+        full_r18[split] = {}
+        target_tiers: Counter[str] = Counter()
+        target_profiles[split] = Counter()
+        target_geometry[split] = {}
+        target_tuples[split] = set()
+        for candidate_family, variants in current[split].items():
+            if len(variants) != 20:
+                raise RuntimeError(
+                    f"r18 artifact family cardinality drift: {split}/{candidate_family}"
+                )
+            full_r18[split][candidate_family] = [
+                morphology(parameters) for parameters in variants
+            ]
+            preserved_entries: list[dict[str, Any]] = []
+            for index, parameters in enumerate(variants):
+                actual = morphology(parameters)
+                source = morphology(inherited[split][candidate_family][index])
+                if (split, candidate_family, index) not in expected_change_set:
+                    if actual != source:
+                        raise RuntimeError(
+                            f"r18 preserved r17 morphology drift: "
+                            f"{split}/{candidate_family}/{index}"
+                        )
+                    preserved_entries.append(
+                        {"variant_index": index, "parameters": actual}
+                    )
+                    continue
+
+                replacement = manifest["splits"][split][index]
+                expected = {
+                    **replacement,
+                    "direct_visibility_reinforcement_revision": (
+                        _R18_SPECK_REINFORCEMENT_REVISION
+                    ),
+                }
+                if (
+                    candidate_family != family
+                    or actual != expected
+                    or source["design_tier"] != actual["design_tier"]
+                ):
+                    raise RuntimeError(
+                        f"r18 speck target morphology drift: {split}/{index}"
+                    )
+                count = int(actual["count_in_metric_window"])
+                amplitude = float(actual["amplitude_l"])
+                shoulder_fraction = float(actual["shoulder_fraction"])
+                separation = int(actual["minimum_separation_px"])
+                if (
+                    int(actual["diameter_px"]) != direct_contract["diameter_px"]
+                    or not direct_contract["minimum_core_count"]
+                    <= count
+                    <= direct_contract["maximum_core_count"]
+                    or not direct_contract["minimum_center_amplitude_l"]
+                    <= amplitude
+                    <= direct_contract["maximum_center_amplitude_l"]
+                    or int(np.rint(amplitude * shoulder_fraction))
+                    < direct_contract["minimum_encoded_axial_shoulder_l"]
+                    or separation < direct_contract["minimum_separation_px"]
+                ):
+                    raise RuntimeError(
+                        f"r18 speck direct-visible parameter drift: {split}/{index}"
+                    )
+
+                rendered = _render_unsigned_delta(
+                    family,
+                    actual,
+                    np.random.default_rng(180000 + index),
+                    384,
+                    512,
+                    (128, 96, 256, 192),
+                )
+                outside = rendered.copy()
+                outside[96:288, 128:384] = 0
+                core_y, core_x = np.nonzero(rendered == np.float32(amplitude))
+                quadrant_counts = Counter(
+                    (0 if x < 256 else 1) + (0 if y < 192 else 2)
+                    for y, x in zip(core_y, core_x, strict=True)
+                )
+                if (
+                    np.any(outside)
+                    or int(np.count_nonzero(rendered)) != count * 5
+                    or len(core_x) != count
+                    or set(quadrant_counts) != {0, 1, 2, 3}
+                    or max(quadrant_counts.values())
+                    - min(quadrant_counts.values())
+                    > 1
+                ):
+                    raise RuntimeError(
+                        f"r18 speck render/stratification drift: {split}/{index}"
+                    )
+                target_tiers[actual["design_tier"]] += 1
+                target_profiles[split][
+                    (actual["design_tier"], count, shoulder_fraction)
+                ] += 1
+                profile = (actual["design_tier"], count, shoulder_fraction)
+                if profile in target_geometry[split]:
+                    raise RuntimeError(
+                        f"r18 duplicate split structural profile: {split}/{index}"
+                    )
+                target_geometry[split][profile] = (amplitude, separation)
+                target_tuples[split].add(canonical_json_bytes(actual))
+            preserved_r17[split][candidate_family] = preserved_entries
+
+        if (
+            sum(len(variants) for variants in current[split].values()) != 100
+            or Counter(
+                parameters["design_tier"]
+                for variants in current[split].values()
+                for parameters in variants
+            )
+            != expected_total_tiers
+            or target_tiers
+            != Counter(
+                {
+                    "clear-reject-candidate": 6,
+                    "dominant-reject-candidate": 4,
+                }
+            )
+            or len(target_tuples[split]) != 10
+        ):
+            raise RuntimeError(f"r18 population/target cardinality drift: {split}")
+
+    if (
+        target_profiles["calibration"] != target_profiles["holdout"]
+        or target_tuples["calibration"] & target_tuples["holdout"]
+        or set(target_geometry["calibration"]) != set(target_geometry["holdout"])
+        or any(
+            holdout_separation != calibration_separation + 1
+            or abs(holdout_amplitude - calibration_amplitude) > 0.100000000001
+            for profile, (
+                calibration_amplitude,
+                calibration_separation,
+            ) in target_geometry["calibration"].items()
+            for holdout_amplitude, holdout_separation in [
+                target_geometry["holdout"][profile]
+            ]
+        )
+    ):
+        raise RuntimeError("r18 symmetric split morphology matrix drift")
+    if (
+        sum(
+            len(entries)
+            for families in preserved_r17.values()
+            for entries in families.values()
+        )
+        != 180
+        or sha256_bytes(canonical_json_bytes(preserved_r17))
+        != _R18_PRESERVED_R17_MORPHOLOGY_SHA256
+    ):
+        raise RuntimeError("r18 preserved r17 morphology SHA drift")
+    if (
+        sum(
+            len(variants)
+            for families in full_r18.values()
+            for variants in families.values()
+        )
+        != 200
+        or sha256_bytes(canonical_json_bytes(full_r18))
+        != _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+    ):
+        raise RuntimeError("r18 full artifact morphology SHA drift")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -3828,7 +4403,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r17_morphology_schedules()
+    _validate_dev_r18_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):

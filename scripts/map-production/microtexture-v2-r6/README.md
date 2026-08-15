@@ -118,15 +118,45 @@ duplicate-auditは両splitともpassしました。このためpopulation aggreg
 pixel/identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem output/private materialを後続editionまたは
 formalへ一切再利用しません。
 
-fresh successor `dev-r17`はgeneral reference-transform prequalificationとdual-initial flag corroborationだけを検証する
-development-only probeです。dev-r16から利用できるのはsanitizedなone-record sentinel aggregateだけです。dev-r16で固定した
-`dev-r16-six-per-sparse-family-direct-visible-warning-v1`、`dev-r16-one-clean-one-clear-per-sparse-family-v1`を含む全200 artifact
-morphologies、tier、population minima、metric、threshold、rate契約を変更しません。全private roleへ同一のpixel/role/label-
-independent best-of-8 HMAC coefficient prequalificationを適用し、Root/Independent双方のofficial initial snapshotとreceiptを
-必須化します。final `g,t,b,l,p` flag setはrecordごとに両initial flag setのintersectionのsubsetでなければなりません。
-full-200 direct-visibility gateを無補正で再適用し、400%-only inferenceを禁止します。fresh isolated root/key/identities/domains/
-nonces/controls/references/commitments/labels/decisions/measurementsを要求し、dev-r17成功自体もformal authorityではありません。
-dev-r17の一回限りauditをcommit/pushし、Ubuntu/Windows CIで確認するまでformal stageを開始してはいけません。
+`dev-r17`は一回限りのgenerationで両split合計440 public recordsを生成し、Root/Independentが各440件を独立確認した
+`440 × 2` reviewを完了しました。両者のofficial initial snapshotsとSHA receiptsは不変です。全差分
+（calibration: logical 97件 + notes-only 17件、holdout: logical 84件 + notes-only 60件）をreconcileし、final bilateral
+initial visible-flag intersection gate、official preflight、両splitのprivate auditはpassしました。
+
+pre-measurement population counts（clean、warning、reject、severity 3、grain、tiny-speck、microblob、spot、short-line、
+parallel-bundle）は、calibrationが`27, 22, 51, 11, 11, 11, 10, 20, 20, 10`で全formal minimumとdevelopment floorをpass、
+holdoutが`30, 30, 40, 28, 11, 0, 9, 9, 20, 10`でした。holdout tiny-speck `0`はformal minimum `4` / development floor
+`6`をfailし、spot `9`はformal minimum `8`をpassしてdevelopment floor `10`をfailしました。holdoutの他endpointは全formal
+minimumとdevelopment floorをpassしました。all-or-nothing gateにより数値metricを一度も呼ばず、thresholdを作らないまま
+`failed-and-closed-before-measurement`で閉鎖しました。閉鎖後のsanitized read-only postmortemは一度だけです。auditは
+`world/map-production/qa/microtexture-v2-r6-dev-r17-development-failure.json`（raw SHA-256
+`2177b04b6f79b75394cbdef6204423194603cd81e3a84b5a673c58393ccf5856`）です。dev-r17の全素材・identity・decision・
+public/private outputはformalまたは後続editionへ一切再利用しません。formal stageはblockedです。
+
+唯一のpreregistered successor `dev-r18`はfresh isolated one-shot development-only probeです。exact roleは
+`fresh one-shot development role used only as a symmetric direct-visible reject-speck reinforcement probe after the closed dev-r17 premeasurement population failure; it may use only the sanitized aggregate that holdout tiny-speck population was 0 against formal minimum 4 and development floor 6 and holdout spot population was 9 against formal minimum 8 and development floor 10 while every other endpoint passed both minima, changes exactly the 10 existing reject-tier speck conditions per split, preserves the other 180 artifact morphologies plus the r17 role-agnostic reference prequalification and bilateral initial flag gate and every tier cardinality, population minimum, metric, threshold, and rate contract, requires a fresh isolated root, cryptographic blind key, identities, domains, nonces, controls, references, commitments, labels, decisions, and measurements, and can never become or supply formal authority`
+です。
+
+各splitの既存`artifact-speck` reject-tier 10条件だけを対称に置換し、内訳はclear-reject 6 / dominant-reject 4です。
+diameterは1 px、core countは4..7、center amplitudeは11.2..12.0 L、shoulder fractionは0.42..0.56、encoded axial
+shoulder magnitudeは5 L以上、minimum separationは30 px以上とし、coreを4象限へstratifyします。これはcoverage reinforcementであり
+Vision truthを保証しません。tiny-speck development floor 6に対する構造上のmiss budgetは4、sanitized r17 holdoutのspot
+`9`からdevelopment floor `10`へ必要な増分は1です。clean / warning / 全non-speckを含む他180 morphology、tier cardinality、
+population minima、metric、threshold、rate、r17 role-agnostic reference prequalification、bilateral initial flag gateは不変です。
+
+schedule revisionは`dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1`、reinforcement revisionは
+`dev-r18-symmetric-reject-speck-direct-visible-cross-v1`です。reinforcement manifest SHA-256は
+`355c6c588c3d698288a3545752c13cea734db85e1e7a9a95416cbe3163f633d4`、full 200 morphology SHA-256は
+`9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365`、preserved 180 morphology SHA-256は
+`03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf`、sanitized r17 basis SHA-256は
+`88860fea0dbdf5ebfa454bf7f038aae53c957808d4c4d344b1ea0fc8e54042e9`です。
+
+fresh rootは`tmp/map-production/microtexture-v2-r6-dev-r18`、public noncesは`r6-calibration-v13` / `r6-holdout-v13`です。
+condition-cluster / render-seed / opaque-code / private-reference-transformはv13、public payload commitmentはv14、key commitment /
+foundation-offset / foundation-assignment / delta / private-control-idはv12です。protocol-zero nonce basesは`1051000` / `1061000`、
+artifact basesは`1073000` / `1083000`、duplicate-audit noncesは`1091000..1091002` / `1101000..1101002`です。
+generation前にexact authority commitをpushし、同じcommitのUbuntu/Windows CIを両方passさせます。dev-r18はone-shotで、
+successしてもformal authorityを供給できず、formal stageは引き続きblockedです。
 
 ## ImageGen authority
 
@@ -146,7 +176,8 @@ record identity（polarity と replicate を含む）を入力とする full-out
 technical / cryptographic blind や、同じ OS principal で悪意ある reviewer に対する secrecy は主張しません。
 formal fresh key は専用の長寿命 custodian process だけが保持し、artifactやlogへ永続化せず、Vision processへ
 継承・公開しません。closed dev-r8/dev-r9/dev-r10/dev-r11/dev-r12/dev-r13/dev-r14/dev-r15/dev-r16 keyは各Git-ignored private rootにだけ保持して
-再利用せず、fresh dev-r17 keyは別のGit-ignored rootとtracked custodian runnerだけが扱います。marker 前の
+再利用せず、closed dev-r17 keyも再利用しません。fresh dev-r18 keyは別のGit-ignored isolated rootだけで扱い、
+既存keyを一切再利用しません。marker 前の
 review surface は185 contact-sheet view-pages（各view 37 pages）とcode-only label formだけです。manifest schema
 `microtexture-v2-r6-control-manifest/3` が公開する record 情報は opaque code と code別の
 `control` / `reference` / `delta` HMAC commitment 3件だけで、個別control/referenceのpath、file、raw bytes、
@@ -183,7 +214,7 @@ artifact の5 family は、compact `control_families` schema の次の ID だけ
 - `artifact-short-dash`
 - `artifact-parallel-bundle`
 
-dev-r16でfreezeしfresh dev-r17がmorphologyを変更せず継承するdevelopment Vision scheduleでは、各familyの20 nonzero conditionsを4つのdesign tierへ配分し、
+dev-r16でfreezeしclosed dev-r17がmorphologyを変更せず継承したdevelopment Vision scheduleでは、各familyの20 nonzero conditionsを4つのdesign tierへ配分し、
 fine-grainを`5 / 4 / 7 / 4`、4つのsparse familyを各`4 / 6 / 6 / 4`としてcorpus coverageを固定します。calibrationとholdoutはspecに記録された
 split別のfrozen scheduleとpublic nonceを使います。tierはperceptual marginを広く試すための生成設計であり、
 `clean`、`warning`、`reject`、severityその他のVision truthを予告・割当するものではありません。
@@ -264,7 +295,7 @@ delta laneは`delta-v10`、private-control-id domainは`microtexture-v2-r6/priva
 calibration `851000..851015` / holdout `861000..861015`、artifactは`873000..873419` / `883000..883419`、
 duplicate-auditは`891000..891002` / `901000..901002`です。
 
-fresh dev-r17 schedule revisionは`dev-r17-protocol-zero-reference-prequalification-schedule-v1`、exact root/keyは
+closed dev-r17が使用したschedule revisionは`dev-r17-protocol-zero-reference-prequalification-schedule-v1`、exact root/keyは
 `tmp/map-production/microtexture-v2-r6-dev-r17` /
 `tmp/map-production/microtexture-v2-r6-dev-r17/private/development-key.bin`です。public noncesは
 `r6-calibration-v12` / `r6-holdout-v12`、cluster domainは`microtexture-v2-r6/private-condition-cluster/v12/`、render domainは
@@ -327,7 +358,7 @@ condition clusterごとに `reject > warning > clean` のworst-case disposition�
 保守的に集約し、metric-equivalent pairには1 predictionだけを割り当てます。その後unique clustersを等重みで
 集計します。1 clusterをaccept/reject endpointの双方へ入れることは禁止です。
 
-closed `dev-r8` / `dev-r9` / `dev-r12` / `dev-r13` / `dev-r14` / `dev-r15` / `dev-r16` とfresh `dev-r17` の一回限りのanalysisには、formal specのendpoint最低populationを
+closed `dev-r8` / `dev-r9` / `dev-r12` / `dev-r13` / `dev-r14` / `dev-r15` / `dev-r16` / `dev-r17` の一回限りのanalysisには、formal specのendpoint最低populationを
 一切変更せず、さらに厳しいdevelopment-only safety floorを上乗せします。dev-r10はanalysis前、dev-r11はprivate
 sentinel auditでpopulation aggregation前に閉鎖したため、このgateの結果を持ちません。label bytesを両splitともsealし、private identityを
 revealしてsemantic auditを終えた後、最初のmetric callより前にcondition-cluster truthで次を検査します。
@@ -363,9 +394,9 @@ minimum `4`をpassしてdevelopment floor `6`をfailしました。calibration�
 passし、`measurement_started=false`のまま閉鎖しました。dev-r15も両private auditをpassした後、calibration warning `12`が
 formal minimum `10`をpassしてdevelopment floor `13`をfailし、holdout warning `9`が両minimumをfailしたため、他の全endpointが
 両minimumをpassしていても測定前に閉鎖しました。dev-r16はprivate exact-zero sentinel false positiveでpopulation gate前に
-閉鎖しました。fresh dev-r17でもprivate auditに失敗するかpopulationが一つでも不足すれば`measurement_started=false`で消費・閉鎖し、測定、threshold探索、ラベル修正、top-up、別keyでの再生成へ
-進みません。population通過後も全endpointを同時に
-満たせなければthresholdを作らず閉鎖します。このmargin gateとgrain support scheduleはdevelopment専用であり、
+閉鎖しました。dev-r17は両private auditをpassしましたが、holdout tiny-speck `0`とspot `9`がdevelopment floorを
+満たさなかったため、`measurement_started=false`のまま消費・閉鎖しました。数値metric、threshold探索、ラベル修正、
+top-up、別keyでの再生成へ進みません。このmargin gateとgrain support scheduleはdevelopment専用であり、
 Vision truthではありません。formal common endpoint minima、rate、metric、candidate selection、one-shot契約を
 変更しません。
 
@@ -380,7 +411,7 @@ Root は各 split の全220 codesを、次の5 viewで漏れなく確認しま�
 
 1 view は37 pages、合計は split あたり 185 contact-sheet view-pagesです。development helperは同じpage indexの
 5 viewを横並びにした37 review boardsも作ります。全 view は同じ code 順序を持ち、nearest-neighbor
-で拡大されます。closed dev-r15/dev-r16へ適用した規約をfresh dev-r17でも維持し、native 512×384 full-200 cropを無補正・contrast強調なしで先に確認し、400%は
+で拡大されます。closed dev-r15/dev-r16/dev-r17へ適用した規約では、native 512×384 full-200 cropを無補正・contrast強調なしで先に確認し、400%は
 同位置の再同定だけに使います。各512×384 panelの直前には30pxのcode headerがあり、codeをpanel下へ置くこと、headerとpanelを
 重ねることは禁止します。Root は生成された exact path の label stub に、`disposition`、5種の visible flag、
 severity、200%確認、全400% quadrant確認、notes を記入します。全185 view-pages相当を確認する前に one-shot
@@ -445,8 +476,8 @@ coherent fine patternはspot/line branchではなく、directional coherenceを�
 split-specific morphology schedulesとこれらのabsolute floorは、fresh formal key、controls、labelsより前に
 明示的なnon-formal development keysでfreezeします。closed `dev-r6`～`dev-r15` corporaは正式判断に使いません。
 dev-r10はgeneration中断、dev-r11/dev-r16はprivate sentinel audit失敗によりmetric evidenceを持たず、dev-r12/dev-r13/dev-r14/dev-r15もpopulation
-gate失敗によりmetric evidenceを持ちません。fresh `dev-r17` は
-`dev-r17-protocol-zero-reference-prequalification-schedule-v1`の全scheduleをsubsettingなしで一回だけ確認します。artifact morphologyはdev-r16から
+gate失敗によりmetric evidenceを持ちません。closed `dev-r17` は
+`dev-r17-protocol-zero-reference-prequalification-schedule-v1`の全scheduleをsubsettingなしで一回だけ生成・reviewしました。artifact morphologyはdev-r16から
 変更せず、dev-r16で行った変更は4 sparse familyで
 各1 clean / 1 clear-rejectをwarningへ変えるexact 16 morphologiesだけで、184 nonconversion morphologiesは不変です。
 formal labels、threshold、resultsは未確定であり、design tierからVision truthを保証・予告しません。既存のmetric、half-scale、
@@ -462,9 +493,9 @@ r7の閉鎖済みaggregate診断から変更するhalf-scaleは3件だけです�
 単一threshold、全endpoint count/rateは不変です。単一reference変更は全候補不合格、2-reference変更で唯一通った組へ、
 判定境界を広げるgrain 1件を加えたrevisionです。dev-r8はpopulation gateでmeasurement前に閉鎖し、dev-r9は
 同じmetricを一度だけ実行したもののthresholdを選べず閉鎖しました。dev-r10はmetricを呼ぶ前のgeneration中断で
-閉鎖しました。dev-r11/dev-r16はprivate sentinel audit、dev-r12/dev-r13/dev-r14/dev-r15はpopulation auditでmetric前に閉鎖しました。fresh
-dev-r17はmetricを変更せず継承し、closed editionのthreshold、diagnostic、measurement、generation/review outputをformalへ
-使用しません。
+閉鎖しました。dev-r11/dev-r16はprivate sentinel audit、dev-r12/dev-r13/dev-r14/dev-r15/dev-r17はpopulation auditでmetric前に閉鎖しました。
+dev-r17では数値metricを一度も呼ばず、thresholdを作りませんでした。closed editionのthreshold、diagnostic、measurement、
+generation/review outputをformalへ使用しません。
 
 ```text
 hard_composite_score = max(
@@ -489,7 +520,7 @@ post-marker failureとしてauthority thresholdを作らず閉鎖します。cou
 candidateがなければ`hard_threshold:null`で閉鎖します。最良の不合格候補はdiagnostic auditにだけ記録し、
 freezeや後続stageへ渡しません。
 
-## Development closure and fresh dev-r17 operator order
+## Development closure
 
 dev-r8は全440 decisionsをreview、seal、private auditした後、最初のmetric callより前のpopulation gateで
 `failed-and-closed-before-measurement`となりました。tiny-speck-visible rejectはcalibration 3、holdout 1で、
@@ -536,35 +567,18 @@ dev-r15はwarning population gate failureとして測定前に閉鎖済みであ
 measurement、threshold searchを開始せず閉鎖済みです。両official initial snapshots/receiptsを不変保存し、read-only postmortemを
 一度だけ実行しました。dev-r16の続行、再生成、decision修正または素材再利用を認めません。
 
-fresh dev-r17はformal r6ではなく、formal前の新しい一回限りdevelopment probeとしてのみ計画されています。
-このREADMEの記述だけでは実行権限になりません。`dev-r17-protocol-zero-reference-prequalification-schedule-v1`、best-of-8
-prequalification、bilateral initial flag intersection gate、dev-r16から不変のactive warning/conversion revisions、fresh root/key、
-全nonce/domain、bindings、code、tests、tracked
-custodian runnerを規範JSONへfreezeし、新しいauthority commitをpushしてbranch upstream HEADをそのexact commitへ一致させ、
-同じcommitのUbuntu/Windows CIを両方passさせるまでgenerateしてはいけません。
-generate時に記録したmachine/exact runtime fingerprintはpreflight/analyze完了まで完全一致を必須とし、途中で変化した
-場合は継続・再生成せずfail-closedに停止します。
-
-freeze後の順序は、fresh rootの不存在確認 → fresh 32-byte key作成 → public byteより前のexclusive
-`generation-start.dev.json` → role/pixel/label-independent best-of-8 coefficient prequalificationを全private referencesへ同一適用 →
-両split各220 recordsの一回限り生成 → generation summary → summaryをbindするseal →
-sealをbindするexclusive completionです。start後のcatchableな例外はexclusive failureへ記録し、failureとcompletionの
-共存、summary / seal / completionの欠落、hard killを含む中断はdev-r17を消費・閉鎖します。その後に限り、
-Root/独立Visionによる全37 review boardsと各220 decisionsの独立確認 → 両official initial snapshotsとexact-format SHA receiptsの
-作成・official parser/coverage/code binding → 画像へ戻るreconciliation → final visible flagsが両initial intersectionのsubsetで
-あることとfinal three-way exact bytesの検証 → code/printed-code binding、生成時SHA、全件logical agreementのpreflight →
-`microtexture-v2-r6-development-label-seal/3`のexclusive label seal → key read後の全185 contact sheets / 37 review boardsの
-secret-derived exact byte・code-order再生成照合 → private audit → all-or-nothing population gateです。全floorがpassした場合に限り最初のmetric callへ進み、calibrationで1 thresholdを
-選び、その値をholdoutへ変更せず適用します。一つでも失敗すればdev-r17を消費・閉鎖し、rerun、resume、relabel、
-別key、subsetting、top-upをしません。成功時もdev-r17 thresholdはformal authorityではなく、success auditをGitへ
-固定してdev-r17を閉じた後にのみ、formal r6 authorityを別commitで最終freezeできます。現時点ではformal readinessを
-主張しません。
+dev-r17はgenerationと`440 × 2` reviewを一回だけ完了し、immutable bilateral initial receiptsを固定しました。calibrationの
+logical 97件 + notes-only 17件、holdoutのlogical 84件 + notes-only 60件をすべてreconcileし、final intersection gate、official
+preflight、両private auditをpassしました。しかしholdoutのtiny-speck / spot development floorsを満たさず、metricとthresholdへ
+進まずfailed-and-closedです。sanitized read-only postmortemは一度だけで、hash-bound failure audit以外を後続判断へ使いません。
+dev-r17のrerun、resume、relabel、別key、subsetting、top-up、および全素材・outputの再利用は禁止です。このfailureから
+preregisterした唯一の後続editionは、上記のfresh dev-r18 one-shot probeです。
 
 ## Formal operator order
 
-dev-r17が上記の全population gate、metric、calibration、holdout endpointsを一回でpassし、hash-bound success auditを
-commit/pushして両CIを通すまで、以下のformal stageを一つも開始してはいけません。その成功はformal authorityではなく、
-formal authorityはその後の別commitでfreezeします。順序を入れ替えたり、失敗後にやり直したりしてはいけません。
+dev-r17はpopulation gateをfailして閉鎖し、fresh dev-r18はまだformal authorityではないため、以下のformal stageはすべて
+blockedです。dev-r18 authority commitのpushとUbuntu/Windows CI成功より前にgenerationを開始できず、dev-r18が成功しても
+そのoutputをformal authorityへ流用できません。
 
 1. authority files、implementation bindings、foundation/locked provenance、Vision reviews を Git で freeze し、
    working tree の対象 bytes、captured upstream HEAD、tracked SHA を preflight します。Ubuntu/Windows CI は

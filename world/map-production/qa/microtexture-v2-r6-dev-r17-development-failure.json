@@ -1,0 +1,467 @@
+{
+  "artifact": "microtexture-v2-r6-dev-r17-development-premeasurement-population-failure-audit",
+  "schema_version": "microtexture-v2-r6-development-premeasurement-population-failure-audit/1",
+  "authority": false,
+  "formal_use_forbidden": true,
+  "audit_recorded_at": "2026-08-15T18:27:06.624Z",
+  "development_edition": "r17",
+  "outcome": "failed_closed",
+  "failure_phase": "private-audits-passed-then-premeasurement-population-audit",
+  "failure_class": "holdout-tiny-speck-and-development-spot-population-shortfall",
+  "measurement_started": false,
+  "selection_status": "not_started_population_gate_failed",
+  "development_hard_threshold": null,
+  "calibration_endpoint_performance": null,
+  "holdout_endpoint_performance": null,
+  "threshold_selection_audit": null,
+  "one_shot_contract": {
+    "generation_completed_exactly_once": true,
+    "root_vision_completed_exactly_once_before_private_reveal": true,
+    "independent_vision_completed_exactly_once_before_private_reveal": true,
+    "all_440_records_reviewed_by_each_reviewer": true,
+    "root_initial_snapshot_and_receipt_sealed_exactly_once": true,
+    "independent_initial_snapshot_and_receipt_sealed_exactly_once": true,
+    "root_and_independent_decisions_reconciled_exactly_once_before_preflight": true,
+    "review_preflight_invoked_exactly_once": true,
+    "review_preflight_passed": true,
+    "labels_sealed_exactly_once_before_private_reveal": true,
+    "private_reveal_started_after_label_seal": true,
+    "private_audit_started_exactly_once": true,
+    "private_sentinel_audit_passed": true,
+    "population_audit_started_exactly_once": true,
+    "population_audit_passed": false,
+    "analysis_started_exactly_once": true,
+    "numeric_metric_called": false,
+    "threshold_search_started": false,
+    "development_threshold_selected": false,
+    "postmortem_invoked_exactly_once": true,
+    "formal_cli_invoked": false,
+    "formal_marker_created": false,
+    "formal_threshold_created": false,
+    "locked_clean_v18_decoded_or_measured": false,
+    "failure_marker_created": true,
+    "rerun_resume_relabel_retune_subset_topup_resample_or_reuse_for_r17_forbidden": true,
+    "r17_closed": true
+  },
+  "vision_review": {
+    "records_per_split_per_reviewer": 220,
+    "review_boards_per_split_per_reviewer": 37,
+    "logical_comparison_fields": [
+      "page",
+      "row",
+      "anonymous_code",
+      "disposition",
+      "severity",
+      "flags"
+    ],
+    "evidence_notes_excluded_from_logical_comparison": true,
+    "initial_snapshots_persisted_immutably": true,
+    "initial_snapshots_official_decision_dsl_conformant": true,
+    "initial_snapshot_receipts_verified": true,
+    "splits": {
+      "calibration": {
+        "root_initial_decisions_sha256": "c129297ebfc7da8bbaa0837a55f19b014418cd72b060616a6e7442645ba1c83f",
+        "root_initial_receipt_sha256": "a29e56cb01281535468620de55fd6c39d4801e77a0aa0f6f9ed46a7360f775c9",
+        "independent_initial_decisions_sha256": "5f534b4d41f88fbbbc3737f4aa95630d867742d98f3d5f3c3813fe949035387c",
+        "independent_initial_receipt_sha256": "edf3a9a3379d484c653ee659f784c211539f15e79996568a8fbf3535a893de49",
+        "initial_exact_logical_agreement": false,
+        "initial_logical_difference_count": 97,
+        "initial_notes_only_difference_count": 17,
+        "all_differences_reinspected_native_then_evidence": true,
+        "reconciled": true,
+        "root_final_decisions_sha256": "1d5c225877e8e8c50679816f6abde9c111df137168e0d86f18ae3a8ef9152c7b",
+        "independent_final_decisions_sha256": "1d5c225877e8e8c50679816f6abde9c111df137168e0d86f18ae3a8ef9152c7b",
+        "canonical_final_decisions_sha256": "1d5c225877e8e8c50679816f6abde9c111df137168e0d86f18ae3a8ef9152c7b",
+        "completed_labels_sha256": "dc31f1d65dc4f9e08c2b1ab1da47f850be04fa59a187794bb4777a3ee4133fc7",
+        "record_dispositions": {
+          "clean": 82,
+          "warning": 41,
+          "reject": 97
+        },
+        "reconciled_final_official_parser_and_ev3_passed": true,
+        "final_visible_flags_subset_of_both_initial_flag_sets": true
+      },
+      "holdout": {
+        "root_initial_decisions_sha256": "37b141a6f6462309fc47196360e173126cd42efec0801aadd311bc5ef18fe45e",
+        "root_initial_receipt_sha256": "d4fafd0f4f93e96baea8ac3b81a42610970ec215ec920430a1459da368fc2d3e",
+        "independent_initial_decisions_sha256": "fb1512533bf695aea9b1fcf255f7a8a1752a3ff33693be3235b3c668a0757e28",
+        "independent_initial_receipt_sha256": "4f5fe9bfe8fe94752749293b923223a90ac6bf02413733ef7f8058f306f46309",
+        "initial_exact_logical_agreement": false,
+        "initial_logical_difference_count": 84,
+        "initial_notes_only_difference_count": 60,
+        "all_differences_reinspected_native_then_evidence": true,
+        "reconciled": true,
+        "root_final_decisions_sha256": "389eaf7163a9f4f4306bdffc57e4fefd27287f4e341106c22873ed9c1918b93d",
+        "independent_final_decisions_sha256": "389eaf7163a9f4f4306bdffc57e4fefd27287f4e341106c22873ed9c1918b93d",
+        "canonical_final_decisions_sha256": "389eaf7163a9f4f4306bdffc57e4fefd27287f4e341106c22873ed9c1918b93d",
+        "completed_labels_sha256": "d7285d2b45242eecad0dfa16d8c5888e870e951ceb643fa13b17d8671f5458b9",
+        "record_dispositions": {
+          "clean": 82,
+          "warning": 56,
+          "reject": 82
+        },
+        "reconciled_final_official_parser_and_ev3_passed": true,
+        "final_visible_flags_subset_of_both_initial_flag_sets": true
+      }
+    },
+    "all_differences_reinspected_native_then_evidence": true,
+    "final_reconciled": true,
+    "canonical_labels_equal_both_reviewers": true,
+    "total_initial_logical_and_notes_only_difference_count": 258,
+    "initial_snapshots_and_receipts_preserved_after_reconciliation": true,
+    "bilateral_initial_visible_flag_intersection_gate": {
+      "revision": "dev-r17-bilateral-initial-visible-flag-intersection-gate-v1",
+      "manifest_sha256": "f042250290f80d4304923e3b564746e8311515f5c649811678db934bb3ad6ffd",
+      "both_official_initial_snapshots_and_receipts_required": true,
+      "final_visible_flag_set_relation": "subset-of-root-initial-intersection-independent-initial",
+      "private_role_input": false,
+      "passed": true
+    }
+  },
+  "private_audit": {
+    "all_splits_passed": true,
+    "anonymous_code_page_row_private_identity_or_pixel_binding_tracked": false,
+    "splits": {
+      "calibration": {
+        "record_count": 220,
+        "artifact_record_count": 200,
+        "protocol_zero_record_count": 16,
+        "duplicate_audit_record_count": 4,
+        "contact_sheet_count": 185,
+        "review_board_count": 37,
+        "regenerated_public_commitments_matched": true,
+        "regenerated_contact_sheet_bytes_matched": true,
+        "regenerated_review_board_bytes_matched": true,
+        "protocol_zero_audit_passed": true,
+        "duplicate_audit_passed": true
+      },
+      "holdout": {
+        "record_count": 220,
+        "artifact_record_count": 200,
+        "protocol_zero_record_count": 16,
+        "duplicate_audit_record_count": 4,
+        "contact_sheet_count": 185,
+        "review_board_count": 37,
+        "regenerated_public_commitments_matched": true,
+        "regenerated_contact_sheet_bytes_matched": true,
+        "regenerated_review_board_bytes_matched": true,
+        "protocol_zero_audit_passed": true,
+        "duplicate_audit_passed": true
+      }
+    }
+  },
+  "population_audit": {
+    "eligible_artifact_condition_clusters_per_split": 100,
+    "all_eligible_artifact_condition_clusters_exact_polarity_pairs": true,
+    "splits": {
+      "calibration": {
+        "split": "calibration",
+        "condition_cluster_count": 100,
+        "all_eligible_clusters_exact_polarity_pairs": true,
+        "formal_endpoint_minimums": {
+          "clean_acceptance": {
+            "unique_cluster_count": 27,
+            "minimum_unique_clusters": 15,
+            "count_passed": true
+          },
+          "warning_acceptance": {
+            "unique_cluster_count": 22,
+            "minimum_unique_clusters": 10,
+            "count_passed": true
+          },
+          "reject_detection": {
+            "unique_cluster_count": 51,
+            "minimum_unique_clusters": 30,
+            "count_passed": true
+          },
+          "severity3_detection": {
+            "unique_cluster_count": 11,
+            "minimum_unique_clusters": 4,
+            "count_passed": true
+          },
+          "grain_reject_detection": {
+            "unique_cluster_count": 11,
+            "minimum_unique_clusters": 8,
+            "count_passed": true
+          },
+          "tiny_speck_reject_detection": {
+            "unique_cluster_count": 11,
+            "minimum_unique_clusters": 4,
+            "count_passed": true
+          },
+          "microblob_reject_detection": {
+            "unique_cluster_count": 10,
+            "minimum_unique_clusters": 4,
+            "count_passed": true
+          },
+          "spot_reject_detection": {
+            "unique_cluster_count": 20,
+            "minimum_unique_clusters": 8,
+            "count_passed": true
+          },
+          "short_line_reject_detection": {
+            "unique_cluster_count": 20,
+            "minimum_unique_clusters": 8,
+            "count_passed": true
+          },
+          "parallel_bundle_reject_detection": {
+            "unique_cluster_count": 10,
+            "minimum_unique_clusters": 6,
+            "count_passed": true
+          }
+        },
+        "formal_endpoint_minimums_passed": true,
+        "development_safety_floors": {
+          "clean_acceptance": {
+            "unique_cluster_count": 27,
+            "development_minimum_unique_clusters": 19,
+            "count_passed": true
+          },
+          "warning_acceptance": {
+            "unique_cluster_count": 22,
+            "development_minimum_unique_clusters": 13,
+            "count_passed": true
+          },
+          "reject_detection": {
+            "unique_cluster_count": 51,
+            "development_minimum_unique_clusters": 38,
+            "count_passed": true
+          },
+          "severity3_detection": {
+            "unique_cluster_count": 11,
+            "development_minimum_unique_clusters": 6,
+            "count_passed": true
+          },
+          "grain_reject_detection": {
+            "unique_cluster_count": 11,
+            "development_minimum_unique_clusters": 10,
+            "count_passed": true
+          },
+          "tiny_speck_reject_detection": {
+            "unique_cluster_count": 11,
+            "development_minimum_unique_clusters": 6,
+            "count_passed": true
+          },
+          "microblob_reject_detection": {
+            "unique_cluster_count": 10,
+            "development_minimum_unique_clusters": 6,
+            "count_passed": true
+          },
+          "spot_reject_detection": {
+            "unique_cluster_count": 20,
+            "development_minimum_unique_clusters": 10,
+            "count_passed": true
+          },
+          "short_line_reject_detection": {
+            "unique_cluster_count": 20,
+            "development_minimum_unique_clusters": 10,
+            "count_passed": true
+          },
+          "parallel_bundle_reject_detection": {
+            "unique_cluster_count": 10,
+            "development_minimum_unique_clusters": 8,
+            "count_passed": true
+          }
+        },
+        "development_safety_floors_passed": true,
+        "passed": true
+      },
+      "holdout": {
+        "split": "holdout",
+        "condition_cluster_count": 100,
+        "all_eligible_clusters_exact_polarity_pairs": true,
+        "formal_endpoint_minimums": {
+          "clean_acceptance": {
+            "unique_cluster_count": 30,
+            "minimum_unique_clusters": 15,
+            "count_passed": true
+          },
+          "warning_acceptance": {
+            "unique_cluster_count": 30,
+            "minimum_unique_clusters": 10,
+            "count_passed": true
+          },
+          "reject_detection": {
+            "unique_cluster_count": 40,
+            "minimum_unique_clusters": 30,
+            "count_passed": true
+          },
+          "severity3_detection": {
+            "unique_cluster_count": 28,
+            "minimum_unique_clusters": 4,
+            "count_passed": true
+          },
+          "grain_reject_detection": {
+            "unique_cluster_count": 11,
+            "minimum_unique_clusters": 8,
+            "count_passed": true
+          },
+          "tiny_speck_reject_detection": {
+            "unique_cluster_count": 0,
+            "minimum_unique_clusters": 4,
+            "count_passed": false
+          },
+          "microblob_reject_detection": {
+            "unique_cluster_count": 9,
+            "minimum_unique_clusters": 4,
+            "count_passed": true
+          },
+          "spot_reject_detection": {
+            "unique_cluster_count": 9,
+            "minimum_unique_clusters": 8,
+            "count_passed": true
+          },
+          "short_line_reject_detection": {
+            "unique_cluster_count": 20,
+            "minimum_unique_clusters": 8,
+            "count_passed": true
+          },
+          "parallel_bundle_reject_detection": {
+            "unique_cluster_count": 10,
+            "minimum_unique_clusters": 6,
+            "count_passed": true
+          }
+        },
+        "formal_endpoint_minimums_passed": false,
+        "development_safety_floors": {
+          "clean_acceptance": {
+            "unique_cluster_count": 30,
+            "development_minimum_unique_clusters": 19,
+            "count_passed": true
+          },
+          "warning_acceptance": {
+            "unique_cluster_count": 30,
+            "development_minimum_unique_clusters": 13,
+            "count_passed": true
+          },
+          "reject_detection": {
+            "unique_cluster_count": 40,
+            "development_minimum_unique_clusters": 38,
+            "count_passed": true
+          },
+          "severity3_detection": {
+            "unique_cluster_count": 28,
+            "development_minimum_unique_clusters": 6,
+            "count_passed": true
+          },
+          "grain_reject_detection": {
+            "unique_cluster_count": 11,
+            "development_minimum_unique_clusters": 10,
+            "count_passed": true
+          },
+          "tiny_speck_reject_detection": {
+            "unique_cluster_count": 0,
+            "development_minimum_unique_clusters": 6,
+            "count_passed": false
+          },
+          "microblob_reject_detection": {
+            "unique_cluster_count": 9,
+            "development_minimum_unique_clusters": 6,
+            "count_passed": true
+          },
+          "spot_reject_detection": {
+            "unique_cluster_count": 9,
+            "development_minimum_unique_clusters": 10,
+            "count_passed": false
+          },
+          "short_line_reject_detection": {
+            "unique_cluster_count": 20,
+            "development_minimum_unique_clusters": 10,
+            "count_passed": true
+          },
+          "parallel_bundle_reject_detection": {
+            "unique_cluster_count": 10,
+            "development_minimum_unique_clusters": 8,
+            "count_passed": true
+          }
+        },
+        "development_safety_floors_passed": false,
+        "passed": false
+      }
+    },
+    "passed": false
+  },
+  "failure_marker_summary": {
+    "artifact": "microtexture-v2-r6-development-analysis-failure",
+    "schema_version": "microtexture-v2-r6-development-analysis-failure/1",
+    "authority": false,
+    "formal_use_forbidden": true,
+    "development_edition": "r17",
+    "development_closed": true,
+    "measurement_started": false,
+    "error_type": "RuntimeError",
+    "message": "development endpoint population premeasurement audit failed"
+  },
+  "hash_bindings": {
+    "captured_repository_head": "e58f936613e37886b6d4edded6494c3a34d8d6f7",
+    "preregistered_spec_sha256": "523cf3229bf20c4f6737692e79270d6861b46371ee3ae1d107a094be6f1a84b7",
+    "implementation_bindings_sha256": "a5caea5b971b27ccbd273d289f7c4a83fa2a6c1eb6a213d19cbb555687150a35",
+    "dev_r16_failure_audit_sha256": "4637978a7ac5d59c99ec076e527b7be6e5d2ad1c0477077e2587fda7091ca169",
+    "development_boundary_sha256": "8d6429929a81467feead59b8e3ea3bf1557f5dac14201fab096e0e3a7de9237a",
+    "generation_start_sha256": "2d976e15ffb1fbf7ef2dc8579adf54b908b59eed4e7e5f64b61a3a16ce0dcd42",
+    "generation_summary_sha256": "53a8ef9b909ff5166f7c1218eea175569de6629d49639e19cdfdd081060e148d",
+    "generation_seal_sha256": "f05d2a45bd7660ec12ac119917462e907aa6529a5b575cf5381b546e22ede416",
+    "generation_completion_sha256": "ddf34fd028e8e659c327cd1cd2c131be5bd2091ec29171f4e39d76349c6f349f",
+    "blind_key_commitment": "1be08c146b7f4d9373faaeacde207a107ced8dea8b06f5b39b0c40b06832c719",
+    "calibration_manifest_sha256": "0c56cf950f12817f73de06cfe0752784fb2afe544e78f9fc69a5c143e988a308",
+    "calibration_blank_labels_sha256": "4ed1c547082e73d0be854f43f67ab1352e257c87b7fc1ca6a5ebc4487a57ad95",
+    "calibration_review_index_sha256": "6e5ec142139ec42399d983218166addf619387ae76e0b501071aa6ca2d3b386e",
+    "holdout_manifest_sha256": "7c574b6926be90c0b1374e3632fe88d660c87a2b8b9d3043557ebd6eb60e9b56",
+    "holdout_blank_labels_sha256": "2eea50d0342a354d8aee39dafebfe115061d951850cb18bf4891d338b767f93b",
+    "holdout_review_index_sha256": "01274d736943e568d5bf21400d21016ab89e69e79b8e684ccc304c3a67f9f486",
+    "label_seal_receipt_sha256": "bc000f99dc6f4e801f33cd6608538aa15f9bffd41ad0e67b05c667a8ebcb3062",
+    "population_audit_sha256": "ee6f42526085e2b828e65d768b043d852b16a62eb462ebca666bd4a7c4d6f45a",
+    "failure_marker_sha256": "af3e89eb4e2372e5c92e0b637ff67a91a953a019ec51c970a23d05edcf7cf067"
+  },
+  "absent_measurement_artifacts": {
+    "calibration_measurements_present": false,
+    "holdout_measurements_present": false,
+    "analysis_result_present": false,
+    "threshold_selection_result_present": false,
+    "holdout_endpoint_result_present": false
+  },
+  "postmortem": {
+    "invoked_exactly_once": true,
+    "read_only": true,
+    "raw_output_tracked": false,
+    "sanitized_aggregate_only_in_this_audit": true,
+    "anonymous_code_to_private_identity_mapping_tracked": false,
+    "used_to_relabel_resample_subset_topup_retune_or_select_a_threshold": false
+  },
+  "root_cause": {
+    "generation_or_runtime_failure": false,
+    "decision_reconciliation_failure": false,
+    "private_audit_failure": false,
+    "population_feasibility": "Calibration passed every formal endpoint minimum and development safety floor. Holdout tiny-speck reject population 0 missed formal minimum 4 and development floor 6; holdout spot reject population 9 passed formal minimum 8 but missed development floor 10; every other holdout endpoint passed both minima.",
+    "premature_measurement_ruled_out": "The edition closed at the premeasurement population gate before the first numeric metric; no score, candidate threshold, selected threshold, or holdout endpoint result exists.",
+    "postmortem": "One read-only invocation confirmed only the sanitized aggregate cause and supplied no raw output, mapping, repair, or tuning.",
+    "repair_forbidden": "The sealed dev-r17 edition cannot be repaired by relabeling, rerunning, resuming, replacing, subsetting, topping up, resampling the key, regenerating, retuning, or reusing any dev-r17 material."
+  },
+  "successor_constraints": {
+    "r17_data_role": "development_only_premeasurement_population_failure_evidence",
+    "formal_r6_must_not_start_from_r17_failure": true,
+    "successor_preregistered_in_this_audit": false,
+    "any_successor_must_be_fully_fresh": true,
+    "successor_requires_fresh_preregistered_revision": true,
+    "successor_requires_fresh_root_key_public_nonces_hmac_domains_parameter_nonces_controls_references_identities_codes_commitments_labels_decisions_and_measurements": true,
+    "r17_root_key_private_material_controls_references_pixels_identities_codes_commitments_labels_decisions_measurements_nonces_public_surfaces_and_postmortem_output_reuse_forbidden": true,
+    "formal_endpoint_population_and_rate_minima_must_not_be_weakened": true,
+    "development_safety_floors_must_not_be_weakened": true,
+    "formal_and_development_minima_must_remain_unchanged": true,
+    "successor_may_use_only_this_sanitized_aggregate_failure_evidence": true,
+    "successor_authority_must_be_committed_pushed_and_dual_ci_green_before_generation": true,
+    "formal_r6_root_and_environment_must_remain_absent": true
+  },
+  "secret_handling": {
+    "blind_key_present_in_this_artifact": false,
+    "blind_key_value_logged_or_tracked": false,
+    "development_blind_key_path": "tmp/map-production/microtexture-v2-r6-dev-r17/private/development-key.bin",
+    "development_blind_key_bytes": 32,
+    "development_blind_key_reuse_forbidden": true,
+    "anonymous_code_to_private_identity_mapping_tracked": false,
+    "private_labels_measurements_identities_or_pixels_tracked": false,
+    "postmortem_raw_output_tracked": false,
+    "closed_temporary_artifact_root": "tmp/map-production/microtexture-v2-r6-dev-r17",
+    "development_blind_key_path_is_git_ignored": true
+  }
+}
