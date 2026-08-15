@@ -134,7 +134,7 @@ duplicate-audit nonceは`691000..691002` / `701000..701002`です。
 
 dev-r14はtier数`5/4/7/4`を維持し、speck、microblob、short-dash、parallel-bundleの同じ既存warning-candidateをsplitごとに
 各4件、計16件だけfamily invariant内でr13から単調に強化したnative full-200で直接知覚可能なsparse morphology anchorへ
-変更します。fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyを含むnonwarning scheduleは変更しません。
+変更します。fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyを含むnon-warning scheduleは変更しません。
 splitごとの16 anchors対development floor 13の構造上のmiss budgetは3ですが、design tierはVision truthやwarning labelを
 保証しません。metric、唯一のscalar threshold、population floors、endpoint minima/counts/ratesは変更しません。
 

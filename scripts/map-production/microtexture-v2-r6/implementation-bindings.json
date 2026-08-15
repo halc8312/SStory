@@ -5,8 +5,8 @@
   "spec_sha256": "9e76c949a7e6b126c6e44e8cc1acc89246812d58614a8513e757d18ce1f03833",
   "files": {
     "preregistered-spec.json": "9e76c949a7e6b126c6e44e8cc1acc89246812d58614a8513e757d18ce1f03833",
-    "PREREGISTERED-SPEC.md": "7b6a546751fdb8012f10843d2177be6f43c6b251699f2d3057d54b1ab0f35190",
-    "README.md": "e5d34009ee5e580c76a6a2dda79d174b6953402d4937cd3e9008c6778490630b",
+    "PREREGISTERED-SPEC.md": "a73ff4dc2adcc7930dd086a1959a86bf30b4b1a3bca0f8e85cf21bdfbbcf5743",
+    "README.md": "069278b347ccd66edfbd2dffe55757d6db5d32fa9cf7424f8e34cec1746c9b52",
     "common.py": "0785e111b3de05e408b05ae16a0688c114ff115e8f0653ce1bebc59110d5c0b0",
     "control_catalog.py": "4e74c3557c91e4eeaf67d9e96916ed474fa39b7fb696d741743ec7b6bdcbb440",
     "metrics_v2_r6.py": "3d8b0ffd53ce8f89c27a7f11868cee16f578244b151ccc1e046027d6d7cd1e43",

@@ -148,7 +148,7 @@ dev-r14は各familyのtier数`5 clean-candidate / 4 warning-candidate / 7 clear-
 4 dominant-reject-candidate`を維持します。変更対象は`artifact-speck`、`artifact-microblob`、`artifact-short-dash`、
 `artifact-parallel-bundle`の同じ既存warning-candidateをsplitごとに各4件、計16件だけです。各対象は単なるtier metadata変更ではなく、
 family invariant内でr13から単調に強化したnative full-200で直接知覚可能なsparse warning-capacity morphology anchorです。
-fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyを含むnonwarning scheduleは変更しません。splitごとの
+fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyを含むnon-warning scheduleは変更しません。splitごとの
 16 anchors対development floor 13の構造上のmiss budgetは3ですが、design tierはVision truth、warning label、endpoint membershipを
 保証・予告しません。metric、rubric、single-threshold rule、formal endpoint minimum、development safety floor、endpoint
 counts/ratesは不変です。schedule revisionは`dev-r14-warning-acceptance-anchor-schedule-v1`、warning anchor revisionは

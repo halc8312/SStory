@@ -167,7 +167,7 @@ holdout development floor `13`だけをfailしたため測定前に閉鎖しま�
 dev-r14はtier数`5/4/7/4`を維持し、`artifact-speck`、`artifact-microblob`、`artifact-short-dash`、
 `artifact-parallel-bundle`の同じ既存warning-candidateをsplitごとに各4件、計16件だけ、family invariant内でr13から単調に
 強化したnative full-200で直接知覚可能なsparse morphology anchorへ変更します。fine-grain warning、全clean-candidate、
-全clear/dominant-reject morphologyを含むnonwarning scheduleは変更しません。splitごとのwarning anchor 16件に対する
+全clear/dominant-reject morphologyを含むnon-warning scheduleは変更しません。splitごとのwarning anchor 16件に対する
 development floor 13の構造上のmiss budgetは3ですが、tierはVision truthやwarning labelの保証ではありません。
 metric、score reference、single-threshold rule、全endpoint minimum/count/rateは変更せず、fresh identityの全20 conditionsと
 各split 220 recordsを一体生成・blind reviewし、全private auditとpopulation gateをall-or-nothingで適用します。
@@ -312,7 +312,7 @@ dev-r10はgeneration中断、dev-r11はprivate sentinel audit失敗によりmetr
 gate失敗によりmetric evidenceを持ちません。fresh `dev-r14` の
 `dev-r14-warning-acceptance-anchor-schedule-v1`全scheduleをsubsettingなしで一回だけ確認します。morphology変更は
 4 sparse familiesの同じ既存warning-candidate計16件/splitをr13から単調に強化するものだけで、fine-grain warningと
-全clean/reject morphologyを含むnonwarning scheduleは不変です。
+全clean/reject morphologyを含むnon-warning scheduleは不変です。
 formal labels、threshold、resultsは
 未確定であり予告しません。既存のmetric、half-scale、absolute floor、endpoint minima/rate、blind、one-shot、
 failed-r3/r4/r5およびclosed development境界は不変です。
