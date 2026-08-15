@@ -107,8 +107,13 @@ _FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
 _R17_SCHEDULE_REVISION = (
     "dev-r17-protocol-zero-reference-prequalification-schedule-v1"
 )
-_SCHEDULE_REVISION = "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1"
-_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v14/"
+_R18_SCHEDULE_REVISION = (
+    "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1"
+)
+_SCHEDULE_REVISION = (
+    "dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1"
+)
+_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v15/"
 _PUBLIC_R15_WARNING_ANCHOR_REVISION = (
     "dev-r14-quantized-direct-visible-sparse-warning-v1"
 )
@@ -121,16 +126,16 @@ _PUBLIC_WARNING_CONVERSION_REVISION = (
 _PUBLIC_MICROBLOB_REJECT_ANCHOR_REVISION = (
     "dev-r15-calibration-quantized-microblob-reject-v1"
 )
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v13/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v12"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v12"
-_DELTA_LANE = "delta-v12"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v12/"
-_ARTIFACT_NONCE_BASES = {"calibration": 1073000, "holdout": 1083000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1051000, "holdout": 1061000}
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v14/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v13"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v13"
+_DELTA_LANE = "delta-v13"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v13/"
+_ARTIFACT_NONCE_BASES = {"calibration": 1173000, "holdout": 1183000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1151000, "holdout": 1161000}
 _DUPLICATE_AUDIT_NONCES = {
-    "calibration": (1091000, 1091001, 1091002),
-    "holdout": (1101000, 1101001, 1101002),
+    "calibration": (1191000, 1191001, 1191002),
+    "holdout": (1201000, 1201001, 1201002),
 }
 _R17_REFERENCE_PREQUALIFICATION_REVISION = (
     "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1"
@@ -181,7 +186,7 @@ _R18_SPECK_REINFORCEMENT_REVISION = (
 _R18_SPECK_REINFORCEMENT_MANIFEST = {
     "revision": _R18_SPECK_REINFORCEMENT_REVISION,
     "inherited_schedule_revision": _R17_SCHEDULE_REVISION,
-    "schedule_revision": _SCHEDULE_REVISION,
+    "schedule_revision": _R18_SCHEDULE_REVISION,
     "sanitized_r17_basis": {
         "calibration_formal_and_development_endpoint_floors_passed": True,
         "holdout": {
@@ -265,6 +270,92 @@ _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256 = (
 )
 _R18_PRESERVED_R17_MORPHOLOGY_SHA256 = (
     "03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf"
+)
+_R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION = (
+    "dev-r19-reject-ordinal-band-duplicate-equivalence-v1"
+)
+_R19_SANITIZED_R18_BASIS = {
+    "calibration": {
+        "duplicate_clean_audit_passed": True,
+        "duplicate_artifact_pair": {
+            "agreed_disposition": "reject",
+            "agreed_visible_flags": {
+                "grain_visible": False,
+                "tiny_speck_visible": False,
+                "microblob_visible": False,
+                "short_line_visible": True,
+                "parallel_bundle_visible": False,
+            },
+            "observed_severity_0_to_3_values": [2, 3],
+            "only_label_difference": "severity_0_to_3",
+        },
+        "protocol_zero_audit_passed": True,
+    },
+    "holdout": {
+        "duplicate_clean_audit_passed": True,
+        "duplicate_artifact_audit_passed": True,
+        "protocol_zero_audit_passed": True,
+    },
+    "population_aggregation_started": False,
+    "numeric_measurement_started": False,
+    "metric_evaluation_started": False,
+    "threshold_search_started": False,
+}
+_R19_SANITIZED_R18_BASIS_SHA256 = (
+    "f4f4c80a406818da30ab18ac270eb466dda2ef42b4f301bde6ce2dea8698ade1"
+)
+_R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST = {
+    "revision": _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION,
+    "scope": {
+        "private_role": "duplicate-audit",
+        "duplicate_audit_group": "artifact",
+    },
+    "pair_equivalence": {
+        "disposition": {
+            "comparison": "exact-across-pair",
+            "required_value": "reject",
+        },
+        "visible_flags": {
+            "comparison": "exact-across-pair",
+            "fields": [
+                "grain_visible",
+                "tiny_speck_visible",
+                "microblob_visible",
+                "short_line_visible",
+                "parallel_bundle_visible",
+            ],
+        },
+        "severity_0_to_3": {
+            "comparison": "per-member-inclusive-ordinal-band",
+            "allowed_values": [2, 3],
+            "exact_across_pair_required": False,
+        },
+    },
+    "unchanged_semantics": {
+        "clean_duplicate_pair_full_semantic_equality_required": True,
+        "warning_semantics_unchanged": True,
+        "all_non_scoped_duplicate_comparisons_unchanged": True,
+    },
+    "obvious_artifact_required_label": {
+        "disposition": "reject",
+        "severity_0_to_3_allowed_values": [2, 3],
+        "short_line_visible_required": True,
+    },
+    "preservation_contract": {
+        "artifact_morphology_change_count_across_splits": 0,
+        "full_artifact_morphology_sha256": (
+            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "tier_cardinality_minimum_metric_threshold_and_rate_contracts_unchanged": (
+            True
+        ),
+        "reference_prequalification_unchanged": True,
+        "bilateral_initial_visible_flag_gate_unchanged": True,
+        "vision_truth_guaranteed": False,
+    },
+}
+_R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256 = (
+    "292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6"
 )
 _R15_WARNING_ACCEPTANCE_ANCHORS = {
     "revision": _PUBLIC_R15_WARNING_ANCHOR_REVISION,
@@ -3797,10 +3888,52 @@ def _validate_dev_r17_morphology_schedules() -> None:
 
 
 def dev_r18_authority_binding() -> dict[str, Any]:
-    """Return the tracked, public r18 catalog authority without runtime material."""
+    """Return the frozen public r18 predecessor catalog authority."""
+
+    return {
+        "schedule_revision": _R18_SCHEDULE_REVISION,
+        "public_payload_commitment_prefix": (
+            "microtexture-v2-r6/public-payload-commitment/v14/"
+        ),
+        "private_reference_transform_prefix": "private-reference-transform-v13/",
+        "foundation_offset_lane": "foundation-offset-v12",
+        "foundation_assignment_lane": "foundation-assignment-v12",
+        "delta_lane": "delta-v12",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v12/",
+        "artifact_nonce_bases": {"calibration": 1073000, "holdout": 1083000},
+        "protocol_zero_nonce_bases": {
+            "calibration": 1051000,
+            "holdout": 1061000,
+        },
+        "duplicate_audit_nonces": {
+            "calibration": [1091000, 1091001, 1091002],
+            "holdout": [1101000, 1101001, 1101002],
+        },
+        "speck_reinforcement_revision": _R18_SPECK_REINFORCEMENT_REVISION,
+        "speck_reinforcement_manifest_sha256": (
+            _R18_SPECK_REINFORCEMENT_MANIFEST_SHA256
+        ),
+        "full_artifact_morphology_sha256": (
+            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "preserved_r17_morphology_sha256": (
+            _R18_PRESERVED_R17_MORPHOLOGY_SHA256
+        ),
+    }
+
+
+def dev_r19_authority_binding() -> dict[str, Any]:
+    """Return the tracked, public r19 catalog authority without runtime material."""
 
     return {
         "schedule_revision": _SCHEDULE_REVISION,
+        "duplicate_equivalence_policy_revision": (
+            _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION
+        ),
+        "duplicate_equivalence_policy_manifest_sha256": (
+            _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+        ),
+        "sanitized_r18_basis_sha256": _R19_SANITIZED_R18_BASIS_SHA256,
         "public_payload_commitment_prefix": (
             _PUBLIC_PAYLOAD_COMMITMENT_PREFIX.decode("ascii")
         ),
@@ -3820,12 +3953,13 @@ def dev_r18_authority_binding() -> dict[str, Any]:
         "speck_reinforcement_manifest_sha256": (
             _R18_SPECK_REINFORCEMENT_MANIFEST_SHA256
         ),
+        "predecessor_full_artifact_morphology_sha256": (
+            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
         "full_artifact_morphology_sha256": (
             _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
         ),
-        "preserved_r17_morphology_sha256": (
-            _R18_PRESERVED_R17_MORPHOLOGY_SHA256
-        ),
+        "exact_morphology_change_count_across_splits": 0,
     }
 
 
@@ -3836,26 +3970,28 @@ def _validate_dev_r18_morphology_schedules() -> None:
     splits = ("calibration", "holdout")
     family = "artifact-speck"
 
+    r18_binding = dev_r18_authority_binding()
     if (
-        _SCHEDULE_REVISION
+        _R18_SCHEDULE_REVISION
         != "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1"
-        or _PUBLIC_PAYLOAD_COMMITMENT_PREFIX
-        != b"microtexture-v2-r6/public-payload-commitment/v14/"
-        or _PRIVATE_REFERENCE_TRANSFORM_PREFIX
-        != b"private-reference-transform-v13/"
-        or _FOUNDATION_OFFSET_LANE != "foundation-offset-v12"
-        or _FOUNDATION_ASSIGNMENT_LANE != "foundation-assignment-v12"
-        or _DELTA_LANE != "delta-v12"
-        or _PRIVATE_CONTROL_ID_PREFIX
-        != b"microtexture-v2-r6/private-control-id/v12/"
-        or _ARTIFACT_NONCE_BASES
+        or r18_binding["public_payload_commitment_prefix"]
+        != "microtexture-v2-r6/public-payload-commitment/v14/"
+        or r18_binding["private_reference_transform_prefix"]
+        != "private-reference-transform-v13/"
+        or r18_binding["foundation_offset_lane"] != "foundation-offset-v12"
+        or r18_binding["foundation_assignment_lane"]
+        != "foundation-assignment-v12"
+        or r18_binding["delta_lane"] != "delta-v12"
+        or r18_binding["private_control_id_prefix"]
+        != "microtexture-v2-r6/private-control-id/v12/"
+        or r18_binding["artifact_nonce_bases"]
         != {"calibration": 1073000, "holdout": 1083000}
-        or _PROTOCOL_ZERO_NONCE_BASES
+        or r18_binding["protocol_zero_nonce_bases"]
         != {"calibration": 1051000, "holdout": 1061000}
-        or _DUPLICATE_AUDIT_NONCES
+        or r18_binding["duplicate_audit_nonces"]
         != {
-            "calibration": (1091000, 1091001, 1091002),
-            "holdout": (1101000, 1101001, 1101002),
+            "calibration": [1091000, 1091001, 1091002],
+            "holdout": [1101000, 1101001, 1101002],
         }
     ):
         raise RuntimeError("r18 schedule/domain/nonce authority drift")
@@ -3864,12 +4000,13 @@ def _validate_dev_r18_morphology_schedules() -> None:
     r17_nonces: dict[str, set[int]] = {}
     for split in splits:
         r18_nonces[split] = {
-            _ARTIFACT_NONCE_BASES[split] + family_offset + index
+            r18_binding["artifact_nonce_bases"][split] + family_offset + index
             for family_offset in (0, 100, 200, 300, 400)
             for index in range(20)
         } | {
-            _PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
-        } | set(_DUPLICATE_AUDIT_NONCES[split])
+            r18_binding["protocol_zero_nonce_bases"][split] + index
+            for index in range(16)
+        } | set(r18_binding["duplicate_audit_nonces"][split])
         r17_artifact_base = 973000 if split == "calibration" else 983000
         r17_zero_base = 951000 if split == "calibration" else 961000
         r17_duplicate = (
@@ -3939,7 +4076,7 @@ def _validate_dev_r18_morphology_schedules() -> None:
     if (
         manifest["revision"] != _R18_SPECK_REINFORCEMENT_REVISION
         or manifest["inherited_schedule_revision"] != _R17_SCHEDULE_REVISION
-        or manifest["schedule_revision"] != _SCHEDULE_REVISION
+        or manifest["schedule_revision"] != _R18_SCHEDULE_REVISION
         or manifest["family"] != family
         or manifest["target_tiers"]
         != ["clear-reject-candidate", "dominant-reject-candidate"]
@@ -4216,6 +4353,253 @@ def _validate_dev_r18_morphology_schedules() -> None:
         != _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
     ):
         raise RuntimeError("r18 full artifact morphology SHA drift")
+
+
+def _validate_dev_r19_morphology_schedules() -> None:
+    """Prove r19 changes identity/audit policy, never artifact morphology."""
+
+    _validate_dev_r18_morphology_schedules()
+    splits = ("calibration", "holdout")
+    binding = dev_r19_authority_binding()
+    if set(binding) != {
+        "schedule_revision",
+        "duplicate_equivalence_policy_revision",
+        "duplicate_equivalence_policy_manifest_sha256",
+        "sanitized_r18_basis_sha256",
+        "public_payload_commitment_prefix",
+        "private_reference_transform_prefix",
+        "foundation_offset_lane",
+        "foundation_assignment_lane",
+        "delta_lane",
+        "private_control_id_prefix",
+        "artifact_nonce_bases",
+        "protocol_zero_nonce_bases",
+        "duplicate_audit_nonces",
+        "speck_reinforcement_revision",
+        "speck_reinforcement_manifest_sha256",
+        "predecessor_full_artifact_morphology_sha256",
+        "full_artifact_morphology_sha256",
+        "exact_morphology_change_count_across_splits",
+    }:
+        raise RuntimeError("r19 catalog authority schema drift")
+    if binding != {
+        "schedule_revision": (
+            "dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1"
+        ),
+        "duplicate_equivalence_policy_revision": (
+            "dev-r19-reject-ordinal-band-duplicate-equivalence-v1"
+        ),
+        "duplicate_equivalence_policy_manifest_sha256": (
+            _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+        ),
+        "sanitized_r18_basis_sha256": _R19_SANITIZED_R18_BASIS_SHA256,
+        "public_payload_commitment_prefix": (
+            "microtexture-v2-r6/public-payload-commitment/v15/"
+        ),
+        "private_reference_transform_prefix": "private-reference-transform-v14/",
+        "foundation_offset_lane": "foundation-offset-v13",
+        "foundation_assignment_lane": "foundation-assignment-v13",
+        "delta_lane": "delta-v13",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v13/",
+        "artifact_nonce_bases": {"calibration": 1173000, "holdout": 1183000},
+        "protocol_zero_nonce_bases": {
+            "calibration": 1151000,
+            "holdout": 1161000,
+        },
+        "duplicate_audit_nonces": {
+            "calibration": [1191000, 1191001, 1191002],
+            "holdout": [1201000, 1201001, 1201002],
+        },
+        "speck_reinforcement_revision": (
+            "dev-r18-symmetric-reject-speck-direct-visible-cross-v1"
+        ),
+        "speck_reinforcement_manifest_sha256": (
+            "355c6c588c3d698288a3545752c13cea734db85e1e7a9a95416cbe3163f633d4"
+        ),
+        "predecessor_full_artifact_morphology_sha256": (
+            "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365"
+        ),
+        "full_artifact_morphology_sha256": (
+            "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365"
+        ),
+        "exact_morphology_change_count_across_splits": 0,
+    }:
+        raise RuntimeError("r19 catalog authority value drift")
+
+    basis = _R19_SANITIZED_R18_BASIS
+    artifact_pair = basis.get("calibration", {}).get("duplicate_artifact_pair", {})
+    short_line_only = {
+        "grain_visible": False,
+        "tiny_speck_visible": False,
+        "microblob_visible": False,
+        "short_line_visible": True,
+        "parallel_bundle_visible": False,
+    }
+    if (
+        set(basis)
+        != {
+            "calibration",
+            "holdout",
+            "population_aggregation_started",
+            "numeric_measurement_started",
+            "metric_evaluation_started",
+            "threshold_search_started",
+        }
+        or basis["calibration"].get("duplicate_clean_audit_passed") is not True
+        or basis["calibration"].get("protocol_zero_audit_passed") is not True
+        or set(artifact_pair)
+        != {
+            "agreed_disposition",
+            "agreed_visible_flags",
+            "observed_severity_0_to_3_values",
+            "only_label_difference",
+        }
+        or artifact_pair["agreed_disposition"] != "reject"
+        or artifact_pair["agreed_visible_flags"] != short_line_only
+        or artifact_pair["observed_severity_0_to_3_values"] != [2, 3]
+        or artifact_pair["only_label_difference"] != "severity_0_to_3"
+        or basis["holdout"]
+        != {
+            "duplicate_clean_audit_passed": True,
+            "duplicate_artifact_audit_passed": True,
+            "protocol_zero_audit_passed": True,
+        }
+        or any(
+            basis[field] is not False
+            for field in (
+                "population_aggregation_started",
+                "numeric_measurement_started",
+                "metric_evaluation_started",
+                "threshold_search_started",
+            )
+        )
+        or sha256_bytes(canonical_json_bytes(basis))
+        != _R19_SANITIZED_R18_BASIS_SHA256
+    ):
+        raise RuntimeError("r19 sanitized r18 basis drift")
+
+    policy = _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
+    pair_equivalence = policy.get("pair_equivalence", {})
+    if (
+        set(policy)
+        != {
+            "revision",
+            "scope",
+            "pair_equivalence",
+            "unchanged_semantics",
+            "obvious_artifact_required_label",
+            "preservation_contract",
+        }
+        or policy["revision"] != _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION
+        or policy["scope"]
+        != {"private_role": "duplicate-audit", "duplicate_audit_group": "artifact"}
+        or pair_equivalence.get("disposition")
+        != {"comparison": "exact-across-pair", "required_value": "reject"}
+        or pair_equivalence.get("visible_flags")
+        != {
+            "comparison": "exact-across-pair",
+            "fields": [
+                "grain_visible",
+                "tiny_speck_visible",
+                "microblob_visible",
+                "short_line_visible",
+                "parallel_bundle_visible",
+            ],
+        }
+        or pair_equivalence.get("severity_0_to_3")
+        != {
+            "comparison": "per-member-inclusive-ordinal-band",
+            "allowed_values": [2, 3],
+            "exact_across_pair_required": False,
+        }
+        or policy.get("unchanged_semantics")
+        != {
+            "clean_duplicate_pair_full_semantic_equality_required": True,
+            "warning_semantics_unchanged": True,
+            "all_non_scoped_duplicate_comparisons_unchanged": True,
+        }
+        or policy.get("obvious_artifact_required_label")
+        != {
+            "disposition": "reject",
+            "severity_0_to_3_allowed_values": [2, 3],
+            "short_line_visible_required": True,
+        }
+        or policy.get("preservation_contract")
+        != {
+            "artifact_morphology_change_count_across_splits": 0,
+            "full_artifact_morphology_sha256": (
+                _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+            ),
+            "tier_cardinality_minimum_metric_threshold_and_rate_contracts_unchanged": (
+                True
+            ),
+            "reference_prequalification_unchanged": True,
+            "bilateral_initial_visible_flag_gate_unchanged": True,
+            "vision_truth_guaranteed": False,
+        }
+        or sha256_bytes(canonical_json_bytes(policy))
+        != _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+    ):
+        raise RuntimeError("r19 duplicate-equivalence policy drift")
+
+    r18_binding = dev_r18_authority_binding()
+    current_nonces: dict[str, set[int]] = {}
+    predecessor_nonces: dict[str, set[int]] = {}
+    for split in splits:
+        current_nonces[split] = {
+            _ARTIFACT_NONCE_BASES[split] + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {
+            _PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
+        } | set(_DUPLICATE_AUDIT_NONCES[split])
+        predecessor_nonces[split] = {
+            r18_binding["artifact_nonce_bases"][split] + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {
+            r18_binding["protocol_zero_nonce_bases"][split] + index
+            for index in range(16)
+        } | set(r18_binding["duplicate_audit_nonces"][split])
+        if (
+            len(current_nonces[split]) != 119
+            or current_nonces[split] & predecessor_nonces[split]
+        ):
+            raise RuntimeError(f"r19 fresh nonce-space drift: {split}")
+    if current_nonces["calibration"] & current_nonces["holdout"]:
+        raise RuntimeError("r19 calibration/holdout nonce-space overlap")
+
+    def morphology(parameters: dict[str, Any]) -> dict[str, Any]:
+        return {
+            key: value
+            for key, value in parameters.items()
+            if key not in {"schedule_revision", "condition_nonce"}
+        }
+
+    full_r19: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    for split in splits:
+        variants = _artifact_variants(split)
+        full_r19[split] = {
+            family: [morphology(parameters) for parameters in family_variants]
+            for family, family_variants in variants.items()
+        }
+        if any(
+            parameters.get("schedule_revision") != _SCHEDULE_REVISION
+            for family_variants in variants.values()
+            for parameters in family_variants
+        ):
+            raise RuntimeError(f"r19 artifact schedule revision drift: {split}")
+    if (
+        sum(
+            len(variants)
+            for families in full_r19.values()
+            for variants in families.values()
+        )
+        != 200
+        or sha256_bytes(canonical_json_bytes(full_r19))
+        != _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+    ):
+        raise RuntimeError("r19 preserved full r18 artifact morphology drift")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:

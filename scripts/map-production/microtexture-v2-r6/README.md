@@ -133,29 +133,54 @@ minimumとdevelopment floorをpassしました。all-or-nothing gateにより数
 `2177b04b6f79b75394cbdef6204423194603cd81e3a84b5a673c58393ccf5856`）です。dev-r17の全素材・identity・decision・
 public/private outputはformalまたは後続editionへ一切再利用しません。formal stageはblockedです。
 
-唯一のpreregistered successor `dev-r18`はfresh isolated one-shot development-only probeです。exact roleは
-`fresh one-shot development role used only as a symmetric direct-visible reject-speck reinforcement probe after the closed dev-r17 premeasurement population failure; it may use only the sanitized aggregate that holdout tiny-speck population was 0 against formal minimum 4 and development floor 6 and holdout spot population was 9 against formal minimum 8 and development floor 10 while every other endpoint passed both minima, changes exactly the 10 existing reject-tier speck conditions per split, preserves the other 180 artifact morphologies plus the r17 role-agnostic reference prequalification and bilateral initial flag gate and every tier cardinality, population minimum, metric, threshold, and rate contract, requires a fresh isolated root, cryptographic blind key, identities, domains, nonces, controls, references, commitments, labels, decisions, and measurements, and can never become or supply formal authority`
-です。
+`dev-r18`のstatusは`failed-and-closed-before-population-audit`です。exact roleは
+`development-only prepopulation private-audit failure evidence; generation, both blind 440-record reviews, bilateral reconciliation, official preflight, label sealing, private reveal, regeneration, and protocol-zero audits each completed exactly once, but calibration's obvious-artifact duplicate pair had identical reject dispositions and short-line flags with ordinal severities 2 and 3, so the then-exact severity semantic check failed before population audit or any numeric measurement; one read-only postmortem ran exactly once, all initial snapshots and receipts remain immutable, and no dev-r18 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable`
+です。sanitized auditは`world/map-production/qa/microtexture-v2-r6-dev-r18-development-failure.json`、raw SHA-256は
+`7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122`です。
 
-各splitの既存`artifact-speck` reject-tier 10条件だけを対称に置換し、内訳はclear-reject 6 / dominant-reject 4です。
+dev-r18では各splitの既存`artifact-speck` reject-tier 10条件だけを対称に置換し、内訳はclear-reject 6 / dominant-reject 4でした。
 diameterは1 px、core countは4..7、center amplitudeは11.2..12.0 L、shoulder fractionは0.42..0.56、encoded axial
 shoulder magnitudeは5 L以上、minimum separationは30 px以上とし、coreを4象限へstratifyします。これはcoverage reinforcementであり
 Vision truthを保証しません。tiny-speck development floor 6に対する構造上のmiss budgetは4、sanitized r17 holdoutのspot
 `9`からdevelopment floor `10`へ必要な増分は1です。clean / warning / 全non-speckを含む他180 morphology、tier cardinality、
 population minima、metric、threshold、rate、r17 role-agnostic reference prequalification、bilateral initial flag gateは不変です。
 
-schedule revisionは`dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1`、reinforcement revisionは
+dev-r18のschedule revisionは`dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1`、reinforcement revisionは
 `dev-r18-symmetric-reject-speck-direct-visible-cross-v1`です。reinforcement manifest SHA-256は
 `355c6c588c3d698288a3545752c13cea734db85e1e7a9a95416cbe3163f633d4`、full 200 morphology SHA-256は
 `9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365`、preserved 180 morphology SHA-256は
 `03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf`、sanitized r17 basis SHA-256は
 `88860fea0dbdf5ebfa454bf7f038aae53c957808d4c4d344b1ea0fc8e54042e9`です。
 
-fresh rootは`tmp/map-production/microtexture-v2-r6-dev-r18`、public noncesは`r6-calibration-v13` / `r6-holdout-v13`です。
+dev-r18 rootは`tmp/map-production/microtexture-v2-r6-dev-r18`、public noncesは`r6-calibration-v13` / `r6-holdout-v13`です。
 condition-cluster / render-seed / opaque-code / private-reference-transformはv13、public payload commitmentはv14、key commitment /
 foundation-offset / foundation-assignment / delta / private-control-idはv12です。protocol-zero nonce basesは`1051000` / `1061000`、
 artifact basesは`1073000` / `1083000`、duplicate-audit noncesは`1091000..1091002` / `1101000..1101002`です。
-generation前にexact authority commitをpushし、同じcommitのUbuntu/Windows CIを両方passさせます。dev-r18はone-shotで、
+このroot、key、private material、controls、references、pixels、identities、codes、commitments、labels、decisions、measurements、
+nonces、public surfaces、postmortem outputは後続editionまたはformalへ一切再利用しません。
+
+唯一のpreregistered successor `dev-r19`のstatusは`fresh-development-only`で、fresh isolated one-shot development-only probeです。exact roleは
+`fresh one-shot development role used only as a duplicate semantic-equivalence correction probe after the closed dev-r18 prepopulation private-audit failure; it preserves every dev-r18 morphology, design tier, metric, threshold, population, and rate contract, changes only duplicate semantic equivalence so reject severities 2 and 3 share one reject ordinal band while clean and warning severities remain exact and disposition plus all five visible flags remain exact, requires a fresh isolated root, cryptographic blind key, identities, domains, nonces, controls, references, commitments, labels, decisions, and measurements, and can never become or supply formal authority`
+です。
+
+r19のschedule revisionは`dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1`、duplicate-equivalence policy revisionは
+`dev-r19-reject-ordinal-band-duplicate-equivalence-v1`です。obvious-artifact duplicate pairはdispositionをexact比較し、5つのvisible flagを
+pairwise exactとしたうえで、両memberの`short_line_visible=true`を必須とします。他4 flagの値はfalseへ固定しません。各memberのseverity 2 / 3を同じreject ordinal bandとして扱います。clean duplicate pairとwarning semanticsは
+exactのままです。dev-r18の全200 artifact morphologies、全design tier、metric、threshold、population、rate contractを保持し、
+morphology change countは`0`、full artifact morphology SHA-256は
+`9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365`のままです。
+sanitized r18 basis SHA-256は`f4f4c80a406818da30ab18ac270eb466dda2ef42b4f301bde6ce2dea8698ade1`、
+duplicate-equivalence policy manifest SHA-256は`292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6`、
+population-anchor schedule keyset / changed-values SHA-256は
+`15e87ae2c17897bccae75722f1a8ffa9dd8f3aea2d8632929d83a62ac0675b0d` /
+`7065534770044e408d02dd82a4b96adbc74ba77a5e154a2c42697bb43c679c3c`、probe authority manifest SHA-256は
+`b96a98c0c6a35f227a9b81c80220af9ffa99621828a71d10a2ddecb84cccb963`です。
+
+fresh rootは`tmp/map-production/microtexture-v2-r6-dev-r19`、public noncesは`r6-calibration-v14` / `r6-holdout-v14`です。
+condition-cluster / render-seed / opaque-code / private-reference-transformはv14、public payload commitmentはv15、key commitment /
+foundation-offset / foundation-assignment / delta / private-control-idはv13です。protocol-zero nonce basesは`1151000` / `1161000`、
+artifact basesは`1173000` / `1183000`、duplicate-audit noncesは`1191000..1191002` / `1201000..1201002`です。
+generation前にexact authority commitをpushし、同じcommitのUbuntu/Windows CIを両方passさせます。dev-r19はone-shotで、
 successしてもformal authorityを供給できず、formal stageは引き続きblockedです。
 
 ## ImageGen authority
@@ -176,7 +201,7 @@ record identity（polarity と replicate を含む）を入力とする full-out
 technical / cryptographic blind や、同じ OS principal で悪意ある reviewer に対する secrecy は主張しません。
 formal fresh key は専用の長寿命 custodian process だけが保持し、artifactやlogへ永続化せず、Vision processへ
 継承・公開しません。closed dev-r8/dev-r9/dev-r10/dev-r11/dev-r12/dev-r13/dev-r14/dev-r15/dev-r16 keyは各Git-ignored private rootにだけ保持して
-再利用せず、closed dev-r17 keyも再利用しません。fresh dev-r18 keyは別のGit-ignored isolated rootだけで扱い、
+再利用せず、closed dev-r17/dev-r18 keyも再利用しません。fresh dev-r19 keyは別のGit-ignored isolated rootだけで扱い、
 既存keyを一切再利用しません。marker 前の
 review surface は185 contact-sheet view-pages（各view 37 pages）とcode-only label formだけです。manifest schema
 `microtexture-v2-r6-control-manifest/3` が公開する record 情報は opaque code と code別の
@@ -360,7 +385,7 @@ condition clusterごとに `reject > warning > clean` のworst-case disposition�
 
 closed `dev-r8` / `dev-r9` / `dev-r12` / `dev-r13` / `dev-r14` / `dev-r15` / `dev-r16` / `dev-r17` の一回限りのanalysisには、formal specのendpoint最低populationを
 一切変更せず、さらに厳しいdevelopment-only safety floorを上乗せします。dev-r10はanalysis前、dev-r11はprivate
-sentinel auditでpopulation aggregation前に閉鎖したため、このgateの結果を持ちません。label bytesを両splitともsealし、private identityを
+sentinel audit、dev-r18はprivate duplicate semantic auditでpopulation aggregation前に閉鎖したため、このgateの結果を持ちません。label bytesを両splitともsealし、private identityを
 revealしてsemantic auditを終えた後、最初のmetric callより前にcondition-cluster truthで次を検査します。
 
 | development-only population | minimum unique clusters / split |
@@ -411,7 +436,7 @@ Root は各 split の全220 codesを、次の5 viewで漏れなく確認しま�
 
 1 view は37 pages、合計は split あたり 185 contact-sheet view-pagesです。development helperは同じpage indexの
 5 viewを横並びにした37 review boardsも作ります。全 view は同じ code 順序を持ち、nearest-neighbor
-で拡大されます。closed dev-r15/dev-r16/dev-r17へ適用した規約では、native 512×384 full-200 cropを無補正・contrast強調なしで先に確認し、400%は
+で拡大されます。closed dev-r15/dev-r16/dev-r17/dev-r18へ適用した規約では、native 512×384 full-200 cropを無補正・contrast強調なしで先に確認し、400%は
 同位置の再同定だけに使います。各512×384 panelの直前には30pxのcode headerがあり、codeをpanel下へ置くこと、headerとpanelを
 重ねることは禁止します。Root は生成された exact path の label stub に、`disposition`、5種の visible flag、
 severity、200%確認、全400% quadrant確認、notes を記入します。全185 view-pages相当を確認する前に one-shot
@@ -475,7 +500,7 @@ spot component floor、finite-line response floor、parallel-pair response floor
 coherent fine patternはspot/line branchではなく、directional coherenceを含むgrain branchが担当します。
 split-specific morphology schedulesとこれらのabsolute floorは、fresh formal key、controls、labelsより前に
 明示的なnon-formal development keysでfreezeします。closed `dev-r6`～`dev-r15` corporaは正式判断に使いません。
-dev-r10はgeneration中断、dev-r11/dev-r16はprivate sentinel audit失敗によりmetric evidenceを持たず、dev-r12/dev-r13/dev-r14/dev-r15もpopulation
+dev-r10はgeneration中断、dev-r11/dev-r16はprivate sentinel audit失敗、dev-r18はprivate duplicate semantic audit失敗によりmetric evidenceを持たず、dev-r12/dev-r13/dev-r14/dev-r15もpopulation
 gate失敗によりmetric evidenceを持ちません。closed `dev-r17` は
 `dev-r17-protocol-zero-reference-prequalification-schedule-v1`の全scheduleをsubsettingなしで一回だけ生成・reviewしました。artifact morphologyはdev-r16から
 変更せず、dev-r16で行った変更は4 sparse familyで
@@ -493,8 +518,8 @@ r7の閉鎖済みaggregate診断から変更するhalf-scaleは3件だけです�
 単一threshold、全endpoint count/rateは不変です。単一reference変更は全候補不合格、2-reference変更で唯一通った組へ、
 判定境界を広げるgrain 1件を加えたrevisionです。dev-r8はpopulation gateでmeasurement前に閉鎖し、dev-r9は
 同じmetricを一度だけ実行したもののthresholdを選べず閉鎖しました。dev-r10はmetricを呼ぶ前のgeneration中断で
-閉鎖しました。dev-r11/dev-r16はprivate sentinel audit、dev-r12/dev-r13/dev-r14/dev-r15/dev-r17はpopulation auditでmetric前に閉鎖しました。
-dev-r17では数値metricを一度も呼ばず、thresholdを作りませんでした。closed editionのthreshold、diagnostic、measurement、
+閉鎖しました。dev-r11/dev-r16はprivate sentinel audit、dev-r12/dev-r13/dev-r14/dev-r15/dev-r17はpopulation audit、dev-r18はprivate duplicate semantic auditでmetric前に閉鎖しました。
+dev-r17/dev-r18では数値metricを一度も呼ばず、thresholdを作りませんでした。closed editionのthreshold、diagnostic、measurement、
 generation/review outputをformalへ使用しません。
 
 ```text
@@ -572,13 +597,22 @@ logical 97件 + notes-only 17件、holdoutのlogical 84件 + notes-only 60件を
 preflight、両private auditをpassしました。しかしholdoutのtiny-speck / spot development floorsを満たさず、metricとthresholdへ
 進まずfailed-and-closedです。sanitized read-only postmortemは一度だけで、hash-bound failure audit以外を後続判断へ使いません。
 dev-r17のrerun、resume、relabel、別key、subsetting、top-up、および全素材・outputの再利用は禁止です。このfailureから
-preregisterした唯一の後続editionは、上記のfresh dev-r18 one-shot probeです。
+preregisterしたdev-r18は上記のscheduleを一回だけ実行しました。
+
+dev-r18はgeneration、`440 × 2` blind review、bilateral reconciliation、official preflight、label sealing、private reveal、
+regeneration、protocol-zero auditを各一度だけ完了しました。calibration obvious-artifact duplicate pairのdispositionとshort-line
+flagは一致しましたがseverityが`2` / `3`に分かれ、当時のexact semantic checkをfailしました。population auditとnumeric metricを
+開始せず`failed-and-closed-before-population-audit`で閉鎖しました。read-only postmortemは一度だけで、auditは
+`world/map-production/qa/microtexture-v2-r6-dev-r18-development-failure.json`（raw SHA-256
+`7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122`）です。全initial snapshots/receiptsを不変保存し、
+dev-r18のrerun、resume、relabel、別key、subsetting、top-up、および全素材・outputの再利用を禁止します。このfailureから
+preregisterした唯一の後続editionは、上記のfresh dev-r19 one-shot probeです。
 
 ## Formal operator order
 
-dev-r17はpopulation gateをfailして閉鎖し、fresh dev-r18はまだformal authorityではないため、以下のformal stageはすべて
-blockedです。dev-r18 authority commitのpushとUbuntu/Windows CI成功より前にgenerationを開始できず、dev-r18が成功しても
-そのoutputをformal authorityへ流用できません。
+dev-r18はprivate duplicate semantic auditをfailしてpopulation audit前に閉鎖し、fresh dev-r19はまだformal authorityではないため、
+以下のformal stageはすべてblockedです。dev-r19 authority commitのpushとUbuntu/Windows CI成功より前にgenerationを開始できず、
+dev-r19が成功してもそのoutputをformal authorityへ流用できません。
 
 1. authority files、implementation bindings、foundation/locked provenance、Vision reviews を Git で freeze し、
    working tree の対象 bytes、captured upstream HEAD、tracked SHA を preflight します。Ubuntu/Windows CI は

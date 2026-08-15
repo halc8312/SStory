@@ -63,8 +63,12 @@
     "dev_r17_role": "development-only premeasurement population failure evidence; both private audits passed, every calibration endpoint passed formal and development minima, holdout tiny-speck population 0 missed formal minimum 4 and development floor 6, holdout spot population 9 passed formal minimum 8 but missed development floor 10, every other holdout endpoint passed both minima, no numeric metric or threshold search started, one read-only postmortem ran exactly once, all Root and Independent initial snapshots and receipts remain immutable, and no dev-r17 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable",
     "dev_r17_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r17-development-failure.json",
     "dev_r17_failure_audit_sha256": "2177b04b6f79b75394cbdef6204423194603cd81e3a84b5a673c58393ccf5856",
-    "dev_r18_status": "fresh-development-only",
-    "dev_r18_role": "fresh one-shot development role used only as a symmetric direct-visible reject-speck reinforcement probe after the closed dev-r17 premeasurement population failure; it may use only the sanitized aggregate that holdout tiny-speck population was 0 against formal minimum 4 and development floor 6 and holdout spot population was 9 against formal minimum 8 and development floor 10 while every other endpoint passed both minima, changes exactly the 10 existing reject-tier speck conditions per split, preserves the other 180 artifact morphologies plus the r17 role-agnostic reference prequalification and bilateral initial flag gate and every tier cardinality, population minimum, metric, threshold, and rate contract, requires a fresh isolated root, cryptographic blind key, identities, domains, nonces, controls, references, commitments, labels, decisions, and measurements, and can never become or supply formal authority"
+    "dev_r18_status": "failed-and-closed-before-population-audit",
+    "dev_r18_role": "development-only prepopulation private-audit failure evidence; generation, both blind 440-record reviews, bilateral reconciliation, official preflight, label sealing, private reveal, regeneration, and protocol-zero audits each completed exactly once, but calibration's obvious-artifact duplicate pair had identical reject dispositions and short-line flags with ordinal severities 2 and 3, so the then-exact severity semantic check failed before population audit or any numeric measurement; one read-only postmortem ran exactly once, all initial snapshots and receipts remain immutable, and no dev-r18 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r18_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r18-development-failure.json",
+    "dev_r18_failure_audit_sha256": "7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122",
+    "dev_r19_status": "fresh-development-only",
+    "dev_r19_role": "fresh one-shot development role used only as a duplicate semantic-equivalence correction probe after the closed dev-r18 prepopulation private-audit failure; it preserves every dev-r18 morphology, design tier, metric, threshold, population, and rate contract, changes only duplicate semantic equivalence so reject severities 2 and 3 share one reject ordinal band while clean and warning severities remain exact and disposition plus all five visible flags remain exact, requires a fresh isolated root, cryptographic blind key, identities, domains, nonces, controls, references, commitments, labels, decisions, and measurements, and can never become or supply formal authority"
   },
   "roots": {
     "blind_key_environment": "MICROTEXTURE_V2_R6_BLIND_KEY",
@@ -77,9 +81,9 @@
     "code_root_policy": "CODE_ROOT must equal the exact required tracked repository path; every authority byte must be tracked and identical to one captured upstream Git HEAD"
   },
   "development_probe_secret_handling": {
-    "scope": "non-authority dev-r18 only; no development key, root, output, or commitment can become formal authority",
+    "scope": "non-authority dev-r19 only; no development key, root, output, or commitment can become formal authority",
     "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-    "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r18/private/development-key.bin",
+    "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r19/private/development-key.bin",
     "gitignore_required_repo_relative": ".gitignore",
     "gitignore_required_pattern": "/tmp*/",
     "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": true,
@@ -185,8 +189,8 @@
     }
   },
   "splits": {
-    "calibration": {"public_nonce": "r6-calibration-v13", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2},
-    "holdout": {"public_nonce": "r6-holdout-v13", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2, "generation_once_only": true, "evaluation_once_only": true}
+    "calibration": {"public_nonce": "r6-calibration-v14", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2},
+    "holdout": {"public_nonce": "r6-holdout-v14", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2, "generation_once_only": true, "evaluation_once_only": true}
   },
   "runtime_contract": {
     "all_formal_stages_same_machine_and_exact_runtime_fingerprint_required": true,
@@ -224,7 +228,7 @@
   },
   "independent_condition_clusters": {
     "private_cluster_id_primitive": "HMAC-SHA-256",
-    "message_prefix": "microtexture-v2-r6/private-condition-cluster/v13/",
+    "message_prefix": "microtexture-v2-r6/private-condition-cluster/v14/",
     "identity_includes": ["split", "public_nonce", "private_role", "family", "variant_index", "parameters", "duplicate_audit_group", "foundation_id"],
     "identity_excludes": ["polarity", "replicate"],
     "public_manifest_or_labels_must_not_expose_cluster_id": true,
@@ -240,15 +244,15 @@
     "expected_artifact_clusters_per_family": 20
   },
   "control_catalog_authority": {
-    "exact_variant_source": "the tracked control_catalog.py named by implementation-bindings.json; r18 preserves the full r17 catalog except the exact twenty hash-bound artifact-speck reject morphologies preregistered in the tracked code",
+    "exact_variant_source": "the tracked control_catalog.py named by implementation-bindings.json; r19 preserves the full hash-bound r18 artifact morphology catalog byte-for-byte and changes only the preregistered duplicate-artifact reject severity equivalence policy",
     "records_per_split": 220,
     "private_role_records_per_split": {"artifact": 200, "protocol-zero": 16, "duplicate-audit": 4},
     "artifact_contract": "five morphology families, exactly 20 nonzero conditions per family, paired dark/light polarities, one replicate per polarity, and no zero-count artifact condition",
     "protocol_zero_contract": "16 independent private clusters with control bytes exactly equal to reference bytes, distributed across all three foundations",
-    "duplicate_audit_contract": "one clean and one obvious-artifact private semantic-replicate cluster; each has two separately coded records with distinct secret-transformed references and controls, the same requested delta, exact decoded residual and metric equality, and identical required semantic labels",
+    "duplicate_audit_contract": "one clean and one obvious-artifact private semantic-replicate cluster; each has two separately coded records with distinct secret-transformed references and controls, the same requested delta, exact decoded residual and metric equality, and labels satisfying the preregistered duplicate semantic-equivalence policy",
     "split_separation": "calibration and holdout use disjoint public nonces, parameter nonces, HMAC identities, opaque codes, control ids, and nonzero requested-delta hashes; exact-zero sentinels intentionally share the canonical all-zero requested-delta hash",
     "foundation_assignment": "secret-HMAC-derived; cluster mates may share a v15/v16/v17 source asset but every record receives a distinct keyed private reference transform",
-    "private_identity_domains": {"private_reference_transform_prefix": "private-reference-transform-v13/", "foundation_offset_lane": "foundation-offset-v12", "foundation_assignment_lane": "foundation-assignment-v12", "delta_lane": "delta-v12", "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v12/"},
+    "private_identity_domains": {"private_reference_transform_prefix": "private-reference-transform-v14/", "foundation_offset_lane": "foundation-offset-v13", "foundation_assignment_lane": "foundation-assignment-v13", "delta_lane": "delta-v13", "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v13/"},
     "private_reference_transform": {
       "primitive": "full-output HMAC-SHA-256 counter-mode PRF coefficient grids",
       "identity": "full private record identity including polarity and replicate",
@@ -267,9 +271,9 @@
     }
   },
   "population_anchor_schedule": {
-    "revision": "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1",
-    "fresh_from_closed_dev_r17": true,
-    "r17_parameter_nonce_reuse_forbidden": true,
+    "revision": "dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1",
+    "fresh_from_closed_dev_r18": true,
+    "r18_parameter_nonce_reuse_forbidden": true,
     "r18_per_family_residue_rotation": {
       "calibration": {
         "artifact-fine-grain": 2,
@@ -286,23 +290,23 @@
         "artifact-parallel-bundle": 11
       }
     },
-    "r18_parameter_nonce_bases": {
-      "calibration_artifact": 1073000,
-      "holdout_artifact": 1083000,
-      "calibration_protocol_zero": 1051000,
-      "holdout_protocol_zero": 1061000,
+    "r19_parameter_nonce_bases": {
+      "calibration_artifact": 1173000,
+      "holdout_artifact": 1183000,
+      "calibration_protocol_zero": 1151000,
+      "holdout_protocol_zero": 1161000,
       "calibration_duplicate_audit": [
-        1091000,
-        1091001,
-        1091002
+        1191000,
+        1191001,
+        1191002
       ],
       "holdout_duplicate_audit": [
-        1101000,
-        1101001,
-        1101002
+        1201000,
+        1201001,
+        1201002
       ]
     },
-    "inherited_r17_schedule_revision": "dev-r17-protocol-zero-reference-prequalification-schedule-v1",
+    "inherited_r18_schedule_revision": "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1",
     "private_reference_prequalification_manifest": {
       "revision": "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1",
       "applies_to_private_roles": ["artifact", "protocol-zero", "duplicate-audit"],
@@ -368,6 +372,95 @@
     },
     "r18_sanitized_r17_basis_sha256": "88860fea0dbdf5ebfa454bf7f038aae53c957808d4c4d344b1ea0fc8e54042e9",
     "r18_metric_threshold_population_and_rate_contract_changes_forbidden": true,
+    "r19_preserved_r18_artifact_morphology_conditions_across_splits": 200,
+    "r19_preserved_r18_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+    "r19_exact_morphology_change_count_across_splits": 0,
+    "r19_duplicate_equivalence_policy_revision": "dev-r19-reject-ordinal-band-duplicate-equivalence-v1",
+    "r19_duplicate_equivalence_policy_manifest": {
+      "revision": "dev-r19-reject-ordinal-band-duplicate-equivalence-v1",
+      "scope": {
+        "private_role": "duplicate-audit",
+        "duplicate_audit_group": "artifact"
+      },
+      "pair_equivalence": {
+        "disposition": {
+          "comparison": "exact-across-pair",
+          "required_value": "reject"
+        },
+        "visible_flags": {
+          "comparison": "exact-across-pair",
+          "fields": [
+            "grain_visible",
+            "tiny_speck_visible",
+            "microblob_visible",
+            "short_line_visible",
+            "parallel_bundle_visible"
+          ]
+        },
+        "severity_0_to_3": {
+          "comparison": "per-member-inclusive-ordinal-band",
+          "allowed_values": [
+            2,
+            3
+          ],
+          "exact_across_pair_required": false
+        }
+      },
+      "unchanged_semantics": {
+        "clean_duplicate_pair_full_semantic_equality_required": true,
+        "warning_semantics_unchanged": true,
+        "all_non_scoped_duplicate_comparisons_unchanged": true
+      },
+      "obvious_artifact_required_label": {
+        "disposition": "reject",
+        "severity_0_to_3_allowed_values": [
+          2,
+          3
+        ],
+        "short_line_visible_required": true
+      },
+      "preservation_contract": {
+        "artifact_morphology_change_count_across_splits": 0,
+        "full_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+        "tier_cardinality_minimum_metric_threshold_and_rate_contracts_unchanged": true,
+        "reference_prequalification_unchanged": true,
+        "bilateral_initial_visible_flag_gate_unchanged": true,
+        "vision_truth_guaranteed": false
+      }
+    },
+    "r19_duplicate_equivalence_policy_manifest_sha256": "292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6",
+    "r19_sanitized_r18_basis": {
+      "calibration": {
+        "duplicate_clean_audit_passed": true,
+        "duplicate_artifact_pair": {
+          "agreed_disposition": "reject",
+          "agreed_visible_flags": {
+            "grain_visible": false,
+            "tiny_speck_visible": false,
+            "microblob_visible": false,
+            "short_line_visible": true,
+            "parallel_bundle_visible": false
+          },
+          "observed_severity_0_to_3_values": [
+            2,
+            3
+          ],
+          "only_label_difference": "severity_0_to_3"
+        },
+        "protocol_zero_audit_passed": true
+      },
+      "holdout": {
+        "duplicate_clean_audit_passed": true,
+        "duplicate_artifact_audit_passed": true,
+        "protocol_zero_audit_passed": true
+      },
+      "population_aggregation_started": false,
+      "numeric_measurement_started": false,
+      "metric_evaluation_started": false,
+      "threshold_search_started": false
+    },
+    "r19_sanitized_r18_basis_sha256": "f4f4c80a406818da30ab18ac270eb466dda2ef42b4f301bde6ce2dea8698ade1",
+    "r19_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden": true,
     "private_until_one_shot_marker": true,
     "public_manifest_exposure_forbidden": true,
     "generation_design_tiers_are_truth": false,
@@ -764,9 +857,9 @@
   ],
   "blind_derivation": {
     "primitive": "HMAC-SHA-256",
-    "key_commitment_message": "microtexture-v2-r6/key-commitment/v12",
-    "seed_message_prefix": "microtexture-v2-r6/render-seed/v13/",
-    "code_message_prefix": "microtexture-v2-r6/opaque-code/v13/",
+    "key_commitment_message": "microtexture-v2-r6/key-commitment/v13",
+    "seed_message_prefix": "microtexture-v2-r6/render-seed/v14/",
+    "code_message_prefix": "microtexture-v2-r6/opaque-code/v14/",
     "opaque_code_hex_characters": 24,
     "formal_secret_value_artifact_or_log_persistence_forbidden": true,
     "same_key_commitment_required_for_calibration_freeze_locked_clean_reference_receipt_holdout": true
@@ -776,7 +869,7 @@
     "requested_delta_hash": "SHA-256 over contiguous little-endian float32 requested delta bytes",
     "encoded_png_hash": "SHA-256 over deterministic Pillow L-mode PNG bytes",
     "public_payload_binding": "the public manifest exposes only opaque codes and per-code, per-lane HMAC-SHA-256 commitments over each private raw payload SHA; no raw control path, reference path, control bytes, or reference bytes exist as individual pre-marker artifacts, and raw control/reference/delta hashes are revealed only after the durable marker",
-    "public_commitment_domain": "microtexture-v2-r6/public-payload-commitment/v14/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
+    "public_commitment_domain": "microtexture-v2-r6/public-payload-commitment/v15/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
     "commitment_equality_hiding": "domain separation plus the opaque code makes all 660 commitments unique even when private requested deltas repeat; repeated or cross-lane commitments are rejected",
     "single_read_validation": "read each contact sheet once and validate the same in-memory bytes; regenerate every private control/reference only after the marker from the frozen catalog and blind key",
     "sparse_injection_domain": "all specks, microblobs, short dashes, and parallel bundles are positioned completely inside the exact metric window",
@@ -792,7 +885,7 @@
     "parallel_geometry_contract": "each artifact-parallel-bundle pair uses an exact 0- or 90-degree axis, equal even-integer length_px, even-integer centerline spacing_px, zero axial offset and therefore 100 percent axial overlap; edge gap equals spacing_px-width_px and satisfies 1<=gap<=length_px; every same-polarity non-touching pair is wholly contained in exactly one 400-percent quadrant",
     "sparse_deterministic_packing_contract": "speck, microblob, short-dash, and parallel-bundle centers use a bounded deterministic candidate permutation and deterministic first-fit acceptance stratified across the four exact quadrants with count difference at most one; short-dash separation is at least ceil(length_px)+width_px+3 and parallel-bundle separation is at least max(length_px,spacing_px)+width_px+3; failure to place the full requested count raises without adaptive count, parameter, tier, split, or key replacement",
     "protocol_zero_contract": "all 16 protocol-zero controls are exact control/reference byte duplicates with a zero requested delta",
-    "duplicate_audit_contract": "the clean and obvious-artifact semantic audit groups each contain two separately coded records with distinct private reference/control bytes, equal requested-delta bytes, exact decoded-residual and metric equality, and identical required semantic labels"
+    "duplicate_audit_contract": "the clean and obvious-artifact semantic audit groups each contain two separately coded records with distinct private reference/control bytes, equal requested-delta bytes, exact decoded-residual and metric equality, and labels satisfying the preregistered duplicate semantic-equivalence policy"
   },
   "contact_sheets": {
     "views": [
@@ -872,7 +965,7 @@
       "ordering": "durable one-shot marker, exact label-byte sealing, secret catalog regeneration, then private audits before any control/reference measurement",
       "protocol_zero": "all 16 secret-role protocol-zero records must be clean, severity 0, with no visible flags",
       "duplicate_clean": "the two separately coded clean-group records must have identical semantic labels and both must be clean",
-      "duplicate_artifact": "the two separately coded obvious-artifact records must have identical semantic labels and both must be reject with severity 2 or 3 and short_line_visible=true",
+      "duplicate_artifact": "the two separately coded obvious-artifact records must have exact disposition and exact values for all five visible flags across the pair, both must be reject with short_line_visible=true, and each severity must independently belong to the inclusive reject ordinal band {2,3}; severity equality within that band is not required",
       "failure_policy": "any disagreement or wrong sentinel outcome is a post-marker failure that consumes and closes the edition"
     },
     "spot_endpoint": "tiny_speck_visible OR microblob_visible"
@@ -946,7 +1039,7 @@
     "parallel_pair_ratio_diagnostic_only": true,
     "diagnostic_branch_flag_cutoff": 0.5,
     "artifact_dependent_score_denominators_forbidden": true,
-    "development_basis": "reference constants, strictly monotone bounded soft-unit score structure, worst-case truth aggregation, and fixed filters were designed from the revealed failed r5 report plus closed non-formal dev-r6/dev-r7 evidence; dev-r8 stopped before measurement because tiny-speck-visible rejects were 3 and 1 clusters; dev-r9 fixed that population deficit but failed after one measurement because warning acceptance and severity-3 detection had no common scalar threshold; dev-r10 was interrupted during generation before any Vision review or measurement; dev-r11 completed blind review but failed the private exact-zero sentinel gate before population aggregation or numeric measurement; dev-r12 passed private audits but closed before measurement because warning population was 10 calibration and 9 holdout against development floor 13, with holdout also below formal minimum 10; dev-r13 passed every formal population minimum but closed before measurement because holdout warning population 12 missed development floor 13; dev-r14 passed all formal minima and every holdout development floor but closed before measurement because calibration microblob population 4 missed development floor 6; dev-r15 passed both private audits but closed before measurement because warning population was 12 calibration and 9 holdout against development floor 13, with holdout also below formal minimum 10; dev-r16 preserved the metric and every threshold/count/rate requirement and applied the frozen warning rebalance, but closed before population aggregation or measurement after one sealed holdout exact-zero sentinel received a severity-1 short-line warning; dev-r17 passed private audits and every calibration population floor but closed before measurement because holdout tiny-speck population 0 missed formal minimum 4 and development floor 6 and holdout spot population 9 missed development floor 10; fresh dev-r18 preserves the other 180 r17 artifact morphologies, all tier cardinalities, population minima, metric, threshold, and rate contracts plus the r17 role-agnostic reference prequalification and bilateral initial flag gate, and changes only the exact twenty hash-bound reject-tier speck morphologies; every prior corpus remains development-only"
+    "development_basis": "reference constants, strictly monotone bounded soft-unit score structure, worst-case truth aggregation, and fixed filters were designed from the revealed failed r5 report plus closed non-formal dev-r6/dev-r7 evidence; dev-r8 stopped before measurement because tiny-speck-visible rejects were 3 and 1 clusters; dev-r9 fixed that population deficit but failed after one measurement because warning acceptance and severity-3 detection had no common scalar threshold; dev-r10 was interrupted during generation before any Vision review or measurement; dev-r11 completed blind review but failed the private exact-zero sentinel gate before population aggregation or numeric measurement; dev-r12 passed private audits but closed before measurement because warning population was 10 calibration and 9 holdout against development floor 13, with holdout also below formal minimum 10; dev-r13 passed every formal population minimum but closed before measurement because holdout warning population 12 missed development floor 13; dev-r14 passed all formal minima and every holdout development floor but closed before measurement because calibration microblob population 4 missed development floor 6; dev-r15 passed both private audits but closed before measurement because warning population was 12 calibration and 9 holdout against development floor 13, with holdout also below formal minimum 10; dev-r16 preserved the metric and every threshold/count/rate requirement and applied the frozen warning rebalance, but closed before population aggregation or measurement after one sealed holdout exact-zero sentinel received a severity-1 short-line warning; dev-r17 passed private audits and every calibration population floor but closed before measurement because holdout tiny-speck population 0 missed formal minimum 4 and development floor 6 and holdout spot population 9 missed development floor 10; dev-r18 preserved the other 180 r17 artifact morphologies, all tier cardinalities, population minima, metric, threshold, and rate contracts plus the r17 role-agnostic reference prequalification and bilateral initial flag gate, but closed before population audit or numeric measurement because calibration's obvious-artifact duplicate pair matched reject disposition and all five visible flags while using ordinal severities 2 and 3 under the then-exact severity check; fresh dev-r19 preserves all 200 dev-r18 artifact morphologies, every design tier, metric, threshold, population, and rate contract, and changes only duplicate semantic equivalence so reject severities 2 and 3 share one reject ordinal band while disposition and all five visible flags remain exact; every prior corpus remains development-only"
   },
   "threshold_selection": {
     "endpoint_eligible_private_role": "artifact",
@@ -1047,7 +1140,7 @@
     "authority_reload_secret_rebinding_required": true,
     "blindness_scope": "operational honest-reviewer blindness: opaque code assignment and private identities are hidden from the Vision review surface; no information-theoretic or same-OS-principal adversarial secrecy is claimed for visible morphology",
     "review_surface": "only the 185 anonymous contact-sheet pages, deterministic crop-only derivatives of those same bytes including each row's native 512-by-384 full-200 panel, and the code-only label form; individual controls, references, source foundations, authority code, private key, filesystem comparisons, automated image differencing, enhancement, and identity-regeneration tools are outside the review surface",
-    "reviewer_access_contract": "the formal blind key remains only in a dedicated custodian process; the closed dev-r9, dev-r10, dev-r11, dev-r12, dev-r13, dev-r14, dev-r15, dev-r16, and dev-r17 blind keys remain only in their retained Git-ignored private probe roots and are never reused; the fresh dev-r18 blind key remains only in its separate Git-ignored private probe root and tracked custodian runner; neither Vision review process may read or inherit any key, and both must use visual page inspection only until both official initial snapshots and receipts exist before reconciliation and label sealing",
+    "reviewer_access_contract": "the formal blind key remains only in a dedicated custodian process; the closed dev-r9, dev-r10, dev-r11, dev-r12, dev-r13, dev-r14, dev-r15, dev-r16, dev-r17, and dev-r18 blind keys remain only in their retained Git-ignored private probe roots and are never reused; the fresh dev-r19 blind key remains only in its separate Git-ignored private probe root and tracked custodian runner; neither Vision review process may read or inherit any key, and both must use visual page inspection only until both official initial snapshots and receipts exist before reconciliation and label sealing",
     "same_principal_attack_non_claim": "a reviewer who deliberately uses arbitrary local process or filesystem access is outside the preregistered threat model; HMAC commitments prevent accidental/public metadata disclosure, not compromise by the key custodian or a malicious same-principal reviewer"
   },
   "timestamps": {

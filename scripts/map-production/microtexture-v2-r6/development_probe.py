@@ -21,14 +21,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r18"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r19"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r18"
+DEVELOPMENT_EDITION = "r19"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
@@ -106,6 +106,42 @@ _R18_PUBLIC_COMMITMENT_DOMAIN = (
 )
 _R18_ZERO_KEY_COMMITMENT_TEST_VECTOR = (
     "794a520cf9bfe76ec1aa1c49767a2dee701f3cd91e06c73f511e18c6ef9bc651"
+)
+_R19_PUBLIC_NONCES = {
+    "calibration": "r6-calibration-v14",
+    "holdout": "r6-holdout-v14",
+}
+_R19_PRIVATE_IDENTITY_DOMAINS = {
+    "private_reference_transform_prefix": "private-reference-transform-v14/",
+    "foundation_offset_lane": "foundation-offset-v13",
+    "foundation_assignment_lane": "foundation-assignment-v13",
+    "delta_lane": "delta-v13",
+    "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v13/",
+}
+_R19_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 1173000,
+    "holdout_artifact": 1183000,
+    "calibration_protocol_zero": 1151000,
+    "holdout_protocol_zero": 1161000,
+    "calibration_duplicate_audit": [1191000, 1191001, 1191002],
+    "holdout_duplicate_audit": [1201000, 1201001, 1201002],
+}
+_R19_SCHEDULE_REVISION = (
+    "dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1"
+)
+_R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION = (
+    "dev-r19-reject-ordinal-band-duplicate-equivalence-v1"
+)
+_R19_CLUSTER_PREFIX = "microtexture-v2-r6/private-condition-cluster/v14/"
+_R19_KEY_COMMITMENT_MESSAGE = "microtexture-v2-r6/key-commitment/v13"
+_R19_SEED_MESSAGE_PREFIX = "microtexture-v2-r6/render-seed/v14/"
+_R19_CODE_MESSAGE_PREFIX = "microtexture-v2-r6/opaque-code/v14/"
+_R19_PUBLIC_COMMITMENT_DOMAIN = (
+    "microtexture-v2-r6/public-payload-commitment/v15/"
+    "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
+)
+_R19_ZERO_KEY_COMMITMENT_TEST_VECTOR = (
+    "0ab9d139a2990f058a140474942a85fdab47eb8d6ad3959bcb845da54aa16498"
 )
 _R17_REFERENCE_PREQUALIFICATION_REVISION = (
     "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1"
@@ -481,7 +517,7 @@ _R18_MATERIALIZED_SPEC_CHANGED_PATHS = {
 }
 _R18_PROBE_AUTHORITY_MANIFEST = {
     "revision": "dev-r18-development-probe-authority-v1",
-    "development_edition": DEVELOPMENT_EDITION,
+    "development_edition": "r18",
     "development_root_required_repo_relative": (
         "tmp/map-production/microtexture-v2-r6-dev-r18"
     ),
@@ -520,6 +556,477 @@ _R18_PROBE_AUTHORITY_MANIFEST = {
 }
 _R18_PROBE_AUTHORITY_MANIFEST_SHA256 = (
     "d4bf229f7ae961e47aa66368ac386c5d911c8a9c81a0703b6650bda5fa9660f1"
+)
+_R19_SANITIZED_R18_BASIS = {
+    "calibration": {
+        "duplicate_clean_audit_passed": True,
+        "duplicate_artifact_pair": {
+            "agreed_disposition": "reject",
+            "agreed_visible_flags": {
+                "grain_visible": False,
+                "tiny_speck_visible": False,
+                "microblob_visible": False,
+                "short_line_visible": True,
+                "parallel_bundle_visible": False,
+            },
+            "observed_severity_0_to_3_values": [2, 3],
+            "only_label_difference": "severity_0_to_3",
+        },
+        "protocol_zero_audit_passed": True,
+    },
+    "holdout": {
+        "duplicate_clean_audit_passed": True,
+        "duplicate_artifact_audit_passed": True,
+        "protocol_zero_audit_passed": True,
+    },
+    "population_aggregation_started": False,
+    "numeric_measurement_started": False,
+    "metric_evaluation_started": False,
+    "threshold_search_started": False,
+}
+_R19_SANITIZED_R18_BASIS_SHA256 = (
+    "f4f4c80a406818da30ab18ac270eb466dda2ef42b4f301bde6ce2dea8698ade1"
+)
+_R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST = {
+    "revision": _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION,
+    "scope": {
+        "private_role": "duplicate-audit",
+        "duplicate_audit_group": "artifact",
+    },
+    "pair_equivalence": {
+        "disposition": {
+            "comparison": "exact-across-pair",
+            "required_value": "reject",
+        },
+        "visible_flags": {
+            "comparison": "exact-across-pair",
+            "fields": [
+                "grain_visible",
+                "tiny_speck_visible",
+                "microblob_visible",
+                "short_line_visible",
+                "parallel_bundle_visible",
+            ],
+        },
+        "severity_0_to_3": {
+            "comparison": "per-member-inclusive-ordinal-band",
+            "allowed_values": [2, 3],
+            "exact_across_pair_required": False,
+        },
+    },
+    "unchanged_semantics": {
+        "clean_duplicate_pair_full_semantic_equality_required": True,
+        "warning_semantics_unchanged": True,
+        "all_non_scoped_duplicate_comparisons_unchanged": True,
+    },
+    "obvious_artifact_required_label": {
+        "disposition": "reject",
+        "severity_0_to_3_allowed_values": [2, 3],
+        "short_line_visible_required": True,
+    },
+    "preservation_contract": {
+        "artifact_morphology_change_count_across_splits": 0,
+        "full_artifact_morphology_sha256": (
+            "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365"
+        ),
+        "tier_cardinality_minimum_metric_threshold_and_rate_contracts_unchanged": (
+            True
+        ),
+        "reference_prequalification_unchanged": True,
+        "bilateral_initial_visible_flag_gate_unchanged": True,
+        "vision_truth_guaranteed": False,
+    },
+}
+_R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256 = (
+    "292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6"
+)
+_R19_CATALOG_AUTHORITY = {
+    "schedule_revision": _R19_SCHEDULE_REVISION,
+    "duplicate_equivalence_policy_revision": (
+        _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION
+    ),
+    "duplicate_equivalence_policy_manifest_sha256": (
+        _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+    ),
+    "sanitized_r18_basis_sha256": _R19_SANITIZED_R18_BASIS_SHA256,
+    "public_payload_commitment_prefix": (
+        "microtexture-v2-r6/public-payload-commitment/v15/"
+    ),
+    "private_reference_transform_prefix": "private-reference-transform-v14/",
+    "foundation_offset_lane": "foundation-offset-v13",
+    "foundation_assignment_lane": "foundation-assignment-v13",
+    "delta_lane": "delta-v13",
+    "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v13/",
+    "artifact_nonce_bases": {"calibration": 1173000, "holdout": 1183000},
+    "protocol_zero_nonce_bases": {"calibration": 1151000, "holdout": 1161000},
+    "duplicate_audit_nonces": {
+        "calibration": [1191000, 1191001, 1191002],
+        "holdout": [1201000, 1201001, 1201002],
+    },
+    "speck_reinforcement_revision": _R18_SPECK_REINFORCEMENT_REVISION,
+    "speck_reinforcement_manifest_sha256": (
+        "355c6c588c3d698288a3545752c13cea734db85e1e7a9a95416cbe3163f633d4"
+    ),
+    "predecessor_full_artifact_morphology_sha256": (
+        "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365"
+    ),
+    "full_artifact_morphology_sha256": (
+        "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365"
+    ),
+    "exact_morphology_change_count_across_splits": 0,
+}
+_R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES = {
+    "revision": _R19_SCHEDULE_REVISION,
+    "fresh_from_closed_dev_r18": True,
+    "r18_parameter_nonce_reuse_forbidden": True,
+    "r18_per_family_residue_rotation": _R18_PER_FAMILY_RESIDUE_ROTATION,
+    "r19_parameter_nonce_bases": _R19_PARAMETER_NONCE_BASES,
+    "inherited_r18_schedule_revision": _R18_SCHEDULE_REVISION,
+    "preserved_r17_artifact_morphology_conditions_across_splits": 180,
+    "preserved_r17_artifact_morphology_sha256": (
+        _R18_CATALOG_AUTHORITY["preserved_r17_morphology_sha256"]
+    ),
+    "r18_exact_morphology_change_count_across_splits": 20,
+    "r18_speck_reinforcement_revision": _R18_SPECK_REINFORCEMENT_REVISION,
+    "r18_speck_reinforcement_manifest_sha256": (
+        _R18_CATALOG_AUTHORITY["speck_reinforcement_manifest_sha256"]
+    ),
+    "r18_full_artifact_morphology_sha256": (
+        _R18_CATALOG_AUTHORITY["full_artifact_morphology_sha256"]
+    ),
+    "r18_target_speck_conditions_per_split": 10,
+    "r18_target_speck_tiers_per_split": {
+        "clear-reject-candidate": 6,
+        "dominant-reject-candidate": 4,
+    },
+    "r18_tiny_speck_structural_miss_budget": 4,
+    "r18_spot_detection_increment_required_from_sanitized_r17_holdout": 1,
+    "r18_sanitized_r17_basis": _R18_SANITIZED_R17_BASIS,
+    "r18_sanitized_r17_basis_sha256": _R18_SANITIZED_R17_BASIS_SHA256,
+    "r18_metric_threshold_population_and_rate_contract_changes_forbidden": True,
+    "r19_preserved_r18_artifact_morphology_conditions_across_splits": 200,
+    "r19_preserved_r18_artifact_morphology_sha256": (
+        _R19_CATALOG_AUTHORITY["full_artifact_morphology_sha256"]
+    ),
+    "r19_exact_morphology_change_count_across_splits": 0,
+    "r19_duplicate_equivalence_policy_revision": (
+        _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION
+    ),
+    "r19_duplicate_equivalence_policy_manifest": (
+        _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
+    ),
+    "r19_duplicate_equivalence_policy_manifest_sha256": (
+        _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+    ),
+    "r19_sanitized_r18_basis": _R19_SANITIZED_R18_BASIS,
+    "r19_sanitized_r18_basis_sha256": _R19_SANITIZED_R18_BASIS_SHA256,
+    "r19_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden": True,
+    "speck_reject_source_anchor_conditions_per_split": 10,
+    "speck_reject_active_anchor_conditions_per_split": 10,
+    "speck_reject_anchor_structural_miss_budget_against_development_floor": 4,
+    "speck_reject_anchor_truth_guarantee_claimed": False,
+    "speck_reject_anchor_schedule": _R18_SPECK_REJECT_ANCHOR_SCHEDULE,
+}
+_R19_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER = (
+    "revision",
+    "fresh_from_closed_dev_r18",
+    "r18_parameter_nonce_reuse_forbidden",
+    "r18_per_family_residue_rotation",
+    "r19_parameter_nonce_bases",
+    "inherited_r18_schedule_revision",
+    "private_reference_prequalification_manifest",
+    "private_reference_prequalification_manifest_sha256",
+    "initial_decision_gate_manifest",
+    "initial_decision_gate_manifest_sha256",
+    "preserved_r17_artifact_morphology_conditions_across_splits",
+    "preserved_r17_artifact_morphology_sha256",
+    "r18_exact_morphology_change_count_across_splits",
+    "r18_speck_reinforcement_revision",
+    "r18_speck_reinforcement_manifest_sha256",
+    "r18_full_artifact_morphology_sha256",
+    "r18_target_speck_conditions_per_split",
+    "r18_target_speck_tiers_per_split",
+    "r18_tiny_speck_structural_miss_budget",
+    "r18_spot_detection_increment_required_from_sanitized_r17_holdout",
+    "r18_sanitized_r17_basis",
+    "r18_sanitized_r17_basis_sha256",
+    "r18_metric_threshold_population_and_rate_contract_changes_forbidden",
+    "r19_preserved_r18_artifact_morphology_conditions_across_splits",
+    "r19_preserved_r18_artifact_morphology_sha256",
+    "r19_exact_morphology_change_count_across_splits",
+    "r19_duplicate_equivalence_policy_revision",
+    "r19_duplicate_equivalence_policy_manifest",
+    "r19_duplicate_equivalence_policy_manifest_sha256",
+    "r19_sanitized_r18_basis",
+    "r19_sanitized_r18_basis_sha256",
+    "r19_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden",
+    "private_until_one_shot_marker",
+    "public_manifest_exposure_forbidden",
+    "generation_design_tiers_are_truth",
+    "tier_counts_per_artifact_family",
+    "artifact_families_covered",
+    "tier_variant_index_modulo_three_residues_per_family",
+    "all_100_artifact_clusters_reviewed_and_evaluated",
+    "subset_selection_forbidden",
+    "top_up_forbidden",
+    "replacement_forbidden",
+    "key_resampling_forbidden",
+    "actual_sealed_vision_labels_are_decisive",
+    "inherited_warning_acceptance_anchor_revision",
+    "inherited_warning_acceptance_anchor_conditions_per_split",
+    "inherited_warning_acceptance_anchor_schedule_sha256",
+    "warning_acceptance_anchor_revision",
+    "warning_acceptance_anchor_conditions_per_split",
+    "warning_acceptance_anchor_conditions_per_family",
+    "warning_acceptance_anchor_structural_miss_budget_against_development_floor",
+    "warning_acceptance_anchor_truth_guarantee_claimed",
+    "warning_acceptance_anchor_schedule_sha256",
+    "warning_conversion_revision",
+    "warning_conversion_conditions_per_split",
+    "warning_conversion_source_tiers_per_sparse_family",
+    "warning_conversion_schedule_sha256",
+    "exact_morphology_change_count_across_splits",
+    "nonconversion_morphology_change_forbidden",
+    "predecessor_full_morphology_sha256",
+    "preserved_nonconversion_morphology_conditions_across_splits",
+    "preserved_nonconversion_morphology_sha256",
+    "preserved_nonwarning_morphology_conditions_across_splits",
+    "preserved_nonwarning_morphology_sha256",
+    "calibration_microblob_clear_reject_anchor_manifest",
+    "calibration_microblob_clear_reject_anchor_conditions",
+    "calibration_microblob_clear_reject_anchor_truth_guarantee_claimed",
+    "calibration_microblob_clear_reject_anchor_schedule_sha256",
+    "calibration_microblob_clear_reject_active_indices",
+    "calibration_microblob_clear_reject_active_conditions",
+    "calibration_microblob_clear_reject_converted_to_warning_index",
+    "calibration_microblob_clear_reject_active_schedule_sha256",
+    "speck_reject_source_anchor_conditions_per_split",
+    "speck_reject_active_anchor_conditions_per_split",
+    "speck_reject_anchor_structural_miss_budget_against_development_floor",
+    "speck_reject_anchor_truth_guarantee_claimed",
+    "speck_reject_anchor_schedule",
+    "grain_reject_anchor_conditions_per_split",
+    "grain_reject_anchor_truth_guarantee_claimed",
+    "grain_reject_anchor_schedule",
+    "blind_key_selection_forbidden_for",
+    "blind_key_allowed_uses",
+    "development_premeasurement_safety_floor_formula",
+    "development_premeasurement_safety_floors",
+)
+_R19_POPULATION_ANCHOR_SCHEDULE_KEYS = set(
+    _R19_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+)
+_R19_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256 = (
+    "15e87ae2c17897bccae75722f1a8ffa9dd8f3aea2d8632929d83a62ac0675b0d"
+)
+_R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256 = (
+    "7065534770044e408d02dd82a4b96adbc74ba77a5e154a2c42697bb43c679c3c"
+)
+_R19_HISTORY_DEV_R18_STATUS = "failed-and-closed-before-population-audit"
+_R19_HISTORY_DEV_R18_ROLE = (
+    "development-only prepopulation private-audit failure evidence; generation, "
+    "both blind 440-record reviews, bilateral reconciliation, official preflight, "
+    "label sealing, private reveal, regeneration, and protocol-zero audits each "
+    "completed exactly once, but calibration's obvious-artifact duplicate pair had "
+    "identical reject dispositions and short-line flags with ordinal severities 2 "
+    "and 3, so the then-exact severity semantic check failed before population audit "
+    "or any numeric measurement; one read-only postmortem ran exactly once, all "
+    "initial snapshots and receipts remain immutable, and no dev-r18 root, key, "
+    "private material, control, reference, pixel, identity, code, commitment, label, "
+    "decision, measurement, nonce, public surface, or postmortem output is reusable"
+)
+_R19_HISTORY_DEV_R18_FAILURE_AUDIT = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r18-development-failure.json"
+)
+_R19_HISTORY_DEV_R18_FAILURE_AUDIT_SHA256 = (
+    "7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122"
+)
+_R19_HISTORY_STATUS = "fresh-development-only"
+_R19_HISTORY_ROLE = (
+    "fresh one-shot development role used only as a duplicate semantic-equivalence "
+    "correction probe after the closed dev-r18 prepopulation private-audit failure; "
+    "it preserves every dev-r18 morphology, design tier, metric, threshold, "
+    "population, and rate contract, changes only duplicate semantic equivalence so "
+    "reject severities 2 and 3 share one reject ordinal band while clean and warning "
+    "severities remain exact and disposition plus all five visible flags remain exact, "
+    "requires a fresh isolated root, cryptographic blind key, identities, domains, "
+    "nonces, controls, references, commitments, labels, decisions, and measurements, "
+    "and can never become or supply formal authority"
+)
+_R19_DEVELOPMENT_BASIS = (
+    "reference constants, strictly monotone bounded soft-unit score structure, "
+    "worst-case truth aggregation, and fixed filters were designed from the "
+    "revealed failed r5 report plus closed non-formal dev-r6/dev-r7 evidence; "
+    "dev-r8 stopped before measurement because tiny-speck-visible rejects were 3 "
+    "and 1 clusters; dev-r9 fixed that population deficit but failed after one "
+    "measurement because warning acceptance and severity-3 detection had no common "
+    "scalar threshold; dev-r10 was interrupted during generation before any Vision "
+    "review or measurement; dev-r11 completed blind review but failed the private "
+    "exact-zero sentinel gate before population aggregation or numeric measurement; "
+    "dev-r12 passed private audits but closed before measurement because warning "
+    "population was 10 calibration and 9 holdout against development floor 13, with "
+    "holdout also below formal minimum 10; dev-r13 passed every formal population "
+    "minimum but closed before measurement because holdout warning population 12 "
+    "missed development floor 13; dev-r14 passed all formal minima and every holdout "
+    "development floor but closed before measurement because calibration microblob "
+    "population 4 missed development floor 6; dev-r15 passed both private audits but "
+    "closed before measurement because warning population was 12 calibration and 9 "
+    "holdout against development floor 13, with holdout also below formal minimum "
+    "10; dev-r16 preserved the metric and every threshold/count/rate requirement and "
+    "applied the frozen warning rebalance, but closed before population aggregation "
+    "or measurement after one sealed holdout exact-zero sentinel received a "
+    "severity-1 short-line warning; dev-r17 passed private audits and every "
+    "calibration population floor but closed before measurement because holdout "
+    "tiny-speck population 0 missed formal minimum 4 and development floor 6 and "
+    "holdout spot population 9 missed development floor 10; dev-r18 preserved the "
+    "other 180 r17 artifact morphologies, all tier cardinalities, population minima, "
+    "metric, threshold, and rate contracts plus the r17 role-agnostic reference "
+    "prequalification and bilateral initial flag gate, but closed before population "
+    "audit or numeric measurement because calibration's obvious-artifact duplicate "
+    "pair matched reject disposition and all five visible flags while using ordinal "
+    "severities 2 and 3 under the then-exact severity check; fresh dev-r19 preserves "
+    "all 200 dev-r18 artifact morphologies, every design tier, metric, threshold, "
+    "population, and rate contract, and changes only duplicate semantic equivalence "
+    "so reject severities 2 and 3 share one reject ordinal band while disposition "
+    "and all five visible flags remain exact; every prior corpus remains "
+    "development-only"
+)
+_R19_EXACT_VARIANT_SOURCE = (
+    "the tracked control_catalog.py named by implementation-bindings.json; r19 "
+    "preserves the full hash-bound r18 artifact morphology catalog byte-for-byte and "
+    "changes only the preregistered duplicate-artifact reject severity equivalence "
+    "policy"
+)
+_R19_SECRET_SCOPE = (
+    "non-authority dev-r19 only; no development key, root, output, or commitment "
+    "can become formal authority"
+)
+_R19_PRIVATE_KEY_REPO_RELATIVE = (
+    "tmp/map-production/microtexture-v2-r6-dev-r19/private/development-key.bin"
+)
+_R19_REVIEWER_ACCESS_CONTRACT = (
+    "the formal blind key remains only in a dedicated custodian process; the "
+    "closed dev-r9, dev-r10, dev-r11, dev-r12, dev-r13, dev-r14, dev-r15, dev-r16, "
+    "dev-r17, and dev-r18 blind keys remain only in their retained Git-ignored "
+    "private probe roots and are never reused; the fresh dev-r19 blind key remains "
+    "only in its separate Git-ignored private probe root and tracked custodian runner; "
+    "neither Vision review process may read or inherit any key, and both must use "
+    "visual page inspection only until both official initial snapshots and receipts "
+    "exist before reconciliation and label sealing"
+)
+_R19_RENDERING_DUPLICATE_AUDIT_CONTRACT = (
+    "the clean and obvious-artifact semantic audit groups each contain two separately "
+    "coded records with distinct private reference/control bytes, equal "
+    "requested-delta bytes, exact decoded-residual and metric equality, and labels "
+    "satisfying the preregistered duplicate semantic-equivalence policy"
+)
+_R19_CATALOG_DUPLICATE_AUDIT_CONTRACT = (
+    "one clean and one obvious-artifact private semantic-replicate cluster; each has "
+    "two separately coded records with distinct secret-transformed references and "
+    "controls, the same requested delta, exact decoded residual and metric equality, "
+    "and labels satisfying the preregistered duplicate semantic-equivalence policy"
+)
+_R19_LABEL_DUPLICATE_ARTIFACT_CONTRACT = (
+    "the two separately coded obvious-artifact records must have exact disposition "
+    "and exact values for all five visible flags across the pair, both must be reject "
+    "with short_line_visible=true, and each severity must independently belong to the "
+    "inclusive reject ordinal band {2,3}; severity equality within that band is not "
+    "required"
+)
+_R19_MATERIALIZED_SPEC_CHANGED_PATHS = {
+    "history.dev_r18_status": _R19_HISTORY_DEV_R18_STATUS,
+    "history.dev_r18_role": _R19_HISTORY_DEV_R18_ROLE,
+    "history.dev_r18_failure_audit": _R19_HISTORY_DEV_R18_FAILURE_AUDIT,
+    "history.dev_r18_failure_audit_sha256": (
+        _R19_HISTORY_DEV_R18_FAILURE_AUDIT_SHA256
+    ),
+    "history.dev_r19_status": _R19_HISTORY_STATUS,
+    "history.dev_r19_role": _R19_HISTORY_ROLE,
+    "metric_definition.development_basis": _R19_DEVELOPMENT_BASIS,
+    "development_probe_secret_handling.scope": _R19_SECRET_SCOPE,
+    "development_probe_secret_handling.ignored_private_key_required_repo_relative": (
+        _R19_PRIVATE_KEY_REPO_RELATIVE
+    ),
+    "splits.calibration.public_nonce": _R19_PUBLIC_NONCES["calibration"],
+    "splits.holdout.public_nonce": _R19_PUBLIC_NONCES["holdout"],
+    "independent_condition_clusters.message_prefix": _R19_CLUSTER_PREFIX,
+    "control_catalog_authority.exact_variant_source": _R19_EXACT_VARIANT_SOURCE,
+    "control_catalog_authority.private_identity_domains": (
+        _R19_PRIVATE_IDENTITY_DOMAINS
+    ),
+    "control_catalog_authority.duplicate_audit_contract": (
+        _R19_CATALOG_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "blind_derivation.key_commitment_message": _R19_KEY_COMMITMENT_MESSAGE,
+    "blind_derivation.seed_message_prefix": _R19_SEED_MESSAGE_PREFIX,
+    "blind_derivation.code_message_prefix": _R19_CODE_MESSAGE_PREFIX,
+    "rendering.public_commitment_domain": _R19_PUBLIC_COMMITMENT_DOMAIN,
+    "rendering.duplicate_audit_contract": _R19_RENDERING_DUPLICATE_AUDIT_CONTRACT,
+    "labels.post_marker_private_audits.duplicate_artifact": (
+        _R19_LABEL_DUPLICATE_ARTIFACT_CONTRACT
+    ),
+    "public_identity_policy.reviewer_access_contract": (
+        _R19_REVIEWER_ACCESS_CONTRACT
+    ),
+}
+_R19_PROBE_AUTHORITY_MANIFEST = {
+    "revision": "dev-r19-development-probe-authority-v1",
+    "development_edition": DEVELOPMENT_EDITION,
+    "development_root_required_repo_relative": (
+        "tmp/map-production/microtexture-v2-r6-dev-r19"
+    ),
+    "public_nonces": _R19_PUBLIC_NONCES,
+    "blind_identity_domains": {
+        "condition_cluster_prefix": _R19_CLUSTER_PREFIX,
+        "key_commitment_message": _R19_KEY_COMMITMENT_MESSAGE,
+        "seed_message_prefix": _R19_SEED_MESSAGE_PREFIX,
+        "code_message_prefix": _R19_CODE_MESSAGE_PREFIX,
+        "public_commitment_domain": _R19_PUBLIC_COMMITMENT_DOMAIN,
+    },
+    "zero_key_commitment_test_vector": _R19_ZERO_KEY_COMMITMENT_TEST_VECTOR,
+    "private_identity_domains": _R19_PRIVATE_IDENTITY_DOMAINS,
+    "parameter_nonce_bases": _R19_PARAMETER_NONCE_BASES,
+    "schedule_revision": _R19_SCHEDULE_REVISION,
+    "catalog_authority": _R19_CATALOG_AUTHORITY,
+    "population_anchor_schedule_key_order": list(
+        _R19_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+    ),
+    "population_anchor_schedule_keyset_sha256": (
+        _R19_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+    ),
+    "population_anchor_schedule_changed_values_sha256": (
+        _R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+    ),
+    "inherited_speck_reject_anchor_schedule_sha256": (
+        _R18_SPECK_REJECT_ANCHOR_SCHEDULE_SHA256
+    ),
+    "duplicate_equivalence_policy_manifest": (
+        _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
+    ),
+    "duplicate_equivalence_policy_manifest_sha256": (
+        _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+    ),
+    "materialized_spec_changed_paths": _R19_MATERIALIZED_SPEC_CHANGED_PATHS,
+    "inherited_reference_prequalification_manifest_sha256": (
+        _R17_REFERENCE_PREQUALIFICATION_MANIFEST_SHA256
+    ),
+    "inherited_initial_decision_gate_manifest_sha256": (
+        _R17_INITIAL_DECISION_GATE_MANIFEST_SHA256
+    ),
+    "development_population_floors": DEVELOPMENT_POPULATION_FLOORS,
+    "sanitized_r18_basis": _R19_SANITIZED_R18_BASIS,
+    "sanitized_r18_basis_sha256": _R19_SANITIZED_R18_BASIS_SHA256,
+    "predecessor_full_artifact_morphology_sha256": (
+        _R19_CATALOG_AUTHORITY["predecessor_full_artifact_morphology_sha256"]
+    ),
+    "full_artifact_morphology_sha256": (
+        _R19_CATALOG_AUTHORITY["full_artifact_morphology_sha256"]
+    ),
+    "exact_morphology_change_count_across_splits": 0,
+    "morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden": True,
+}
+_R19_PROBE_AUTHORITY_MANIFEST_SHA256 = (
+    "b96a98c0c6a35f227a9b81c80220af9ffa99621828a71d10a2ddecb84cccb963"
 )
 _R16_WARNING_ANCHOR_REVISION = (
     "dev-r16-six-per-sparse-family-direct-visible-warning-v1"
@@ -954,7 +1461,7 @@ def _development_blind_commitment(key: bytes) -> str:
     if len(key) != 32:
         raise RuntimeError("development blind key must contain exactly 32 bytes")
     return hmac.new(
-        key, _R18_KEY_COMMITMENT_MESSAGE.encode("ascii"), hashlib.sha256
+        key, _R19_KEY_COMMITMENT_MESSAGE.encode("ascii"), hashlib.sha256
     ).hexdigest()
 
 
@@ -1149,10 +1656,12 @@ def _validate_dev_r18_probe_authority_manifest() -> None:
         is not True
         or _sha256(common.canonical_json_bytes(manifest))
         != _R18_PROBE_AUTHORITY_MANIFEST_SHA256
-        or DEV_ROOT.relative_to(REPO_ROOT).as_posix()
-        != manifest["development_root_required_repo_relative"]
         or control_catalog.dev_r18_authority_binding() != _R18_CATALOG_AUTHORITY
-        or _development_blind_commitment(bytes(32))
+        or hmac.new(
+            bytes(32),
+            _R18_KEY_COMMITMENT_MESSAGE.encode("ascii"),
+            hashlib.sha256,
+        ).hexdigest()
         != _R18_ZERO_KEY_COMMITMENT_TEST_VECTOR
     ):
         raise RuntimeError("development dev-r18 probe authority manifest drift")
@@ -1243,6 +1752,295 @@ def _validate_dev_r18_spec_authority(value: dict[str, Any]) -> None:
     )
 
 
+def _project_materialized_r19_authority_to_r18(
+    value: dict[str, Any],
+) -> dict[str, Any]:
+    """Reconstruct the frozen r18 authority for inherited-byte validation."""
+
+    projected = deepcopy(value)
+    history = projected["history"]
+    history["dev_r18_status"] = _R18_HISTORY_STATUS
+    history["dev_r18_role"] = _R18_HISTORY_ROLE
+    for key in (
+        "dev_r18_failure_audit",
+        "dev_r18_failure_audit_sha256",
+        "dev_r19_status",
+        "dev_r19_role",
+    ):
+        history.pop(key, None)
+    projected["development_probe_secret_handling"].update(
+        {
+            "scope": _R18_SECRET_SCOPE,
+            "ignored_private_key_required_repo_relative": (
+                _R18_PRIVATE_KEY_REPO_RELATIVE
+            ),
+        }
+    )
+    for split, nonce in _R18_PUBLIC_NONCES.items():
+        projected["splits"][split]["public_nonce"] = nonce
+    projected["independent_condition_clusters"]["message_prefix"] = (
+        _R18_CLUSTER_PREFIX
+    )
+    projected["blind_derivation"].update(
+        {
+            "key_commitment_message": _R18_KEY_COMMITMENT_MESSAGE,
+            "seed_message_prefix": _R18_SEED_MESSAGE_PREFIX,
+            "code_message_prefix": _R18_CODE_MESSAGE_PREFIX,
+        }
+    )
+    projected["rendering"].update(
+        {
+            "public_commitment_domain": _R18_PUBLIC_COMMITMENT_DOMAIN,
+            "duplicate_audit_contract": (
+                "the clean and obvious-artifact semantic audit groups each contain "
+                "two separately coded records with distinct private "
+                "reference/control bytes, equal requested-delta bytes, exact "
+                "decoded-residual and metric equality, and identical required "
+                "semantic labels"
+            ),
+        }
+    )
+    projected["control_catalog_authority"].update(
+        {
+            "exact_variant_source": _R18_EXACT_VARIANT_SOURCE,
+            "private_identity_domains": deepcopy(_R18_PRIVATE_IDENTITY_DOMAINS),
+            "duplicate_audit_contract": (
+                "one clean and one obvious-artifact private semantic-replicate "
+                "cluster; each has two separately coded records with distinct "
+                "secret-transformed references and controls, the same requested "
+                "delta, exact decoded residual and metric equality, and identical "
+                "required semantic labels"
+            ),
+        }
+    )
+    projected["labels"]["post_marker_private_audits"]["duplicate_artifact"] = (
+        "the two separately coded obvious-artifact records must have identical "
+        "semantic labels and both must be reject with severity 2 or 3 and "
+        "short_line_visible=true"
+    )
+    projected["public_identity_policy"]["reviewer_access_contract"] = (
+        _R18_REVIEWER_ACCESS_CONTRACT
+    )
+    schedule = projected["population_anchor_schedule"]
+    for key in (
+        "fresh_from_closed_dev_r18",
+        "r18_parameter_nonce_reuse_forbidden",
+        "r19_parameter_nonce_bases",
+        "inherited_r18_schedule_revision",
+        "r19_preserved_r18_artifact_morphology_conditions_across_splits",
+        "r19_preserved_r18_artifact_morphology_sha256",
+        "r19_exact_morphology_change_count_across_splits",
+        "r19_duplicate_equivalence_policy_revision",
+        "r19_duplicate_equivalence_policy_manifest",
+        "r19_duplicate_equivalence_policy_manifest_sha256",
+        "r19_sanitized_r18_basis",
+        "r19_sanitized_r18_basis_sha256",
+        "r19_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden",
+    ):
+        schedule.pop(key)
+    schedule.update(
+        {
+            "revision": _R18_SCHEDULE_REVISION,
+            "fresh_from_closed_dev_r17": True,
+            "r17_parameter_nonce_reuse_forbidden": True,
+            "r18_parameter_nonce_bases": deepcopy(_R18_PARAMETER_NONCE_BASES),
+            "inherited_r17_schedule_revision": _R17_SCHEDULE_REVISION,
+        }
+    )
+    return projected
+
+
+def _validate_dev_r19_probe_authority_manifest() -> None:
+    manifest = _R19_PROBE_AUTHORITY_MANIFEST
+    if set(manifest) != {
+        "revision",
+        "development_edition",
+        "development_root_required_repo_relative",
+        "public_nonces",
+        "blind_identity_domains",
+        "zero_key_commitment_test_vector",
+        "private_identity_domains",
+        "parameter_nonce_bases",
+        "schedule_revision",
+        "catalog_authority",
+        "population_anchor_schedule_key_order",
+        "population_anchor_schedule_keyset_sha256",
+        "population_anchor_schedule_changed_values_sha256",
+        "inherited_speck_reject_anchor_schedule_sha256",
+        "duplicate_equivalence_policy_manifest",
+        "duplicate_equivalence_policy_manifest_sha256",
+        "materialized_spec_changed_paths",
+        "inherited_reference_prequalification_manifest_sha256",
+        "inherited_initial_decision_gate_manifest_sha256",
+        "development_population_floors",
+        "sanitized_r18_basis",
+        "sanitized_r18_basis_sha256",
+        "predecessor_full_artifact_morphology_sha256",
+        "full_artifact_morphology_sha256",
+        "exact_morphology_change_count_across_splits",
+        "morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden",
+    }:
+        raise RuntimeError("development dev-r19 authority manifest schema drift")
+    if (
+        manifest["revision"] != "dev-r19-development-probe-authority-v1"
+        or manifest["development_edition"] != "r19"
+        or manifest["development_root_required_repo_relative"]
+        != "tmp/map-production/microtexture-v2-r6-dev-r19"
+        or manifest["public_nonces"] != _R19_PUBLIC_NONCES
+        or manifest["blind_identity_domains"]
+        != {
+            "condition_cluster_prefix": _R19_CLUSTER_PREFIX,
+            "key_commitment_message": _R19_KEY_COMMITMENT_MESSAGE,
+            "seed_message_prefix": _R19_SEED_MESSAGE_PREFIX,
+            "code_message_prefix": _R19_CODE_MESSAGE_PREFIX,
+            "public_commitment_domain": _R19_PUBLIC_COMMITMENT_DOMAIN,
+        }
+        or manifest["zero_key_commitment_test_vector"]
+        != _R19_ZERO_KEY_COMMITMENT_TEST_VECTOR
+        or manifest["private_identity_domains"]
+        != _R19_PRIVATE_IDENTITY_DOMAINS
+        or manifest["parameter_nonce_bases"] != _R19_PARAMETER_NONCE_BASES
+        or manifest["schedule_revision"] != _R19_SCHEDULE_REVISION
+        or manifest["catalog_authority"] != _R19_CATALOG_AUTHORITY
+        or manifest["population_anchor_schedule_key_order"]
+        != list(_R19_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER)
+        or len(_R19_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER) != 84
+        or len(_R19_POPULATION_ANCHOR_SCHEDULE_KEYS) != 84
+        or manifest["population_anchor_schedule_keyset_sha256"]
+        != _R19_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        or manifest["population_anchor_schedule_changed_values_sha256"]
+        != _R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        or manifest["inherited_speck_reject_anchor_schedule_sha256"]
+        != _R18_SPECK_REJECT_ANCHOR_SCHEDULE_SHA256
+        or manifest["duplicate_equivalence_policy_manifest"]
+        != _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
+        or manifest["duplicate_equivalence_policy_manifest_sha256"]
+        != _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+        or manifest["materialized_spec_changed_paths"]
+        != _R19_MATERIALIZED_SPEC_CHANGED_PATHS
+        or manifest["inherited_reference_prequalification_manifest_sha256"]
+        != _R17_REFERENCE_PREQUALIFICATION_MANIFEST_SHA256
+        or manifest["inherited_initial_decision_gate_manifest_sha256"]
+        != _R17_INITIAL_DECISION_GATE_MANIFEST_SHA256
+        or manifest["development_population_floors"]
+        != DEVELOPMENT_POPULATION_FLOORS
+        or manifest["sanitized_r18_basis"] != _R19_SANITIZED_R18_BASIS
+        or manifest["sanitized_r18_basis_sha256"]
+        != _R19_SANITIZED_R18_BASIS_SHA256
+        or manifest["predecessor_full_artifact_morphology_sha256"]
+        != "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365"
+        or manifest["full_artifact_morphology_sha256"]
+        != manifest["predecessor_full_artifact_morphology_sha256"]
+        or manifest["exact_morphology_change_count_across_splits"] != 0
+        or manifest[
+            "morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden"
+        ]
+        is not True
+        or _sha256(
+            common.canonical_json_bytes(
+                sorted(_R19_POPULATION_ANCHOR_SCHEDULE_KEYS)
+            )
+        )
+        != _R19_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        or _sha256(
+            common.canonical_json_bytes(
+                _R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+            )
+        )
+        != _R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        or _sha256(
+            common.canonical_json_bytes(
+                _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
+            )
+        )
+        != _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+        or _sha256(common.canonical_json_bytes(_R19_SANITIZED_R18_BASIS))
+        != _R19_SANITIZED_R18_BASIS_SHA256
+        or _sha256(common.canonical_json_bytes(manifest))
+        != _R19_PROBE_AUTHORITY_MANIFEST_SHA256
+        or DEV_ROOT.relative_to(REPO_ROOT).as_posix()
+        != manifest["development_root_required_repo_relative"]
+        or control_catalog.dev_r19_authority_binding() != _R19_CATALOG_AUTHORITY
+        or control_catalog._R19_SANITIZED_R18_BASIS
+        != _R19_SANITIZED_R18_BASIS
+        or control_catalog._R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
+        != _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
+        or _development_blind_commitment(bytes(32))
+        != _R19_ZERO_KEY_COMMITMENT_TEST_VECTOR
+    ):
+        raise RuntimeError("development dev-r19 probe authority manifest drift")
+
+    if (
+        set(_R19_PUBLIC_NONCES.values()) & set(_R18_PUBLIC_NONCES.values())
+        or set(_R19_PRIVATE_IDENTITY_DOMAINS.values())
+        & set(_R18_PRIVATE_IDENTITY_DOMAINS.values())
+        or set(manifest["blind_identity_domains"].values())
+        & {
+            _R18_CLUSTER_PREFIX,
+            _R18_KEY_COMMITMENT_MESSAGE,
+            _R18_SEED_MESSAGE_PREFIX,
+            _R18_CODE_MESSAGE_PREFIX,
+            _R18_PUBLIC_COMMITMENT_DOMAIN,
+        }
+        or {
+            value
+            for key, value in _R19_PARAMETER_NONCE_BASES.items()
+            if not key.endswith("duplicate_audit")
+        }
+        & {
+            value
+            for key, value in _R18_PARAMETER_NONCE_BASES.items()
+            if not key.endswith("duplicate_audit")
+        }
+        or {
+            nonce
+            for key, values in _R19_PARAMETER_NONCE_BASES.items()
+            if key.endswith("duplicate_audit")
+            for nonce in values
+        }
+        & {
+            nonce
+            for key, values in _R18_PARAMETER_NONCE_BASES.items()
+            if key.endswith("duplicate_audit")
+            for nonce in values
+        }
+    ):
+        raise RuntimeError("development dev-r19 freshness separation drift")
+    _validate_dev_r18_probe_authority_manifest()
+    control_catalog._validate_dev_r19_morphology_schedules()
+
+
+def _validate_dev_r19_spec_authority(value: dict[str, Any]) -> None:
+    _validate_dev_r19_probe_authority_manifest()
+    schedule = value.get("population_anchor_schedule", {})
+    if (
+        not isinstance(schedule, dict)
+        or tuple(schedule) != _R19_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+        or set(schedule) != _R19_POPULATION_ANCHOR_SCHEDULE_KEYS
+        or {
+            key: schedule.get(key)
+            for key in _R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+        }
+        != _R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+    ):
+        raise RuntimeError("development dev-r19 schedule authority drift")
+    for dotted_path, expected in _R19_MATERIALIZED_SPEC_CHANGED_PATHS.items():
+        actual: Any = value
+        for component in dotted_path.split("."):
+            if not isinstance(actual, dict) or component not in actual:
+                raise RuntimeError(
+                    f"development dev-r19 materialized path missing: {dotted_path}"
+                )
+            actual = actual[component]
+        if actual != expected:
+            raise RuntimeError(
+                f"development dev-r19 materialized path drift: {dotted_path}"
+            )
+    _validate_dev_r18_spec_authority(
+        _project_materialized_r19_authority_to_r18(value)
+    )
+
+
 def _load_spec() -> tuple[dict[str, Any], str]:
     payload = (CODE_ROOT / "preregistered-spec.json").read_bytes()
     digest = _sha256(payload)
@@ -1250,7 +2048,7 @@ def _load_spec() -> tuple[dict[str, Any], str]:
         raise RuntimeError("development preregistered spec SHA drift")
     value = json.loads(payload.decode("utf-8"))
     common.validate_preregistered_spec(value)
-    _validate_dev_r18_spec_authority(value)
+    _validate_dev_r19_spec_authority(value)
     return value, digest
 
 
@@ -1810,7 +2608,7 @@ def _load_generation_state(
         or boundary.get("formal_environment_absent_before_generation") is not True
         or state.get("development_edition") != DEVELOPMENT_EDITION
         or state.get("development_authority_sha256")
-        != _R18_PROBE_AUTHORITY_MANIFEST_SHA256
+        != _R19_PROBE_AUTHORITY_MANIFEST_SHA256
         or state.get("spec_sha256") != spec_sha
         or state.get("public_nonces") != _public_nonces(spec)
         or state.get("implementation_bindings_sha256") != expected_bindings_sha
@@ -3127,11 +3925,11 @@ def generate() -> None:
     DEV_ROOT.mkdir(parents=True, exist_ok=False)
     (DEV_ROOT / "private").mkdir()
     # The root is the earliest durable consumed-edition evidence. Sample the key
-    # only after it exists so an interruption can never silently resample r18.
+    # only after it exists so an interruption can never silently resample r19.
     key = secrets.token_bytes(32)
     state = {
         "development_edition": DEVELOPMENT_EDITION,
-        "development_authority_sha256": _R18_PROBE_AUTHORITY_MANIFEST_SHA256,
+        "development_authority_sha256": _R19_PROBE_AUTHORITY_MANIFEST_SHA256,
         "spec_sha256": spec_sha,
         "public_nonces": _public_nonces(spec),
         "implementation_bindings_sha256": bindings_sha,
