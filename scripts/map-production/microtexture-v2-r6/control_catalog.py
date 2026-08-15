@@ -104,10 +104,8 @@ _HEX_GLYPHS = {
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
-_SCHEDULE_REVISION = "dev-r16-sparse-warning-rebalance-schedule-v1"
-_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
-    b"microtexture-v2-r6/public-payload-commitment/v12/"
-)
+_SCHEDULE_REVISION = "dev-r17-protocol-zero-reference-prequalification-schedule-v1"
+_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v13/"
 _PUBLIC_R15_WARNING_ANCHOR_REVISION = (
     "dev-r14-quantized-direct-visible-sparse-warning-v1"
 )
@@ -120,17 +118,60 @@ _PUBLIC_WARNING_CONVERSION_REVISION = (
 _PUBLIC_MICROBLOB_REJECT_ANCHOR_REVISION = (
     "dev-r15-calibration-quantized-microblob-reject-v1"
 )
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v11/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v10"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v10"
-_DELTA_LANE = "delta-v10"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v10/"
-_ARTIFACT_NONCE_BASES = {"calibration": 873000, "holdout": 883000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 851000, "holdout": 861000}
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v12/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v11"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v11"
+_DELTA_LANE = "delta-v11"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v11/"
+_ARTIFACT_NONCE_BASES = {"calibration": 973000, "holdout": 983000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 951000, "holdout": 961000}
 _DUPLICATE_AUDIT_NONCES = {
-    "calibration": (891000, 891001, 891002),
-    "holdout": (901000, 901001, 901002),
+    "calibration": (991000, 991001, 991002),
+    "holdout": (1001000, 1001001, 1001002),
 }
+_R17_REFERENCE_PREQUALIFICATION_REVISION = (
+    "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1"
+)
+_R17_REFERENCE_PREQUALIFICATION_MANIFEST = {
+    "revision": _R17_REFERENCE_PREQUALIFICATION_REVISION,
+    "applies_to_private_roles": [
+        "artifact",
+        "protocol-zero",
+        "duplicate-audit",
+    ],
+    "candidate_count": 8,
+    "coefficient_grid_hw": [7, 9],
+    "candidate_domain": "candidate/{index:02d}/",
+    "score_lane_integer_weights": {
+        "displacement-y": 7,
+        "displacement-x": 7,
+        "tone": 3,
+    },
+    "score_terms_in_lexicographic_order": [
+        "maximum-weighted-orthogonal-neighbor-jump",
+        "sum-weighted-orthogonal-neighbor-jumps",
+        "maximum-weighted-centered-coefficient-magnitude",
+        "sum-weighted-centered-coefficient-magnitudes",
+        "candidate-index",
+    ],
+    "selection_rule": "lexicographic-minimum",
+    "selection_uses_pixels": False,
+    "selection_uses_requested_delta": False,
+    "selection_uses_labels_or_decisions": False,
+    "selection_branches_on_private_role": False,
+    "selected_score_not_worse_than_candidate_zero": True,
+    "truth_guarantee_claimed": False,
+}
+_R17_REFERENCE_PREQUALIFICATION_MANIFEST_SHA256 = (
+    "a3cfdec84b58bebec38f581c03fbe9947975bf93e11741477cd3bb22f0931119"
+)
+_R17_REFERENCE_PREQUALIFICATION_STATIC_SCORES_SHA256 = (
+    "1413b6a4f7dba56cc264a5a5c32a6f101041fa77c8ac82541baaa6843dc81d1f"
+)
+_R17_REFERENCE_PREQUALIFICATION_STATIC_SELECTED_INDEX = 1
+_R17_PRESERVED_R16_ARTIFACT_MORPHOLOGY_SHA256 = (
+    "c60917c79ae36278d17cc7ccaa93d798cac17500d2d678b41b0cdea34ff66b30"
+)
 _R15_WARNING_ACCEPTANCE_ANCHORS = {
     "revision": _PUBLIC_R15_WARNING_ANCHOR_REVISION,
     "splits": {
@@ -370,23 +411,38 @@ def _public_payload_commitment(
     ).hex()
 
 
-def _hmac_prf_grid(
+def _hmac_prf_grid_integers(
     *,
     key: bytes,
     prefix: str,
     identity: dict[str, Any],
     lane: str,
     shape: tuple[int, int],
-) -> np.ndarray:
-    """Derive a coefficient grid directly from an HMAC-SHA-256 PRF."""
+    candidate_index: int,
+) -> tuple[int, ...]:
+    """Derive exact uint64 coefficient material for one r17 candidate."""
 
+    candidate_count = int(_R17_REFERENCE_PREQUALIFICATION_MANIFEST["candidate_count"])
+    expected_shape = tuple(
+        int(value)
+        for value in _R17_REFERENCE_PREQUALIFICATION_MANIFEST["coefficient_grid_hw"]
+    )
+    if (
+        not 0 <= candidate_index < candidate_count
+        or shape != expected_shape
+        or lane
+        not in _R17_REFERENCE_PREQUALIFICATION_MANIFEST["score_lane_integer_weights"]
+    ):
+        raise RuntimeError("r17 reference-prequalification candidate contract drift")
     count = shape[0] * shape[1]
-    values: list[float] = []
+    values: list[int] = []
     counter = 0
     identity_bytes = canonical_json_bytes(identity)
+    candidate_domain = f"candidate/{candidate_index:02d}/".encode("ascii")
     domain = (
         prefix.encode("ascii")
         + _PRIVATE_REFERENCE_TRANSFORM_PREFIX
+        + candidate_domain
         + lane.encode("ascii")
         + b"/"
         + identity_bytes
@@ -396,11 +452,191 @@ def _hmac_prf_grid(
         digest = blind_hmac(key, domain + counter.to_bytes(4, "big"))
         for offset in range(0, len(digest), 8):
             integer = int.from_bytes(digest[offset : offset + 8], "big")
-            values.append((integer / float((1 << 64) - 1)) * 2.0 - 1.0)
+            values.append(integer)
             if len(values) == count:
                 break
         counter += 1
+    return tuple(values)
+
+
+def _hmac_prf_grid(
+    *,
+    key: bytes,
+    prefix: str,
+    identity: dict[str, Any],
+    lane: str,
+    shape: tuple[int, int],
+    candidate_index: int,
+) -> np.ndarray:
+    """Map exact r17 candidate material to the established float32 grid."""
+
+    maximum = float((1 << 64) - 1)
+    integers = _hmac_prf_grid_integers(
+        key=key,
+        prefix=prefix,
+        identity=identity,
+        lane=lane,
+        shape=shape,
+        candidate_index=candidate_index,
+    )
+    values = [(integer / maximum) * 2.0 - 1.0 for integer in integers]
     return np.asarray(values, dtype=np.float32).reshape(shape)
+
+
+def _reference_prequalification_candidate_scores(
+    *,
+    key: bytes,
+    prefix: str,
+    identity: dict[str, Any],
+) -> tuple[tuple[int, int, int, int, int], ...]:
+    """Score HMAC coefficient candidates without pixels, labels, or deltas."""
+
+    manifest = _R17_REFERENCE_PREQUALIFICATION_MANIFEST
+    grid_height, grid_width = [int(value) for value in manifest["coefficient_grid_hw"]]
+    maximum = (1 << 64) - 1
+    scores: list[tuple[int, int, int, int, int]] = []
+    for candidate_index in range(int(manifest["candidate_count"])):
+        weighted_jumps: list[int] = []
+        weighted_magnitudes: list[int] = []
+        for lane, raw_weight in manifest["score_lane_integer_weights"].items():
+            weight = int(raw_weight)
+            values = _hmac_prf_grid_integers(
+                key=key,
+                prefix=prefix,
+                identity=identity,
+                lane=str(lane),
+                shape=(grid_height, grid_width),
+                candidate_index=candidate_index,
+            )
+            for y in range(grid_height):
+                for x in range(grid_width):
+                    index = y * grid_width + x
+                    value = values[index]
+                    weighted_magnitudes.append(weight * abs(2 * value - maximum))
+                    if x + 1 < grid_width:
+                        weighted_jumps.append(weight * abs(value - values[index + 1]))
+                    if y + 1 < grid_height:
+                        weighted_jumps.append(
+                            weight * abs(value - values[index + grid_width])
+                        )
+        if not weighted_jumps or not weighted_magnitudes:
+            raise RuntimeError("r17 reference-prequalification score is empty")
+        scores.append(
+            (
+                max(weighted_jumps),
+                sum(weighted_jumps),
+                max(weighted_magnitudes),
+                sum(weighted_magnitudes),
+                candidate_index,
+            )
+        )
+    return tuple(scores)
+
+
+def _select_reference_prequalification_candidate(
+    *,
+    key: bytes,
+    prefix: str,
+    identity: dict[str, Any],
+) -> tuple[int, tuple[tuple[int, int, int, int, int], ...]]:
+    scores = _reference_prequalification_candidate_scores(
+        key=key,
+        prefix=prefix,
+        identity=identity,
+    )
+    selected_index = min(range(len(scores)), key=scores.__getitem__)
+    if scores[selected_index] > scores[0]:
+        raise RuntimeError("r17 reference prequalification worsened candidate zero")
+    return selected_index, scores
+
+
+@lru_cache(maxsize=1)
+def _validate_dev_r17_reference_prequalification_design() -> None:
+    manifest = _R17_REFERENCE_PREQUALIFICATION_MANIFEST
+    if (
+        set(manifest)
+        != {
+            "revision",
+            "applies_to_private_roles",
+            "candidate_count",
+            "coefficient_grid_hw",
+            "candidate_domain",
+            "score_lane_integer_weights",
+            "score_terms_in_lexicographic_order",
+            "selection_rule",
+            "selection_uses_pixels",
+            "selection_uses_requested_delta",
+            "selection_uses_labels_or_decisions",
+            "selection_branches_on_private_role",
+            "selected_score_not_worse_than_candidate_zero",
+            "truth_guarantee_claimed",
+        }
+        or manifest["revision"] != _R17_REFERENCE_PREQUALIFICATION_REVISION
+        or manifest["applies_to_private_roles"]
+        != ["artifact", "protocol-zero", "duplicate-audit"]
+        or manifest["candidate_count"] != 8
+        or manifest["coefficient_grid_hw"] != [7, 9]
+        or manifest["candidate_domain"] != "candidate/{index:02d}/"
+        or manifest["score_lane_integer_weights"]
+        != {"displacement-y": 7, "displacement-x": 7, "tone": 3}
+        or manifest["score_terms_in_lexicographic_order"]
+        != [
+            "maximum-weighted-orthogonal-neighbor-jump",
+            "sum-weighted-orthogonal-neighbor-jumps",
+            "maximum-weighted-centered-coefficient-magnitude",
+            "sum-weighted-centered-coefficient-magnitudes",
+            "candidate-index",
+        ]
+        or manifest["selection_rule"] != "lexicographic-minimum"
+        or manifest["selection_uses_pixels"] is not False
+        or manifest["selection_uses_requested_delta"] is not False
+        or manifest["selection_uses_labels_or_decisions"] is not False
+        or manifest["selection_branches_on_private_role"] is not False
+        or manifest["selected_score_not_worse_than_candidate_zero"] is not True
+        or manifest["truth_guarantee_claimed"] is not False
+        or sha256_bytes(canonical_json_bytes(manifest))
+        != _R17_REFERENCE_PREQUALIFICATION_MANIFEST_SHA256
+    ):
+        raise RuntimeError("r17 reference-prequalification manifest drift")
+
+    static_key = hashlib.sha256(
+        b"microtexture-v2-r6/dev-r17/reference-prequalification/static-key"
+    ).digest()
+    static_identity = {
+        "split": "calibration",
+        "public_nonce": "r6-calibration-v12",
+        "private_role": "protocol-zero",
+        "family": "protocol-zero",
+        "variant_index": 0,
+        "parameters": {
+            "schedule_revision": _SCHEDULE_REVISION,
+            "protocol_nonce": 951000,
+        },
+        "duplicate_audit_group": None,
+        "foundation_id": "v15",
+        "replicate": 0,
+        "polarity": 1,
+    }
+    selected_index, scores = _select_reference_prequalification_candidate(
+        key=static_key,
+        prefix="microtexture-v2-r6/render-seed/v12/",
+        identity=static_identity,
+    )
+    scores_sha = sha256_bytes(
+        canonical_json_bytes(
+            {
+                "revision": _R17_REFERENCE_PREQUALIFICATION_REVISION,
+                "scores": [list(score) for score in scores],
+            }
+        )
+    )
+    if (
+        selected_index != _R17_REFERENCE_PREQUALIFICATION_STATIC_SELECTED_INDEX
+        or scores_sha != _R17_REFERENCE_PREQUALIFICATION_STATIC_SCORES_SHA256
+        or scores[selected_index] != min(scores)
+        or scores[selected_index] > scores[0]
+    ):
+        raise RuntimeError("r17 reference-prequalification static vector drift")
 
 
 def _private_reference_transform(
@@ -434,6 +670,12 @@ def _private_reference_transform(
     ):
         raise RuntimeError("r6 private reference-transform parameter drift")
 
+    candidate_index, _candidate_scores = _select_reference_prequalification_candidate(
+        key=key,
+        prefix=prefix,
+        identity=identity,
+    )
+
     height, width = reference.shape
     target_y, target_x = np.meshgrid(
         np.linspace(0.0, grid_height - 1, height, dtype=np.float32),
@@ -448,6 +690,7 @@ def _private_reference_transform(
             identity=identity,
             lane=lane,
             shape=(grid_height, grid_width),
+            candidate_index=candidate_index,
         )
         expanded = ndimage.map_coordinates(
             grid,
@@ -2718,7 +2961,8 @@ def _artifact_variants(
     return result
 
 
-def _validate_dev_r16_morphology_schedules() -> None:
+def _validate_dev_r17_morphology_schedules() -> None:
+    _validate_dev_r17_reference_prequalification_design()
     sparse_families = (
         "artifact-speck",
         "artifact-microblob",
@@ -2765,7 +3009,8 @@ def _validate_dev_r16_morphology_schedules() -> None:
         return min(capacities)
 
     if (
-        _SCHEDULE_REVISION != "dev-r16-sparse-warning-rebalance-schedule-v1"
+        _SCHEDULE_REVISION
+        != "dev-r17-protocol-zero-reference-prequalification-schedule-v1"
         or _PUBLIC_WARNING_ANCHOR_REVISION
         != "dev-r16-six-per-sparse-family-direct-visible-warning-v1"
         or _PUBLIC_WARNING_CONVERSION_REVISION
@@ -2773,31 +3018,45 @@ def _validate_dev_r16_morphology_schedules() -> None:
         or _PUBLIC_MICROBLOB_REJECT_ANCHOR_REVISION
         != "dev-r15-calibration-quantized-microblob-reject-v1"
         or _PUBLIC_PAYLOAD_COMMITMENT_PREFIX
-        != b"microtexture-v2-r6/public-payload-commitment/v12/"
-        or _PRIVATE_REFERENCE_TRANSFORM_PREFIX != b"private-reference-transform-v11/"
-        or _FOUNDATION_OFFSET_LANE != "foundation-offset-v10"
-        or _FOUNDATION_ASSIGNMENT_LANE != "foundation-assignment-v10"
-        or _DELTA_LANE != "delta-v10"
-        or _PRIVATE_CONTROL_ID_PREFIX
-        != b"microtexture-v2-r6/private-control-id/v10/"
-        or _ARTIFACT_NONCE_BASES != {"calibration": 873000, "holdout": 883000}
-        or _PROTOCOL_ZERO_NONCE_BASES
-        != {"calibration": 851000, "holdout": 861000}
+        != b"microtexture-v2-r6/public-payload-commitment/v13/"
+        or _PRIVATE_REFERENCE_TRANSFORM_PREFIX != b"private-reference-transform-v12/"
+        or _FOUNDATION_OFFSET_LANE != "foundation-offset-v11"
+        or _FOUNDATION_ASSIGNMENT_LANE != "foundation-assignment-v11"
+        or _DELTA_LANE != "delta-v11"
+        or _PRIVATE_CONTROL_ID_PREFIX != b"microtexture-v2-r6/private-control-id/v11/"
+        or _ARTIFACT_NONCE_BASES != {"calibration": 973000, "holdout": 983000}
+        or _PROTOCOL_ZERO_NONCE_BASES != {"calibration": 951000, "holdout": 961000}
         or _DUPLICATE_AUDIT_NONCES
         != {
-            "calibration": (891000, 891001, 891002),
-            "holdout": (901000, 901001, 901002),
+            "calibration": (991000, 991001, 991002),
+            "holdout": (1001000, 1001001, 1001002),
         }
     ):
-        raise RuntimeError("r16 schedule/domain/nonce authority drift")
+        raise RuntimeError("r17 schedule/domain/nonce authority drift")
 
     predecessor = {
-        split: _artifact_variants(
-            split, _include_r16_warning_rebalance=False
-        )
+        split: _artifact_variants(split, _include_r16_warning_rebalance=False)
         for split in splits
     }
     current = {split: _artifact_variants(split) for split in splits}
+    current_morphology = {
+        split: {
+            family: [morphology(parameters) for parameters in variants]
+            for family, variants in current[split].items()
+        }
+        for split in splits
+    }
+    if (
+        sum(
+            len(variants)
+            for families in current_morphology.values()
+            for variants in families.values()
+        )
+        != 200
+        or sha256_bytes(canonical_json_bytes(current_morphology))
+        != _R17_PRESERVED_R16_ARTIFACT_MORPHOLOGY_SHA256
+    ):
+        raise RuntimeError("r17 preserved r16 artifact morphology drift")
 
     r15_warning_manifest = {
         "revision": _R15_WARNING_ACCEPTANCE_ANCHORS["revision"],
@@ -2806,9 +3065,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                 family: [
                     {"variant_index": index, "parameters": parameters}
                     for index, parameters in sorted(
-                        _R15_WARNING_ACCEPTANCE_ANCHORS["splits"][split][
-                            family
-                        ].items()
+                        _R15_WARNING_ACCEPTANCE_ANCHORS["splits"][split][family].items()
                     )
                 ]
                 for family in sparse_families
@@ -2852,9 +3109,9 @@ def _validate_dev_r16_morphology_schedules() -> None:
                         "source_parameters": morphology(
                             predecessor[split][family][index]
                         ),
-                        "warning_parameters": _R16_WARNING_CONVERSION_ANCHORS[
-                            split
-                        ][family][index],
+                        "warning_parameters": _R16_WARNING_CONVERSION_ANCHORS[split][
+                            family
+                        ][index],
                     }
                     for index, source_tier in sorted(
                         _R16_WARNING_CONVERSION_SOURCES[split][family].items()
@@ -2891,8 +3148,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                 actual = morphology(current[split][family][index])
                 if actual != entry["parameters"]:
                     raise RuntimeError(
-                        f"r16 warning anchor morphology drift: "
-                        f"{split}/{family}/{index}"
+                        f"r16 warning anchor morphology drift: {split}/{family}/{index}"
                     )
                 parameters = entry["parameters"]
                 amplitude = float(parameters["amplitude_l"])
@@ -2914,9 +3170,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                     )
                     packing_count = int(parameters["count_in_metric_window"])
                     packing_margin = 1
-                    packing_separation = int(
-                        parameters["minimum_separation_px"]
-                    )
+                    packing_separation = int(parameters["minimum_separation_px"])
                 elif family == "artifact-microblob":
                     valid = (
                         4 <= parameters["diameter_px"] <= 8
@@ -2927,9 +3181,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                     )
                     packing_count = int(parameters["count_in_metric_window"])
                     packing_margin = int(parameters["support_radius_px"]) + 1
-                    packing_separation = int(
-                        parameters["minimum_separation_px"]
-                    )
+                    packing_separation = int(parameters["minimum_separation_px"])
                 elif family == "artifact-short-dash":
                     valid = (
                         parameters["width_px"] == 1
@@ -2944,9 +3196,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                         + int(parameters["width_px"])
                         + 2
                     )
-                    packing_separation = int(
-                        parameters["minimum_separation_px"]
-                    )
+                    packing_separation = int(parameters["minimum_separation_px"])
                 else:
                     valid = (
                         parameters["width_px"] == 1
@@ -2958,9 +3208,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                         + parameters["width_px"]
                         + 3
                     )
-                    packing_count = int(
-                        parameters["pair_count_in_metric_window"]
-                    )
+                    packing_count = int(parameters["pair_count_in_metric_window"])
                     packing_margin = (
                         int(
                             math.ceil(
@@ -2974,9 +3222,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                         )
                         + 2
                     )
-                    packing_separation = int(
-                        parameters["minimum_bundle_separation_px"]
-                    )
+                    packing_separation = int(parameters["minimum_bundle_separation_px"])
                 if not valid:
                     raise RuntimeError(
                         f"r16 warning direct-visible geometry drift: "
@@ -3012,8 +3258,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                 amplitude_direction_ok = (
                     float(source["amplitude_l"]) < float(target["amplitude_l"])
                     if conversion["source_tier"] == "clean-candidate"
-                    else float(target["amplitude_l"])
-                    < float(source["amplitude_l"])
+                    else float(target["amplitude_l"]) < float(source["amplitude_l"])
                 )
                 if (
                     source != conversion["source_parameters"]
@@ -3116,9 +3361,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
     for entry in microblob_anchor_manifest["entries"]:
         index = entry["variant_index"]
         if morphology(predecessor_microblob[index]) != entry["parameters"]:
-            raise RuntimeError(
-                f"r16 inherited r15 microblob source drift: {index}"
-            )
+            raise RuntimeError(f"r16 inherited r15 microblob source drift: {index}")
         if index != converted_microblob_index and (
             morphology(final_microblob[index]) != entry["parameters"]
         ):
@@ -3140,22 +3383,17 @@ def _validate_dev_r16_morphology_schedules() -> None:
         "2c207dfb5249d42056e164e7553091a9a617d8b673aecfb5ea25e4d757651f0c"
     ):
         raise RuntimeError("r16 active r15 microblob anchor SHA drift")
-    if (
-        Counter(
-            (
-                int(entry["parameters"]["diameter_px"]),
-                int(entry["parameters"]["support_radius_px"]),
-                int(entry["parameters"]["count_in_metric_window"]),
-            )
-            for entry in remaining_microblob_entries
+    if Counter(
+        (
+            int(entry["parameters"]["diameter_px"]),
+            int(entry["parameters"]["support_radius_px"]),
+            int(entry["parameters"]["count_in_metric_window"]),
         )
-        != Counter({(4, 2, 64): 3, (6, 3, 44): 3})
-        or {
-            entry["variant_index"] % len(_FOUNDATIONS)
-            for entry in remaining_microblob_entries
-        }
-        != {0, 1, 2}
-    ):
+        for entry in remaining_microblob_entries
+    ) != Counter({(4, 2, 64): 3, (6, 3, 44): 3}) or {
+        entry["variant_index"] % len(_FOUNDATIONS)
+        for entry in remaining_microblob_entries
+    } != {0, 1, 2}:
         raise RuntimeError("r16 preserved r15 microblob compact matrix drift")
     for diameter in (4, 6):
         ladder = {
@@ -3224,17 +3462,13 @@ def _validate_dev_r16_morphology_schedules() -> None:
         raise RuntimeError("r16 exact morphology change-set drift")
 
     preserved_morphology: dict[str, dict[str, list[dict[str, Any]]]] = {}
-    preserved_nonwarning_morphology: dict[
-        str, dict[str, list[dict[str, Any]]]
-    ] = {}
+    preserved_nonwarning_morphology: dict[str, dict[str, list[dict[str, Any]]]] = {}
     sparse_preserved_count = 0
     for split in splits:
         preserved_morphology[split] = {}
         preserved_nonwarning_morphology[split] = {}
         for family, variants in current[split].items():
-            converted = set(
-                _R16_WARNING_CONVERSION_SOURCES[split].get(family, {})
-            )
+            converted = set(_R16_WARNING_CONVERSION_SOURCES[split].get(family, {}))
             entries: list[dict[str, Any]] = []
             for index, parameters in enumerate(variants):
                 if index in converted:
@@ -3243,8 +3477,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                 expected = morphology(predecessor[split][family][index])
                 if actual != expected:
                     raise RuntimeError(
-                        f"r16 nonconversion morphology drift: "
-                        f"{split}/{family}/{index}"
+                        f"r16 nonconversion morphology drift: {split}/{family}/{index}"
                     )
                 entries.append({"variant_index": index, "parameters": actual})
             preserved_morphology[split][family] = entries
@@ -3292,10 +3525,13 @@ def _validate_dev_r16_morphology_schedules() -> None:
         }
     )
     for split in splits:
-        if Counter(
-            parameters["design_tier"]
-            for parameters in current[split]["artifact-fine-grain"]
-        ) != expected_grain_tiers:
+        if (
+            Counter(
+                parameters["design_tier"]
+                for parameters in current[split]["artifact-fine-grain"]
+            )
+            != expected_grain_tiers
+        ):
             raise RuntimeError(f"r16 fine-grain tier-count drift: {split}")
         for family in sparse_families:
             variants = current[split][family]
@@ -3304,8 +3540,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
             }
             if len(morphology_tuples) != 20:
                 raise RuntimeError(
-                    f"r16 sparse family morphology uniqueness drift: "
-                    f"{split}/{family}"
+                    f"r16 sparse family morphology uniqueness drift: {split}/{family}"
                 )
             if Counter(parameters["design_tier"] for parameters in variants) != (
                 expected_sparse_tiers
@@ -3318,8 +3553,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
                     if parameters["design_tier"] == tier
                 } != {0, 1, 2}:
                     raise RuntimeError(
-                        f"r16 sparse tier mod-3 coverage drift: "
-                        f"{split}/{family}/{tier}"
+                        f"r16 sparse tier mod-3 coverage drift: {split}/{family}/{tier}"
                     )
         total_tiers = Counter(
             parameters["design_tier"]
@@ -3393,11 +3627,7 @@ def _validate_dev_r16_morphology_schedules() -> None:
             actual = tuple(
                 (
                     str(parameters["pattern"]),
-                    float(
-                        parameters.get(
-                            "wavelength_px", parameters.get("cell_px")
-                        )
-                    ),
+                    float(parameters.get("wavelength_px", parameters.get("cell_px"))),
                 )
                 for parameters in grain
                 if parameters["design_tier"] == tier
@@ -3552,9 +3782,9 @@ def _expected_controls_bounded(
         anonymous_code = blind_hmac(
             key, code_prefix.encode("ascii") + identity_bytes
         ).hex()[: int(spec["blind_derivation"]["opaque_code_hex_characters"])]
-        control_id = blind_hmac(
-            key, _PRIVATE_CONTROL_ID_PREFIX + identity_bytes
-        ).hex()[:24]
+        control_id = blind_hmac(key, _PRIVATE_CONTROL_ID_PREFIX + identity_bytes).hex()[
+            :24
+        ]
         condition_cluster_id = blind_hmac(
             key,
             spec["independent_condition_clusters"]["message_prefix"].encode("ascii")
@@ -3598,7 +3828,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r16_morphology_schedules()
+    _validate_dev_r17_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):

@@ -145,7 +145,7 @@ floor `13`をfailし、holdout warning `9`はformal minimum `10`とdevelopment f
 identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem outputは後続editionまたはformalへ一切
 再利用しません。
 
-fresh successorはdevelopment-onlyの`dev-r16`です。unchanged preregistered soft-unit metricを一回だけ検証するため、
+development-onlyの`dev-r16`はunchanged preregistered soft-unit metricを一回だけ検証するため、
 fine-grainのtier数は`5/4/7/4`のまま、4つのsparse familyは各`4/6/6/4`へ変え、各familyでclean morphology 1件と
 clear-reject morphology 1件だけをpreregistered intermediate warning morphologyへ置換します。これによりsparse warning
 anchorsはsplitあたり24件、warning floor 13に対する構造上のmiss budgetは11です。全non-target morphologyと全endpoint
@@ -187,10 +187,39 @@ exact rootは`tmp/map-production/microtexture-v2-r6-dev-r16`、keyは
 `microtexture-v2-r6/key-commitment/v10`、foundation lanesは`foundation-offset-v10` / `foundation-assignment-v10`、delta laneは
 `delta-v10`、private-control-id domainは`microtexture-v2-r6/private-control-id/v10/`です。protocol-zero noncesは
 `851000..851015` / `861000..861015`、artifactは`873000..873419` / `883000..883419`、duplicate-auditは
-`891000..891002` / `901000..901002`です。fresh isolated
-root/key/identity/control/reference/commitment/label/measurementを要求します。r16の一回限りdevelopment auditをcommit/pushし
-両CIで確認するまでformal stageは開始できず、その成功自体もformal authorityではありません。現時点ではformal readiness
-またはformal authorityを主張しません。
+`891000..891002` / `901000..901002`です。
+
+dev-r16はgeneration、Root/独立Visionによる各440-record blind review、reconciliation、official preflight、label seal、private
+revealを各一度だけ完了しました。両reviewerのofficial initial snapshots/receiptsは不変です。calibration protocol-zeroは
+`16/16` clean、holdoutは`15/16` cleanでしたが、残るexact-zero 1件がseverity-1 short-line warningとなるlocalized-line
+false positiveでした。duplicate-auditは両splitともpassしました。population aggregation、numeric measurement、threshold searchは
+未開始のまま閉鎖し、read-only postmortemを一度だけ実行しました。sanitized auditは
+`world/map-production/qa/microtexture-v2-r6-dev-r16-development-failure.json`、raw SHA-256は
+`4637978a7ac5d59c99ec076e527b7be6e5d2ad1c0477077e2587fda7091ca169`です。dev-r16のroot/key/secret/control/reference/
+pixel/identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem output/private materialは再利用しません。
+
+fresh successor `dev-r17`はdev-r16の200件の生成物morphology、tier、population minima、metric、threshold、rateを変更せず、
+全private roleへ同一のpixel/role/label-independent best-of-8 HMAC coefficient prequalificationを加えます。prequalification revisionは
+`dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1`、manifest SHA-256は
+`a3cfdec84b58bebec38f581c03fbe9947975bf93e11741477cd3bb22f0931119`、保存するr16 morphology SHA-256は
+`c60917c79ae36278d17cc7ccaa93d798cac17500d2d678b41b0cdea34ff66b30`です。Root/Independent双方のofficial initial
+snapshot/receiptを必須とし、final visible flagsは両initial flag intersectionのsubsetに限定します。このgate revisionは
+`dev-r17-bilateral-initial-visible-flag-intersection-gate-v1`、manifest SHA-256は
+`f042250290f80d4304923e3b564746e8311515f5c649811678db934bb3ad6ffd`です。
+
+dev-r17 schedule revisionは`dev-r17-protocol-zero-reference-prequalification-schedule-v1`です。exact root/keyは
+`tmp/map-production/microtexture-v2-r6-dev-r17` /
+`tmp/map-production/microtexture-v2-r6-dev-r17/private/development-key.bin`です。public noncesは`r6-calibration-v12` /
+`r6-holdout-v12`です。cluster domainは`microtexture-v2-r6/private-condition-cluster/v12/`、render domainは
+`microtexture-v2-r6/render-seed/v12/`、code domainは`microtexture-v2-r6/opaque-code/v12/`、private-reference-transform
+domainは`private-reference-transform-v12/`、public commitment domainは
+`microtexture-v2-r6/public-payload-commitment/v13/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`です。
+key commitmentは`microtexture-v2-r6/key-commitment/v11`、foundation lanesは`foundation-offset-v11` /
+`foundation-assignment-v11`、delta laneは`delta-v11`、private-control-id domainは
+`microtexture-v2-r6/private-control-id/v11/`です。protocol-zero noncesは`951000..951015` / `961000..961015`、artifactは
+`973000..973419` / `983000..983419`、duplicate-auditは`991000..991002` / `1001000..1001002`です。fresh isolated
+root/key/identity/control/reference/commitment/label/decision/measurementを要求し、dev-r17 auditをcommit/pushして両CIで
+確認するまでformal stageは開始できません。その成功自体もformal authorityではなく、現時点でformal readinessを主張しません。
 fresh calibration、v18 locked-clean validation、独立threshold authority receipt、fresh holdoutは各一度だけ実行します。
 全stageと別途preregisterするproduction residual derivationが合格するまで、v246候補、Golden、master、最終pixelへ
 接続しません。runnerは書込み前にroot `.gitignore`をcaptured HEADへbyte-bindし、exact pathのHEAD/index非存在と

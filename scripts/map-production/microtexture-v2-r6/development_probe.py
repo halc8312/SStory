@@ -20,14 +20,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r16"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r17"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r16"
+DEVELOPMENT_EDITION = "r17"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
@@ -50,26 +50,101 @@ DEVELOPMENT_POPULATION_FLOORS = {
     "short_line_reject_detection": 10,
     "parallel_bundle_reject_detection": 8,
 }
-_R16_PUBLIC_NONCES = {
-    "calibration": "r6-calibration-v11",
-    "holdout": "r6-holdout-v11",
+_R17_PUBLIC_NONCES = {
+    "calibration": "r6-calibration-v12",
+    "holdout": "r6-holdout-v12",
 }
-_R16_PRIVATE_IDENTITY_DOMAINS = {
-    "private_reference_transform_prefix": "private-reference-transform-v11/",
-    "foundation_offset_lane": "foundation-offset-v10",
-    "foundation_assignment_lane": "foundation-assignment-v10",
-    "delta_lane": "delta-v10",
-    "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v10/",
+_R17_PRIVATE_IDENTITY_DOMAINS = {
+    "private_reference_transform_prefix": "private-reference-transform-v12/",
+    "foundation_offset_lane": "foundation-offset-v11",
+    "foundation_assignment_lane": "foundation-assignment-v11",
+    "delta_lane": "delta-v11",
+    "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v11/",
 }
-_R16_PARAMETER_NONCE_BASES = {
-    "calibration_artifact": 873000,
-    "holdout_artifact": 883000,
-    "calibration_protocol_zero": 851000,
-    "holdout_protocol_zero": 861000,
-    "calibration_duplicate_audit": [891000, 891001, 891002],
-    "holdout_duplicate_audit": [901000, 901001, 901002],
+_R17_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 973000,
+    "holdout_artifact": 983000,
+    "calibration_protocol_zero": 951000,
+    "holdout_protocol_zero": 961000,
+    "calibration_duplicate_audit": [991000, 991001, 991002],
+    "holdout_duplicate_audit": [1001000, 1001001, 1001002],
 }
-_R16_SCHEDULE_REVISION = "dev-r16-sparse-warning-rebalance-schedule-v1"
+_R17_SCHEDULE_REVISION = "dev-r17-protocol-zero-reference-prequalification-schedule-v1"
+_R17_REFERENCE_PREQUALIFICATION_REVISION = (
+    "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1"
+)
+_R17_REFERENCE_PREQUALIFICATION_MANIFEST = {
+    "revision": _R17_REFERENCE_PREQUALIFICATION_REVISION,
+    "applies_to_private_roles": [
+        "artifact",
+        "protocol-zero",
+        "duplicate-audit",
+    ],
+    "candidate_count": 8,
+    "coefficient_grid_hw": [7, 9],
+    "candidate_domain": "candidate/{index:02d}/",
+    "score_lane_integer_weights": {
+        "displacement-y": 7,
+        "displacement-x": 7,
+        "tone": 3,
+    },
+    "score_terms_in_lexicographic_order": [
+        "maximum-weighted-orthogonal-neighbor-jump",
+        "sum-weighted-orthogonal-neighbor-jumps",
+        "maximum-weighted-centered-coefficient-magnitude",
+        "sum-weighted-centered-coefficient-magnitudes",
+        "candidate-index",
+    ],
+    "selection_rule": "lexicographic-minimum",
+    "selection_uses_pixels": False,
+    "selection_uses_requested_delta": False,
+    "selection_uses_labels_or_decisions": False,
+    "selection_branches_on_private_role": False,
+    "selected_score_not_worse_than_candidate_zero": True,
+    "truth_guarantee_claimed": False,
+}
+_R17_REFERENCE_PREQUALIFICATION_MANIFEST_SHA256 = (
+    "a3cfdec84b58bebec38f581c03fbe9947975bf93e11741477cd3bb22f0931119"
+)
+_R17_PRESERVED_R16_ARTIFACT_MORPHOLOGY_SHA256 = (
+    "c60917c79ae36278d17cc7ccaa93d798cac17500d2d678b41b0cdea34ff66b30"
+)
+_R17_INITIAL_DECISION_GATE_REVISION = (
+    "dev-r17-bilateral-initial-visible-flag-intersection-gate-v1"
+)
+_R17_INITIAL_DECISION_GATE_MANIFEST = {
+    "revision": _R17_INITIAL_DECISION_GATE_REVISION,
+    "snapshot_files": {
+        "root": "decisions-root.initial.dev.txt",
+        "independent": "decisions-independent.initial.dev.txt",
+    },
+    "receipt_files": {
+        "root": "decisions-root.initial.dev.txt.sha256",
+        "independent": "decisions-independent.initial.dev.txt.sha256",
+    },
+    "receipt_format": "lowercase-sha256 two-spaces snapshot-basename newline",
+    "final_files": [
+        "vision-decisions.dev.txt",
+        "decisions-root.dev.txt",
+        "decisions-independent.dev.txt",
+    ],
+    "final_three_way_exact_bytes_required": True,
+    "initial_snapshots_require_official_parser_coverage_and_code_binding": True,
+    "visible_flags": ["g", "t", "b", "l", "p"],
+    "final_visible_flag_set_relation": (
+        "subset-of-root-initial-intersection-independent-initial"
+    ),
+    "reconciled_fields_not_restricted_by_this_gate": [
+        "disposition",
+        "severity_0_to_3",
+        "notes",
+    ],
+    "private_role_input": False,
+    "read_only_attribute_required_by_runner": False,
+}
+_R17_INITIAL_DECISION_GATE_MANIFEST_SHA256 = (
+    "f042250290f80d4304923e3b564746e8311515f5c649811678db934bb3ad6ffd"
+)
 _R16_WARNING_ANCHOR_REVISION = (
     "dev-r16-six-per-sparse-family-direct-visible-warning-v1"
 )
@@ -341,7 +416,7 @@ def _assert_private_analysis_boundary(*, analysis_must_exist: bool) -> None:
             raise RuntimeError("development private-analysis root escapes DEV_ROOT")
 
 
-def _validate_dev_r16_spec_authority(value: dict[str, Any]) -> None:
+def _validate_dev_r17_spec_authority(value: dict[str, Any]) -> None:
     sparse_families = (
         "artifact-speck",
         "artifact-microblob",
@@ -398,23 +473,20 @@ def _validate_dev_r16_spec_authority(value: dict[str, Any]) -> None:
         for family in sparse_families
     }
     if (
-        public_nonces != _R16_PUBLIC_NONCES
-        or cluster_prefix
-        != "microtexture-v2-r6/private-condition-cluster/v11/"
-        or private_domains != _R16_PRIVATE_IDENTITY_DOMAINS
+        public_nonces != _R17_PUBLIC_NONCES
+        or cluster_prefix != "microtexture-v2-r6/private-condition-cluster/v12/"
+        or private_domains != _R17_PRIVATE_IDENTITY_DOMAINS
         or blind.get("key_commitment_message")
-        != "microtexture-v2-r6/key-commitment/v10"
-        or blind.get("seed_message_prefix")
-        != "microtexture-v2-r6/render-seed/v11/"
-        or blind.get("code_message_prefix")
-        != "microtexture-v2-r6/opaque-code/v11/"
+        != "microtexture-v2-r6/key-commitment/v11"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v12/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v12/"
         or rendering.get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v12/"
+        != "microtexture-v2-r6/public-payload-commitment/v13/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
-        or schedule.get("revision") != _R16_SCHEDULE_REVISION
-        or schedule.get("fresh_from_closed_dev_r15") is not True
-        or schedule.get("r15_parameter_nonce_reuse_forbidden") is not True
-        or schedule.get("r16_per_family_residue_rotation") != expected_rotations
+        or schedule.get("revision") != _R17_SCHEDULE_REVISION
+        or schedule.get("fresh_from_closed_dev_r16") is not True
+        or schedule.get("r16_parameter_nonce_reuse_forbidden") is not True
+        or schedule.get("r17_per_family_residue_rotation") != expected_rotations
         or schedule.get("tier_counts_per_artifact_family") != expected_tiers
         or schedule.get("inherited_warning_acceptance_anchor_revision")
         != "dev-r14-quantized-direct-visible-sparse-warning-v1"
@@ -430,8 +502,30 @@ def _validate_dev_r16_spec_authority(value: dict[str, Any]) -> None:
             "revision"
         )
         != _R16_MICROBLOB_ANCHOR_REVISION
-        or schedule.get("r16_parameter_nonce_bases")
-        != _R16_PARAMETER_NONCE_BASES
+        or schedule.get("r17_parameter_nonce_bases") != _R17_PARAMETER_NONCE_BASES
+        or schedule.get("private_reference_prequalification_manifest")
+        != _R17_REFERENCE_PREQUALIFICATION_MANIFEST
+        or schedule.get("private_reference_prequalification_manifest_sha256")
+        != _R17_REFERENCE_PREQUALIFICATION_MANIFEST_SHA256
+        or _sha256(
+            common.canonical_json_bytes(
+                schedule.get("private_reference_prequalification_manifest")
+            )
+        )
+        != _R17_REFERENCE_PREQUALIFICATION_MANIFEST_SHA256
+        or schedule.get("initial_decision_gate_manifest")
+        != _R17_INITIAL_DECISION_GATE_MANIFEST
+        or schedule.get("initial_decision_gate_manifest_sha256")
+        != _R17_INITIAL_DECISION_GATE_MANIFEST_SHA256
+        or _sha256(
+            common.canonical_json_bytes(schedule.get("initial_decision_gate_manifest"))
+        )
+        != _R17_INITIAL_DECISION_GATE_MANIFEST_SHA256
+        or schedule.get("preserved_r16_artifact_morphology_conditions_across_splits")
+        != 200
+        or schedule.get("preserved_r16_artifact_morphology_sha256")
+        != _R17_PRESERVED_R16_ARTIFACT_MORPHOLOGY_SHA256
+        or schedule.get("r17_exact_morphology_change_count_across_splits") != 0
         or schedule.get("warning_conversion_revision")
         != _R16_WARNING_CONVERSION_REVISION
         or schedule.get("warning_conversion_conditions_per_split") != 8
@@ -458,17 +552,13 @@ def _validate_dev_r16_spec_authority(value: dict[str, Any]) -> None:
             "warning_acceptance_anchor_structural_miss_budget_against_development_floor"
         )
         != 11
-        or schedule.get("calibration_microblob_clear_reject_anchor_conditions")
-        != 7
+        or schedule.get("calibration_microblob_clear_reject_anchor_conditions") != 7
         or schedule.get("calibration_microblob_clear_reject_anchor_schedule_sha256")
         != "dd2ce7fd13f624bd065e8c7a6bacc2ab8bd593821dec8d46250a40e57ef64833"
         or schedule.get("calibration_microblob_clear_reject_active_indices")
         != [1, 2, 9, 13, 17, 18]
-        or schedule.get("calibration_microblob_clear_reject_active_conditions")
-        != 6
-        or schedule.get(
-            "calibration_microblob_clear_reject_converted_to_warning_index"
-        )
+        or schedule.get("calibration_microblob_clear_reject_active_conditions") != 6
+        or schedule.get("calibration_microblob_clear_reject_converted_to_warning_index")
         != 16
         or schedule.get("calibration_microblob_clear_reject_active_schedule_sha256")
         != _R16_ACTIVE_MICROBLOB_ANCHOR_SHA256
@@ -479,7 +569,7 @@ def _validate_dev_r16_spec_authority(value: dict[str, Any]) -> None:
         )
         != 4
     ):
-        raise RuntimeError("development dev-r16 spec/domain authority drift")
+        raise RuntimeError("development dev-r17 spec/domain authority drift")
 
 
 def _load_spec() -> tuple[dict[str, Any], str]:
@@ -489,7 +579,7 @@ def _load_spec() -> tuple[dict[str, Any], str]:
         raise RuntimeError("development preregistered spec SHA drift")
     value = json.loads(payload.decode("utf-8"))
     common.validate_preregistered_spec(value)
-    _validate_dev_r16_spec_authority(value)
+    _validate_dev_r17_spec_authority(value)
     return value, digest
 
 
@@ -1141,7 +1231,9 @@ def _parse_decisions_payload(
     payload: bytes, context: str
 ) -> dict[tuple[int, int], dict[str, Any]]:
     decisions: dict[tuple[int, int], dict[str, Any]] = {}
-    for line_number, raw_line in enumerate(payload.decode("utf-8").splitlines(), start=1):
+    for line_number, raw_line in enumerate(
+        payload.decode("utf-8").splitlines(), start=1
+    ):
         line = raw_line.strip()
         if not line or line.startswith("#"):
             continue
@@ -1176,8 +1268,14 @@ def _parse_decisions_payload(
         if flags_text == "-":
             flags: set[str] = set()
         else:
-            flags = set(flags_text.split(","))
-            if "" in flags or not flags.issubset(_FLAG_FIELDS):
+            flag_tokens = flags_text.split(",")
+            flags = set(flag_tokens)
+            canonical_flag_tokens = [flag for flag in _FLAG_FIELDS if flag in flags]
+            if (
+                "" in flags
+                or not flags.issubset(_FLAG_FIELDS)
+                or flag_tokens != canonical_flag_tokens
+            ):
                 raise RuntimeError(f"decision DSL flag drift: {context}:{line_number}")
         consistent = (
             (disposition == "clean" and severity == 0 and not flags)
@@ -1186,7 +1284,7 @@ def _parse_decisions_payload(
         )
         if not consistent or not notes:
             raise RuntimeError(f"decision DSL semantic drift: {context}:{line_number}")
-        decisions[key] = {
+        decision = {
             "anonymous_code": anonymous_code,
             "disposition": disposition,
             "severity_0_to_3": severity,
@@ -1195,7 +1293,82 @@ def _parse_decisions_payload(
             "reviewed_at_all_400_percent_quadrants": True,
             "notes": notes,
         }
+        common._validate_vision_evidence_notes(decision, context, anonymous_code)
+        decisions[key] = decision
     return decisions
+
+
+def _validate_r17_initial_decision_gate_manifest() -> None:
+    manifest = _R17_INITIAL_DECISION_GATE_MANIFEST
+    if (
+        manifest.get("revision") != _R17_INITIAL_DECISION_GATE_REVISION
+        or manifest.get("snapshot_files")
+        != {
+            "root": "decisions-root.initial.dev.txt",
+            "independent": "decisions-independent.initial.dev.txt",
+        }
+        or manifest.get("receipt_files")
+        != {
+            "root": "decisions-root.initial.dev.txt.sha256",
+            "independent": "decisions-independent.initial.dev.txt.sha256",
+        }
+        or manifest.get("receipt_format")
+        != "lowercase-sha256 two-spaces snapshot-basename newline"
+        or manifest.get("final_files")
+        != [
+            "vision-decisions.dev.txt",
+            "decisions-root.dev.txt",
+            "decisions-independent.dev.txt",
+        ]
+        or manifest.get("final_three_way_exact_bytes_required") is not True
+        or manifest.get(
+            "initial_snapshots_require_official_parser_coverage_and_code_binding"
+        )
+        is not True
+        or manifest.get("visible_flags") != ["g", "t", "b", "l", "p"]
+        or manifest.get("final_visible_flag_set_relation")
+        != "subset-of-root-initial-intersection-independent-initial"
+        or manifest.get("reconciled_fields_not_restricted_by_this_gate")
+        != ["disposition", "severity_0_to_3", "notes"]
+        or manifest.get("private_role_input") is not False
+        or manifest.get("read_only_attribute_required_by_runner") is not False
+        or _sha256(common.canonical_json_bytes(manifest))
+        != _R17_INITIAL_DECISION_GATE_MANIFEST_SHA256
+    ):
+        raise RuntimeError("development r17 initial-decision gate manifest drift")
+
+
+def _read_verified_initial_decision_snapshot(
+    split: str,
+    reviewer: str,
+) -> tuple[bytes, dict[tuple[int, int], dict[str, Any]], str, str]:
+    snapshot_name = _R17_INITIAL_DECISION_GATE_MANIFEST["snapshot_files"].get(reviewer)
+    receipt_name = _R17_INITIAL_DECISION_GATE_MANIFEST["receipt_files"].get(reviewer)
+    if not isinstance(snapshot_name, str) or not isinstance(receipt_name, str):
+        raise RuntimeError(f"{split} invalid initial-decision reviewer: {reviewer}")
+    snapshot_relative = f"public/{split}/{snapshot_name}"
+    receipt_relative = f"public/{split}/{receipt_name}"
+    snapshot_path = _checked_dev_file(
+        snapshot_relative,
+        f"{split} {reviewer} initial Vision decisions",
+    )
+    receipt_path = _checked_dev_file(
+        receipt_relative,
+        f"{split} {reviewer} initial Vision decision receipt",
+    )
+    snapshot_payload = snapshot_path.read_bytes()
+    snapshot_sha = _sha256(snapshot_payload)
+    receipt_payload = receipt_path.read_bytes()
+    expected_receipt = f"{snapshot_sha}  {snapshot_name}\n".encode("ascii")
+    if receipt_payload != expected_receipt:
+        raise RuntimeError(f"{split} {reviewer} initial Vision decision receipt drift")
+    decisions = _parse_decisions_payload(
+        snapshot_payload,
+        str(snapshot_path),
+    )
+    return snapshot_payload, decisions, snapshot_sha, _sha256(receipt_payload)
+
+
 def _verify_bundle_files(entries: Any, context: str) -> dict[str, bytes]:
     if not isinstance(entries, list) or not entries:
         raise RuntimeError(f"{context} bundle is empty")
@@ -1375,8 +1548,7 @@ def _prepare_public_split(
     )
     records = manifest.get("records")
     if (
-        manifest.get("artifact")
-        != "microtexture-v2-r6-development-control-manifest"
+        manifest.get("artifact") != "microtexture-v2-r6-development-control-manifest"
         or manifest.get("schema_version")
         != "microtexture-v2-r6-development-control-manifest/1"
         or manifest.get("authority") is not False
@@ -1406,8 +1578,10 @@ def _prepare_public_split(
             f"{split} development manifest record[{index}]",
         )
         code = record.get("anonymous_code")
-        if not isinstance(code, str) or len(code) != 24 or any(
-            character not in "0123456789abcdef" for character in code
+        if (
+            not isinstance(code, str)
+            or len(code) != 24
+            or any(character not in "0123456789abcdef" for character in code)
         ):
             raise RuntimeError(f"{split} development manifest code format drift")
         for field in (
@@ -1437,9 +1611,7 @@ def _prepare_public_split(
     contact_sheet_payloads = _verify_bundle_files(
         manifest["contact_sheet_bundle"], f"{split} contact sheet"
     )
-    _verify_contact_sheet_layout(
-        manifest["contact_sheet_bundle"], spec, split, codes
-    )
+    _verify_contact_sheet_layout(manifest["contact_sheet_bundle"], spec, split, codes)
 
     common.require_exact_keys(
         review_index, _REVIEW_INDEX_KEYS, f"{split} development review-index"
@@ -1449,8 +1621,7 @@ def _prepare_public_split(
         str(view["id"]) for view in spec["contact_sheets"]["views"]
     ]
     if (
-        review_index.get("artifact")
-        != "microtexture-v2-r6-development-review-index"
+        review_index.get("artifact") != "microtexture-v2-r6-development-review-index"
         or review_index.get("schema_version")
         != "microtexture-v2-r6-development-review-index/1"
         or review_index.get("authority") is not False
@@ -1528,6 +1699,7 @@ def _prepare_public_split(
             "review_board_payloads": review_board_payloads,
         }
 
+    _validate_r17_initial_decision_gate_manifest()
     decision_relatives = {
         "canonical": f"public/{split}/vision-decisions.dev.txt",
         "root": f"public/{split}/decisions-root.dev.txt",
@@ -1539,6 +1711,18 @@ def _prepare_public_split(
         ).read_bytes()
         for reviewer, relative in decision_relatives.items()
     }
+    if not (
+        decision_payloads["canonical"]
+        == decision_payloads["root"]
+        == decision_payloads["independent"]
+    ):
+        raise RuntimeError(
+            f"{split} final Vision decisions are not exact three-way bytes"
+        )
+    initial_snapshots = {
+        reviewer: _read_verified_initial_decision_snapshot(split, reviewer)
+        for reviewer in ("root", "independent")
+    }
     decisions = _parse_decisions_payload(
         decision_payloads["canonical"], str(decisions_path)
     )
@@ -1548,10 +1732,14 @@ def _prepare_public_split(
     independent_decisions = _parse_decisions_payload(
         decision_payloads["independent"], str(independent_decisions_path)
     )
+    root_initial_decisions = initial_snapshots["root"][1]
+    independent_initial_decisions = initial_snapshots["independent"][1]
     for reviewer, reviewed in (
         ("canonical Root", decisions),
         ("Root", root_decisions),
         ("independent", independent_decisions),
+        ("initial Root", root_initial_decisions),
+        ("initial independent", independent_initial_decisions),
     ):
         if set(reviewed) != set(page_rows):
             raise RuntimeError(f"{split} {reviewer} Vision decision coverage drift")
@@ -1570,6 +1758,21 @@ def _prepare_public_split(
         raise RuntimeError(
             f"{split} Root/independent Vision decisions are not reconciled"
         )
+    visible_fields = tuple(_FLAG_FIELDS.values())
+    for key in sorted(decisions):
+        unsupported_final_flags = {
+            field
+            for field in visible_fields
+            if decisions[key][field]
+            and not (
+                root_initial_decisions[key][field]
+                and independent_initial_decisions[key][field]
+            )
+        }
+        if unsupported_final_flags:
+            raise RuntimeError(
+                f"{split} final visible flags lack bilateral initial support"
+            )
     by_code = {decision["anonymous_code"]: decision for decision in decisions.values()}
     completed = deepcopy(blank_labels)
     items = completed.get("items")
@@ -1602,8 +1805,15 @@ def _prepare_public_split(
         "review_index_sha256": _sha256(review_index_payload),
         "decisions_sha256": _sha256(decision_payloads["canonical"]),
         "root_decisions_sha256": _sha256(decision_payloads["root"]),
-        "independent_decisions_sha256": _sha256(
-            decision_payloads["independent"]
+        "independent_decisions_sha256": _sha256(decision_payloads["independent"]),
+        "root_initial_decisions_sha256": initial_snapshots["root"][2],
+        "root_initial_decisions_receipt_sha256": initial_snapshots["root"][3],
+        "independent_initial_decisions_sha256": initial_snapshots["independent"][2],
+        "independent_initial_decisions_receipt_sha256": initial_snapshots[
+            "independent"
+        ][3],
+        "initial_decision_gate_manifest_sha256": (
+            _R17_INITIAL_DECISION_GATE_MANIFEST_SHA256
         ),
         "root_independent_logical_difference_count": logical_difference_count,
         "dispositions": dict(Counter(item["disposition"] for item in labels.values())),
@@ -1974,6 +2184,21 @@ def analyze() -> None:
                 "decisions_sha256": result["decisions_sha256"],
                 "root_decisions_sha256": result["root_decisions_sha256"],
                 "independent_decisions_sha256": result["independent_decisions_sha256"],
+                "root_initial_decisions_sha256": result[
+                    "root_initial_decisions_sha256"
+                ],
+                "root_initial_decisions_receipt_sha256": result[
+                    "root_initial_decisions_receipt_sha256"
+                ],
+                "independent_initial_decisions_sha256": result[
+                    "independent_initial_decisions_sha256"
+                ],
+                "independent_initial_decisions_receipt_sha256": result[
+                    "independent_initial_decisions_receipt_sha256"
+                ],
+                "initial_decision_gate_manifest_sha256": result[
+                    "initial_decision_gate_manifest_sha256"
+                ],
                 "root_independent_logical_difference_count": result[
                     "root_independent_logical_difference_count"
                 ],
@@ -1982,7 +2207,7 @@ def analyze() -> None:
             }
         seal_receipt = {
             "artifact": "microtexture-v2-r6-development-label-seal",
-            "schema_version": "microtexture-v2-r6-development-label-seal/2",
+            "schema_version": "microtexture-v2-r6-development-label-seal/3",
             "authority": False,
             "formal_use_forbidden": True,
             "root_vision_blind_during_all_decisions": True,
@@ -2226,7 +2451,7 @@ def generate() -> None:
     DEV_ROOT.mkdir(parents=True, exist_ok=False)
     (DEV_ROOT / "private").mkdir()
     # The root is the earliest durable consumed-edition evidence. Sample the key
-    # only after it exists so an interruption can never silently resample r16.
+    # only after it exists so an interruption can never silently resample r17.
     key = secrets.token_bytes(32)
     state = {
         "development_edition": DEVELOPMENT_EDITION,
