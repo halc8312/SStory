@@ -151,7 +151,7 @@ development rootは`tmp/map-production/microtexture-v2-r6-dev-r15`、keyはそ�
 `microtexture-v2-r6/public-payload-commitment/v11/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
 `microtexture-v2-r6/key-commitment/v9`、foundation lanesは`foundation-offset-v9` / `foundation-assignment-v9`、delta
 laneは`delta-v9`、private-control-idは`microtexture-v2-r6/private-control-id/v9/`です。protocol nonceはcalibration
-`751000..751015` / holdout `761000..761015`、artifact nonceは`773000..773419` / `783000..783419`、
+`751000..751015` / holdout `761000..761015`、生成物nonceは`773000..773419` / `783000..783419`、
 duplicate-audit nonceは`791000..791002` / `801000..801002`です。
 
 dev-r15生成は、tracked authorityとrunnerをfresh authority commitへfreezeしてpushし、Ubuntu/Windowsの両CIがそのexact
