@@ -615,6 +615,9 @@ def _development_generation_documents(
     ).hexdigest()
     state: dict[str, object] = {
         "development_edition": "r18",
+        "development_authority_sha256": (
+            development_probe._R18_PROBE_AUTHORITY_MANIFEST_SHA256
+        ),
         "spec_sha256": common.SPEC_SHA256,
         "public_nonces": development_probe._public_nonces(spec),
         "implementation_bindings_sha256": bindings_sha,
@@ -1300,12 +1303,16 @@ class MicrotextureR6SelfTest(unittest.TestCase):
 
         predecessor = {
             split: _artifact_variants(
-                split, _include_r16_warning_rebalance=False
+                split,
+                _include_r16_warning_rebalance=False,
+                _include_r18_speck_reinforcement=False,
             )
             for split in ("calibration", "holdout")
         }
         current = {
-            split: _artifact_variants(split)
+            split: _artifact_variants(
+                split, _include_r18_speck_reinforcement=False
+            )
             for split in ("calibration", "holdout")
         }
         conversion_manifest = {
@@ -2287,7 +2294,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     self.spec, captured_head
                 )
 
-    def test_dev_r17_generation_transaction_is_exact_and_sealed(self) -> None:
+    def test_dev_r18_generation_transaction_is_exact_and_sealed(self) -> None:
         state, boundary, start, summary, seal, completion = (
             _development_generation_documents(self.spec)
         )
@@ -2336,7 +2343,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ).hexdigest()
 
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r17"
+            root = Path(directory) / "dev-r18"
             with mock.patch.object(development_probe, "DEV_ROOT", root):
                 write_documents(root, boundary, start, summary, seal, completion)
                 loaded_state, receipts, binding = (
@@ -2508,9 +2515,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                         self.spec, common.SPEC_SHA256
                     )
 
-    def test_dev_r17_generate_success_reloads_exact_terminal_chain(self) -> None:
+    def test_dev_r18_generate_success_reloads_exact_terminal_chain(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "dev-r17"
+            root = Path(directory) / "dev-r18"
             key_path = root / "private" / "development-key.bin"
             bindings_sha = hashlib.sha256(
                 (
@@ -2597,7 +2604,11 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     )
                 )
             review_preflight.assert_called_once_with()
-            self.assertEqual(loaded_state["development_edition"], "r17")
+            self.assertEqual(loaded_state["development_edition"], "r18")
+            self.assertEqual(
+                loaded_state["development_authority_sha256"],
+                development_probe._R18_PROBE_AUTHORITY_MANIFEST_SHA256,
+            )
             self.assertEqual(set(receipts), {"calibration", "holdout"})
             self.assertFalse((root / "generation-failure.dev.json").exists())
             for name in (

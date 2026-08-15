@@ -13,7 +13,7 @@
     "generate_controls.py": "79819eb0ea4214986c27253c21b0692bc0b5a57ebf8e1606af27562fa9c36481",
     "calibration_harness.py": "8f36124b15b3998745742d99eea310615e762d9187ad33e65390c2c06d034b74",
     "development_probe.py": "f0c3f490c0fd62eab3ad43d317c920bcf4cb213215ee5ef20d376f646e738602",
-    "self_test.py": "864e128e7d95ee209f623cb0ce2169cae504bfb93d0b463f4e93ef7b517fd033",
+    "self_test.py": "dbf88d75e265c12696b2bd44cf625fd19a4be459acdd35c745cb97b946ffbef7",
     "labels-calibration.template.json": "45c3f218647bb6fbdea1a148bc3576f87145915463837397ada09ab050af44ed",
     "labels-holdout.template.json": "4cd84f44a45b05d11bb1edd36634f7e986540f0fb3532624222f01345d106ab3",
     "threshold-authority.template.json": "e04a4bf629f8d0fede1b893e4e87ec421a9f001a8bcec4c806e826821294fd4f"
