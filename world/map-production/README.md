@@ -129,7 +129,7 @@ revisionを`dev-r14-quantized-direct-visible-sparse-warning-v1`へ固定しま�
 `microtexture-v2-r6/public-payload-commitment/v10/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
 `microtexture-v2-r6/key-commitment/v8`、foundation lanesは`foundation-offset-v8` / `foundation-assignment-v8`、delta
 laneは`delta-v8`、private-control-idは`microtexture-v2-r6/private-control-id/v8/`です。protocol nonceはcalibration
-`651000..651015` / holdout `661000..661015`、artifact nonceは`673000..673419` / `683000..683419`、
+`651000..651015` / holdout `661000..661015`、`artifact` nonceは`673000..673419` / `683000..683419`、
 duplicate-audit nonceは`691000..691002` / `701000..701002`です。
 
 dev-r14はtier数`5/4/7/4`を維持し、speck、microblob、short-dash、parallel-bundleの同じ既存warning-candidateをsplitごとに
