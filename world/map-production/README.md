@@ -100,6 +100,16 @@ performanceは`null`です。閉鎖後にsanitized read-only postmortemを一度
 `world/map-production/qa/microtexture-v2-r6-dev-r12-development-failure.json`です。dev-r12 rootを不変に保持し、rerun、
 resume、relabel、retune、subset、top-up、key resamplingと、全素材・identity・nonce・public surfaceの再利用を禁止します。
 
+`dev-r13`もgeneration、全440 recordsのRoot/独立Vision review、reconciliation、preflight、label seal、両splitのprivate
+auditを一度だけ完了し、両private auditはpassしました。calibration warning `14`はformal minimum `10` / development floor
+`13`をpassし、holdout warning `12`はformal minimum `10`をpassしてdevelopment floor `13`だけをfailしました。その他の
+全endpointは両splitでformal minimumとdevelopment floorをpassしました。all-or-nothing gateにより
+`measurement_started=false`のままmetric、threshold search、holdout endpoint evaluationを開始せず、thresholdとholdout
+performanceは`null`です。閉鎖後にsanitized read-only postmortemを一度だけ実行しました。sanitized evidenceは
+`world/map-production/qa/microtexture-v2-r6-dev-r13-development-failure.json`です。dev-r13 rootは不変に保持し、rerun、
+resume、relabel、retune、replacement、subset、top-up、key resampling、root削除後の再生成、およびroot/key/control/
+reference/pixel/identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem outputの再利用を禁止します。
+
 唯一のsuccessor authorityは`scripts/map-production/microtexture-v2-r6/`、運用概要は
 `spec/microtexture-v2-calibration.md`です。r6は各split 220 records / 118 private clustersで、200 injection records
 （5 morphology families × 20 nonzero conditions × dark/light polarity）、16 exact protocol-zero sentinels、4
@@ -108,34 +118,35 @@ duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185
 half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
 r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
-持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r12`はformalへ昇格できません。
+持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r13`はformalへ昇格できません。
 
-fresh successorは`dev-r13`です。development rootは`tmp/map-production/microtexture-v2-r6-dev-r13`、keyはそのroot内の
-`private/development-key.bin`だけに置き、schedule metadataを`dev-r13-warning-acceptance-anchor-schedule-v1`へ固定します。
-public noncesは`r6-calibration-v8` / `r6-holdout-v8`、cluster/render/code domainsは
-`microtexture-v2-r6/private-condition-cluster/v8/`、`microtexture-v2-r6/render-seed/v8/`、
-`microtexture-v2-r6/opaque-code/v8/`、private-reference-transform domainは`private-reference-transform-v8/`です。
-public commitmentは
-`microtexture-v2-r6/public-payload-commitment/v9/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
-`microtexture-v2-r6/key-commitment/v7`、foundation lanesは`foundation-offset-v7` / `foundation-assignment-v7`、delta
-laneは`delta-v7`、private-control-idは`microtexture-v2-r6/private-control-id/v7/`です。protocol nonceはcalibration
-`551000..551015` / holdout `561000..561015`、欠陥候補用nonceは`573000..573419` / `583000..583419`、
-duplicate-audit nonceは`591000..591002` / `601000..601002`です。
+fresh successorは`dev-r14`です。development rootは`tmp/map-production/microtexture-v2-r6-dev-r14`、keyはそのroot内の
+`private/development-key.bin`だけに置き、schedule revisionを`dev-r14-warning-acceptance-anchor-schedule-v1`、warning anchor
+revisionを`dev-r14-quantized-direct-visible-sparse-warning-v1`へ固定します。public noncesは`r6-calibration-v9` /
+`r6-holdout-v9`、cluster/render/code domainsは`microtexture-v2-r6/private-condition-cluster/v9/`、
+`microtexture-v2-r6/render-seed/v9/`、`microtexture-v2-r6/opaque-code/v9/`、private-reference-transform domainは
+`private-reference-transform-v9/`です。public commitmentは
+`microtexture-v2-r6/public-payload-commitment/v10/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
+`microtexture-v2-r6/key-commitment/v8`、foundation lanesは`foundation-offset-v8` / `foundation-assignment-v8`、delta
+laneは`delta-v8`、private-control-idは`microtexture-v2-r6/private-control-id/v8/`です。protocol nonceはcalibration
+`651000..651015` / holdout `661000..661015`、artifact nonceは`673000..673419` / `683000..683419`、
+duplicate-audit nonceは`691000..691002` / `701000..701002`です。
 
-dev-r13はtier数`5/4/7/4`を維持し、speck、microblob、short-dash、parallel-bundleの既存warning-candidateをsplitごとに各4件、
-計16件だけfamily invariant内の弱いが直接知覚可能なmorphology anchorへ実パラメータ変更します。fine-grain warning、
-全clean-candidate、全clear/dominant-reject morphologyは変更しません。splitごとの16 anchors対development floor 13の構造上のmiss
-budgetは3ですが、design tierはVision truthやwarning labelを保証しません。metric、唯一のscalar threshold、population
-floors、endpoint counts/ratesは変更しません。
+dev-r14はtier数`5/4/7/4`を維持し、speck、microblob、short-dash、parallel-bundleの同じ既存warning-candidateをsplitごとに
+各4件、計16件だけfamily invariant内でr13から単調に強化したnative full-200で直接知覚可能なsparse morphology anchorへ
+変更します。fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyを含むnonwarning scheduleは変更しません。
+splitごとの16 anchors対development floor 13の構造上のmiss budgetは3ですが、design tierはVision truthやwarning labelを
+保証しません。metric、唯一のscalar threshold、population floors、endpoint minima/counts/ratesは変更しません。
 
-dev-r13生成は、tracked authorityとrunnerをauthority commitへfreezeしてpushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
+dev-r14生成は、tracked authorityとrunnerをauthority commitへfreezeしてpushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
 fresh root/keyを作り、公開byteを一つでも書く前に排他的な`generation-start.dev.json`を確定し、両splitを生成してから
 summary → seal → completionの順に排他的に確定します。catchableな失敗は排他的なfailureへ固定し、failure/completionの
 共存、summary/seal/completionの欠落、または外部中断はそのeditionを消費済みとして閉鎖します。transaction検証前には
 Vision/analysisを開始しません。`review-crops`が同じcontact-sheet bytesからcrop-onlyで各rowへ出すnative 512×384
 full-200 cropを無補正で先に判定し、
 400%は同位置の再同定だけに使います。閉鎖editionの続行、再生成、key再利用、部分出力流用は禁止です。development成功後も
-証拠をcommit/pushしてUbuntu/Windowsの両CIを通し、その後にだけformal authorityを別commitで最終freezeします。
+証拠をcommit/pushしてUbuntu/Windowsの両CIを通し、その後にだけformal authorityを別commitで最終freezeします。現時点では
+formal readinessまたはformal authorityを主張しません。
 fresh calibration、v18 locked-clean validation、独立threshold authority receipt、fresh holdoutは各一度だけ実行します。
 全stageと別途preregisterするproduction residual derivationが合格するまで、v246候補、Golden、master、最終pixelへ
 接続しません。runnerは書込み前にroot `.gitignore`をcaptured HEADへbyte-bindし、exact pathのHEAD/index非存在と

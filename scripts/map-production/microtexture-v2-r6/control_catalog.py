@@ -104,75 +104,75 @@ _HEX_GLYPHS = {
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
-_SCHEDULE_REVISION = "dev-r13-warning-acceptance-anchor-schedule-v1"
+_SCHEDULE_REVISION = "dev-r14-warning-acceptance-anchor-schedule-v1"
 _PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
-    b"microtexture-v2-r6/public-payload-commitment/v9/"
+    b"microtexture-v2-r6/public-payload-commitment/v10/"
 )
-_PUBLIC_WARNING_ANCHOR_REVISION = "dev-r13-localized-sparse-warning-v1"
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v8/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v7"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v7"
-_DELTA_LANE = "delta-v7"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v7/"
-_ARTIFACT_NONCE_BASES = {"calibration": 573000, "holdout": 583000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 551000, "holdout": 561000}
+_PUBLIC_WARNING_ANCHOR_REVISION = "dev-r14-quantized-direct-visible-sparse-warning-v1"
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v9/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v8"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v8"
+_DELTA_LANE = "delta-v8"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v8/"
+_ARTIFACT_NONCE_BASES = {"calibration": 673000, "holdout": 683000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 651000, "holdout": 661000}
 _DUPLICATE_AUDIT_NONCES = {
-    "calibration": (591000, 591001, 591002),
-    "holdout": (601000, 601001, 601002),
+    "calibration": (691000, 691001, 691002),
+    "holdout": (701000, 701001, 701002),
 }
 _WARNING_ACCEPTANCE_ANCHORS = {
     "revision": _PUBLIC_WARNING_ANCHOR_REVISION,
     "splits": {
         "calibration": {
             "artifact-speck": {
-                2: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 6.6, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 12},
-                10: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 6.8, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 14},
-                11: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.0, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 16},
-                18: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.2, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 18},
+                2: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.1, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 12},
+                10: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.3, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 14},
+                11: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.7, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 16},
+                18: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.9, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 18},
             },
             "artifact-microblob": {
-                4: {"design_tier": "warning-candidate", "diameter_px": 5, "amplitude_l": 5.2, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
-                5: {"design_tier": "warning-candidate", "diameter_px": 6, "amplitude_l": 5.4, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
-                12: {"design_tier": "warning-candidate", "diameter_px": 7, "amplitude_l": 5.6, "count_in_metric_window": 2, "support_radius_px": 6, "minimum_separation_px": 16},
-                14: {"design_tier": "warning-candidate", "diameter_px": 8, "amplitude_l": 5.8, "count_in_metric_window": 2, "support_radius_px": 7, "minimum_separation_px": 18},
+                4: {"design_tier": "warning-candidate", "diameter_px": 5, "amplitude_l": 6.8, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
+                5: {"design_tier": "warning-candidate", "diameter_px": 6, "amplitude_l": 6.6, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
+                12: {"design_tier": "warning-candidate", "diameter_px": 7, "amplitude_l": 6.4, "count_in_metric_window": 2, "support_radius_px": 6, "minimum_separation_px": 16},
+                14: {"design_tier": "warning-candidate", "diameter_px": 8, "amplitude_l": 6.2, "count_in_metric_window": 2, "support_radius_px": 7, "minimum_separation_px": 18},
             },
             "artifact-short-dash": {
-                6: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "amplitude_l": 6.0, "count_in_metric_window": 1, "minimum_separation_px": 12},
-                8: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "amplitude_l": 6.2, "count_in_metric_window": 1, "minimum_separation_px": 14},
-                17: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "amplitude_l": 6.4, "count_in_metric_window": 1, "minimum_separation_px": 16},
+                6: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "amplitude_l": 7.2, "count_in_metric_window": 1, "minimum_separation_px": 12},
+                8: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "amplitude_l": 7.0, "count_in_metric_window": 1, "minimum_separation_px": 14},
+                17: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "amplitude_l": 6.8, "count_in_metric_window": 1, "minimum_separation_px": 16},
                 19: {"design_tier": "warning-candidate", "length_px": 14, "width_px": 1, "amplitude_l": 6.6, "count_in_metric_window": 1, "minimum_separation_px": 18},
             },
             "artifact-parallel-bundle": {
-                0: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "spacing_px": 4, "amplitude_l": 5.4, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 12},
-                2: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "spacing_px": 4, "amplitude_l": 5.4, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
-                11: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 4, "amplitude_l": 5.4, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
-                13: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 6, "amplitude_l": 5.4, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
+                0: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "spacing_px": 4, "amplitude_l": 7.2, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 12},
+                2: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "spacing_px": 4, "amplitude_l": 7.0, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
+                11: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 4, "amplitude_l": 6.8, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
+                13: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 6, "amplitude_l": 6.6, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
             },
         },
         "holdout": {
             "artifact-speck": {
-                0: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 6.7, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 13},
-                5: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 6.9, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 15},
-                12: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.1, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 17},
-                16: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.3, "count_in_metric_window": 3, "shoulder_fraction": 0.05, "minimum_separation_px": 19},
+                0: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.2, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 13},
+                5: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.4, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 15},
+                12: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.6, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 17},
+                16: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.8, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 19},
             },
             "artifact-microblob": {
-                6: {"design_tier": "warning-candidate", "diameter_px": 5, "amplitude_l": 5.3, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
-                10: {"design_tier": "warning-candidate", "diameter_px": 6, "amplitude_l": 5.5, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
-                15: {"design_tier": "warning-candidate", "diameter_px": 7, "amplitude_l": 5.7, "count_in_metric_window": 2, "support_radius_px": 6, "minimum_separation_px": 16},
-                17: {"design_tier": "warning-candidate", "diameter_px": 8, "amplitude_l": 5.9, "count_in_metric_window": 2, "support_radius_px": 7, "minimum_separation_px": 18},
+                6: {"design_tier": "warning-candidate", "diameter_px": 5, "amplitude_l": 6.9, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
+                10: {"design_tier": "warning-candidate", "diameter_px": 6, "amplitude_l": 6.7, "count_in_metric_window": 2, "support_radius_px": 5, "minimum_separation_px": 14},
+                15: {"design_tier": "warning-candidate", "diameter_px": 7, "amplitude_l": 6.3, "count_in_metric_window": 2, "support_radius_px": 6, "minimum_separation_px": 16},
+                17: {"design_tier": "warning-candidate", "diameter_px": 8, "amplitude_l": 6.1, "count_in_metric_window": 2, "support_radius_px": 7, "minimum_separation_px": 18},
             },
             "artifact-short-dash": {
-                0: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "amplitude_l": 6.1, "count_in_metric_window": 1, "minimum_separation_px": 12},
-                4: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "amplitude_l": 6.3, "count_in_metric_window": 1, "minimum_separation_px": 14},
-                9: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "amplitude_l": 6.5, "count_in_metric_window": 1, "minimum_separation_px": 16},
+                0: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "amplitude_l": 7.3, "count_in_metric_window": 1, "minimum_separation_px": 12},
+                4: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "amplitude_l": 7.1, "count_in_metric_window": 1, "minimum_separation_px": 14},
+                9: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "amplitude_l": 6.9, "count_in_metric_window": 1, "minimum_separation_px": 16},
                 11: {"design_tier": "warning-candidate", "length_px": 14, "width_px": 1, "amplitude_l": 6.7, "count_in_metric_window": 1, "minimum_separation_px": 18},
             },
             "artifact-parallel-bundle": {
-                3: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "spacing_px": 4, "amplitude_l": 5.3, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 12},
-                5: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "spacing_px": 6, "amplitude_l": 5.3, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
-                15: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 4, "amplitude_l": 5.3, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
-                19: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 6, "amplitude_l": 5.3, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
+                3: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "spacing_px": 4, "amplitude_l": 7.3, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 12},
+                5: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "spacing_px": 6, "amplitude_l": 7.1, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
+                15: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 4, "amplitude_l": 6.9, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
+                19: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 6, "amplitude_l": 6.7, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
             },
         },
     },
@@ -2480,14 +2480,14 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
         "artifact-short-dash",
         "artifact-parallel-bundle",
     }:
-        raise RuntimeError(f"r13 warning-anchor family coverage drift: {split}")
+        raise RuntimeError(f"r14 warning-anchor family coverage drift: {split}")
     for family, replacements in warning_anchors.items():
         if len(replacements) != 4:
-            raise RuntimeError(f"r13 warning-anchor count drift: {split}/{family}")
+            raise RuntimeError(f"r14 warning-anchor count drift: {split}/{family}")
         for index, replacement in replacements.items():
             if result[family][index]["design_tier"] != "warning-candidate":
                 raise RuntimeError(
-                    f"r13 warning anchor replaced a non-warning tier: "
+                    f"r14 warning anchor replaced a non-warning tier: "
                     f"{split}/{family}/{index}"
                 )
             result[family][index] = dict(replacement)
@@ -2510,7 +2510,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             continue
         tier_index = speck_reject_tier_indices[tier]
         if tier_index >= len(tier_counts):
-            raise RuntimeError(f"r13 speck reject-tier count overflow: {split}/{tier}")
+            raise RuntimeError(f"r14 speck reject-tier count overflow: {split}/{tier}")
         parameters["count_in_metric_window"] = tier_counts[tier_index]
         parameters["minimum_separation_px"] = 10
         speck_reject_tier_indices[tier] += 1
@@ -2521,7 +2521,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             if parameters["design_tier"] == tier
         )
         if actual_counts != expected_counts:
-            raise RuntimeError(f"r13 speck reject-tier schedule drift: {split}/{tier}")
+            raise RuntimeError(f"r14 speck reject-tier schedule drift: {split}/{tier}")
 
     family_nonce_offsets = {
         "artifact-fine-grain": 0,
@@ -2565,7 +2565,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     return result
 
 
-def _validate_dev_r13_morphology_schedules() -> None:
+def _validate_dev_r14_morphology_schedules() -> None:
     morphology_fields = (
         "diameter_px",
         "amplitude_l",
@@ -2581,7 +2581,7 @@ def _validate_dev_r13_morphology_schedules() -> None:
         }
     overlap = morphology_by_split["calibration"] & morphology_by_split["holdout"]
     if overlap:
-        raise RuntimeError("r13 calibration/holdout speck morphology tuple overlap")
+        raise RuntimeError("r14 calibration/holdout speck morphology tuple overlap")
 
     anchor_manifest = {
         "revision": _WARNING_ACCEPTANCE_ANCHORS["revision"],
@@ -2604,15 +2604,15 @@ def _validate_dev_r13_morphology_schedules() -> None:
         },
     }
     if sha256_bytes(canonical_json_bytes(anchor_manifest)) != (
-        "d9216ce6809f95dc3435f3aefdad6a0518bd789fa8c62a21b081a1058d6378b6"
+        "5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6"
     ):
-        raise RuntimeError("r13 warning-anchor manifest SHA drift")
+        raise RuntimeError("r14 warning-anchor manifest SHA drift")
     for split in ("calibration", "holdout"):
         variants = _artifact_variants(split)
         for family, expected_entries in anchor_manifest["splits"][split].items():
             if {entry["variant_index"] % 3 for entry in expected_entries} != {0, 1, 2}:
                 raise RuntimeError(
-                    f"r13 warning anchors lack mod-3 coverage: {split}/{family}"
+                    f"r14 warning anchors lack mod-3 coverage: {split}/{family}"
                 )
             for entry in expected_entries:
                 actual = dict(variants[family][entry["variant_index"]])
@@ -2620,7 +2620,7 @@ def _validate_dev_r13_morphology_schedules() -> None:
                 actual.pop("condition_nonce")
                 if actual != entry["parameters"]:
                     raise RuntimeError(
-                        f"r13 warning-anchor morphology drift: "
+                        f"r14 warning-anchor morphology drift: "
                         f"{split}/{family}/{entry['variant_index']}"
                     )
 
@@ -2678,14 +2678,14 @@ def _validate_dev_r13_morphology_schedules() -> None:
                 if parameters["design_tier"] == tier
             )
             if actual != expected:
-                raise RuntimeError(f"r13 grain reject period drift: {split}/{tier}")
+                raise RuntimeError(f"r14 grain reject period drift: {split}/{tier}")
             if any(not 2.0 < period < 13.0 for _, period in actual):
                 raise RuntimeError(
-                    f"r13 grain reject period escaped metric support: {split}/{tier}"
+                    f"r14 grain reject period escaped metric support: {split}/{tier}"
                 )
             split_tuples[split].update(actual)
     if split_tuples["calibration"] & split_tuples["holdout"]:
-        raise RuntimeError("r13 calibration/holdout grain pattern-period overlap")
+        raise RuntimeError("r14 calibration/holdout grain pattern-period overlap")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -2873,7 +2873,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r13_morphology_schedules()
+    _validate_dev_r14_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):

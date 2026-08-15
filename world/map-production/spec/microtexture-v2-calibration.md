@@ -63,9 +63,19 @@ summary: "Google Maps級deep zoom用の微細表現を、画像生成・Root/独
   `measurement_started=false`のままmetric、threshold search、holdout endpoint evaluationを開始せず、threshold / holdout
   performanceは`null`です。閉鎖後にsanitized read-only postmortemを一度だけ実行しました。rootは不変に保持し、rerun、
   resume、relabel、retune、subset、top-up、key resamplingと全dev-r12素材・identity・nonce・public surfaceの再利用を禁止します。
-- dev-r13: warning capacityだけをfresh identityで一度確認するsuccessorです。metric、single threshold、population floors、
-  endpoint counts/ratesは変更しません。authorityをcommit/pushし、Ubuntu/Windows CIが同じcommitで両方成功するまで
-  generationを開始しません。
+- dev-r13: generation、全440 recordsのRoot/独立Vision review、reconciliation、preflight、label seal、両splitのprivate
+  auditを一度だけ完了し、両private auditはpassしました。calibration warning `14`はformal minimum `10` / development floor
+  `13`をpassし、holdout warning `12`はformal minimum `10`をpassしましたがdevelopment floor `13`をfailしました。その他の
+  全endpointは両splitでformal minimumとdevelopment floorをpassしました。all-or-nothing gateにより測定前に閉鎖しました。
+- dev-r13 sanitized evidence:
+  `world/map-production/qa/microtexture-v2-r6-dev-r13-development-failure.json`
+  `measurement_started=false`のままmetric、threshold search、holdout endpoint evaluationを開始せず、threshold / holdout
+  performanceは`null`です。閉鎖後にsanitized read-only postmortemを一度だけ実行しました。rootは不変に保持し、rerun、
+  resume、relabel、retune、replacement、subset、top-up、key resamplingと全dev-r13素材・identity・nonce・public surface・
+  postmortem outputの再利用を禁止します。
+- dev-r14: 同じ16 sparse warning anchorsだけをfresh identityでr13から単調に強化するone-shot successorです。metric、single
+  threshold、tier数`5/4/7/4`、population floors、endpoint counts/ratesは変更しません。authorityをcommit/pushし、
+  Ubuntu/Windows CIが同じcommitで両方成功するまでgenerationを開始しません。formal readinessは未成立です。
 - formal r6: 未開始。formal CLI、one-shot marker、threshold freeze、v18 numeric measurementはいずれも未使用です。
 
 ## ImageGen入力の境界
@@ -123,22 +133,26 @@ development rootはdev-r8にもformal r6にも渡しません。
 development rootはGit-ignored private evidenceとして閉鎖後も不変に保持し、formal keyは従来どおりartifact/logへ
 永続化しません。
 
-## dev-r12 closure and dev-r13 successor schedule
+## dev-r13 closure and dev-r14 successor schedule
 
-dev-r12は両private auditをpassしましたが、warning populationがcalibration 10、holdout 9となり、両splitでdevelopment
-floor 13に不足し、holdoutではformal minimum 10にも不足しました。その他の全formal endpoint minimumとdevelopment
-safety floorはpassしました。all-or-nothing gateによりmetricとthreshold searchは開始せず、閉鎖後にsanitized read-only
+dev-r13は両private auditをpassしました。calibration warning `14`はformal minimum `10` / development floor `13`をpass、
+holdout warning `12`はformal minimum `10`をpassしてdevelopment floor `13`だけをfailしました。その他の全formal endpoint
+minimumとdevelopment safety floorは両splitでpassしました。all-or-nothing gateによりmetricとthreshold searchは開始せず、
+`measurement_started=false`、threshold / holdout performanceは`null`のまま閉鎖しました。閉鎖後にsanitized read-only
 postmortemを一度だけ実行しました。auditは
-`world/map-production/qa/microtexture-v2-r6-dev-r12-development-failure.json`です。dev-r12 rootを不変に保持し、素材、
-identity、nonce、public surfaceをdev-r13またはformalへ再利用しません。
+`world/map-production/qa/microtexture-v2-r6-dev-r13-development-failure.json`です。dev-r13 rootを不変に保持し、rerun、resume、
+relabel、retune、replacement、subset、top-up、key resampling、root削除後の再生成、およびroot/key/control/reference/pixel/
+identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem outputをdev-r14またはformalへ再利用しません。
 
-dev-r13は各familyのtier数`5 clean-candidate / 4 warning-candidate / 7 clear-reject-candidate /
+dev-r14は各familyのtier数`5 clean-candidate / 4 warning-candidate / 7 clear-reject-candidate /
 4 dominant-reject-candidate`を維持します。変更対象は`artifact-speck`、`artifact-microblob`、`artifact-short-dash`、
-`artifact-parallel-bundle`の既存warning-candidateをsplitごとに各4件、計16件だけです。各対象は単なるtier metadata変更ではなく、
-family invariantを保った弱いがnative full-200で直接知覚可能なwarning-capacity morphology anchorへ実パラメータ変更します。
-fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyは変更しません。splitごとの16 anchors対development floor 13の
-構造上のmiss budgetは3ですが、design tierはVision truth、warning label、endpoint membershipを保証・予告しません。
-metric、rubric、single-threshold rule、formal endpoint minimum、development safety floor、endpoint counts/ratesは不変です。
+`artifact-parallel-bundle`の同じ既存warning-candidateをsplitごとに各4件、計16件だけです。各対象は単なるtier metadata変更ではなく、
+family invariant内でr13から単調に強化したnative full-200で直接知覚可能なsparse warning-capacity morphology anchorです。
+fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyを含むnonwarning scheduleは変更しません。splitごとの
+16 anchors対development floor 13の構造上のmiss budgetは3ですが、design tierはVision truth、warning label、endpoint membershipを
+保証・予告しません。metric、rubric、single-threshold rule、formal endpoint minimum、development safety floor、endpoint
+counts/ratesは不変です。schedule revisionは`dev-r14-warning-acceptance-anchor-schedule-v1`、warning anchor revisionは
+`dev-r14-quantized-direct-visible-sparse-warning-v1`です。
 
 dev-r9で固定したspeck reject anchorsとdev-r10で事前登録したgrain reject periodsは変更しません。speck reject側の
 count scheduleは次のままです。
@@ -151,34 +165,35 @@ count scheduleは次のままです。
 1px hard core、最大12 L、0.08 axial shoulder、exact polarity、4象限stratification、minimum separation 10pxを維持します。
 11 reject anchors対floor 6の構造上のmiss budgetは5ですが、これもVision truthの保証ではありません。
 
-fresh dev-r13境界は次のexact identityです。
+fresh dev-r14境界は次のexact identityです。
 
-- root: `tmp/map-production/microtexture-v2-r6-dev-r13`
-- key: `tmp/map-production/microtexture-v2-r6-dev-r13/private/development-key.bin`
-- schedule revision: `dev-r13-warning-acceptance-anchor-schedule-v1`
-- public nonce: `r6-calibration-v8` / `r6-holdout-v8`
-- cluster domain: `microtexture-v2-r6/private-condition-cluster/v8/`
-- render domain: `microtexture-v2-r6/render-seed/v8/`
-- code domain: `microtexture-v2-r6/opaque-code/v8/`
-- private-reference-transform domain: `private-reference-transform-v8/`
+- root: `tmp/map-production/microtexture-v2-r6-dev-r14`
+- key: `tmp/map-production/microtexture-v2-r6-dev-r14/private/development-key.bin`
+- schedule revision: `dev-r14-warning-acceptance-anchor-schedule-v1`
+- warning anchor revision: `dev-r14-quantized-direct-visible-sparse-warning-v1`
+- public nonce: `r6-calibration-v9` / `r6-holdout-v9`
+- cluster domain: `microtexture-v2-r6/private-condition-cluster/v9/`
+- render domain: `microtexture-v2-r6/render-seed/v9/`
+- code domain: `microtexture-v2-r6/opaque-code/v9/`
+- private-reference-transform domain: `private-reference-transform-v9/`
 - public commitment domain:
-  `microtexture-v2-r6/public-payload-commitment/v9/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`
-- key commitment: `microtexture-v2-r6/key-commitment/v7`
-- foundation offset/assignment lanes: `foundation-offset-v7` / `foundation-assignment-v7`
-- delta lane: `delta-v7`
-- private-control-id domain: `microtexture-v2-r6/private-control-id/v7/`
-- protocol-zero nonces: calibration `551000..551015`、holdout `561000..561015`
-- artifact nonces: calibration `573000..573419`、holdout `583000..583419`
-- duplicate-audit nonces: calibration `591000..591002`、holdout `601000..601002`
+  `microtexture-v2-r6/public-payload-commitment/v10/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`
+- key commitment: `microtexture-v2-r6/key-commitment/v8`
+- foundation offset/assignment lanes: `foundation-offset-v8` / `foundation-assignment-v8`
+- delta lane: `delta-v8`
+- private-control-id domain: `microtexture-v2-r6/private-control-id/v8/`
+- protocol-zero nonces: calibration `651000..651015`、holdout `661000..661015`
+- artifact nonces: calibration `673000..673419`、holdout `683000..683419`
+- duplicate-audit nonces: calibration `691000..691002`、holdout `701000..701002`
 
-dev-r8/dev-r9/dev-r10/dev-r11/dev-r12のkey、control、reference、label、decision、pixel、identity、placement、nonce、
+dev-r8/dev-r9/dev-r10/dev-r11/dev-r12/dev-r13のkey、control、reference、label、decision、pixel、identity、placement、nonce、
 commitment、rootを読み替え・再利用しません。
 
 ## 全件Visionとmeasurement gate
 
 Rootと独立Visionは各splitの全220 anonymous codesを、full 200%とNW/NE/SW/SE 400%で確認します。
 5 viewは同じcode順、nearest-neighbor拡大、完全なquadrant partitionを持ちます。`review-crops`は同じcontact-sheet
-bytesからcrop-only derivativeとして各rowのnative 512×384 full-200 panelを出します。dev-r13はこのnative panelを
+bytesからcrop-only derivativeとして各rowのnative 512×384 full-200 panelを出します。dev-r14はこのnative panelを
 無補正・contrast強調なしで先に判定し、400%は同位置の再同定だけに使います。400%だけで推測できる極めて薄い点状印象は
 visible morphologyへ数えません。Rootは各recordを
 `clean|warning|reject`、severity 0..3、5 visible flags、EV3 locatorsで決定し、独立reviewerとの差を
@@ -218,8 +233,8 @@ raw filterは維持し、唯一のhard metricは4 branchの最大です。
 closed dev-r7のaggregate-only診断から変更するhalf-scaleは `grain_rms_l 0.7 -> 0.875`、
 `tiny_mass_l 20 -> 15`、`finite_line_top4_mean_l 4.5 -> 2.25` の3件だけです。他6 reference、raw metrics、
 branch構成、単一threshold、endpoint count/rateは不変です。dev-r8はmetric call前、dev-r9はthreshold選択失敗後、
-dev-r10はgeneration中断、dev-r11はprivate sentinel audit失敗、dev-r12はpopulation audit失敗でmetric call前に閉鎖したため、
-fresh dev-r13でのblindな再検証を必須とします。
+dev-r10はgeneration中断、dev-r11はprivate sentinel audit失敗、dev-r12/dev-r13はpopulation audit失敗でmetric call前に閉鎖したため、
+fresh dev-r14でのblindな再検証を必須とします。
 
 ```text
 reject = max(grain_score, spot_score,
@@ -232,21 +247,21 @@ warning acceptance 0.75を含む全endpoint count/rateを満たす候補だけ�
 
 ## 安全な実行順序
 
-1. dev-r7/r8/r9 failure audits、dev-r10 generation-interruption audit、sanitized dev-r11/dev-r12 premeasurement failure audits、
-   dev-r13 spec/code/tests/runner、既存ImageGen provenance、Root/独立Vision QA authorityをcommitする。closed editionの
+1. dev-r7/r8/r9 failure audits、dev-r10 generation-interruption audit、sanitized dev-r11/dev-r12/dev-r13 premeasurement failure audits、
+   dev-r14 spec/code/tests/runner、既存ImageGen provenance、Root/独立Vision QA authorityをcommitする。closed editionの
    code-to-private bindingやraw private materialは作成・追跡しない。
 2. branchへpushし、Ubuntu/Windows CIの両方が成功したことを確認する。
-3. formal root/environmentとdev-r13 root/keyが存在せず、closed dev-r10/dev-r11/dev-r12 rootsが不変に保持されていることを確認する。
+3. formal root/environmentとdev-r14 root/keyが存在せず、closed dev-r10/dev-r11/dev-r12/dev-r13 rootsが不変に保持されていることを確認する。
 4. fresh keyを作り、public byteより前にexclusive `generation-start.dev.json`を書く。
-5. dev-r13 calibration/holdout controlsを一度だけ生成し、generation summary → seal → exclusive completionの順で閉じる。
+5. dev-r14 calibration/holdout controlsを一度だけ生成し、generation summary → seal → exclusive completionの順で閉じる。
    catchableな失敗はexclusive failureへ記録し、failure/completion共存またはsummary/seal/completion欠落を拒否する。
 6. complete generation transactionを検証してから、Rootと独立Visionが全440 recordsを匿名確認し、Root decisionsを
    画像へ戻ってreconcileする。
 7. 両splitのlabelsをsealし、private auditとpopulation safety floorを実行する。
 8. gate合格時だけcalibrationを測定し、thresholdを一度だけ選択する。
 9. calibration選択thresholdを変えずdevelopment holdoutへ一度だけ適用する。
-10. dev-r13失敗時はsanitized failure auditをcommitし、formalへ進まない。
-11. dev-r13成功時はdevelopment-only success auditをcommitし、dev-r13を閉じる。
+10. dev-r14失敗時はsanitized failure auditをcommitし、formalへ進まない。
+11. dev-r14成功時はdevelopment-only success auditをcommitし、dev-r14を閉じる。
 12. success auditをpushし、Ubuntu/Windows CIの両方を再度成功させる。
 13. spec SHA、trust-root tests、全implementation hashesを再計算し、formal authority freeze commitを作る。
 14. push後、Ubuntu/Windows CIが再度成功してからfresh formal key/rootを作る。
@@ -257,9 +272,9 @@ warning acceptance 0.75を含む全endpoint count/rateを満たす候補だけ�
 19. formal holdout pass後も、production residual derivationとuntouched production holdoutを別specで固定する。
 20. その後にのみGolden、master、deep-zoom tilesへ接続する。
 
-dev-r8/dev-r9は各failure gate、dev-r10はgeneration中断、dev-r11はprivate sentinel audit、dev-r12はpopulation auditで
-閉鎖しました。上記はfresh dev-r13から再開する順序であり、dev-r13 success auditをcommit/pushして両CIを通すまで
-手順13以降へ進めません。
+dev-r8/dev-r9は各failure gate、dev-r10はgeneration中断、dev-r11はprivate sentinel audit、dev-r12/dev-r13はpopulation auditで
+閉鎖しました。上記はfresh dev-r14から再開する順序であり、dev-r14 success auditをcommit/pushして両CIを通すまで
+手順13以降へ進めません。現在はformal readinessまたはformal authorityを主張しません。
 
 generation start後、marker後の例外、通常endpoint failure、completion欠落はeditionを消費します。失敗後のresume、
 regeneration、relabel、remeasurement、rerun、別key、threshold変更は禁止です。
