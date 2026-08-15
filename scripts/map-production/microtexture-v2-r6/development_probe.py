@@ -20,14 +20,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r15"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r16"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r15"
+DEVELOPMENT_EDITION = "r16"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
@@ -50,6 +50,53 @@ DEVELOPMENT_POPULATION_FLOORS = {
     "short_line_reject_detection": 10,
     "parallel_bundle_reject_detection": 8,
 }
+_R16_PUBLIC_NONCES = {
+    "calibration": "r6-calibration-v11",
+    "holdout": "r6-holdout-v11",
+}
+_R16_PRIVATE_IDENTITY_DOMAINS = {
+    "private_reference_transform_prefix": "private-reference-transform-v11/",
+    "foundation_offset_lane": "foundation-offset-v10",
+    "foundation_assignment_lane": "foundation-assignment-v10",
+    "delta_lane": "delta-v10",
+    "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v10/",
+}
+_R16_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 873000,
+    "holdout_artifact": 883000,
+    "calibration_protocol_zero": 851000,
+    "holdout_protocol_zero": 861000,
+    "calibration_duplicate_audit": [891000, 891001, 891002],
+    "holdout_duplicate_audit": [901000, 901001, 901002],
+}
+_R16_SCHEDULE_REVISION = "dev-r16-sparse-warning-rebalance-schedule-v1"
+_R16_WARNING_ANCHOR_REVISION = (
+    "dev-r16-six-per-sparse-family-direct-visible-warning-v1"
+)
+_R16_WARNING_CONVERSION_REVISION = (
+    "dev-r16-one-clean-one-clear-per-sparse-family-v1"
+)
+_R16_MICROBLOB_ANCHOR_REVISION = (
+    "dev-r15-calibration-quantized-microblob-reject-v1"
+)
+_R16_WARNING_ANCHOR_SHA256 = (
+    "bfc0e95e402c4f5751212c67759940c8c01802bb0a938899304ec4db576aa5df"
+)
+_R16_WARNING_CONVERSION_SHA256 = (
+    "0f0f4e0865249d34ff8f83537f60dcaee1c2ee0fd64836551b6aa754251fb8e7"
+)
+_R16_PREDECESSOR_MORPHOLOGY_SHA256 = (
+    "7adf59546337cded9910d17fbff5d383fc36e1058e69f98ed633890c2dd60f5b"
+)
+_R16_PRESERVED_NONCONVERSION_MORPHOLOGY_SHA256 = (
+    "b8e7429a62e78c6e67efbfa6ec8b3b2fb0f16fb07f61ea9c7590f83f1b637ecd"
+)
+_R16_PRESERVED_NONWARNING_MORPHOLOGY_SHA256 = (
+    "72212f11b453526bd6cec7e11420bcb9a0df7bbae2e097168393a5ee0c9a48b4"
+)
+_R16_ACTIVE_MICROBLOB_ANCHOR_SHA256 = (
+    "2c207dfb5249d42056e164e7553091a9a617d8b673aecfb5ea25e4d757651f0c"
+)
 _GENERATION_STATE_KEYS = {
     "development_edition",
     "spec_sha256",
@@ -294,6 +341,147 @@ def _assert_private_analysis_boundary(*, analysis_must_exist: bool) -> None:
             raise RuntimeError("development private-analysis root escapes DEV_ROOT")
 
 
+def _validate_dev_r16_spec_authority(value: dict[str, Any]) -> None:
+    sparse_families = (
+        "artifact-speck",
+        "artifact-microblob",
+        "artifact-short-dash",
+        "artifact-parallel-bundle",
+    )
+    public_nonces = {
+        split: value.get("splits", {}).get(split, {}).get("public_nonce")
+        for split in ("calibration", "holdout")
+    }
+    cluster_prefix = value.get("independent_condition_clusters", {}).get(
+        "message_prefix"
+    )
+    private_domains = value.get("control_catalog_authority", {}).get(
+        "private_identity_domains"
+    )
+    blind = value.get("blind_derivation", {})
+    rendering = value.get("rendering", {})
+    schedule = value.get("population_anchor_schedule", {})
+    expected_rotations = {
+        "calibration": {
+            "artifact-fine-grain": 2,
+            "artifact-speck": 4,
+            "artifact-microblob": 6,
+            "artifact-short-dash": 8,
+            "artifact-parallel-bundle": 10,
+        },
+        "holdout": {
+            "artifact-fine-grain": 3,
+            "artifact-speck": 5,
+            "artifact-microblob": 7,
+            "artifact-short-dash": 9,
+            "artifact-parallel-bundle": 11,
+        },
+    }
+    fine_grain_tiers = {
+        "clean-candidate": 5,
+        "warning-candidate": 4,
+        "clear-reject-candidate": 7,
+        "dominant-reject-candidate": 4,
+    }
+    sparse_tiers = {
+        "clean-candidate": 4,
+        "warning-candidate": 6,
+        "clear-reject-candidate": 6,
+        "dominant-reject-candidate": 4,
+    }
+    expected_tiers = {
+        "artifact-fine-grain": fine_grain_tiers,
+        **{family: sparse_tiers for family in sparse_families},
+    }
+    expected_conversion_sources = {
+        family: {"clean-candidate": 1, "clear-reject-candidate": 1}
+        for family in sparse_families
+    }
+    if (
+        public_nonces != _R16_PUBLIC_NONCES
+        or cluster_prefix
+        != "microtexture-v2-r6/private-condition-cluster/v11/"
+        or private_domains != _R16_PRIVATE_IDENTITY_DOMAINS
+        or blind.get("key_commitment_message")
+        != "microtexture-v2-r6/key-commitment/v10"
+        or blind.get("seed_message_prefix")
+        != "microtexture-v2-r6/render-seed/v11/"
+        or blind.get("code_message_prefix")
+        != "microtexture-v2-r6/opaque-code/v11/"
+        or rendering.get("public_commitment_domain")
+        != "microtexture-v2-r6/public-payload-commitment/v12/"
+        "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
+        or schedule.get("revision") != _R16_SCHEDULE_REVISION
+        or schedule.get("fresh_from_closed_dev_r15") is not True
+        or schedule.get("r15_parameter_nonce_reuse_forbidden") is not True
+        or schedule.get("r16_per_family_residue_rotation") != expected_rotations
+        or schedule.get("tier_counts_per_artifact_family") != expected_tiers
+        or schedule.get("inherited_warning_acceptance_anchor_revision")
+        != "dev-r14-quantized-direct-visible-sparse-warning-v1"
+        or schedule.get("inherited_warning_acceptance_anchor_conditions_per_split")
+        != 16
+        or schedule.get("inherited_warning_acceptance_anchor_schedule_sha256")
+        != "5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6"
+        or schedule.get("warning_acceptance_anchor_revision")
+        != _R16_WARNING_ANCHOR_REVISION
+        or schedule.get("warning_acceptance_anchor_schedule_sha256")
+        != _R16_WARNING_ANCHOR_SHA256
+        or schedule.get("calibration_microblob_clear_reject_anchor_manifest", {}).get(
+            "revision"
+        )
+        != _R16_MICROBLOB_ANCHOR_REVISION
+        or schedule.get("r16_parameter_nonce_bases")
+        != _R16_PARAMETER_NONCE_BASES
+        or schedule.get("warning_conversion_revision")
+        != _R16_WARNING_CONVERSION_REVISION
+        or schedule.get("warning_conversion_conditions_per_split") != 8
+        or schedule.get("warning_conversion_source_tiers_per_sparse_family")
+        != expected_conversion_sources
+        or schedule.get("warning_conversion_schedule_sha256")
+        != _R16_WARNING_CONVERSION_SHA256
+        or schedule.get("exact_morphology_change_count_across_splits") != 16
+        or schedule.get("nonconversion_morphology_change_forbidden") is not True
+        or schedule.get("predecessor_full_morphology_sha256")
+        != _R16_PREDECESSOR_MORPHOLOGY_SHA256
+        or schedule.get("preserved_nonconversion_morphology_conditions_across_splits")
+        != 184
+        or schedule.get("preserved_nonconversion_morphology_sha256")
+        != _R16_PRESERVED_NONCONVERSION_MORPHOLOGY_SHA256
+        or schedule.get("preserved_nonwarning_morphology_conditions_across_splits")
+        != 144
+        or schedule.get("preserved_nonwarning_morphology_sha256")
+        != _R16_PRESERVED_NONWARNING_MORPHOLOGY_SHA256
+        or schedule.get("warning_acceptance_anchor_conditions_per_split") != 24
+        or schedule.get("warning_acceptance_anchor_conditions_per_family")
+        != {family: 6 for family in sparse_families}
+        or schedule.get(
+            "warning_acceptance_anchor_structural_miss_budget_against_development_floor"
+        )
+        != 11
+        or schedule.get("calibration_microblob_clear_reject_anchor_conditions")
+        != 7
+        or schedule.get("calibration_microblob_clear_reject_anchor_schedule_sha256")
+        != "dd2ce7fd13f624bd065e8c7a6bacc2ab8bd593821dec8d46250a40e57ef64833"
+        or schedule.get("calibration_microblob_clear_reject_active_indices")
+        != [1, 2, 9, 13, 17, 18]
+        or schedule.get("calibration_microblob_clear_reject_active_conditions")
+        != 6
+        or schedule.get(
+            "calibration_microblob_clear_reject_converted_to_warning_index"
+        )
+        != 16
+        or schedule.get("calibration_microblob_clear_reject_active_schedule_sha256")
+        != _R16_ACTIVE_MICROBLOB_ANCHOR_SHA256
+        or schedule.get("speck_reject_source_anchor_conditions_per_split") != 11
+        or schedule.get("speck_reject_active_anchor_conditions_per_split") != 10
+        or schedule.get(
+            "speck_reject_anchor_structural_miss_budget_against_development_floor"
+        )
+        != 4
+    ):
+        raise RuntimeError("development dev-r16 spec/domain authority drift")
+
+
 def _load_spec() -> tuple[dict[str, Any], str]:
     payload = (CODE_ROOT / "preregistered-spec.json").read_bytes()
     digest = _sha256(payload)
@@ -301,6 +489,7 @@ def _load_spec() -> tuple[dict[str, Any], str]:
         raise RuntimeError("development preregistered spec SHA drift")
     value = json.loads(payload.decode("utf-8"))
     common.validate_preregistered_spec(value)
+    _validate_dev_r16_spec_authority(value)
     return value, digest
 
 
@@ -2037,7 +2226,7 @@ def generate() -> None:
     DEV_ROOT.mkdir(parents=True, exist_ok=False)
     (DEV_ROOT / "private").mkdir()
     # The root is the earliest durable consumed-edition evidence. Sample the key
-    # only after it exists so an interruption can never silently resample r15.
+    # only after it exists so an interruption can never silently resample r16.
     key = secrets.token_bytes(32)
     state = {
         "development_edition": DEVELOPMENT_EDITION,

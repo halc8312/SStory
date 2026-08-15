@@ -104,27 +104,35 @@ _HEX_GLYPHS = {
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _FOUNDATION_SOURCE_CROP_XYWH = (512, 320, 512, 384)
-_SCHEDULE_REVISION = "dev-r15-calibration-microblob-reject-anchor-schedule-v1"
+_SCHEDULE_REVISION = "dev-r16-sparse-warning-rebalance-schedule-v1"
 _PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
-    b"microtexture-v2-r6/public-payload-commitment/v11/"
+    b"microtexture-v2-r6/public-payload-commitment/v12/"
 )
-_PUBLIC_WARNING_ANCHOR_REVISION = "dev-r14-quantized-direct-visible-sparse-warning-v1"
+_PUBLIC_R15_WARNING_ANCHOR_REVISION = (
+    "dev-r14-quantized-direct-visible-sparse-warning-v1"
+)
+_PUBLIC_WARNING_ANCHOR_REVISION = (
+    "dev-r16-six-per-sparse-family-direct-visible-warning-v1"
+)
+_PUBLIC_WARNING_CONVERSION_REVISION = (
+    "dev-r16-one-clean-one-clear-per-sparse-family-v1"
+)
 _PUBLIC_MICROBLOB_REJECT_ANCHOR_REVISION = (
     "dev-r15-calibration-quantized-microblob-reject-v1"
 )
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v10/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v9"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v9"
-_DELTA_LANE = "delta-v9"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v9/"
-_ARTIFACT_NONCE_BASES = {"calibration": 773000, "holdout": 783000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 751000, "holdout": 761000}
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v11/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v10"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v10"
+_DELTA_LANE = "delta-v10"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v10/"
+_ARTIFACT_NONCE_BASES = {"calibration": 873000, "holdout": 883000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 851000, "holdout": 861000}
 _DUPLICATE_AUDIT_NONCES = {
-    "calibration": (791000, 791001, 791002),
-    "holdout": (801000, 801001, 801002),
+    "calibration": (891000, 891001, 891002),
+    "holdout": (901000, 901001, 901002),
 }
-_WARNING_ACCEPTANCE_ANCHORS = {
-    "revision": _PUBLIC_WARNING_ANCHOR_REVISION,
+_R15_WARNING_ACCEPTANCE_ANCHORS = {
+    "revision": _PUBLIC_R15_WARNING_ANCHOR_REVISION,
     "splits": {
         "calibration": {
             "artifact-speck": {
@@ -178,6 +186,76 @@ _WARNING_ACCEPTANCE_ANCHORS = {
                 19: {"design_tier": "warning-candidate", "length_px": 12, "width_px": 1, "spacing_px": 6, "amplitude_l": 6.7, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 16},
             },
         },
+    },
+}
+_R16_WARNING_CONVERSION_SOURCES = {
+    "calibration": {
+        "artifact-speck": {0: "clean-candidate", 1: "clear-reject-candidate"},
+        "artifact-microblob": {15: "clean-candidate", 16: "clear-reject-candidate"},
+        "artifact-short-dash": {9: "clean-candidate", 16: "clear-reject-candidate"},
+        "artifact-parallel-bundle": {3: "clean-candidate", 10: "clear-reject-candidate"},
+    },
+    "holdout": {
+        "artifact-speck": {19: "clean-candidate", 17: "clear-reject-candidate"},
+        "artifact-microblob": {13: "clean-candidate", 11: "clear-reject-candidate"},
+        "artifact-short-dash": {7: "clean-candidate", 5: "clear-reject-candidate"},
+        "artifact-parallel-bundle": {8: "clean-candidate", 13: "clear-reject-candidate"},
+    },
+}
+_R16_WARNING_CONVERSION_ANCHORS = {
+    "calibration": {
+        "artifact-speck": {
+            0: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.5, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 13},
+            1: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.6, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 15},
+        },
+        "artifact-microblob": {
+            15: {"design_tier": "warning-candidate", "diameter_px": 4, "amplitude_l": 7.0, "count_in_metric_window": 4, "support_radius_px": 2, "minimum_separation_px": 12},
+            16: {"design_tier": "warning-candidate", "diameter_px": 6, "amplitude_l": 7.2, "count_in_metric_window": 4, "support_radius_px": 3, "minimum_separation_px": 15},
+        },
+        "artifact-short-dash": {
+            9: {"design_tier": "warning-candidate", "length_px": 6, "width_px": 1, "amplitude_l": 7.4, "count_in_metric_window": 2, "minimum_separation_px": 10},
+            16: {"design_tier": "warning-candidate", "length_px": 16, "width_px": 1, "amplitude_l": 6.4, "count_in_metric_window": 1, "minimum_separation_px": 20},
+        },
+        "artifact-parallel-bundle": {
+            3: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "spacing_px": 6, "amplitude_l": 7.4, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
+            10: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "spacing_px": 6, "amplitude_l": 6.4, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
+        },
+    },
+    "holdout": {
+        "artifact-speck": {
+            19: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 7.5, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 14},
+            17: {"design_tier": "warning-candidate", "diameter_px": 1, "amplitude_l": 8.0, "count_in_metric_window": 4, "shoulder_fraction": 0.05, "minimum_separation_px": 16},
+        },
+        "artifact-microblob": {
+            13: {"design_tier": "warning-candidate", "diameter_px": 4, "amplitude_l": 7.1, "count_in_metric_window": 4, "support_radius_px": 2, "minimum_separation_px": 13},
+            11: {"design_tier": "warning-candidate", "diameter_px": 6, "amplitude_l": 7.3, "count_in_metric_window": 4, "support_radius_px": 3, "minimum_separation_px": 16},
+        },
+        "artifact-short-dash": {
+            7: {"design_tier": "warning-candidate", "length_px": 6, "width_px": 1, "amplitude_l": 7.5, "count_in_metric_window": 2, "minimum_separation_px": 10},
+            5: {"design_tier": "warning-candidate", "length_px": 16, "width_px": 1, "amplitude_l": 6.5, "count_in_metric_window": 1, "minimum_separation_px": 20},
+        },
+        "artifact-parallel-bundle": {
+            8: {"design_tier": "warning-candidate", "length_px": 8, "width_px": 1, "spacing_px": 6, "amplitude_l": 7.5, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
+            13: {"design_tier": "warning-candidate", "length_px": 10, "width_px": 1, "spacing_px": 4, "amplitude_l": 6.5, "pair_count_in_metric_window": 1, "minimum_bundle_separation_px": 14},
+        },
+    },
+}
+_WARNING_ACCEPTANCE_ANCHORS = {
+    "revision": _PUBLIC_WARNING_ANCHOR_REVISION,
+    "splits": {
+        split: {
+            family: {
+                **_R15_WARNING_ACCEPTANCE_ANCHORS["splits"][split][family],
+                **_R16_WARNING_CONVERSION_ANCHORS[split][family],
+            }
+            for family in (
+                "artifact-speck",
+                "artifact-microblob",
+                "artifact-short-dash",
+                "artifact-parallel-bundle",
+            )
+        }
+        for split in ("calibration", "holdout")
     },
 }
 _CALIBRATION_MICROBLOB_CLEAR_REJECT_ANCHORS = {
@@ -824,7 +902,9 @@ def _render_unsigned_delta(
     raise RuntimeError(f"unknown family: {family}")
 
 
-def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
+def _artifact_variants(
+    split: str, *, _include_r16_warning_rebalance: bool = True
+) -> dict[str, list[dict[str, Any]]]:
     if split == "calibration":
         nonce_base = _ARTIFACT_NONCE_BASES[split]
         grain = [
@@ -2488,21 +2568,23 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             raise RuntimeError(f"r6 residue-preserving permutation drift: {family}")
         result[family] = [item for item in permuted if item is not None]
 
-    warning_anchors = _WARNING_ACCEPTANCE_ANCHORS["splits"][split]
+    warning_anchors = _R15_WARNING_ACCEPTANCE_ANCHORS["splits"][split]
     if set(warning_anchors) != {
         "artifact-speck",
         "artifact-microblob",
         "artifact-short-dash",
         "artifact-parallel-bundle",
     }:
-        raise RuntimeError(f"r15 warning-anchor family coverage drift: {split}")
+        raise RuntimeError(f"r15 predecessor warning-anchor family coverage drift: {split}")
     for family, replacements in warning_anchors.items():
         if len(replacements) != 4:
-            raise RuntimeError(f"r15 warning-anchor count drift: {split}/{family}")
+            raise RuntimeError(
+                f"r15 predecessor warning-anchor count drift: {split}/{family}"
+            )
         for index, replacement in replacements.items():
             if result[family][index]["design_tier"] != "warning-candidate":
                 raise RuntimeError(
-                    f"r15 warning anchor replaced a non-warning tier: "
+                    f"r15 predecessor warning anchor replaced a non-warning tier: "
                     f"{split}/{family}/{index}"
                 )
             result[family][index] = dict(replacement)
@@ -2553,6 +2635,34 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
         if actual_counts != expected_counts:
             raise RuntimeError(f"r15 speck reject-tier schedule drift: {split}/{tier}")
 
+    if _include_r16_warning_rebalance:
+        warning_anchors = _WARNING_ACCEPTANCE_ANCHORS["splits"][split]
+        conversion_sources = _R16_WARNING_CONVERSION_SOURCES[split]
+        if set(warning_anchors) != set(conversion_sources) or set(
+            warning_anchors
+        ) != {
+            "artifact-speck",
+            "artifact-microblob",
+            "artifact-short-dash",
+            "artifact-parallel-bundle",
+        }:
+            raise RuntimeError(f"r16 warning-rebalance family coverage drift: {split}")
+        for family, replacements in warning_anchors.items():
+            if len(replacements) != 6 or len(conversion_sources[family]) != 2:
+                raise RuntimeError(
+                    f"r16 warning-rebalance cardinality drift: {split}/{family}"
+                )
+            for index, replacement in replacements.items():
+                expected_source_tier = conversion_sources[family].get(
+                    index, "warning-candidate"
+                )
+                if result[family][index]["design_tier"] != expected_source_tier:
+                    raise RuntimeError(
+                        f"r16 warning anchor predecessor-tier drift: "
+                        f"{split}/{family}/{index}"
+                    )
+                result[family][index] = dict(replacement)
+
     family_nonce_offsets = {
         "artifact-fine-grain": 0,
         "artifact-speck": 100,
@@ -2568,7 +2678,7 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             )
     if any(len(variants) != 20 for variants in result.values()):
         raise RuntimeError("r6 bounded artifact variant contract drift")
-    expected_tier_counts = Counter(
+    predecessor_tier_counts = Counter(
         {
             "clean-candidate": 5,
             "warning-candidate": 4,
@@ -2576,12 +2686,25 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
             "dominant-reject-candidate": 4,
         }
     )
+    sparse_r16_tier_counts = Counter(
+        {
+            "clean-candidate": 4,
+            "warning-candidate": 6,
+            "clear-reject-candidate": 6,
+            "dominant-reject-candidate": 4,
+        }
+    )
     for family, variants in result.items():
         if len({canonical_json_bytes(item) for item in variants}) != 20:
             raise RuntimeError(f"r6 duplicate artifact condition: {family}")
+        expected_tier_counts = (
+            sparse_r16_tier_counts
+            if _include_r16_warning_rebalance and family != "artifact-fine-grain"
+            else predecessor_tier_counts
+        )
         tier_counts = Counter(str(item["design_tier"]) for item in variants)
         if tier_counts != expected_tier_counts:
-            raise RuntimeError(f"r6 design-tier cardinality drift: {family}")
+            raise RuntimeError(f"r16 design-tier cardinality drift: {family}")
         for tier in expected_tier_counts:
             residues = {
                 index % len(_FOUNDATIONS)
@@ -2595,23 +2718,108 @@ def _artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     return result
 
 
-def _validate_dev_r15_morphology_schedules() -> None:
-    morphology_fields = (
-        "diameter_px",
-        "amplitude_l",
-        "count_in_metric_window",
-        "shoulder_fraction",
-        "minimum_separation_px",
+def _validate_dev_r16_morphology_schedules() -> None:
+    sparse_families = (
+        "artifact-speck",
+        "artifact-microblob",
+        "artifact-short-dash",
+        "artifact-parallel-bundle",
     )
-    morphology_by_split: dict[str, set[tuple[Any, ...]]] = {}
-    for split in ("calibration", "holdout"):
-        morphology_by_split[split] = {
-            tuple(parameters[field] for field in morphology_fields)
-            for parameters in _artifact_variants(split)["artifact-speck"]
+    splits = ("calibration", "holdout")
+
+    def morphology(parameters: dict[str, Any]) -> dict[str, Any]:
+        return {
+            key: value
+            for key, value in parameters.items()
+            if key not in {"schedule_revision", "condition_nonce"}
         }
-    overlap = morphology_by_split["calibration"] & morphology_by_split["holdout"]
-    if overlap:
-        raise RuntimeError("r15 calibration/holdout speck morphology tuple overlap")
+
+    def fallback_quadrant_capacity(*, margin: int, separation: int) -> int:
+        """Return the least capacity of the renderer's four bounded lattices."""
+
+        internal_guard = max(
+            0,
+            math.ceil((separation - (2 * margin + 1)) / 2),
+        )
+        capacities: list[int] = []
+        for quadrant_index, (left, top, width, height) in enumerate(
+            _metric_quadrants((128, 96, 256, 192))
+        ):
+            x_min, x_max = left + margin, left + width - margin - 1
+            y_min, y_max = top + margin, top + height - margin - 1
+            if quadrant_index % 2 == 0:
+                x_max -= internal_guard
+            else:
+                x_min += internal_guard
+            if quadrant_index < 2:
+                y_max -= internal_guard
+            else:
+                y_min += internal_guard
+            if x_min > x_max or y_min > y_max:
+                return 0
+            x_start = x_min + ((x_max - x_min) % separation) // 2
+            y_start = y_min + ((y_max - y_min) % separation) // 2
+            x_count = ((x_max - x_start) // separation) + 1
+            y_count = ((y_max - y_start) // separation) + 1
+            capacities.append(x_count * y_count)
+        return min(capacities)
+
+    if (
+        _SCHEDULE_REVISION != "dev-r16-sparse-warning-rebalance-schedule-v1"
+        or _PUBLIC_WARNING_ANCHOR_REVISION
+        != "dev-r16-six-per-sparse-family-direct-visible-warning-v1"
+        or _PUBLIC_WARNING_CONVERSION_REVISION
+        != "dev-r16-one-clean-one-clear-per-sparse-family-v1"
+        or _PUBLIC_MICROBLOB_REJECT_ANCHOR_REVISION
+        != "dev-r15-calibration-quantized-microblob-reject-v1"
+        or _PUBLIC_PAYLOAD_COMMITMENT_PREFIX
+        != b"microtexture-v2-r6/public-payload-commitment/v12/"
+        or _PRIVATE_REFERENCE_TRANSFORM_PREFIX != b"private-reference-transform-v11/"
+        or _FOUNDATION_OFFSET_LANE != "foundation-offset-v10"
+        or _FOUNDATION_ASSIGNMENT_LANE != "foundation-assignment-v10"
+        or _DELTA_LANE != "delta-v10"
+        or _PRIVATE_CONTROL_ID_PREFIX
+        != b"microtexture-v2-r6/private-control-id/v10/"
+        or _ARTIFACT_NONCE_BASES != {"calibration": 873000, "holdout": 883000}
+        or _PROTOCOL_ZERO_NONCE_BASES
+        != {"calibration": 851000, "holdout": 861000}
+        or _DUPLICATE_AUDIT_NONCES
+        != {
+            "calibration": (891000, 891001, 891002),
+            "holdout": (901000, 901001, 901002),
+        }
+    ):
+        raise RuntimeError("r16 schedule/domain/nonce authority drift")
+
+    predecessor = {
+        split: _artifact_variants(
+            split, _include_r16_warning_rebalance=False
+        )
+        for split in splits
+    }
+    current = {split: _artifact_variants(split) for split in splits}
+
+    r15_warning_manifest = {
+        "revision": _R15_WARNING_ACCEPTANCE_ANCHORS["revision"],
+        "splits": {
+            split: {
+                family: [
+                    {"variant_index": index, "parameters": parameters}
+                    for index, parameters in sorted(
+                        _R15_WARNING_ACCEPTANCE_ANCHORS["splits"][split][
+                            family
+                        ].items()
+                    )
+                ]
+                for family in sparse_families
+            }
+            for split in splits
+        },
+    }
+    if sha256_bytes(canonical_json_bytes(r15_warning_manifest)) != (
+        "5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6"
+    ):
+        raise RuntimeError("r16 inherited r15 warning-anchor manifest SHA drift")
 
     anchor_manifest = {
         "revision": _WARNING_ACCEPTANCE_ANCHORS["revision"],
@@ -2623,36 +2831,269 @@ def _validate_dev_r15_morphology_schedules() -> None:
                         _WARNING_ACCEPTANCE_ANCHORS["splits"][split][family].items()
                     )
                 ]
-                for family in (
-                    "artifact-speck",
-                    "artifact-microblob",
-                    "artifact-short-dash",
-                    "artifact-parallel-bundle",
-                )
+                for family in sparse_families
             }
-            for split in ("calibration", "holdout")
+            for split in splits
         },
     }
     if sha256_bytes(canonical_json_bytes(anchor_manifest)) != (
-        "5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6"
+        "bfc0e95e402c4f5751212c67759940c8c01802bb0a938899304ec4db576aa5df"
     ):
-        raise RuntimeError("r15 inherited warning-anchor manifest SHA drift")
-    for split in ("calibration", "holdout"):
-        variants = _artifact_variants(split)
-        for family, expected_entries in anchor_manifest["splits"][split].items():
-            if {entry["variant_index"] % 3 for entry in expected_entries} != {0, 1, 2}:
+        raise RuntimeError("r16 warning-anchor manifest SHA drift")
+
+    conversion_manifest = {
+        "revision": _PUBLIC_WARNING_CONVERSION_REVISION,
+        "splits": {
+            split: {
+                family: [
+                    {
+                        "variant_index": index,
+                        "source_tier": source_tier,
+                        "source_parameters": morphology(
+                            predecessor[split][family][index]
+                        ),
+                        "warning_parameters": _R16_WARNING_CONVERSION_ANCHORS[
+                            split
+                        ][family][index],
+                    }
+                    for index, source_tier in sorted(
+                        _R16_WARNING_CONVERSION_SOURCES[split][family].items()
+                    )
+                ]
+                for family in sparse_families
+            }
+            for split in splits
+        },
+    }
+    if sha256_bytes(canonical_json_bytes(conversion_manifest)) != (
+        "0f0f4e0865249d34ff8f83537f60dcaee1c2ee0fd64836551b6aa754251fb8e7"
+    ):
+        raise RuntimeError("r16 warning conversion manifest SHA drift")
+
+    for split in splits:
+        warning_tuple_sets: dict[str, set[bytes]] = {}
+        for family in sparse_families:
+            entries = anchor_manifest["splits"][split][family]
+            conversions = conversion_manifest["splits"][split][family]
+            warning_indices = {entry["variant_index"] for entry in entries}
+            if (
+                len(entries) != 6
+                or Counter(index % len(_FOUNDATIONS) for index in warning_indices)
+                != Counter({0: 2, 1: 2, 2: 2})
+                or Counter(item["source_tier"] for item in conversions)
+                != Counter({"clean-candidate": 1, "clear-reject-candidate": 1})
+            ):
                 raise RuntimeError(
-                    f"r15 warning anchors lack mod-3 coverage: {split}/{family}"
+                    f"r16 warning tier/residue conversion drift: {split}/{family}"
                 )
-            for entry in expected_entries:
-                actual = dict(variants[family][entry["variant_index"]])
-                actual.pop("schedule_revision")
-                actual.pop("condition_nonce")
+            for entry in entries:
+                index = entry["variant_index"]
+                actual = morphology(current[split][family][index])
                 if actual != entry["parameters"]:
                     raise RuntimeError(
-                        f"r15 warning-anchor morphology drift: "
-                        f"{split}/{family}/{entry['variant_index']}"
+                        f"r16 warning anchor morphology drift: "
+                        f"{split}/{family}/{index}"
                     )
+                parameters = entry["parameters"]
+                amplitude = float(parameters["amplitude_l"])
+                if (
+                    parameters["design_tier"] != "warning-candidate"
+                    or not 6.0 <= amplitude <= 8.0
+                    or int(np.rint(amplitude)) not in {6, 7, 8}
+                ):
+                    raise RuntimeError(
+                        f"r16 warning weak-amplitude contract drift: "
+                        f"{split}/{family}/{index}"
+                    )
+                if family == "artifact-speck":
+                    valid = (
+                        parameters["diameter_px"] == 1
+                        and parameters["count_in_metric_window"] == 4
+                        and parameters["shoulder_fraction"] == 0.05
+                        and parameters["minimum_separation_px"] >= 10
+                    )
+                    packing_count = int(parameters["count_in_metric_window"])
+                    packing_margin = 1
+                    packing_separation = int(
+                        parameters["minimum_separation_px"]
+                    )
+                elif family == "artifact-microblob":
+                    valid = (
+                        4 <= parameters["diameter_px"] <= 8
+                        and parameters["count_in_metric_window"] in {2, 4}
+                        and 2 <= parameters["support_radius_px"] <= 7
+                        and parameters["minimum_separation_px"]
+                        >= 2 * parameters["support_radius_px"] + 1
+                    )
+                    packing_count = int(parameters["count_in_metric_window"])
+                    packing_margin = int(parameters["support_radius_px"]) + 1
+                    packing_separation = int(
+                        parameters["minimum_separation_px"]
+                    )
+                elif family == "artifact-short-dash":
+                    valid = (
+                        parameters["width_px"] == 1
+                        and parameters["count_in_metric_window"] in {1, 2}
+                        and 6 <= parameters["length_px"] <= 16
+                        and parameters["minimum_separation_px"]
+                        >= parameters["length_px"] + parameters["width_px"] + 3
+                    )
+                    packing_count = int(parameters["count_in_metric_window"])
+                    packing_margin = (
+                        int(math.ceil(float(parameters["length_px"]) / 2))
+                        + int(parameters["width_px"])
+                        + 2
+                    )
+                    packing_separation = int(
+                        parameters["minimum_separation_px"]
+                    )
+                else:
+                    valid = (
+                        parameters["width_px"] == 1
+                        and parameters["pair_count_in_metric_window"] == 1
+                        and parameters["length_px"] % 2 == 0
+                        and parameters["spacing_px"] % 2 == 0
+                        and parameters["minimum_bundle_separation_px"]
+                        >= max(parameters["length_px"], parameters["spacing_px"])
+                        + parameters["width_px"]
+                        + 3
+                    )
+                    packing_count = int(
+                        parameters["pair_count_in_metric_window"]
+                    )
+                    packing_margin = (
+                        int(
+                            math.ceil(
+                                max(
+                                    float(parameters["length_px"]),
+                                    float(parameters["spacing_px"]),
+                                )
+                                / 2
+                                + float(parameters["width_px"]) / 2
+                            )
+                        )
+                        + 2
+                    )
+                    packing_separation = int(
+                        parameters["minimum_bundle_separation_px"]
+                    )
+                if not valid:
+                    raise RuntimeError(
+                        f"r16 warning direct-visible geometry drift: "
+                        f"{split}/{family}/{index}"
+                    )
+                if fallback_quadrant_capacity(
+                    margin=packing_margin,
+                    separation=packing_separation,
+                ) < math.ceil(packing_count / 4):
+                    raise RuntimeError(
+                        f"r16 warning bounded-lattice capacity drift: "
+                        f"{split}/{family}/{index}"
+                    )
+                rendered = _render_unsigned_delta(
+                    family,
+                    parameters,
+                    np.random.default_rng(160000 + index),
+                    384,
+                    512,
+                    (128, 96, 256, 192),
+                )
+                outside = rendered.copy()
+                outside[96:288, 128:384] = 0
+                if not np.any(rendered) or np.any(outside):
+                    raise RuntimeError(
+                        f"r16 warning packing/render contract drift: "
+                        f"{split}/{family}/{index}"
+                    )
+            for conversion in conversions:
+                index = conversion["variant_index"]
+                source = morphology(predecessor[split][family][index])
+                target = morphology(current[split][family][index])
+                amplitude_direction_ok = (
+                    float(source["amplitude_l"]) < float(target["amplitude_l"])
+                    if conversion["source_tier"] == "clean-candidate"
+                    else float(target["amplitude_l"])
+                    < float(source["amplitude_l"])
+                )
+                if (
+                    source != conversion["source_parameters"]
+                    or source["design_tier"] != conversion["source_tier"]
+                    or target != conversion["warning_parameters"]
+                    or {
+                        key: value
+                        for key, value in source.items()
+                        if key != "design_tier"
+                    }
+                    == {
+                        key: value
+                        for key, value in target.items()
+                        if key != "design_tier"
+                    }
+                    or not amplitude_direction_ok
+                ):
+                    raise RuntimeError(
+                        f"r16 non-metadata warning conversion drift: "
+                        f"{split}/{family}/{index}"
+                    )
+            warning_tuple_sets[family] = {
+                canonical_json_bytes(entry["parameters"]) for entry in entries
+            }
+            if len(warning_tuple_sets[family]) != 6:
+                raise RuntimeError(
+                    f"r16 warning morphology uniqueness drift: {split}/{family}"
+                )
+
+        for family in sparse_families:
+            other_split = "holdout" if split == "calibration" else "calibration"
+            other_tuples = {
+                canonical_json_bytes(entry["parameters"])
+                for entry in anchor_manifest["splits"][other_split][family]
+            }
+            if warning_tuple_sets[family] & other_tuples:
+                raise RuntimeError(
+                    f"r16 split warning morphology tuple overlap: {family}"
+                )
+
+    allowed_full_split_overlap = {
+        "artifact-speck": set(),
+        "artifact-microblob": set(),
+        "artifact-short-dash": set(),
+        "artifact-parallel-bundle": {
+            canonical_json_bytes(
+                {
+                    "design_tier": "dominant-reject-candidate",
+                    "length_px": 22,
+                    "width_px": 3,
+                    "spacing_px": 8,
+                    "amplitude_l": 11.8,
+                    "pair_count_in_metric_window": 9,
+                    "minimum_bundle_separation_px": 30,
+                }
+            ),
+            canonical_json_bytes(
+                {
+                    "design_tier": "dominant-reject-candidate",
+                    "length_px": 28,
+                    "width_px": 3,
+                    "spacing_px": 12,
+                    "amplitude_l": 12.0,
+                    "pair_count_in_metric_window": 8,
+                    "minimum_bundle_separation_px": 36,
+                }
+            ),
+        },
+    }
+    for family in sparse_families:
+        calibration_tuples = {
+            canonical_json_bytes(morphology(parameters))
+            for parameters in current["calibration"][family]
+        }
+        holdout_tuples = {
+            canonical_json_bytes(morphology(parameters))
+            for parameters in current["holdout"][family]
+        }
+        if calibration_tuples & holdout_tuples != allowed_full_split_overlap[family]:
+            raise RuntimeError(f"r16 full split morphology overlap drift: {family}")
 
     microblob_anchor_manifest = {
         "revision": _CALIBRATION_MICROBLOB_CLEAR_REJECT_ANCHORS["revision"],
@@ -2668,152 +3109,245 @@ def _validate_dev_r15_morphology_schedules() -> None:
     if sha256_bytes(canonical_json_bytes(microblob_anchor_manifest)) != (
         "dd2ce7fd13f624bd065e8c7a6bacc2ab8bd593821dec8d46250a40e57ef64833"
     ):
-        raise RuntimeError("r15 calibration microblob anchor manifest SHA drift")
-    calibration_microblob = _artifact_variants("calibration")[
-        "artifact-microblob"
-    ]
-    clear_indices = {
-        index
-        for index, parameters in enumerate(calibration_microblob)
-        if parameters["design_tier"] == "clear-reject-candidate"
-    }
-    expected_clear_indices = set(
-        _CALIBRATION_MICROBLOB_CLEAR_REJECT_ANCHORS["entries"]
-    )
-    if clear_indices != expected_clear_indices or {
-        index % len(_FOUNDATIONS) for index in clear_indices
-    } != {0, 1, 2}:
-        raise RuntimeError("r15 calibration microblob clear-anchor coverage drift")
+        raise RuntimeError("r16 inherited r15 microblob anchor SHA drift")
+    predecessor_microblob = predecessor["calibration"]["artifact-microblob"]
+    final_microblob = current["calibration"]["artifact-microblob"]
+    converted_microblob_index = 16
     for entry in microblob_anchor_manifest["entries"]:
-        parameters = entry["parameters"]
-        actual = dict(calibration_microblob[entry["variant_index"]])
-        actual.pop("schedule_revision")
-        actual.pop("condition_nonce")
-        if actual != parameters:
+        index = entry["variant_index"]
+        if morphology(predecessor_microblob[index]) != entry["parameters"]:
             raise RuntimeError(
-                f"r15 calibration microblob clear-anchor morphology drift: "
-                f"{entry['variant_index']}"
+                f"r16 inherited r15 microblob source drift: {index}"
             )
-        support_radius = int(parameters["support_radius_px"])
-        if (
-            int(parameters["diameter_px"]) not in {4, 5, 6}
-            or not 2 <= support_radius <= 3
-            or float(parameters["amplitude_l"]) < 11.4
-            or int(parameters["count_in_metric_window"]) < 44
-            or int(parameters["minimum_separation_px"])
-            < 2 * support_radius + 1
+        if index != converted_microblob_index and (
+            morphology(final_microblob[index]) != entry["parameters"]
         ):
             raise RuntimeError(
-                f"r15 calibration microblob compact-anchor contract drift: "
-                f"{entry['variant_index']}"
+                f"r16 preserved r15 microblob clear-anchor drift: {index}"
             )
-
-    compact_shape_counts = Counter(
-        (
-            int(entry["parameters"]["diameter_px"]),
-            int(entry["parameters"]["support_radius_px"]),
-            int(entry["parameters"]["count_in_metric_window"]),
-        )
+    remaining_microblob_entries = [
+        entry
         for entry in microblob_anchor_manifest["entries"]
-    )
-    if compact_shape_counts != Counter(
-        {(4, 2, 64): 3, (6, 3, 44): 3, (5, 3, 52): 1}
+        if entry["variant_index"] != converted_microblob_index
+    ]
+    active_microblob_anchor_manifest = {
+        "revision": _CALIBRATION_MICROBLOB_CLEAR_REJECT_ANCHORS["revision"],
+        "split": "calibration",
+        "family": "artifact-microblob",
+        "entries": remaining_microblob_entries,
+    }
+    if sha256_bytes(canonical_json_bytes(active_microblob_anchor_manifest)) != (
+        "2c207dfb5249d42056e164e7553091a9a617d8b673aecfb5ea25e4d757651f0c"
     ):
-        raise RuntimeError("r15 calibration microblob compact matrix drift")
-    if tuple(
-        int(np.rint(float(entry["parameters"]["amplitude_l"])))
-        for entry in microblob_anchor_manifest["entries"]
-    ) != (12, 12, 11, 12, 12, 12, 11):
-        raise RuntimeError("r15 calibration microblob quantized center drift")
+        raise RuntimeError("r16 active r15 microblob anchor SHA drift")
+    if (
+        Counter(
+            (
+                int(entry["parameters"]["diameter_px"]),
+                int(entry["parameters"]["support_radius_px"]),
+                int(entry["parameters"]["count_in_metric_window"]),
+            )
+            for entry in remaining_microblob_entries
+        )
+        != Counter({(4, 2, 64): 3, (6, 3, 44): 3})
+        or {
+            entry["variant_index"] % len(_FOUNDATIONS)
+            for entry in remaining_microblob_entries
+        }
+        != {0, 1, 2}
+    ):
+        raise RuntimeError("r16 preserved r15 microblob compact matrix drift")
     for diameter in (4, 6):
         ladder = {
             entry["variant_index"] % len(_FOUNDATIONS): float(
                 entry["parameters"]["amplitude_l"]
             )
-            for entry in microblob_anchor_manifest["entries"]
+            for entry in remaining_microblob_entries
             if int(entry["parameters"]["diameter_px"]) == diameter
         }
         if ladder != {0: 11.4, 1: 11.6, 2: 11.8}:
             raise RuntimeError(
-                f"r15 calibration microblob residue ladder drift: {diameter}"
+                f"r16 preserved r15 microblob residue ladder drift: {diameter}"
             )
 
-    quadrants = _metric_quadrants((128, 96, 256, 192))
-    for entry in microblob_anchor_manifest["entries"]:
-        parameters = entry["parameters"]
-        count = int(parameters["count_in_metric_window"])
-        margin = int(parameters["support_radius_px"]) + 1
-        separation = int(parameters["minimum_separation_px"])
-        internal_guard = max(
-            0,
-            math.ceil((separation - (2 * margin + 1)) / 2),
-        )
-        capacities: list[int] = []
-        for quadrant_index, (left, top, width, height) in enumerate(quadrants):
-            x_min, x_max = left + margin, left + width - margin - 1
-            y_min, y_max = top + margin, top + height - margin - 1
-            if quadrant_index % 2 == 0:
-                x_max -= internal_guard
-            else:
-                x_min += internal_guard
-            if quadrant_index < 2:
-                y_max -= internal_guard
-            else:
-                y_min += internal_guard
-            x_capacity = (x_max - x_min) // separation + 1
-            y_capacity = (y_max - y_min) // separation + 1
-            capacities.append(x_capacity * y_capacity)
-        if min(capacities) < math.ceil(count / len(quadrants)):
-            raise RuntimeError(
-                f"r15 calibration microblob packing capacity drift: "
-                f"{entry['variant_index']}"
+    expected_active_speck_reject_counts = {
+        "calibration": {
+            "clear-reject-candidate": (36, 40, 44, 48, 52, 56),
+            "dominant-reject-candidate": (64, 72, 80, 88),
+        },
+        "holdout": {
+            "clear-reject-candidate": (34, 38, 42, 46, 50, 58),
+            "dominant-reject-candidate": (68, 76, 84, 90),
+        },
+    }
+    for split, expected_by_tier in expected_active_speck_reject_counts.items():
+        for tier, expected_counts in expected_by_tier.items():
+            actual_counts = tuple(
+                int(parameters["count_in_metric_window"])
+                for parameters in current[split]["artifact-speck"]
+                if parameters["design_tier"] == tier
             )
-
-    anchor_tuples = {
-        canonical_json_bytes(entry["parameters"])
-        for entry in microblob_anchor_manifest["entries"]
-    }
-    nonanchor_tuples = {
-        canonical_json_bytes(
-            {
-                key: value
-                for key, value in parameters.items()
-                if key not in {"schedule_revision", "condition_nonce"}
-            }
-        )
-        for split in ("calibration", "holdout")
-        for parameters in _artifact_variants(split)["artifact-microblob"]
-        if not (
-            split == "calibration"
-            and parameters["design_tier"] == "clear-reject-candidate"
-        )
-    }
-    if len(anchor_tuples) != 7 or anchor_tuples & nonanchor_tuples:
-        raise RuntimeError("r15 calibration microblob anchor tuple overlap")
-
-    preserved_morphology = {
-        split: {
-            family: [
-                {
-                    key: value
-                    for key, value in parameters.items()
-                    if key not in {"schedule_revision", "condition_nonce"}
-                }
-                for parameters in variants
-                if not (
-                    split == "calibration"
-                    and family == "artifact-microblob"
-                    and parameters["design_tier"] == "clear-reject-candidate"
+            if actual_counts != expected_counts:
+                raise RuntimeError(
+                    f"r16 active speck reject-count drift: {split}/{tier}"
                 )
-            ]
-            for family, variants in _artifact_variants(split).items()
+
+    predecessor_morphology = {
+        split: {
+            family: [morphology(parameters) for parameters in variants]
+            for family, variants in predecessor[split].items()
         }
-        for split in ("calibration", "holdout")
+        for split in splits
     }
-    if sha256_bytes(canonical_json_bytes(preserved_morphology)) != (
-        "d9b2cd55c575075268ebd5c69a3a39e1a5c4819089832e1bf330118dd2f2b869"
+    if sha256_bytes(canonical_json_bytes(predecessor_morphology)) != (
+        "7adf59546337cded9910d17fbff5d383fc36e1058e69f98ed633890c2dd60f5b"
     ):
-        raise RuntimeError("r15 preserved morphology SHA drift")
+        raise RuntimeError("r16 predecessor morphology SHA drift")
+
+    changed_morphology = {
+        (split, family, index)
+        for split in splits
+        for family, variants in current[split].items()
+        for index, parameters in enumerate(variants)
+        if morphology(parameters) != morphology(predecessor[split][family][index])
+    }
+    expected_changed_morphology = {
+        (split, family, index)
+        for split in splits
+        for family in sparse_families
+        for index in _R16_WARNING_CONVERSION_SOURCES[split][family]
+    }
+    if (
+        changed_morphology != expected_changed_morphology
+        or len(changed_morphology) != 16
+    ):
+        raise RuntimeError("r16 exact morphology change-set drift")
+
+    preserved_morphology: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    preserved_nonwarning_morphology: dict[
+        str, dict[str, list[dict[str, Any]]]
+    ] = {}
+    sparse_preserved_count = 0
+    for split in splits:
+        preserved_morphology[split] = {}
+        preserved_nonwarning_morphology[split] = {}
+        for family, variants in current[split].items():
+            converted = set(
+                _R16_WARNING_CONVERSION_SOURCES[split].get(family, {})
+            )
+            entries: list[dict[str, Any]] = []
+            for index, parameters in enumerate(variants):
+                if index in converted:
+                    continue
+                actual = morphology(parameters)
+                expected = morphology(predecessor[split][family][index])
+                if actual != expected:
+                    raise RuntimeError(
+                        f"r16 nonconversion morphology drift: "
+                        f"{split}/{family}/{index}"
+                    )
+                entries.append({"variant_index": index, "parameters": actual})
+            preserved_morphology[split][family] = entries
+            nonwarning_entries = [
+                entry
+                for entry in entries
+                if entry["parameters"]["design_tier"] != "warning-candidate"
+            ]
+            preserved_nonwarning_morphology[split][family] = nonwarning_entries
+            if family in sparse_families:
+                sparse_preserved_count += len(entries)
+    if (
+        sum(
+            len(entries)
+            for families in preserved_morphology.values()
+            for entries in families.values()
+        )
+        != 184
+        or sparse_preserved_count != 144
+    ):
+        raise RuntimeError("r16 preserved morphology cardinality drift")
+    if sha256_bytes(canonical_json_bytes(preserved_morphology)) != (
+        "b8e7429a62e78c6e67efbfa6ec8b3b2fb0f16fb07f61ea9c7590f83f1b637ecd"
+    ):
+        raise RuntimeError("r16 preserved morphology SHA drift")
+    if sha256_bytes(canonical_json_bytes(preserved_nonwarning_morphology)) != (
+        "72212f11b453526bd6cec7e11420bcb9a0df7bbae2e097168393a5ee0c9a48b4"
+    ):
+        raise RuntimeError("r16 preserved nonwarning morphology SHA drift")
+
+    expected_sparse_tiers = Counter(
+        {
+            "clean-candidate": 4,
+            "warning-candidate": 6,
+            "clear-reject-candidate": 6,
+            "dominant-reject-candidate": 4,
+        }
+    )
+    expected_grain_tiers = Counter(
+        {
+            "clean-candidate": 5,
+            "warning-candidate": 4,
+            "clear-reject-candidate": 7,
+            "dominant-reject-candidate": 4,
+        }
+    )
+    for split in splits:
+        if Counter(
+            parameters["design_tier"]
+            for parameters in current[split]["artifact-fine-grain"]
+        ) != expected_grain_tiers:
+            raise RuntimeError(f"r16 fine-grain tier-count drift: {split}")
+        for family in sparse_families:
+            variants = current[split][family]
+            morphology_tuples = {
+                canonical_json_bytes(morphology(item)) for item in variants
+            }
+            if len(morphology_tuples) != 20:
+                raise RuntimeError(
+                    f"r16 sparse family morphology uniqueness drift: "
+                    f"{split}/{family}"
+                )
+            if Counter(parameters["design_tier"] for parameters in variants) != (
+                expected_sparse_tiers
+            ):
+                raise RuntimeError(f"r16 sparse tier-count drift: {split}/{family}")
+            for tier in expected_sparse_tiers:
+                if {
+                    index % len(_FOUNDATIONS)
+                    for index, parameters in enumerate(variants)
+                    if parameters["design_tier"] == tier
+                } != {0, 1, 2}:
+                    raise RuntimeError(
+                        f"r16 sparse tier mod-3 coverage drift: "
+                        f"{split}/{family}/{tier}"
+                    )
+        total_tiers = Counter(
+            parameters["design_tier"]
+            for variants in current[split].values()
+            for parameters in variants
+        )
+        if (
+            total_tiers
+            != Counter(
+                {
+                    "clean-candidate": 21,
+                    "warning-candidate": 28,
+                    "clear-reject-candidate": 31,
+                    "dominant-reject-candidate": 20,
+                }
+            )
+            or sum(
+                1
+                for family in sparse_families
+                for parameters in current[split][family]
+                if parameters["design_tier"] == "warning-candidate"
+            )
+            != 24
+            or total_tiers["clear-reject-candidate"]
+            + total_tiers["dominant-reject-candidate"]
+            != 51
+        ):
+            raise RuntimeError(f"r16 structural population-margin drift: {split}")
 
     expected_grain_periods = {
         "calibration": {
@@ -2869,14 +3403,14 @@ def _validate_dev_r15_morphology_schedules() -> None:
                 if parameters["design_tier"] == tier
             )
             if actual != expected:
-                raise RuntimeError(f"r15 grain reject period drift: {split}/{tier}")
+                raise RuntimeError(f"r16 grain reject period drift: {split}/{tier}")
             if any(not 2.0 < period < 13.0 for _, period in actual):
                 raise RuntimeError(
-                    f"r15 grain reject period escaped metric support: {split}/{tier}"
+                    f"r16 grain reject period escaped metric support: {split}/{tier}"
                 )
             split_tuples[split].update(actual)
     if split_tuples["calibration"] & split_tuples["holdout"]:
-        raise RuntimeError("r15 calibration/holdout grain pattern-period overlap")
+        raise RuntimeError("r16 calibration/holdout grain pattern-period overlap")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -3064,7 +3598,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r15_morphology_schedules()
+    _validate_dev_r16_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):

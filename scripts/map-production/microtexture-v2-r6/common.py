@@ -36,7 +36,7 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "21199f17cdd7fff6f30c6f2a41cd2d5e465cd63de67b0d480a892423629d4aef"
+SPEC_SHA256 = "ceb30ce754fd7601e6a3f12a98c52687650798893b7163901998747b38282493"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
 
 
@@ -366,10 +366,10 @@ VISION_SEMANTIC_RUBRIC = {
 }
 
 POPULATION_ANCHOR_SCHEDULE = {
-    "revision": "dev-r15-calibration-microblob-reject-anchor-schedule-v1",
-    "fresh_from_closed_dev_r14": True,
-    "r14_parameter_nonce_reuse_forbidden": True,
-    "r15_per_family_residue_rotation": {
+    "revision": "dev-r16-sparse-warning-rebalance-schedule-v1",
+    "fresh_from_closed_dev_r15": True,
+    "r15_parameter_nonce_reuse_forbidden": True,
+    "r16_per_family_residue_rotation": {
         "calibration": {
             "artifact-fine-grain": 2,
             "artifact-speck": 4,
@@ -385,22 +385,48 @@ POPULATION_ANCHOR_SCHEDULE = {
             "artifact-parallel-bundle": 11,
         },
     },
-    "r15_parameter_nonce_bases": {
-        "calibration_artifact": 773000,
-        "holdout_artifact": 783000,
-        "calibration_protocol_zero": 751000,
-        "holdout_protocol_zero": 761000,
-        "calibration_duplicate_audit": [791000, 791001, 791002],
-        "holdout_duplicate_audit": [801000, 801001, 801002],
+    "r16_parameter_nonce_bases": {
+        "calibration_artifact": 873000,
+        "holdout_artifact": 883000,
+        "calibration_protocol_zero": 851000,
+        "holdout_protocol_zero": 861000,
+        "calibration_duplicate_audit": [891000, 891001, 891002],
+        "holdout_duplicate_audit": [901000, 901001, 901002],
     },
     "private_until_one_shot_marker": True,
     "public_manifest_exposure_forbidden": True,
     "generation_design_tiers_are_truth": False,
     "tier_counts_per_artifact_family": {
-        "clean-candidate": 5,
-        "warning-candidate": 4,
-        "clear-reject-candidate": 7,
-        "dominant-reject-candidate": 4,
+        "artifact-fine-grain": {
+            "clean-candidate": 5,
+            "warning-candidate": 4,
+            "clear-reject-candidate": 7,
+            "dominant-reject-candidate": 4,
+        },
+        "artifact-speck": {
+            "clean-candidate": 4,
+            "warning-candidate": 6,
+            "clear-reject-candidate": 6,
+            "dominant-reject-candidate": 4,
+        },
+        "artifact-microblob": {
+            "clean-candidate": 4,
+            "warning-candidate": 6,
+            "clear-reject-candidate": 6,
+            "dominant-reject-candidate": 4,
+        },
+        "artifact-short-dash": {
+            "clean-candidate": 4,
+            "warning-candidate": 6,
+            "clear-reject-candidate": 6,
+            "dominant-reject-candidate": 4,
+        },
+        "artifact-parallel-bundle": {
+            "clean-candidate": 4,
+            "warning-candidate": 6,
+            "clear-reject-candidate": 6,
+            "dominant-reject-candidate": 4,
+        },
     },
     "artifact_families_covered": [
         "artifact-fine-grain",
@@ -416,20 +442,48 @@ POPULATION_ANCHOR_SCHEDULE = {
     "replacement_forbidden": True,
     "key_resampling_forbidden": True,
     "actual_sealed_vision_labels_are_decisive": True,
-    "warning_acceptance_anchor_revision": "dev-r14-quantized-direct-visible-sparse-warning-v1",
-    "warning_acceptance_anchor_conditions_per_split": 16,
+    "inherited_warning_acceptance_anchor_revision": "dev-r14-quantized-direct-visible-sparse-warning-v1",
+    "inherited_warning_acceptance_anchor_conditions_per_split": 16,
+    "inherited_warning_acceptance_anchor_schedule_sha256": "5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6",
+    "warning_acceptance_anchor_revision": "dev-r16-six-per-sparse-family-direct-visible-warning-v1",
+    "warning_acceptance_anchor_conditions_per_split": 24,
     "warning_acceptance_anchor_conditions_per_family": {
-        "artifact-speck": 4,
-        "artifact-microblob": 4,
-        "artifact-short-dash": 4,
-        "artifact-parallel-bundle": 4,
+        "artifact-speck": 6,
+        "artifact-microblob": 6,
+        "artifact-short-dash": 6,
+        "artifact-parallel-bundle": 6,
     },
-    "warning_acceptance_anchor_structural_miss_budget_against_development_floor": 3,
+    "warning_acceptance_anchor_structural_miss_budget_against_development_floor": 11,
     "warning_acceptance_anchor_truth_guarantee_claimed": False,
-    "nonwarning_morphology_change_forbidden": False,
-    "non_target_morphology_change_forbidden": True,
-    "predecessor_non_target_morphology_sha256": "d9b2cd55c575075268ebd5c69a3a39e1a5c4819089832e1bf330118dd2f2b869",
-    "warning_acceptance_anchor_schedule_sha256": "5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6",
+    "warning_acceptance_anchor_schedule_sha256": "bfc0e95e402c4f5751212c67759940c8c01802bb0a938899304ec4db576aa5df",
+    "warning_conversion_revision": "dev-r16-one-clean-one-clear-per-sparse-family-v1",
+    "warning_conversion_conditions_per_split": 8,
+    "warning_conversion_source_tiers_per_sparse_family": {
+        "artifact-speck": {
+            "clean-candidate": 1,
+            "clear-reject-candidate": 1,
+        },
+        "artifact-microblob": {
+            "clean-candidate": 1,
+            "clear-reject-candidate": 1,
+        },
+        "artifact-short-dash": {
+            "clean-candidate": 1,
+            "clear-reject-candidate": 1,
+        },
+        "artifact-parallel-bundle": {
+            "clean-candidate": 1,
+            "clear-reject-candidate": 1,
+        },
+    },
+    "warning_conversion_schedule_sha256": "0f0f4e0865249d34ff8f83537f60dcaee1c2ee0fd64836551b6aa754251fb8e7",
+    "exact_morphology_change_count_across_splits": 16,
+    "nonconversion_morphology_change_forbidden": True,
+    "predecessor_full_morphology_sha256": "7adf59546337cded9910d17fbff5d383fc36e1058e69f98ed633890c2dd60f5b",
+    "preserved_nonconversion_morphology_conditions_across_splits": 184,
+    "preserved_nonconversion_morphology_sha256": "b8e7429a62e78c6e67efbfa6ec8b3b2fb0f16fb07f61ea9c7590f83f1b637ecd",
+    "preserved_nonwarning_morphology_conditions_across_splits": 144,
+    "preserved_nonwarning_morphology_sha256": "72212f11b453526bd6cec7e11420bcb9a0df7bbae2e097168393a5ee0c9a48b4",
     "calibration_microblob_clear_reject_anchor_manifest": {
         "revision": "dev-r15-calibration-quantized-microblob-reject-v1",
         "split": "calibration",
@@ -517,16 +571,23 @@ POPULATION_ANCHOR_SCHEDULE = {
     "calibration_microblob_clear_reject_anchor_conditions": 7,
     "calibration_microblob_clear_reject_anchor_truth_guarantee_claimed": False,
     "calibration_microblob_clear_reject_anchor_schedule_sha256": "dd2ce7fd13f624bd065e8c7a6bacc2ab8bd593821dec8d46250a40e57ef64833",
-    "speck_reject_anchor_conditions_per_split": 11,
-    "speck_reject_anchor_structural_miss_budget_against_development_floor": 5,
+    "calibration_microblob_clear_reject_active_indices": [1, 2, 9, 13, 17, 18],
+    "calibration_microblob_clear_reject_active_conditions": 6,
+    "calibration_microblob_clear_reject_converted_to_warning_index": 16,
+    "calibration_microblob_clear_reject_active_schedule_sha256": "2c207dfb5249d42056e164e7553091a9a617d8b673aecfb5ea25e4d757651f0c",
+    "speck_reject_source_anchor_conditions_per_split": 11,
+    "speck_reject_active_anchor_conditions_per_split": 10,
+    "speck_reject_anchor_structural_miss_budget_against_development_floor": 4,
     "speck_reject_anchor_truth_guarantee_claimed": False,
     "speck_reject_anchor_schedule": {
         "calibration": {
-            "clear_counts": [32, 36, 40, 44, 48, 52, 56],
+            "source_clear_counts": [32, 36, 40, 44, 48, 52, 56],
+            "active_clear_counts": [36, 40, 44, 48, 52, 56],
             "dominant_counts": [64, 72, 80, 88],
         },
         "holdout": {
-            "clear_counts": [34, 38, 42, 46, 50, 54, 58],
+            "source_clear_counts": [34, 38, 42, 46, 50, 54, 58],
+            "active_clear_counts": [34, 38, 42, 46, 50, 58],
             "dominant_counts": [68, 76, 84, 90],
         },
         "diameter_px": 1,
@@ -824,6 +885,10 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "dev_r14_failure_audit_sha256",
             "dev_r15_status",
             "dev_r15_role",
+            "dev_r15_failure_audit",
+            "dev_r15_failure_audit_sha256",
+            "dev_r16_status",
+            "dev_r16_role",
         },
         "r6 development history",
     )
@@ -946,16 +1011,35 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "microtexture-v2-r6-dev-r14-development-failure.json"
         or history.get("dev_r14_failure_audit_sha256")
         != "79acad1ef7972293e2697bd4c81edcc2c6ec017b4121e6609b94b95391c25476"
-        or history.get("dev_r15_status") != "fresh-development-only"
+        or history.get("dev_r15_status")
+        != "failed-and-closed-before-measurement"
         or history.get("dev_r15_role")
+        != "development-only premeasurement population failure evidence; both "
+        "private audits passed, calibration warning population 12 met formal "
+        "minimum 10 but missed development floor 13, holdout warning population 9 "
+        "missed formal minimum 10 and development floor 13, every other endpoint "
+        "passed both minima, no numeric metric or threshold search started, and no "
+        "dev-r15 root, key, control, reference, pixel, identity, code, commitment, "
+        "label, decision, measurement, nonce, public surface, or postmortem output "
+        "is reusable"
+        or history.get("dev_r15_failure_audit")
+        != "world/map-production/qa/"
+        "microtexture-v2-r6-dev-r15-development-failure.json"
+        or history.get("dev_r15_failure_audit_sha256")
+        != "faa420e63af8b3f647e045ae4d71ac2fbe32316175e68999cc16b3e278311200"
+        or history.get("dev_r16_status") != "fresh-development-only"
+        or history.get("dev_r16_role")
         != "fresh one-shot development role used only to verify the unchanged "
-        "preregistered soft-unit metric after the closed dev-r14 calibration "
-        "microblob development-floor failure; it changes only the seven calibration "
-        "clear-reject microblob morphologies to preregistered compact finite-Gaussian "
-        "anchors, preserves every other morphology and every endpoint minimum, "
-        "requires a fresh isolated root, cryptographic blind key, identities, domains, "
-        "nonces, controls, references, commitments, labels, and measurements, and can "
-        "never become or supply formal authority"
+        "preregistered soft-unit metric after the closed dev-r15 warning population "
+        "failure; it preserves fine-grain tier counts and all non-target morphologies, "
+        "expands the four sparse-family warning anchor tiers from four to six conditions "
+        "by replacing exactly one clean and one clear-reject morphology per family with "
+        "preregistered intermediate warning morphologies, retains the complete "
+        "six-condition diameter-4/diameter-6 dev-r15 calibration microblob reject-anchor "
+        "ladders while converting only the seventh singleton, preserves every endpoint "
+        "minimum, requires a fresh isolated root, cryptographic blind key, identities, "
+        "domains, nonces, controls, references, commitments, labels, and measurements, "
+        "and can never become or supply formal authority"
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -973,9 +1057,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": "non-authority dev-r15 only; no development key, root, output, or commitment can become formal authority",
+        "scope": "non-authority dev-r16 only; no development key, root, output, or commitment can become formal authority",
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r15/private/development-key.bin",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r16/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -1420,24 +1504,65 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         endpoint_id: max(minimum + 2, math.ceil(1.25 * minimum))
         for endpoint_id, minimum in formal_minima.items()
     }
+    expected_tier_counts = {
+        "artifact-fine-grain": {
+            "clean-candidate": 5,
+            "warning-candidate": 4,
+            "clear-reject-candidate": 7,
+            "dominant-reject-candidate": 4,
+        },
+        **{
+            family: {
+                "clean-candidate": 4,
+                "warning-candidate": 6,
+                "clear-reject-candidate": 6,
+                "dominant-reject-candidate": 4,
+            }
+            for family in (
+                "artifact-speck",
+                "artifact-microblob",
+                "artifact-short-dash",
+                "artifact-parallel-bundle",
+            )
+        },
+    }
     if (
         anchor_schedule["development_premeasurement_safety_floors"]
         != derived_safety_floors
-        or sum(anchor_schedule["tier_counts_per_artifact_family"].values()) != 20
+        or anchor_schedule["tier_counts_per_artifact_family"]
+        != expected_tier_counts
+        or any(sum(counts.values()) != 20 for counts in expected_tier_counts.values())
         or len(anchor_schedule["artifact_families_covered"]) != 5
-        or anchor_schedule["warning_acceptance_anchor_conditions_per_split"] != 16
+        or anchor_schedule["inherited_warning_acceptance_anchor_conditions_per_split"]
+        != 16
+        or anchor_schedule["warning_acceptance_anchor_conditions_per_split"] != 24
         or sum(
             anchor_schedule["warning_acceptance_anchor_conditions_per_family"].values()
         )
-        != 16
+        != 24
         or anchor_schedule[
             "warning_acceptance_anchor_structural_miss_budget_against_development_floor"
         ]
-        != 3
+        != 11
         or anchor_schedule["warning_acceptance_anchor_truth_guarantee_claimed"]
         is not False
-        or anchor_schedule["nonwarning_morphology_change_forbidden"] is not False
-        or anchor_schedule["non_target_morphology_change_forbidden"] is not True
+        or anchor_schedule["warning_conversion_conditions_per_split"] != 8
+        or any(
+            source_counts != {"clean-candidate": 1, "clear-reject-candidate": 1}
+            for source_counts in anchor_schedule[
+                "warning_conversion_source_tiers_per_sparse_family"
+            ].values()
+        )
+        or anchor_schedule["exact_morphology_change_count_across_splits"] != 16
+        or anchor_schedule["nonconversion_morphology_change_forbidden"] is not True
+        or anchor_schedule[
+            "preserved_nonconversion_morphology_conditions_across_splits"
+        ]
+        != 184
+        or anchor_schedule[
+            "preserved_nonwarning_morphology_conditions_across_splits"
+        ]
+        != 144
         or anchor_schedule["calibration_microblob_clear_reject_anchor_conditions"]
         != 7
         or anchor_schedule[
@@ -1450,6 +1575,22 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             ]
         )
         != 7
+        or anchor_schedule["calibration_microblob_clear_reject_active_indices"]
+        != [1, 2, 9, 13, 17, 18]
+        or anchor_schedule["calibration_microblob_clear_reject_active_conditions"]
+        != 6
+        or anchor_schedule[
+            "calibration_microblob_clear_reject_converted_to_warning_index"
+        ]
+        != 16
+        or anchor_schedule["speck_reject_source_anchor_conditions_per_split"]
+        != 11
+        or anchor_schedule["speck_reject_active_anchor_conditions_per_split"]
+        != 10
+        or anchor_schedule[
+            "speck_reject_anchor_structural_miss_budget_against_development_floor"
+        ]
+        != 4
         or anchor_schedule["grain_reject_anchor_conditions_per_split"] != 11
         or anchor_schedule["grain_reject_anchor_truth_guarantee_claimed"] is not False
         or anchor_schedule["grain_reject_anchor_schedule"][
@@ -1598,8 +1739,8 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         catalog.get("exact_variant_source")
         != "the frozen tracked control_catalog.py named by implementation-bindings.json; "
         "its byte hash is authority and every report is rebound to a fresh secret-key "
-        "regeneration of that catalog; every dev-r15 control, reference, identity, "
-        "code, and commitment is newly generated and no dev-r14 material is reusable"
+        "regeneration of that catalog; every dev-r16 control, reference, identity, "
+        "code, and commitment is newly generated and no dev-r15 material is reusable"
         or catalog.get("artifact_contract")
         != "five morphology families, exactly 20 nonzero conditions per family, "
         "paired dark/light polarities, one replicate per polarity, and no zero-count "
@@ -1640,11 +1781,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     }:
         raise RuntimeError("r6 private reference-transform contract drift")
     if catalog.get("private_identity_domains") != {
-        "private_reference_transform_prefix": "private-reference-transform-v10/",
-        "foundation_offset_lane": "foundation-offset-v9",
-        "foundation_assignment_lane": "foundation-assignment-v9",
-        "delta_lane": "delta-v9",
-        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v9/",
+        "private_reference_transform_prefix": "private-reference-transform-v11/",
+        "foundation_offset_lane": "foundation-offset-v10",
+        "foundation_assignment_lane": "foundation-assignment-v10",
+        "delta_lane": "delta-v10",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v10/",
     }:
         raise RuntimeError("r6 private identity domain contract drift")
 
@@ -1704,28 +1845,28 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v10"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v11"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
             raise RuntimeError(f"r6 split replicate contract drift: {split_name}")
     blind = value.get("blind_derivation", {})
     if (
-        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v9"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v10/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v10/"
+        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v10"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v11/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v11/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-10 blind derivation domain drift")
+        raise RuntimeError("r6 revision-11 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v10/"
+        != "microtexture-v2-r6/private-condition-cluster/v11/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v11/"
+        != "microtexture-v2-r6/public-payload-commitment/v12/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-10/11 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-11/12 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -3767,10 +3908,348 @@ def validate_dev_r14_premeasurement_population_failure_audit(value: Any) -> None
             raise RuntimeError(f"{context} malformed hash binding: {field}")
 
 
+def validate_dev_r15_premeasurement_population_failure_audit(value: Any) -> None:
+    """Validate the exact sanitized dev-r15 population-gate failure evidence."""
+
+    context = "closed dev-r15 premeasurement population failure audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "failure_phase",
+            "failure_class",
+            "measurement_started",
+            "selection_status",
+            "development_hard_threshold",
+            "calibration_endpoint_performance",
+            "holdout_endpoint_performance",
+            "threshold_selection_audit",
+            "one_shot_contract",
+            "vision_review",
+            "private_audit",
+            "population_audit",
+            "failure_marker_summary",
+            "hash_bindings",
+            "absent_measurement_artifacts",
+            "postmortem",
+            "root_cause",
+            "successor_constraints",
+            "secret_handling",
+        },
+        context,
+    )
+    timestamp = value["audit_recorded_at"]
+    if not isinstance(timestamp, str) or re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z", timestamp
+    ) is None:
+        raise RuntimeError(f"{context}.audit_recorded_at must be canonical UTC text")
+    parse_utc_timestamp(timestamp, f"{context}.audit_recorded_at")
+    expected_header = {
+        "artifact": "microtexture-v2-r6-dev-r15-development-premeasurement-population-failure-audit",
+        "schema_version": "microtexture-v2-r6-development-premeasurement-population-failure-audit/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "development_edition": "r15",
+        "outcome": "failed_closed",
+        "failure_phase": "private-audits-passed-then-premeasurement-population-audit",
+        "failure_class": "warning-cluster-population-shortfall",
+        "measurement_started": False,
+        "selection_status": "not_started_population_gate_failed",
+        "development_hard_threshold": None,
+        "calibration_endpoint_performance": None,
+        "holdout_endpoint_performance": None,
+        "threshold_selection_audit": None,
+    }
+    for field, expected in expected_header.items():
+        _require_exact_json_value(value[field], expected, f"{context}.{field}")
+
+    if sha256_bytes(canonical_json_bytes(value)) != (
+        "f153779020b1564b01c409115bdd823b6a3e30e0f444d6cf1076e139a369f63e"
+    ):
+        raise RuntimeError(f"{context} canonical semantic digest drift")
+
+    expected_one_shot = {
+        "generation_completed_exactly_once": True,
+        "root_vision_completed_before_private_reveal": True,
+        "independent_vision_completed_before_private_reveal": True,
+        "all_440_records_reviewed_by_each_reviewer": True,
+        "root_and_independent_decisions_reconciled_before_preflight": True,
+        "review_preflight_invoked_exactly_once": True,
+        "review_preflight_passed": True,
+        "labels_sealed_before_private_reveal": True,
+        "private_reveal_started_after_label_seal": True,
+        "private_sentinel_audit_passed": True,
+        "population_audit_started_exactly_once": True,
+        "population_audit_passed": False,
+        "analysis_started_exactly_once": True,
+        "numeric_metric_called": False,
+        "threshold_search_started": False,
+        "development_threshold_selected": False,
+        "postmortem_invoked_exactly_once": True,
+        "formal_cli_invoked": False,
+        "formal_marker_created": False,
+        "formal_threshold_created": False,
+        "locked_clean_v18_decoded_or_measured": False,
+        "failure_marker_created": True,
+        "rerun_resume_relabel_retune_subset_topup_resample_or_reuse_for_r15_forbidden": True,
+        "r15_closed": True,
+    }
+    _require_exact_json_value(
+        value["one_shot_contract"], expected_one_shot, f"{context}.one_shot_contract"
+    )
+
+    vision = value["vision_review"]
+    require_exact_keys(
+        vision,
+        {
+            "records_per_split_per_reviewer",
+            "review_boards_per_split_per_reviewer",
+            "logical_comparison_fields",
+            "evidence_notes_excluded_from_logical_comparison",
+            "initial_snapshots_persisted_immutably",
+            "splits",
+            "all_differences_reinspected_native_then_evidence",
+            "final_reconciled",
+            "canonical_labels_equal_both_reviewers",
+            "total_initial_logical_and_notes_only_difference_count",
+            "initial_independent_snapshots_preserved_after_dsl_drift_discovery",
+            "reconciled_finals_passed_official_parser_and_ev3",
+            "initial_independent_dsl_drift",
+        },
+        f"{context}.vision_review",
+    )
+    if (
+        vision["records_per_split_per_reviewer"] != 220
+        or vision["review_boards_per_split_per_reviewer"] != 37
+        or vision["logical_comparison_fields"]
+        != ["page", "row", "anonymous_code", "disposition", "severity", "flags"]
+        or vision["evidence_notes_excluded_from_logical_comparison"] is not True
+        or vision["initial_snapshots_persisted_immutably"] is not True
+        or vision["all_differences_reinspected_native_then_evidence"] is not True
+        or vision["final_reconciled"] is not True
+        or vision["canonical_labels_equal_both_reviewers"] is not True
+        or vision["total_initial_logical_and_notes_only_difference_count"] != 257
+        or vision[
+            "initial_independent_snapshots_preserved_after_dsl_drift_discovery"
+        ]
+        is not True
+        or vision["reconciled_finals_passed_official_parser_and_ev3"] is not True
+    ):
+        raise RuntimeError(f"{context} Vision review contract drift")
+    expected_dsl_drift = {
+        "present": True,
+        "systematic_noncanonical_flags_token": "lp",
+        "required_canonical_flags_token": "l,p",
+        "calibration_record_count": 29,
+        "holdout_record_count": 30,
+        "all_affected_records_intended_flag_set": ["l", "p"],
+        "all_affected_records_l_and_p_locator_sets_identical": True,
+        "independent_initial_snapshots_official_dsl_conformant": False,
+        "independent_initial_snapshots_modified": False,
+        "independent_initial_self_lint_pass_claim_correct": False,
+        "self_lint_defect": "flags were concatenated without a delimiter and comma-separated canonical serialization was not enforced",
+        "resolved_only_in_reconciled_final_after_all_differences_reinspected": True,
+        "reconciled_final_official_parser_and_ev3_validation_passed": True,
+    }
+    _require_exact_json_value(
+        vision["initial_independent_dsl_drift"],
+        expected_dsl_drift,
+        f"{context}.vision_review.initial_independent_dsl_drift",
+    )
+    expected_reviews = {
+        "calibration": {
+            "root_initial_decisions_sha256": "97d2eae9be3918534a9a7e70e047369dafc31c2b817ffc1e1d978ecbd5fadeea",
+            "independent_initial_decisions_sha256": "85520c950c5d655f0ed6353a331b1057af117232df5096ee787591eb01c840d3",
+            "initial_exact_logical_agreement": False,
+            "initial_logical_difference_count": 65,
+            "all_differences_reinspected_native_then_evidence": True,
+            "reconciled": True,
+            "root_final_decisions_sha256": "2663fa37ec88c65a1b3ec53f3f9612251690947de16ed5eec0ed9eb42bc71adb",
+            "independent_final_decisions_sha256": "2663fa37ec88c65a1b3ec53f3f9612251690947de16ed5eec0ed9eb42bc71adb",
+            "canonical_final_decisions_sha256": "2663fa37ec88c65a1b3ec53f3f9612251690947de16ed5eec0ed9eb42bc71adb",
+            "completed_labels_sha256": "14055ae886dd3ed1883aea2e10452bf8bd04e67e60367b1148c00b3847a299e2",
+            "initial_notes_only_difference_count": 51,
+            "independent_initial_noncanonical_lp_record_count": 29,
+            "independent_initial_official_dsl_conformant": False,
+        },
+        "holdout": {
+            "root_initial_decisions_sha256": "a6865bc9af86aa4e63441eca702b16d190e32fac452ff0d8ee886338b120059d",
+            "independent_initial_decisions_sha256": "f951fd6eb89118b971224b49c688f2ff7261bc47625e2dd677be2f34d70b9420",
+            "initial_exact_logical_agreement": False,
+            "initial_logical_difference_count": 44,
+            "all_differences_reinspected_native_then_evidence": True,
+            "reconciled": True,
+            "root_final_decisions_sha256": "2437f1906940204e43736a4f07e048295d796f9c6174b394be80d41c3d2df1e3",
+            "independent_final_decisions_sha256": "2437f1906940204e43736a4f07e048295d796f9c6174b394be80d41c3d2df1e3",
+            "canonical_final_decisions_sha256": "2437f1906940204e43736a4f07e048295d796f9c6174b394be80d41c3d2df1e3",
+            "completed_labels_sha256": "fd4757378e43074b42b0c73b313fdc5743489b71a7f6b68b1b6b1eed70f639e9",
+            "initial_notes_only_difference_count": 97,
+            "independent_initial_noncanonical_lp_record_count": 30,
+            "independent_initial_official_dsl_conformant": False,
+        },
+    }
+    _require_exact_json_value(
+        vision["splits"], expected_reviews, f"{context}.vision_review.splits"
+    )
+
+    expected_population_counts = {
+        "calibration": [29, 12, 59, 40, 15, 12, 11, 22, 22, 11],
+        "holdout": [33, 9, 58, 44, 14, 11, 11, 22, 22, 11],
+    }
+    formal_minima = [15, 10, 30, 4, 8, 4, 4, 8, 8, 6]
+    development_floors = [19, 13, 38, 6, 10, 6, 6, 10, 10, 8]
+    population = value["population_audit"]
+    if (
+        population["eligible_artifact_condition_clusters_per_split"] != 100
+        or population["all_eligible_artifact_condition_clusters_exact_polarity_pairs"]
+        is not True
+        or population["passed"] is not False
+    ):
+        raise RuntimeError(f"{context} population summary drift")
+    for split, counts in expected_population_counts.items():
+        split_audit = population["splits"][split]
+        formal = split_audit["formal_endpoint_minimums"]
+        development = split_audit["development_safety_floors"]
+        expected_formal_pass = split == "calibration"
+        if (
+            split_audit["split"] != split
+            or split_audit["condition_cluster_count"] != 100
+            or split_audit["all_eligible_clusters_exact_polarity_pairs"] is not True
+            or split_audit["formal_endpoint_minimums_passed"]
+            is not expected_formal_pass
+            or split_audit["development_safety_floors_passed"] is not False
+            or split_audit["passed"] is not False
+        ):
+            raise RuntimeError(f"{context} population split summary drift: {split}")
+        for index, endpoint_id in enumerate(EXPECTED_ENDPOINT_IDS):
+            if formal[endpoint_id] != {
+                "unique_cluster_count": counts[index],
+                "minimum_unique_clusters": formal_minima[index],
+                "count_passed": counts[index] >= formal_minima[index],
+            } or development[endpoint_id] != {
+                "unique_cluster_count": counts[index],
+                "development_minimum_unique_clusters": development_floors[index],
+                "count_passed": counts[index] >= development_floors[index],
+            }:
+                raise RuntimeError(
+                    f"{context} population endpoint drift: {split}/{endpoint_id}"
+                )
+
+    expected_failure_marker = {
+        "artifact": "microtexture-v2-r6-development-analysis-failure",
+        "schema_version": "microtexture-v2-r6-development-analysis-failure/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "development_edition": "r15",
+        "development_closed": True,
+        "measurement_started": False,
+        "error_type": "RuntimeError",
+        "message": "development endpoint population premeasurement audit failed",
+    }
+    _require_exact_json_value(
+        value["failure_marker_summary"],
+        expected_failure_marker,
+        f"{context}.failure_marker_summary",
+    )
+    expected_hash_bindings = {
+        "captured_repository_head": "c0a81cc356507c280c9968d80ae8a3db59d75584",
+        "preregistered_spec_sha256": "21199f17cdd7fff6f30c6f2a41cd2d5e465cd63de67b0d480a892423629d4aef",
+        "implementation_bindings_sha256": "0b867b626a9cd7810aebd08c3aa6cb2711c2650de0cc57a9e5516f5fd7ef20ec",
+        "dev_r14_failure_audit_sha256": "79acad1ef7972293e2697bd4c81edcc2c6ec017b4121e6609b94b95391c25476",
+        "development_boundary_sha256": "b29d15d03fb018924b0aa77d1e12f3c5ee6402bc9a32a7c2ce9db8a50c267872",
+        "generation_start_sha256": "1d0e7772accbe921516f2fc2083f08f0be4d281f7ba25244edfd3a9a0c26e312",
+        "generation_summary_sha256": "0c915939e6d7092c1a8252e3f4a990955aebd37c4b816152b5e323a95b920958",
+        "generation_seal_sha256": "b2466d8714f168a8a0056f682d42c5a095a136ee771a7272c63d3223fe7e8123",
+        "generation_completion_sha256": "43c16120674641e65a6cc4852d4a08071ec050604dc5b53f4ece8539323ed9e4",
+        "blind_key_commitment": "50d36e88e56f564e990722d0a1ba045b93788b1047e3d8956aa1fa1837872426",
+        "calibration_manifest_sha256": "0de860967511971049decee047015043ab3e32f438117dd0ac80ceaeaf8bf0ef",
+        "calibration_blank_labels_sha256": "537dcdc94c347b8f9af0404e8f5b72edfebf9084aa41457b45f9f8c6e184ebba",
+        "calibration_review_index_sha256": "c3dd783b264e6b65e9d3ca51d0fb3a2d1af348c09f902064bbfef9ebee7cd219",
+        "holdout_manifest_sha256": "89bea7a34bd79af44e654c4af74dee000ae7801b9a637f89c62d2ee4b52c2a4a",
+        "holdout_blank_labels_sha256": "ad7ff815a6e1c827ded9985b8aa0ced1d6c552c46874929c1e7dd04b93aa246b",
+        "holdout_review_index_sha256": "b275871ead7bcdf4510241c8bc662d047ebf5477e664225947067c4a67962055",
+        "label_seal_receipt_sha256": "d5e94fddb35e055de2a111882bdff329050473baea1c30e369a093b04583eff6",
+        "population_audit_sha256": "0f71e82e41b3f47fc61a062cfb40401df2c1827a858c2f7458129f7b9b5c73a1",
+        "failure_marker_sha256": "93c5b87a010a49236023e282cc8b21c781a40d25ef8f3f93aba5ef003883d5af",
+    }
+    _require_exact_json_value(
+        value["hash_bindings"], expected_hash_bindings, f"{context}.hash_bindings"
+    )
+    for field, digest in value["hash_bindings"].items():
+        expected_length = 40 if field == "captured_repository_head" else 64
+        if not isinstance(digest, str) or re.fullmatch(
+            rf"[0-9a-f]{{{expected_length}}}", digest
+        ) is None:
+            raise RuntimeError(f"{context} malformed hash binding: {field}")
+
+    _require_exact_json_value(
+        value["absent_measurement_artifacts"],
+        {
+            "calibration_measurements_present": False,
+            "holdout_measurements_present": False,
+            "analysis_result_present": False,
+            "holdout_endpoint_result_present": False,
+        },
+        f"{context}.absent_measurement_artifacts",
+    )
+    _require_exact_json_value(
+        value["postmortem"],
+        {
+            "invoked_exactly_once": True,
+            "read_only": True,
+            "raw_output_tracked": False,
+            "sanitized_aggregate_only_in_this_audit": True,
+            "anonymous_code_to_private_identity_mapping_tracked": False,
+            "used_to_relabel_resample_subset_topup_retune_or_select_a_threshold": False,
+        },
+        f"{context}.postmortem",
+    )
+    _require_exact_json_value(
+        value["successor_constraints"],
+        {
+            "r15_data_role": "development_only_premeasurement_population_failure_evidence",
+            "formal_r6_must_not_start_from_r15_failure": True,
+            "successor_must_be_fully_fresh_r16": True,
+            "successor_requires_fresh_preregistered_revision": True,
+            "successor_requires_fresh_root_key_public_nonces_hmac_domains_parameter_nonces_controls_references_identities_codes_commitments_labels_and_measurements": True,
+            "r15_root_key_controls_references_pixels_identities_codes_commitments_labels_measurements_nonces_public_surfaces_and_postmortem_output_reuse_forbidden": True,
+            "formal_endpoint_population_and_rate_minima_must_not_be_weakened": True,
+            "development_safety_floors_must_not_be_weakened": True,
+            "formal_and_development_minima_must_remain_unchanged": True,
+            "successor_may_use_only_this_sanitized_aggregate_failure_evidence": True,
+            "successor_authority_must_be_committed_pushed_and_dual_ci_green_before_generation": True,
+            "formal_r6_root_and_environment_must_remain_absent": True,
+        },
+        f"{context}.successor_constraints",
+    )
+    _require_exact_json_value(
+        value["secret_handling"],
+        {
+            "blind_key_present_in_this_artifact": False,
+            "blind_key_value_logged_or_tracked": False,
+            "development_blind_key_path": "tmp/map-production/microtexture-v2-r6-dev-r15/private/development-key.bin",
+            "development_blind_key_bytes": 32,
+            "development_blind_key_reuse_forbidden": True,
+            "anonymous_code_to_private_identity_mapping_tracked": False,
+            "private_labels_measurements_identities_or_pixels_tracked": False,
+            "postmortem_raw_output_tracked": False,
+            "closed_temporary_artifact_root": "tmp/map-production/microtexture-v2-r6-dev-r15",
+            "development_blind_key_path_is_git_ignored": True,
+        },
+        f"{context}.secret_handling",
+    )
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind closed dev-r7 through dev-r14 audits without private corpora."""
+    """Bind closed dev-r7 through dev-r15 audits without private corpora."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -3882,6 +4361,14 @@ def verify_tracked_development_history(
         raise RuntimeError("closed dev-r14 failure audit tracked SHA drift")
     validate_dev_r14_premeasurement_population_failure_audit(
         json.loads(dev_r14_payload.decode("utf-8"))
+    )
+
+    relative = history["dev_r15_failure_audit"]
+    dev_r15_payload = _tracked_worktree_bytes(repository, captured_head, relative)
+    if sha256_bytes(dev_r15_payload) != history["dev_r15_failure_audit_sha256"]:
+        raise RuntimeError("closed dev-r15 failure audit tracked SHA drift")
+    validate_dev_r15_premeasurement_population_failure_audit(
+        json.loads(dev_r15_payload.decode("utf-8"))
     )
 
     # Preserve the historical return contract; callers use this function for its

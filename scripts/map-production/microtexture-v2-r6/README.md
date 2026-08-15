@@ -94,22 +94,31 @@ resume、relabel、retune、replacement、subset、top-up、key resampling、roo
 control/reference/pixel/identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem outputのformal・後続editionへの
 再利用を禁止します。
 
-fresh successor `dev-r15` のexact rootは`tmp/map-production/microtexture-v2-r6-dev-r15`、key pathはその
-`private/development-key.bin`、schedule revisionは`dev-r15-calibration-microblob-reject-anchor-schedule-v1`、microblob anchor
-revisionは`dev-r15-calibration-quantized-microblob-reject-v1`です。warning anchor revisionはr14から不変の
-`dev-r14-quantized-direct-visible-sparse-warning-v1`です。public noncesは`r6-calibration-v10` / `r6-holdout-v10`、
-cluster/render/code domainsはそれぞれ`microtexture-v2-r6/private-condition-cluster/v10/`、
-`microtexture-v2-r6/render-seed/v10/`、`microtexture-v2-r6/opaque-code/v10/`、private-reference-transform domainは
-`private-reference-transform-v10/`です。public commitment domainは
-`microtexture-v2-r6/public-payload-commitment/v11/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
-`microtexture-v2-r6/key-commitment/v9`です。foundation lanesは`foundation-offset-v9` / `foundation-assignment-v9`、
-delta laneは`delta-v9`、private-control-id domainは`microtexture-v2-r6/private-control-id/v9/`です。parameter nonce
-rangesはcalibrationがartifact `773000..773419`、protocol-zero `751000..751015`、duplicate-audit
-`791000..791002`、holdoutがartifact `783000..783419`、protocol-zero `761000..761015`、duplicate-audit
-`801000..801002`です。metric、single-threshold rule、tier数`5/4/7/4`、population floors、endpoint counts/ratesは変更しません。
-規範JSON、bindings、code、tests、runnerを新しいauthority commitへfreezeしてpushし、branch upstream HEADをそのexact commitへ
-一致させ、同じcommitのUbuntu/Windows CIが両方成功するまでdev-r15をgenerateしてはいけません。これはformal readinessまたは
-formal authorityの主張ではなく、formal keyの非永続化契約も変更しません。
+`dev-r15`は一回限りのgenerationを完了し、Rootと独立Visionがそれぞれ全440 public recordsを独立確認した
+`440 × 2` review、全差分のreconciliation、official preflight、label seal、両splitのprivate auditを一度だけ完了しました。
+両private auditはpassしました。独立initial decisionの`lp` delimiter drift（calibration 29行、holdout 30行）はinitial
+snapshot/receiptに不変保存し、正規`l,p`への修正はfinal official-valid decision filesだけへ適用しました。
+pre-measurement population auditではcalibration warning `12`がformal minimum `10`をpassしてdevelopment floor `13`を
+failし、holdout warning `9`はformal minimum `10`とdevelopment floor `13`の両方をfailしました。他の全endpointは
+両splitで両minimumをpassしました。数値metric、measurement、threshold searchを開始せず、thresholdは存在しません。
+閉鎖後のsanitized read-only postmortemは一度だけです。auditは
+`world/map-production/qa/microtexture-v2-r6-dev-r15-development-failure.json`（raw SHA-256
+`faa420e63af8b3f647e045ae4d71ac2fbe32316175e68999cc16b3e278311200`）です。dev-r15のroot/key/control/reference/
+pixel/identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem outputは後続editionまたはformalへ
+一切再利用しません。
+
+fresh successor `dev-r16` はunchanged preregistered soft-unit metricを一回だけ検証するdevelopment-only probeです。
+scheduleは`dev-r16-sparse-warning-rebalance-schedule-v1`、active warning revisionは
+`dev-r16-six-per-sparse-family-direct-visible-warning-v1`、conversion revisionは
+`dev-r16-one-clean-one-clear-per-sparse-family-v1`です。fine-grain tierは`5/4/7/4`のまま、4つのsparse familyを
+各`4/6/6/4`へ変更し、各familyでclean 1件とclear-reject 1件だけをintermediate warning morphologyへ置換します。
+sparse warning anchorsはsplitあたり24件（6/family）、warning floor 13に対するmiss budgetは11です。全non-target morphologyと
+全endpoint minimumは不変です。r15 source microblob manifest 7件をprovenanceとして保持し、indices
+`[1,2,9,13,17,18]`のdiameter-4/diameter-6 6-condition ladderはbyte-identical、singleton index `16`だけを
+clear-to-warningへ変換します。design tierはVision truth、label、population membershipまたは合格を保証しません
+（`truth guarantee=false`）。fresh isolated root/key/identities/domains/nonces/controls/references/commitments/labels/
+measurementsを要求し、r16 development成功自体もformal authorityではありません。r16の一回限りauditをcommit/pushし、
+Ubuntu/Windows CIで確認するまでformal stageを開始してはいけません。
 
 ## ImageGen authority
 
@@ -128,8 +137,8 @@ record identity（polarity と replicate を含む）を入力とする full-out
 この blind は、honest reviewer が割り当てられた review surface だけを見るための**運用上の blind**です。
 technical / cryptographic blind や、同じ OS principal で悪意ある reviewer に対する secrecy は主張しません。
 formal fresh key は専用の長寿命 custodian process だけが保持し、artifactやlogへ永続化せず、Vision processへ
-継承・公開しません。closed dev-r8/dev-r9/dev-r10/dev-r11/dev-r12/dev-r13/dev-r14 keyは各Git-ignored private rootにだけ保持して
-再利用せず、fresh dev-r15 keyは別のGit-ignored rootとtracked custodian runnerだけが扱います。marker 前の
+継承・公開しません。closed dev-r8/dev-r9/dev-r10/dev-r11/dev-r12/dev-r13/dev-r14/dev-r15 keyは各Git-ignored private rootにだけ保持して
+再利用せず、fresh dev-r16 keyは別のGit-ignored rootとtracked custodian runnerだけが扱います。marker 前の
 review surface は185 contact-sheet view-pages（各view 37 pages）とcode-only label formだけです。manifest schema
 `microtexture-v2-r6-control-manifest/3` が公開する record 情報は opaque code と code別の
 `control` / `reference` / `delta` HMAC commitment 3件だけで、個別control/referenceのpath、file、raw bytes、
@@ -166,8 +175,8 @@ artifact の5 family は、compact `control_families` schema の次の ID だけ
 - `artifact-short-dash`
 - `artifact-parallel-bundle`
 
-formal one-shot開始前のdevelopment Visionで、各familyの20 nonzero conditionsを4つのdesign tierへ
-`5 / 4 / 7 / 4` conditionsずつ配分し、corpus coverageを固定します。calibrationとholdoutはspecに記録された
+fresh dev-r16のformal one-shot開始前development Visionでは、各familyの20 nonzero conditionsを4つのdesign tierへ配分し、
+fine-grainを`5 / 4 / 7 / 4`、4つのsparse familyを各`4 / 6 / 6 / 4`としてcorpus coverageを固定します。calibrationとholdoutはspecに記録された
 split別のfrozen scheduleとpublic nonceを使います。tierはperceptual marginを広く試すための生成設計であり、
 `clean`、`warning`、`reject`、severityその他のVision truthを予告・割当するものではありません。
 全scheduleを一体として生成・blind reviewし、結果を見てsubsetting、top-up、key resamplingしてはいけません。
@@ -185,7 +194,7 @@ dev-r14もtier数`5/4/7/4`を維持して一体生成・blind reviewし、両pri
 microblob-visible rejectが`4`でformal minimum `4`だけをpassし、development floor `6`をfailしたため測定前に閉鎖しました。
 calibrationのその他のendpointとholdoutの全endpointはformal minimumとdevelopment floorをpassしました。
 
-dev-r15は、calibration `artifact-microblob`の7 clear-reject candidateだけを次のcompact finite Gaussian matrixへ置換します。
+closed dev-r15は、calibration `artifact-microblob`の7 clear-reject candidateだけを次のcompact finite Gaussian matrixへ置換しました。
 
 | calibration index | diameter px | amplitude L | count | support radius px | separation px |
 |---:|---:|---:|---:|---:|---:|
@@ -197,11 +206,55 @@ dev-r15は、calibration `artifact-microblob`の7 clear-reject candidateだけ�
 | 17 | 6 | 11.8 | 44 | 3 | 17 |
 | 16 | 5 | 12.0 | 52 | 3 | 15 |
 
-calibrationの4 dominant candidate、全clean/warning candidate、holdout全体、他family、renderer/placement、metric、
-single-threshold rule、population minima、endpoint counts/ratesは変更しません。tier数も`5/4/7/4`のままです。この
-scheduleはblindなgeneration coverageであり、Vision truth、microblob label、endpoint membership、またはgate通過を保証・予告しません。
-fresh identityの全20 conditionsと各split 220 recordsを一体生成・blind reviewし、全private auditとpopulation gateを
-all-or-nothingで適用します。既存corpusへのtop-up、relabel、retuneではありません。
+closed dev-r15ではcalibrationの4 dominant candidate、全clean/warning candidate、holdout全体、他family、renderer/placement、metric、
+single-threshold rule、population minima、endpoint counts/ratesを変更しませんでした。r15のtier数も`5/4/7/4`のままでした。この
+scheduleはblindなgeneration coverageであり、Vision truth、microblob label、endpoint membership、またはgate通過を保証・予告しませんでした。
+r15 runtime outputsは閉鎖済みであり、top-up、relabel、retuneまたは後続editionへの再利用を認めません。
+
+dev-r16の16 exact warning conversionsはすべて`warning-candidate`です。
+
+| split | family | index (source) | warning parameters |
+|---|---|---|---|
+| calibration | speck | 0 (clean) | d1, L7.5, count4, shoulder0.05, separation13 |
+| calibration | speck | 1 (clear) | d1, L7.6, count4, shoulder0.05, separation15 |
+| calibration | microblob | 15 (clean) | d4, L7.0, count4, radius2, separation12 |
+| calibration | microblob | 16 (clear) | d6, L7.2, count4, radius3, separation15 |
+| calibration | short-dash | 9 (clean) | length6, width1, L7.4, count2, separation10 |
+| calibration | short-dash | 16 (clear) | length16, width1, L6.4, count1, separation20 |
+| calibration | parallel-bundle | 3 (clean) | length8, width1, spacing6, L7.4, pair1, separation14 |
+| calibration | parallel-bundle | 10 (clear) | length10, width1, spacing6, L6.4, pair1, separation14 |
+| holdout | speck | 19 (clean) | d1, L7.5, count4, shoulder0.05, separation14 |
+| holdout | speck | 17 (clear) | d1, L8.0, count4, shoulder0.05, separation16 |
+| holdout | microblob | 13 (clean) | d4, L7.1, count4, radius2, separation13 |
+| holdout | microblob | 11 (clear) | d6, L7.3, count4, radius3, separation16 |
+| holdout | short-dash | 7 (clean) | length6, width1, L7.5, count2, separation10 |
+| holdout | short-dash | 5 (clear) | length16, width1, L6.5, count1, separation20 |
+| holdout | parallel-bundle | 8 (clean) | length8, width1, spacing6, L7.5, pair1, separation14 |
+| holdout | parallel-bundle | 13 (clear) | length10, width1, spacing4, L6.5, pair1, separation14 |
+
+r14 inherited warning revisionは`dev-r14-quantized-direct-visible-sparse-warning-v1`、その16-warning manifest SHA-256は
+`5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6`、active 48-warning manifestは
+`bfc0e95e402c4f5751212c67759940c8c01802bb0a938899304ec4db576aa5df`、conversion-16 manifestは
+`0f0f4e0865249d34ff8f83537f60dcaee1c2ee0fd64836551b6aa754251fb8e7`です。predecessor full morphologyは
+`7adf59546337cded9910d17fbff5d383fc36e1058e69f98ed633890c2dd60f5b`、184 nonconversion morphologiesは
+`b8e7429a62e78c6e67efbfa6ec8b3b2fb0f16fb07f61ea9c7590f83f1b637ecd`、144 preserved nonwarning sparse morphologiesは
+`72212f11b453526bd6cec7e11420bcb9a0df7bbae2e097168393a5ee0c9a48b4`へ固定します。r15 source schedule / microblob revisionは
+`dev-r15-calibration-microblob-reject-anchor-schedule-v1` / `dev-r15-calibration-quantized-microblob-reject-v1`、その7-manifest SHA-256は
+`dd2ce7fd13f624bd065e8c7a6bacc2ab8bd593821dec8d46250a40e57ef64833`、active six ladder indices
+`[1,2,9,13,17,18]`のSHA-256は`2c207dfb5249d42056e164e7553091a9a617d8b673aecfb5ea25e4d757651f0c`です。
+speck reject active clear countsはcalibration `[36,40,44,48,52,56]`、holdout `[34,38,42,46,50,58]`、dominant countsは
+不変で、source 11件からactive 10件、floor 6に対するmiss budgetは4です。
+
+dev-r16 exact rootは`tmp/map-production/microtexture-v2-r6-dev-r16`、key pathは
+`tmp/map-production/microtexture-v2-r6-dev-r16/private/development-key.bin`です。
+public noncesは`r6-calibration-v11` / `r6-holdout-v11`、cluster domainは
+`microtexture-v2-r6/private-condition-cluster/v11/`、render domainは`microtexture-v2-r6/render-seed/v11/`、code domainは
+`microtexture-v2-r6/opaque-code/v11/`、private-reference-transform domainは`private-reference-transform-v11/`です。public
+commitment domainは`microtexture-v2-r6/public-payload-commitment/v12/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、
+key commitmentは`microtexture-v2-r6/key-commitment/v10`、foundation lanesは`foundation-offset-v10` / `foundation-assignment-v10`、
+delta laneは`delta-v10`、private-control-id domainは`microtexture-v2-r6/private-control-id/v10/`です。protocol-zero noncesは
+calibration `851000..851015` / holdout `861000..861015`、artifactは`873000..873419` / `883000..883419`、
+duplicate-auditは`891000..891002` / `901000..901002`です。
 
 family identityを保つmorphology invariantsも全tierで不変です。fine-grainはfield-wideな反復/coherenceを保ち、
 spotやlineへ形態を移しません。speckは互いに分離した同程度のpoint-like hard coreを3個以上保ち、blurでmicroblob化
@@ -235,7 +288,7 @@ condition clusterごとに `reject > warning > clean` のworst-case disposition�
 保守的に集約し、metric-equivalent pairには1 predictionだけを割り当てます。その後unique clustersを等重みで
 集計します。1 clusterをaccept/reject endpointの双方へ入れることは禁止です。
 
-closed `dev-r8` / `dev-r9` / `dev-r12` / `dev-r13` / `dev-r14` とfresh `dev-r15` の一回限りのanalysisには、formal specのendpoint最低populationを
+closed `dev-r8` / `dev-r9` / `dev-r12` / `dev-r13` / `dev-r14` / `dev-r15` とfresh `dev-r16` の一回限りのanalysisには、formal specのendpoint最低populationを
 一切変更せず、さらに厳しいdevelopment-only safety floorを上乗せします。dev-r10はanalysis前、dev-r11はprivate
 sentinel auditでpopulation aggregation前に閉鎖したため、このgateの結果を持ちません。label bytesを両splitともsealし、private identityを
 revealしてsemantic auditを終えた後、最初のmetric callより前にcondition-cluster truthで次を検査します。
@@ -268,7 +321,9 @@ formal minimum 10 / development floor 13をpass、holdout warning `12`はformal 
 failしたため、`measurement_started=false`のまま閉鎖しました。dev-r13のその他の全endpointはformal minimumとdevelopment
 floorをpassしました。dev-r14も両private auditをpassしましたが、calibration microblob-visible reject `4`はformal
 minimum `4`をpassしてdevelopment floor `6`をfailしました。calibrationの他endpointとholdout全endpointは両minimumを
-passし、`measurement_started=false`のまま閉鎖しました。fresh dev-r15でもprivate auditに失敗するかpopulationが一つでも
+passし、`measurement_started=false`のまま閉鎖しました。dev-r15も両private auditをpassした後、calibration warning `12`が
+formal minimum `10`をpassしてdevelopment floor `13`をfailし、holdout warning `9`が両minimumをfailしたため、他の全endpointが
+両minimumをpassしていても測定前に閉鎖しました。fresh dev-r16でもprivate auditに失敗するかpopulationが一つでも
 不足すれば`measurement_started=false`で消費・閉鎖し、測定、threshold探索、ラベル修正、top-up、別keyでの再生成へ
 進みません。population通過後も全endpointを同時に
 満たせなければthresholdを作らず閉鎖します。このmargin gateとgrain support scheduleはdevelopment専用であり、
@@ -286,7 +341,7 @@ Root は各 split の全220 codesを、次の5 viewで漏れなく確認しま�
 
 1 view は37 pages、合計は split あたり 185 contact-sheet view-pagesです。development helperは同じpage indexの
 5 viewを横並びにした37 review boardsも作ります。全 view は同じ code 順序を持ち、nearest-neighbor
-で拡大されます。dev-r15の判定ではnative 512×384 full-200 cropを無補正・contrast強調なしで先に確認し、400%は
+で拡大されます。closed dev-r15へ適用した規約をfresh dev-r16でも維持し、native 512×384 full-200 cropを無補正・contrast強調なしで先に確認し、400%は
 同位置の再同定だけに使います。各512×384 panelの直前には30pxのcode headerがあり、codeをpanel下へ置くこと、headerとpanelを
 重ねることは禁止します。Root は生成された exact path の label stub に、`disposition`、5種の visible flag、
 severity、200%確認、全400% quadrant確認、notes を記入します。全185 view-pages相当を確認する前に one-shot
@@ -340,14 +395,13 @@ detector は中央 256×192 luminance-residual window に対し、固定 raw met
 spot component floor、finite-line response floor、parallel-pair response floor はすべてabsolute `4.5 L`です。
 coherent fine patternはspot/line branchではなく、directional coherenceを含むgrain branchが担当します。
 split-specific morphology schedulesとこれらのabsolute floorは、fresh formal key、controls、labelsより前に
-明示的なnon-formal development keysでfreezeします。closed `dev-r6`～`dev-r14` corporaは正式判断に使いません。
-dev-r10はgeneration中断、dev-r11はprivate sentinel audit失敗によりmetric evidenceを持たず、dev-r12/dev-r13/dev-r14もpopulation
-gate失敗によりmetric evidenceを持ちません。fresh `dev-r15` の
-`dev-r15-calibration-microblob-reject-anchor-schedule-v1`全scheduleをsubsettingなしで一回だけ確認します。morphology変更は
-calibration `artifact-microblob`のclear-reject candidate indices `1,2,9,13,16,17,18`だけです。calibration dominant 4、
-全clean/warning、holdout、他family、renderer/placementは不変です。formal labels、threshold、resultsは未確定であり、
-design tierからVision truthを保証・予告しません。既存のmetric、half-scale、absolute floor、endpoint minima/rate、blind、one-shot、
-failed-r3/r4/r5およびclosed development境界は不変です。
+明示的なnon-formal development keysでfreezeします。closed `dev-r6`～`dev-r15` corporaは正式判断に使いません。
+dev-r10はgeneration中断、dev-r11はprivate sentinel audit失敗によりmetric evidenceを持たず、dev-r12/dev-r13/dev-r14/dev-r15もpopulation
+gate失敗によりmetric evidenceを持ちません。fresh `dev-r16` の
+`dev-r16-sparse-warning-rebalance-schedule-v1`全scheduleをsubsettingなしで一回だけ確認します。変更は4 sparse familyで
+各1 clean / 1 clear-rejectをwarningへ変えるexact 16 morphologiesだけで、184 nonconversion morphologiesは不変です。
+formal labels、threshold、resultsは未確定であり、design tierからVision truthを保証・予告しません。既存のmetric、half-scale、
+absolute floor、endpoint minima/rate、blind、one-shot、failed-r3/r4/r5およびclosed development境界は不変です。
 
 各 branch は固定half-scale referenceに対する
 `unit_soft(x,ref)=0 (x<=0), otherwise (2/pi)*atan(x/ref)` で正規化します。有限の正の証拠に対して厳密単調で
@@ -359,8 +413,8 @@ r7の閉鎖済みaggregate診断から変更するhalf-scaleは3件だけです�
 単一threshold、全endpoint count/rateは不変です。単一reference変更は全候補不合格、2-reference変更で唯一通った組へ、
 判定境界を広げるgrain 1件を加えたrevisionです。dev-r8はpopulation gateでmeasurement前に閉鎖し、dev-r9は
 同じmetricを一度だけ実行したもののthresholdを選べず閉鎖しました。dev-r10はmetricを呼ぶ前のgeneration中断で
-閉鎖しました。dev-r11もprivate sentinel audit、dev-r12/dev-r13/dev-r14もpopulation auditでmetric前に閉鎖しました。fresh
-dev-r15はmetricを変更せず継承し、closed editionのthreshold、diagnostic、measurement、generation/review outputをformalへ
+閉鎖しました。dev-r11もprivate sentinel audit、dev-r12/dev-r13/dev-r14/dev-r15もpopulation auditでmetric前に閉鎖しました。fresh
+dev-r16はmetricを変更せず継承し、closed editionのthreshold、diagnostic、measurement、generation/review outputをformalへ
 使用しません。
 
 ```text
@@ -386,7 +440,7 @@ post-marker failureとしてauthority thresholdを作らず閉鎖します。cou
 candidateがなければ`hard_threshold:null`で閉鎖します。最良の不合格候補はdiagnostic auditにだけ記録し、
 freezeや後続stageへ渡しません。
 
-## Development closure and fresh dev-r15 operator order
+## Development closure and fresh dev-r16 operator order
 
 dev-r8は全440 decisionsをreview、seal、private auditした後、最初のmetric callより前のpopulation gateで
 `failed-and-closed-before-measurement`となりました。tiny-speck-visible rejectはcalibration 3、holdout 1で、
@@ -428,31 +482,31 @@ parallel-bundle `11`で全endpointが両minimumをpassしました。measurement
 replacement、別key、subset、top-up、およびroot/key/control/reference/pixel/identity/code/commitment/label/decision/measurement/nonce/
 public surface/postmortem outputの再利用を禁止します。
 
-dev-r15はformal r6ではなく、formal前の新しい一回限りdevelopment probeとしてのみ計画されています。このREADMEの
-記述だけでは実行権限になりません。`dev-r15-calibration-microblob-reject-anchor-schedule-v1`、
-`dev-r15-calibration-quantized-microblob-reject-v1`、r14から継承する
-`dev-r14-quantized-direct-visible-sparse-warning-v1`、fresh root/key、全nonce/domain、7 calibration microblob clear-reject
-anchors、bindings、code、tests、tracked custodian runnerを規範JSONへfreezeし、新しいauthority commitをpushしてbranch
-upstream HEADをそのexact commitへ一致させ、同じcommitのUbuntu/Windows CIを両方passさせるまでgenerateしてはいけません。
+dev-r15はwarning population gate failureとして測定前に閉鎖済みであり、続行、再生成、修正または成果物の再利用を
+認めません。fresh dev-r16はformal r6ではなく、formal前の新しい一回限りdevelopment probeとしてのみ計画されています。
+このREADMEの記述だけでは実行権限になりません。`dev-r16-sparse-warning-rebalance-schedule-v1`、active warning /
+conversion revisions、fresh root/key、全nonce/domain、exact 16 warning conversions、bindings、code、tests、tracked
+custodian runnerを規範JSONへfreezeし、新しいauthority commitをpushしてbranch upstream HEADをそのexact commitへ一致させ、
+同じcommitのUbuntu/Windows CIを両方passさせるまでgenerateしてはいけません。
 generate時に記録したmachine/exact runtime fingerprintはpreflight/analyze完了まで完全一致を必須とし、途中で変化した
 場合は継続・再生成せずfail-closedに停止します。
 
 freeze後の順序は、fresh rootの不存在確認 → fresh 32-byte key作成 → public byteより前のexclusive
 `generation-start.dev.json` → 両split各220 recordsの一回限り生成 → generation summary → summaryをbindするseal →
 sealをbindするexclusive completionです。start後のcatchableな例外はexclusive failureへ記録し、failureとcompletionの
-共存、summary / seal / completionの欠落、hard killを含む中断はdev-r15を消費・閉鎖します。その後に限り、
+共存、summary / seal / completionの欠落、hard killを含む中断はdev-r16を消費・閉鎖します。その後に限り、
 Root/独立Visionによる全37
 review boardsと各220 decisionsの独立確認 → exact Root decision reconciliation → code/printed-code binding、生成時SHA、
 全件logical agreementのpreflight → exclusive label seal → key read後の全185 contact sheets / 37 review boardsの
 secret-derived exact byte・code-order再生成照合 → private audit → all-or-nothing population gateです。全floorがpassした場合に限り最初のmetric callへ進み、calibrationで1 thresholdを
-選び、その値をholdoutへ変更せず適用します。一つでも失敗すればdev-r15を消費・閉鎖し、rerun、resume、relabel、
-別key、subsetting、top-upをしません。成功時もdev-r15 thresholdはformal authorityではなく、success auditをGitへ
-固定してdev-r15を閉じた後にのみ、formal r6 authorityを別commitで最終freezeできます。現時点ではformal readinessを
+選び、その値をholdoutへ変更せず適用します。一つでも失敗すればdev-r16を消費・閉鎖し、rerun、resume、relabel、
+別key、subsetting、top-upをしません。成功時もdev-r16 thresholdはformal authorityではなく、success auditをGitへ
+固定してdev-r16を閉じた後にのみ、formal r6 authorityを別commitで最終freezeできます。現時点ではformal readinessを
 主張しません。
 
 ## Formal operator order
 
-dev-r15が上記の全population gate、metric、calibration、holdout endpointsを一回でpassし、hash-bound success auditを
+dev-r16が上記の全population gate、metric、calibration、holdout endpointsを一回でpassし、hash-bound success auditを
 commit/pushして両CIを通すまで、以下のformal stageを一つも開始してはいけません。その成功はformal authorityではなく、
 formal authorityはその後の別commitでfreezeします。順序を入れ替えたり、失敗後にやり直したりしてはいけません。
 
