@@ -118,27 +118,44 @@ duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185
 half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
 r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
-持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r13`はformalへ昇格できません。
+持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r14`はformalへ昇格できません。
 
-fresh successorは`dev-r14`です。development rootは`tmp/map-production/microtexture-v2-r6-dev-r14`、keyはそのroot内の
-`private/development-key.bin`だけに置き、schedule revisionを`dev-r14-warning-acceptance-anchor-schedule-v1`、warning anchor
-revisionを`dev-r14-quantized-direct-visible-sparse-warning-v1`へ固定します。public noncesは`r6-calibration-v9` /
-`r6-holdout-v9`、cluster/render/code domainsは`microtexture-v2-r6/private-condition-cluster/v9/`、
-`microtexture-v2-r6/render-seed/v9/`、`microtexture-v2-r6/opaque-code/v9/`、private-reference-transform domainは
-`private-reference-transform-v9/`です。public commitmentは
-`microtexture-v2-r6/public-payload-commitment/v10/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
-`microtexture-v2-r6/key-commitment/v8`、foundation lanesは`foundation-offset-v8` / `foundation-assignment-v8`、delta
-laneは`delta-v8`、private-control-idは`microtexture-v2-r6/private-control-id/v8/`です。protocol nonceはcalibration
-`651000..651015` / holdout `661000..661015`、`artifact` nonceは`673000..673419` / `683000..683419`、
-duplicate-audit nonceは`691000..691002` / `701000..701002`です。
+`dev-r14`はgeneration、全440 recordsのRoot/独立Vision review、reconciliation、preflight、label seal、両splitのprivate
+auditを一度だけ完了し、両private auditはpassしました。calibrationはclean `35`、warning `15`、reject `50`、severity-3
+`13`、grain `12`、tiny-speck `12`、microblob `4`、spot `16`、short-line `22`、parallel-bundle `11`でした。
+microblob-visible reject `4`はformal minimum `4`をpassしましたがdevelopment floor `6`をfailし、他のcalibration endpointは
+両minimumをpassしました。holdoutはclean `31`、warning `16`、reject `53`、severity-3 `20`、grain `11`、tiny-speck `11`、
+microblob `9`、spot `20`、short-line `22`、parallel-bundle `11`で全endpointが両minimumをpassしました。all-or-nothing
+gateにより`measurement_started=false`のままmetric、threshold search、holdout endpoint evaluationを開始せず閉鎖しました。
+閉鎖後のsanitized read-only postmortemは一度だけで、auditは
+`world/map-production/qa/microtexture-v2-r6-dev-r14-development-failure.json`です。dev-r14 rootを不変に保持し、rerun、resume、
+relabel、retune、replacement、subset、top-up、key resampling、root削除後の再生成、およびroot/key/control/reference/pixel/
+identity/code/commitment/label/decision/measurement/nonce/public surface/postmortem outputの後続edition・formalへの再利用を禁止します。
 
-dev-r14はtier数`5/4/7/4`を維持し、speck、microblob、short-dash、parallel-bundleの同じ既存warning-candidateをsplitごとに
-各4件、計16件だけfamily invariant内でr13から単調に強化したnative full-200で直接知覚可能なsparse morphology anchorへ
-変更します。fine-grain warning、全clean-candidate、全clear/dominant-reject morphologyを含むnon-warning scheduleは変更しません。
-splitごとの16 anchors対development floor 13の構造上のmiss budgetは3ですが、design tierはVision truthやwarning labelを
-保証しません。metric、唯一のscalar threshold、population floors、endpoint minima/counts/ratesは変更しません。
+fresh successorは`dev-r15`です。変更するのはcalibration `artifact-microblob`の既存clear-reject 7件だけで、compact finite
+Gaussian matrixはfinal index順に`9:(res0,d4,L11.4,count64,r2,sep12)`、`1:(res1,d4,L11.6,count64,r2,sep13)`、
+`2:(res2,d4,L11.8,count64,r2,sep14)`、`18:(res0,d6,L11.4,count44,r3,sep15)`、
+`13:(res1,d6,L11.6,count44,r3,sep16)`、`17:(res2,d6,L11.8,count44,r3,sep17)`、
+`16:(res1,d5,L12.0,count52,r3,sep15)`です。calibration microblobの4 dominant-reject、全clean/warning、holdout、
+他family、renderer、placement、metric、唯一のscalar threshold、tier数`5/4/7/4`、population floors、endpoint
+minima/counts/ratesは変更しません。この設計はVision truth、microblob flag、reject label、endpoint membershipを保証しません。
 
-dev-r14生成は、tracked authorityとrunnerをauthority commitへfreezeしてpushし、Ubuntu/Windowsの両CIが同じcommitで成功した後にだけ開始します。
+development rootは`tmp/map-production/microtexture-v2-r6-dev-r15`、keyはそのroot内の
+`private/development-key.bin`だけに置きます。schedule revisionは
+`dev-r15-calibration-microblob-reject-anchor-schedule-v1`、microblob anchor revisionは
+`dev-r15-calibration-quantized-microblob-reject-v1`で、変更しないwarning anchor revision
+`dev-r14-quantized-direct-visible-sparse-warning-v1`を継承します。public noncesは`r6-calibration-v10` /
+`r6-holdout-v10`、cluster/render/code domainsは`microtexture-v2-r6/private-condition-cluster/v10/`、
+`microtexture-v2-r6/render-seed/v10/`、`microtexture-v2-r6/opaque-code/v10/`、private-reference-transform domainは
+`private-reference-transform-v10/`です。public commitmentは
+`microtexture-v2-r6/public-payload-commitment/v11/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}`、key commitmentは
+`microtexture-v2-r6/key-commitment/v9`、foundation lanesは`foundation-offset-v9` / `foundation-assignment-v9`、delta
+laneは`delta-v9`、private-control-idは`microtexture-v2-r6/private-control-id/v9/`です。protocol nonceはcalibration
+`751000..751015` / holdout `761000..761015`、artifact nonceは`773000..773419` / `783000..783419`、
+duplicate-audit nonceは`791000..791002` / `801000..801002`です。
+
+dev-r15生成は、tracked authorityとrunnerをfresh authority commitへfreezeしてpushし、Ubuntu/Windowsの両CIがそのexact
+commitで成功した後にだけ開始します。
 fresh root/keyを作り、公開byteを一つでも書く前に排他的な`generation-start.dev.json`を確定し、両splitを生成してから
 summary → seal → completionの順に排他的に確定します。catchableな失敗は排他的なfailureへ固定し、failure/completionの
 共存、summary/seal/completionの欠落、または外部中断はそのeditionを消費済みとして閉鎖します。transaction検証前には

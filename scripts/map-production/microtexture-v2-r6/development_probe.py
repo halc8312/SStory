@@ -20,14 +20,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r14"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r15"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r14"
+DEVELOPMENT_EDITION = "r15"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
@@ -2037,7 +2037,7 @@ def generate() -> None:
     DEV_ROOT.mkdir(parents=True, exist_ok=False)
     (DEV_ROOT / "private").mkdir()
     # The root is the earliest durable consumed-edition evidence. Sample the key
-    # only after it exists so an interruption can never silently resample r14.
+    # only after it exists so an interruption can never silently resample r15.
     key = secrets.token_bytes(32)
     state = {
         "development_edition": DEVELOPMENT_EDITION,
