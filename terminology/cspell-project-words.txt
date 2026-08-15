@@ -170,6 +170,8 @@ multiscale
 ndimage
 nonblocking
 nonclean
+nonconversion
+nonwarning
 nonuniformity
 premeasurement
 RGB
