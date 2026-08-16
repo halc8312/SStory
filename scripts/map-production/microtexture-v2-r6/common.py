@@ -36,9 +36,9 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "1fbf850662373dee6368626024df1298feed1913558edcdb15691ed19dbf6414"
+SPEC_SHA256 = "7bf147420b6baed542c05da97591fcc28c357436e312fb2275845153edd56fbf"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
-R19_DEVELOPMENT_BASIS = (
+R20_DEVELOPMENT_BASIS = (
     "reference constants, strictly monotone bounded soft-unit score structure, "
     "worst-case truth aggregation, and fixed filters were designed from the "
     "revealed failed r5 report plus closed non-formal dev-r6/dev-r7 evidence; "
@@ -74,7 +74,14 @@ R19_DEVELOPMENT_BASIS = (
     "population, and rate contract, and changes only duplicate semantic equivalence "
     "so reject severities 2 and 3 share one reject ordinal band while disposition "
     "and all five visible flags remain exact; every prior corpus remains "
-    "development-only"
+    "development-only; dev-r19 then closed before population aggregation or numeric "
+    "measurement because its holdout obvious-artifact duplicate pair was labeled "
+    "clean severity 0 with no visible flags; fresh dev-r20 preserves the full dev-r19 "
+    "artifact catalog, tier/metric/threshold/population/rate contracts, reject "
+    "severity-band policy, and clean duplicate, and changes only the obvious-artifact "
+    "duplicate construction to a keyed 12-bar finite axial short-line payload whose "
+    "native-pixel geometry is statically checked but whose Vision outcome is not "
+    "guaranteed"
 )
 
 
@@ -404,7 +411,7 @@ VISION_SEMANTIC_RUBRIC = {
 }
 
 POPULATION_ANCHOR_SCHEDULE = {
-    "revision": "dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1",
+    "revision": "dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1",
     "fresh_from_closed_dev_r18": True,
     "r18_parameter_nonce_reuse_forbidden": True,
     "r18_per_family_residue_rotation": {
@@ -633,6 +640,129 @@ POPULATION_ANCHOR_SCHEDULE = {
         "f4f4c80a406818da30ab18ac270eb466dda2ef42b4f301bde6ce2dea8698ade1"
     ),
     "r19_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden": True,
+   'fresh_from_closed_dev_r19': True,
+   'r19_parameter_nonce_reuse_forbidden': True,
+   'r20_parameter_nonce_bases': {'calibration_artifact': 1273000,
+                                 'holdout_artifact': 1283000,
+                                 'calibration_protocol_zero': 1251000,
+                                 'holdout_protocol_zero': 1261000,
+                                 'calibration_duplicate_audit': [1291000,
+                                                                 1291001,
+                                                                 1291002],
+                                 'holdout_duplicate_audit': [1301000, 1301001, 1301002]},
+   'inherited_r19_schedule_revision': 'dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1',
+   'r20_predecessor_catalog_authority_sha256': 'f2edfca7ee3f696ddaf815b4be3f316973626ed5cc602cba3dbc5585203d5b37',
+   'r20_preserved_r19_artifact_morphology_conditions_across_splits': 200,
+   'r20_preserved_r19_artifact_morphology_sha256': '9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365',
+   'r20_exact_morphology_change_count_across_splits': 0,
+   'r20_duplicate_equivalence_policy_revision': 'dev-r19-reject-ordinal-band-duplicate-equivalence-v1',
+   'r20_duplicate_equivalence_policy_manifest': {'revision': 'dev-r19-reject-ordinal-band-duplicate-equivalence-v1',
+                                                 'scope': {'private_role': 'duplicate-audit',
+                                                           'duplicate_audit_group': 'artifact'},
+                                                 'pair_equivalence': {'disposition': {'comparison': 'exact-across-pair',
+                                                                                      'required_value': 'reject'},
+                                                                      'visible_flags': {'comparison': 'exact-across-pair',
+                                                                                        'fields': ['grain_visible',
+                                                                                                   'tiny_speck_visible',
+                                                                                                   'microblob_visible',
+                                                                                                   'short_line_visible',
+                                                                                                   'parallel_bundle_visible']},
+                                                                      'severity_0_to_3': {'comparison': 'per-member-inclusive-ordinal-band',
+                                                                                          'allowed_values': [2,
+                                                                                                             3],
+                                                                                          'exact_across_pair_required': False}},
+                                                 'unchanged_semantics': {'clean_duplicate_pair_full_semantic_equality_required': True,
+                                                                         'warning_semantics_unchanged': True,
+                                                                         'all_non_scoped_duplicate_comparisons_unchanged': True},
+                                                 'obvious_artifact_required_label': {'disposition': 'reject',
+                                                                                     'severity_0_to_3_allowed_values': [2,
+                                                                                                                        3],
+                                                                                     'short_line_visible_required': True},
+                                                 'preservation_contract': {'artifact_morphology_change_count_across_splits': 0,
+                                                                           'full_artifact_morphology_sha256': '9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365',
+                                                                           'tier_cardinality_minimum_metric_threshold_and_rate_contracts_unchanged': True,
+                                                                           'reference_prequalification_unchanged': True,
+                                                                           'bilateral_initial_visible_flag_gate_unchanged': True,
+                                                                           'vision_truth_guaranteed': False}},
+   'r20_duplicate_equivalence_policy_manifest_sha256': '292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6',
+   'r20_duplicate_sentinel_revision': 'dev-r20-keyed-axial-short-line-duplicate-sentinel-v1',
+   'r20_duplicate_sentinel_manifest': {'revision': 'dev-r20-keyed-axial-short-line-duplicate-sentinel-v1',
+                                       'scope': {'private_role': 'duplicate-audit',
+                                                 'duplicate_audit_group': 'artifact'},
+                                       'construction': {'render_family': 'duplicate-obvious-short-line-sentinel',
+                                                        'bar_count_in_metric_window': 12,
+                                                        'bars_per_exact_metric_quadrant': 3,
+                                                        'encoded_bar_length_px': 24,
+                                                        'encoded_bar_width_px': 3,
+                                                        'encoded_amplitude_l': 12.0,
+                                                        'polarity': 1,
+                                                        'minimum_center_chebyshev_separation_px': 32,
+                                                        'center_margin_per_exact_metric_quadrant_px': 14,
+                                                        'minimum_support_guard_px': 2,
+                                                        'orientation_contract': 'keyed-phase-2-to-1-horizontal-or-vertical-per-quadrant',
+                                                        'placement_contract': 'fresh-keyed-split-and-condition-derived'},
+                                       'raster_contract': {'connected_component_count': 12,
+                                                           'pixels_per_component': 72,
+                                                           'nonzero_pixel_count': 864,
+                                                           'nonzero_values_exact': [12.0],
+                                                           'component_shapes_hw': [[3,
+                                                                                    24],
+                                                                                   [24,
+                                                                                    3]],
+                                                           'each_quadrant_contains_horizontal_and_vertical': True,
+                                                           'all_support_inside_one_exact_metric_quadrant_per_component': True,
+                                                           'all_support_inside_metric_window': True},
+                                       'pair_equality_contract': {'requested_delta_float32_exact': True,
+                                                                  'decoded_residual_exact': True,
+                                                                  'metric_values_exact': True,
+                                                                  'reference_bytes_distinct': True,
+                                                                  'control_bytes_distinct': True,
+                                                                  'anonymous_codes_and_control_ids_distinct': True},
+                                       'zero_key_static_delta_float32_sha256': {'calibration': '0f34c8f787be57c7c0c074888a73ec15e007c63e98d5c5606d4d5d8bbc6de823',
+                                                                                'holdout': '027140de4d34eb78c06b00c282b37caade6393ce6240165bfa65825a286a644f'},
+                                       'preservation_contract': {'clean_duplicate_construction_unchanged': True,
+                                                                 'artifact_catalog_morphology_change_count_across_splits': 0,
+                                                                 'full_artifact_morphology_sha256': '9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365',
+                                                                 'duplicate_equivalence_policy_revision': 'dev-r19-reject-ordinal-band-duplicate-equivalence-v1',
+                                                                 'duplicate_equivalence_policy_manifest_sha256': '292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6',
+                                                                 'tier_metric_threshold_population_and_rate_contracts_unchanged': True,
+                                                                 'vision_truth_guaranteed': False}},
+   'r20_duplicate_sentinel_manifest_sha256': '2ee513f2a3182741fbf9df569a2c5137a7f25b4fd27d3fbba6b00344497b85a1',
+   'r20_sanitized_r19_basis': {'failure_class': 'holdout-artifact-duplicate-obvious-short-line-clean-miss',
+                               'calibration': {'duplicate_clean_audit_passed': True,
+                                               'duplicate_artifact_pair': {'member_count': 2,
+                                                                           'agreed_disposition': 'reject',
+                                                                           'agreed_severity_0_to_3': 3,
+                                                                           'agreed_visible_flags': {'grain_visible': False,
+                                                                                                    'tiny_speck_visible': False,
+                                                                                                    'microblob_visible': False,
+                                                                                                    'short_line_visible': True,
+                                                                                                    'parallel_bundle_visible': False},
+                                                                           'required_obvious_artifact_contract_passed': True},
+                                               'protocol_zero_audit_passed': True,
+                                               'duplicate_audit_passed': True},
+                               'holdout': {'duplicate_clean_audit_passed': True,
+                                           'duplicate_artifact_pair': {'member_count': 2,
+                                                                       'agreed_disposition': 'clean',
+                                                                       'agreed_severity_0_to_3': 0,
+                                                                       'agreed_visible_flags': {'grain_visible': False,
+                                                                                                'tiny_speck_visible': False,
+                                                                                                'microblob_visible': False,
+                                                                                                'short_line_visible': False,
+                                                                                                'parallel_bundle_visible': False},
+                                                                       'required_obvious_artifact_contract_passed': False},
+                                           'protocol_zero_audit_passed': True,
+                                           'duplicate_audit_passed': False},
+                               'population_aggregation_started': False,
+                               'numeric_measurement_started': False,
+                               'metric_evaluation_started': False,
+                               'threshold_search_started': False},
+   'r20_sanitized_r19_basis_sha256': '8a99bb7038b5936ac7e44ac339114dc46f78e5d2a8df923a7be0674693d85933',
+   'r20_sanitized_r19_failure_audit_canonical_sha256': '54833ae6c35d7ec864f05fabefb8416844c63fe259780bda0ca309b6c31285e0',
+   'r20_obvious_artifact_duplicate_sentinel_construction_changes_across_splits': 2,
+   'r20_clean_duplicate_construction_changes_across_splits': 0,
+   'r20_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden': True,
+   'r20_duplicate_sentinel_vision_truth_guaranteed': False,
     "private_until_one_shot_marker": True,
     "public_manifest_exposure_forbidden": True,
     "generation_design_tiers_are_truth": False,
@@ -921,7 +1051,7 @@ POPULATION_ANCHOR_SCHEDULE = {
     },
 }
 
-R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
+R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
     "revision",
     "fresh_from_closed_dev_r18",
     "r18_parameter_nonce_reuse_forbidden",
@@ -955,15 +1085,36 @@ R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
     "speck_reject_anchor_structural_miss_budget_against_development_floor",
     "speck_reject_anchor_truth_guarantee_claimed",
     "speck_reject_anchor_schedule",
+    "fresh_from_closed_dev_r19",
+    "r19_parameter_nonce_reuse_forbidden",
+    "r20_parameter_nonce_bases",
+    "inherited_r19_schedule_revision",
+    "r20_predecessor_catalog_authority_sha256",
+    "r20_preserved_r19_artifact_morphology_conditions_across_splits",
+    "r20_preserved_r19_artifact_morphology_sha256",
+    "r20_exact_morphology_change_count_across_splits",
+    "r20_duplicate_equivalence_policy_revision",
+    "r20_duplicate_equivalence_policy_manifest",
+    "r20_duplicate_equivalence_policy_manifest_sha256",
+    "r20_duplicate_sentinel_revision",
+    "r20_duplicate_sentinel_manifest",
+    "r20_duplicate_sentinel_manifest_sha256",
+    "r20_sanitized_r19_basis",
+    "r20_sanitized_r19_basis_sha256",
+    "r20_sanitized_r19_failure_audit_canonical_sha256",
+    "r20_obvious_artifact_duplicate_sentinel_construction_changes_across_splits",
+    "r20_clean_duplicate_construction_changes_across_splits",
+    "r20_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden",
+    "r20_duplicate_sentinel_vision_truth_guaranteed",
 )
-R19_SPECK_REJECT_ANCHOR_SCHEDULE_SHA256 = (
+R20_INHERITED_SPECK_REJECT_ANCHOR_SCHEDULE_SHA256 = (
     "ed60c8f99b7338c4ca66246312b7d9a48648519257a3079ba06e0aba1e19e317"
 )
-R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256 = (
-    "7065534770044e408d02dd82a4b96adbc74ba77a5e154a2c42697bb43c679c3c"
+R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256 = (
+    "3b87c5aabee0c8c8641d80496123a4f2dd58ca60f6da2bcf822e6bc7dfa80368"
 )
-R19_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256 = (
-    "15e87ae2c17897bccae75722f1a8ffa9dd8f3aea2d8632929d83a62ac0675b0d"
+R20_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256 = (
+    "b5c8211902bb03838e7fe402bbb48e0e7f7a9db37acd1856be3dca2c67b82134"
 )
 
 RENDERING_INVARIANTS = {
@@ -1196,6 +1347,10 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "dev_r18_failure_audit_sha256",
             "dev_r19_status",
             "dev_r19_role",
+            "dev_r19_failure_audit",
+            "dev_r19_failure_audit_sha256",
+            "dev_r20_status",
+            "dev_r20_role",
         },
         "r6 development history",
     )
@@ -1388,18 +1543,36 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "microtexture-v2-r6-dev-r18-development-failure.json"
         or history.get("dev_r18_failure_audit_sha256")
         != "7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122"
-        or history.get("dev_r19_status") != "fresh-development-only"
+        or history.get("dev_r19_status")
+        != "failed-and-closed-before-population-audit"
         or history.get("dev_r19_role")
-        != "fresh one-shot development role used only as a duplicate semantic-"
-        "equivalence correction probe after the closed dev-r18 prepopulation private-"
-        "audit failure; it preserves every dev-r18 morphology, design tier, metric, "
-        "threshold, population, and rate contract, changes only duplicate semantic "
-        "equivalence so reject severities 2 and 3 share one reject ordinal band while "
-        "clean and warning severities remain exact and disposition plus all five "
-        "visible flags remain exact, requires a fresh isolated root, cryptographic "
-        "blind key, identities, domains, nonces, controls, references, commitments, "
-        "labels, decisions, and measurements, and can never become or supply formal "
-        "authority"
+        != "development-only prepopulation private-audit failure evidence; generation, "
+        "both blind 440-record reviews, bilateral reconciliation, official preflight, "
+        "label sealing, private reveal, regeneration, and protocol-zero audits each "
+        "completed exactly once, calibration clean and obvious-artifact duplicate "
+        "groups plus the holdout clean duplicate group passed, but holdout's obvious-"
+        "artifact duplicate pair was clean severity 0 with no visible flags, so the "
+        "required rejected short-line artifact contract failed before population audit "
+        "or any numeric measurement; one read-only postmortem ran exactly once, all "
+        "initial snapshots and receipts remain immutable, and no dev-r19 root, key, "
+        "private material, control, reference, pixel, identity, code, commitment, label, "
+        "decision, measurement, nonce, public surface, or postmortem output is reusable"
+        or history.get("dev_r19_failure_audit")
+        != "world/map-production/qa/"
+        "microtexture-v2-r6-dev-r19-development-failure.json"
+        or history.get("dev_r19_failure_audit_sha256")
+        != "96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0"
+        or history.get("dev_r20_status") != "fresh-development-only"
+        or history.get("dev_r20_role")
+        != "fresh one-shot development role used only to strengthen the obvious-"
+        "artifact duplicate sentinel after the closed dev-r19 prepopulation private-"
+        "audit miss; it preserves all 200 dev-r19 artifact morphologies, every design "
+        "tier, metric, threshold, population and rate contract, the dev-r19 reject "
+        "severity-band duplicate policy, and the clean duplicate construction, and "
+        "changes only the obvious-artifact duplicate payload to a fresh-keyed finite "
+        "axial short-line sentinel with static geometry checks; Vision truth is not "
+        "guaranteed, all identities and audit roles remain private, and it can never "
+        "supply formal authority"
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -1417,9 +1590,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": "non-authority dev-r19 only; no development key, root, output, or commitment can become formal authority",
+        "scope": "non-authority dev-r20 only; no development key, root, output, or commitment can become formal authority",
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r19/private/development-key.bin",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r20/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -1702,7 +1875,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or definition.get("parallel_pair_ratio_diagnostic_only") is not True
         or definition.get("diagnostic_branch_flag_cutoff") != 0.5
         or definition.get("artifact_dependent_score_denominators_forbidden") is not True
-        or definition.get("development_basis") != R19_DEVELOPMENT_BASIS
+        or definition.get("development_basis") != R20_DEVELOPMENT_BASIS
         or definition.get("score_normalization")
         != "unit_soft(x, reference)=0 when x<=0 else (2/pi)*atan(x/reference), "
         "where reference is a frozen fixed half-scale and every finite positive "
@@ -1859,19 +2032,19 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         raise RuntimeError("r6 private population-anchor schedule drift")
     changed_schedule_values = {
         key: anchor_schedule[key]
-        for key in R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
+        for key in R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
     }
     if (
-        len(anchor_schedule) != 84
+        len(anchor_schedule) != 105
         or list(anchor_schedule) != list(POPULATION_ANCHOR_SCHEDULE)
         or sha256_bytes(canonical_json_bytes(sorted(anchor_schedule)))
-        != R19_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        != R20_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
         or sha256_bytes(canonical_json_bytes(changed_schedule_values))
-        != R19_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        != R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
         or sha256_bytes(
             canonical_json_bytes(anchor_schedule["speck_reject_anchor_schedule"])
         )
-        != R19_SPECK_REJECT_ANCHOR_SCHEDULE_SHA256
+        != R20_INHERITED_SPECK_REJECT_ANCHOR_SCHEDULE_SHA256
         or sha256_bytes(
             canonical_json_bytes(anchor_schedule["r18_sanitized_r17_basis"])
         )
@@ -1886,8 +2059,22 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             canonical_json_bytes(anchor_schedule["r19_sanitized_r18_basis"])
         )
         != anchor_schedule["r19_sanitized_r18_basis_sha256"]
+        or sha256_bytes(
+            canonical_json_bytes(
+                anchor_schedule["r20_duplicate_equivalence_policy_manifest"]
+            )
+        )
+        != anchor_schedule["r20_duplicate_equivalence_policy_manifest_sha256"]
+        or sha256_bytes(
+            canonical_json_bytes(anchor_schedule["r20_duplicate_sentinel_manifest"])
+        )
+        != anchor_schedule["r20_duplicate_sentinel_manifest_sha256"]
+        or sha256_bytes(
+            canonical_json_bytes(anchor_schedule["r20_sanitized_r19_basis"])
+        )
+        != anchor_schedule["r20_sanitized_r19_basis_sha256"]
     ):
-        raise RuntimeError("r6 dev-r19 population-anchor authority digest drift")
+        raise RuntimeError("r6 dev-r20 population-anchor authority digest drift")
     formal_minima = {
         endpoint["id"]: int(endpoint["minimum_unique_clusters"])
         for endpoint in EXPECTED_ENDPOINT_DEFINITIONS
@@ -1999,6 +2186,39 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "r18_metric_threshold_population_and_rate_contract_changes_forbidden"
         ]
         is not True
+        or anchor_schedule["fresh_from_closed_dev_r19"] is not True
+        or anchor_schedule["r19_parameter_nonce_reuse_forbidden"] is not True
+        or anchor_schedule[
+            "r20_preserved_r19_artifact_morphology_conditions_across_splits"
+        ]
+        + anchor_schedule["r20_exact_morphology_change_count_across_splits"]
+        != 200
+        or anchor_schedule[
+            "r20_obvious_artifact_duplicate_sentinel_construction_changes_across_splits"
+        ]
+        != 2
+        or anchor_schedule[
+            "r20_clean_duplicate_construction_changes_across_splits"
+        ]
+        != 0
+        or anchor_schedule[
+            "r20_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden"
+        ]
+        is not True
+        or anchor_schedule["r20_duplicate_sentinel_vision_truth_guaranteed"]
+        is not False
+        or anchor_schedule["r20_duplicate_sentinel_manifest"]["construction"][
+            "bar_count_in_metric_window"
+        ]
+        != 12
+        or anchor_schedule["r20_duplicate_sentinel_manifest"]["construction"][
+            "bars_per_exact_metric_quadrant"
+        ]
+        != 3
+        or anchor_schedule["r20_duplicate_sentinel_manifest"]["raster_contract"][
+            "nonzero_pixel_count"
+        ]
+        != 864
         or anchor_schedule["grain_reject_anchor_conditions_per_split"] != 11
         or anchor_schedule["grain_reject_anchor_truth_guarantee_claimed"] is not False
         or anchor_schedule["grain_reject_anchor_schedule"][
@@ -2067,6 +2287,13 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "reject-tier grain periods per split are statically constrained to the "
         "inclusive 3..12 pixel guard-banded interior of the unchanged 2..13 pixel "
         "coherence support"
+        or rendering.get("duplicate_audit_contract")
+        != "the clean semantic audit group retains its exact-zero construction; the "
+        "obvious-artifact group uses the r20 fresh-keyed finite axial short-line "
+        "sentinel; each group contains two separately coded records with distinct "
+        "private reference and control bytes, equal requested-delta bytes, exact "
+        "decoded-residual and metric equality, and labels satisfying the preserved "
+        "dev-r19 reject-band policy"
     ):
         raise RuntimeError("r6 rendering population cardinality drift")
 
@@ -2113,6 +2340,12 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or any(
             not isinstance(item, str) or not item for item in private_audits.values()
         )
+        or private_audits.get("duplicate_artifact")
+        != "the two separately coded obvious-artifact records must have exact "
+        "disposition and exact values for all five visible flags across the pair, both "
+        "must be reject with short_line_visible=true, and each severity must "
+        "independently belong to the inclusive reject ordinal band {2,3}; severity "
+        "equality within that band is not required"
     ):
         raise RuntimeError("r6 private Vision audit contract drift")
 
@@ -2145,10 +2378,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         raise RuntimeError("r6 control catalog cardinality drift")
     if (
         catalog.get("exact_variant_source")
-        != "the tracked control_catalog.py named by implementation-bindings.json; r19 "
-        "preserves the full hash-bound r18 artifact morphology catalog byte-for-byte "
-        "and changes only the preregistered duplicate-artifact reject severity "
-        "equivalence policy"
+        != "the tracked control_catalog.py named by implementation-bindings.json; r20 "
+        "preserves the full hash-bound r19 artifact morphology catalog and dev-r19 "
+        "duplicate semantic-equivalence policy byte-for-byte, preserves the clean "
+        "duplicate, and changes only the obvious-artifact duplicate sentinel "
+        "construction"
         or catalog.get("artifact_contract")
         != "five morphology families, exactly 20 nonzero conditions per family, "
         "paired dark/light polarities, one replicate per polarity, and no zero-count "
@@ -2156,6 +2390,13 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or catalog.get("foundation_assignment")
         != "secret-HMAC-derived; cluster mates may share a v15/v16/v17 source asset "
         "but every record receives a distinct keyed private reference transform"
+        or catalog.get("duplicate_audit_contract")
+        != "one unchanged clean and one strengthened obvious-artifact private "
+        "semantic-replicate cluster; the strengthened pair uses twelve keyed finite "
+        "24-by-3 pixel positive-L axial bars, exactly three per metric quadrant with "
+        "both orientations; pair deltas, decoded residuals, and metrics are exact while "
+        "references, controls, codes, and control identities remain distinct and "
+        "private"
     ):
         raise RuntimeError("r6 artifact catalog contract drift")
     if catalog.get("split_separation") != (
@@ -2189,11 +2430,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     }:
         raise RuntimeError("r6 private reference-transform contract drift")
     if catalog.get("private_identity_domains") != {
-        "private_reference_transform_prefix": "private-reference-transform-v14/",
-        "foundation_offset_lane": "foundation-offset-v13",
-        "foundation_assignment_lane": "foundation-assignment-v13",
-        "delta_lane": "delta-v13",
-        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v13/",
+        "private_reference_transform_prefix": "private-reference-transform-v15/",
+        "foundation_offset_lane": "foundation-offset-v14",
+        "foundation_assignment_lane": "foundation-assignment-v14",
+        "delta_lane": "delta-v14",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v14/",
     }:
         raise RuntimeError("r6 private identity domain contract drift")
 
@@ -2253,28 +2494,28 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v14"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v15"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
             raise RuntimeError(f"r6 split replicate contract drift: {split_name}")
     blind = value.get("blind_derivation", {})
     if (
-        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v13"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v14/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v14/"
+        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v14"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v15/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v15/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-14 blind derivation domain drift")
+        raise RuntimeError("r6 revision-15 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v14/"
+        != "microtexture-v2-r6/private-condition-cluster/v15/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v15/"
+        != "microtexture-v2-r6/public-payload-commitment/v16/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-14/15 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-15/16 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -2304,17 +2545,16 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         if not isinstance(public_policy.get(field), str) or not public_policy[field]:
             raise RuntimeError(f"r6 public identity policy missing {field}")
     if public_policy.get("reviewer_access_contract") != (
-        "the formal blind key remains only in a dedicated custodian process; the "
-        "closed dev-r9, dev-r10, dev-r11, dev-r12, dev-r13, dev-r14, dev-r15, dev-r16, "
-        "dev-r17, and dev-r18 blind keys remain only in their retained Git-ignored "
-        "private probe roots and are never reused; the fresh dev-r19 blind key remains "
-        "only in its "
-        "separate Git-ignored private probe root and tracked custodian runner; neither "
-        "Vision review process may read or inherit any key, and both must use visual "
-        "page inspection only until both official initial snapshots and receipts exist "
-        "before reconciliation and label sealing"
+        "the formal blind key remains only in a dedicated custodian process; "
+        "every closed development blind key through dev-r19 remains only in its "
+        "retained Git-ignored private probe root and is never reused; the fresh dev-r20 "
+        "blind key remains only in its separate Git-ignored private probe root and "
+        "tracked custodian runner; neither Vision review process may read or inherit "
+        "any key or private audit role, and both must use visual page inspection only "
+        "until both official initial snapshots and receipts exist before reconciliation "
+        "and label sealing"
     ):
-        raise RuntimeError("r6 dev-r19 reviewer-access contract drift")
+        raise RuntimeError("r6 dev-r20 reviewer-access contract drift")
     if (
         value["contact_sheets"].get("all_220_source_panels_unique_in_every_view")
         is not True
@@ -5764,10 +6004,406 @@ def validate_dev_r18_premeasurement_private_audit_failure(value: Any) -> None:
         require_exact_keys(value[field], keys, f"{context}.{field}")
 
 
+def validate_dev_r19_premeasurement_private_audit_failure(value: Any) -> None:
+    """Validate the exact sanitized dev-r19 private duplicate-audit failure."""
+
+    context = "closed dev-r19 prepopulation private-audit failure"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "failure_phase",
+            "failure_class",
+            "measurement_started",
+            "selection_status",
+            "development_hard_threshold",
+            "calibration_endpoint_performance",
+            "holdout_endpoint_performance",
+            "threshold_selection_audit",
+            "one_shot_contract",
+            "vision_review",
+            "private_audit_failure",
+            "failure_marker_summary",
+            "hash_bindings",
+            "measurement_artifacts",
+            "postmortem",
+            "root_cause",
+            "successor_constraints",
+            "secret_handling",
+        },
+        context,
+    )
+    timestamp = value["audit_recorded_at"]
+    if (
+        not isinstance(timestamp, str)
+        or re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z", timestamp
+        )
+        is None
+    ):
+        raise RuntimeError(f"{context}.audit_recorded_at must be canonical UTC text")
+    parse_utc_timestamp(timestamp, f"{context}.audit_recorded_at")
+    expected_header = {
+        "artifact": "microtexture-v2-r6-dev-r19-development-private-audit-failure-audit",
+        "schema_version": "microtexture-v2-r6-development-private-audit-failure-audit/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "development_edition": "r19",
+        "outcome": "failed_closed",
+        "failure_phase": "private-audit-before-population-audit",
+        "failure_class": "holdout-artifact-duplicate-obvious-short-line-clean-miss",
+        "measurement_started": False,
+        "selection_status": "not_started_private_duplicate_gate_failed",
+        "development_hard_threshold": None,
+        "calibration_endpoint_performance": None,
+        "holdout_endpoint_performance": None,
+        "threshold_selection_audit": None,
+    }
+    for field, expected in expected_header.items():
+        _require_exact_json_value(value[field], expected, f"{context}.{field}")
+    if sha256_bytes(canonical_json_bytes(value)) != (
+        "54833ae6c35d7ec864f05fabefb8416844c63fe259780bda0ca309b6c31285e0"
+    ):
+        raise RuntimeError(f"{context} canonical semantic digest drift")
+
+    _require_exact_json_value(
+        value["one_shot_contract"],
+        {
+            "generation_completed_exactly_once": True,
+            "root_vision_completed_exactly_once_before_private_reveal": True,
+            "independent_vision_completed_exactly_once_before_private_reveal": True,
+            "all_440_records_reviewed_by_each_reviewer": True,
+            "root_initial_snapshot_and_receipt_sealed_exactly_once": True,
+            "independent_initial_snapshot_and_receipt_sealed_exactly_once": True,
+            "root_and_independent_decisions_reconciled_exactly_once_before_preflight": True,
+            "review_preflight_invoked_exactly_once": True,
+            "review_preflight_passed": True,
+            "labels_sealed_exactly_once_before_private_reveal": True,
+            "private_reveal_started_after_label_seal": True,
+            "private_audit_started_exactly_once": True,
+            "private_regeneration_and_public_surface_match_audit_passed": True,
+            "protocol_zero_audits_passed_both_splits": True,
+            "duplicate_audit_passed": False,
+            "population_audit_started": False,
+            "population_audit_passed": False,
+            "analysis_started_exactly_once": True,
+            "numeric_metric_called": False,
+            "threshold_search_started": False,
+            "development_threshold_selected": False,
+            "postmortem_invoked_exactly_once": True,
+            "formal_cli_invoked": False,
+            "formal_marker_created": False,
+            "formal_threshold_created": False,
+            "locked_clean_v18_decoded_or_measured": False,
+            "failure_marker_created": True,
+            "rerun_resume_relabel_retune_subset_topup_resample_or_reuse_for_r19_forbidden": True,
+            "r19_closed": True,
+        },
+        f"{context}.one_shot_contract",
+    )
+
+    vision = value["vision_review"]
+    require_exact_keys(
+        vision,
+        {
+            "records_per_split_per_reviewer",
+            "review_boards_per_split_per_reviewer",
+            "logical_comparison_fields",
+            "evidence_notes_excluded_from_logical_comparison",
+            "initial_snapshots_persisted_immutably",
+            "initial_snapshots_official_decision_dsl_conformant",
+            "initial_snapshot_receipts_verified",
+            "splits",
+            "all_differences_reinspected_native_then_evidence",
+            "final_reconciled",
+            "canonical_labels_equal_both_reviewers",
+            "total_initial_logical_and_notes_only_difference_count",
+            "initial_snapshots_and_receipts_preserved_after_reconciliation",
+            "bilateral_initial_visible_flag_intersection_gate",
+        },
+        f"{context}.vision_review",
+    )
+    expected_split_keys = {
+        "root_initial_decisions_sha256",
+        "root_initial_receipt_sha256",
+        "independent_initial_decisions_sha256",
+        "independent_initial_receipt_sha256",
+        "initial_exact_logical_agreement",
+        "initial_logical_difference_count",
+        "initial_notes_only_difference_count",
+        "all_differences_reinspected_native_then_evidence",
+        "reconciled",
+        "root_final_decisions_sha256",
+        "independent_final_decisions_sha256",
+        "canonical_final_decisions_sha256",
+        "completed_labels_sha256",
+        "record_dispositions",
+        "reconciled_final_official_parser_and_ev3_passed",
+        "final_visible_flags_subset_of_both_initial_flag_sets",
+    }
+    if set(vision["splits"]) != {"calibration", "holdout"}:
+        raise RuntimeError(f"{context} Vision split coverage drift")
+    total_differences = 0
+    for split, review in vision["splits"].items():
+        require_exact_keys(
+            review, expected_split_keys, f"{context}.vision_review.{split}"
+        )
+        require_exact_keys(
+            review["record_dispositions"],
+            {"clean", "warning", "reject"},
+            f"{context}.vision_review.{split}.record_dispositions",
+        )
+        hash_fields = {field for field in review if field.endswith("_sha256")}
+        if any(
+            not isinstance(review[field], str)
+            or re.fullmatch(r"[0-9a-f]{64}", review[field]) is None
+            for field in hash_fields
+        ):
+            raise RuntimeError(f"{context}.{split} Vision SHA-256 binding drift")
+        final_sha = review["root_final_decisions_sha256"]
+        if (
+            review["initial_exact_logical_agreement"] is not False
+            or review["all_differences_reinspected_native_then_evidence"] is not True
+            or review["reconciled"] is not True
+            or final_sha != review["independent_final_decisions_sha256"]
+            or final_sha != review["canonical_final_decisions_sha256"]
+            or sum(review["record_dispositions"].values()) != 220
+            or review["reconciled_final_official_parser_and_ev3_passed"] is not True
+            or review["final_visible_flags_subset_of_both_initial_flag_sets"]
+            is not True
+        ):
+            raise RuntimeError(f"{context}.{split} reconciliation contract drift")
+        total_differences += review["initial_logical_difference_count"]
+        total_differences += review["initial_notes_only_difference_count"]
+    if (
+        vision["records_per_split_per_reviewer"] != 220
+        or vision["review_boards_per_split_per_reviewer"] != 37
+        or vision["logical_comparison_fields"]
+        != ["page", "row", "anonymous_code", "disposition", "severity", "flags"]
+        or total_differences != 312
+        or total_differences
+        != vision["total_initial_logical_and_notes_only_difference_count"]
+    ):
+        raise RuntimeError(f"{context} Vision review contract drift")
+    _require_exact_json_value(
+        vision["bilateral_initial_visible_flag_intersection_gate"],
+        {
+            "revision": "dev-r17-bilateral-initial-visible-flag-intersection-gate-v1",
+            "manifest_sha256": "f042250290f80d4304923e3b564746e8311515f5c649811678db934bb3ad6ffd",
+            "both_official_initial_snapshots_and_receipts_required": True,
+            "final_visible_flag_set_relation": "subset-of-root-initial-intersection-independent-initial",
+            "private_role_input": False,
+            "passed": True,
+        },
+        f"{context}.vision_review.bilateral_initial_visible_flag_intersection_gate",
+    )
+
+    private_failure = value["private_audit_failure"]
+    require_exact_keys(
+        private_failure,
+        {
+            "all_splits_passed",
+            "affected_split",
+            "failed_audit",
+            "private_regeneration_and_public_surface_match_audit_passed",
+            "protocol_zero_audits_passed_both_splits",
+            "anonymous_code_page_row_ev3_locator_private_identity_or_pixel_binding_tracked",
+            "semantic_signature_at_failure",
+            "splits",
+            "calibration_duplicate_aggregate_observation",
+            "holdout_artifact_duplicate_observation",
+            "interpretation",
+        },
+        f"{context}.private_audit_failure",
+    )
+    expected_private_split_keys = {
+        "record_count",
+        "artifact_record_count",
+        "protocol_zero_record_count",
+        "protocol_zero_clean_count",
+        "duplicate_audit_record_count",
+        "duplicate_group_count",
+        "contact_sheet_count",
+        "review_board_count",
+        "regenerated_public_commitments_matched",
+        "regenerated_contact_sheet_bytes_matched",
+        "regenerated_review_board_bytes_matched",
+        "protocol_zero_audit_passed",
+        "clean_duplicate_group_passed",
+        "artifact_duplicate_group_passed",
+        "duplicate_audit_passed",
+    }
+    for split, audit in private_failure["splits"].items():
+        require_exact_keys(
+            audit, expected_private_split_keys, f"{context}.private_audit.{split}"
+        )
+    _require_exact_json_value(
+        private_failure["calibration_duplicate_aggregate_observation"],
+        {
+            "clean_duplicate": {
+                "record_count": 2,
+                "dispositions": ["clean", "clean"],
+                "severity_ordinals": [0, 0],
+                "visible_flags_in_canonical_order": [[], []],
+                "semantic_equivalence_passed": True,
+            },
+            "artifact_duplicate": {
+                "record_count": 2,
+                "dispositions": ["reject", "reject"],
+                "severity_ordinals": [3, 3],
+                "severity_equivalence_classes": ["reject-band", "reject-band"],
+                "visible_flags_in_canonical_order": [["l"], ["l"]],
+                "disposition_exact_match": True,
+                "severity_equivalence_class_match": True,
+                "all_five_visible_flags_exact_match": True,
+                "both_obvious_artifacts_individually_reject_severity_2_or_3_with_short_line_visible": True,
+                "semantic_equivalence_and_obvious_artifact_contract_passed": True,
+            },
+        },
+        f"{context}.private_audit_failure.calibration_duplicate_aggregate_observation",
+    )
+    _require_exact_json_value(
+        private_failure["holdout_artifact_duplicate_observation"],
+        {
+            "record_count": 2,
+            "dispositions": ["clean", "clean"],
+            "severity_ordinals": [0, 0],
+            "severity_equivalence_classes": ["clean-exact", "clean-exact"],
+            "visible_flags_in_canonical_order": [[], []],
+            "disposition_exact_match": True,
+            "severity_equivalence_class_match": True,
+            "all_five_visible_flags_exact_match": True,
+            "both_records_clean_severity_zero_with_no_visible_flags": True,
+            "required_obvious_artifact_contract": "each record reject severity 2 or 3 with short_line_visible true",
+            "required_obvious_artifact_contract_passed": False,
+        },
+        f"{context}.private_audit_failure.holdout_artifact_duplicate_observation",
+    )
+    if (
+        private_failure["all_splits_passed"] is not False
+        or private_failure["affected_split"] != "holdout"
+        or private_failure["failed_audit"]
+        != "artifact-duplicate-obvious-artifact-contract"
+        or private_failure["splits"]["calibration"]["duplicate_audit_passed"]
+        is not True
+        or private_failure["splits"]["holdout"]["duplicate_audit_passed"] is not False
+    ):
+        raise RuntimeError(f"{context} private duplicate-audit aggregate drift")
+
+    expected_hash_bindings = {
+        "captured_repository_head": "8fcb229f1ee49b0889e61828644ad3d3c594c0d4",
+        "preregistered_spec_sha256": "1fbf850662373dee6368626024df1298feed1913558edcdb15691ed19dbf6414",
+        "implementation_bindings_sha256": "01680d9484f5f13d4f73aa19c292031e4a72df803eac43bbe383de199b3a8968",
+        "development_authority_manifest_sha256": "b96a98c0c6a35f227a9b81c80220af9ffa99621828a71d10a2ddecb84cccb963",
+        "dev_r18_failure_audit_sha256": "7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122",
+        "development_boundary_sha256": "e0231e2b1caf65d67c87b4d946a070dbf499fcd2dd7c9fe01934f90349841e89",
+        "generation_start_sha256": "c18f6a1ce82585a6aa800dd3f695e9da43f7221368bc09daf09bae23354e6717",
+        "generation_summary_sha256": "c53bfed5d4ee828f2240c3a7dc806a4b2ad535842ed095a73b8e4987c554f2c8",
+        "generation_seal_sha256": "25460dbe3691c1fc6a7c771dd1fc4f6e8134c42f125875ef5b73c55632136148",
+        "generation_completion_sha256": "1fb0a3d2d9e82f535d62dadc460471082320616397c51ab996ed73090ac86a47",
+        "blind_key_commitment": "c84482d79047682475647c36ecc91eecb7b49e9a7dad29a5d85284ed9f577888",
+        "calibration_manifest_sha256": "95d1b3c10dcdc4c74a4aa1ab394c0f6cfec688146e15f3874c978f1b334c5acb",
+        "calibration_blank_labels_sha256": "f493bdb3552ca40a8cd4b4ce408c046755cd1ad8ac61af3f8f2531f3ae14906f",
+        "calibration_review_index_sha256": "39a52c8635a4be4fb4cce155637c06dab3f5035fc13ea4b3c78044c5650bbd22",
+        "holdout_manifest_sha256": "7293445860640b17737d3b9e2aad53068974732aedb01dbd0dbdf9f68944e8e0",
+        "holdout_blank_labels_sha256": "059dd10b9ebecb0106f6df4ea9cee698fd004006af9e0abd0f44a3f8fd949fdc",
+        "holdout_review_index_sha256": "0fbda402328d8a555e1023dd33245ff92446c0fa63b9b4930c8a43e381da102f",
+        "label_seal_receipt_sha256": "9d4c5ca1f4c4eb8df8cbc9138ddce942037f026b8aa35a41ba34f36f623a7ccd",
+        "failure_marker_sha256": "98aec4dd4f5e8ac5f0d4a5b8e96a19e785d0d1b3afa8d7a401dfa75ed2a3ea9d",
+    }
+    _require_exact_json_value(
+        value["hash_bindings"], expected_hash_bindings, f"{context}.hash_bindings"
+    )
+    for field, digest in value["hash_bindings"].items():
+        expected_length = 40 if field == "captured_repository_head" else 64
+        if (
+            not isinstance(digest, str)
+            or re.fullmatch(rf"[0-9a-f]{{{expected_length}}}", digest) is None
+        ):
+            raise RuntimeError(f"{context} malformed hash binding: {field}")
+
+    exact_nested_keysets = {
+        "failure_marker_summary": {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "development_edition",
+            "development_closed",
+            "measurement_started",
+            "error_type",
+            "message",
+        },
+        "measurement_artifacts": {
+            "sealed_calibration_labels_present",
+            "sealed_holdout_labels_present",
+            "label_seal_receipt_present",
+            "failure_marker_present",
+            "population_audit_present",
+            "calibration_measurements_present",
+            "holdout_measurements_present",
+            "analysis_result_present",
+            "threshold_selection_result_present",
+            "holdout_endpoint_result_present",
+        },
+        "postmortem": {
+            "invoked_exactly_once",
+            "read_only",
+            "raw_output_tracked",
+            "sanitized_aggregate_only_in_this_audit",
+            "anonymous_code_page_row_ev3_locator_or_private_identity_mapping_tracked",
+            "used_to_relabel_resample_subset_topup_retune_or_select_a_threshold",
+        },
+        "root_cause": {
+            "generation_or_runtime_failure",
+            "decision_reconciliation_failure",
+            "private_regeneration_or_public_surface_mismatch",
+            "protocol_zero_failure",
+            "duplicate_obvious_artifact_contract_failure",
+            "population_or_metric_failure_evaluated",
+            "premature_measurement_ruled_out",
+            "postmortem",
+            "repair_forbidden",
+        },
+        "successor_constraints": {
+            "r19_data_role",
+            "formal_r6_must_not_start_from_r19_failure",
+            "successor_preregistered_in_this_audit",
+            "any_successor_must_be_fully_fresh",
+            "successor_requires_fresh_preregistered_revision",
+            "successor_requires_fresh_root_key_public_nonces_hmac_domains_parameter_nonces_controls_references_identities_codes_commitments_labels_decisions_and_measurements",
+            "r19_root_key_private_material_controls_references_pixels_identities_codes_commitments_labels_decisions_measurements_nonces_public_surfaces_and_postmortem_output_reuse_forbidden",
+            "closed_r19_morphologies_tiers_metric_threshold_population_and_rate_contracts_may_not_be_changed_in_place",
+            "holdout_obvious_artifact_miss_may_not_be_repaired_in_place",
+            "successor_may_change_any_contract_only_under_fresh_preregistered_authority",
+            "successor_may_use_only_this_sanitized_aggregate_failure_evidence",
+            "successor_authority_must_be_committed_pushed_and_dual_ci_green_before_generation",
+            "formal_r6_root_and_environment_must_remain_absent",
+        },
+        "secret_handling": {
+            "blind_key_present_in_this_artifact",
+            "blind_key_value_logged_or_tracked",
+            "anonymous_code_to_private_identity_mapping_tracked",
+            "private_labels_measurements_identities_or_pixels_tracked",
+            "postmortem_raw_output_tracked",
+            "development_blind_key_and_private_material_reuse_forbidden",
+            "closed_development_root_reuse_forbidden",
+        },
+    }
+    for field, keys in exact_nested_keysets.items():
+        require_exact_keys(value[field], keys, f"{context}.{field}")
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind closed dev-r7 through dev-r18 audits without private corpora."""
+    """Bind every closed development audit through dev-r19 and fresh dev-r20."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -5912,6 +6548,56 @@ def verify_tracked_development_history(
     validate_dev_r18_premeasurement_private_audit_failure(
         json.loads(dev_r18_payload.decode("utf-8"))
     )
+
+    expected_dev_r19_role = (
+        "development-only prepopulation private-audit failure evidence; generation, "
+        "both blind 440-record reviews, bilateral reconciliation, official preflight, "
+        "label sealing, private reveal, regeneration, and protocol-zero audits each "
+        "completed exactly once, calibration clean and obvious-artifact duplicate "
+        "groups plus the holdout clean duplicate group passed, but holdout's "
+        "obvious-artifact duplicate pair was clean severity 0 with no visible flags, "
+        "so the required rejected short-line artifact contract failed before "
+        "population audit or any numeric measurement; one read-only postmortem ran "
+        "exactly once, all initial snapshots and receipts remain immutable, and no "
+        "dev-r19 root, key, private material, control, reference, pixel, identity, "
+        "code, commitment, label, decision, measurement, nonce, public surface, or "
+        "postmortem output is reusable"
+    )
+    if (
+        history.get("dev_r19_status")
+        != "failed-and-closed-before-population-audit"
+        or history.get("dev_r19_role") != expected_dev_r19_role
+        or history.get("dev_r19_failure_audit")
+        != "world/map-production/qa/microtexture-v2-r6-dev-r19-development-failure.json"
+        or history.get("dev_r19_failure_audit_sha256")
+        != "96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0"
+    ):
+        raise RuntimeError("closed dev-r19 failure audit history binding drift")
+    relative = history["dev_r19_failure_audit"]
+    dev_r19_payload = _tracked_worktree_bytes(repository, captured_head, relative)
+    if sha256_bytes(dev_r19_payload) != history["dev_r19_failure_audit_sha256"]:
+        raise RuntimeError("closed dev-r19 failure audit tracked SHA drift")
+    validate_dev_r19_premeasurement_private_audit_failure(
+        json.loads(dev_r19_payload.decode("utf-8"))
+    )
+
+    if (
+        history.get("dev_r20_status") != "fresh-development-only"
+        or history.get("dev_r20_role")
+        != "fresh one-shot development role used only to strengthen the obvious-"
+        "artifact duplicate sentinel after the closed dev-r19 prepopulation private-"
+        "audit miss; it preserves all 200 dev-r19 artifact morphologies, every design "
+        "tier, metric, threshold, population and rate contract, the dev-r19 reject "
+        "severity-band duplicate policy, and the clean duplicate construction, and "
+        "changes only the obvious-artifact duplicate payload to a fresh-keyed finite "
+        "axial short-line sentinel with static geometry checks; Vision truth is not "
+        "guaranteed, all identities and audit roles remain private, and it can never "
+        "supply formal authority"
+        or {"dev_r20_failure_audit", "dev_r20_failure_audit_sha256"}.intersection(
+            history
+        )
+    ):
+        raise RuntimeError("fresh dev-r20 development history binding drift")
 
     # Preserve the historical return contract; callers use this function for its
     # fail-closed checks, but earlier code returned the dev-r7 payload.

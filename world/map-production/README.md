@@ -118,7 +118,7 @@ duplicate-audit recordsを持ちます。Rootはfull 200%と4象限400%の計185
 half-scale arctangent soft-unitで飽和させず最大合成し、1個のscalar thresholdだけをcalibrationでfreezeします。
 
 r6のhonest-reviewer blindは運用上の分離です。公開manifestはopaque codeとdomain-separated HMAC commitmentsだけを
-持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r18`はformalへ昇格できません。
+持ち、個別control/reference path・raw SHAをmarker前に出しません。closed `dev-r6`から`dev-r19`はformalへ昇格できません。
 
 `dev-r14`はgeneration、全440 recordsのRoot/独立Vision review、reconciliation、preflight、label seal、両splitのprivate
 auditを一度だけ完了し、両private auditはpassしました。calibrationはclean `35`、warning `15`、reject `50`、severity-3
@@ -258,31 +258,28 @@ basesは`1051000` / `1061000`、生成物basesは`1073000` / `1083000`、duplica
 references、commitments、labels、decisions、measurementsをisolated root内で一度だけ作りました。dev-r18の全素材とoutputは
 後続editionまたはformalへ一切再利用しません。
 
-唯一のpreregistered successor `dev-r19`のstatusは`fresh-development-only`で、fresh isolated one-shot development-only probeです。exact roleは
-`fresh one-shot development role used only as a duplicate semantic-equivalence correction probe after the closed dev-r18 prepopulation private-audit failure; it preserves every dev-r18 morphology, design tier, metric, threshold, population, and rate contract, changes only duplicate semantic equivalence so reject severities 2 and 3 share one reject ordinal band while clean and warning severities remain exact and disposition plus all five visible flags remain exact, requires a fresh isolated root, cryptographic blind key, identities, domains, nonces, controls, references, commitments, labels, decisions, and measurements, and can never become or supply formal authority`
+`dev-r19`のstatusは`failed-and-closed-before-population-audit`です。exact roleは
+`development-only prepopulation private-audit failure evidence; generation, both blind 440-record reviews, bilateral reconciliation, official preflight, label sealing, private reveal, regeneration, and protocol-zero audits each completed exactly once, calibration clean and obvious-artifact duplicate groups plus the holdout clean duplicate group passed, but holdout's obvious-artifact duplicate pair was clean severity 0 with no visible flags, so the required rejected short-line artifact contract failed before population audit or any numeric measurement; one read-only postmortem ran exactly once, all initial snapshots and receipts remain immutable, and no dev-r19 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable`
+です。calibrationのclean / `obvious-artifact` duplicate groupsとholdoutのclean duplicate groupはpassし、calibration obvious pairは両方`reject`、severity `3`、visible flagは`l`のみでした。holdout obvious pairは両方`clean`、severity `0`、visible flagなしのため必須short-line contractをfailしました。population aggregation、numeric measurement、metric evaluation、threshold searchを開始せず、read-only sanitized postmortemは一度だけです。auditは
+`world/map-production/qa/microtexture-v2-r6-dev-r19-development-failure.json`、raw SHA-256は
+`96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0`です。`dev-r19`のroot / key / private material / outputは再利用しません。
+
+唯一のpreregistered successor `dev-r20`のstatusは`fresh-development-only`です。exact roleは
+`fresh one-shot development role used only to strengthen the obvious-artifact duplicate sentinel after the closed dev-r19 prepopulation private-audit miss; it preserves all 200 dev-r19 artifact morphologies, every design tier, metric, threshold, population and rate contract, the dev-r19 reject severity-band duplicate policy, and the clean duplicate construction, and changes only the obvious-artifact duplicate payload to a fresh-keyed finite axial short-line sentinel with static geometry checks; Vision truth is not guaranteed, all identities and audit roles remain private, and it can never supply formal authority`
 です。
 
-r19のschedule revisionは`dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1`、duplicate-equivalence policy revisionは
-`dev-r19-reject-ordinal-band-duplicate-equivalence-v1`です。明白なアーティファクトのduplicate pairはdispositionをexact比較し、5つのvisible flagを
-pairwise exactとしたうえで、両memberの`short_line_visible=true`を必須とします。他4 flagの値はfalseへ固定しません。各memberのseverity 2 / 3を同じreject ordinal bandとして扱います。clean duplicate pairとwarning semanticsは
-exactのままです。dev-r18の全200アーティファクト形態、全design tier、metric、threshold、population、rate contractを保持し、
-morphology change countは`0`、全アーティファクト形態SHA-256は
-`9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365`のままです。
-sanitized r18 basis SHA-256は`f4f4c80a406818da30ab18ac270eb466dda2ef42b4f301bde6ce2dea8698ade1`、
-duplicate-equivalence policy manifest SHA-256は`292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6`、
-population-anchor schedule keyset / changed-values SHA-256は
-`15e87ae2c17897bccae75722f1a8ffa9dd8f3aea2d8632929d83a62ac0675b0d` /
-`7065534770044e408d02dd82a4b96adbc74ba77a5e154a2c42697bb43c679c3c`、probe authority manifest SHA-256は
-`b96a98c0c6a35f227a9b81c80220af9ffa99621828a71d10a2ddecb84cccb963`です。
+`dev-r20`はschedule / sentinel revisionsは`dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1` /
+`dev-r20-keyed-axial-short-line-duplicate-sentinel-v1`です。`obvious-artifact` duplicateのみをfresh-keyed positive `+12.0 L`のaxial bar `12`本へ変更します。各barはencoded `24×3 px`、各exact metric quadrantに`3`本、各quadrantにhorizontal / verticalの両方を含み、center間Chebyshev distanceは`>=32 px`、support guardは`>=2 px`、nonzero supportは`864 px`です。pairはrequested delta、decoded residual、metricがexactに等しく、reference、control、anonymous code、control IDは異なります。Vision truthとprivate audit passは保証しません。
 
-fresh rootは`tmp/map-production/microtexture-v2-r6-dev-r19`です。public noncesは`r6-calibration-v14` /
-`r6-holdout-v14`、condition-cluster / render-seed / opaque-code / private-reference-transformはv14、public payload commitmentは
-v15、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv13です。protocol-zero nonce
-basesは`1151000` / `1161000`、生成物basesは`1173000` / `1183000`、duplicate-audit noncesは
-`1191000..1191002` / `1201000..1201002`です。fresh cryptographic blind key、identities、domains、nonces、controls、
-references、commitments、labels、decisions、measurementsをisolated root内で一度だけ作り、過去editionから再利用しません。
-generation前にexact authority commitをpushし、同じcommitのUbuntu/Windows CIを両方passさせます。dev-r19はsuccessしても
-formal authorityにならず、formal authorityを供給できません。formal stageは引き続きblockedです。
+clean duplicate、`dev-r19`のreject severity-band policy、全200アーティファクト形態、全design tier、metric、threshold、population、rate contractは不変です。fullアーティファクト形態 / sanitized r19 basis / sentinel manifest SHA-256は
+`9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365` /
+`8a99bb7038b5936ac7e44ac339114dc46f78e5d2a8df923a7be0674693d85933` /
+`2ee513f2a3182741fbf9df569a2c5137a7f25b4fd27d3fbba6b00344497b85a1`です。schedule keyset / changed-values / probe authority SHA-256は
+`b5c8211902bb03838e7fe402bbb48e0e7f7a9db37acd1856be3dca2c67b82134` /
+`3b87c5aabee0c8c8641d80496123a4f2dd58ca60f6da2bcf822e6bc7dfa80368` /
+`584deb41c74d8beeff030c33f1ed0116c4e583c9c60a41e010fb6233972b05a2`です。
+
+fresh rootは`tmp/map-production/microtexture-v2-r6-dev-r20`、public noncesは`r6-calibration-v15` / `r6-holdout-v15`です。condition-cluster / render-seed / opaque-code / private-reference-transformはv15、public payload commitmentはv16、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv14です。protocol-zero nonce basesは`1251000` / `1261000`、アーティファクトbasesは`1273000` / `1283000`、duplicate-audit noncesは`1291000..1291002` / `1301000..1301002`です。exact authority commitのpushと同一commitのUbuntu / Windows CI両方のgreenより前にgenerationを開始できません。`dev-r20`はformal authorityを供給できず、formal stageはblockedです。
 
 ## Golden 候補の二段階昇格
 

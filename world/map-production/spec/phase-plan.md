@@ -71,22 +71,11 @@ ImageGenは `ground material` と `eight-system scalar relief` の候補作成�
 
 ### Microtexture v2-r6 の先行凍結
 
-r3、r4、r5は一回限りcalibrationで不合格となり、再実行・再label・retuneせず閉鎖しました。pre-formal
-`dev-r6`もpopulation gateで測定前に閉鎖し、`dev-r7`は全440 recordsのRoot/独立Visionと一回限り測定後、
-hard-clamp score saturationのためendpoint-admissible thresholdなしで閉鎖しました。新しいGolden候補を生成する前に、
-freshな候補・foundation非依存authority `scripts/map-production/microtexture-v2-r6/` をGitへ凍結します。
+r3、r4、r5およびpre-formal `dev-r6`から`dev-r19`までの失敗editionはすべて閉鎖済みで、rerun、relabel、retune、subset、top-up、key resampling、過去素材のformalまたは後続editionへの再利用を禁止します。`dev-r19`のstatusは`failed-and-closed-before-population-audit`で、generation、両reviewerの`440 × 2` blind review、reconciliation、official preflight、label sealing、private reveal、regeneration、protocol-zero auditを各一度だけ完了しました。calibrationのclean / `obvious-artifact` duplicate groupsとholdoutのclean duplicate groupはpassしましたが、holdout obvious pairは両方`clean`、severity `0`、visible flagなしで、必須の`reject`、severity `2` / `3`、`short_line_visible=true`契約をfailしました。population aggregation、numeric measurement、metric evaluation、threshold searchは未開始で、read-only sanitized postmortemは一度だけです。auditは`world/map-production/qa/microtexture-v2-r6-dev-r19-development-failure.json`、raw SHA-256は`96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0`です。
 
-fresh `dev-r8`は各split 220 controls、full 200%と4象限400%の計185 view-pages相当です。追跡済みrunner、revision-3
-public/HMAC/parameter nonce domain、fresh root/key/controls/identities/labels/measurementsを使い、私と独立Visionが全件を
-匿名確認します。固定half-scale arctangent soft-unit、grain / spot / finite-line / parallel-bundleの最大composite、
-単一scalar threshold、既存のendpoint minimum count/rateは生成前に固定し、subsetting、top-up、key resampling、
-relabel、rerunを禁止します。dev-r8入力commitをpushしてUbuntu/Windows CIが通るまで生成しません。
+現在の唯一のpreregistered successor `dev-r20`のstatusは`fresh-development-only`で、fresh one-shotです。exact roleは`fresh one-shot development role used only to strengthen the obvious-artifact duplicate sentinel after the closed dev-r19 prepopulation private-audit miss; it preserves all 200 dev-r19 artifact morphologies, every design tier, metric, threshold, population and rate contract, the dev-r19 reject severity-band duplicate policy, and the clean duplicate construction, and changes only the obvious-artifact duplicate payload to a fresh-keyed finite axial short-line sentinel with static geometry checks; Vision truth is not guaranteed, all identities and audit roles remain private, and it can never supply formal authority`です。`dev-r19`のreject severity-band duplicate policy、clean duplicate construction、全200アーティファクト形態、全design tier、metric、threshold、population、rate contractを保持し、`obvious-artifact` duplicateだけをfresh-keyed positive `+12.0 L`のaxial bar `12`本へ変更します。各barはencoded `24×3 px`、各exact metric quadrantに`3`本、各quadrantにhorizontal / verticalの両方を含み、center間Chebyshev distanceは`>=32 px`、support guardは`>=2 px`、nonzero supportは`864 px`です。pairのrequested delta、decoded residual、metricはexactですが、Vision truthやprivate audit passは保証しません。schedule / sentinel revisionsは`dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1` / `dev-r20-keyed-axial-short-line-duplicate-sentinel-v1`です。
 
-dev-r8成功後にformal authorityを別commitで最終freezeし、fresh calibration、ImageGen v18 locked-clean reference、
-事前登録済み独立threshold authority receipt、fresh holdoutを各一度だけ実行します。一段でも失敗すればthresholdを
-調整せずeditionを閉じます。`k3-v246-imagegen-ground-material-donor-v5.png`は較正から除外し、r6 formal holdout後も
-reference / mask erosion / overlap-seam / color-alpha-resampling / production holdoutを別途事前登録するproduction
-residual derivationでだけ使用できます。
+fullアーティファクト形態 / sanitized r19 basis / sentinel manifest SHA-256は`9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365` / `8a99bb7038b5936ac7e44ac339114dc46f78e5d2a8df923a7be0674693d85933` / `2ee513f2a3182741fbf9df569a2c5137a7f25b4fd27d3fbba6b00344497b85a1`です。schedule keyset / changed-values / probe authority SHA-256は`b5c8211902bb03838e7fe402bbb48e0e7f7a9db37acd1856be3dca2c67b82134` / `3b87c5aabee0c8c8641d80496123a4f2dd58ca60f6da2bcf822e6bc7dfa80368` / `584deb41c74d8beeff030c33f1ed0116c4e583c9c60a41e010fb6233972b05a2`です。fresh rootは`tmp/map-production/microtexture-v2-r6-dev-r20`、public noncesは`r6-calibration-v15` / `r6-holdout-v15`、condition-cluster / render-seed / opaque-code / private-reference-transformはv15、public payload commitmentはv16、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv14です。protocol-zero / アーティファクトnonce basesは`1251000` / `1261000` / `1273000` / `1283000`、duplicate-audit noncesは`1291000..1291002` / `1301000..1301002`です。exact authority commitをpushし、その同一commitのUbuntu / Windows CIが両方greenになるまでgenerationを開始できません。`dev-r20`はformal authorityを供給できず、formal stageはblockedです。`k3-v246-imagegen-ground-material-donor-v5.png`は較正から除外し、formal holdoutを未実施のまま別途のproduction residual derivationへ使用しません。
 
 ## Phase 5: 14地域の生成順
 

@@ -18,6 +18,7 @@ Bloodsize
 bullseyes
 casefold
 Celestia
+Chebyshev
 Chrono
 Chronos
 colour
