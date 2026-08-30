@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-k-v3-semantic-cleanup-root-authorization-v2",
+  "job_id": "style-candidate-k-v3-semantic-cleanup",
+  "created_at": "2026-08-30T08:33:39Z",
+  "reviewer": "codex-root-agent",
+  "status": "complete",
+  "review_mode": "root-authority",
+  "source_temporary_root_review_sha256": "91851dbeb3623c65eae6976cfe0b3961fb45c87bbf0789bd86c738dae4eeb69b",
+  "candidate": {
+    "path": "world/map-production/candidates/style-candidate-k-v3-golden-v2.png",
+    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+  },
+  "native": {
+    "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-native.png",
+    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+  },
+  "review_views": [
+    {
+      "id": "native",
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-native.png",
+      "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+      "complete": true,
+      "evidence": "Inspected the exact 1536x1024 native view: coast, islands, river, city walls, roads, fields, and all eight highland bodies remain crisp and spatially coherent, with no blank, clipped, or overwritten region."
+    },
+    {
+      "id": "full25",
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full25.png",
+      "sha256": "2648cc8ec2a9714dce0d0c41ed9cd0a51463593fde344e76b3d72b2fc5d07bd9",
+      "complete": true,
+      "evidence": "Inspected the exact 25-percent full-board view: the coastline, central city, port, waterways, fields, and eight-system highland group preserve clear global hierarchy and remain identifiable without a pasted-panel appearance."
+    },
+    {
+      "id": "full50",
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full50.png",
+      "sha256": "1bfb21cd8415a237548dc36cc040411695ea934df3ce18436f73d6df3f35475a",
+      "complete": true,
+      "evidence": "Inspected the exact 50-percent full-board view: city and transport geometry remain legible, shore and river edges stay stable, and the highland treatment integrates with the surrounding parchment texture without seams or halos."
+    },
+    {
+      "id": "highland200",
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland200.png",
+      "sha256": "fd3e717400642a524dd61787191216c728a04f55ae8d19af05fa30da2ff20cc3",
+      "complete": true,
+      "evidence": "Inspected the exact highland 200-percent view: eight separate overhead relief systems are visible with distinct silhouettes, internal directions, spacing, saddles, and valley indentations; the foundation remains quiet and planar."
+    },
+    {
+      "id": "highland400",
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland400.png",
+      "sha256": "68a58bbf012cfe4792e83df9d48e04ff6149221a2e2a7ecdaa12da3ed01069fc",
+      "complete": true,
+      "evidence": "Inspected the exact highland 400-percent view: system-specific fine line spacing and local relief structure become more legible while body edges, the bordering road, and the neighboring city remain stable; no particle, dash-bundle, or resampling damage appears."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "eight-system-topology",
+      "detected": false,
+      "evidence": "Exactly eight non-touching highland systems are visibly countable in native, 25-percent, 50-percent, 200-percent, and 400-percent views."
+    },
+    {
+      "id": "side-view-or-shared-projection",
+      "detected": false,
+      "evidence": "Every highland body reads in a consistent overhead plan view; none becomes a scenic side face and no two bodies collapse into a shared projection."
+    },
+    {
+      "id": "panel-seam-or-body-halo",
+      "detected": false,
+      "evidence": "The highland field follows the map-edge and road context with stable tonal integration; no rectangular pasted seam, doubled border, or light or dark body halo is visible at any reviewed scale."
+    },
+    {
+      "id": "white-particle-pill-hole-or-crater",
+      "detected": false,
+      "evidence": "No bright isolated particle, pill-shaped mark, punched hole, crater, or similar high-contrast defect is visible in the native or enlarged highland views."
+    },
+    {
+      "id": "root-river-vein-fingerprint-or-contour",
+      "detected": false,
+      "evidence": "Internal relief lines remain sparse, nested, and system-specific inside eight bounded overhead bodies; they do not read as roots, river veins, fingerprints, or a generic contour-only substitute."
+    },
+    {
+      "id": "fern-fishbone-dash-bundle-or-repetition",
+      "detected": false,
+      "evidence": "No fern branching, fishbone grammar, repeated parallel dash bundle, chained marks, or mechanical wallpaper cadence appears in the highland bodies."
+    },
+    {
+      "id": "no-200-to-400-information-gain",
+      "detected": false,
+      "evidence": "The 400-percent view exposes additional legible line spacing, saddle, valley, and local direction information beyond the 200-percent view rather than merely enlarging an empty field."
+    },
+    {
+      "id": "protected-geometry-difference",
+      "detected": false,
+      "evidence": "Coast, river, city, road, field, and highland-body boundaries remain visually coincident across all five bound views; no protected canonical geometry shifts or disappears."
+    }
+  ],
+  "acceptance_threshold": 94,
+  "total_score": 96,
+  "decision": "accepted",
+  "authorizes_blind_review": true,
+  "golden_reference": false,
+  "acceptance_inferred": false,
+  "summary": "Accepted for anonymous blind review at 96/100 after direct inspection of all five exact views. The candidate preserves the canonical map hierarchy and protected geometry, keeps eight overhead relief systems distinct, adds useful fine highland information from 200 to 400 percent, and shows none of the eight immediate-failure morphologies."
+}

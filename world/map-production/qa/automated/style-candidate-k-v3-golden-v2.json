@@ -1,0 +1,563 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-k-v3-semantic-cleanup-generic-promotion-v2-automated-audit",
+  "job_id": "style-candidate-k-v3-semantic-cleanup",
+  "status": "passed",
+  "image_path": "world/map-production/candidates/style-candidate-k-v3-golden-v2.png",
+  "image_sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+  "acceptance_threshold": 94,
+  "decision_authority": false,
+  "acceptance_inferred": false,
+  "golden_accepted": false,
+  "raw": {
+    "path": "world/map-production/candidates/style-candidate-k-v3-golden-v2-raw.png",
+    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+  },
+  "candidate": {
+    "path": "world/map-production/candidates/style-candidate-k-v3-golden-v2.png",
+    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+  },
+  "provenance_receipt": {
+    "path": "world/map-production/prompts/style-candidate-k-v3-golden-v2.provenance-receipt.json",
+    "sha256": "e1f98265de43eb4884ef26a4e36aca7a345404f66b3a13b3615b5dc23ae8bdab"
+  },
+  "root_review": {
+    "path": "world/map-production/qa/style-candidate-k-v3-golden-v2-root-review.json",
+    "sha256": "02e55a9c094b9a9e79c38c1f9404016950f0b1de68b331d89db4a4a7fbcfb500"
+  },
+  "views": {
+    "native": {
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-native.png",
+      "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+    },
+    "full25": {
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full25.png",
+      "sha256": "2648cc8ec2a9714dce0d0c41ed9cd0a51463593fde344e76b3d72b2fc5d07bd9"
+    },
+    "full50": {
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full50.png",
+      "sha256": "1bfb21cd8415a237548dc36cc040411695ea934df3ce18436f73d6df3f35475a"
+    },
+    "highland200": {
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland200.png",
+      "sha256": "fd3e717400642a524dd61787191216c728a04f55ae8d19af05fa30da2ff20cc3"
+    },
+    "highland400": {
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland400.png",
+      "sha256": "68a58bbf012cfe4792e83df9d48e04ff6149221a2e2a7ecdaa12da3ed01069fc"
+    }
+  },
+  "blind_packet": {
+    "path": "world/map-production/qa/blind-packets/phase4-k3-v2/3df44f8f71180c68bb528605bfcde6cf6e5e78e3eb856615cd14fe34f855b39f.json",
+    "sha256": "3df44f8f71180c68bb528605bfcde6cf6e5e78e3eb856615cd14fe34f855b39f"
+  },
+  "metrics": {
+    "coverage_50": 367,
+    "coverage_25": 338,
+    "quiet_fraction": 0.912177,
+    "dash_bundle_pairs": 0,
+    "orientation_coherence": 0.05625,
+    "texture_inside_to_outside_ratio": {
+      "4": 0.614135,
+      "8": 0.981493
+    }
+  },
+  "geometry": {
+    "selected_component_count": 8
+  },
+  "identity": {
+    "outside_permission": 0,
+    "protected_features": 0,
+    "road_calm_18px": 0
+  },
+  "pixel_audit": {
+    "schema_version": "1.0.0",
+    "id": "style-candidate-k-v3-golden-v2-independent-pixel-audit",
+    "algorithm": "sstory-k3-golden-v2-independent-pixel-audit-v2",
+    "control_sha256": "7104ac37996dfdc5bc18a8a1c84bbca43e5d05fcafbd17cf4df3229348f720c8",
+    "candidate_sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+    "baseline_sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882",
+    "mask_sha256": {
+      "measurement_inside": "bbf721e7bdb3dee6fd8bb999237cca3966240d477199a24bb650b7ee6815e624",
+      "texture_reference": "2d9cdb96097526968df72564a6f6513703f821d4e6849becc16d4c0a08f90eea",
+      "permission": "41e7fd45b2188b0ee918ed712be782fec2c58f14f1f4391089abb48d3704a535",
+      "protected_features": "585f133d596f49ecea280223b814db22fed8c169ec3f9bce8544f7b7525dd607",
+      "road_calm_18px": "22434242cce4af83c0ba12637124102734b818dd087b94c0b94c7dadd7cdb4bc",
+      "selected_components": "c025f9f20c0a942e932fbd7e0c2d17a71a9928bcdb2400420b41c7f5dbc7d16e"
+    },
+    "metrics": {
+      "coverage_50": 367,
+      "coverage_25": 338,
+      "quiet_fraction": 0.912177,
+      "dash_bundle_pairs": 0,
+      "orientation_coherence": 0.05625,
+      "texture_inside_to_outside_ratio": {
+        "4": 0.614135,
+        "8": 0.981493
+      }
+    },
+    "geometry": {
+      "selected_component_count": 8
+    },
+    "geometry_proof": {
+      "algorithm": "selected-mask-components-with-material-extent-v2",
+      "thresholds": {
+        "minimum_changed_pixels": 4,
+        "minimum_changed_fraction": 0.5,
+        "minimum_changed_x_span_fraction": 0.5,
+        "minimum_changed_y_span_fraction": 0.5,
+        "minimum_peak_channel_delta": 1
+      },
+      "mask_component_count": 8,
+      "valid_component_count": 8,
+      "components": [
+        {
+          "component_id": 1,
+          "mask_pixels": 12370,
+          "changed_pixels": 12370,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1230,
+            26,
+            1353,
+            190
+          ],
+          "changed_bbox_xyxy": [
+            1230,
+            26,
+            1353,
+            190
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 104,
+          "valid": true
+        },
+        {
+          "component_id": 2,
+          "mask_pixels": 11618,
+          "changed_pixels": 11618,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1375,
+            41,
+            1494,
+            219
+          ],
+          "changed_bbox_xyxy": [
+            1375,
+            41,
+            1494,
+            219
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 90,
+          "valid": true
+        },
+        {
+          "component_id": 3,
+          "mask_pixels": 11142,
+          "changed_pixels": 11142,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1146,
+            173,
+            1272,
+            317
+          ],
+          "changed_bbox_xyxy": [
+            1146,
+            173,
+            1272,
+            317
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 94,
+          "valid": true
+        },
+        {
+          "component_id": 4,
+          "mask_pixels": 15929,
+          "changed_pixels": 15929,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1299,
+            194,
+            1506,
+            348
+          ],
+          "changed_bbox_xyxy": [
+            1299,
+            194,
+            1506,
+            348
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 113,
+          "valid": true
+        },
+        {
+          "component_id": 5,
+          "mask_pixels": 13473,
+          "changed_pixels": 13473,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1059,
+            293,
+            1204,
+            453
+          ],
+          "changed_bbox_xyxy": [
+            1059,
+            293,
+            1204,
+            453
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 96,
+          "valid": true
+        },
+        {
+          "component_id": 6,
+          "mask_pixels": 10915,
+          "changed_pixels": 10915,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1217,
+            312,
+            1344,
+            454
+          ],
+          "changed_bbox_xyxy": [
+            1217,
+            312,
+            1344,
+            454
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 91,
+          "valid": true
+        },
+        {
+          "component_id": 7,
+          "mask_pixels": 9379,
+          "changed_pixels": 9379,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1369,
+            358,
+            1498,
+            469
+          ],
+          "changed_bbox_xyxy": [
+            1369,
+            358,
+            1498,
+            469
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 84,
+          "valid": true
+        },
+        {
+          "component_id": 8,
+          "mask_pixels": 1777,
+          "changed_pixels": 1777,
+          "changed_fraction": 1.0,
+          "mask_bbox_xyxy": [
+            1238,
+            441,
+            1330,
+            488
+          ],
+          "changed_bbox_xyxy": [
+            1238,
+            441,
+            1330,
+            488
+          ],
+          "changed_x_span_fraction": 1.0,
+          "changed_y_span_fraction": 1.0,
+          "peak_channel_delta": 93,
+          "valid": true
+        }
+      ]
+    },
+    "identity": {
+      "outside_permission": 0,
+      "protected_features": 0,
+      "road_calm_18px": 0
+    },
+    "gates": {
+      "coverage_50_min_360": true,
+      "coverage_25_min_334": true,
+      "quiet_fraction_min_0_905": true,
+      "dash_bundle_pairs_zero": true,
+      "orientation_coherence_max_0_16": true,
+      "texture_ratio_4_min_0_61": true,
+      "texture_ratio_8_range_0_75_1_22": true,
+      "selected_component_count_exact_8": true,
+      "outside_permission_zero": true,
+      "protected_features_zero": true,
+      "road_calm_18px_zero": true
+    },
+    "failed_gates": [],
+    "passed": true
+  },
+  "reproduction": {
+    "renderer": {
+      "path": "scripts/map-production/render_style_candidate_k3_golden_v2.py",
+      "sha256": "bba470884068c13b652b74653d3e19220e6cfb42bf3fedbf39c332bd5fb03e22"
+    },
+    "config": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/renderer-config.json",
+      "sha256": "94c094df66ec1641b78aa3b4cd42b3b3f32824a43b5021f1fb759e8e439e48e4"
+    },
+    "seed": "k3-v19-golden-v2-replay-v1",
+    "donors": [
+      {
+        "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+        "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+      },
+      {
+        "path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+        "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f"
+      },
+      {
+        "path": "world/map-production/style-assets/highland-detail-exemplar-v1.png",
+        "sha256": "c7fcd3da5fba6fe08f10fd1e0fe16bdb2884a0a04386de828f923d660de8f1a2"
+      },
+      {
+        "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+        "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837"
+      }
+    ],
+    "controls": [
+      {
+        "path": "scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py",
+        "sha256": "92100794ff519fb77c7bca89af74897dcc422c9bb341582d31355d6b98cd229a"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/v19-replay-contract.json",
+        "sha256": "c8a4c4f2bb50905f0904cef050218d3fdafcafc7d11172a92db613774e02b0b6"
+      },
+      {
+        "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+        "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+        "sha256": "7527b0be4d7a042c5fd33e499b96806bcbbd6a1b614086c7c0fbdf308b83666b"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.json",
+        "sha256": "f9a1eab4a8e417bcd688ceae8db1e8f01dc21835842e69339dda70f461eab768"
+      },
+      {
+        "path": "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation.txt",
+        "sha256": "6a4dc3cc69ff4b6a2f03edd76a1408c839ad32a6497726aff7c4057e81a5ac43"
+      },
+      {
+        "path": "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation-receipt.json",
+        "sha256": "05b9c19008daf348e17850322f3052ff023652c2709e53127e9f64500478dc09"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/spec.json",
+        "sha256": "49d681f16f061583638a778a0fd0fc8b7b3a977d21320ee0c51b9b593040890e"
+      },
+      {
+        "path": "world/map-production/qa/style-candidate-k-v3-highland-source-v55-root-vision.json",
+        "sha256": "626ea739be2aa63a55d73f31064ef697301db4244a6102834b7886930e76cd90"
+      },
+      {
+        "path": "world/map-production/qa/automated/style-candidate-k-v3-sparse-ridgeline-v19-preflight.json",
+        "sha256": "64de26a0b9ee59e3a6e100297802a201d3a14db9fff022c097d6e881015a6fd3"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+        "sha256": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/audit-control.json",
+        "sha256": "7104ac37996dfdc5bc18a8a1c84bbca43e5d05fcafbd17cf4df3229348f720c8"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/measurement-inside.png",
+        "sha256": "bbf721e7bdb3dee6fd8bb999237cca3966240d477199a24bb650b7ee6815e624"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/texture-reference.png",
+        "sha256": "2d9cdb96097526968df72564a6f6513703f821d4e6849becc16d4c0a08f90eea"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/permission.png",
+        "sha256": "41e7fd45b2188b0ee918ed712be782fec2c58f14f1f4391089abb48d3704a535"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/protected-features.png",
+        "sha256": "585f133d596f49ecea280223b814db22fed8c169ec3f9bce8544f7b7525dd607"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/road-calm-18px.png",
+        "sha256": "22434242cce4af83c0ba12637124102734b818dd087b94c0b94c7dadd7cdb4bc"
+      },
+      {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/selected-components.png",
+        "sha256": "c025f9f20c0a942e932fbd7e0c2d17a71a9928bcdb2400420b41c7f5dbc7d16e"
+      }
+    ],
+    "argv": [
+      "{python}",
+      "scripts/map-production/render_style_candidate_k3_golden_v2.py",
+      "--config",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/renderer-config.json",
+      "--seed",
+      "k3-v19-golden-v2-replay-v1",
+      "--donor",
+      "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+      "--donor",
+      "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+      "--donor",
+      "world/map-production/style-assets/highland-detail-exemplar-v1.png",
+      "--donor",
+      "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+      "--control",
+      "scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/v19-replay-contract.json",
+      "--control",
+      "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.json",
+      "--control",
+      "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation.txt",
+      "--control",
+      "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation-receipt.json",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/spec.json",
+      "--control",
+      "world/map-production/qa/style-candidate-k-v3-highland-source-v55-root-vision.json",
+      "--control",
+      "world/map-production/qa/automated/style-candidate-k-v3-sparse-ridgeline-v19-preflight.json",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/audit-control.json",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/measurement-inside.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/texture-reference.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/permission.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/protected-features.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/road-calm-18px.png",
+      "--control",
+      "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/selected-components.png",
+      "--output",
+      "{output}"
+    ],
+    "environment": {
+      "LANG": "C",
+      "LC_ALL": "C",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONHASHSEED": "0",
+      "PYTHONIOENCODING": "utf-8",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONSAFEPATH": "1",
+      "PYTHONUTF8": "1",
+      "TZ": "UTC"
+    },
+    "timeout_seconds": 300,
+    "read_closure_runner": {
+      "path": "scripts/map-production/run_golden_v2_renderer_read_closed.py",
+      "sha256": "6919d45678923a8af996d5f2d23280ac560cc6d363695e345e857e94151a762b"
+    },
+    "pixel_auditor": {
+      "path": "scripts/map-production/audit_style_candidate_k3_golden_v2.py",
+      "sha256": "21607b7618e765bbcabc1c36c6880e465b2c08edbebfdea8a9855089d5bd8e69"
+    },
+    "pixel_audit": {
+      "baseline": {
+        "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+        "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+      },
+      "control": {
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/audit-control.json",
+        "sha256": "7104ac37996dfdc5bc18a8a1c84bbca43e5d05fcafbd17cf4df3229348f720c8"
+      },
+      "masks": {
+        "measurement_inside": {
+          "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/measurement-inside.png",
+          "sha256": "bbf721e7bdb3dee6fd8bb999237cca3966240d477199a24bb650b7ee6815e624"
+        },
+        "texture_reference": {
+          "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/texture-reference.png",
+          "sha256": "2d9cdb96097526968df72564a6f6513703f821d4e6849becc16d4c0a08f90eea"
+        },
+        "permission": {
+          "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/permission.png",
+          "sha256": "41e7fd45b2188b0ee918ed712be782fec2c58f14f1f4391089abb48d3704a535"
+        },
+        "protected_features": {
+          "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/protected-features.png",
+          "sha256": "585f133d596f49ecea280223b814db22fed8c169ec3f9bce8544f7b7525dd607"
+        },
+        "road_calm_18px": {
+          "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/road-calm-18px.png",
+          "sha256": "22434242cce4af83c0ba12637124102734b818dd087b94c0b94c7dadd7cdb4bc"
+        },
+        "selected_components": {
+          "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/selected-components.png",
+          "sha256": "c025f9f20c0a942e932fbd7e0c2d17a71a9928bcdb2400420b41c7f5dbc7d16e"
+        }
+      }
+    }
+  },
+  "independent_replay_2": {
+    "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/deterministic-replay-2.png",
+    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+  },
+  "determinism": {
+    "independent_in_memory_builds": 2,
+    "replay": {
+      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/deterministic-replay.png",
+      "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+    },
+    "byte_identical": true,
+    "passed": true
+  },
+  "automated_gates": {
+    "candidate_not_known_non_golden": true,
+    "candidate_not_previously_accepted": true,
+    "coverage_25_min_334": true,
+    "coverage_50_min_360": true,
+    "dash_bundle_pairs_zero": true,
+    "deterministic_replay_byte_exact": true,
+    "orientation_coherence_max_0_16": true,
+    "outside_permission_zero": true,
+    "protected_features_zero": true,
+    "quiet_fraction_min_0_905": true,
+    "road_calm_18px_zero": true,
+    "root_review_accepted_94_no_failures": true,
+    "selected_component_count_exact_8": true,
+    "texture_ratio_4_min_0_61": true,
+    "texture_ratio_8_range_0_75_1_22": true
+  },
+  "failed_gates": [],
+  "authorized_by": "halc8312",
+  "source_emission_created_at": "2026-08-30T08:31:51Z",
+  "created_at": "2026-08-30T08:34:37Z"
+}
