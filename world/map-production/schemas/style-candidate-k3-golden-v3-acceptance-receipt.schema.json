@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
+  "title": "SStory Golden v3 acceptance receipt",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "id",
+    "job_id",
+    "status",
+    "acceptance_threshold",
+    "candidate_id",
+    "candidate",
+    "raw",
+    "promotion_authority",
+    "generation_contract_id",
+    "generation_authority",
+    "generation_generator",
+    "generation_seals",
+    "strict_audit_authority",
+    "strict_audit_report",
+    "root_review",
+    "blind_packet",
+    "reviews",
+    "authorized_by",
+    "accepted_at",
+    "promotion_performed"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json"
+    },
+    "schema_version": { "const": "2.0.0" },
+    "id": { "const": "sstory-k3-golden-v3-acceptance-receipt-v2" },
+    "job_id": { "const": "style-candidate-k-v3-golden-v3" },
+    "status": { "const": "accepted" },
+    "acceptance_threshold": { "const": 94 },
+    "candidate_id": { "type": "string", "minLength": 1 },
+    "candidate": { "$ref": "#/definitions/sized_artifact" },
+    "raw": { "$ref": "#/definitions/artifact" },
+    "promotion_authority": { "$ref": "#/definitions/artifact" },
+    "generation_contract_id": {
+      "enum": ["four-candidate-v1", "balanced-phase-v2"]
+    },
+    "generation_authority": { "$ref": "#/definitions/artifact" },
+    "generation_generator": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/definitions/artifact" }
+      ]
+    },
+    "generation_seals": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["runtime_profile_id", "sha256", "payload_utf8"],
+        "properties": {
+          "runtime_profile_id": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "payload_utf8": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "strict_audit_authority": { "$ref": "#/definitions/artifact" },
+    "strict_audit_report": { "$ref": "#/definitions/artifact" },
+    "root_review": { "$ref": "#/definitions/review" },
+    "blind_packet": { "$ref": "#/definitions/artifact" },
+    "reviews": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/definitions/review" }
+    },
+    "authorized_by": { "type": "string", "minLength": 1 },
+    "accepted_at": { "type": "string", "format": "date-time" },
+    "promotion_performed": { "const": true }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "generation_contract_id": { "const": "four-candidate-v1" } }
+      },
+      "then": {
+        "properties": { "generation_generator": { "type": "null" } }
+      },
+      "else": {
+        "properties": {
+          "generation_generator": { "$ref": "#/definitions/artifact" }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "sized_artifact": {
+      "type": "object",
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "bytes": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "required": ["role", "path", "sha256", "reviewer", "score", "created_at"],
+      "properties": {
+        "role": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "reviewer": { "type": "string", "minLength": 1 },
+        "score": { "type": "integer", "minimum": 94, "maximum": 100 },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

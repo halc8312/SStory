@@ -45,6 +45,7 @@ from promote_phase5_renderer_outputs import (
     _rename_directory_no_replace,
 )
 import promote_style_candidate_k3_golden_v2 as golden_v2_promotion
+import promote_style_candidate_k3_golden_v3 as golden_v3_promotion
 from release_bound_artifact import (
     BoundArtifact,
     BoundArtifactError,
@@ -1981,6 +1982,25 @@ def _verify_manifest_golden_style_v2(
     }
 
 
+def _verify_manifest_golden_style_v3(
+    golden_style: dict[str, str], base_manifest_path: Path
+) -> dict[str, Any]:
+    """Revalidate the full Golden-v3 promotion graph without legacy fallback."""
+
+    try:
+        evidence = golden_v3_promotion.verify_accepted_manifest_golden_v3(
+            golden_style, base_manifest_path
+        )
+    except golden_v3_promotion.GoldenV3PromotionError as exc:
+        raise Phase5BuildError(str(exc)) from exc
+    if evidence.get("generation_contract_id") not in (
+        golden_v3_promotion.FOUR_CANDIDATE_V1,
+        golden_v3_promotion.BALANCED_PHASE_V2,
+    ):
+        raise Phase5BuildError("Golden v3 generation discriminator is missing or invalid")
+    return evidence
+
+
 def verify_manifest_golden_style(
     golden_style: dict[str, str], base_manifest_path: Path
 ) -> dict[str, Any]:
@@ -1992,10 +2012,30 @@ def verify_manifest_golden_style(
     if not isinstance(inputs, list):
         raise Phase5BuildError("Golden manifest job inputs must be an array")
     roles = [item.get("role") for item in inputs if isinstance(item, dict)]
+    v3_receipt_count = roles.count(golden_v3_promotion.V3_ACCEPTANCE_RECEIPT_ROLE)
+    v3_markers = set(roles) & set(golden_v3_promotion.V3_ONLY_ROLES)
+    v3_declared = job.get("id") == golden_v3_promotion.JOB_ID or bool(v3_markers)
     receipt_count = roles.count(GOLDEN_ACCEPTANCE_RECEIPT_ROLE)
+    v2_prepared_markers = set(roles) & set(GOLDEN_V2_PREPARED_ONLY_ROLES)
+    if v3_declared:
+        # The anonymous packet role is shared by v2 and v3.  Ignore only that
+        # shared role while checking whether a declared v3 graph is mixed.
+        v2_only_markers = v2_prepared_markers - {GOLDEN_BLIND_PACKET_ROLE}
+        if (
+            job.get("id") != golden_v3_promotion.JOB_ID
+            or v3_receipt_count != 1
+            or receipt_count
+            or v2_only_markers
+        ):
+            raise Phase5BuildError(
+                "Golden v3 evidence is incomplete or mixed; refusing legacy fallback; "
+                f"job_id={job.get('id')!r}, receipt_count={v3_receipt_count}, "
+                f"markers={sorted(v3_markers)}, "
+                f"v2_markers={sorted(v2_only_markers)}"
+            )
+        return _verify_manifest_golden_style_v3(golden_style, base_manifest_path)
     if receipt_count == 1:
         return _verify_manifest_golden_style_v2(golden_style, base_manifest_path)
-    v2_prepared_markers = set(roles) & set(GOLDEN_V2_PREPARED_ONLY_ROLES)
     if receipt_count or v2_prepared_markers:
         raise Phase5BuildError(
             "Golden v2 evidence is incomplete; refusing legacy fallback; "
