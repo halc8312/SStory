@@ -21,14 +21,16 @@ from PIL import Image, ImageDraw, ImageFont
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CODE_ROOT = REPO_ROOT / "scripts" / "map-production" / "microtexture-v2-r6"
-DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r20"
+R20_DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r20"
+R21_DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r21"
+DEV_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-dev-r22"
 FORMAL_ROOT = REPO_ROOT / "tmp" / "map-production" / "microtexture-v2-r6-artifacts"
 PRIVATE_ANALYSIS_ROOT = DEV_ROOT / "private" / "analysis"
 FORMAL_ENVIRONMENT = (
     "MICROTEXTURE_V2_R6_BLIND_KEY",
     "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
 )
-DEVELOPMENT_EDITION = "r20"
+DEVELOPMENT_EDITION = "r22"
 EXPECTED_RECORDS_PER_SPLIT = 220
 EXPECTED_ARTIFACT_RECORDS_PER_SPLIT = 200
 EXPECTED_ARTIFACT_CLUSTERS_PER_SPLIT = 100
@@ -178,6 +180,71 @@ _R20_PUBLIC_COMMITMENT_DOMAIN = (
 )
 _R20_ZERO_KEY_COMMITMENT_TEST_VECTOR = (
     "5c182b83ea230ab3f3fc19f26fcf3369f41d40cef5a50cbc8cf9f072d37d6383"
+)
+_R21_PUBLIC_NONCES = {
+    "calibration": "r6-calibration-v16",
+    "holdout": "r6-holdout-v16",
+}
+_R21_PRIVATE_IDENTITY_DOMAINS = {
+    "private_reference_transform_prefix": "private-reference-transform-v16/",
+    "foundation_offset_lane": "foundation-offset-v15",
+    "foundation_assignment_lane": "foundation-assignment-v15",
+    "delta_lane": "delta-v15",
+    "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v15/",
+}
+_R21_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 1373000,
+    "holdout_artifact": 1383000,
+    "calibration_protocol_zero": 1351000,
+    "holdout_protocol_zero": 1361000,
+    "calibration_duplicate_audit": [1391000, 1391001, 1391002],
+    "holdout_duplicate_audit": [1401000, 1401001, 1401002],
+}
+_R21_SCHEDULE_REVISION = "dev-r21-symmetric-hard-point-speck-population-schedule-v1"
+_R21_HARD_POINT_SPECK_REVISION = "dev-r21-reject-speck-encoded-hard-plus-v1"
+_R21_CLUSTER_PREFIX = "microtexture-v2-r6/private-condition-cluster/v16/"
+_R21_KEY_COMMITMENT_MESSAGE = "microtexture-v2-r6/key-commitment/v15"
+_R21_SEED_MESSAGE_PREFIX = "microtexture-v2-r6/render-seed/v16/"
+_R21_CODE_MESSAGE_PREFIX = "microtexture-v2-r6/opaque-code/v16/"
+_R21_PUBLIC_COMMITMENT_DOMAIN = (
+    "microtexture-v2-r6/public-payload-commitment/v17/"
+    "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
+)
+_R21_ZERO_KEY_COMMITMENT_TEST_VECTOR = (
+    "08c4d57c14569bc7c3915333464b2622d87c41b4140a2c43140589f740ab9b29"
+)
+_R22_PUBLIC_NONCES = {
+    "calibration": "r6-calibration-v17",
+    "holdout": "r6-holdout-v17",
+}
+_R22_PRIVATE_IDENTITY_DOMAINS = {
+    "private_reference_transform_prefix": "private-reference-transform-v17/",
+    "foundation_offset_lane": "foundation-offset-v16",
+    "foundation_assignment_lane": "foundation-assignment-v16",
+    "delta_lane": "delta-v16",
+    "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v16/",
+}
+_R22_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 1473000,
+    "holdout_artifact": 1483000,
+    "calibration_protocol_zero": 1451000,
+    "holdout_protocol_zero": 1461000,
+    "calibration_duplicate_audit": [1491000, 1491001, 1491002],
+    "holdout_duplicate_audit": [1501000, 1501001, 1501002],
+}
+_R22_SCHEDULE_REVISION = (
+    "dev-r22-r21-morphology-strict-preseal-decision-schedule-v1"
+)
+_R22_CLUSTER_PREFIX = "microtexture-v2-r6/private-condition-cluster/v17/"
+_R22_KEY_COMMITMENT_MESSAGE = "microtexture-v2-r6/key-commitment/v16"
+_R22_SEED_MESSAGE_PREFIX = "microtexture-v2-r6/render-seed/v17/"
+_R22_CODE_MESSAGE_PREFIX = "microtexture-v2-r6/opaque-code/v17/"
+_R22_PUBLIC_COMMITMENT_DOMAIN = (
+    "microtexture-v2-r6/public-payload-commitment/v18/"
+    "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
+)
+_R22_ZERO_KEY_COMMITMENT_TEST_VECTOR = (
+    "1d5872dc538c4481d38435355e5690fa5c9b5ccba2b1597f14a75d849566ceb3"
 )
 _R17_REFERENCE_PREQUALIFICATION_REVISION = (
     "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1"
@@ -1420,7 +1487,7 @@ _R20_MATERIALIZED_SPEC_CHANGED_PATHS = {
 }
 _R20_PROBE_AUTHORITY_MANIFEST = {
     "revision": "dev-r20-development-probe-authority-v1",
-    "development_edition": DEVELOPMENT_EDITION,
+    "development_edition": "r20",
     "development_root_required_repo_relative": (
         "tmp/map-production/microtexture-v2-r6-dev-r20"
     ),
@@ -1674,6 +1741,391 @@ _R20_RETIRED_OPERATIONS = frozenset(
 _R20_FROZEN_FRESH_SPEC_CANONICAL_SHA256 = (
     "a9d369f8735e8f5bd83c3c330d2f11acb564896c0b16c771cb33b41cc78f3cc8"
 )
+_R21_PRIVATE_KEY_REPO_RELATIVE = (
+    "tmp/map-production/microtexture-v2-r6-dev-r21/private/development-key.bin"
+)
+_R21_REQUIRED_CI_CHECKS = (
+    "Full validation (ubuntu-latest)",
+    "Full validation (windows-latest)",
+)
+_R21_MATERIALIZED_SPEC_CHANGED_PATHS = {
+    "history.dev_r21_status": common.DEV_R21_FRESH_STATUS,
+    "history.dev_r21_role": common.DEV_R21_FRESH_ROLE,
+    "metric_definition.development_basis": common.R21_DEVELOPMENT_BASIS,
+    "development_probe_secret_handling.scope": common.DEV_R21_FRESH_SECRET_SCOPE,
+    "development_probe_secret_handling.development_artifact_root_required_repo_relative": (
+        "tmp/map-production/microtexture-v2-r6-dev-r21"
+    ),
+    "development_probe_secret_handling.ignored_private_key_required_repo_relative": (
+        _R21_PRIVATE_KEY_REPO_RELATIVE
+    ),
+    "splits.calibration.public_nonce": _R21_PUBLIC_NONCES["calibration"],
+    "splits.holdout.public_nonce": _R21_PUBLIC_NONCES["holdout"],
+    "independent_condition_clusters.message_prefix": _R21_CLUSTER_PREFIX,
+    "control_catalog_authority.exact_variant_source": common.R21_EXACT_VARIANT_SOURCE,
+    "control_catalog_authority.private_identity_domains": (
+        _R21_PRIVATE_IDENTITY_DOMAINS
+    ),
+    "control_catalog_authority.duplicate_audit_contract": (
+        common.R21_CATALOG_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "blind_derivation.key_commitment_message": _R21_KEY_COMMITMENT_MESSAGE,
+    "blind_derivation.seed_message_prefix": _R21_SEED_MESSAGE_PREFIX,
+    "blind_derivation.code_message_prefix": _R21_CODE_MESSAGE_PREFIX,
+    "rendering.public_commitment_domain": _R21_PUBLIC_COMMITMENT_DOMAIN,
+    "rendering.hard_speck_integer_core_contract": (
+        common.RENDERING_INVARIANTS["hard_speck_integer_core_contract"]
+    ),
+    "rendering.hard_speck_separation_contract": (
+        common.RENDERING_INVARIANTS["hard_speck_separation_contract"]
+    ),
+    "rendering.hard_speck_reject_anchor_contract": (
+        common.RENDERING_INVARIANTS["hard_speck_reject_anchor_contract"]
+    ),
+    "rendering.duplicate_audit_contract": (
+        common.R21_RENDERING_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "public_identity_policy.reviewer_access_contract": (
+        common.DEV_R21_FRESH_REVIEWER_ACCESS_CONTRACT
+    ),
+}
+_R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER = tuple(
+    common.R21_POPULATION_ANCHOR_SCHEDULE
+)
+_R21_POPULATION_ANCHOR_SCHEDULE_KEYS = set(
+    _R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+)
+_R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES = {
+    key: common.R21_POPULATION_ANCHOR_SCHEDULE[key]
+    for key in common.R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
+}
+_R21_POPULATION_ANCHOR_SCHEDULE_ADDED_KEYS = (
+    "fresh_from_closed_dev_r20",
+    "r20_parameter_nonce_reuse_forbidden",
+    "r21_parameter_nonce_bases",
+    "inherited_r20_schedule_revision",
+    "r21_sanitized_r20_basis",
+    "r21_sanitized_r20_basis_sha256",
+    "r21_reject_speck_overlay_revision",
+    "r21_reject_speck_overlay_manifest",
+    "r21_reject_speck_overlay_manifest_sha256",
+    "r21_preserved_r20_morphology_sha256",
+    "r21_full_artifact_morphology_sha256",
+    "r21_generation_review_reconciliation_preflight_label_seal_private_reveal_"
+    "measurement_threshold_or_audit_started",
+    "all_100_artifact_clusters_review_and_evaluation_required_before_population_or_"
+    "measurement",
+)
+_R21_CATALOG_AUTHORITY = control_catalog.dev_r21_authority_binding()
+_R21_PREDECESSOR_CATALOG_AUTHORITY_SHA256 = (
+    "589497c2e207fd2a24412d943721318aa47c34215b843ceb84f9483ba64d2633"
+)
+_R21_PROBE_AUTHORITY_MANIFEST = {
+    "revision": "dev-r21-development-probe-authority-v1",
+    "development_edition": "r21",
+    "development_root_required_repo_relative": (
+        "tmp/map-production/microtexture-v2-r6-dev-r21"
+    ),
+    "public_nonces": _R21_PUBLIC_NONCES,
+    "blind_identity_domains": {
+        "condition_cluster_prefix": _R21_CLUSTER_PREFIX,
+        "key_commitment_message": _R21_KEY_COMMITMENT_MESSAGE,
+        "seed_message_prefix": _R21_SEED_MESSAGE_PREFIX,
+        "code_message_prefix": _R21_CODE_MESSAGE_PREFIX,
+        "public_commitment_domain": _R21_PUBLIC_COMMITMENT_DOMAIN,
+    },
+    "zero_key_commitment_test_vector": _R21_ZERO_KEY_COMMITMENT_TEST_VECTOR,
+    "private_identity_domains": _R21_PRIVATE_IDENTITY_DOMAINS,
+    "parameter_nonce_bases": _R21_PARAMETER_NONCE_BASES,
+    "schedule_revision": _R21_SCHEDULE_REVISION,
+    "catalog_authority": _R21_CATALOG_AUTHORITY,
+    "predecessor_catalog_authority_sha256": (
+        _R21_PREDECESSOR_CATALOG_AUTHORITY_SHA256
+    ),
+    "population_anchor_schedule_key_order": list(
+        _R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+    ),
+    "population_anchor_schedule_keyset_sha256": (
+        common.R21_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+    ),
+    "population_anchor_schedule_changed_values_sha256": (
+        common.R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+    ),
+    "hard_point_speck_manifest": control_catalog._R21_HARD_POINT_SPECK_MANIFEST,
+    "hard_point_speck_manifest_sha256": (
+        control_catalog._R21_HARD_POINT_SPECK_MANIFEST_SHA256
+    ),
+    "materialized_spec_changed_paths": _R21_MATERIALIZED_SPEC_CHANGED_PATHS,
+    "development_population_floors": DEVELOPMENT_POPULATION_FLOORS,
+    "sanitized_r20_basis": control_catalog._R21_SANITIZED_R20_BASIS,
+    "sanitized_r20_basis_sha256": (
+        control_catalog._R21_SANITIZED_R20_BASIS_SHA256
+    ),
+    "source_dev_r20_failure_audit_raw_sha256": (
+        common.DEV_R20_FAILURE_AUDIT_RAW_SHA256
+    ),
+    "source_dev_r20_failure_audit_canonical_sha256": (
+        common.DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256
+    ),
+    "predecessor_full_artifact_morphology_sha256": (
+        _R21_CATALOG_AUTHORITY["predecessor_full_artifact_morphology_sha256"]
+    ),
+    "preserved_predecessor_morphology_sha256": (
+        _R21_CATALOG_AUTHORITY["preserved_predecessor_morphology_sha256"]
+    ),
+    "preserved_predecessor_morphology_conditions_across_splits": 180,
+    "full_artifact_morphology_sha256": (
+        _R21_CATALOG_AUTHORITY["full_artifact_morphology_sha256"]
+    ),
+    "exact_morphology_change_count_across_splits": 20,
+    "non_speck_morphology_change_count_across_splits": 0,
+    "duplicate_construction_change_count_across_splits": 0,
+    "morphology_tier_minimum_metric_threshold_population_and_rate_changes_forbidden": (
+        True
+    ),
+    "vision_truth_guaranteed": False,
+    "generation_gate": {
+        "tracked_head_equals_upstream": True,
+        "same_head_dual_ci_green_required": True,
+        "required_check_runs": list(_R21_REQUIRED_CI_CHECKS),
+        "root_key_or_generation_start_before_gate_forbidden": True,
+    },
+}
+_R21_PROBE_AUTHORITY_MANIFEST_SHA256 = (
+    "9d164cbb51dbe7da120a3692f5d7cd881a13262a425976886f2016cbfdda2557"
+)
+_R21_CLOSED_R20_RESTORATION_PATHS = {
+    "metric_definition.development_basis": common.R20_DEVELOPMENT_BASIS,
+    "development_probe_secret_handling.scope": common.DEV_R20_CLOSED_SECRET_SCOPE,
+    "development_probe_secret_handling.ignored_private_key_required_repo_relative": (
+        _R20_PRIVATE_KEY_REPO_RELATIVE
+    ),
+    "splits.calibration.public_nonce": _R20_PUBLIC_NONCES["calibration"],
+    "splits.holdout.public_nonce": _R20_PUBLIC_NONCES["holdout"],
+    "independent_condition_clusters.message_prefix": _R20_CLUSTER_PREFIX,
+    "control_catalog_authority.exact_variant_source": _R20_EXACT_VARIANT_SOURCE,
+    "control_catalog_authority.private_identity_domains": (
+        _R20_PRIVATE_IDENTITY_DOMAINS
+    ),
+    "control_catalog_authority.duplicate_audit_contract": (
+        _R20_CATALOG_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "blind_derivation.key_commitment_message": _R20_KEY_COMMITMENT_MESSAGE,
+    "blind_derivation.seed_message_prefix": _R20_SEED_MESSAGE_PREFIX,
+    "blind_derivation.code_message_prefix": _R20_CODE_MESSAGE_PREFIX,
+    "rendering.public_commitment_domain": _R20_PUBLIC_COMMITMENT_DOMAIN,
+    "rendering.hard_speck_integer_core_contract": (
+        "artifact-speck retains an unblurred exact one-pixel integer-lattice core; "
+        "clean and warning conditions retain their inherited shoulders, while the ten "
+        "preregistered reject targets per split use only four axial neighbours whose "
+        "encoded magnitude is at least 5 L"
+    ),
+    "rendering.hard_speck_separation_contract": (
+        "all inherited artifact-speck conditions retain their prior separation; the "
+        "ten r18 reject targets per split require at least 30-pixel pairwise Chebyshev "
+        "separation, disjoint one-neighbour crosses, and uninjected background beyond "
+        "that support"
+    ),
+    "rendering.hard_speck_reject_anchor_contract": (
+        "the ten r18 target conditions per split preserve reject-tier membership and "
+        "replace only their speck morphology with four through seven quadrant-"
+        "stratified direct-visible one-pixel cores; this is a preregistered coverage "
+        "reinforcement, not assigned Vision truth, and cannot bypass the post-seal "
+        "population gate"
+    ),
+    "rendering.duplicate_audit_contract": _R20_RENDERING_DUPLICATE_AUDIT_CONTRACT,
+    "public_identity_policy.reviewer_access_contract": (
+        common.DEV_R20_CLOSED_REVIEWER_ACCESS_CONTRACT
+    ),
+}
+
+_R21_CLOSED_SPEC_CHANGED_PATHS = {
+    "history.dev_r21_status": common.DEV_R21_CLOSED_STATUS,
+    "history.dev_r21_role": common.DEV_R21_CLOSED_ROLE,
+    "history.dev_r21_failure_audit": common.DEV_R21_FAILURE_AUDIT_REL,
+    "history.dev_r21_failure_audit_sha256": (
+        common.DEV_R21_FAILURE_AUDIT_RAW_SHA256
+    ),
+    "metric_definition.development_basis": common.R21_DEVELOPMENT_BASIS,
+    "development_probe_secret_handling.scope": common.DEV_R21_CLOSED_SECRET_SCOPE,
+    "public_identity_policy.reviewer_access_contract": (
+        common.DEV_R21_CLOSED_REVIEWER_ACCESS_CONTRACT
+    ),
+}
+_R21_FROZEN_FRESH_SPEC_CANONICAL_SHA256 = (
+    "0d856cf7de23edee17587a670bfdbafcb4d4054a1764243b21cb9d6cbab2edf2"
+)
+_R22_PRIVATE_KEY_REPO_RELATIVE = (
+    "tmp/map-production/microtexture-v2-r6-dev-r22/private/development-key.bin"
+)
+_R22_REQUIRED_CI_CHECKS = _R21_REQUIRED_CI_CHECKS
+_R22_MATERIALIZED_SPEC_CHANGED_PATHS = {
+    "history.dev_r22_status": common.DEV_R22_STATUS,
+    "history.dev_r22_role": common.DEV_R22_ROLE,
+    "metric_definition.development_basis": common.R22_DEVELOPMENT_BASIS,
+    "development_probe_secret_handling.scope": common.DEV_R22_SECRET_SCOPE,
+    "development_probe_secret_handling.development_artifact_root_required_repo_relative": (
+        "tmp/map-production/microtexture-v2-r6-dev-r22"
+    ),
+    "development_probe_secret_handling.ignored_private_key_required_repo_relative": (
+        _R22_PRIVATE_KEY_REPO_RELATIVE
+    ),
+    "splits.calibration.public_nonce": _R22_PUBLIC_NONCES["calibration"],
+    "splits.holdout.public_nonce": _R22_PUBLIC_NONCES["holdout"],
+    "independent_condition_clusters.message_prefix": _R22_CLUSTER_PREFIX,
+    "control_catalog_authority.exact_variant_source": common.R22_EXACT_VARIANT_SOURCE,
+    "control_catalog_authority.private_identity_domains": (
+        _R22_PRIVATE_IDENTITY_DOMAINS
+    ),
+    "control_catalog_authority.duplicate_audit_contract": (
+        common.R22_CATALOG_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "blind_derivation.key_commitment_message": _R22_KEY_COMMITMENT_MESSAGE,
+    "blind_derivation.seed_message_prefix": _R22_SEED_MESSAGE_PREFIX,
+    "blind_derivation.code_message_prefix": _R22_CODE_MESSAGE_PREFIX,
+    "rendering.public_commitment_domain": _R22_PUBLIC_COMMITMENT_DOMAIN,
+    "rendering.duplicate_audit_contract": (
+        common.R22_RENDERING_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "labels.initial_decision_receipt_writer_contract": (
+        common.R22_INITIAL_DECISION_PRESEAL_VALIDATION_CONTRACT
+    ),
+    "public_identity_policy.reviewer_access_contract": (
+        common.DEV_R22_REVIEWER_ACCESS_CONTRACT
+    ),
+}
+_R22_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER = tuple(
+    common.POPULATION_ANCHOR_SCHEDULE
+)
+_R22_POPULATION_ANCHOR_SCHEDULE_KEYS = set(
+    _R22_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+)
+_R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES = {
+    key: common.POPULATION_ANCHOR_SCHEDULE[key]
+    for key in common.R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
+}
+_R22_POPULATION_ANCHOR_SCHEDULE_ADDED_KEYS = (
+    "fresh_from_closed_dev_r21",
+    "r21_parameter_nonce_reuse_forbidden",
+    "r22_parameter_nonce_bases",
+    "inherited_r21_schedule_revision",
+    "r22_sanitized_r21_basis",
+    "r22_sanitized_r21_basis_sha256",
+    "r22_preserved_r21_artifact_morphology_conditions_across_splits",
+    "r22_preserved_r21_artifact_morphology_sha256",
+    "r22_exact_morphology_change_count_across_splits",
+    "r22_morphology_tier_minimum_metric_threshold_population_and_rate_changes_"
+    "forbidden",
+    "r22_initial_decision_preseal_validation_required",
+    "r22_generation_review_preseal_reconciliation_preflight_label_seal_private_"
+    "reveal_measurement_threshold_or_audit_started",
+)
+_R22_CATALOG_AUTHORITY = control_catalog.dev_r22_authority_binding()
+_R22_PREDECESSOR_CATALOG_AUTHORITY_SHA256 = (
+    "62f9694518072db42601b57f3a88b97c34c34eda344142b0809e3c636b11ff4f"
+)
+_R22_PROBE_AUTHORITY_MANIFEST = {
+    "revision": "dev-r22-development-probe-authority-v1",
+    "development_edition": DEVELOPMENT_EDITION,
+    "development_root_required_repo_relative": (
+        "tmp/map-production/microtexture-v2-r6-dev-r22"
+    ),
+    "public_nonces": _R22_PUBLIC_NONCES,
+    "blind_identity_domains": {
+        "condition_cluster_prefix": _R22_CLUSTER_PREFIX,
+        "key_commitment_message": _R22_KEY_COMMITMENT_MESSAGE,
+        "seed_message_prefix": _R22_SEED_MESSAGE_PREFIX,
+        "code_message_prefix": _R22_CODE_MESSAGE_PREFIX,
+        "public_commitment_domain": _R22_PUBLIC_COMMITMENT_DOMAIN,
+    },
+    "zero_key_commitment_test_vector": _R22_ZERO_KEY_COMMITMENT_TEST_VECTOR,
+    "private_identity_domains": _R22_PRIVATE_IDENTITY_DOMAINS,
+    "parameter_nonce_bases": _R22_PARAMETER_NONCE_BASES,
+    "schedule_revision": _R22_SCHEDULE_REVISION,
+    "catalog_authority": _R22_CATALOG_AUTHORITY,
+    "predecessor_catalog_authority_sha256": (
+        _R22_PREDECESSOR_CATALOG_AUTHORITY_SHA256
+    ),
+    "population_anchor_schedule_key_order": list(
+        _R22_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+    ),
+    "population_anchor_schedule_keyset_sha256": (
+        common.R22_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+    ),
+    "population_anchor_schedule_changed_values_sha256": (
+        common.R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+    ),
+    "materialized_spec_changed_paths": _R22_MATERIALIZED_SPEC_CHANGED_PATHS,
+    "development_population_floors": DEVELOPMENT_POPULATION_FLOORS,
+    "sanitized_r21_basis": common.R22_SANITIZED_R21_BASIS,
+    "sanitized_r21_basis_sha256": common.R22_SANITIZED_R21_BASIS_SHA256,
+    "source_dev_r21_failure_audit_raw_sha256": (
+        common.DEV_R21_FAILURE_AUDIT_RAW_SHA256
+    ),
+    "source_dev_r21_failure_audit_canonical_sha256": (
+        common.DEV_R21_FAILURE_AUDIT_CANONICAL_SHA256
+    ),
+    "initial_decision_receipt_writer_revision": (
+        "dev-r22-strict-initial-decision-receipt-writer-v1"
+    ),
+    "initial_decision_receipt_writer_contract": (
+        common.R22_INITIAL_DECISION_PRESEAL_VALIDATION_CONTRACT
+    ),
+    "predecessor_full_artifact_morphology_sha256": (
+        _R22_CATALOG_AUTHORITY["predecessor_full_artifact_morphology_sha256"]
+    ),
+    "preserved_predecessor_morphology_sha256": (
+        _R22_CATALOG_AUTHORITY["preserved_predecessor_morphology_sha256"]
+    ),
+    "preserved_predecessor_morphology_conditions_across_splits": 200,
+    "full_artifact_morphology_sha256": (
+        _R22_CATALOG_AUTHORITY["full_artifact_morphology_sha256"]
+    ),
+    "exact_morphology_change_count_across_splits": 0,
+    "morphology_tier_minimum_metric_threshold_population_and_rate_changes_forbidden": (
+        True
+    ),
+    "vision_truth_guaranteed": False,
+    "generation_gate": {
+        "tracked_head_equals_upstream": True,
+        "same_head_dual_ci_green_required": True,
+        "required_check_runs": list(_R22_REQUIRED_CI_CHECKS),
+        "root_key_or_generation_start_before_gate_forbidden": True,
+    },
+}
+_R22_PROBE_AUTHORITY_MANIFEST_SHA256 = (
+    "d579abd7b2ed596f699c2bd5ce2e30db43d143f29a1b7315053184e632fe0e9b"
+)
+_R22_CLOSED_R21_RESTORATION_PATHS = {
+    "metric_definition.development_basis": common.R21_DEVELOPMENT_BASIS,
+    "development_probe_secret_handling.scope": common.DEV_R21_CLOSED_SECRET_SCOPE,
+    "development_probe_secret_handling.development_artifact_root_required_repo_relative": (
+        "tmp/map-production/microtexture-v2-r6-dev-r21"
+    ),
+    "development_probe_secret_handling.ignored_private_key_required_repo_relative": (
+        _R21_PRIVATE_KEY_REPO_RELATIVE
+    ),
+    "splits.calibration.public_nonce": _R21_PUBLIC_NONCES["calibration"],
+    "splits.holdout.public_nonce": _R21_PUBLIC_NONCES["holdout"],
+    "independent_condition_clusters.message_prefix": _R21_CLUSTER_PREFIX,
+    "control_catalog_authority.exact_variant_source": common.R21_EXACT_VARIANT_SOURCE,
+    "control_catalog_authority.private_identity_domains": (
+        _R21_PRIVATE_IDENTITY_DOMAINS
+    ),
+    "control_catalog_authority.duplicate_audit_contract": (
+        common.R21_CATALOG_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "blind_derivation.key_commitment_message": _R21_KEY_COMMITMENT_MESSAGE,
+    "blind_derivation.seed_message_prefix": _R21_SEED_MESSAGE_PREFIX,
+    "blind_derivation.code_message_prefix": _R21_CODE_MESSAGE_PREFIX,
+    "rendering.public_commitment_domain": _R21_PUBLIC_COMMITMENT_DOMAIN,
+    "rendering.duplicate_audit_contract": (
+        common.R21_RENDERING_DUPLICATE_AUDIT_CONTRACT
+    ),
+    "public_identity_policy.reviewer_access_contract": (
+        common.DEV_R21_CLOSED_REVIEWER_ACCESS_CONTRACT
+    ),
+}
 
 
 def _sha256(payload: bytes) -> str:
@@ -1943,7 +2395,7 @@ def _validate_dev_r17_spec_authority(value: dict[str, Any]) -> None:
 
 
 def _development_blind_commitment(
-    key: bytes, message: str = _R20_KEY_COMMITMENT_MESSAGE
+    key: bytes, message: str = _R22_KEY_COMMITMENT_MESSAGE
 ) -> str:
     if len(key) != 32:
         raise RuntimeError("development blind key must contain exactly 32 bytes")
@@ -2754,7 +3206,7 @@ def _validate_dev_r20_probe_authority_manifest() -> None:
         != _R20_PREDECESSOR_CATALOG_AUTHORITY_SHA256
         or _sha256(common.canonical_json_bytes(manifest))
         != _R20_PROBE_AUTHORITY_MANIFEST_SHA256
-        or DEV_ROOT.relative_to(REPO_ROOT).as_posix()
+        or R20_DEV_ROOT.relative_to(REPO_ROOT).as_posix()
         != manifest["development_root_required_repo_relative"]
         or control_catalog.dev_r20_authority_binding() != _R20_CATALOG_AUTHORITY
         or control_catalog._R20_SANITIZED_R19_BASIS != _R20_SANITIZED_R19_BASIS
@@ -2762,7 +3214,7 @@ def _validate_dev_r20_probe_authority_manifest() -> None:
         != _R20_DUPLICATE_SENTINEL_MANIFEST
         or control_catalog._R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
         != _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST
-        or _development_blind_commitment(bytes(32))
+        or _development_blind_commitment(bytes(32), _R20_KEY_COMMITMENT_MESSAGE)
         != _R20_ZERO_KEY_COMMITMENT_TEST_VECTOR
     ):
         raise RuntimeError("development dev-r20 probe authority manifest drift")
@@ -2805,6 +3257,368 @@ def _validate_dev_r20_probe_authority_manifest() -> None:
         raise RuntimeError("development dev-r20 freshness separation drift")
     _validate_dev_r19_probe_authority_manifest()
     control_catalog._validate_dev_r20_morphology_schedules()
+
+
+def _validate_dev_r21_probe_authority_manifest() -> None:
+    """Validate fresh r21 public authority without reading any root or secret."""
+
+    manifest = _R21_PROBE_AUTHORITY_MANIFEST
+    expected_keys = {
+        "revision",
+        "development_edition",
+        "development_root_required_repo_relative",
+        "public_nonces",
+        "blind_identity_domains",
+        "zero_key_commitment_test_vector",
+        "private_identity_domains",
+        "parameter_nonce_bases",
+        "schedule_revision",
+        "catalog_authority",
+        "predecessor_catalog_authority_sha256",
+        "population_anchor_schedule_key_order",
+        "population_anchor_schedule_keyset_sha256",
+        "population_anchor_schedule_changed_values_sha256",
+        "hard_point_speck_manifest",
+        "hard_point_speck_manifest_sha256",
+        "materialized_spec_changed_paths",
+        "development_population_floors",
+        "sanitized_r20_basis",
+        "sanitized_r20_basis_sha256",
+        "source_dev_r20_failure_audit_raw_sha256",
+        "source_dev_r20_failure_audit_canonical_sha256",
+        "predecessor_full_artifact_morphology_sha256",
+        "preserved_predecessor_morphology_sha256",
+        "preserved_predecessor_morphology_conditions_across_splits",
+        "full_artifact_morphology_sha256",
+        "exact_morphology_change_count_across_splits",
+        "non_speck_morphology_change_count_across_splits",
+        "duplicate_construction_change_count_across_splits",
+        "morphology_tier_minimum_metric_threshold_population_and_rate_changes_forbidden",
+        "vision_truth_guaranteed",
+        "generation_gate",
+    }
+    if set(manifest) != expected_keys:
+        raise RuntimeError("development dev-r21 authority manifest schema drift")
+    if (
+        manifest["revision"] != "dev-r21-development-probe-authority-v1"
+        or manifest["development_edition"] != "r21"
+        or manifest["development_root_required_repo_relative"]
+        != "tmp/map-production/microtexture-v2-r6-dev-r21"
+        or manifest["public_nonces"] != _R21_PUBLIC_NONCES
+        or manifest["blind_identity_domains"]
+        != {
+            "condition_cluster_prefix": _R21_CLUSTER_PREFIX,
+            "key_commitment_message": _R21_KEY_COMMITMENT_MESSAGE,
+            "seed_message_prefix": _R21_SEED_MESSAGE_PREFIX,
+            "code_message_prefix": _R21_CODE_MESSAGE_PREFIX,
+            "public_commitment_domain": _R21_PUBLIC_COMMITMENT_DOMAIN,
+        }
+        or manifest["zero_key_commitment_test_vector"]
+        != _R21_ZERO_KEY_COMMITMENT_TEST_VECTOR
+        or manifest["private_identity_domains"] != _R21_PRIVATE_IDENTITY_DOMAINS
+        or manifest["parameter_nonce_bases"] != _R21_PARAMETER_NONCE_BASES
+        or manifest["schedule_revision"] != _R21_SCHEDULE_REVISION
+        or manifest["catalog_authority"] != _R21_CATALOG_AUTHORITY
+        or manifest["predecessor_catalog_authority_sha256"]
+        != _R21_PREDECESSOR_CATALOG_AUTHORITY_SHA256
+        or manifest["population_anchor_schedule_key_order"]
+        != list(_R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER)
+        or len(_R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER) != 118
+        or len(_R21_POPULATION_ANCHOR_SCHEDULE_KEYS) != 118
+        or manifest["population_anchor_schedule_keyset_sha256"]
+        != common.R21_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        or manifest["population_anchor_schedule_changed_values_sha256"]
+        != common.R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        or manifest["hard_point_speck_manifest"]
+        != control_catalog._R21_HARD_POINT_SPECK_MANIFEST
+        or manifest["hard_point_speck_manifest_sha256"]
+        != control_catalog._R21_HARD_POINT_SPECK_MANIFEST_SHA256
+        or manifest["materialized_spec_changed_paths"]
+        != _R21_MATERIALIZED_SPEC_CHANGED_PATHS
+        or manifest["development_population_floors"] != DEVELOPMENT_POPULATION_FLOORS
+        or manifest["sanitized_r20_basis"]
+        != control_catalog._R21_SANITIZED_R20_BASIS
+        or manifest["sanitized_r20_basis_sha256"]
+        != control_catalog._R21_SANITIZED_R20_BASIS_SHA256
+        or manifest["source_dev_r20_failure_audit_raw_sha256"]
+        != common.DEV_R20_FAILURE_AUDIT_RAW_SHA256
+        or manifest["source_dev_r20_failure_audit_canonical_sha256"]
+        != common.DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256
+        or manifest["predecessor_full_artifact_morphology_sha256"]
+        != _R21_CATALOG_AUTHORITY["predecessor_full_artifact_morphology_sha256"]
+        or manifest["preserved_predecessor_morphology_sha256"]
+        != _R21_CATALOG_AUTHORITY["preserved_predecessor_morphology_sha256"]
+        or manifest["preserved_predecessor_morphology_conditions_across_splits"]
+        != 180
+        or manifest["full_artifact_morphology_sha256"]
+        != _R21_CATALOG_AUTHORITY["full_artifact_morphology_sha256"]
+        or manifest["exact_morphology_change_count_across_splits"] != 20
+        or manifest["non_speck_morphology_change_count_across_splits"] != 0
+        or manifest["duplicate_construction_change_count_across_splits"] != 0
+        or manifest[
+            "morphology_tier_minimum_metric_threshold_population_and_rate_changes_"
+            "forbidden"
+        ]
+        is not True
+        or manifest["vision_truth_guaranteed"] is not False
+        or manifest["generation_gate"]
+        != {
+            "tracked_head_equals_upstream": True,
+            "same_head_dual_ci_green_required": True,
+            "required_check_runs": list(_R21_REQUIRED_CI_CHECKS),
+            "root_key_or_generation_start_before_gate_forbidden": True,
+        }
+        or _sha256(
+            common.canonical_json_bytes(sorted(_R21_POPULATION_ANCHOR_SCHEDULE_KEYS))
+        )
+        != common.R21_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        or _sha256(
+            common.canonical_json_bytes(
+                _R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+            )
+        )
+        != common.R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        or _sha256(
+            common.canonical_json_bytes(control_catalog._R21_SANITIZED_R20_BASIS)
+        )
+        != control_catalog._R21_SANITIZED_R20_BASIS_SHA256
+        or _sha256(
+            common.canonical_json_bytes(
+                control_catalog._R21_HARD_POINT_SPECK_MANIFEST
+            )
+        )
+        != control_catalog._R21_HARD_POINT_SPECK_MANIFEST_SHA256
+        or _sha256(common.canonical_json_bytes(_R20_CATALOG_AUTHORITY))
+        != _R21_PREDECESSOR_CATALOG_AUTHORITY_SHA256
+        or _sha256(common.canonical_json_bytes(_R21_CATALOG_AUTHORITY))
+        != "62f9694518072db42601b57f3a88b97c34c34eda344142b0809e3c636b11ff4f"
+        or _sha256(common.canonical_json_bytes(manifest))
+        != _R21_PROBE_AUTHORITY_MANIFEST_SHA256
+        or R21_DEV_ROOT.relative_to(REPO_ROOT).as_posix()
+        != manifest["development_root_required_repo_relative"]
+        or control_catalog.dev_r21_authority_binding() != _R21_CATALOG_AUTHORITY
+        or _development_blind_commitment(bytes(32), _R21_KEY_COMMITMENT_MESSAGE)
+        != _R21_ZERO_KEY_COMMITMENT_TEST_VECTOR
+    ):
+        raise RuntimeError("development dev-r21 probe authority manifest drift")
+
+    historical_nonces: set[int] = set()
+    for bases in (
+        _R17_PARAMETER_NONCE_BASES,
+        _R18_PARAMETER_NONCE_BASES,
+        _R19_PARAMETER_NONCE_BASES,
+        _R20_PARAMETER_NONCE_BASES,
+    ):
+        for name, value in bases.items():
+            if name.endswith("duplicate_audit"):
+                historical_nonces.update(value)
+            else:
+                historical_nonces.add(value)
+    r21_nonces: set[int] = set()
+    for name, value in _R21_PARAMETER_NONCE_BASES.items():
+        if name.endswith("duplicate_audit"):
+            r21_nonces.update(value)
+        else:
+            r21_nonces.add(value)
+    historical_blind_domains = {
+        _R18_CLUSTER_PREFIX,
+        _R18_KEY_COMMITMENT_MESSAGE,
+        _R18_SEED_MESSAGE_PREFIX,
+        _R18_CODE_MESSAGE_PREFIX,
+        _R18_PUBLIC_COMMITMENT_DOMAIN,
+        _R19_CLUSTER_PREFIX,
+        _R19_KEY_COMMITMENT_MESSAGE,
+        _R19_SEED_MESSAGE_PREFIX,
+        _R19_CODE_MESSAGE_PREFIX,
+        _R19_PUBLIC_COMMITMENT_DOMAIN,
+        _R20_CLUSTER_PREFIX,
+        _R20_KEY_COMMITMENT_MESSAGE,
+        _R20_SEED_MESSAGE_PREFIX,
+        _R20_CODE_MESSAGE_PREFIX,
+        _R20_PUBLIC_COMMITMENT_DOMAIN,
+    }
+    if (
+        set(_R21_PUBLIC_NONCES.values())
+        & {
+            *_R17_PUBLIC_NONCES.values(),
+            *_R18_PUBLIC_NONCES.values(),
+            *_R19_PUBLIC_NONCES.values(),
+            *_R20_PUBLIC_NONCES.values(),
+        }
+        or set(_R21_PRIVATE_IDENTITY_DOMAINS.values())
+        & {
+            *_R17_PRIVATE_IDENTITY_DOMAINS.values(),
+            *_R18_PRIVATE_IDENTITY_DOMAINS.values(),
+            *_R19_PRIVATE_IDENTITY_DOMAINS.values(),
+            *_R20_PRIVATE_IDENTITY_DOMAINS.values(),
+        }
+        or set(manifest["blind_identity_domains"].values()) & historical_blind_domains
+        or r21_nonces & historical_nonces
+        or R21_DEV_ROOT == R20_DEV_ROOT
+    ):
+        raise RuntimeError("development dev-r21 freshness separation drift")
+    _validate_dev_r20_probe_authority_manifest()
+    control_catalog._validate_dev_r21_morphology_schedules()
+
+
+def _validate_dev_r22_probe_authority_manifest() -> None:
+    """Validate fresh r22 public authority without reading any root or secret."""
+
+    manifest = _R22_PROBE_AUTHORITY_MANIFEST
+    expected_keys = {
+        "revision",
+        "development_edition",
+        "development_root_required_repo_relative",
+        "public_nonces",
+        "blind_identity_domains",
+        "zero_key_commitment_test_vector",
+        "private_identity_domains",
+        "parameter_nonce_bases",
+        "schedule_revision",
+        "catalog_authority",
+        "predecessor_catalog_authority_sha256",
+        "population_anchor_schedule_key_order",
+        "population_anchor_schedule_keyset_sha256",
+        "population_anchor_schedule_changed_values_sha256",
+        "materialized_spec_changed_paths",
+        "development_population_floors",
+        "sanitized_r21_basis",
+        "sanitized_r21_basis_sha256",
+        "source_dev_r21_failure_audit_raw_sha256",
+        "source_dev_r21_failure_audit_canonical_sha256",
+        "initial_decision_receipt_writer_revision",
+        "initial_decision_receipt_writer_contract",
+        "predecessor_full_artifact_morphology_sha256",
+        "preserved_predecessor_morphology_sha256",
+        "preserved_predecessor_morphology_conditions_across_splits",
+        "full_artifact_morphology_sha256",
+        "exact_morphology_change_count_across_splits",
+        "morphology_tier_minimum_metric_threshold_population_and_rate_changes_forbidden",
+        "vision_truth_guaranteed",
+        "generation_gate",
+    }
+    if set(manifest) != expected_keys:
+        raise RuntimeError("development dev-r22 authority manifest schema drift")
+    expected_blind_domains = {
+        "condition_cluster_prefix": _R22_CLUSTER_PREFIX,
+        "key_commitment_message": _R22_KEY_COMMITMENT_MESSAGE,
+        "seed_message_prefix": _R22_SEED_MESSAGE_PREFIX,
+        "code_message_prefix": _R22_CODE_MESSAGE_PREFIX,
+        "public_commitment_domain": _R22_PUBLIC_COMMITMENT_DOMAIN,
+    }
+    if (
+        manifest["revision"] != "dev-r22-development-probe-authority-v1"
+        or manifest["development_edition"] != "r22"
+        or manifest["development_root_required_repo_relative"]
+        != "tmp/map-production/microtexture-v2-r6-dev-r22"
+        or manifest["public_nonces"] != _R22_PUBLIC_NONCES
+        or manifest["blind_identity_domains"] != expected_blind_domains
+        or manifest["zero_key_commitment_test_vector"]
+        != _R22_ZERO_KEY_COMMITMENT_TEST_VECTOR
+        or manifest["private_identity_domains"] != _R22_PRIVATE_IDENTITY_DOMAINS
+        or manifest["parameter_nonce_bases"] != _R22_PARAMETER_NONCE_BASES
+        or manifest["schedule_revision"] != _R22_SCHEDULE_REVISION
+        or manifest["catalog_authority"] != _R22_CATALOG_AUTHORITY
+        or manifest["predecessor_catalog_authority_sha256"]
+        != _R22_PREDECESSOR_CATALOG_AUTHORITY_SHA256
+        or manifest["population_anchor_schedule_key_order"]
+        != list(_R22_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER)
+        or len(_R22_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER) != 130
+        or len(_R22_POPULATION_ANCHOR_SCHEDULE_KEYS) != 130
+        or manifest["population_anchor_schedule_keyset_sha256"]
+        != common.R22_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        or manifest["population_anchor_schedule_changed_values_sha256"]
+        != common.R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        or manifest["materialized_spec_changed_paths"]
+        != _R22_MATERIALIZED_SPEC_CHANGED_PATHS
+        or manifest["development_population_floors"] != DEVELOPMENT_POPULATION_FLOORS
+        or manifest["sanitized_r21_basis"] != common.R22_SANITIZED_R21_BASIS
+        or manifest["sanitized_r21_basis_sha256"]
+        != common.R22_SANITIZED_R21_BASIS_SHA256
+        or manifest["source_dev_r21_failure_audit_raw_sha256"]
+        != common.DEV_R21_FAILURE_AUDIT_RAW_SHA256
+        or manifest["source_dev_r21_failure_audit_canonical_sha256"]
+        != common.DEV_R21_FAILURE_AUDIT_CANONICAL_SHA256
+        or manifest["initial_decision_receipt_writer_revision"]
+        != "dev-r22-strict-initial-decision-receipt-writer-v1"
+        or manifest["initial_decision_receipt_writer_contract"]
+        != common.R22_INITIAL_DECISION_PRESEAL_VALIDATION_CONTRACT
+        or manifest["predecessor_full_artifact_morphology_sha256"]
+        != control_catalog._R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        or manifest["preserved_predecessor_morphology_sha256"]
+        != control_catalog._R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        or manifest["preserved_predecessor_morphology_conditions_across_splits"]
+        != 200
+        or manifest["full_artifact_morphology_sha256"]
+        != control_catalog._R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        or manifest["exact_morphology_change_count_across_splits"] != 0
+        or manifest[
+            "morphology_tier_minimum_metric_threshold_population_and_rate_changes_"
+            "forbidden"
+        ]
+        is not True
+        or manifest["vision_truth_guaranteed"] is not False
+        or manifest["generation_gate"]
+        != {
+            "tracked_head_equals_upstream": True,
+            "same_head_dual_ci_green_required": True,
+            "required_check_runs": list(_R22_REQUIRED_CI_CHECKS),
+            "root_key_or_generation_start_before_gate_forbidden": True,
+        }
+        or _sha256(common.canonical_json_bytes(sorted(_R22_POPULATION_ANCHOR_SCHEDULE_KEYS)))
+        != common.R22_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        or _sha256(
+            common.canonical_json_bytes(_R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES)
+        )
+        != common.R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        or _sha256(common.canonical_json_bytes(common.R22_SANITIZED_R21_BASIS))
+        != common.R22_SANITIZED_R21_BASIS_SHA256
+        or _sha256(common.canonical_json_bytes(_R21_CATALOG_AUTHORITY))
+        != _R22_PREDECESSOR_CATALOG_AUTHORITY_SHA256
+        or _sha256(common.canonical_json_bytes(_R22_CATALOG_AUTHORITY))
+        != "4ba48c2cfbea7299d3ae596675fe5a97f92fc4520f5fb68181d35e8d418419af"
+        or _sha256(common.canonical_json_bytes(manifest))
+        != _R22_PROBE_AUTHORITY_MANIFEST_SHA256
+        or DEV_ROOT.relative_to(REPO_ROOT).as_posix()
+        != manifest["development_root_required_repo_relative"]
+        or control_catalog.dev_r22_authority_binding() != _R22_CATALOG_AUTHORITY
+        or _development_blind_commitment(bytes(32))
+        != _R22_ZERO_KEY_COMMITMENT_TEST_VECTOR
+    ):
+        raise RuntimeError("development dev-r22 probe authority manifest drift")
+
+    historical_nonces: set[int] = set()
+    for bases in (
+        _R17_PARAMETER_NONCE_BASES,
+        _R18_PARAMETER_NONCE_BASES,
+        _R19_PARAMETER_NONCE_BASES,
+        _R20_PARAMETER_NONCE_BASES,
+        _R21_PARAMETER_NONCE_BASES,
+    ):
+        for name, value in bases.items():
+            historical_nonces.update(value if name.endswith("duplicate_audit") else [value])
+    r22_nonces: set[int] = set()
+    for name, value in _R22_PARAMETER_NONCE_BASES.items():
+        r22_nonces.update(value if name.endswith("duplicate_audit") else [value])
+    historical_domains = {
+        *(_R21_PUBLIC_NONCES.values()),
+        *(_R21_PRIVATE_IDENTITY_DOMAINS.values()),
+        _R21_CLUSTER_PREFIX,
+        _R21_KEY_COMMITMENT_MESSAGE,
+        _R21_SEED_MESSAGE_PREFIX,
+        _R21_CODE_MESSAGE_PREFIX,
+        _R21_PUBLIC_COMMITMENT_DOMAIN,
+    }
+    if (
+        set(_R22_PUBLIC_NONCES.values()) & historical_domains
+        or set(_R22_PRIVATE_IDENTITY_DOMAINS.values()) & historical_domains
+        or set(expected_blind_domains.values()) & historical_domains
+        or r22_nonces & historical_nonces
+        or DEV_ROOT == R21_DEV_ROOT
+    ):
+        raise RuntimeError("development dev-r22 freshness separation drift")
+    _validate_dev_r21_probe_authority_manifest()
+    control_catalog._validate_dev_r22_morphology_schedules()
 
 
 def _validate_dev_r20_spec_authority(value: dict[str, Any]) -> None:
@@ -2909,6 +3723,248 @@ def _validate_closed_dev_r20_spec_authority(value: dict[str, Any]) -> None:
         raise RuntimeError("development closed dev-r20 authority round-trip drift")
 
 
+def _project_materialized_r21_authority_to_closed_r20(
+    value: dict[str, Any],
+) -> dict[str, Any]:
+    """Reconstruct closed r20, which itself reconstructs the frozen fresh r20."""
+
+    projected = deepcopy(value)
+    history = projected["history"]
+    history.pop("dev_r21_status", None)
+    history.pop("dev_r21_role", None)
+    projected["development_probe_secret_handling"].pop(
+        "development_artifact_root_required_repo_relative", None
+    )
+    for dotted_path, expected in _R21_CLOSED_R20_RESTORATION_PATHS.items():
+        components = dotted_path.split(".")
+        target: Any = projected
+        for component in components[:-1]:
+            if not isinstance(target, dict) or component not in target:
+                raise RuntimeError(
+                    f"development dev-r21 predecessor path missing: {dotted_path}"
+                )
+            target = target[component]
+        if not isinstance(target, dict) or components[-1] not in target:
+            raise RuntimeError(
+                f"development dev-r21 predecessor leaf missing: {dotted_path}"
+            )
+        target[components[-1]] = deepcopy(expected)
+
+    schedule = dict(projected["population_anchor_schedule"])
+    for key in _R21_POPULATION_ANCHOR_SCHEDULE_ADDED_KEYS:
+        schedule.pop(key, None)
+    schedule["revision"] = _R20_SCHEDULE_REVISION
+    schedule["all_100_artifact_clusters_reviewed_and_evaluated"] = True
+    projected["population_anchor_schedule"] = {
+        key: schedule[key] for key in _R20_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+    }
+    return projected
+
+
+def _materialize_dev_r21_spec(value: dict[str, Any]) -> dict[str, Any]:
+    """Overlay closed r20 with the exact public r21 authority."""
+
+    _validate_closed_dev_r20_spec_authority(value)
+    materialized = deepcopy(value)
+    schedule = dict(materialized["population_anchor_schedule"])
+    schedule.update(deepcopy(_R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES))
+    materialized["population_anchor_schedule"] = {
+        key: schedule[key] for key in _R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+    }
+    for dotted_path, expected in _R21_MATERIALIZED_SPEC_CHANGED_PATHS.items():
+        components = dotted_path.split(".")
+        target: Any = materialized
+        for component in components[:-1]:
+            if not isinstance(target, dict) or component not in target:
+                raise RuntimeError(
+                    f"development dev-r21 materialization path missing: {dotted_path}"
+                )
+            target = target[component]
+        if not isinstance(target, dict):
+            raise RuntimeError(
+                f"development dev-r21 materialization parent drift: {dotted_path}"
+            )
+        target[components[-1]] = deepcopy(expected)
+    return materialized
+
+
+def _validate_dev_r21_spec_authority(value: dict[str, Any]) -> None:
+    """Validate r21, its closed-r20 predecessor, and r20's frozen fresh view."""
+
+    _validate_dev_r21_probe_authority_manifest()
+    schedule = value.get("population_anchor_schedule", {})
+    if (
+        not isinstance(schedule, dict)
+        or tuple(schedule) != _R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+        or set(schedule) != _R21_POPULATION_ANCHOR_SCHEDULE_KEYS
+        or {
+            key: schedule.get(key)
+            for key in _R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+        }
+        != _R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+        or schedule != common.R21_POPULATION_ANCHOR_SCHEDULE
+    ):
+        raise RuntimeError("development dev-r21 schedule authority drift")
+    for dotted_path, expected in _R21_MATERIALIZED_SPEC_CHANGED_PATHS.items():
+        actual: Any = value
+        for component in dotted_path.split("."):
+            if not isinstance(actual, dict) or component not in actual:
+                raise RuntimeError(
+                    f"development dev-r21 materialized path missing: {dotted_path}"
+                )
+            actual = actual[component]
+        if actual != expected:
+            raise RuntimeError(
+                f"development dev-r21 materialized path drift: {dotted_path}"
+            )
+
+    projected_closed_r20 = _project_materialized_r21_authority_to_closed_r20(value)
+    _validate_closed_dev_r20_spec_authority(projected_closed_r20)
+    if _materialize_dev_r21_spec(projected_closed_r20) != value:
+        raise RuntimeError("development dev-r21 predecessor round-trip drift")
+
+
+def _project_closed_dev_r21_authority_to_fresh_r21(
+    value: dict[str, Any],
+) -> dict[str, Any]:
+    """Project closed r21 to the exact frozen fresh-r21 authority view."""
+
+    projected = deepcopy(value)
+    history = projected["history"]
+    history["dev_r21_status"] = common.DEV_R21_FRESH_STATUS
+    history["dev_r21_role"] = common.DEV_R21_FRESH_ROLE
+    history.pop("dev_r21_failure_audit", None)
+    history.pop("dev_r21_failure_audit_sha256", None)
+    projected["metric_definition"]["development_basis"] = common.R21_DEVELOPMENT_BASIS
+    projected["development_probe_secret_handling"]["scope"] = (
+        common.DEV_R21_FRESH_SECRET_SCOPE
+    )
+    projected["public_identity_policy"]["reviewer_access_contract"] = (
+        common.DEV_R21_FRESH_REVIEWER_ACCESS_CONTRACT
+    )
+    return projected
+
+
+def _validate_closed_dev_r21_spec_authority(value: dict[str, Any]) -> None:
+    """Validate closure fields and revalidate the frozen fresh-r21 authority."""
+
+    for dotted_path, expected in _R21_CLOSED_SPEC_CHANGED_PATHS.items():
+        actual: Any = value
+        for component in dotted_path.split("."):
+            if not isinstance(actual, dict) or component not in actual:
+                raise RuntimeError(
+                    f"development closed dev-r21 path missing: {dotted_path}"
+                )
+            actual = actual[component]
+        if actual != expected:
+            raise RuntimeError(f"development closed dev-r21 path drift: {dotted_path}")
+    projected_fresh = _project_closed_dev_r21_authority_to_fresh_r21(value)
+    _validate_dev_r21_spec_authority(projected_fresh)
+    if _sha256(common.canonical_json_bytes(projected_fresh)) != (
+        _R21_FROZEN_FRESH_SPEC_CANONICAL_SHA256
+    ):
+        raise RuntimeError("development closed dev-r21 authority round-trip drift")
+
+
+def _project_materialized_r22_authority_to_closed_r21(
+    value: dict[str, Any],
+) -> dict[str, Any]:
+    """Reconstruct closed r21, which reconstructs frozen fresh r21."""
+
+    projected = deepcopy(value)
+    history = projected["history"]
+    history.pop("dev_r22_status", None)
+    history.pop("dev_r22_role", None)
+    projected["labels"].pop("initial_decision_receipt_writer_contract", None)
+    for dotted_path, expected in _R22_CLOSED_R21_RESTORATION_PATHS.items():
+        components = dotted_path.split(".")
+        target: Any = projected
+        for component in components[:-1]:
+            if not isinstance(target, dict) or component not in target:
+                raise RuntimeError(
+                    f"development dev-r22 predecessor path missing: {dotted_path}"
+                )
+            target = target[component]
+        if not isinstance(target, dict) or components[-1] not in target:
+            raise RuntimeError(
+                f"development dev-r22 predecessor leaf missing: {dotted_path}"
+            )
+        target[components[-1]] = deepcopy(expected)
+    schedule = dict(projected["population_anchor_schedule"])
+    for key in _R22_POPULATION_ANCHOR_SCHEDULE_ADDED_KEYS:
+        schedule.pop(key, None)
+    schedule["revision"] = _R21_SCHEDULE_REVISION
+    projected["population_anchor_schedule"] = {
+        key: schedule[key] for key in _R21_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+    }
+    return projected
+
+
+def _materialize_dev_r22_spec(value: dict[str, Any]) -> dict[str, Any]:
+    """Overlay closed r21 with the exact public r22 authority."""
+
+    _validate_closed_dev_r21_spec_authority(value)
+    materialized = deepcopy(value)
+    schedule = dict(materialized["population_anchor_schedule"])
+    schedule.update(deepcopy(_R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES))
+    materialized["population_anchor_schedule"] = {
+        key: schedule[key] for key in _R22_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+    }
+    materialized["labels"]["initial_decision_receipt_writer_contract"] = (
+        common.R22_INITIAL_DECISION_PRESEAL_VALIDATION_CONTRACT
+    )
+    for dotted_path, expected in _R22_MATERIALIZED_SPEC_CHANGED_PATHS.items():
+        components = dotted_path.split(".")
+        target: Any = materialized
+        for component in components[:-1]:
+            if not isinstance(target, dict) or component not in target:
+                raise RuntimeError(
+                    f"development dev-r22 materialization path missing: {dotted_path}"
+                )
+            target = target[component]
+        if not isinstance(target, dict):
+            raise RuntimeError(
+                f"development dev-r22 materialization parent drift: {dotted_path}"
+            )
+        target[components[-1]] = deepcopy(expected)
+    return materialized
+
+
+def _validate_dev_r22_spec_authority(value: dict[str, Any]) -> None:
+    """Validate r22 and the complete closed/fresh r21 predecessor chain."""
+
+    _validate_dev_r22_probe_authority_manifest()
+    schedule = value.get("population_anchor_schedule", {})
+    if (
+        not isinstance(schedule, dict)
+        or tuple(schedule) != _R22_POPULATION_ANCHOR_SCHEDULE_KEY_ORDER
+        or set(schedule) != _R22_POPULATION_ANCHOR_SCHEDULE_KEYS
+        or {
+            key: schedule.get(key)
+            for key in _R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+        }
+        != _R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES
+        or schedule != common.POPULATION_ANCHOR_SCHEDULE
+    ):
+        raise RuntimeError("development dev-r22 schedule authority drift")
+    for dotted_path, expected in _R22_MATERIALIZED_SPEC_CHANGED_PATHS.items():
+        actual: Any = value
+        for component in dotted_path.split("."):
+            if not isinstance(actual, dict) or component not in actual:
+                raise RuntimeError(
+                    f"development dev-r22 materialized path missing: {dotted_path}"
+                )
+            actual = actual[component]
+        if actual != expected:
+            raise RuntimeError(
+                f"development dev-r22 materialized path drift: {dotted_path}"
+            )
+    projected_closed = _project_materialized_r22_authority_to_closed_r21(value)
+    _validate_closed_dev_r21_spec_authority(projected_closed)
+    if _materialize_dev_r22_spec(projected_closed) != value:
+        raise RuntimeError("development dev-r22 predecessor round-trip drift")
+
+
 def _load_spec() -> tuple[dict[str, Any], str]:
     payload = (CODE_ROOT / "preregistered-spec.json").read_bytes()
     digest = _sha256(payload)
@@ -2916,7 +3972,7 @@ def _load_spec() -> tuple[dict[str, Any], str]:
         raise RuntimeError("development preregistered spec SHA drift")
     value = json.loads(payload.decode("utf-8"))
     common.validate_preregistered_spec(value)
-    _validate_closed_dev_r20_spec_authority(value)
+    _validate_dev_r22_spec_authority(value)
     return value, digest
 
 
@@ -3039,7 +4095,62 @@ def _validate_development_key_git_boundary(
     return key_path
 
 
-def _tracked_input_preflight(spec: dict[str, Any], spec_sha: str) -> tuple[str, str]:
+def _require_same_head_dual_ci_green(captured_head: str) -> None:
+    """Require the two matrix validation jobs to be green on this exact commit."""
+
+    remote_url = subprocess.check_output(
+        ["git", "remote", "get-url", "origin"],
+        cwd=REPO_ROOT,
+        text=True,
+    ).strip()
+    match = re.search(r"github\.com[/:]([^/]+)/([^/]+?)(?:\.git)?$", remote_url)
+    if match is None:
+        raise RuntimeError("development dual-CI gate requires a GitHub origin")
+    repository_slug = f"{match.group(1)}/{match.group(2)}"
+    response = subprocess.check_output(
+        [
+            "gh",
+            "api",
+            "--method",
+            "GET",
+            f"repos/{repository_slug}/commits/{captured_head}/check-runs?per_page=100",
+            "-H",
+            "Accept: application/vnd.github+json",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+    )
+    payload = json.loads(response)
+    check_runs = payload.get("check_runs") if isinstance(payload, dict) else None
+    if not isinstance(check_runs, list):
+        raise RuntimeError("development dual-CI check-run response drift")
+    latest_by_name: dict[str, dict[str, Any]] = {}
+    for run in check_runs:
+        if not isinstance(run, dict) or run.get("name") not in _R22_REQUIRED_CI_CHECKS:
+            continue
+        name = run["name"]
+        if not isinstance(run.get("id"), int):
+            raise RuntimeError(f"development CI check id drift: {name}")
+        previous = latest_by_name.get(name)
+        if previous is None or run["id"] > previous["id"]:
+            latest_by_name[name] = run
+    if set(latest_by_name) != set(_R22_REQUIRED_CI_CHECKS) or any(
+        run.get("head_sha") != captured_head
+        or run.get("status") != "completed"
+        or run.get("conclusion") != "success"
+        for run in latest_by_name.values()
+    ):
+        raise RuntimeError(
+            "development generation requires same-HEAD Ubuntu and Windows CI green"
+        )
+
+
+def _tracked_input_preflight(
+    spec: dict[str, Any],
+    spec_sha: str,
+    *,
+    require_dual_ci_green: bool = False,
+) -> tuple[str, str]:
     captured_head = _git_head()
     branch = subprocess.check_output(
         ["git", "symbolic-ref", "--quiet", "--short", "HEAD"],
@@ -3077,6 +4188,8 @@ def _tracked_input_preflight(spec: dict[str, Any], spec_sha: str) -> tuple[str, 
     common.verify_tracked_foundation_corpus_provenance(
         repository, captured_head, spec["foundation_corpus"]
     )
+    if require_dual_ci_green:
+        _require_same_head_dual_ci_green(captured_head)
     _validate_development_key_git_boundary(spec, captured_head)
     common.assert_head_unchanged(captured_head)
     return captured_head, _sha256_file(CODE_ROOT / "implementation-bindings.json")
@@ -3492,7 +4605,7 @@ def _load_generation_state(
         or boundary.get("formal_environment_absent_before_generation") is not True
         or state.get("development_edition") != DEVELOPMENT_EDITION
         or state.get("development_authority_sha256")
-        != _R20_PROBE_AUTHORITY_MANIFEST_SHA256
+        != _R22_PROBE_AUTHORITY_MANIFEST_SHA256
         or state.get("spec_sha256") != spec_sha
         or state.get("public_nonces") != _public_nonces(spec)
         or state.get("implementation_bindings_sha256") != expected_bindings_sha
@@ -3652,6 +4765,91 @@ def _parse_decisions_payload(
         common._validate_vision_evidence_notes(decision, context, anonymous_code)
         decisions[key] = decision
     return decisions
+
+
+def _validate_unsealed_initial_decisions(
+    *,
+    payload: bytes,
+    split: str,
+    reviewer: str,
+    review_index: dict[str, Any],
+) -> tuple[str, bytes]:
+    """Apply official parsing/coverage before the exclusive receipt write."""
+
+    if split not in {"calibration", "holdout"} or reviewer not in {
+        "root",
+        "independent",
+    }:
+        raise RuntimeError("invalid initial-decision split or reviewer")
+    page_rows: dict[tuple[int, int], str] = {}
+    pages = review_index.get("pages")
+    if not isinstance(pages, list):
+        raise RuntimeError(f"{split} initial-decision review-index drift")
+    for page in pages:
+        if not isinstance(page, dict) or type(page.get("page_index")) is not int:
+            raise RuntimeError(f"{split} initial-decision review-index page drift")
+        item_codes = page.get("item_codes")
+        if not isinstance(item_codes, list):
+            raise RuntimeError(f"{split} initial-decision review-index codes drift")
+        for row, code in enumerate(item_codes, start=1):
+            page_rows[(page["page_index"], row)] = code
+    decisions = _parse_decisions_payload(
+        payload, f"{split} {reviewer} unsealed initial decisions"
+    )
+    if len(page_rows) != EXPECTED_RECORDS_PER_SPLIT or set(decisions) != set(page_rows):
+        raise RuntimeError(f"{split} {reviewer} initial decision coverage drift")
+    if any(
+        decisions[key]["anonymous_code"] != code for key, code in page_rows.items()
+    ):
+        raise RuntimeError(f"{split} {reviewer} initial decision code binding drift")
+    snapshot_name = _R17_INITIAL_DECISION_GATE_MANIFEST["snapshot_files"][reviewer]
+    snapshot_sha = _sha256(payload)
+    return snapshot_sha, f"{snapshot_sha}  {snapshot_name}\n".encode("ascii")
+
+
+def seal_initial_decisions(split: str, reviewer: str) -> None:
+    """Validate one public initial snapshot, then exclusively seal its receipt."""
+
+    _spec, _state, _generation_binding, prepared = _review_preflight()
+    snapshot_name = _R17_INITIAL_DECISION_GATE_MANIFEST["snapshot_files"].get(
+        reviewer
+    )
+    receipt_name = _R17_INITIAL_DECISION_GATE_MANIFEST["receipt_files"].get(reviewer)
+    if not isinstance(snapshot_name, str) or not isinstance(receipt_name, str):
+        raise RuntimeError("invalid initial-decision reviewer")
+    snapshot_path = _checked_dev_file(
+        f"public/{split}/{snapshot_name}",
+        f"{split} {reviewer} unsealed initial decisions",
+    )
+    receipt_path = DEV_ROOT / "public" / split / receipt_name
+    _assert_no_link_like_ancestors(receipt_path.parent, REPO_ROOT)
+    if receipt_path.exists() or receipt_path.is_symlink():
+        raise RuntimeError(
+            f"{split} {reviewer} initial decision receipt already exists"
+        )
+    snapshot_sha, receipt_payload = _validate_unsealed_initial_decisions(
+        payload=snapshot_path.read_bytes(),
+        split=split,
+        reviewer=reviewer,
+        review_index=prepared[split]["review_index"],
+    )
+    receipt_sha = _write_bytes_exclusive(receipt_path, receipt_payload)
+    _assert_development_boundary(root_must_not_exist=False)
+    print(
+        json.dumps(
+            {
+                "authority": False,
+                "formal_use_forbidden": True,
+                "split": split,
+                "reviewer": reviewer,
+                "snapshot_sha256": snapshot_sha,
+                "receipt_sha256": receipt_sha,
+                "receipt_path": receipt_path.relative_to(DEV_ROOT).as_posix(),
+                "strict_official_parser_passed_before_receipt_seal": True,
+            },
+            ensure_ascii=False,
+        )
+    )
 
 
 def _validate_r17_initial_decision_gate_manifest() -> None:
@@ -4230,7 +5428,6 @@ def _review_preflight() -> tuple[
 
 
 def preflight() -> None:
-    _reject_retired_dev_r20_operation("preflight")
     _spec, _state, _generation_binding, prepared = _public_preflight()
     _assert_development_boundary(root_must_not_exist=False)
     print(
@@ -4514,7 +5711,6 @@ def _regenerate_and_audit_population(
 
 
 def analyze() -> None:
-    _reject_retired_dev_r20_operation("analyze")
     spec, state, generation_binding, prepared = _public_preflight()
     _assert_private_analysis_boundary(analysis_must_exist=False)
     if PRIVATE_ANALYSIS_ROOT.exists() or PRIVATE_ANALYSIS_ROOT.is_symlink():
@@ -4721,7 +5917,6 @@ def analyze() -> None:
 
 def postmortem() -> None:
     """Read-only reveal for a closed development probe; never emits key material."""
-    _reject_retired_dev_r20_operation("postmortem")
     failure = PRIVATE_ANALYSIS_ROOT / "FAILED.dev.json"
     if not failure.is_file():
         raise RuntimeError("development postmortem requires a closed failed probe")
@@ -4805,19 +6000,20 @@ def postmortem() -> None:
 
 
 def generate() -> None:
-    _reject_retired_dev_r20_operation("generate")
     _assert_development_boundary(root_must_not_exist=True)
     spec, spec_sha = _load_spec()
-    captured_head, bindings_sha = _tracked_input_preflight(spec, spec_sha)
+    captured_head, bindings_sha = _tracked_input_preflight(
+        spec, spec_sha, require_dual_ci_green=True
+    )
     key_path = _validate_development_key_git_boundary(spec, captured_head)
     DEV_ROOT.mkdir(parents=True, exist_ok=False)
     (DEV_ROOT / "private").mkdir()
     # The root is the earliest durable consumed-edition evidence. Sample the key
-    # only after it exists so an interruption can never silently resample r20.
+    # only after it exists so an interruption can never silently resample r21.
     key = secrets.token_bytes(32)
     state = {
         "development_edition": DEVELOPMENT_EDITION,
-        "development_authority_sha256": _R20_PROBE_AUTHORITY_MANIFEST_SHA256,
+        "development_authority_sha256": _R22_PROBE_AUTHORITY_MANIFEST_SHA256,
         "spec_sha256": spec_sha,
         "public_nonces": _public_nonces(spec),
         "implementation_bindings_sha256": bindings_sha,
@@ -5005,7 +6201,6 @@ def generate() -> None:
 
 
 def review_crops(split: str, page_index: int) -> None:
-    _reject_retired_dev_r20_operation("review-crops")
     if (
         split not in {"calibration", "holdout"}
         or not 1 <= page_index <= EXPECTED_REVIEW_PAGES_PER_SPLIT
@@ -5091,14 +6286,25 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "command",
-        choices=("generate", "preflight", "analyze", "postmortem", "review-crops"),
+        choices=(
+            "generate",
+            "seal-initial-decisions",
+            "preflight",
+            "analyze",
+            "postmortem",
+            "review-crops",
+        ),
     )
     parser.add_argument("--split", choices=("calibration", "holdout"))
+    parser.add_argument("--reviewer", choices=("root", "independent"))
     parser.add_argument("--page", type=int)
     arguments = parser.parse_args()
-    _reject_retired_dev_r20_operation(arguments.command)
     if arguments.command == "generate":
         generate()
+    elif arguments.command == "seal-initial-decisions":
+        if arguments.split is None or arguments.reviewer is None:
+            parser.error("seal-initial-decisions requires --split and --reviewer")
+        seal_initial_decisions(arguments.split, arguments.reviewer)
     elif arguments.command == "preflight":
         preflight()
     elif arguments.command == "analyze":

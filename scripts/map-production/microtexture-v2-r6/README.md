@@ -169,7 +169,7 @@ nonces、public surfaces、postmortem outputは後続editionまたはformalへ�
 `development-only premeasurement population failure evidence; both private audits passed, calibration tiny-speck population 0 and holdout tiny-speck population 1 each missed formal minimum 4 and development floor 6, every other endpoint passed both minima, no numeric metric or threshold search started, one read-only postmortem ran exactly once, all Root and Independent initial snapshots and receipts remain immutable, and no dev-r20 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable`
 です。generation、両reviewerの`440 × 2` blind review、bilateral reconciliation、official preflight、label sealing、private reveal、regeneration、protocol-zero / duplicate auditsを各一度だけ完了し、両private auditはpassしました。premeasurement population auditではcalibration tiny-speck population `0`とholdout tiny-speck population `1`がformal minimum `4` / development floor `6`をともにmissし、他の全endpointは両minimumをpassしました。numeric metricとthreshold searchを開始せず閉鎖し、read-only sanitized postmortemは一度だけです。auditは
 `world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json`、raw SHA-256は
-`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。successorはpreregisterしていません。
+`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。dev-r20のsuccessorだったdev-r21も閉鎖済みで、current successorはfresh development-only `dev-r22`です。
 
 `dev-r20`はschedule revisionは`dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1`、sentinel revisionは
 `dev-r20-keyed-axial-short-line-duplicate-sentinel-v1`です。obvious-artifact duplicateだけを、当該editionのfresh keyとsplit / condition identityから決定するpositive `+12.0 L`のaxial bar `12`本へ変更しました。各barはencoded `24×3 px`、metric windowの各exact quadrantに`3`本、各quadrantにhorizontal / verticalの両方を含み、center間Chebyshev distanceは`>=32 px`、support guardは`>=2 px`、nonzero supportは計`864 px`です。pairはrequested delta、decoded residual、metricをexactに等しくし、reference、control、anonymous code、control IDは異ならせました。有限pixel geometry契約と両private auditはpassしましたが、artifact population全体のVision truthは保証されず、tiny-speck population gateをfailしました。
@@ -183,6 +183,16 @@ clean duplicate construction、`dev-r19`のreject severity-band policy、全200 
 `584deb41c74d8beeff030c33f1ed0116c4e583c9c60a41e010fb6233972b05a2`です。
 
 消費済みclosed rootは`tmp/map-production/microtexture-v2-r6-dev-r20`、public noncesは`r6-calibration-v15` / `r6-holdout-v15`です。condition-cluster / render-seed / opaque-code / private-reference-transformはv15、public payload commitmentはv16、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv14です。protocol-zero nonce basesは`1251000` / `1261000`、artifact basesは`1273000` / `1283000`、duplicate-audit noncesは`1291000..1291002` / `1301000..1301002`です。generationはexact authority commitのpushと同一commitのUbuntu / Windows CI両方のgreen後に一度だけ実行済みです。`dev-r20`はformal authorityを供給できず、全root / key / material / outputを再利用しません。formal stageはblockedです。
+
+`dev-r21`のstatusは`failed-and-closed-before-analysis`です。generation、両reviewerのblind `440 × 2` review、immutable initial snapshot / receipt、bilateral reconciliationは一度だけ完了しました。official public preflightの一回の呼出しはoperator observationだけで、machine receiptはありません。preflightはcalibration Rootの`decisions-root.initial.dev.txt` 6行目で、連結token `lp`をcanonical `l,p`として受理せず`decision DSL flag drift`で停止しました。非canonical `lp`は各splitでRoot initial `33`件、Independent initial `32`件、三つのfinal fileそれぞれ`32`件です。strict parserは正しくfail-closedであり、欠陥はreceipt seal前に同じparserを必須実行する専用writerがなかったことです。
+
+label seal、key read、private reveal、private / population audit、analysis、numeric measurement、threshold search、postmortemは未開始です。key bytesはfailed preflightでもこのtracked audit作成でも読まず、logにもGitにも入りません。closed rootとsealed snapshots / receipts / reconciled finalsは変更せずforensic evidenceとして保持し、13個のcalibration review-crop derivativeを含む全derivative、root、key、controls、references、pixels、identities、codes、commitments、labels、decisions、nonces、public surfaceを再利用しません。auditは`world/map-production/qa/microtexture-v2-r6-dev-r21-development-failure.json`、raw / canonical SHA-256は`89229d2b5f0b6c91c61cea6547127cc4441fd7cc6bd02d6cc17a3c7aec2d61bd` / `ffa5759cd56417deb1e6c53310e52f73ecdd6fe7929129939b464d0c049542cd`です。
+
+唯一のpreregistered successorはfresh development-only `dev-r22`です。schedule revisionは`dev-r22-r21-morphology-strict-preseal-decision-schedule-v1`で、dev-r21の全200 artifact morphology、両duplicate construction、全tier、formal/development minima、metric、threshold、population、rateを変更せず保持します。fresh root / keyは`tmp/map-production/microtexture-v2-r6-dev-r22` / `tmp/map-production/microtexture-v2-r6-dev-r22/private/development-key.bin`です。public noncesは`r6-calibration-v17` / `r6-holdout-v17`、condition-cluster / render-seed / opaque-code / private-reference-transformはv17、public payload commitmentはv18、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv16です。protocol-zero basesは`1451000` / `1461000`、artifact basesは`1473000` / `1483000`、duplicate-audit noncesは`1491000..1491002` / `1501000..1501002`です。
+
+dev-r22のinitial decisionは、各reviewerがsnapshotをauthorした直後、reconciliationより前に必ず`node scripts/run-python.js scripts/map-production/microtexture-v2-r6/development_probe.py seal-initial-decisions --split <calibration|holdout> --reviewer <root|independent>`でsealします。この専用writerだけがreceipt creationを所有し、同じstrict official parser、canonical `g,t,b,l,p` comma order、220-record coverage、page/rowとanonymous-code bindingを通した後にだけexact SHA receiptをexclusive writeします。`lp`、逆順、重複、空token、coverage/code driftではreceiptを作りません。四つのsnapshot / receiptがこの手順をpassしてからbilateral reconciliationとofficial `preflight`へ進みます。
+
+dev-r22はauthority登録だけで、generation、review、preseal、reconciliation、preflight、label seal、private reveal、measurement、threshold、auditを開始していません。exact authority commitのpushと、その同一commitのUbuntu / Windows CI両方のgreenがgeneration開始条件です。sanitized r21 basis / preserved 200-morphology SHA-256は`62dc7c4e5f31211cd5ea2fa7cbb43ebc2944e7e88bf1db79e6c1b4b738843e86` / `99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595`、schedule keyset / changed-values SHA-256は`428d7dcbf3aa796bfa419cd1f0e852f0207a52a6971ccb329c82a075abbeda07` / `ee63cf45a728caa0c1635ddf41b89ee60d864ea5f3787890a036c877a96bfc60`、r22 catalog / probe authority SHA-256は`4ba48c2cfbea7299d3ae596675fe5a97f92fc4520f5fb68181d35e8d418419af` / `d579abd7b2ed596f699c2bd5ce2e30db43d143f29a1b7315053184e632fe0e9b`です。formal stageはblockedです。
 
 ## ImageGen authority
 
@@ -202,8 +212,8 @@ record identity（polarity と replicate を含む）を入力とする full-out
 technical / cryptographic blind や、同じ OS principal で悪意ある reviewer に対する secrecy は主張しません。
 formal fresh key は専用の長寿命 custodian process だけが保持し、artifactやlogへ永続化せず、Vision processへ
 継承・公開しません。closed dev-r8/dev-r9/dev-r10/dev-r11/dev-r12/dev-r13/dev-r14/dev-r15/dev-r16 keyは各Git-ignored private rootにだけ保持して
-再利用せず、closed dev-r17/dev-r18/dev-r19/dev-r20 keyも各Git-ignored private rootに保持するforensic evidenceだけとし、
-既存または後続operationへ一切再利用しません。marker 前の
+再利用せず、closed dev-r17/dev-r18/dev-r19/dev-r20/dev-r21 keyも各Git-ignored private rootに保持するforensic evidenceだけとし、
+既存または後続operationへ一切再利用しません。fresh dev-r22 keyは別のGit-ignored private rootとtracked custodian runnerだけが保持し、r21以前のkeyを継承しません。marker 前の
 review surface は185 contact-sheet view-pages（各view 37 pages）とcode-only label formだけです。manifest schema
 `microtexture-v2-r6-control-manifest/3` が公開する record 情報は opaque code と code別の
 `control` / `reference` / `delta` HMAC commitment 3件だけで、個別control/referenceのpath、file、raw bytes、
@@ -443,10 +453,8 @@ Root は各 split の全220 codesを、次の5 viewで漏れなく確認しま�
 severity、200%確認、全400% quadrant確認、notes を記入します。全185 view-pages相当を確認する前に one-shot
 evaluation を開始してはいけません。
 
-RootとIndependentはreconciliation前に各splitのofficial initial snapshot
-`decisions-root.initial.dev.txt` / `decisions-independent.initial.dev.txt`と対応する`.sha256` receiptを作成します。receiptは
-`lowercase-sha256 two-spaces snapshot-basename newline`、両snapshotはofficial parser、220-record coverage、anonymous-code
-bindingをpassしなければなりません。reconciliation後の`vision-decisions.dev.txt` / `decisions-root.dev.txt` /
+RootとIndependentは各splitのofficial initial snapshot
+`decisions-root.initial.dev.txt` / `decisions-independent.initial.dev.txt`をauthorしますが、`.sha256` receiptを手作業で作ってはいけません。reconciliation前に専用`seal-initial-decisions --split <split> --reviewer <reviewer>`を実行し、同じofficial parser、canonical comma-separated flag order、220-record coverage、page/rowとanonymous-code bindingをpassした場合だけ、writerが`lowercase-sha256 two-spaces snapshot-basename newline` receiptをexclusive createします。失敗時はreceiptを作りません。reconciliation後の`vision-decisions.dev.txt` / `decisions-root.dev.txt` /
 `decisions-independent.dev.txt`はthree-way exact bytesとし、各recordのfinal `g,t,b,l,p` setはRoot initialとIndependent
 initialのflag intersectionのsubsetでなければなりません。disposition、severity、notesはこのsubset gateの対象外ですが、通常の
 schema/semantic validationを通します。private roleはこのgateの入力にせず、label sealは
@@ -610,12 +618,12 @@ dev-r18のrerun、resume、relabel、別key、subsetting、top-up、および全
 
 dev-r19はgeneration、`440 × 2` blind review、bilateral reconciliation、official preflight、label sealing、private reveal、regeneration、protocol-zero auditを各一度だけ完了しました。calibrationのclean / obvious-artifact duplicate groupsとholdoutのclean duplicate groupはpassしましたが、holdout obvious-artifact pairは両方`clean`、severity `0`、visible flagなしで、各memberに必須の`reject`、severity `2` / `3`、`short_line_visible=true`契約をfailしました。population auditとnumeric metricは開始せず`failed-and-closed-before-population-audit`で閉鎖し、read-only postmortemは一度だけです。auditは`world/map-production/qa/microtexture-v2-r6-dev-r19-development-failure.json`、raw SHA-256は`96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0`です。dev-r19の全素材・outputは再利用できません。
 
-dev-r20はgeneration、`440 × 2` blind review、bilateral reconciliation、official preflight、label sealing、private reveal、regeneration、両private audit、premeasurement population auditを各一度だけ実行しました。両private auditはpassしましたが、calibration / holdoutのtiny-speck populationは`0` / `1`で、formal minimum `4`とdevelopment floor `6`をともにmissしました。他の全endpointは両minimumをpassしました。numeric metricとthreshold searchを開始せず`failed-and-closed-before-measurement`で閉鎖し、read-only postmortemは一度だけです。auditは`world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json`、raw SHA-256は`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。dev-r20の全素材・outputは再利用できず、successorはpreregisterしていません。
+dev-r20はgeneration、`440 × 2` blind review、bilateral reconciliation、official preflight、label sealing、private reveal、regeneration、両private audit、premeasurement population auditを各一度だけ実行しました。両private auditはpassしましたが、calibration / holdoutのtiny-speck populationは`0` / `1`で、formal minimum `4`とdevelopment floor `6`をともにmissしました。他の全endpointは両minimumをpassしました。numeric metricとthreshold searchを開始せず`failed-and-closed-before-measurement`で閉鎖し、read-only postmortemは一度だけです。auditは`world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json`、raw SHA-256は`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。dev-r20の全素材・outputは再利用できません。dev-r21もstrict decision DSL failureでanalysis前に閉鎖し、fresh development-only dev-r22をpreregisterしました。dev-r22 generationは未開始で、formal authorityではありません。
 
 ## Formal operator order
 
 dev-r20は両private auditをpassしましたが両splitのtiny-speck population gateをfailし、numeric measurement前に閉鎖しました。
-dev-r20はformal authorityではなくsuccessorも未登録のため、以下のformal stageはすべてblockedです。dev-r20のroot、key、controls、labels、decisions、measurements、threshold、public surfaces、postmortem outputをformal authorityへ流用できません。
+fresh development-only dev-r22は登録済みですが、まだgeneration前でありformal authorityではありません。以下のformal stageはすべてblockedです。dev-r21以前またはdev-r22のroot、key、controls、labels、decisions、measurements、threshold、public surfaces、postmortem outputをformal authorityへ流用できません。
 
 1. authority files、implementation bindings、foundation/locked provenance、Vision reviews を Git で freeze し、
    working tree の対象 bytes、captured upstream HEAD、tracked SHA を preflight します。Ubuntu/Windows CI は

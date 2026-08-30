@@ -36,7 +36,7 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "fbdaf2aa25a9f7046cf3a05e7cbfaa4822edd40af83d133e0a2cc8b44051ac54"
+SPEC_SHA256 = "071aec1d27ccdcad9dd837e820edd014f7ae8cd6a351bae8a36b66a51f63455b"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
 DEV_R20_CLOSED_STATUS = "failed-and-closed-before-measurement"
 DEV_R20_CLOSED_ROLE = (
@@ -118,6 +118,159 @@ R20_DEVELOPMENT_BASIS = (
     "audits, and then closed before measurement because calibration tiny-speck "
     "population 0 and holdout tiny-speck population 1 each missed formal minimum 4 and "
     "development floor 6 while every other endpoint passed both minima"
+)
+DEV_R21_FRESH_STATUS = "fresh-development-only"
+DEV_R21_FRESH_ROLE = (
+    "fresh one-shot development role used only to strengthen the reject-tier "
+    "artifact-speck population after the closed dev-r20 premeasurement tiny-speck "
+    "population miss; it changes exactly the ten preregistered reject-speck "
+    "conditions per split to the encoded hard-plus overlay, preserves the other 180 "
+    "artifact morphologies, every design tier cardinality, metric, threshold, "
+    "population and rate contract, the dev-r19 reject severity-band duplicate policy, "
+    "and both r20 duplicate constructions; Vision truth is not guaranteed, all "
+    "identities and audit roles remain private, and it can never supply formal authority"
+)
+DEV_R21_FRESH_SECRET_SCOPE = (
+    "non-authority dev-r21 only; no development key, root, output, or commitment "
+    "can become formal authority"
+)
+DEV_R21_FRESH_REVIEWER_ACCESS_CONTRACT = (
+    "the formal blind key remains only in a dedicated custodian process; every closed "
+    "development blind key through dev-r20 remains only in its retained Git-ignored "
+    "private probe root and is never reused; the fresh dev-r21 blind key remains only "
+    "in its separate Git-ignored private probe root and tracked custodian runner; "
+    "neither Vision review process may read or inherit any key or private audit role, "
+    "and both must use visual page inspection only until both official initial "
+    "snapshots and receipts exist before reconciliation and label sealing"
+)
+R21_DEVELOPMENT_BASIS = (
+    R20_DEVELOPMENT_BASIS
+    + "; fresh dev-r21 uses only the tracked sanitized dev-r20 aggregate failure "
+    "evidence, preserves every formal and development minimum plus the metric, "
+    "threshold, rate, duplicate, and non-speck morphology contracts, and changes "
+    "exactly the ten reject-tier artifact-speck conditions per split to the "
+    "preregistered encoded hard-plus overlay; the other 180 artifact morphologies are "
+    "preserved and Vision truth is not guaranteed"
+)
+R21_EXACT_VARIANT_SOURCE = (
+    "the tracked control_catalog.py named by implementation-bindings.json; r21 "
+    "preserves the hash-bound r20 artifact catalog outside exactly ten reject-speck "
+    "conditions per split, preserves the dev-r19 duplicate semantic-equivalence policy "
+    "and both r20 duplicate constructions, and changes only those twenty reject-speck "
+    "morphologies to the encoded hard-plus overlay"
+)
+R21_CATALOG_DUPLICATE_AUDIT_CONTRACT = (
+    "one fresh-keyed clean and one fresh-keyed obvious-artifact private semantic-"
+    "replicate cluster; the obvious pair preserves the r20 twelve-bar finite axial "
+    "short-line construction while fresh r21 domains and nonces make every reference, "
+    "control, code, control identity, and commitment new; pair deltas, decoded "
+    "residuals, and metrics remain exact"
+)
+R21_RENDERING_DUPLICATE_AUDIT_CONTRACT = (
+    "the clean semantic audit group preserves its exact-zero construction and the "
+    "obvious-artifact group preserves the r20 finite axial short-line construction; "
+    "fresh r21 keying, domains, and nonces produce separately coded records with new "
+    "private references, controls, identities, and commitments, while requested "
+    "deltas, decoded residuals, and metrics remain exact within each pair and labels "
+    "satisfy the preserved dev-r19 reject-band policy"
+)
+DEV_R21_CLOSED_STATUS = "failed-and-closed-before-analysis"
+DEV_R21_CLOSED_ROLE = (
+    "development-only public-preflight failure evidence; generation, both blind "
+    "440-record reviews, immutable initial snapshots and receipts, and bilateral "
+    "reconciliation completed exactly once, but the one official public preflight "
+    "stopped at calibration Root initial line 6 because concatenated flag token lp "
+    "was not canonical comma-separated l,p; no label seal, private reveal, private "
+    "audit, population audit, analysis, numeric measurement, threshold search, or "
+    "postmortem started, all sealed snapshots and receipts remain immutable, and no "
+    "dev-r21 root, key, private material, control, reference, pixel, identity, code, "
+    "commitment, label, decision, measurement, nonce, or public surface is reusable"
+)
+DEV_R21_FAILURE_AUDIT_REL = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r21-development-failure.json"
+)
+DEV_R21_FAILURE_AUDIT_RAW_SHA256 = (
+    "89229d2b5f0b6c91c61cea6547127cc4441fd7cc6bd02d6cc17a3c7aec2d61bd"
+)
+DEV_R21_FAILURE_AUDIT_CANONICAL_SHA256 = (
+    "ffa5759cd56417deb1e6c53310e52f73ecdd6fe7929129939b464d0c049542cd"
+)
+DEV_R21_CLOSED_SECRET_SCOPE = (
+    "closed non-authority dev-r21 only; the retained development key, root, output, "
+    "and commitment are forensic evidence only and cannot become formal authority or "
+    "be reused"
+)
+DEV_R21_CLOSED_REVIEWER_ACCESS_CONTRACT = (
+    "the formal blind key remains only in a dedicated custodian process; every closed "
+    "development blind key through dev-r21 remains only in its retained Git-ignored "
+    "private probe root and is never reused; neither Vision review process may read or "
+    "inherit any key or private audit role, and both must use visual page inspection "
+    "only until each initial snapshot passes the public strict pre-seal validator and "
+    "both official snapshots and receipts exist before reconciliation and label sealing"
+)
+DEV_R21_STATUS = DEV_R21_CLOSED_STATUS
+DEV_R21_ROLE = DEV_R21_CLOSED_ROLE
+DEV_R22_STATUS = "fresh-development-only"
+DEV_R22_ROLE = (
+    "fresh one-shot development role after the closed dev-r21 public-preflight "
+    "decision-authoring failure; it preserves all 200 dev-r21 artifact morphologies, "
+    "both duplicate constructions, every design tier cardinality, metric, threshold, "
+    "population and rate contract, changes no morphology or numeric requirement, "
+    "requires every initial decision snapshot to pass the same strict public parser "
+    "before receipt sealing, uses entirely fresh identities, domains, nonces, controls, "
+    "references, commitments and public surfaces, and can never supply formal authority"
+)
+DEV_R22_SECRET_SCOPE = (
+    "non-authority dev-r22 only; no development key, root, output, or commitment "
+    "can become formal authority"
+)
+DEV_R22_REVIEWER_ACCESS_CONTRACT = (
+    "the formal blind key remains only in a dedicated custodian process; every closed "
+    "development blind key through dev-r21 remains only in its retained Git-ignored "
+    "private probe root and is never reused; the fresh dev-r22 blind key remains only "
+    "in its separate Git-ignored private probe root and tracked custodian runner; "
+    "neither Vision review process may read or inherit any key or private audit role, "
+    "and both must use visual page inspection only; each initial snapshot must pass "
+    "the public strict pre-seal validator before its receipt is created, and both "
+    "official snapshots and receipts must exist before reconciliation and label sealing"
+)
+R22_DEVELOPMENT_BASIS = (
+    R21_DEVELOPMENT_BASIS
+    + "; dev-r21 then closed at its one official public preflight because a sealed "
+    "calibration Root initial decision used concatenated flags lp instead of canonical "
+    "comma-separated l,p; label sealing, private reveal, population aggregation, "
+    "numeric measurement, and threshold search never started, so fresh dev-r22 changes "
+    "no morphology, tier, metric, threshold, population, or rate contract and adds only "
+    "a mandatory public strict-parser validation step before each initial receipt seal"
+)
+R22_EXACT_VARIANT_SOURCE = (
+    "the tracked control_catalog.py named by implementation-bindings.json; r22 "
+    "preserves all 200 hash-bound r21 artifact morphologies and both duplicate "
+    "constructions byte-for-byte at the morphology level while fresh domains and "
+    "nonces make every control, reference, identity, code, and commitment new"
+)
+R22_CATALOG_DUPLICATE_AUDIT_CONTRACT = (
+    "one fresh-keyed clean and one fresh-keyed obvious-artifact private semantic-"
+    "replicate cluster; both constructions are identical to r21 at the morphology "
+    "level while fresh r22 domains and nonces make every reference, control, code, "
+    "control identity, and commitment new; pair deltas, decoded residuals, and metrics "
+    "remain exact"
+)
+R22_RENDERING_DUPLICATE_AUDIT_CONTRACT = (
+    "the clean semantic audit group preserves its exact-zero construction and the "
+    "obvious-artifact group preserves the r20 finite axial short-line construction; "
+    "fresh r22 keying, domains, and nonces produce separately coded records with new "
+    "private references, controls, identities, and commitments, while requested "
+    "deltas, decoded residuals, and metrics remain exact within each pair and labels "
+    "satisfy the preserved dev-r19 reject-band policy"
+)
+R22_INITIAL_DECISION_PRESEAL_VALIDATION_CONTRACT = (
+    "the public seal-initial-decisions command exclusively owns initial receipt "
+    "creation; before writing it must parse the exact unsealed snapshot with the same "
+    "fail-closed decision DSL parser used by official preflight, require canonical "
+    "comma-separated flags in g,t,b,l,p order plus exact 220-record page/row coverage "
+    "and printed-code binding, refuse an existing receipt, and write only the exact "
+    "lowercase SHA-256 two-spaces snapshot-basename newline receipt"
 )
 
 
@@ -1087,6 +1240,316 @@ POPULATION_ANCHOR_SCHEDULE = {
     },
 }
 
+# Preserve the complete closed-r20 schedule as an independently reconstructable
+# predecessor.  The active r21 schedule is a narrow overlay whose insertion order is
+# itself authority: thirteen new fields, one revised edition marker, and one pending
+# review-state transition.  No r20 value is silently recomputed from r21.
+R20_POPULATION_ANCHOR_SCHEDULE = POPULATION_ANCHOR_SCHEDULE
+R21_SCHEDULE_REVISION = "dev-r21-symmetric-hard-point-speck-population-schedule-v1"
+R21_HARD_POINT_SPECK_REVISION = "dev-r21-reject-speck-encoded-hard-plus-v1"
+R21_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 1373000,
+    "holdout_artifact": 1383000,
+    "calibration_protocol_zero": 1351000,
+    "holdout_protocol_zero": 1361000,
+    "calibration_duplicate_audit": [1391000, 1391001, 1391002],
+    "holdout_duplicate_audit": [1401000, 1401001, 1401002],
+}
+R21_SANITIZED_R20_BASIS = {
+    "failure_class": "both-split-tiny-speck-population-shortfall",
+    "source_failure_audit_sha256": DEV_R20_FAILURE_AUDIT_RAW_SHA256,
+    "calibration": {
+        "tiny_speck_reject_detection": {
+            "observed": 0,
+            "formal_minimum": 4,
+            "development_minimum": 6,
+        },
+        "all_other_endpoints_passed_formal_and_development_minima": True,
+    },
+    "holdout": {
+        "tiny_speck_reject_detection": {
+            "observed": 1,
+            "formal_minimum": 4,
+            "development_minimum": 6,
+        },
+        "all_other_endpoints_passed_formal_and_development_minima": True,
+    },
+    "private_audits_passed": True,
+    "population_audit_started": True,
+    "population_audit_passed": False,
+    "numeric_measurement_started": False,
+    "metric_evaluation_started": False,
+    "threshold_search_started": False,
+}
+R21_REJECT_SPECK_OVERLAY_MANIFEST = {
+    "revision": R21_HARD_POINT_SPECK_REVISION,
+    "inherited_schedule_revision": R20_POPULATION_ANCHOR_SCHEDULE["revision"],
+    "schedule_revision": R21_SCHEDULE_REVISION,
+    "sanitized_r20_basis": R21_SANITIZED_R20_BASIS,
+    "sanitized_r20_basis_sha256": (
+        "60a781e4a74ce4b31a4513b66bfbae1362c39fe373c3f8ff3f5a4a9c587ce610"
+    ),
+    "family": "artifact-speck",
+    "target_tiers": ["clear-reject-candidate", "dominant-reject-candidate"],
+    "target_conditions_per_split": 10,
+    "clear_reject_conditions_per_split": 6,
+    "dominant_reject_conditions_per_split": 4,
+    "tiny_speck_formal_minimum": 4,
+    "tiny_speck_development_floor": 6,
+    "tiny_speck_structural_miss_budget": 4,
+    "direct_visibility_contract": {
+        "diameter_px": 1,
+        "center_amplitude_l": 12.0,
+        "shoulder_fraction": 0.92,
+        "encoded_center_l": 12,
+        "encoded_axial_shoulder_l": 11,
+        "connected_component_area_px": 5,
+        "component_count_bounds": [12, 21],
+        "minimum_center_chebyshev_separation_px": 30,
+        "quadrant_stratified": True,
+        "minimum_components_per_exact_metric_quadrant": 3,
+        "maximum_quadrant_count_difference": 1,
+        "returns_to_uninjected_background_outside_one_axial_neighbor": True,
+        "microblob_blur_forbidden": True,
+        "vision_truth_guaranteed": False,
+    },
+    "preservation_contract": {
+        "artifact_condition_count_per_split_unchanged": 100,
+        "artifact_records_per_split_unchanged": 200,
+        "total_records_per_split_unchanged": 220,
+        "clean_and_warning_speck_morphologies_unchanged_per_split": 10,
+        "all_non_speck_morphologies_unchanged_per_split": 80,
+        "exact_morphology_change_count_across_splits": 20,
+        "preserved_predecessor_morphology_conditions_across_splits": 180,
+        "design_tier_membership_unchanged": True,
+        "formal_and_development_minima_unchanged": True,
+        "metric_threshold_population_and_rate_contracts_unchanged": True,
+    },
+    "splits": {
+        "calibration": {
+            "3": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 12, "shoulder_fraction": 0.92, "minimum_separation_px": 30},
+            "5": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 13, "shoulder_fraction": 0.92, "minimum_separation_px": 32},
+            "6": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 18, "shoulder_fraction": 0.92, "minimum_separation_px": 30},
+            "7": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 14, "shoulder_fraction": 0.92, "minimum_separation_px": 34},
+            "8": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 15, "shoulder_fraction": 0.92, "minimum_separation_px": 31},
+            "12": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 19, "shoulder_fraction": 0.92, "minimum_separation_px": 32},
+            "15": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 16, "shoulder_fraction": 0.92, "minimum_separation_px": 33},
+            "16": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 20, "shoulder_fraction": 0.92, "minimum_separation_px": 34},
+            "17": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 21, "shoulder_fraction": 0.92, "minimum_separation_px": 36},
+            "19": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 17, "shoulder_fraction": 0.92, "minimum_separation_px": 35},
+        },
+        "holdout": {
+            "1": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 18, "shoulder_fraction": 0.92, "minimum_separation_px": 31},
+            "3": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 12, "shoulder_fraction": 0.92, "minimum_separation_px": 31},
+            "4": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 13, "shoulder_fraction": 0.92, "minimum_separation_px": 33},
+            "6": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 14, "shoulder_fraction": 0.92, "minimum_separation_px": 35},
+            "9": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 19, "shoulder_fraction": 0.92, "minimum_separation_px": 33},
+            "10": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 15, "shoulder_fraction": 0.92, "minimum_separation_px": 32},
+            "11": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 16, "shoulder_fraction": 0.92, "minimum_separation_px": 34},
+            "13": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 20, "shoulder_fraction": 0.92, "minimum_separation_px": 35},
+            "14": {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 21, "shoulder_fraction": 0.92, "minimum_separation_px": 37},
+            "18": {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 17, "shoulder_fraction": 0.92, "minimum_separation_px": 36},
+        },
+    },
+}
+
+_r21_population_anchor_schedule: dict[str, Any] = {}
+for _key, _value in R20_POPULATION_ANCHOR_SCHEDULE.items():
+    if _key == "revision":
+        _r21_population_anchor_schedule[_key] = R21_SCHEDULE_REVISION
+        _r21_population_anchor_schedule["fresh_from_closed_dev_r20"] = True
+        _r21_population_anchor_schedule["r20_parameter_nonce_reuse_forbidden"] = True
+        continue
+    _r21_population_anchor_schedule[_key] = _value
+    if _key == "r20_parameter_nonce_bases":
+        _r21_population_anchor_schedule["r21_parameter_nonce_bases"] = (
+            R21_PARAMETER_NONCE_BASES
+        )
+    elif _key == "inherited_r19_schedule_revision":
+        _r21_population_anchor_schedule["inherited_r20_schedule_revision"] = (
+            R20_POPULATION_ANCHOR_SCHEDULE["revision"]
+        )
+    elif _key == "r20_duplicate_sentinel_vision_truth_guaranteed":
+        _r21_population_anchor_schedule["r21_sanitized_r20_basis"] = (
+            R21_SANITIZED_R20_BASIS
+        )
+        _r21_population_anchor_schedule["r21_sanitized_r20_basis_sha256"] = (
+            "60a781e4a74ce4b31a4513b66bfbae1362c39fe373c3f8ff3f5a4a9c587ce610"
+        )
+        _r21_population_anchor_schedule["r21_reject_speck_overlay_revision"] = (
+            R21_HARD_POINT_SPECK_REVISION
+        )
+        _r21_population_anchor_schedule["r21_reject_speck_overlay_manifest"] = (
+            R21_REJECT_SPECK_OVERLAY_MANIFEST
+        )
+        _r21_population_anchor_schedule[
+            "r21_reject_speck_overlay_manifest_sha256"
+        ] = "9f85d79300a23b9c6f7cec27048d91cd8b1bcce98e395f792797a795156210cc"
+        _r21_population_anchor_schedule["r21_preserved_r20_morphology_sha256"] = (
+            "03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf"
+        )
+        _r21_population_anchor_schedule["r21_full_artifact_morphology_sha256"] = (
+            "99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595"
+        )
+        _r21_population_anchor_schedule[
+            "r21_generation_review_reconciliation_preflight_label_seal_private_reveal_"
+            "measurement_threshold_or_audit_started"
+        ] = False
+    elif _key == "all_100_artifact_clusters_reviewed_and_evaluated":
+        _r21_population_anchor_schedule[_key] = False
+        _r21_population_anchor_schedule[
+            "all_100_artifact_clusters_review_and_evaluation_required_before_"
+            "population_or_measurement"
+        ] = True
+POPULATION_ANCHOR_SCHEDULE = _r21_population_anchor_schedule
+del _r21_population_anchor_schedule, _key, _value
+
+R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
+    "revision",
+    "fresh_from_closed_dev_r20",
+    "r20_parameter_nonce_reuse_forbidden",
+    "r21_parameter_nonce_bases",
+    "inherited_r20_schedule_revision",
+    "r21_sanitized_r20_basis",
+    "r21_sanitized_r20_basis_sha256",
+    "r21_reject_speck_overlay_revision",
+    "r21_reject_speck_overlay_manifest",
+    "r21_reject_speck_overlay_manifest_sha256",
+    "r21_preserved_r20_morphology_sha256",
+    "r21_full_artifact_morphology_sha256",
+    "r21_generation_review_reconciliation_preflight_label_seal_private_reveal_"
+    "measurement_threshold_or_audit_started",
+    "all_100_artifact_clusters_reviewed_and_evaluated",
+    "all_100_artifact_clusters_review_and_evaluation_required_before_population_or_"
+    "measurement",
+)
+R21_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256 = (
+    "35dd416ed9ea9f0ccd350dccfc6b60f2cca76cfcfc2c9e596b37888bdb432cf1"
+)
+R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256 = (
+    "059ff3d98148ba17dd3f4a011ecc6c80c9618aee305e30ed77e4aa84d703d2f2"
+)
+R21_SANITIZED_R20_BASIS_SHA256 = (
+    "60a781e4a74ce4b31a4513b66bfbae1362c39fe373c3f8ff3f5a4a9c587ce610"
+)
+R21_REJECT_SPECK_OVERLAY_MANIFEST_SHA256 = (
+    "9f85d79300a23b9c6f7cec27048d91cd8b1bcce98e395f792797a795156210cc"
+)
+
+# Preserve the complete fresh-r21 schedule as the closed predecessor.  Fresh r22
+# changes no morphology or numeric contract; it only rotates every identity/nonce
+# namespace and requires strict public decision parsing before receipt sealing.
+R21_POPULATION_ANCHOR_SCHEDULE = POPULATION_ANCHOR_SCHEDULE
+R22_SCHEDULE_REVISION = (
+    "dev-r22-r21-morphology-strict-preseal-decision-schedule-v1"
+)
+R22_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 1473000,
+    "holdout_artifact": 1483000,
+    "calibration_protocol_zero": 1451000,
+    "holdout_protocol_zero": 1461000,
+    "calibration_duplicate_audit": [1491000, 1491001, 1491002],
+    "holdout_duplicate_audit": [1501000, 1501001, 1501002],
+}
+R22_SANITIZED_R21_BASIS = {
+    "failure_class": "sealed-initial-decision-dsl-noncanonical-flag-list",
+    "source_failure_audit_sha256": DEV_R21_FAILURE_AUDIT_RAW_SHA256,
+    "official_public_preflight_invocation_operator_observation": {
+        "observed_count": 1,
+        "machine_receipt_available": False,
+    },
+    "official_public_preflight_passed": False,
+    "first_failure": {
+        "split": "calibration",
+        "reviewer": "root",
+        "file": "decisions-root.initial.dev.txt",
+        "line": 6,
+        "message": "decision DSL flag drift",
+        "observed_flag_token": "lp",
+        "required_canonical_flag_token": "l,p",
+    },
+    "generation_completed": True,
+    "both_blind_reviews_completed": True,
+    "initial_snapshots_and_receipts_immutable": True,
+    "final_three_way_decision_bytes_reconciled": True,
+    "labels_sealed": False,
+    "private_reveal_started": False,
+    "population_audit_started": False,
+    "analysis_started": False,
+    "numeric_measurement_started": False,
+    "threshold_search_started": False,
+    "postmortem_invoked": False,
+}
+R22_SANITIZED_R21_BASIS_SHA256 = (
+    "62dc7c4e5f31211cd5ea2fa7cbb43ebc2944e7e88bf1db79e6c1b4b738843e86"
+)
+_r22_population_anchor_schedule: dict[str, Any] = {}
+for _key, _value in R21_POPULATION_ANCHOR_SCHEDULE.items():
+    if _key == "revision":
+        _r22_population_anchor_schedule[_key] = R22_SCHEDULE_REVISION
+        _r22_population_anchor_schedule["fresh_from_closed_dev_r21"] = True
+        _r22_population_anchor_schedule["r21_parameter_nonce_reuse_forbidden"] = True
+        _r22_population_anchor_schedule["r22_parameter_nonce_bases"] = (
+            R22_PARAMETER_NONCE_BASES
+        )
+        _r22_population_anchor_schedule["inherited_r21_schedule_revision"] = (
+            R21_POPULATION_ANCHOR_SCHEDULE["revision"]
+        )
+        _r22_population_anchor_schedule["r22_sanitized_r21_basis"] = (
+            R22_SANITIZED_R21_BASIS
+        )
+        _r22_population_anchor_schedule["r22_sanitized_r21_basis_sha256"] = (
+            R22_SANITIZED_R21_BASIS_SHA256
+        )
+        _r22_population_anchor_schedule[
+            "r22_preserved_r21_artifact_morphology_conditions_across_splits"
+        ] = 200
+        _r22_population_anchor_schedule[
+            "r22_preserved_r21_artifact_morphology_sha256"
+        ] = "99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595"
+        _r22_population_anchor_schedule[
+            "r22_exact_morphology_change_count_across_splits"
+        ] = 0
+        _r22_population_anchor_schedule[
+            "r22_morphology_tier_minimum_metric_threshold_population_and_rate_"
+            "changes_forbidden"
+        ] = True
+        _r22_population_anchor_schedule[
+            "r22_initial_decision_preseal_validation_required"
+        ] = True
+        _r22_population_anchor_schedule[
+            "r22_generation_review_preseal_reconciliation_preflight_label_seal_"
+            "private_reveal_measurement_threshold_or_audit_started"
+        ] = False
+        continue
+    _r22_population_anchor_schedule[_key] = _value
+POPULATION_ANCHOR_SCHEDULE = _r22_population_anchor_schedule
+del _r22_population_anchor_schedule, _key, _value
+
+R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
+    "revision",
+    "fresh_from_closed_dev_r21",
+    "r21_parameter_nonce_reuse_forbidden",
+    "r22_parameter_nonce_bases",
+    "inherited_r21_schedule_revision",
+    "r22_sanitized_r21_basis",
+    "r22_sanitized_r21_basis_sha256",
+    "r22_preserved_r21_artifact_morphology_conditions_across_splits",
+    "r22_preserved_r21_artifact_morphology_sha256",
+    "r22_exact_morphology_change_count_across_splits",
+    "r22_morphology_tier_minimum_metric_threshold_population_and_rate_changes_"
+    "forbidden",
+    "r22_initial_decision_preseal_validation_required",
+    "r22_generation_review_preseal_reconciliation_preflight_label_seal_private_"
+    "reveal_measurement_threshold_or_audit_started",
+)
+R22_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256 = (
+    "428d7dcbf3aa796bfa419cd1f0e852f0207a52a6971ccb329c82a075abbeda07"
+)
+R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256 = (
+    "ee63cf45a728caa0c1635ddf41b89ee60d864ea5f3787890a036c877a96bfc60"
+)
+
 R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
     "revision",
     "fresh_from_closed_dev_r18",
@@ -1157,14 +1620,15 @@ RENDERING_INVARIANTS = {
     "hard_speck_integer_core_contract": (
         "artifact-speck retains an unblurred exact one-pixel integer-lattice core; "
         "clean and warning conditions retain their inherited shoulders, while the ten "
-        "preregistered reject targets per split use only four axial neighbours whose "
-        "encoded magnitude is at least 5 L"
+        "preregistered r21 reject targets per split use center amplitude 12.0 L and "
+        "shoulder fraction 0.92 so the encoded center is 12 L and each of the four "
+        "encoded axial neighbours is 11 L"
     ),
     "hard_speck_separation_contract": (
         "all inherited artifact-speck conditions retain their prior separation; the "
-        "ten r18 reject targets per split require at least 30-pixel pairwise Chebyshev "
-        "separation, disjoint one-neighbour crosses, and uninjected background beyond "
-        "that support"
+        "ten r21 reject targets per split use the exact preregistered 30..37-pixel "
+        "pairwise Chebyshev separations, disjoint one-neighbour plus supports, and "
+        "uninjected background beyond that support"
     ),
     "hard_speck_quadrant_stratification_contract": (
         "artifact-speck integer centers use deterministic round-robin packing "
@@ -1172,10 +1636,11 @@ RENDERING_INVARIANTS = {
         "by at most one; a count of at least four covers every quadrant"
     ),
     "hard_speck_reject_anchor_contract": (
-        "the ten r18 target conditions per split preserve reject-tier membership and "
-        "replace only their speck morphology with four through seven quadrant-stratified "
-        "direct-visible one-pixel cores; this is a preregistered coverage reinforcement, "
-        "not assigned Vision truth, and cannot bypass the post-seal population gate"
+        "the ten r21 target conditions per split preserve reject-tier membership and "
+        "replace only their speck morphology with twelve through twenty-one quadrant-"
+        "stratified encoded hard-plus points; this is a preregistered coverage "
+        "reinforcement, not assigned Vision truth, and cannot bypass the post-seal "
+        "population gate"
     ),
     "microblob_separation_contract": (
         "artifact-microblob uses integer centers and a finite Gaussian truncated at "
@@ -1389,6 +1854,12 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "dev_r20_role",
             "dev_r20_failure_audit",
             "dev_r20_failure_audit_sha256",
+            "dev_r21_status",
+            "dev_r21_role",
+            "dev_r21_failure_audit",
+            "dev_r21_failure_audit_sha256",
+            "dev_r22_status",
+            "dev_r22_role",
         },
         "r6 development history",
     )
@@ -1605,6 +2076,13 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or history.get("dev_r20_failure_audit") != DEV_R20_FAILURE_AUDIT_REL
         or history.get("dev_r20_failure_audit_sha256")
         != DEV_R20_FAILURE_AUDIT_RAW_SHA256
+        or history.get("dev_r21_status") != DEV_R21_CLOSED_STATUS
+        or history.get("dev_r21_role") != DEV_R21_CLOSED_ROLE
+        or history.get("dev_r21_failure_audit") != DEV_R21_FAILURE_AUDIT_REL
+        or history.get("dev_r21_failure_audit_sha256")
+        != DEV_R21_FAILURE_AUDIT_RAW_SHA256
+        or history.get("dev_r22_status") != DEV_R22_STATUS
+        or history.get("dev_r22_role") != DEV_R22_ROLE
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -1622,9 +2100,10 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": DEV_R20_CLOSED_SECRET_SCOPE,
+        "scope": DEV_R22_SECRET_SCOPE,
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r20/private/development-key.bin",
+        "development_artifact_root_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r22",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r22/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -1907,7 +2386,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or definition.get("parallel_pair_ratio_diagnostic_only") is not True
         or definition.get("diagnostic_branch_flag_cutoff") != 0.5
         or definition.get("artifact_dependent_score_denominators_forbidden") is not True
-        or definition.get("development_basis") != R20_DEVELOPMENT_BASIS
+        or definition.get("development_basis") != R22_DEVELOPMENT_BASIS
         or definition.get("score_normalization")
         != "unit_soft(x, reference)=0 when x<=0 else (2/pi)*atan(x/reference), "
         "where reference is a frozen fixed half-scale and every finite positive "
@@ -2062,17 +2541,36 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     anchor_schedule = value.get("population_anchor_schedule")
     if anchor_schedule != POPULATION_ANCHOR_SCHEDULE:
         raise RuntimeError("r6 private population-anchor schedule drift")
+    r21_manifest_for_code_hash = dict(
+        anchor_schedule["r21_reject_speck_overlay_manifest"]
+    )
+    r21_manifest_splits = r21_manifest_for_code_hash.get("splits")
+    if not isinstance(r21_manifest_splits, dict) or set(r21_manifest_splits) != {
+        "calibration",
+        "holdout",
+    }:
+        raise RuntimeError("r6 dev-r21 speck-manifest split schema drift")
+    normalized_splits: dict[str, dict[int, Any]] = {}
+    for split, entries in r21_manifest_splits.items():
+        if (
+            not isinstance(entries, dict)
+            or any(re.fullmatch(r"(?:0|[1-9][0-9]*)", key) is None for key in entries)
+            or len({int(key) for key in entries}) != len(entries)
+        ):
+            raise RuntimeError("r6 dev-r21 speck-manifest index encoding drift")
+        normalized_splits[split] = {int(key): item for key, item in entries.items()}
+    r21_manifest_for_code_hash["splits"] = normalized_splits
     changed_schedule_values = {
         key: anchor_schedule[key]
-        for key in R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
+        for key in R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
     }
     if (
-        len(anchor_schedule) != 105
+        len(anchor_schedule) != 130
         or list(anchor_schedule) != list(POPULATION_ANCHOR_SCHEDULE)
         or sha256_bytes(canonical_json_bytes(sorted(anchor_schedule)))
-        != R20_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        != R22_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
         or sha256_bytes(canonical_json_bytes(changed_schedule_values))
-        != R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        != R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
         or sha256_bytes(
             canonical_json_bytes(anchor_schedule["speck_reject_anchor_schedule"])
         )
@@ -2105,8 +2603,26 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             canonical_json_bytes(anchor_schedule["r20_sanitized_r19_basis"])
         )
         != anchor_schedule["r20_sanitized_r19_basis_sha256"]
+        or sha256_bytes(
+            canonical_json_bytes(anchor_schedule["r21_sanitized_r20_basis"])
+        )
+        != anchor_schedule["r21_sanitized_r20_basis_sha256"]
+        or anchor_schedule["r21_sanitized_r20_basis_sha256"]
+        != R21_SANITIZED_R20_BASIS_SHA256
+        or sha256_bytes(
+            canonical_json_bytes(r21_manifest_for_code_hash)
+        )
+        != anchor_schedule["r21_reject_speck_overlay_manifest_sha256"]
+        or anchor_schedule["r21_reject_speck_overlay_manifest_sha256"]
+        != R21_REJECT_SPECK_OVERLAY_MANIFEST_SHA256
+        or sha256_bytes(
+            canonical_json_bytes(anchor_schedule["r22_sanitized_r21_basis"])
+        )
+        != anchor_schedule["r22_sanitized_r21_basis_sha256"]
+        or anchor_schedule["r22_sanitized_r21_basis_sha256"]
+        != R22_SANITIZED_R21_BASIS_SHA256
     ):
-        raise RuntimeError("r6 dev-r20 population-anchor authority digest drift")
+        raise RuntimeError("r6 dev-r22 population-anchor authority digest drift")
     formal_minima = {
         endpoint["id"]: int(endpoint["minimum_unique_clusters"])
         for endpoint in EXPECTED_ENDPOINT_DEFINITIONS
@@ -2239,6 +2755,74 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         is not True
         or anchor_schedule["r20_duplicate_sentinel_vision_truth_guaranteed"]
         is not False
+        or anchor_schedule["fresh_from_closed_dev_r20"] is not True
+        or anchor_schedule["r20_parameter_nonce_reuse_forbidden"] is not True
+        or anchor_schedule["r21_parameter_nonce_bases"] != R21_PARAMETER_NONCE_BASES
+        or anchor_schedule["inherited_r20_schedule_revision"]
+        != R20_POPULATION_ANCHOR_SCHEDULE["revision"]
+        or anchor_schedule["r21_sanitized_r20_basis"] != R21_SANITIZED_R20_BASIS
+        or anchor_schedule["r21_reject_speck_overlay_revision"]
+        != R21_HARD_POINT_SPECK_REVISION
+        or anchor_schedule["r21_reject_speck_overlay_manifest"]
+        != R21_REJECT_SPECK_OVERLAY_MANIFEST
+        or anchor_schedule["r21_preserved_r20_morphology_sha256"]
+        != "03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf"
+        or anchor_schedule["r21_full_artifact_morphology_sha256"]
+        != "99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595"
+        or anchor_schedule[
+            "r21_generation_review_reconciliation_preflight_label_seal_private_reveal_"
+            "measurement_threshold_or_audit_started"
+        ]
+        is not False
+        or anchor_schedule["all_100_artifact_clusters_reviewed_and_evaluated"]
+        is not False
+        or anchor_schedule[
+            "all_100_artifact_clusters_review_and_evaluation_required_before_"
+            "population_or_measurement"
+        ]
+        is not True
+        or anchor_schedule["r21_reject_speck_overlay_manifest"][
+            "preservation_contract"
+        ]["exact_morphology_change_count_across_splits"]
+        != 20
+        or anchor_schedule["r21_reject_speck_overlay_manifest"][
+            "preservation_contract"
+        ]["preserved_predecessor_morphology_conditions_across_splits"]
+        != 180
+        or anchor_schedule["r21_reject_speck_overlay_manifest"][
+            "target_conditions_per_split"
+        ]
+        != 10
+        or any(
+            len(anchor_schedule["r21_reject_speck_overlay_manifest"]["splits"][split])
+            != 10
+            for split in ("calibration", "holdout")
+        )
+        or anchor_schedule["fresh_from_closed_dev_r21"] is not True
+        or anchor_schedule["r21_parameter_nonce_reuse_forbidden"] is not True
+        or anchor_schedule["r22_parameter_nonce_bases"] != R22_PARAMETER_NONCE_BASES
+        or anchor_schedule["inherited_r21_schedule_revision"]
+        != R21_POPULATION_ANCHOR_SCHEDULE["revision"]
+        or anchor_schedule["r22_sanitized_r21_basis"] != R22_SANITIZED_R21_BASIS
+        or anchor_schedule[
+            "r22_preserved_r21_artifact_morphology_conditions_across_splits"
+        ]
+        != 200
+        or anchor_schedule["r22_preserved_r21_artifact_morphology_sha256"]
+        != "99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595"
+        or anchor_schedule["r22_exact_morphology_change_count_across_splits"] != 0
+        or anchor_schedule[
+            "r22_morphology_tier_minimum_metric_threshold_population_and_rate_"
+            "changes_forbidden"
+        ]
+        is not True
+        or anchor_schedule["r22_initial_decision_preseal_validation_required"]
+        is not True
+        or anchor_schedule[
+            "r22_generation_review_preseal_reconciliation_preflight_label_seal_"
+            "private_reveal_measurement_threshold_or_audit_started"
+        ]
+        is not False
         or anchor_schedule["r20_duplicate_sentinel_manifest"]["construction"][
             "bar_count_in_metric_window"
         ]
@@ -2320,12 +2904,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "inclusive 3..12 pixel guard-banded interior of the unchanged 2..13 pixel "
         "coherence support"
         or rendering.get("duplicate_audit_contract")
-        != "the clean semantic audit group retains its exact-zero construction; the "
-        "obvious-artifact group uses the r20 fresh-keyed finite axial short-line "
-        "sentinel; each group contains two separately coded records with distinct "
-        "private reference and control bytes, equal requested-delta bytes, exact "
-        "decoded-residual and metric equality, and labels satisfying the preserved "
-        "dev-r19 reject-band policy"
+        != R22_RENDERING_DUPLICATE_AUDIT_CONTRACT
     ):
         raise RuntimeError("r6 rendering population cardinality drift")
 
@@ -2410,11 +2989,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         raise RuntimeError("r6 control catalog cardinality drift")
     if (
         catalog.get("exact_variant_source")
-        != "the tracked control_catalog.py named by implementation-bindings.json; r20 "
-        "preserves the full hash-bound r19 artifact morphology catalog and dev-r19 "
-        "duplicate semantic-equivalence policy byte-for-byte, preserves the clean "
-        "duplicate, and changes only the obvious-artifact duplicate sentinel "
-        "construction"
+        != R22_EXACT_VARIANT_SOURCE
         or catalog.get("artifact_contract")
         != "five morphology families, exactly 20 nonzero conditions per family, "
         "paired dark/light polarities, one replicate per polarity, and no zero-count "
@@ -2423,12 +2998,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         != "secret-HMAC-derived; cluster mates may share a v15/v16/v17 source asset "
         "but every record receives a distinct keyed private reference transform"
         or catalog.get("duplicate_audit_contract")
-        != "one unchanged clean and one strengthened obvious-artifact private "
-        "semantic-replicate cluster; the strengthened pair uses twelve keyed finite "
-        "24-by-3 pixel positive-L axial bars, exactly three per metric quadrant with "
-        "both orientations; pair deltas, decoded residuals, and metrics are exact while "
-        "references, controls, codes, and control identities remain distinct and "
-        "private"
+        != R22_CATALOG_DUPLICATE_AUDIT_CONTRACT
     ):
         raise RuntimeError("r6 artifact catalog contract drift")
     if catalog.get("split_separation") != (
@@ -2462,11 +3032,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     }:
         raise RuntimeError("r6 private reference-transform contract drift")
     if catalog.get("private_identity_domains") != {
-        "private_reference_transform_prefix": "private-reference-transform-v15/",
-        "foundation_offset_lane": "foundation-offset-v14",
-        "foundation_assignment_lane": "foundation-assignment-v14",
-        "delta_lane": "delta-v14",
-        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v14/",
+        "private_reference_transform_prefix": "private-reference-transform-v17/",
+        "foundation_offset_lane": "foundation-offset-v16",
+        "foundation_assignment_lane": "foundation-assignment-v16",
+        "delta_lane": "delta-v16",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v16/",
     }:
         raise RuntimeError("r6 private identity domain contract drift")
 
@@ -2526,28 +3096,28 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v15"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v17"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
             raise RuntimeError(f"r6 split replicate contract drift: {split_name}")
     blind = value.get("blind_derivation", {})
     if (
-        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v14"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v15/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v15/"
+        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v16"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v17/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v17/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-15 blind derivation domain drift")
+        raise RuntimeError("r6 revision-17 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v15/"
+        != "microtexture-v2-r6/private-condition-cluster/v17/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v16/"
+        != "microtexture-v2-r6/public-payload-commitment/v18/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-15/16 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-17/18 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -2578,9 +3148,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             raise RuntimeError(f"r6 public identity policy missing {field}")
     if (
         public_policy.get("reviewer_access_contract")
-        != DEV_R20_CLOSED_REVIEWER_ACCESS_CONTRACT
+        != DEV_R22_REVIEWER_ACCESS_CONTRACT
     ):
-        raise RuntimeError("r6 dev-r20 reviewer-access contract drift")
+        raise RuntimeError("r6 dev-r22 reviewer-access contract drift")
     if (
         value["contact_sheets"].get("all_220_source_panels_unique_in_every_view")
         is not True
@@ -6876,10 +7446,169 @@ def _verify_tracked_dev_r20_failure_audit(
     return payload
 
 
+def validate_dev_r21_public_preflight_failure(value: Any) -> None:
+    """Validate the exact sanitized dev-r21 public-preflight failure evidence."""
+
+    context = "closed dev-r21 public-preflight failure audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "failure_phase",
+            "failure_class",
+            "measurement_started",
+            "selection_status",
+            "development_hard_threshold",
+            "calibration_endpoint_performance",
+            "holdout_endpoint_performance",
+            "threshold_selection_audit",
+            "one_shot_contract",
+            "public_preflight_failure",
+            "vision_review",
+            "hash_bindings",
+            "absent_analysis_artifacts",
+            "closed_root_retention",
+            "root_cause",
+            "successor_constraints",
+        },
+        context,
+    )
+    timestamp = value["audit_recorded_at"]
+    if (
+        not isinstance(timestamp, str)
+        or re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z",
+            timestamp,
+        )
+        is None
+    ):
+        raise RuntimeError(f"{context}.audit_recorded_at must be canonical UTC text")
+    parse_utc_timestamp(timestamp, f"{context}.audit_recorded_at")
+    expected_header = {
+        "artifact": "microtexture-v2-r6-dev-r21-development-public-preflight-failure-audit",
+        "schema_version": "microtexture-v2-r6-development-public-preflight-failure-audit/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "development_edition": "r21",
+        "outcome": "failed_closed",
+        "failure_phase": "public-preflight-before-label-seal-or-private-reveal",
+        "failure_class": "sealed-initial-decision-dsl-noncanonical-flag-list",
+        "measurement_started": False,
+        "selection_status": "not_started_public_preflight_failed",
+        "development_hard_threshold": None,
+        "calibration_endpoint_performance": None,
+        "holdout_endpoint_performance": None,
+        "threshold_selection_audit": None,
+    }
+    for field, expected in expected_header.items():
+        _require_exact_json_value(value[field], expected, f"{context}.{field}")
+    if sha256_bytes(canonical_json_bytes(value)) != (
+        DEV_R21_FAILURE_AUDIT_CANONICAL_SHA256
+    ):
+        raise RuntimeError(f"{context} canonical semantic digest drift")
+
+    one_shot = value["one_shot_contract"]
+    if (
+        one_shot.get("official_preflight_invocation_operator_observation")
+        != {"observed_count": 1, "machine_receipt_available": False}
+        or one_shot.get("official_preflight_passed") is not False
+        or one_shot.get("labels_sealed") is not False
+        or one_shot.get("private_reveal_started") is not False
+        or one_shot.get("private_audit_started") is not False
+        or one_shot.get("population_audit_started") is not False
+        or one_shot.get("analysis_started") is not False
+        or one_shot.get("numeric_metric_called") is not False
+        or one_shot.get("threshold_search_started") is not False
+        or one_shot.get("postmortem_invoked") is not False
+        or one_shot.get("development_key_bytes_read_by_failed_preflight") is not False
+        or one_shot.get("development_key_bytes_logged") is not False
+        or one_shot.get("development_key_bytes_tracked") is not False
+        or one_shot.get("r21_closed") is not True
+    ):
+        raise RuntimeError(f"{context} one-shot boundary drift")
+
+    failure = value["public_preflight_failure"]
+    if (
+        failure.get("error_type") != "RuntimeError"
+        or failure.get("message") != "decision DSL flag drift"
+        or failure.get("first_failure_split") != "calibration"
+        or failure.get("first_failure_reviewer") != "root"
+        or failure.get("first_failure_file") != "decisions-root.initial.dev.txt"
+        or failure.get("first_failure_line") != 6
+        or failure.get("observed_flag_token") != "lp"
+        or failure.get("required_canonical_flag_token") != "l,p"
+        or failure.get("strict_parser_weakened") is not False
+        or failure.get("initial_snapshot_or_receipt_modified_after_failure")
+        is not False
+        or failure.get("complete_noncanonical_lp_scope")
+        != {
+            split: {
+                "root_initial_occurrences": 33,
+                "independent_initial_occurrences": 32,
+                "vision_final_occurrences": 32,
+                "root_final_occurrences": 32,
+                "independent_final_occurrences": 32,
+            }
+            for split in ("calibration", "holdout")
+        }
+    ):
+        raise RuntimeError(f"{context} public failure scope drift")
+
+    if value["closed_root_retention"] != {
+        "retained_unchanged_for_forensic_evidence": True,
+        "sealed_initial_snapshots_and_receipts_unchanged": True,
+        "reconciled_final_decisions_unchanged": True,
+        "private_root_inspected_for_this_tracked_audit": False,
+        "calibration_review_crop_derivative_file_count": 13,
+        "all_review_crop_derivatives_non_reusable": True,
+        "all_other_dev_r21_derivatives_non_reusable": True,
+    }:
+        raise RuntimeError(f"{context} closed-root retention drift")
+    if any(
+        not isinstance(digest, str)
+        or re.fullmatch(
+            rf"[0-9a-f]{{{40 if field == 'captured_repository_head' else 64}}}",
+            digest,
+        )
+        is None
+        for field, digest in value["hash_bindings"].items()
+    ):
+        raise RuntimeError(f"{context} malformed public hash binding")
+
+
+def _verify_tracked_dev_r21_failure_audit(
+    repository: Path, captured_head: str, spec: dict[str, Any]
+) -> bytes:
+    """Bind the retired dev-r21 status to its exact tracked sanitized audit."""
+
+    history = spec.get("history")
+    if not isinstance(history, dict) or (
+        history.get("dev_r21_status") != DEV_R21_CLOSED_STATUS
+        or history.get("dev_r21_role") != DEV_R21_CLOSED_ROLE
+        or history.get("dev_r21_failure_audit") != DEV_R21_FAILURE_AUDIT_REL
+        or history.get("dev_r21_failure_audit_sha256")
+        != DEV_R21_FAILURE_AUDIT_RAW_SHA256
+    ):
+        raise RuntimeError("closed dev-r21 failure audit history binding drift")
+    payload = _tracked_worktree_bytes(
+        repository, captured_head, DEV_R21_FAILURE_AUDIT_REL
+    )
+    if sha256_bytes(payload) != DEV_R21_FAILURE_AUDIT_RAW_SHA256:
+        raise RuntimeError("closed dev-r21 failure audit tracked SHA drift")
+    validate_dev_r21_public_preflight_failure(json.loads(payload.decode("utf-8")))
+    return payload
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind every closed development audit through retired dev-r20."""
+    """Bind every closed development audit through retired dev-r21."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -7058,6 +7787,7 @@ def verify_tracked_development_history(
     )
 
     _verify_tracked_dev_r20_failure_audit(repository, captured_head, spec)
+    _verify_tracked_dev_r21_failure_audit(repository, captured_head, spec)
 
     # Preserve the historical return contract; callers use this function for its
     # fail-closed checks, but earlier code returned the dev-r7 payload.
@@ -7123,7 +7853,7 @@ def verify_tracked_foundation_corpus_provenance(
     return payloads
 
 
-def _reject_closed_dev_r20_formal_operation() -> None:
+def _reject_closed_dev_r21_formal_operation() -> None:
     """Validate retirement evidence, then reject before formal root/key/env access."""
 
     spec = load_spec()
@@ -7132,9 +7862,10 @@ def _reject_closed_dev_r20_formal_operation() -> None:
     repository = CODE_ROOT.parents[2]
     captured_head = _git(CODE_ROOT, "rev-parse", "HEAD").decode().strip()
     _verify_tracked_dev_r20_failure_audit(repository, captured_head, spec)
+    _verify_tracked_dev_r21_failure_audit(repository, captured_head, spec)
     assert_head_unchanged(captured_head)
     raise RuntimeError(
-        "formal r6 operation is blocked: dev-r20 failed and closed before measurement; "
+        "formal r6 operation is blocked: dev-r21 failed and closed before analysis; "
         "no closed development material can authorize a formal run"
     )
 
@@ -7142,7 +7873,7 @@ def _reject_closed_dev_r20_formal_operation() -> None:
 def operation_preflight(
     *, require_receipt: bool, include_locked_clean_reference: bool = False
 ) -> dict[str, Any]:
-    _reject_closed_dev_r20_formal_operation()
+    _reject_closed_dev_r21_formal_operation()
     spec = load_spec()
     key = blind_key()
     commitment = blind_commitment(key)
