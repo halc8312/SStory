@@ -1,0 +1,459 @@
+{
+  "schema_version": "1.0.0",
+  "interface": "sstory-k3-golden-v3-four-candidate-derivation-preregistration-v1",
+  "status": "preregistered-code-only-not-generated",
+  "immutable_plan": true,
+  "strict_audit_authority": {
+    "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
+    "sha256": "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7",
+    "policy": "reference-only; this derivation authority contains no candidate measurements and duplicates no acceptance gate"
+  },
+  "runtime": {
+    "common": {
+      "python_implementation": "CPython",
+      "python_version": "3.12.10",
+      "opencv_api": "4.13.0",
+      "numpy": "2.3.5",
+      "pillow": "12.3.0",
+      "byteorder": "little",
+      "opencv_threads": 1
+    },
+    "allowed_profiles": [
+      {
+        "id": "windows-local-opencv-python-4.13.0.92",
+        "platform_system": "Windows",
+        "platform_machine": "AMD64",
+        "opencv_distributions": [{"name": "opencv-python", "version": "4.13.0.92"}],
+        "opencv_build_sha256": "8a55f551e40cf84d0fa7e2509bb9544da66782a8cbc017d7ce27a9de0ef9c1ac"
+      },
+      {
+        "id": "windows-ci-opencv-python-headless-4.13.0.92",
+        "platform_system": "Windows",
+        "platform_machine": "AMD64",
+        "opencv_distributions": [{"name": "opencv-python-headless", "version": "4.13.0.92"}],
+        "opencv_build_sha256": "fc048a2b6c657a1e163e8591b98100d585d65bacf1d1f1a6e28659cae3b531f1"
+      },
+      {
+        "id": "linux-ci-opencv-python-headless-4.13.0.92",
+        "platform_system": "Linux",
+        "platform_machine": "x86_64",
+        "opencv_distributions": [{"name": "opencv-python-headless", "version": "4.13.0.92"}],
+        "opencv_build_sha256": "9e0b6b5d3c457d7794d56f55acd3afdadd8fd4b5a8a562e78bcab4fadaf1e604"
+      }
+    ],
+    "profile_selection": "exactly one profile must match system, machine, installed OpenCV distribution set, and OpenCV build-information SHA-256",
+    "opencv_rng_seed": 17720
+  },
+  "input_policy": {
+    "exact_source_binding_count": 27,
+    "unlisted_inputs_forbidden": true,
+    "tracked_worktree_bytes_must_match_sha256": true,
+    "candidate_generator_read_allowlist_roles": [
+      "strict-audit-authority-reference-only",
+      "v18-byte-authority",
+      "v19-body-control",
+      "v21-dev20-renderer-algorithm",
+      "v21-foundation-v19-canonical",
+      "v20-replacement-body-control",
+      "v21-dev20-ridge-marks",
+      "permission-mask",
+      "protected-mask",
+      "road-calm-mask",
+      "alpha-zero-mask",
+      "sealed-v19-statistics-firewall"
+    ],
+    "candidate_generator_forbidden_calls": [
+      "v21.load_replay_inputs",
+      "v21.reconstruct",
+      "v21._validate_search_summary",
+      "v19 replay imports or raw raster reads"
+    ],
+    "historical_v19_imagegen_lineage_exception": "The SHA-closed tracked v19 replay graph may be read only to reproduce the byte-closed v19 raster. Only per-body Lab medians, radial power, and empirical distributions from bodies 1-7 may cross from that replay into this derivation.",
+    "prohibited_inputs": [
+      "external or untracked ImageGen donors, prompts, roots, pixels, and outputs",
+      "new v21 ImageGen donors and absolute-path ImageGen development plans",
+      "failed microtexture roots, pixels, and outputs",
+      "any v246 input",
+      "any TEMP PNG",
+      "raw rejected spatial pixels copied, pasted, warped, tiled, or used as phase",
+      "any candidate outside the exact four-candidate table"
+    ],
+    "source_bindings": [
+      {
+        "role": "strict-audit-authority-reference-only",
+        "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
+        "sha256": "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7",
+        "use": "hash validation and downstream audit-authority identity only"
+      },
+      {
+        "role": "v19-byte-closed-replay-module",
+        "path": "scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py",
+        "sha256": "92100794ff519fb77c7bca89af74897dcc422c9bb341582d31355d6b98cd229a",
+        "use": "reconstruct v19 in memory"
+      },
+      {
+        "role": "v19-statistics-firewall-extractor-provenance-only",
+        "path": "scripts/map-production/extract_style_candidate_k3_golden_v3_v19_statistics.py",
+        "sha256": "26ea56e203ffb8b9899d8d04042bfd8e9d0e14281f2b55fe55bc99b270cca955",
+        "use": "statistics artifact canonical serializer and source provenance only; candidate emit never reads or imports it"
+      },
+      {
+        "role": "v19-byte-closed-replay-contract",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/v19-replay-contract.json",
+        "sha256": "c8a4c4f2bb50905f0904cef050218d3fdafcafc7d11172a92db613774e02b0b6",
+        "use": "bind the complete v19 replay graph"
+      },
+      {
+        "role": "v18-byte-authority",
+        "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+        "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882",
+        "use": "permission, protected, road, and alpha-zero byte restoration"
+      },
+      {
+        "role": "v19-replay-generated-layout-control",
+        "path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+        "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f",
+        "use": "v19 replay graph only; no pixels cross directly into the new derivation"
+      },
+      {
+        "role": "v19-body-control",
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+        "sha256": "7527b0be4d7a042c5fd33e499b96806bcbbd6a1b614086c7c0fbdf308b83666b",
+        "use": "bodies 1-7 source-statistics support and exact coverage anchors"
+      },
+      {
+        "role": "v19-replay-control-atlas-metadata",
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.json",
+        "sha256": "f9a1eab4a8e417bcd688ceae8db1e8f01dc21835842e69339dda70f461eab768",
+        "use": "v19 replay graph only"
+      },
+      {
+        "role": "v19-replay-prompt-authority",
+        "path": "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation.txt",
+        "sha256": "6a4dc3cc69ff4b6a2f03edd76a1408c839ad32a6497726aff7c4057e81a5ac43",
+        "use": "v19 replay graph validation only"
+      },
+      {
+        "role": "v19-replay-generation-receipt",
+        "path": "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation-receipt.json",
+        "sha256": "05b9c19008daf348e17850322f3052ff023652c2709e53127e9f64500478dc09",
+        "use": "v19 replay graph validation only"
+      },
+      {
+        "role": "v19-replay-canonical-k3-spec",
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/spec.json",
+        "sha256": "49d681f16f061583638a778a0fd0fc8b7b3a977d21320ee0c51b9b593040890e",
+        "use": "v19 replay graph validation only"
+      },
+      {
+        "role": "v19-replay-root-vision-review",
+        "path": "world/map-production/qa/style-candidate-k-v3-highland-source-v55-root-vision.json",
+        "sha256": "626ea739be2aa63a55d73f31064ef697301db4244a6102834b7886930e76cd90",
+        "use": "v19 replay graph validation only"
+      },
+      {
+        "role": "v19-replay-preflight",
+        "path": "world/map-production/qa/automated/style-candidate-k-v3-sparse-ridgeline-v19-preflight.json",
+        "sha256": "64de26a0b9ee59e3a6e100297802a201d3a14db9fff022c097d6e881015a6fd3",
+        "use": "v19 replay graph validation only"
+      },
+      {
+        "role": "v19-replay-control-atlas",
+        "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+        "sha256": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4",
+        "use": "v19 replay graph only; no pixels cross directly into the new derivation"
+      },
+      {
+        "role": "v19-replay-material-reference",
+        "path": "world/map-production/style-assets/highland-detail-exemplar-v1.png",
+        "sha256": "c7fcd3da5fba6fe08f10fd1e0fe16bdb2884a0a04386de828f923d660de8f1a2",
+        "use": "v19 replay graph only; no pixels cross directly into the new derivation"
+      },
+      {
+        "role": "v19-replay-palette-reference",
+        "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+        "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
+        "use": "v19 replay graph only; no pixels cross directly into the new derivation"
+      },
+      {
+        "role": "v21-dev20-renderer-algorithm",
+        "path": "scripts/map-production/render_style_candidate_k3_overhead_relief_v21.py",
+        "sha256": "254f0ac9d0d936862fc3b2a2efa09bf0a378d05d226b32bfbc0209fb53386d2c",
+        "use": "summary-free in-memory reconstruction primitives and canonical PNG encoding"
+      },
+      {
+        "role": "v21-dev20-replay-contract",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v21-replay-contract.json",
+        "sha256": "12c8e2e70909ff4567a09f0c068ce2f2977b01744dc8372aa92eacd062d5dbd2",
+        "use": "bind dev20 foundation, controls, marks, search parameter source, and locks"
+      },
+      {
+        "role": "v21-foundation-v19-canonical",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/foundation-v19-canonical.png",
+        "sha256": "2f80740f1ef6a6abec2774ab01294e92069f96809ae94473ee723b0aa8b6f214",
+        "use": "candidate canvas outside exact body support and dev20 delta reference"
+      },
+      {
+        "role": "v20-replacement-body-control",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v20-canonical-body-control.png",
+        "sha256": "aad51a5a92ee0de7c84ecfef4ba9f44c6e99af5add404ebec0f712c808b5e713",
+        "use": "exact eight-body output support including complete body-8 replacement"
+      },
+      {
+        "role": "v21-dev20-ridge-marks",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v21-sparse-overhead-relief-marks.json",
+        "sha256": "b775de198ff5efeb4bd7ea55e27ac7f876320e8381755458cfda00973d069680",
+        "use": "whitelisted dev20 replacement, style, geometry, and color parameters"
+      },
+      {
+        "role": "v21-dev20-search-summary",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v21-relief-search-summary.json",
+        "sha256": "2669f81b718fdaaf0c9e0cb6187f1beaae5626396a305f3a13ae62e43beb62cd",
+        "use": "SHA-256 provenance only; --check may hash the tracked bytes, but candidate emission never opens or parses the summary"
+      },
+      {
+        "role": "v21-dev20-search-script",
+        "path": "scripts/map-production/search_style_candidate_k3_relief_v21.py",
+        "sha256": "14ed368c0d61faf7f9e2d850d17dd5af573091f31b5af03247f881d3548cfa02",
+        "use": "replay-contract source identity only; never executed"
+      },
+      {
+        "role": "permission-mask",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/permission.png",
+        "sha256": "efa65224fd9a1f7623d6a3770b1f7006912e92318ae86c9643a90ba95d22b5dc",
+        "use": "v18 byte restoration"
+      },
+      {
+        "role": "protected-mask",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/protected-features.png",
+        "sha256": "8863e1937fbe3c57e36db26606db7cd73ac4fc805ef4d6cfbbe69008448b2f19",
+        "use": "v18 byte restoration"
+      },
+      {
+        "role": "road-calm-mask",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/road-calm-18px.png",
+        "sha256": "b4fd7dbb0957c2f31499f9cc5366d252bc3013128b6f818d0cb52ae9b9056d98",
+        "use": "v18 byte restoration"
+      },
+      {
+        "role": "alpha-zero-mask",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/alpha-zero.png",
+        "sha256": "786a87101c3a5e6ccae0222687d9db18dc6e06da13f1aa7d131d42166dc85709",
+        "use": "v18 byte restoration"
+      }
+    ]
+  },
+  "derivation": {
+    "algorithm": "sstory-k3-golden-v3-four-candidate-statistical-phase-derivation-v1",
+    "candidate_canvas": "tracked v21 foundation-v19-canonical RGB bytes outside the exact v20 eight-body union; full-canvas Lab roundtrip bytes are never retained there",
+    "body_numbering": {
+      "human_ids": ["body-1", "body-2", "body-3", "body-4", "body-5", "body-6", "body-7", "body-8"],
+      "control_values_in_order": [32, 64, 96, 128, 160, 192, 224, 255]
+    },
+    "coverage_anchors": {
+      "definition": "exact support geometry, never a measured candidate gate",
+      "bodies_1_through_7": "the corresponding exact nonzero indexed supports in the v19 body control; each must be byte-identical to its v20 support",
+      "body_8": "the value-255 v20 replacement support only; the detached v19 pill support is never an output support or a statistical donor",
+      "bodies_1_through_7_support_sha256_by_control_value": {
+        "32": "22411dccde51d280322d6357bf3bfd7103c83316df75d5e153c4d4628e573d94",
+        "64": "f528cfa39a95ea1f49c9cefaa35848f7ce7bb9b0939eab325501aabfd04f2f0e",
+        "96": "5c7219a4a67dd2be266011791b7ff04e2c19e996088ebd39c61760ab0e9240c9",
+        "128": "b3ff40a24077abb168a1490a1b23b8841d024243ec201a3833799bc8c7d38d81",
+        "160": "b28ce325cc9a0abffafa3c4d4cf94bb85b468973fbef972cc2f082148f657ccd",
+        "192": "6e2dcb974dfb2596c861916719c637df70b5a16095527abcaa9dba4f377f545a",
+        "224": "df6ef1892510bf62dc55d46fbe25b365e16d9ec194284245341ebcc712ea0bc9"
+      }
+    },
+    "v19_statistical_authority": {
+      "firewall_status": "schema-frozen-unsealed-no-real-statistics-extracted",
+      "future_artifact_path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v19-statistics-firewall.json",
+      "future_artifact_sha256": null,
+      "emit_requires_sealed_sha256": true,
+      "single_frozen_source": "one byte-closed v19 replay result; quantized contour_field supplies scalar PSD/CDF and the same replay supplies Lab medians",
+      "body_medians": "three-element [L,a,b] componentwise Q16.16 Lab medians from reconstructed v19 bodies 1-7 on their exact coverage anchors",
+      "body_signal": "quantized v19 contour_field on one body's support with outside-support values zero; no final RGB or spatial phase export",
+      "allowed_exports": ["body_id", "source support SHA-256", "three-element [L,a,b] Lab median Q16.16", "16-bin one-dimensional normalized radial PSD Q16.16", "17-knot one-dimensional empirical quantiles Q16.16"],
+      "forbidden_exports": ["coordinates", "bounding boxes", "2D arrays", "phase", "RGB pixels", "raw Lab pixels", "source paths beyond frozen provenance identifiers"],
+      "candidate_generator_reads_v19_replay": false,
+      "raw_spatial_pixels_allowed": false,
+      "artifact_schema": {
+        "exact_top_keys": ["schema_id", "record_id", "source_hashes", "body_statistics"],
+        "schema_id": "sstory.k3.golden-v3.v19-contour-statistics.v1",
+        "record_id": "k3-golden-v3-v19-contour-field-bodies-32-224",
+        "source_hashes_exact_keys": ["v19_contour_field_array_sha256", "v19_final_pixel_array_sha256", "v19_renderer_sha256", "v19_replay_contract_sha256", "v19_statistics_extractor_sha256", "v19_transitive_inputs_sha256"],
+        "source_hashes_expected": {
+          "v19_contour_field_array_sha256": "a9b27c4a0cc6bf3a80702794853d5053d024e22b16088597fa4b32fd06e8b022",
+          "v19_final_pixel_array_sha256": "f613b6579c637b6f93f12b7ffd332fd79e0b1cba1f5f992b578bf74adcedd1c3",
+          "v19_renderer_sha256": "92100794ff519fb77c7bca89af74897dcc422c9bb341582d31355d6b98cd229a",
+          "v19_replay_contract_sha256": "c8a4c4f2bb50905f0904cef050218d3fdafcafc7d11172a92db613774e02b0b6",
+          "v19_statistics_extractor_sha256": "26ea56e203ffb8b9899d8d04042bfd8e9d0e14281f2b55fe55bc99b270cca955",
+          "v19_transitive_inputs_sha256": "50aa6962fcc59c7ffb229ad5a510f0151d7a9d2500deebad2953daec27b6390e"
+        },
+        "body_statistics_exact_keys": ["32", "64", "96", "128", "160", "192", "224"],
+        "body_255_forbidden": true,
+        "body_record_exact_keys": ["support_sha256", "median_lab_q16", "radial_power_q16", "quantiles_q16"],
+        "radial_bin_count": 16,
+        "quantile_count": 17,
+        "fixed_point": "every median, radial PSD, and quantile value is a non-bool signed-32 Q16.16 decimal JSON integer; Lab medians are within encoded uint8 Lab range; PSD entries are within [0,1], and each PSD is either all-zero or normalized to unity within its fixed 16-bin quantization allowance; quantiles are monotone",
+        "numeric_arrays": "flat decimal JSON integer arrays only; no bool, NaN, Infinity, floats, nested arrays, or coordinate-bearing records",
+        "canonical_json": "strict UTF-8 JSON with duplicate object keys and non-finite constants rejected; recursively sort_keys=True, separators=(',',':'), ensure_ascii=True, allow_nan=False, exactly one trailing LF; candidate loader must reproduce these bytes exactly"
+      }
+    },
+    "dev20_coarse_authority": {
+      "reconstruction": "summary-free in-memory dev20 final RGB reconstruction from the tracked v21 renderer primitives and marks parameters; no TEMP PNG and no call to v21 load_replay_inputs, reconstruct, or _validate_search_summary",
+      "expected_pixel_sha256": "56d02af395f4d4f0216337da5600eac4cb3a4f8f988133fbce5d69df25486197",
+      "lab_l_u8": "OpenCV 4.13.0 RGB uint8 to encoded Lab uint8 channel L with no preconversion or normalization; units are encoded Lab-L byte units, not strict integer luma",
+      "delta": "D20_lab_l_i is body-local int32 encoded Lab-L: lab_l_u8(final dev20 RGB)-lab_l_u8(foundation-v19-canonical) on exact body-i support and zero everywhere else in the deterministic G24 crop",
+      "coarse_field": "separable literal-Q30 G24(D20_lab_l_i Q16.16) with half-sample-symmetric reflect and integer rounding after each pass",
+      "gain": 1.0,
+      "saved_or_exposed": false,
+      "marks_parameter_source": true,
+      "search_summary_use": "SHA-256 provenance only; --check may hash the tracked bytes, but candidate emission never opens or parses the summary",
+      "search_summary_parameter_whitelist": [],
+      "search_summary_ignored_sections": ["all content including criteria, selected diagnostics, selection rule, parameters, candidate counts, and topology counts"]
+    },
+    "phase_synthesis": {
+      "statistics_extraction_crop": "the separately SHA-bound extractor derives the tight coverage-anchor bounding box and appends exactly 8 synthetic zero pixels on every side (never canvas pixels); no crop coordinates cross the firewall",
+      "candidate_phase_crop": "derive the tight coverage-anchor bounding box from the tracked v20 control and append exactly 96 synthetic zero pixels on every side, equal to the G24 radius, before phase realization and G4/G8/G24 filtering",
+      "d20_g24_crop": "derive the tight coverage-anchor bounding box, expand by the literal G24 radius 96, and clip to canvas",
+      "source_window": "support-only residual, outside-support exact zero; subtract the separable-Hann/support-weighted mean, then multiply by the separable symmetric Hann window; no inpainting",
+      "fft": "NumPy 2.3.5 float64 rfft2/irfft2 with default backward normalization on the deterministic crop; 16 radial bins are min(15,floor(16*hypot(fftfreq(height),rfftfreq(width))/sqrt(0.5)))",
+      "radial_power": "16 bins; rFFT one-sided Hermitian weights 2 except DC/Nyquist, DC excluded; each bin is normalized by total non-DC weighted power, zero total gives sixteen zeros, then values are quantized signed Q16.16 nearest-even in the firewall artifact",
+      "phase": "phase of PCG64 standard-normal crop noise; source phase is discarded; for each of 16 bins divide PSD_Q16.16/2^16 by that bin's sum of rFFT Hermitian weights (weight 1 for kx=0 and even-width Nyquist column, otherwise 2; DC weight 0), multiply its square root by the real-noise rFFT Hermitian phase, set DC exact zero, then irfft2 once",
+      "distribution": "17 Type-7 quantile knots at k/16 inclusive from a stable-sorted support residual, quantized signed Q16.16 nearest-even; stable mergesort rank-map synthesized support values through exact rational interpolation of those knots; this is the sole remap and occurs before filtering or factorial gain",
+      "bodies_1_through_7": "each uses only its own v19 median, radial power, and empirical distribution",
+      "body_8": "componentwise lower-middle median of seven three-element Q16.16 medians; per-bin ties-away rounded arithmetic mean of the seven fixed 16-bin PSD_Q16.16 arrays; per-knot ties-away rounded arithmetic mean of the seven fixed 17-knot quantile_Q16.16 arrays; separate phase seed; no v19 body-8 pill statistic is read",
+      "seed_root": "sstory-k3-golden-v3-four-candidate-phase-root-v1",
+      "seed_uint64_rule": "unsigned big-endian integer from the first eight bytes of SHA-256(seed_root + ':' + label)",
+      "candidate_independence": "the same frozen eight phase fields are reused for all four factorial candidates; only the two preregistered gains differ",
+      "normalization_order": ["load fixed PSD/CDF integers", "create Hermitian random phase", "inverse FFT", "one stable-rank CDF map to X_i Q16", "compute G4X_i/G8X_i/G24X_i", "apply exact factorial equation"],
+      "post_factor_remap": false,
+      "seeds": [
+        {"body_id": "body-1", "label": "body-01-v19-statistical-phase", "sha256": "96e8cf04b69835e38cac3942e29d053068e80d7fa025291df14fc54aadb5253e"},
+        {"body_id": "body-2", "label": "body-02-v19-statistical-phase", "sha256": "3a956cc19f993b9a11041c2d848749c467bd700d73dd65df63d3658ab76d08fa"},
+        {"body_id": "body-3", "label": "body-03-v19-statistical-phase", "sha256": "5dfeaa25651d9470238fec5a63d29051af7e44df05aed7bfb915384b7b8370f4"},
+        {"body_id": "body-4", "label": "body-04-v19-statistical-phase", "sha256": "8619f340c8cd884a070d4481d04f031dd561b315f92868cacae9f801686a9432"},
+        {"body_id": "body-5", "label": "body-05-v19-statistical-phase", "sha256": "2851ebebce7c9effda00acc5a2ca4e3aafd8ed914bf97790e02566e7c14257ff"},
+        {"body_id": "body-6", "label": "body-06-v19-statistical-phase", "sha256": "6f9dd18459bffcda52b5b60f0c5276cf2afc7eb9074e31e7d2890633d3e0d223"},
+        {"body_id": "body-7", "label": "body-07-v19-statistical-phase", "sha256": "adaf78314c2cdd2b52ac766e0694c60cb252ad0c1f2259dd821d6324fbf9d301"},
+        {"body_id": "body-8", "label": "body-08-aggregate-v19-statistical-phase", "sha256": "0614b411504e7acfaf12552c0ecdfd2294745f76d138262367a9af3df94c4115"}
+      ]
+    },
+    "fixed_filters": {
+      "representation": "symmetric separable signed-free integer coefficients divided by 2^30; each literal array sums exactly to 2^30",
+      "application": "int64 separable convolution, half-sample-symmetric reflect, same kernel on x/y, nearest-ties-away-from-zero division by 2^30 after horizontal pass and again after vertical pass",
+      "strict_kernel_reuse": "G4 and G8 coefficients are literal copies of the strict audit authority identified only by c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7; G24 is a new separate literal sigma-24 radius-96 kernel",
+      "kernels": {
+        "G4": {
+          "sigma": 4,
+          "radius": 16,
+          "q_bits": 30,
+          "coefficients_sha256": "fc33f0f663040d31269c167b08df5c488c1903370ea0d9eceeea3cdd784e5d0b",
+          "coefficients": [35926, 94653, 234267, 544688, 1189707, 2441121, 4705384, 8520349, 14493603, 23160711, 34768345, 49031226, 64955820, 80838825, 94510161, 103799105, 107094042, 103799105, 94510161, 80838825, 64955820, 49031226, 34768345, 23160711, 14493603, 8520349, 4705384, 2441121, 1189707, 544688, 234267, 94653, 35926]
+        },
+        "G8": {
+          "sigma": 8,
+          "radius": 32,
+          "q_bits": 30,
+          "coefficients_sha256": "0f9ac09840b8c73397e348e90c289c693409cbc755068758eb297c9432dd9ab1",
+          "coefficients": [17963, 29386, 47327, 75040, 117135, 180011, 272347, 405660, 594861, 858782, 1220576, 1707893, 2352722, 3190764, 4260228, 5599965, 7246893, 9232781, 11580502, 14300011, 17384392, 20806393, 24515922, 28438967, 32478320, 36516357, 40419922, 44047134, 47255677, 49911942, 51900207, 53130985, 53547694, 53130985, 51900207, 49911942, 47255677, 44047134, 40419922, 36516357, 32478320, 28438967, 24515922, 20806393, 17384392, 14300011, 11580502, 9232781, 7246893, 5599965, 4260228, 3190764, 2352722, 1707893, 1220576, 858782, 594861, 405660, 272347, 180011, 117135, 75040, 47327, 29386, 17963]
+        },
+        "G24": {
+          "sigma": 24,
+          "radius": 96,
+          "q_bits": 30,
+          "coefficients_sha256": "25f96a319c8fade8baeb474f415120a8c1478f732d15824fa215826a232dfda9",
+          "coefficients": [5988, 7068, 8328, 9795, 11502, 13482, 15776, 18428, 21488, 25013, 29067, 33718, 39045, 45136, 52087, 60004, 69004, 79217, 90783, 103858, 118610, 135221, 153892, 174838, 198289, 224496, 253726, 286264, 322414, 362500, 406863, 455862, 509877, 569303, 634553, 706053, 784248, 869592, 962551, 1063598, 1173215, 1291885, 1420090, 1558311, 1707018, 1866673, 2037720, 2220581, 2415655, 2623307, 2843867, 3077624, 3324818, 3585635, 3860205, 4148592, 4450790, 4766718, 5096215, 5439039, 5794855, 6163238, 6543670, 6935533, 7338112, 7750590, 8172055, 8601492, 9037792, 9479750, 9926072, 10375380, 10826214, 11277043, 11726269, 12172240, 12613254, 13047576, 13473441, 13889072, 14292690, 14682524, 15056827, 15413890, 15752048, 16069703, 16365327, 16637479, 16884818, 17106110, 17300241, 17466225, 17603215, 17710504, 17787540, 17833922, 17849412, 17833922, 17787540, 17710504, 17603215, 17466225, 17300241, 17106110, 16884818, 16637479, 16365327, 16069703, 15752048, 15413890, 15056827, 14682524, 14292690, 13889072, 13473441, 13047576, 12613254, 12172240, 11726269, 11277043, 10826214, 10375380, 9926072, 9479750, 9037792, 8601492, 8172055, 7750590, 7338112, 6935533, 6543670, 6163238, 5794855, 5439039, 5096215, 4766718, 4450790, 4148592, 3860205, 3585635, 3324818, 3077624, 2843867, 2623307, 2415655, 2220581, 2037720, 1866673, 1707018, 1558311, 1420090, 1291885, 1173215, 1063598, 962551, 869592, 784248, 706053, 634553, 569303, 509877, 455862, 406863, 362500, 322414, 286264, 253726, 224496, 198289, 174838, 153892, 135221, 118610, 103858, 90783, 79217, 69004, 60004, 52087, 45136, 39045, 33718, 29067, 25013, 21488, 18428, 15776, 13482, 11502, 9795, 8328, 7068, 5988]
+        }
+      }
+    },
+    "band_composition": {
+      "source": "one independently phased, distribution-matched v19 statistical surrogate per body",
+      "sub_4": "surrogate - G4(surrogate)",
+      "g4_to_g8": "G4(surrogate) - G8(surrogate)",
+      "g8_to_g24": "G8(surrogate) - G24(surrogate)",
+      "coarse_g24": "body-local G24(D20_lab_l_i)",
+      "luma_formula": "Y_i = median_i + F*(X_i-G4(X_i)) + (G4(X_i)-G8(X_i)) + M*(G8(X_i)-G24(X_i)) + G24(D20_lab_l_i)",
+      "luma_numeric_lattice": "all equation terms are signed Q16.16 int64; each rational multiplication is nearest-ties-away-from-zero at Q16.16 before addition; additions occur in the written left-to-right order",
+      "int64_safety": "reject INT64_MIN before absolute value; prove multiplication/convolution headroom before every product; reject rounding-bias overflow; perform checked left-to-right additions and fail before wraparound",
+      "chroma_formula": "constant Q16.16 componentwise v19 body median a/b; body 8 uses the componentwise lower-middle median of bodies 1-7",
+      "g4_to_g8_gain": 1.0,
+      "coarse_g24_gain": 1.0,
+      "fine_gain_rationals": {"F094": [47, 50], "F097": [97, 100]},
+      "mid_gain_rationals": {"M148": [37, 25], "M155": [31, 20]},
+      "post_equation_recenter_or_remap": false
+    },
+    "finalization": {
+      "foundation_realization": "after the synthesized full-canvas Lab-to-RGB conversion and v18 lock restoration, every pixel outside the exact union of the eight v20 body supports is reassigned all three tracked foundation-v19-canonical RGB bytes; an assertion proves complete outside-union byte equality",
+      "colorspace": "OpenCV 4.13.0 RGB uint8 to Lab uint8 for foundation and D20; synthesized Lab is Q16.16 int64; convert each channel to uint8 by nearest-ties-away-from-zero division by 2^16 then clip to [0,255]; OpenCV 4.13.0 Lab uint8 to RGB uint8",
+      "chroma": "no raw v19 chroma pixels; constant per-body firewall median a/b only",
+      "clipping_order": "round Q16.16 Lab to signed integer, clip each Lab channel, cast uint8, then one Lab-to-RGB conversion",
+      "restore_from_v18": ["outside permission", "protected features", "road calm 18px", "alpha zero"],
+      "restore_rule": "the union of all four lock masks is first assigned byte-exact RGB pixels from v18 after RGB conversion; v18 and foundation must already agree byte-exact on locked pixels outside the v20 body union or emission fails, then outside-union foundation restoration preserves both authorities while foundation has final canvas precedence",
+      "png_encoder": "tracked v21 manual filter-0 PNG with explicit stored DEFLATE blocks",
+      "candidate_audit_or_measurement": "forbidden in this derivation CLI"
+    }
+  },
+  "candidates": {
+    "exact_count": 4,
+    "ordering": "listed order only",
+    "parameter_changes_forbidden": true,
+    "extra_candidates_forbidden": true,
+    "records": [
+      {
+        "candidate_id": "F094-M148",
+        "fine_retention": 0.94,
+        "fine_retention_rational": [47, 50],
+        "mid_gain": 1.48,
+        "mid_gain_rational": [37, 25],
+        "g4_to_g8_gain": 1.0,
+        "coarse_g24_gain": 1.0,
+        "output_path": "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M148.png"
+      },
+      {
+        "candidate_id": "F094-M155",
+        "fine_retention": 0.94,
+        "fine_retention_rational": [47, 50],
+        "mid_gain": 1.55,
+        "mid_gain_rational": [31, 20],
+        "g4_to_g8_gain": 1.0,
+        "coarse_g24_gain": 1.0,
+        "output_path": "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M155.png"
+      },
+      {
+        "candidate_id": "F097-M148",
+        "fine_retention": 0.97,
+        "fine_retention_rational": [97, 100],
+        "mid_gain": 1.48,
+        "mid_gain_rational": [37, 25],
+        "g4_to_g8_gain": 1.0,
+        "coarse_g24_gain": 1.0,
+        "output_path": "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M148.png"
+      },
+      {
+        "candidate_id": "F097-M155",
+        "fine_retention": 0.97,
+        "fine_retention_rational": [97, 100],
+        "mid_gain": 1.55,
+        "mid_gain_rational": [31, 20],
+        "g4_to_g8_gain": 1.0,
+        "coarse_g24_gain": 1.0,
+        "output_path": "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M155.png"
+      }
+    ]
+  },
+  "cli_contract": {
+    "default_mode": "check",
+    "check": "validate this preregistration, runtime, tracked source paths, and source SHA-256 bindings without decoding or reconstructing any raster",
+    "emit": "requires the explicit --emit flag; requires a separately sealed statistics firewall; constructs and seals all four payloads in memory, records the exact allowed runtime profile id and each PNG payload SHA-256, then exclusively reserves the final directory and creates each fixed file with exclusive-create semantics; performs no audit or metric calculation",
+    "compare_seals": "--compare-seals LEFT RIGHT is compare-only: read exactly two regular non-symlink canonical seal JSON files, require distinct allowed runtime profile ids, and require byte-identical authority/statistics identities plus the ordered four candidate ids, fixed paths, byte counts, and PNG payload SHA-256 values; it never opens a PNG, emits a candidate, or evaluates a metric",
+    "cross_profile_gate": "after generation and before any evaluation or audit, seals from every allowed runtime profile actually used must pass pairwise --compare-seals equality; the ordered four deterministic manual-PNG payload hashes are the carrier/output byte-equality evidence, and any disagreement fails closed so no candidate may proceed",
+    "output_directory": "tmp/map-production/k3-golden-v3-preregistered-four",
+    "seal_path": "tmp/map-production/k3-golden-v3-preregistered-four/sealed-output-sha256.json",
+    "seal_exact_top_keys": ["schema_id", "authority_sha256", "statistics_firewall_sha256", "runtime_profile_id", "candidate_count", "candidates"],
+    "seal_candidate_exact_keys": ["candidate_id", "path", "sha256", "bytes"],
+    "seal_serialization": "strict UTF-8 JSON with duplicate keys/non-finite constants forbidden, the listed deterministic key order, indent=2, ensure_ascii=True, allow_nan=False, and exactly one trailing LF",
+    "overwrite": "cross-platform fail-safe: final directory mkdir is the exclusive publication reservation; any pre-existing final path fails; every candidate and seal uses exclusive creation; partial failure leaves the reserved directory and permanently prevents retry, replacement, or coexistence",
+    "parameter_overrides": "none"
+  }
+}
