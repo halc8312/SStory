@@ -4,7 +4,7 @@ category: "analysis"
 title: "Golden v3 development status"
 version: "1.0.0"
 created: "2026-08-30"
-last_updated: "2026-08-30"
+last_updated: "2026-08-31"
 author: "Codex"
 tags: ["maps", "image-generation", "vision-qa"]
 status: "draft"
@@ -161,6 +161,49 @@ crater/partial-arc proxies. A generic `alpha_zero` lock is also absent from
 the v3 audit control; it would have to be derived from v19
 `derive_controls()["alpha"] == 0` and bound explicitly before it could become
 an auditable v3 gate.
+
+## Frozen strict-v3 authority and four-candidate result
+
+The previously missing gates were subsequently defined and frozen before any
+candidate evaluation in
+`world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json`
+(SHA-256
+`c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7`).
+The candidate-blind derivation authority was then sealed at SHA-256
+`b1e5550ea73189540dae5469ee16521df8b5e3a39b689a349882e811d0ed44ac`.
+Its one-dimensional v19 statistics firewall reproduced byte-identically on
+Windows and Linux at SHA-256
+`23cd5086a91dac4b49654527ed24d8283c6fe8033fa64a307d41de3a6797f903`.
+
+Exactly the four preregistered candidates were emitted once on each platform.
+The ordered PNG hashes and byte counts matched between runtime profiles
+`windows-local-opencv-python-4.13.0.92` and
+`linux-ci-opencv-python-headless-4.13.0.92`. Each PNG was 4,720,044 bytes.
+No candidate was inspected visually before the strict audit.
+
+| Candidate | PNG SHA-256 | coverage 50/25 | quiet | dash | orientation | texture 4/8 | closed loops | Result |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| F094-M148 | `fbdcd7d62157e9c39aec297287bf88e57a1576b9ff4ae256ab40c5c04b6c0bea` | 374/345 | .908007 | 1 | .034075 | .604343/1.073287 | 8 | reject |
+| F094-M155 | `848985217712962fb1909f4923fe124448cf336bfb2c138999d8a5d0781a07bb` | 374/345 | .908024 | 1 | .034051 | .604603/1.073960 | 8 | reject |
+| F097-M148 | `ee346346d6005f6cd89df8ca37bb2a57ba9f7e995e9874f359ea98e95eb983cd` | 374/345 | .908050 | 1 | .034119 | .604810/1.073844 | 8 | reject |
+| F097-M155 | `198997b080e48f03d5f3523c94ae46b8151fb06fa19d88cf18531f9d84a388e1` | 374/345 | .908050 | 1 | .034081 | .605081/1.074570 | 8 | reject |
+
+All four failed the same eight frozen gates:
+
+- `closed_loop_count_zero`;
+- `dash_bundle_pairs_zero`;
+- `repetition_A_max_1_over_20`;
+- `repetition_unit_max_1_over_20`;
+- `sub8_total_max_0_42`;
+- `sub8_unit_max_0_42`;
+- `texture_ratio_4_range_0_615_0_64`;
+- `texture_ratio_8_range_1_10_1_20`.
+
+Canonical rejection audit reports are stored under
+`world/map-production/qa/automated/` for all four candidate IDs. The frozen
+plan forbids retries, parameter changes, and extra candidates, so this run
+stopped without visual selection. No Golden v3 candidate was accepted,
+promoted, or designated.
 
 ## v21 tooling checkpoint
 
