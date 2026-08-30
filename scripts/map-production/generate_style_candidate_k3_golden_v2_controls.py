@@ -122,7 +122,43 @@ def _json_bytes(value: dict[str, Any]) -> bytes:
     ).encode("utf-8")
 
 
-def _derive() -> tuple[dict[Path, bytes], dict[str, Any]]:
+def _validated_canonical_mask_payloads(
+    payloads: dict[str, bytes], masks: dict[str, np.ndarray]
+) -> dict[str, bytes]:
+    if tuple(payloads) != pixel_auditor.MASK_NAMES:
+        raise GoldenV2ControlError("canonical Golden-v2 mask order drifted")
+    validated: dict[str, bytes] = {}
+    for name in pixel_auditor.MASK_NAMES:
+        payload = payloads[name]
+        if _sha256(payload) != EXPECTED_MASK_PNG_SHA256[name]:
+            raise GoldenV2ControlError(f"canonical {name} mask PNG SHA-256 changed")
+        try:
+            with Image.open(io.BytesIO(payload)) as opened:
+                opened.load()
+                if opened.size != (v19.WIDTH, v19.HEIGHT):
+                    raise GoldenV2ControlError(
+                        f"canonical {name} mask PNG size changed"
+                    )
+                decoded = np.asarray(opened.convert("L"), dtype=np.uint8).copy()
+        except OSError as exc:
+            raise GoldenV2ControlError(
+                f"cannot decode canonical {name} mask PNG"
+            ) from exc
+        if not np.all((decoded == 0) | (decoded == 255)):
+            raise GoldenV2ControlError(
+                f"canonical {name} mask PNG is not binary"
+            )
+        if not np.array_equal(decoded == 255, masks[name]):
+            raise GoldenV2ControlError(
+                f"canonical {name} mask PNG pixels changed"
+            )
+        validated[name] = payload
+    return validated
+
+
+def _derive(
+    *, canonical_mask_payloads: dict[str, bytes] | None = None
+) -> tuple[dict[Path, bytes], dict[str, Any]]:
     first = v19.reconstruct_from_contract(REPLAY_CONTRACT)
     second = v19.reconstruct_from_contract(REPLAY_CONTRACT)
     if not np.array_equal(first.candidate, second.candidate):
@@ -172,7 +208,11 @@ def _derive() -> tuple[dict[Path, bytes], dict[str, Any]]:
     if np.any(masks["selected_components"] & ~masks["measurement_inside"]):
         raise GoldenV2ControlError("selected components escaped measurement support")
 
-    mask_payloads = {name: _mask_png(mask) for name, mask in masks.items()}
+    mask_payloads = (
+        {name: _mask_png(mask) for name, mask in masks.items()}
+        if canonical_mask_payloads is None
+        else _validated_canonical_mask_payloads(canonical_mask_payloads, masks)
+    )
     control = {
         "schema_version": pixel_auditor.SCHEMA_VERSION,
         "id": pixel_auditor.CONTROL_ID,
@@ -274,7 +314,20 @@ def write_controls() -> dict[str, Any]:
 
 
 def verify_controls() -> dict[str, Any]:
-    payloads, report = _derive()
+    canonical_mask_payloads: dict[str, bytes] = {}
+    for name in pixel_auditor.MASK_NAMES:
+        try:
+            canonical_mask_payloads[name] = MASK_PATHS[name].read_bytes()
+        except OSError as exc:
+            raise GoldenV2ControlError(
+                f"cannot read canonical {name} mask PNG"
+            ) from exc
+    # The tracked PNG bytes are the cross-platform authority.  Pillow delegates
+    # compression to the host zlib, so re-encoding the same binary pixels can
+    # legitimately produce different IDAT bytes on Windows and Linux.  Rebuild
+    # every semantic mask in memory, then prove that the tracked canonical PNGs
+    # decode to those exact pixels and retain their frozen byte hashes.
+    payloads, report = _derive(canonical_mask_payloads=canonical_mask_payloads)
     stale = []
     for path, payload in payloads.items():
         try:
