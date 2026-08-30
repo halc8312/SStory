@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-k-v3-semantic-cleanup",
+  "image_path": "world/map-production/qa/blind-packets/phase4-k3-v2/3df44f8f71180c68bb528605bfcde6cf6e5e78e3eb856615cd14fe34f855b39f.json",
+  "image_sha256": "3df44f8f71180c68bb528605bfcde6cf6e5e78e3eb856615cd14fe34f855b39f",
+  "created_at": "2026-08-30T08:52:43Z",
+  "reviewer": "independent-vision-review-b/codex-r21-independent-blind-review",
+  "status": "complete",
+  "golden_reference": true,
+  "review_mode": "blind-independent",
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "native",
+      "label": "Anonymous native view",
+      "complete": true,
+      "evidence": "The native view shows an intact coast, river junction, islands, circular city, port, roads, fields, and eight separable highland bodies in one coherent plan view.",
+      "notes": "Protected map geometry is crisp at native scale, but the highland interiors read as repeated nested contour rings and the lowest detached body reads as a rounded pill-like bar."
+    },
+    {
+      "id": "full25",
+      "label": "Anonymous full view at 25%",
+      "complete": true,
+      "evidence": "At 25%, the coast, river delta, central city, port, field grid, road network, and all eight highland silhouettes remain distinguishable without a crop or topology shift.",
+      "notes": "Large-scale composition survives reduction well; fine paper texture and interior contour bands appropriately compress, while the detached low bar remains visibly capsule-like."
+    },
+    {
+      "id": "full50",
+      "label": "Anonymous full view at 50%",
+      "complete": true,
+      "evidence": "At 50%, the same shoreline, waterways, roads, settlement outlines, field boundaries, and eight highland bodies align with the native view while surface texture becomes more legible.",
+      "notes": "Scale progression is stable and readable; the highland region remains flatter and more contour-driven than the richly stippled surrounding terrain."
+    },
+    {
+      "id": "highland200",
+      "label": "Anonymous highland crop at 200%",
+      "complete": true,
+      "evidence": "The 200% crop resolves exactly eight non-touching brown bodies: two northern, two middle, three lower main bodies, and one detached horizontal body at the bottom.",
+      "notes": "Every main body is dominated by nested closed contour bands rather than differentiated crest, spur, and saddle structure; the detached bottom body has a conspicuous pill-like silhouette."
+    },
+    {
+      "id": "highland400",
+      "label": "Anonymous highland crop at 400%",
+      "complete": true,
+      "evidence": "The 400% crop preserves the 200% silhouettes exactly and reveals finer paper grain, antialiased edges, and additional separation between the nested interior bands.",
+      "notes": "There is genuine 200%-to-400% information gain, but the added detail confirms field-wide contour substitution and confirms the isolated rounded bar rather than resolving it as an organic ridge."
+    },
+    {
+      "id": "blind-audit-overview",
+      "label": "Anonymous packet: overall composition",
+      "complete": true,
+      "evidence": "Across the three full-map views, the circular city anchors the composition, roads connect cleanly to the port and fields, waterways retain hierarchy, and the highland cluster occupies a stable northeast region.",
+      "notes": "The overall map is coherent and legible, although the flat highland fill and repeated contour-ring treatment are stylistically weaker than the surrounding hand-textured terrain."
+    },
+    {
+      "id": "blind-audit-native-integrity",
+      "label": "Anonymous packet: native-pixel integrity",
+      "complete": true,
+      "evidence": "Native inspection shows continuous coast and road edges, intact settlement linework, varied stipple, and no missing tile, straight image seam, luminous halo, or projection collapse.",
+      "notes": "Pixel integrity is otherwise sound; the rejection arises from authored highland morphology, not from resampling, clipping, or broken protected geometry."
+    },
+    {
+      "id": "blind-audit-scale-progression",
+      "label": "Anonymous packet: 25%/50% scale progression",
+      "complete": true,
+      "evidence": "The 25%, 50%, and native views retain identical coast, river, city, road, field, and highland placement while successively revealing finer texture and line separation.",
+      "notes": "No parent-child drift or shared-projection collapse is visible; the same pill-like low body remains consistently identifiable at every useful scale."
+    },
+    {
+      "id": "blind-audit-highland-information-gain",
+      "label": "Anonymous packet: 200%/400% highland information gain",
+      "complete": true,
+      "evidence": "Compared with 200%, the 400% view exposes finer base grain, clearer individual contour bands, edge antialiasing, and subtle tonal variation without changing any silhouette.",
+      "notes": "The information-gain requirement passes, but the higher scale strengthens the evidence for contour substitution instead of revealing natural ridge anatomy."
+    },
+    {
+      "id": "blind-audit-artifact-sweep",
+      "label": "Anonymous packet: immediate-failure sweep",
+      "complete": true,
+      "evidence": "The sweep found no side view, projection collapse, panel seam, white particle, hole, crater, root, river vein, fern, fishbone, dash bundle, or protected-geometry change; it did find a detached pill-like body and pervasive nested contour substitution.",
+      "notes": "Two immediate failures are present: pill morphology and contour substitution. Either one independently prevents acceptance."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "eight-system-topology",
+      "label": "Exactly eight distinct ridge systems remain legible",
+      "detected": false,
+      "evidence": "Exactly eight separate highland bodies can be counted consistently in full50, highland200, and highland400: two north, two middle, three lower main bodies, and one detached low body."
+    },
+    {
+      "id": "side-view-or-shared-projection",
+      "label": "No side view or shared-projection collapse",
+      "detected": false,
+      "evidence": "All highland bodies are presented from the same overhead plan view, and their silhouettes and spatial relationships remain unchanged from full25 through highland400."
+    },
+    {
+      "id": "panel-seam-or-body-halo",
+      "label": "No panel seam or body halo",
+      "detected": false,
+      "evidence": "No straight tile boundary, composited panel edge, or luminous outline appears through the highland bodies; the terrain-region boundary is organic and remains coincident across scales."
+    },
+    {
+      "id": "white-particle-pill-hole-or-crater",
+      "label": "No white particle, pill, hole, or crater",
+      "detected": true,
+      "evidence": "A detached, long, rounded brown body at the bottom of both highland crops has a capsule/pill silhouette with smoothly rounded ends and little ridge articulation."
+    },
+    {
+      "id": "root-river-vein-fingerprint-or-contour",
+      "label": "No root, river-vein, fingerprint, or contour substitution",
+      "detected": true,
+      "evidence": "At 200% and 400%, all main highland bodies are filled by repeated nested closed bands around local centers, reading as topographic contour rings rather than ridge anatomy."
+    },
+    {
+      "id": "fern-fishbone-dash-bundle-or-repetition",
+      "label": "No fern, fishbone, dash bundle, or repetition artifact",
+      "detected": false,
+      "evidence": "No branching fern or fishbone skeleton and no localized bundle of identical finite dashes is visible in the highland bodies or at their boundaries."
+    },
+    {
+      "id": "no-200-to-400-information-gain",
+      "label": "200% to 400% adds visible information",
+      "detected": false,
+      "evidence": "The 400% crop visibly separates more contour bands and resolves finer paper grain, edge pixels, and low-contrast tonal variation than the 200% crop."
+    },
+    {
+      "id": "protected-geometry-difference",
+      "label": "No protected-geometry difference",
+      "detected": false,
+      "evidence": "Coast, waterways, settlements, roads, fields, highland-region boundary, and all eight highland silhouettes remain positionally identical across the anonymous scale sequence."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "正典・地形形状との一致",
+      "maximum": 25,
+      "score": 24,
+      "notes": "The protected map layout and exactly eight highland silhouettes are stable and mutually consistent; one point is withheld because the detached lowest system has a generic pill silhouette."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親子ズームの連続性",
+      "maximum": 15,
+      "score": 15,
+      "notes": "All compared features retain position and topology from 25% to 50%, native, 200%, and 400%, with orderly detail reveal and no scale drift."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "隣接画像の継ぎ目",
+      "maximum": 15,
+      "score": 15,
+      "notes": "Roads, terrain texture, boundaries, and protected geometry remain continuous; no straight tile seam, clipped insert edge, or body halo is visible."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 12,
+      "notes": "Palette and parchment treatment are cohesive, but flat brown highland bodies filled with uniform contour rings are less organic and less texturally integrated than the surrounding stippled terrain."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 8,
+      "notes": "The map reads well at 25% and gains fine information through 400%, but the highland information is dominated by repetitive contour bands rather than varied ridge-scale structure."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・反復模様",
+      "maximum": 10,
+      "score": 5,
+      "notes": "Most of the map is clean, but pervasive contour substitution and the conspicuous detached pill-like body are two immediate-failure artifacts."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 9,
+      "notes": "Major silhouettes, roads, settlements, and fields remain clear and low-conflict for overlays; one point is withheld for the dense low-contrast nested bands inside the highlands."
+    }
+  ],
+  "total_score": 88,
+  "decision": "rejected",
+  "summary": "Rejected at 88/100. The anonymous packet is geometrically stable, scale-consistent, seam-free, and readable, but the highland crops show two immediate failures: repeated nested contour-ring substitution across the ridge bodies and a detached capsule-like low body that reads as a pill rather than an organic ridge system.",
+  "required_changes": [
+    "Replace the nested closed contour-ring treatment with genuine overhead ridge anatomy, including differentiated crests, spurs, saddles, and falloff, while preserving the eight protected silhouettes and their positions.",
+    "Redesign the detached lowest horizontal body so it reads as an articulated organic ridge system rather than a rounded pill or capsule, without introducing particles, holes, or craters.",
+    "Recheck the revised 200% and 400% crops to confirm both immediate failures are absent while retaining the current scale information gain and protected geometry."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "interface": "sstory-k3-sparse-ridgeline-v19-replay-v2",
+  "base_v18": {
+    "path": "../../style-assets/k3-v18-reconstruction-base.png",
+    "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+  },
+  "generated_layout_control": {
+    "path": "../../style-assets/k3-v55-topographic-contour-atlas.png",
+    "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f"
+  },
+  "canonical_body_control": {
+    "path": "../style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+    "sha256": "7527b0be4d7a042c5fd33e499b96806bcbbd6a1b614086c7c0fbdf308b83666b"
+  },
+  "control_atlas_metadata": {
+    "path": "../style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.json",
+    "sha256": "f9a1eab4a8e417bcd688ceae8db1e8f01dc21835842e69339dda70f461eab768"
+  },
+  "imagegen_prompt": {
+    "path": "../../prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation.txt",
+    "sha256": "6a4dc3cc69ff4b6a2f03edd76a1408c839ad32a6497726aff7c4057e81a5ac43"
+  },
+  "generation_receipt": {
+    "path": "../../prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation-receipt.json",
+    "sha256": "05b9c19008daf348e17850322f3052ff023652c2709e53127e9f64500478dc09"
+  },
+  "authorities": [
+    {
+      "role": "canonical-k3-spec",
+      "path": "../style-candidate-k-v3-semantic-cleanup/spec.json",
+      "sha256": "49d681f16f061583638a778a0fd0fc8b7b3a977d21320ee0c51b9b593040890e"
+    },
+    {
+      "role": "v55-root-vision-review",
+      "path": "../../qa/style-candidate-k-v3-highland-source-v55-root-vision.json",
+      "sha256": "626ea739be2aa63a55d73f31064ef697301db4244a6102834b7886930e76cd90"
+    },
+    {
+      "role": "v55-robust-recipe-verification",
+      "path": "../../qa/automated/style-candidate-k-v3-sparse-ridgeline-v19-preflight.json",
+      "sha256": "64de26a0b9ee59e3a6e100297802a201d3a14db9fff022c097d6e881015a6fd3"
+    },
+    {
+      "role": "v52-control-atlas",
+      "path": "../style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+      "sha256": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4"
+    },
+    {
+      "role": "v55-copperplate-material-reference",
+      "path": "../../style-assets/highland-detail-exemplar-v1.png",
+      "sha256": "c7fcd3da5fba6fe08f10fd1e0fe16bdb2884a0a04386de828f923d660de8f1a2"
+    },
+    {
+      "role": "v55-palette-parchment-reference",
+      "path": "../../candidates/style-candidate-h-v4-plan-view-golden-board.png",
+      "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837"
+    }
+  ]
+}

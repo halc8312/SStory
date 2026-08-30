@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "interface": "sstory-k3-golden-v2-renderer-config-v1",
+  "seed": "k3-v19-golden-v2-replay-v1",
+  "expected_output": {
+    "png_sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+    "pixel_sha256": "f613b6579c637b6f93f12b7ffd332fd79e0b1cba1f5f992b578bf74adcedd1c3",
+    "png_bytes": 3630310,
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB"
+  },
+  "replay_contract": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v2/v19-replay-contract.json",
+    "sha256": "c8a4c4f2bb50905f0904cef050218d3fdafcafc7d11172a92db613774e02b0b6"
+  },
+  "frozen_renderer": {
+    "path": "scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py",
+    "sha256": "92100794ff519fb77c7bca89af74897dcc422c9bb341582d31355d6b98cd229a"
+  },
+  "donors": [
+    "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+    "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+    "world/map-production/style-assets/highland-detail-exemplar-v1.png",
+    "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png"
+  ],
+  "controls": [
+    "scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/v19-replay-contract.json",
+    "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+    "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+    "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.json",
+    "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation.txt",
+    "world/map-production/prompts/style-candidate-k-v3-highland-contour-atlas-v55.generation-receipt.json",
+    "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/spec.json",
+    "world/map-production/qa/style-candidate-k-v3-highland-source-v55-root-vision.json",
+    "world/map-production/qa/automated/style-candidate-k-v3-sparse-ridgeline-v19-preflight.json",
+    "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/audit-control.json",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/measurement-inside.png",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/texture-reference.png",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/permission.png",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/protected-features.png",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/road-calm-18px.png",
+    "world/map-production/controls/style-candidate-k-v3-golden-v2/masks/selected-components.png"
+  ]
+}

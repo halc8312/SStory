@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "views": [
+    {
+      "id": "native",
+      "path": "world/map-production/qa/blind-packets/phase4-k3-v2/views/native-1a7186f7ebfdf343c10cbba54571aa07c1a2b81181ab6384e01ce9460b71462e.png",
+      "sha256": "1a7186f7ebfdf343c10cbba54571aa07c1a2b81181ab6384e01ce9460b71462e"
+    },
+    {
+      "id": "full25",
+      "path": "world/map-production/qa/blind-packets/phase4-k3-v2/views/full25-4bc3472be69e7e4c5719fbc9e7fc98a6926d8231a00dfea31e115aeb3fe0aa9b.png",
+      "sha256": "4bc3472be69e7e4c5719fbc9e7fc98a6926d8231a00dfea31e115aeb3fe0aa9b"
+    },
+    {
+      "id": "full50",
+      "path": "world/map-production/qa/blind-packets/phase4-k3-v2/views/full50-7b67dfe5e06902c739f5e674842811b01cd97a8c0839b7a1b470f6d7e8580cf9.png",
+      "sha256": "7b67dfe5e06902c739f5e674842811b01cd97a8c0839b7a1b470f6d7e8580cf9"
+    },
+    {
+      "id": "highland200",
+      "path": "world/map-production/qa/blind-packets/phase4-k3-v2/views/highland200-c67daa0b854f6f8c478dc009924a41589254b8bca7aa342ac5377bc14c67bd37.png",
+      "sha256": "c67daa0b854f6f8c478dc009924a41589254b8bca7aa342ac5377bc14c67bd37"
+    },
+    {
+      "id": "highland400",
+      "path": "world/map-production/qa/blind-packets/phase4-k3-v2/views/highland400-bef418e5e124858f7edda4bd32e98e62641680608c6a77a13b242049086a7da2.png",
+      "sha256": "bef418e5e124858f7edda4bd32e98e62641680608c6a77a13b242049086a7da2"
+    }
+  ]
+}

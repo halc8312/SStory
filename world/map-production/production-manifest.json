@@ -6,7 +6,7 @@
   "coordinate_system": "EA-WORLD-1",
   "epoch": "2026-07-18",
   "style_guide_path": "world/map-production/spec/style-bible.md",
-  "updated_at": "2026-07-19T16:36:13Z",
+  "updated_at": "2026-08-30T08:34:37Z",
   "jobs": [
     {
       "id": "style-candidate-a-v1",
@@ -193,8 +193,17 @@
       "id": "style-candidate-c-v1",
       "sheet_id": "style-candidate-c",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
         {
@@ -230,12 +239,40 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T15:14:00Z", "actor": "Codex", "note": "Candidate C changes only fine copperplate detail density."},
-        {"state": "inputs-ready", "at": "2026-07-18T15:15:00Z", "actor": "Codex", "note": "Locked the candidate C prompt and legacy world-map style reference."},
-        {"state": "generated", "at": "2026-07-18T15:18:22Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T15:20:00Z", "actor": "Codex", "note": "Verified PNG readability, dimensions, and SHA-256."},
-        {"state": "vision-qa", "at": "2026-07-18T15:24:00Z", "actor": "Codex Vision QA"},
-        {"state": "rejected", "at": "2026-07-18T15:25:00Z", "actor": "Independent Codex Vision QA", "note": "Perspective failure and overlay density make B the better revision base."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T15:14:00Z",
+          "actor": "Codex",
+          "note": "Candidate C changes only fine copperplate detail density."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T15:15:00Z",
+          "actor": "Codex",
+          "note": "Locked the candidate C prompt and legacy world-map style reference."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T15:18:22Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T15:20:00Z",
+          "actor": "Codex",
+          "note": "Verified PNG readability, dimensions, and SHA-256."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T15:24:00Z",
+          "actor": "Codex Vision QA"
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T15:25:00Z",
+          "actor": "Independent Codex Vision QA",
+          "note": "Perspective failure and overlay density make B the better revision base."
+        }
       ],
       "notes": "Highest engraving density, but weaker vector readability and stronger oblique terrain than candidate B."
     },
@@ -243,8 +280,17 @@
       "id": "style-candidate-b-v2-plan-view",
       "sheet_id": "style-candidate-b",
       "status": "revise",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
         {
@@ -285,12 +331,41 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T15:31:00Z", "actor": "Codex", "note": "Locked candidate B v1 and selected one change only: strict plan-view projection."},
-        {"state": "inputs-ready", "at": "2026-07-18T15:32:00Z", "actor": "Codex", "note": "Locked the B v1 source image and the single-change projection prompt."},
-        {"state": "generated", "at": "2026-07-18T15:35:53Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T15:38:00Z", "actor": "Codex", "note": "Verified PNG readability, 1536x1024 dimensions, and SHA-256."},
-        {"state": "vision-qa", "at": "2026-07-18T15:55:00Z", "actor": "Independent Codex Vision QA", "note": "Perspective gate passed; repetition gate failed on mountain bullseyes."},
-        {"state": "revise", "at": "2026-07-18T15:55:00Z", "actor": "Codex", "note": "Keep B v2 as the edit base and change only mountain rendering in attempt 3."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T15:31:00Z",
+          "actor": "Codex",
+          "note": "Locked candidate B v1 and selected one change only: strict plan-view projection."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T15:32:00Z",
+          "actor": "Codex",
+          "note": "Locked the B v1 source image and the single-change projection prompt."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T15:35:53Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T15:38:00Z",
+          "actor": "Codex",
+          "note": "Verified PNG readability, 1536x1024 dimensions, and SHA-256."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T15:55:00Z",
+          "actor": "Independent Codex Vision QA",
+          "note": "Perspective gate passed; repetition gate failed on mountain bullseyes."
+        },
+        {
+          "state": "revise",
+          "at": "2026-07-18T15:55:00Z",
+          "actor": "Codex",
+          "note": "Keep B v2 as the edit base and change only mountain rendering in attempt 3."
+        }
       ],
       "notes": "Perspective correction succeeded. Not golden because repeated concentric mountain marks trigger an immediate failure."
     },
@@ -298,8 +373,17 @@
       "id": "style-candidate-b-v3-mountain-relief",
       "sheet_id": "style-candidate-b",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
         {
@@ -327,7 +411,10 @@
         "color_profile": "sRGB"
       },
       "qa": {
-        "automated": {"status": "passed", "report_path": "world/map-production/qa/style-candidate-b-v3-mountain-relief.json"},
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/style-candidate-b-v3-mountain-relief.json"
+        },
         "vision": {
           "decision": "rejected",
           "score": 81,
@@ -337,12 +424,41 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T16:01:00Z", "actor": "Codex", "note": "Selected one change only: replace B v2 mountain bullseyes with irregular relief."},
-        {"state": "inputs-ready", "at": "2026-07-18T16:02:00Z", "actor": "Codex", "note": "Locked B v2 as the edit source and saved the attempt-3 prompt."},
-        {"state": "generated", "at": "2026-07-18T16:07:49Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T16:09:00Z", "actor": "Codex", "note": "Verified PNG readability, 1536x1024 dimensions, and SHA-256."},
-        {"state": "vision-qa", "at": "2026-07-18T16:14:00Z", "actor": "Independent Codex Vision QA", "note": "Perspective and repetition gates failed; non-mountain pixel drift also violated invariants."},
-        {"state": "rejected", "at": "2026-07-18T16:14:00Z", "actor": "Codex", "note": "Return to B v2 and use a binary mountain mask for attempt 4."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T16:01:00Z",
+          "actor": "Codex",
+          "note": "Selected one change only: replace B v2 mountain bullseyes with irregular relief."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T16:02:00Z",
+          "actor": "Codex",
+          "note": "Locked B v2 as the edit source and saved the attempt-3 prompt."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T16:07:49Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T16:09:00Z",
+          "actor": "Codex",
+          "note": "Verified PNG readability, 1536x1024 dimensions, and SHA-256."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T16:14:00Z",
+          "actor": "Independent Codex Vision QA",
+          "note": "Perspective and repetition gates failed; non-mountain pixel drift also violated invariants."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T16:14:00Z",
+          "actor": "Codex",
+          "note": "Return to B v2 and use a binary mountain mask for attempt 4."
+        }
       ],
       "notes": "Rejected attempt. Retained only as traceable QA evidence; not eligible for production use."
     },
@@ -350,15 +466,44 @@
       "id": "style-candidate-b-v4-masked-topography",
       "sheet_id": "style-candidate-b",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-b-v4-masked-topography.md", "sha256": "7647b12a68d87bc032e3fafc36fbbd02040c58ecbe2ba800d139fb44f2e03526", "role": "masked-edit-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png", "sha256": "dbc0ccccb4e41a5ec7ef5d3f70c06a9782760d7fe715b7159678116f41362347", "role": "edit-source"},
-        {"path": "world/map-production/controls/style-candidate-b-mountain-mask-v1.json", "sha256": "0f9ef69f7476a575b2f5afafc8615c85444941aba0e6535cc48f5f4a20614782", "role": "initial-composite-mask"},
-        {"path": "world/map-production/controls/style-candidate-b-mountain-mask-v2.json", "sha256": "fb0f3091bea92df33e7b640ec81f5db2766284b73ce162e3752afe470b41d05b", "role": "refined-composite-mask"},
-        {"path": "world/map-production/candidates/style-candidate-b-v4-masked-topography-raw.png", "sha256": "7a63ceed749c6dd28d5eda838554593117cfcbf94e6e61224c2239fd833243b5", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-b-v4-masked-topography.md",
+          "sha256": "7647b12a68d87bc032e3fafc36fbbd02040c58ecbe2ba800d139fb44f2e03526",
+          "role": "masked-edit-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+          "sha256": "dbc0ccccb4e41a5ec7ef5d3f70c06a9782760d7fe715b7159678116f41362347",
+          "role": "edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-b-mountain-mask-v1.json",
+          "sha256": "0f9ef69f7476a575b2f5afafc8615c85444941aba0e6535cc48f5f4a20614782",
+          "role": "initial-composite-mask"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-b-mountain-mask-v2.json",
+          "sha256": "fb0f3091bea92df33e7b640ec81f5db2766284b73ce162e3752afe470b41d05b",
+          "role": "refined-composite-mask"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-b-v4-masked-topography-raw.png",
+          "sha256": "7a63ceed749c6dd28d5eda838554593117cfcbf94e6e61224c2239fd833243b5",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic masked composite",
@@ -376,7 +521,10 @@
         "color_profile": "sRGB"
       },
       "qa": {
-        "automated": {"status": "passed", "report_path": "world/map-production/qa/style-candidate-b-v4b-mask-refinement.json"},
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/style-candidate-b-v4b-mask-refinement.json"
+        },
         "vision": {
           "decision": "rejected",
           "score": 83,
@@ -386,16 +534,65 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T16:20:00Z", "actor": "Codex", "note": "Returned to B v2 and selected a binary mountain-mask edit."},
-        {"state": "inputs-ready", "at": "2026-07-18T16:22:00Z", "actor": "Codex", "note": "Locked B v2, prompt, and versioned mask control."},
-        {"state": "generated", "at": "2026-07-18T16:27:00Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T16:29:00Z", "actor": "Codex masked-composite pipeline", "note": "Verified 1,063,587 protected pixels and zero outside-mask difference."},
-        {"state": "vision-qa", "at": "2026-07-18T16:32:00Z", "actor": "Independent Codex Vision QA", "note": "Score 76; hard seams and fingerprint repetition failed."},
-        {"state": "revise", "at": "2026-07-18T16:33:00Z", "actor": "Codex", "note": "Change only road exclusion width and inward feathering."},
-        {"state": "generated", "at": "2026-07-18T16:36:00Z", "actor": "Codex masked-composite pipeline", "note": "Recomposited the unchanged ImageGen raw through mask v2."},
-        {"state": "automated-qa", "at": "2026-07-18T16:37:00Z", "actor": "Codex masked-composite pipeline", "note": "Verified 1,042,420 protected pixels and zero outside-mask difference."},
-        {"state": "vision-qa", "at": "2026-07-18T16:41:00Z", "actor": "Independent Codex Vision QA", "note": "Score 83; seam passed, repetition failed."},
-        {"state": "rejected", "at": "2026-07-18T16:41:00Z", "actor": "Codex", "note": "Attempt 5 will change only the internal relief-line vocabulary."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T16:20:00Z",
+          "actor": "Codex",
+          "note": "Returned to B v2 and selected a binary mountain-mask edit."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T16:22:00Z",
+          "actor": "Codex",
+          "note": "Locked B v2, prompt, and versioned mask control."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T16:27:00Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T16:29:00Z",
+          "actor": "Codex masked-composite pipeline",
+          "note": "Verified 1,063,587 protected pixels and zero outside-mask difference."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T16:32:00Z",
+          "actor": "Independent Codex Vision QA",
+          "note": "Score 76; hard seams and fingerprint repetition failed."
+        },
+        {
+          "state": "revise",
+          "at": "2026-07-18T16:33:00Z",
+          "actor": "Codex",
+          "note": "Change only road exclusion width and inward feathering."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T16:36:00Z",
+          "actor": "Codex masked-composite pipeline",
+          "note": "Recomposited the unchanged ImageGen raw through mask v2."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T16:37:00Z",
+          "actor": "Codex masked-composite pipeline",
+          "note": "Verified 1,042,420 protected pixels and zero outside-mask difference."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T16:41:00Z",
+          "actor": "Independent Codex Vision QA",
+          "note": "Score 83; seam passed, repetition failed."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T16:41:00Z",
+          "actor": "Codex",
+          "note": "Attempt 5 will change only the internal relief-line vocabulary."
+        }
       ],
       "notes": "Attempt-4 raw and both composites are retained. The refined composite proves protected geography but remains non-golden due repetition."
     },
@@ -403,14 +600,39 @@
       "id": "style-candidate-b-v5-sparse-ridges",
       "sheet_id": "style-candidate-b",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-b-v5-sparse-ridges.md", "sha256": "d228fb6f30947ac7813bfcad451eb0da6815c1d10a6fe255ba5673dea99ecb33", "role": "single-change-masked-edit-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-b-v4b-mask-refinement.png", "sha256": "04c43a797ee49c12fe92cfd3f3fc097cf0c369eacf4427a8189ea8a561f7e604", "role": "edit-source"},
-        {"path": "world/map-production/controls/style-candidate-b-mountain-mask-v2.json", "sha256": "fb0f3091bea92df33e7b640ec81f5db2766284b73ce162e3752afe470b41d05b", "role": "composite-mask"},
-        {"path": "world/map-production/candidates/style-candidate-b-v5-sparse-ridges-raw.png", "sha256": "c98efddac336eedbecd3aa75fe586e83752d1ca367fb2284dbf976ead6395b77", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-b-v5-sparse-ridges.md",
+          "sha256": "d228fb6f30947ac7813bfcad451eb0da6815c1d10a6fe255ba5673dea99ecb33",
+          "role": "single-change-masked-edit-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-b-v4b-mask-refinement.png",
+          "sha256": "04c43a797ee49c12fe92cfd3f3fc097cf0c369eacf4427a8189ea8a561f7e604",
+          "role": "edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-b-mountain-mask-v2.json",
+          "sha256": "fb0f3091bea92df33e7b640ec81f5db2766284b73ce162e3752afe470b41d05b",
+          "role": "composite-mask"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-b-v5-sparse-ridges-raw.png",
+          "sha256": "c98efddac336eedbecd3aa75fe586e83752d1ca367fb2284dbf976ead6395b77",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic masked composite",
@@ -428,7 +650,10 @@
         "color_profile": "sRGB"
       },
       "qa": {
-        "automated": {"status": "passed", "report_path": "world/map-production/qa/style-candidate-b-v5-sparse-ridges.json"},
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/style-candidate-b-v5-sparse-ridges.json"
+        },
         "vision": {
           "decision": "rejected",
           "score": 73,
@@ -438,12 +663,41 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T16:42:00Z", "actor": "Codex", "note": "Locked one change only: replace fingerprint waves with sparse ridge lines."},
-        {"state": "inputs-ready", "at": "2026-07-18T17:10:00Z", "actor": "Codex", "note": "Prompt passed independent review, frontmatter, markdown, and spelling checks."},
-        {"state": "generated", "at": "2026-07-18T17:15:38Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T17:18:00Z", "actor": "Codex masked-composite pipeline", "note": "Verified 1,042,420 protected pixels and zero outside-mask difference."},
-        {"state": "vision-qa", "at": "2026-07-18T17:26:01Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 73 and 77; mountain semantics failed and one reviewer found a visible exclusion-strip seam."},
-        {"state": "rejected", "at": "2026-07-18T17:27:00Z", "actor": "Codex", "note": "Candidate B ended at its five-attempt limit. Candidate D will correct road protection and use non-branching ridge chains."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T16:42:00Z",
+          "actor": "Codex",
+          "note": "Locked one change only: replace fingerprint waves with sparse ridge lines."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T17:10:00Z",
+          "actor": "Codex",
+          "note": "Prompt passed independent review, frontmatter, markdown, and spelling checks."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T17:15:38Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T17:18:00Z",
+          "actor": "Codex masked-composite pipeline",
+          "note": "Verified 1,042,420 protected pixels and zero outside-mask difference."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T17:26:01Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 73 and 77; mountain semantics failed and one reviewer found a visible exclusion-strip seam."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T17:27:00Z",
+          "actor": "Codex",
+          "note": "Candidate B ended at its five-attempt limit. Candidate D will correct road protection and use non-branching ridge chains."
+        }
       ],
       "notes": "Rejected after two independent reviews. Fingerprint contours were removed, but the replacement reads as cracks or tributaries and the erroneous east-road exclusion preserves a visible old-relief band."
     },
@@ -451,15 +705,44 @@
       "id": "style-candidate-d-v1-guided-ridge-chains",
       "sheet_id": "style-candidate-d",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-d-v1-guided-ridge-chains.md", "sha256": "7a55f246bbeb08849e24c2b5f7b268cee39e74d8ef61e832c277e2f808f5ed85", "role": "guided-single-change-edit-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png", "sha256": "dbc0ccccb4e41a5ec7ef5d3f70c06a9782760d7fe715b7159678116f41362347", "role": "edit-source"},
-        {"path": "world/map-production/controls/style-candidate-d-mountain-mask-v1.json", "sha256": "bee281fee1659511bdafcb95f9e01dbb1e5b9045829bd8f1f738fbe3b6691768", "role": "composite-mask-control"},
-        {"path": "world/map-production/controls/style-candidate-d-ridge-guide-v1.json", "sha256": "094f23f2a9515add9fccc6f52868d720ac53c40ca4985b804dd0da8a48062a13", "role": "ridge-topology-control"},
-        {"path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains-raw.png", "sha256": "d36559468b38b8e54a1d5860d4ea943c3f24dd611c2df26e8816caf072c6c58d", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-d-v1-guided-ridge-chains.md",
+          "sha256": "7a55f246bbeb08849e24c2b5f7b268cee39e74d8ef61e832c277e2f808f5ed85",
+          "role": "guided-single-change-edit-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+          "sha256": "dbc0ccccb4e41a5ec7ef5d3f70c06a9782760d7fe715b7159678116f41362347",
+          "role": "edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-mountain-mask-v1.json",
+          "sha256": "bee281fee1659511bdafcb95f9e01dbb1e5b9045829bd8f1f738fbe3b6691768",
+          "role": "composite-mask-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-ridge-guide-v1.json",
+          "sha256": "094f23f2a9515add9fccc6f52868d720ac53c40ca4985b804dd0da8a48062a13",
+          "role": "ridge-topology-control"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains-raw.png",
+          "sha256": "d36559468b38b8e54a1d5860d4ea943c3f24dd611c2df26e8816caf072c6c58d",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic masked composite",
@@ -477,7 +760,10 @@
         "color_profile": "sRGB"
       },
       "qa": {
-        "automated": {"status": "passed", "report_path": "world/map-production/qa/style-candidate-d-v1-guided-ridge-chains.json"},
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/style-candidate-d-v1-guided-ridge-chains.json"
+        },
         "vision": {
           "decision": "rejected",
           "score": 86,
@@ -487,12 +773,41 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T17:28:00Z", "actor": "Codex", "note": "Started candidate D after candidate B reached its five-attempt limit."},
-        {"state": "inputs-ready", "at": "2026-07-18T18:05:00Z", "actor": "Codex", "note": "Locked corrected road mask, ten-chain topology guide, B v2 parent, and single-change prompt after independent control review."},
-        {"state": "generated", "at": "2026-07-18T18:21:00Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T18:25:00Z", "actor": "Codex masked-composite pipeline", "note": "Verified 1,041,840 protected pixels and zero outside-mask difference."},
-        {"state": "vision-qa", "at": "2026-07-18T18:40:01Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 86 and 73; topology, roads, and seams passed, but pictorial side-faced relief failed the plan-view gate."},
-        {"state": "rejected", "at": "2026-07-18T18:41:00Z", "actor": "Codex", "note": "Attempt 2 changes only the visual projection of the same ten ridges to flat parchment bands."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T17:28:00Z",
+          "actor": "Codex",
+          "note": "Started candidate D after candidate B reached its five-attempt limit."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T18:05:00Z",
+          "actor": "Codex",
+          "note": "Locked corrected road mask, ten-chain topology guide, B v2 parent, and single-change prompt after independent control review."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T18:21:00Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T18:25:00Z",
+          "actor": "Codex masked-composite pipeline",
+          "note": "Verified 1,041,840 protected pixels and zero outside-mask difference."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T18:40:01Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 86 and 73; topology, roads, and seams passed, but pictorial side-faced relief failed the plan-view gate."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T18:41:00Z",
+          "actor": "Codex",
+          "note": "Attempt 2 changes only the visual projection of the same ten ridges to flat parchment bands."
+        }
       ],
       "notes": "Rejected after two independent reviews. Correct road protection and disconnected topology pass; attempt 2 must remove continuous scenic crests, side faces, and directional hatching without changing any other feature."
     },
@@ -500,15 +815,44 @@
       "id": "style-candidate-d-v2-flat-relief-bands",
       "sheet_id": "style-candidate-d",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-d-v2-flat-relief-bands.md", "sha256": "42409972b02c2fd1a66a7399de78eec4fc730221828b6b661c62dbbc0fbcce24", "role": "single-change-plan-view-edit-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains.png", "sha256": "d833b8bdf83b78a9a4cca6d118a3b5cd8af55b00a029c585abe15d1942057363", "role": "edit-source"},
-        {"path": "world/map-production/controls/style-candidate-d-mountain-mask-v1.json", "sha256": "bee281fee1659511bdafcb95f9e01dbb1e5b9045829bd8f1f738fbe3b6691768", "role": "composite-mask-control"},
-        {"path": "world/map-production/controls/style-candidate-d-ridge-guide-v1.json", "sha256": "094f23f2a9515add9fccc6f52868d720ac53c40ca4985b804dd0da8a48062a13", "role": "ridge-topology-control"},
-        {"path": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands-raw.png", "sha256": "0a19e82f9b4759bf43ddd6d3ec2a04375d23685e377a913c4c643faab544768e", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-d-v2-flat-relief-bands.md",
+          "sha256": "42409972b02c2fd1a66a7399de78eec4fc730221828b6b661c62dbbc0fbcce24",
+          "role": "single-change-plan-view-edit-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains.png",
+          "sha256": "d833b8bdf83b78a9a4cca6d118a3b5cd8af55b00a029c585abe15d1942057363",
+          "role": "edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-mountain-mask-v1.json",
+          "sha256": "bee281fee1659511bdafcb95f9e01dbb1e5b9045829bd8f1f738fbe3b6691768",
+          "role": "composite-mask-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-ridge-guide-v1.json",
+          "sha256": "094f23f2a9515add9fccc6f52868d720ac53c40ca4985b804dd0da8a48062a13",
+          "role": "ridge-topology-control"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands-raw.png",
+          "sha256": "0a19e82f9b4759bf43ddd6d3ec2a04375d23685e377a913c4c643faab544768e",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic masked composite",
@@ -526,7 +870,10 @@
         "color_profile": "sRGB"
       },
       "qa": {
-        "automated": {"status": "passed", "report_path": "world/map-production/qa/style-candidate-d-v2-flat-relief-bands.json"},
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/style-candidate-d-v2-flat-relief-bands.json"
+        },
         "vision": {
           "decision": "rejected",
           "score": 75,
@@ -536,12 +883,41 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T18:42:00Z", "actor": "Codex", "note": "Locked one change only: flatten the projection of the same ten D v1 ridges."},
-        {"state": "inputs-ready", "at": "2026-07-18T18:50:00Z", "actor": "Codex", "note": "Prompt passed independent GO review and all pre-generation validation."},
-        {"state": "generated", "at": "2026-07-18T18:54:00Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T18:58:00Z", "actor": "Codex masked-composite pipeline", "note": "Verified 1,041,840 protected pixels and zero outside-mask difference."},
-        {"state": "vision-qa", "at": "2026-07-18T19:04:48Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 75 and 78; large scenic faces improved, but continuous scalloped pseudo-writing, touching hatches, and absent broad bands failed."},
-        {"state": "rejected", "at": "2026-07-18T19:05:00Z", "actor": "Codex", "note": "The same continuous-crest defect repeated twice, so attempt 3 must replace the topology guide with explicit detached fragment zones."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T18:42:00Z",
+          "actor": "Codex",
+          "note": "Locked one change only: flatten the projection of the same ten D v1 ridges."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T18:50:00Z",
+          "actor": "Codex",
+          "note": "Prompt passed independent GO review and all pre-generation validation."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T18:54:00Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T18:58:00Z",
+          "actor": "Codex masked-composite pipeline",
+          "note": "Verified 1,041,840 protected pixels and zero outside-mask difference."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T19:04:48Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 75 and 78; large scenic faces improved, but continuous scalloped pseudo-writing, touching hatches, and absent broad bands failed."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T19:05:00Z",
+          "actor": "Codex",
+          "note": "The same continuous-crest defect repeated twice, so attempt 3 must replace the topology guide with explicit detached fragment zones."
+        }
       ],
       "notes": "Rejected after two independent reviews. Roads, protected geography, seams, and five-plus-five disconnected topology pass. Attempt 3 changes the control representation to prevent continuous scripted centerlines."
     },
@@ -549,15 +925,44 @@
       "id": "style-candidate-d-v3-detached-fragments",
       "sheet_id": "style-candidate-d",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-d-v3-detached-fragments.md", "sha256": "bed3cc6c44cae36fd14f663e6ffcaf90b60f1582a864b6b17c64c2f0785eed98", "role": "single-change-detached-fragment-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v2-localized-base.png", "sha256": "7945719f6668a3e8d8967ece15a14057d5ad246321a06346e0277e7387e561f4", "role": "localized-edit-source"},
-        {"path": "world/map-production/controls/style-candidate-d-ridge-edit-mask-v2.json", "sha256": "f455808fe7502108c1adbb44d82058d6da1bbd0f8a0d13169f2f1dcdb2e8e82e", "role": "local-composite-mask-control"},
-        {"path": "world/map-production/controls/style-candidate-d-ridge-fragment-guide-v2.json", "sha256": "f63f93966258e1d7ca8150f162ff92692d3542d9959953a966ec40dcab38b352", "role": "fragment-count-and-placement-control"},
-        {"path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments-raw.png", "sha256": "e479b72087daab13f29f6f0b1c8758d939cc50e53ca54cd2fe31403d1bd3cc05", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-d-v3-detached-fragments.md",
+          "sha256": "bed3cc6c44cae36fd14f663e6ffcaf90b60f1582a864b6b17c64c2f0785eed98",
+          "role": "single-change-detached-fragment-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v2-localized-base.png",
+          "sha256": "7945719f6668a3e8d8967ece15a14057d5ad246321a06346e0277e7387e561f4",
+          "role": "localized-edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-ridge-edit-mask-v2.json",
+          "sha256": "f455808fe7502108c1adbb44d82058d6da1bbd0f8a0d13169f2f1dcdb2e8e82e",
+          "role": "local-composite-mask-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-ridge-fragment-guide-v2.json",
+          "sha256": "f63f93966258e1d7ca8150f162ff92692d3542d9959953a966ec40dcab38b352",
+          "role": "fragment-count-and-placement-control"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments-raw.png",
+          "sha256": "e479b72087daab13f29f6f0b1c8758d939cc50e53ca54cd2fe31403d1bd3cc05",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic masked composite",
@@ -575,7 +980,10 @@
         "color_profile": "sRGB"
       },
       "qa": {
-        "automated": {"status": "passed", "report_path": "world/map-production/qa/style-candidate-d-v3-detached-fragments.json"},
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/style-candidate-d-v3-detached-fragments.json"
+        },
         "vision": {
           "decision": "rejected",
           "score": 73,
@@ -585,12 +993,41 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T19:06:00Z", "actor": "Codex", "note": "Stopped prompt-only repetition and selected explicit detached fragment topology as the only change."},
-        {"state": "inputs-ready", "at": "2026-07-18T19:35:00Z", "actor": "Codex", "note": "Locked the localized base, ten-stroke edit mask, three-plus-one fragment guide, and prompt after independent GO review."},
-        {"state": "generated", "at": "2026-07-18T19:42:00Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T19:45:00Z", "actor": "Codex masked-composite pipeline", "note": "Verified 1,194,316 protected pixels and zero outside-mask channel difference."},
-        {"state": "vision-qa", "at": "2026-07-18T19:53:07Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 73 and 72; pseudo-writing was removed, but uniform double-outline capsules read as dashed routes and fail mountain semantics."},
-        {"state": "rejected", "at": "2026-07-18T19:53:07Z", "actor": "Codex", "note": "Post-QA extraction found forty route-like components but a 23/17 regional distribution rather than four per ridge. Attempt 4 will erase only those forty actual artifacts through a narrow mark mask without inventing roles."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T19:06:00Z",
+          "actor": "Codex",
+          "note": "Stopped prompt-only repetition and selected explicit detached fragment topology as the only change."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T19:35:00Z",
+          "actor": "Codex",
+          "note": "Locked the localized base, ten-stroke edit mask, three-plus-one fragment guide, and prompt after independent GO review."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T19:42:00Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T19:45:00Z",
+          "actor": "Codex masked-composite pipeline",
+          "note": "Verified 1,194,316 protected pixels and zero outside-mask channel difference."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T19:53:07Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 73 and 72; pseudo-writing was removed, but uniform double-outline capsules read as dashed routes and fail mountain semantics."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T19:53:07Z",
+          "actor": "Codex",
+          "note": "Post-QA extraction found forty route-like components but a 23/17 regional distribution rather than four per ridge. Attempt 4 will erase only those forty actual artifacts through a narrow mark mask without inventing roles."
+        }
       ],
       "notes": "Rejected after two independent reviews. Exact protected geography, road continuity, plan-view projection, and seam continuity pass. A reproducible Pillow extraction found forty elongated dark components total, distributed 23 north-east and 17 south-east, so the requested per-ridge three-plus-one grammar is not present and must not be claimed post hoc."
     },
@@ -598,15 +1035,44 @@
       "id": "style-candidate-d-v4-erase-route-marks",
       "sheet_id": "style-candidate-d",
       "status": "revise",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-d-v4-erase-route-marks.md", "sha256": "5ca33bcac30fb22e36a69df562d467ca864c09316e2eb779e46ba0f91deaca78", "role": "single-change-artifact-removal-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png", "sha256": "8112f35363cc5e314e2b9793d06603bf5274a516e9a5ec72c5a06c5f421a73f8", "role": "edit-source"},
-        {"path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json", "sha256": "b437aff4c4ed0ed16b477095562861f66c53bafdfe971e286601dc79caea2775", "role": "reviewed-forty-four-target-control"},
-        {"path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.png", "sha256": "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c", "role": "reviewed-forty-four-target-mask"},
-        {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks-raw.png", "sha256": "8335302765459a60adb17c048a996a54ab321b85bd53a003233f9ff591953a51", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-d-v4-erase-route-marks.md",
+          "sha256": "5ca33bcac30fb22e36a69df562d467ca864c09316e2eb779e46ba0f91deaca78",
+          "role": "single-change-artifact-removal-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+          "sha256": "8112f35363cc5e314e2b9793d06603bf5274a516e9a5ec72c5a06c5f421a73f8",
+          "role": "edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json",
+          "sha256": "b437aff4c4ed0ed16b477095562861f66c53bafdfe971e286601dc79caea2775",
+          "role": "reviewed-forty-four-target-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.png",
+          "sha256": "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c",
+          "role": "reviewed-forty-four-target-mask"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks-raw.png",
+          "sha256": "8335302765459a60adb17c048a996a54ab321b85bd53a003233f9ff591953a51",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic masked composite",
@@ -624,7 +1090,10 @@
         "color_profile": "sRGB"
       },
       "qa": {
-        "automated": {"status": "passed", "report_path": "world/map-production/qa/style-candidate-d-v4-erase-route-marks.json"},
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/style-candidate-d-v4-erase-route-marks.json"
+        },
         "vision": {
           "decision": "revise",
           "score": 89,
@@ -634,12 +1103,41 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T20:10:00Z", "actor": "Codex", "note": "Locked one change only: erase the actual reviewed route-like marks without claiming an absent per-ridge role grammar."},
-        {"state": "inputs-ready", "at": "2026-07-18T20:55:40Z", "actor": "Codex", "note": "A reproducible detector plus 100% and 400% visual review produced thirty-nine automated true positives, one excluded tree false-positive, five manual additions, and forty-four reviewed targets with opaque cores."},
-        {"state": "generated", "at": "2026-07-18T20:59:00Z", "actor": "OpenAI ImageGen"},
-        {"state": "automated-qa", "at": "2026-07-18T21:09:00Z", "actor": "Codex masked-composite and removal-audit pipeline", "note": "Verified zero residual automated route components, zero residual manual-target pixels, the exact preserved mark_26 tree, 1,539,273 protected pixels, and zero outside-mask channel difference."},
-        {"state": "vision-qa", "at": "2026-07-18T21:11:32Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 89 and 88; the forty-four-target removal passes with no visible seam or protected-feature damage, but broad mountain relief is still missing."},
-        {"state": "revise", "at": "2026-07-18T21:12:00Z", "actor": "Codex", "note": "Accepted v4 as the safe base for attempt 5. The final candidate may change only the broad, low-contrast, plan-view mountain relief substrate."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T20:10:00Z",
+          "actor": "Codex",
+          "note": "Locked one change only: erase the actual reviewed route-like marks without claiming an absent per-ridge role grammar."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T20:55:40Z",
+          "actor": "Codex",
+          "note": "A reproducible detector plus 100% and 400% visual review produced thirty-nine automated true positives, one excluded tree false-positive, five manual additions, and forty-four reviewed targets with opaque cores."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T20:59:00Z",
+          "actor": "OpenAI ImageGen"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T21:09:00Z",
+          "actor": "Codex masked-composite and removal-audit pipeline",
+          "note": "Verified zero residual automated route components, zero residual manual-target pixels, the exact preserved mark_26 tree, 1,539,273 protected pixels, and zero outside-mask channel difference."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T21:11:32Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 89 and 88; the forty-four-target removal passes with no visible seam or protected-feature damage, but broad mountain relief is still missing."
+        },
+        {
+          "state": "revise",
+          "at": "2026-07-18T21:12:00Z",
+          "actor": "Codex",
+          "note": "Accepted v4 as the safe base for attempt 5. The final candidate may change only the broad, low-contrast, plan-view mountain relief substrate."
+        }
       ],
       "notes": "Revision base accepted after two independent reviews. The former route-like capsule chains are gone, the reviewed false-positive tree and all protected geography are exact, and no visible seam is present. Candidate D v5 must add readable broad mountain hierarchy without reintroducing dark lines, contours, dashes, pseudo-writing, repetition, or perspective."
     },
@@ -647,18 +1145,59 @@
       "id": "style-candidate-d-v5-broad-relief",
       "sheet_id": "style-candidate-d",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-d-v5-broad-relief.md", "sha256": "2702319cec7f71106a930be60dba26b5424d996c282413591f8e22a733e7cfd0", "role": "single-change-broad-relief-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png", "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016", "role": "pixel-authoritative-edit-source"},
-        {"path": "world/map-production/controls/style-candidate-d-v5-generation-mask-v1.json", "sha256": "97064a0cee8ee1b446ee16306a4d8eda1cf24e99a320c7686407a337cb3828e0", "role": "polygon-only-imagegen-permission-control"},
-        {"path": "world/map-production/controls/style-candidate-d-v5-generation-mask-v1.png", "sha256": "fca035d237685eb4ef5db32a2a05584d772d904c7b105e35479d1230c5156b04", "role": "polygon-only-imagegen-permission-mask"},
-        {"path": "world/map-production/controls/style-candidate-d-v5-relief-mask-v1.json", "sha256": "bbf298c8e7a462f92fe85476a7044417f0c658101365649d642766c746512fa7", "role": "road-safe-low-frequency-transfer-control"},
-        {"path": "world/map-production/qa/automated/style-candidate-d-v5-preflight.json", "sha256": "f260086416bba918b68cdb5ca8e87a228ebc8e176fa29e74fe7a1fe4aa81ecfe", "role": "generation-authorization-evidence"},
-        {"path": "world/map-production/qa/automated/style-candidate-d-v5-rejection-audit.json", "sha256": "03b10cfa4ba8c51bb10cb7c8195cce7ef225d7302380debfa5959413cd9388e2", "role": "atomic-transfer-rejection-evidence"},
-        {"path": "world/map-production/candidates/style-candidate-d-v5-broad-relief-raw.png", "sha256": "bd3388ea2de264509a36c44954c121d9d9c358a3e483ca1e94a5d88b00137b6f", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-d-v5-broad-relief.md",
+          "sha256": "2702319cec7f71106a930be60dba26b5424d996c282413591f8e22a733e7cfd0",
+          "role": "single-change-broad-relief-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+          "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+          "role": "pixel-authoritative-edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-v5-generation-mask-v1.json",
+          "sha256": "97064a0cee8ee1b446ee16306a4d8eda1cf24e99a320c7686407a337cb3828e0",
+          "role": "polygon-only-imagegen-permission-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-v5-generation-mask-v1.png",
+          "sha256": "fca035d237685eb4ef5db32a2a05584d772d904c7b105e35479d1230c5156b04",
+          "role": "polygon-only-imagegen-permission-mask"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-d-v5-relief-mask-v1.json",
+          "sha256": "bbf298c8e7a462f92fe85476a7044417f0c658101365649d642766c746512fa7",
+          "role": "road-safe-low-frequency-transfer-control"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-d-v5-preflight.json",
+          "sha256": "f260086416bba918b68cdb5ca8e87a228ebc8e176fa29e74fe7a1fe4aa81ecfe",
+          "role": "generation-authorization-evidence"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-d-v5-rejection-audit.json",
+          "sha256": "03b10cfa4ba8c51bb10cb7c8195cce7ef225d7302380debfa5959413cd9388e2",
+          "role": "atomic-transfer-rejection-evidence"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v5-broad-relief-raw.png",
+          "sha256": "bd3388ea2de264509a36c44954c121d9d9c358a3e483ca1e94a5d88b00137b6f",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic low-frequency transfer",
@@ -689,12 +1228,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T21:12:01Z", "actor": "Codex", "note": "Locked one change only: add broad edgeless plan-view luminance hierarchy beneath the two mountain fields."},
-        {"state": "inputs-ready", "at": "2026-07-18T22:56:36Z", "actor": "Codex", "note": "Independent preflight QA A and B plus transfer code audit returned GO; ten focused and 103 repository tests passed."},
-        {"state": "generated", "at": "2026-07-18T22:59:00Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 raw edit."},
-        {"state": "automated-qa", "at": "2026-07-18T23:00:00Z", "actor": "Codex low-frequency transfer", "note": "Atomic transfer rejected before publication because north-east band-pass Q90-Q10 was 2.0 below the required 3.5; south-east was 1.0."},
-        {"state": "vision-qa", "at": "2026-07-18T23:05:01Z", "actor": "Independent Codex Vision QA A and B", "note": "Both reviews found missing broad hierarchy and whole-raster high-frequency regeneration; no final candidate artifact existed."},
-        {"state": "rejected", "at": "2026-07-18T23:06:40Z", "actor": "Codex", "note": "Candidate D reached its five-attempt limit. Candidate E changes only the generation input representation to a standalone luminance delta plate."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T21:12:01Z",
+          "actor": "Codex",
+          "note": "Locked one change only: add broad edgeless plan-view luminance hierarchy beneath the two mountain fields."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T22:56:36Z",
+          "actor": "Codex",
+          "note": "Independent preflight QA A and B plus transfer code audit returned GO; ten focused and 103 repository tests passed."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T22:59:00Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 raw edit."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T23:00:00Z",
+          "actor": "Codex low-frequency transfer",
+          "note": "Atomic transfer rejected before publication because north-east band-pass Q90-Q10 was 2.0 below the required 3.5; south-east was 1.0."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T23:05:01Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Both reviews found missing broad hierarchy and whole-raster high-frequency regeneration; no final candidate artifact existed."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T23:06:40Z",
+          "actor": "Codex",
+          "note": "Candidate D reached its five-attempt limit. Candidate E changes only the generation input representation to a standalone luminance delta plate."
+        }
       ],
       "notes": "Rejected safely. The raw image is retained only as production history and is not an accepted master. No candidate, transfer mask, field, or success report was published. Candidate E must not edit the detailed map."
     },
@@ -702,17 +1271,54 @@
       "id": "style-candidate-e-v1-independent-relief-plate",
       "sheet_id": "style-candidate-e",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-e-v1-independent-relief-plate.md", "sha256": "581cef350b65793c3bd43d3751c0c2294904629e8568e1d073bcfc217a81c28a", "role": "standalone-luminance-plate-generation-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png", "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016", "role": "pixel-authoritative-final-composite-base"},
-        {"path": "world/map-production/controls/style-candidate-e-v1-relief-mask-v1.json", "sha256": "eabfbd8256449025dc097c78a0aa3d711037bbb7fa7344579b9f1d3ee7b574cb", "role": "standalone-plate-low-frequency-transfer-control"},
-        {"path": "world/map-production/controls/style-candidate-e-v1-relief-mask-v1.png", "sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a", "role": "road-safe-low-frequency-transfer-mask"},
-        {"path": "world/map-production/qa/automated/style-candidate-e-v1-preflight.json", "sha256": "3446149021e3f76ce640b44b7ef1518f04a8aa7d95e14db1cba1c397db7aeecd", "role": "generation-authorization-evidence"},
-        {"path": "world/map-production/qa/automated/style-candidate-e-v1-rejection-audit.json", "sha256": "73819a4b30fc621b1c22aa8be7f69107c554a4a8e4b573b8ff1c9667123d7f92", "role": "atomic-transfer-rejection-evidence"},
-        {"path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png", "sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0", "role": "imagegen-raw-output"}
+        {
+          "path": "world/map-production/prompts/style-candidate-e-v1-independent-relief-plate.md",
+          "sha256": "581cef350b65793c3bd43d3751c0c2294904629e8568e1d073bcfc217a81c28a",
+          "role": "standalone-luminance-plate-generation-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+          "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+          "role": "pixel-authoritative-final-composite-base"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-e-v1-relief-mask-v1.json",
+          "sha256": "eabfbd8256449025dc097c78a0aa3d711037bbb7fa7344579b9f1d3ee7b574cb",
+          "role": "standalone-plate-low-frequency-transfer-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-e-v1-relief-mask-v1.png",
+          "sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a",
+          "role": "road-safe-low-frequency-transfer-mask"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-e-v1-preflight.json",
+          "sha256": "3446149021e3f76ce640b44b7ef1518f04a8aa7d95e14db1cba1c397db7aeecd",
+          "role": "generation-authorization-evidence"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-e-v1-rejection-audit.json",
+          "sha256": "73819a4b30fc621b1c22aa8be7f69107c554a4a8e4b573b8ff1c9667123d7f92",
+          "role": "atomic-transfer-rejection-evidence"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+          "sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0",
+          "role": "imagegen-raw-output"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic low-frequency transfer",
@@ -743,12 +1349,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-18T23:06:41Z", "actor": "Codex", "note": "Changed only the generation input representation to an independent scalar plate after Candidate D exhausted five attempts."},
-        {"state": "inputs-ready", "at": "2026-07-18T23:44:12Z", "actor": "Codex", "note": "Three independent preflight reviews returned GO; sixteen focused and 109 repository tests passed; all generation-input hashes were locked."},
-        {"state": "generated", "at": "2026-07-18T23:56:00Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 standalone luminance plate without reference images."},
-        {"state": "automated-qa", "at": "2026-07-18T23:57:00Z", "actor": "Codex low-frequency transfer", "note": "Atomic transfer rejected before publication: north-east input span 33 passed, south-east input span 17 failed the required 31-40 range; south-east band-pass span was only 2."},
-        {"state": "vision-qa", "at": "2026-07-18T23:59:17Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 54 and 55. No discrete lines or text appeared, but south-east was too weak and repeated cloudy masses remained."},
-        {"state": "rejected", "at": "2026-07-18T23:59:17Z", "actor": "Codex", "note": "Attempt 2 changes only the existing south-east plate amplitude; north-east, spatial shapes, transfer controls, and all safety gates remain unchanged."}
+        {
+          "state": "planned",
+          "at": "2026-07-18T23:06:41Z",
+          "actor": "Codex",
+          "note": "Changed only the generation input representation to an independent scalar plate after Candidate D exhausted five attempts."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-18T23:44:12Z",
+          "actor": "Codex",
+          "note": "Three independent preflight reviews returned GO; sixteen focused and 109 repository tests passed; all generation-input hashes were locked."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-18T23:56:00Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 standalone luminance plate without reference images."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-18T23:57:00Z",
+          "actor": "Codex low-frequency transfer",
+          "note": "Atomic transfer rejected before publication: north-east input span 33 passed, south-east input span 17 failed the required 31-40 range; south-east band-pass span was only 2."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-18T23:59:17Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 54 and 55. No discrete lines or text appeared, but south-east was too weak and repeated cloudy masses remained."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-18T23:59:17Z",
+          "actor": "Codex",
+          "note": "Attempt 2 changes only the existing south-east plate amplitude; north-east, spatial shapes, transfer controls, and all safety gates remain unchanged."
+        }
       ],
       "notes": "Rejected safely. The independent-input strategy prevented detailed-map drift, and north-east passed. South-east failed both the input range and robust band-pass gates, so no candidate, transfer mask, field, success report, tile, or staging artifact was published."
     },
@@ -756,21 +1392,74 @@
       "id": "style-candidate-g-v1-direct-cartographic-relief",
       "sheet_id": "style-candidate-g",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-g-v1-direct-cartographic-relief.generation.txt", "sha256": "63b8b81270d17ef9e3084b45ee3c66668629fee34a6e80cf3f3bfdc28858a987", "role": "single-change-direct-relief-generation-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png", "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016", "role": "pixel-authoritative-edit-source"},
-        {"path": "world/map-production/controls/style-candidate-g-v1-topology-guide.json", "sha256": "9e93675fe3eca6a82887f421f2d939f3d8279c446f3971bdf4d4c7ffdfef6347", "role": "six-landform-topology-control"},
-        {"path": "world/map-production/controls/style-candidate-g-v1-topology-guide.png", "sha256": "4238d100542e0169ff34a4c3c2977ec286ea411df71a8d513c56ca4f74df26c8", "role": "imagegen-topology-guide"},
-        {"path": "world/map-production/controls/style-candidate-g-v1-generation-control-v1.json", "sha256": "49dd3b3c18c6a8f7d323dd29632ef15d3e44545d2c4d9683c59485a03a0563f0", "role": "hash-locked-protected-composite-control"},
-        {"path": "world/map-production/candidates/style-candidate-g-v1-direct-cartographic-relief-raw.png", "sha256": "56dd602f58952e238134d2241590eb22e5a6866243f1fdd737c22c30c9134b56", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v1-edit-mask.png", "sha256": "f986453f14165c86656fb0b6a2748c3f075627a0494cd4e5f58b7ad2f85f09bc", "role": "guide-derived-road-and-detail-safe-edit-mask"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v1-protection.png", "sha256": "2f6adeee3d93ecff85f65e3a9e009e64e8a9f762c9d24cce961e730490c3030f", "role": "protected-pixel-evidence"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v1-protected-composite.json", "sha256": "35b6cc5fd2e9453195ebec1dbfd4743818f94ea63e7dea9f0f8c88bca9bafe9c", "role": "atomic-composite-pass-report"},
-        {"path": "world/map-production/qa/style-candidate-g-v1-direct-cartographic-relief.json", "sha256": "00e3da7ea2d32e3af2275391a04c105cef6b1107a46a43cd789285c9a064a97a", "role": "independent-vision-review-a"},
-        {"path": "world/map-production/qa/style-candidate-g-v1-direct-cartographic-relief-review2.json", "sha256": "668673084be307c02929c93539409fc0cb6595de2e5a51213fa817590a370181", "role": "independent-vision-review-b"}
+        {
+          "path": "world/map-production/prompts/style-candidate-g-v1-direct-cartographic-relief.generation.txt",
+          "sha256": "63b8b81270d17ef9e3084b45ee3c66668629fee34a6e80cf3f3bfdc28858a987",
+          "role": "single-change-direct-relief-generation-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+          "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+          "role": "pixel-authoritative-edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v1-topology-guide.json",
+          "sha256": "9e93675fe3eca6a82887f421f2d939f3d8279c446f3971bdf4d4c7ffdfef6347",
+          "role": "six-landform-topology-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v1-topology-guide.png",
+          "sha256": "4238d100542e0169ff34a4c3c2977ec286ea411df71a8d513c56ca4f74df26c8",
+          "role": "imagegen-topology-guide"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v1-generation-control-v1.json",
+          "sha256": "49dd3b3c18c6a8f7d323dd29632ef15d3e44545d2c4d9683c59485a03a0563f0",
+          "role": "hash-locked-protected-composite-control"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-g-v1-direct-cartographic-relief-raw.png",
+          "sha256": "56dd602f58952e238134d2241590eb22e5a6866243f1fdd737c22c30c9134b56",
+          "role": "imagegen-raw-output"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v1-edit-mask.png",
+          "sha256": "f986453f14165c86656fb0b6a2748c3f075627a0494cd4e5f58b7ad2f85f09bc",
+          "role": "guide-derived-road-and-detail-safe-edit-mask"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v1-protection.png",
+          "sha256": "2f6adeee3d93ecff85f65e3a9e009e64e8a9f762c9d24cce961e730490c3030f",
+          "role": "protected-pixel-evidence"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v1-protected-composite.json",
+          "sha256": "35b6cc5fd2e9453195ebec1dbfd4743818f94ea63e7dea9f0f8c88bca9bafe9c",
+          "role": "atomic-composite-pass-report"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v1-direct-cartographic-relief.json",
+          "sha256": "00e3da7ea2d32e3af2275391a04c105cef6b1107a46a43cd789285c9a064a97a",
+          "role": "independent-vision-review-a"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v1-direct-cartographic-relief-review2.json",
+          "sha256": "668673084be307c02929c93539409fc0cb6595de2e5a51213fa817590a370181",
+          "role": "independent-vision-review-b"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic protected composite",
@@ -801,12 +1490,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-19T04:11:00Z", "actor": "Codex", "note": "Changed representation from rejected scalar plates to direct hand-engraved relief inside six declared landform footprints."},
-        {"state": "inputs-ready", "at": "2026-07-19T04:18:00Z", "actor": "Codex", "note": "Prompt, base, guide, schema, reference order, dimensions, and SHA-256 locks passed strict preflight."},
-        {"state": "generated", "at": "2026-07-19T04:25:00Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 direct cartographic edit."},
-        {"state": "automated-qa", "at": "2026-07-19T04:29:00Z", "actor": "Codex protected composite", "note": "Atomic composite passed with zero changed pixels outside permission, on road cores, on detail cores, and wherever the edit mask was zero."},
-        {"state": "vision-qa", "at": "2026-07-19T05:16:07Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 48 and 59. Both detected oblique scenic peaks, missing foothill/saddle hierarchy, repeated hachures, and south/east clipping."},
-        {"state": "rejected", "at": "2026-07-19T05:16:07Z", "actor": "Codex", "note": "G1 was retained as rejected production evidence. G2 changes the single root representation issue to strict orthographic hachure and uses complete inset curved footprints."}
+        {
+          "state": "planned",
+          "at": "2026-07-19T04:11:00Z",
+          "actor": "Codex",
+          "note": "Changed representation from rejected scalar plates to direct hand-engraved relief inside six declared landform footprints."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-19T04:18:00Z",
+          "actor": "Codex",
+          "note": "Prompt, base, guide, schema, reference order, dimensions, and SHA-256 locks passed strict preflight."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-19T04:25:00Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 direct cartographic edit."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-19T04:29:00Z",
+          "actor": "Codex protected composite",
+          "note": "Atomic composite passed with zero changed pixels outside permission, on road cores, on detail cores, and wherever the edit mask was zero."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-19T05:16:07Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 48 and 59. Both detected oblique scenic peaks, missing foothill/saddle hierarchy, repeated hachures, and south/east clipping."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-19T05:16:07Z",
+          "actor": "Codex",
+          "note": "G1 was retained as rejected production evidence. G2 changes the single root representation issue to strict orthographic hachure and uses complete inset curved footprints."
+        }
       ],
       "notes": "Rejected safely. Pixel protection was exact, but the candidate failed immediate visual gates for perspective, required terrain hierarchy, clipping/seams, and repetition. It is not an accepted master and must never be published as a regional raster."
     },
@@ -814,21 +1533,74 @@
       "id": "style-candidate-g-v2-orthographic-hachure",
       "sheet_id": "style-candidate-g",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-g-v2-orthographic-hachure.generation.txt", "sha256": "9c6af16c5a104930656c8e7d3cb6d98d93df854a079a581ded5a24423657c5b7", "role": "single-change-orthographic-hachure-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png", "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016", "role": "pixel-authoritative-edit-source"},
-        {"path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json", "sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01", "role": "six-landform-inset-curve-control"},
-        {"path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png", "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f", "role": "imagegen-topology-guide"},
-        {"path": "world/map-production/controls/style-candidate-g-v2-generation-control-v1.json", "sha256": "939ffde3c072c3e33bde070054d9df5a6328328dc597143ab0d61995cdfe09c8", "role": "hash-locked-protected-composite-control"},
-        {"path": "world/map-production/candidates/style-candidate-g-v2-orthographic-hachure-raw.png", "sha256": "49f9d54addb78e1265489ab29d41d8c6735747b65157c59cf1318a28285a8c3a", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v2-edit-mask.png", "sha256": "44f05ea401cc96f1cefc5ab6ea191e5e6370f9ea83d41b713bb2ea2cdf0a8541", "role": "guide-derived-road-and-detail-safe-edit-mask"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v2-protection.png", "sha256": "22ac0c9f4a21616b40413a6fe34827756abd8ffc59475a0d04d1979c26adaa36", "role": "protected-pixel-evidence"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v2-protected-composite.json", "sha256": "5a09c01b04fd22bfd0eee64907b71a254d25da6a40d65a7e9c7dc548c9369f0c", "role": "atomic-composite-pass-report"},
-        {"path": "world/map-production/qa/style-candidate-g-v2-orthographic-hachure.json", "sha256": "07b178d971e03058d14594abc158ac13ede639bbd54c1ba96479cc59da562b0a", "role": "independent-vision-review-a"},
-        {"path": "world/map-production/qa/style-candidate-g-v2-orthographic-hachure-review2.json", "sha256": "3ebbb8d2fd6cafb954af564e7383bdd4e155286d6613e3787c1069ee8ffcc6ca", "role": "independent-vision-review-b"}
+        {
+          "path": "world/map-production/prompts/style-candidate-g-v2-orthographic-hachure.generation.txt",
+          "sha256": "9c6af16c5a104930656c8e7d3cb6d98d93df854a079a581ded5a24423657c5b7",
+          "role": "single-change-orthographic-hachure-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+          "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+          "role": "pixel-authoritative-edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json",
+          "sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01",
+          "role": "six-landform-inset-curve-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+          "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f",
+          "role": "imagegen-topology-guide"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v2-generation-control-v1.json",
+          "sha256": "939ffde3c072c3e33bde070054d9df5a6328328dc597143ab0d61995cdfe09c8",
+          "role": "hash-locked-protected-composite-control"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-g-v2-orthographic-hachure-raw.png",
+          "sha256": "49f9d54addb78e1265489ab29d41d8c6735747b65157c59cf1318a28285a8c3a",
+          "role": "imagegen-raw-output"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v2-edit-mask.png",
+          "sha256": "44f05ea401cc96f1cefc5ab6ea191e5e6370f9ea83d41b713bb2ea2cdf0a8541",
+          "role": "guide-derived-road-and-detail-safe-edit-mask"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v2-protection.png",
+          "sha256": "22ac0c9f4a21616b40413a6fe34827756abd8ffc59475a0d04d1979c26adaa36",
+          "role": "protected-pixel-evidence"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v2-protected-composite.json",
+          "sha256": "5a09c01b04fd22bfd0eee64907b71a254d25da6a40d65a7e9c7dc548c9369f0c",
+          "role": "atomic-composite-pass-report"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v2-orthographic-hachure.json",
+          "sha256": "07b178d971e03058d14594abc158ac13ede639bbd54c1ba96479cc59da562b0a",
+          "role": "independent-vision-review-a"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v2-orthographic-hachure-review2.json",
+          "sha256": "3ebbb8d2fd6cafb954af564e7383bdd4e155286d6613e3787c1069ee8ffcc6ca",
+          "role": "independent-vision-review-b"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic protected composite",
@@ -859,12 +1631,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-19T05:17:00Z", "actor": "Codex", "note": "Changed only G1's rejected oblique terrain representation to strict orthographic hachure and replaced edge-clipped polygons with six smooth inset footprints."},
-        {"state": "inputs-ready", "at": "2026-07-19T05:31:00Z", "actor": "Codex and independent preflight QA A", "note": "Prompt, base, six-component guide, curve insets, gaps, schema, reference order, and SHA-256 locks passed preflight."},
-        {"state": "generated", "at": "2026-07-19T05:41:00Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 orthographic hachure edit."},
-        {"state": "automated-qa", "at": "2026-07-19T05:44:00Z", "actor": "Codex protected composite", "note": "Atomic composite passed with zero protected-core, outside-permission, zero-mask, and border changes."},
-        {"state": "vision-qa", "at": "2026-07-19T05:52:00Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 51 and 64. Both detected missing four-foothill topology, uniform contour-like repetition, and road-guard terrain voids."},
-        {"state": "rejected", "at": "2026-07-19T05:52:00Z", "actor": "Codex", "note": "G2 was retained as rejected evidence. G3 must constrain short fall-line marks and all six landform interiors before protected compositing."}
+        {
+          "state": "planned",
+          "at": "2026-07-19T05:17:00Z",
+          "actor": "Codex",
+          "note": "Changed only G1's rejected oblique terrain representation to strict orthographic hachure and replaced edge-clipped polygons with six smooth inset footprints."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-19T05:31:00Z",
+          "actor": "Codex and independent preflight QA A",
+          "note": "Prompt, base, six-component guide, curve insets, gaps, schema, reference order, and SHA-256 locks passed preflight."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-19T05:41:00Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 orthographic hachure edit."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-19T05:44:00Z",
+          "actor": "Codex protected composite",
+          "note": "Atomic composite passed with zero protected-core, outside-permission, zero-mask, and border changes."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-19T05:52:00Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 51 and 64. Both detected missing four-foothill topology, uniform contour-like repetition, and road-guard terrain voids."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-19T05:52:00Z",
+          "actor": "Codex",
+          "note": "G2 was retained as rejected evidence. G3 must constrain short fall-line marks and all six landform interiors before protected compositing."
+        }
       ],
       "notes": "Rejected safely. G2 fixes G1 perspective and canvas clipping while keeping protected geography exact, but it is not a Golden master: four foothills disappear, long uniform hachure bands repeat, and road guards read as terrain gaps. It must never be staged or published."
     },
@@ -872,25 +1674,94 @@
       "id": "style-candidate-g-v3-hachure-skeleton",
       "sheet_id": "style-candidate-g",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-g-v3-hachure-skeleton.generation.txt", "sha256": "24ed8b4e96a03c5ce991d8d2536e33fe6273f756bb0831c39dbedcbc83d3604d", "role": "single-change-open-hachure-skeleton-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png", "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016", "role": "pixel-authoritative-edit-source"},
-        {"path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json", "sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01", "role": "six-landform-inset-curve-control"},
-        {"path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png", "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f", "role": "imagegen-topology-guide"},
-        {"path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.json", "sha256": "d6d68f39861802aa28ebf4a42fece89433da80fe616a79fdba57a34aca3baeb6", "role": "open-hachure-skeleton-source"},
-        {"path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.png", "sha256": "dc8978b184755de6ba21f10a120bfb413b0976fed642b106065eff82dee34da3", "role": "imagegen-open-hachure-skeleton-guide"},
-        {"path": "world/map-production/schemas/protected-relief-composite-v2.schema.json", "sha256": "56bf15ae7c4137850f32d507bd6bc128f18bfa65f08e1690ea8adbe2ef63d2bc", "role": "protected-composite-schema-lock"},
-        {"path": "world/map-production/controls/style-candidate-g-v3-generation-control-v2.json", "sha256": "c76814865952855c86f5806da0e5c378388b8aa6d443dd9535a4b1da6c788fe9", "role": "hash-locked-three-reference-generation-control"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v3-generation-preflight.json", "sha256": "aa233cb0e0aee3a1064783ceaed114e7b349dcd5a33b752efccfb89f51acb48c", "role": "independent-generation-preflight-pass"},
-        {"path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton-raw.png", "sha256": "3b00eeb44fc2141ca421393cb69d7faf16a6fae7b889ac07076be329f25b9774", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v3-edit-mask.png", "sha256": "44f05ea401cc96f1cefc5ab6ea191e5e6370f9ea83d41b713bb2ea2cdf0a8541", "role": "guide-derived-road-and-detail-safe-edit-mask"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v3-protection.png", "sha256": "22ac0c9f4a21616b40413a6fe34827756abd8ffc59475a0d04d1979c26adaa36", "role": "protected-pixel-evidence"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v3-protected-composite.json", "sha256": "9588f4f6727b64abdbfceb943fd0a886aeb2b7912b9312e20e7ac14d42afb688", "role": "atomic-composite-pass-report"},
-        {"path": "world/map-production/qa/style-candidate-g-v3-hachure-skeleton.json", "sha256": "1bcb6dc701c9ae2e60a5a090b1063f38fbb5e6602c09411e7a8cb2fd23b4c195", "role": "independent-vision-review-a"},
-        {"path": "world/map-production/qa/style-candidate-g-v3-hachure-skeleton-review2.json", "sha256": "8c91e7b8885cbeeca126f72df6a503288e5f601f1183c406cb23d81c807a8be0", "role": "independent-vision-review-b"}
+        {
+          "path": "world/map-production/prompts/style-candidate-g-v3-hachure-skeleton.generation.txt",
+          "sha256": "24ed8b4e96a03c5ce991d8d2536e33fe6273f756bb0831c39dbedcbc83d3604d",
+          "role": "single-change-open-hachure-skeleton-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+          "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+          "role": "pixel-authoritative-edit-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json",
+          "sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01",
+          "role": "six-landform-inset-curve-control"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+          "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f",
+          "role": "imagegen-topology-guide"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.json",
+          "sha256": "d6d68f39861802aa28ebf4a42fece89433da80fe616a79fdba57a34aca3baeb6",
+          "role": "open-hachure-skeleton-source"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.png",
+          "sha256": "dc8978b184755de6ba21f10a120bfb413b0976fed642b106065eff82dee34da3",
+          "role": "imagegen-open-hachure-skeleton-guide"
+        },
+        {
+          "path": "world/map-production/schemas/protected-relief-composite-v2.schema.json",
+          "sha256": "56bf15ae7c4137850f32d507bd6bc128f18bfa65f08e1690ea8adbe2ef63d2bc",
+          "role": "protected-composite-schema-lock"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v3-generation-control-v2.json",
+          "sha256": "c76814865952855c86f5806da0e5c378388b8aa6d443dd9535a4b1da6c788fe9",
+          "role": "hash-locked-three-reference-generation-control"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v3-generation-preflight.json",
+          "sha256": "aa233cb0e0aee3a1064783ceaed114e7b349dcd5a33b752efccfb89f51acb48c",
+          "role": "independent-generation-preflight-pass"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton-raw.png",
+          "sha256": "3b00eeb44fc2141ca421393cb69d7faf16a6fae7b889ac07076be329f25b9774",
+          "role": "imagegen-raw-output"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v3-edit-mask.png",
+          "sha256": "44f05ea401cc96f1cefc5ab6ea191e5e6370f9ea83d41b713bb2ea2cdf0a8541",
+          "role": "guide-derived-road-and-detail-safe-edit-mask"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v3-protection.png",
+          "sha256": "22ac0c9f4a21616b40413a6fe34827756abd8ffc59475a0d04d1979c26adaa36",
+          "role": "protected-pixel-evidence"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v3-protected-composite.json",
+          "sha256": "9588f4f6727b64abdbfceb943fd0a886aeb2b7912b9312e20e7ac14d42afb688",
+          "role": "atomic-composite-pass-report"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v3-hachure-skeleton.json",
+          "sha256": "1bcb6dc701c9ae2e60a5a090b1063f38fbb5e6602c09411e7a8cb2fd23b4c195",
+          "role": "independent-vision-review-a"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v3-hachure-skeleton-review2.json",
+          "sha256": "8c91e7b8885cbeeca126f72df6a503288e5f601f1183c406cb23d81c807a8be0",
+          "role": "independent-vision-review-b"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) + deterministic protected composite",
@@ -921,12 +1792,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-19T06:05:00Z", "actor": "Codex", "note": "Changed only G2's rejected long contour-band guide to a deterministic six-landform skeleton of short disconnected strokes."},
-        {"state": "inputs-ready", "at": "2026-07-19T06:41:00Z", "actor": "Codex and independent preflight QA", "note": "The three references, skeleton metrics, schema, reference order, permission source, dimensions, and SHA-256 locks passed strict preflight."},
-        {"state": "generated", "at": "2026-07-19T08:02:00Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 hachure-skeleton-conditioned edit."},
-        {"state": "automated-qa", "at": "2026-07-19T08:04:38Z", "actor": "Codex protected composite", "note": "Atomic composite passed with zero protected-core, outside-permission, zero-mask, and border changes."},
-        {"state": "vision-qa", "at": "2026-07-19T13:53:29Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 49 and 56. Both found four missing foothills, repeated radial rosettes, and broad road-guard terrain voids; one also classified the bright-centered mounds as a perspective jump."},
-        {"state": "rejected", "at": "2026-07-19T13:53:29Z", "actor": "Codex", "note": "G3 is retained as rejected evidence. G4 changes only the broad protection strategy so foothill support and road continuity can be isolated before the final relief-vocabulary attempt."}
+        {
+          "state": "planned",
+          "at": "2026-07-19T06:05:00Z",
+          "actor": "Codex",
+          "note": "Changed only G2's rejected long contour-band guide to a deterministic six-landform skeleton of short disconnected strokes."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-19T06:41:00Z",
+          "actor": "Codex and independent preflight QA",
+          "note": "The three references, skeleton metrics, schema, reference order, permission source, dimensions, and SHA-256 locks passed strict preflight."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-19T08:02:00Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 hachure-skeleton-conditioned edit."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-19T08:04:38Z",
+          "actor": "Codex protected composite",
+          "note": "Atomic composite passed with zero protected-core, outside-permission, zero-mask, and border changes."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-19T13:53:29Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 49 and 56. Both found four missing foothills, repeated radial rosettes, and broad road-guard terrain voids; one also classified the bright-centered mounds as a perspective jump."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-19T13:53:29Z",
+          "actor": "Codex",
+          "note": "G3 is retained as rejected evidence. G4 changes only the broad protection strategy so foothill support and road continuity can be isolated before the final relief-vocabulary attempt."
+        }
       ],
       "notes": "Rejected safely. The deterministic skeleton itself passes topology checks and all canonical protected pixels remain exact, but ImageGen converts the marks into repeated radial bright-centered mounds and the current broad detail/road protection removes all four foothills. G3 is not a Golden master and must never be staged or published."
     },
@@ -934,21 +1835,74 @@
       "id": "style-candidate-g-v4-narrow-protection",
       "sheet_id": "style-candidate-g",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-g-v3-hachure-skeleton.generation.txt", "sha256": "24ed8b4e96a03c5ce991d8d2536e33fe6273f756bb0831c39dbedcbc83d3604d", "role": "locked-imagegen-relief-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png", "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016", "role": "pixel-authoritative-composite-base"},
-        {"path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton-raw.png", "sha256": "3b00eeb44fc2141ca421393cb69d7faf16a6fae7b889ac07076be329f25b9774", "role": "locked-imagegen-raw-output"},
-        {"path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png", "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f", "role": "six-landform-permission-guide"},
-        {"path": "world/map-production/schemas/protected-relief-composite-v3.schema.json", "sha256": "b9f98dc78985be9de19c3e502d283256e17326420d4eb3eafa48c9811fd56601", "role": "narrow-protection-schema-lock"},
-        {"path": "world/map-production/controls/style-candidate-g-v4-narrow-protection-control-v3.json", "sha256": "bc41af853af3ee09f5650be98d4075f022514c8f45d0e072c9adc2f11aeadb37", "role": "hash-locked-narrow-protection-control"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v4-edit-mask.png", "sha256": "7d93e2c44230c54ea53576bb09939642358b9e9c965e459de15c610af3179bfb", "role": "narrow-permission-mask"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v4-protection.png", "sha256": "fecf38fc6977ac01ed6f71c04e9bf7cf50c74f391779e583ba30fc639f46a653", "role": "protected-pixel-evidence"},
-        {"path": "world/map-production/qa/automated/style-candidate-g-v4-protected-composite.json", "sha256": "075b08057cc84bf22ccd3eb369cf95ac3b000fcd8531e54f7f4b228f87e4b645", "role": "atomic-narrow-composite-pass-report"},
-        {"path": "world/map-production/qa/style-candidate-g-v4-narrow-protection.json", "sha256": "c839f1adc2d44795b8e6852f636bcbee3ec0ea01610d69e925ba02fe034b0b4b", "role": "independent-vision-review-a"},
-        {"path": "world/map-production/qa/style-candidate-g-v4-narrow-protection-review2.json", "sha256": "ada38d2d2ea6fd14f17ee60225c4557788686f3cd0023555af0177b2333a2881", "role": "independent-vision-review-b"}
+        {
+          "path": "world/map-production/prompts/style-candidate-g-v3-hachure-skeleton.generation.txt",
+          "sha256": "24ed8b4e96a03c5ce991d8d2536e33fe6273f756bb0831c39dbedcbc83d3604d",
+          "role": "locked-imagegen-relief-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+          "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+          "role": "pixel-authoritative-composite-base"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton-raw.png",
+          "sha256": "3b00eeb44fc2141ca421393cb69d7faf16a6fae7b889ac07076be329f25b9774",
+          "role": "locked-imagegen-raw-output"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+          "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f",
+          "role": "six-landform-permission-guide"
+        },
+        {
+          "path": "world/map-production/schemas/protected-relief-composite-v3.schema.json",
+          "sha256": "b9f98dc78985be9de19c3e502d283256e17326420d4eb3eafa48c9811fd56601",
+          "role": "narrow-protection-schema-lock"
+        },
+        {
+          "path": "world/map-production/controls/style-candidate-g-v4-narrow-protection-control-v3.json",
+          "sha256": "bc41af853af3ee09f5650be98d4075f022514c8f45d0e072c9adc2f11aeadb37",
+          "role": "hash-locked-narrow-protection-control"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v4-edit-mask.png",
+          "sha256": "7d93e2c44230c54ea53576bb09939642358b9e9c965e459de15c610af3179bfb",
+          "role": "narrow-permission-mask"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v4-protection.png",
+          "sha256": "fecf38fc6977ac01ed6f71c04e9bf7cf50c74f391779e583ba30fc639f46a653",
+          "role": "protected-pixel-evidence"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-g-v4-protected-composite.json",
+          "sha256": "075b08057cc84bf22ccd3eb369cf95ac3b000fcd8531e54f7f4b228f87e4b645",
+          "role": "atomic-narrow-composite-pass-report"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v4-narrow-protection.json",
+          "sha256": "c839f1adc2d44795b8e6852f636bcbee3ec0ea01610d69e925ba02fe034b0b4b",
+          "role": "independent-vision-review-a"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-g-v4-narrow-protection-review2.json",
+          "sha256": "ada38d2d2ea6fd14f17ee60225c4557788686f3cd0023555af0177b2333a2881",
+          "role": "independent-vision-review-b"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in) raw + deterministic narrow protected composite",
@@ -979,12 +1933,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-19T13:54:00Z", "actor": "Codex", "note": "Changed only G3's broad protection policy; the ImageGen raw output, topology, base, and visual vocabulary remained byte-locked."},
-        {"state": "inputs-ready", "at": "2026-07-19T14:08:00Z", "actor": "Codex", "note": "Versioned schema and control locked the narrower 16px road core and high-frequency AND dark detail protection."},
-        {"state": "generated", "at": "2026-07-19T14:12:00Z", "actor": "Codex deterministic protected composite", "note": "Recomposited the unchanged G3 ImageGen raw output over the unchanged D4 base."},
-        {"state": "automated-qa", "at": "2026-07-19T14:16:00Z", "actor": "Codex", "note": "All five identity gates passed with zero differences; G1-G3 outputs also remained byte-identical under compatibility verification."},
-        {"state": "vision-qa", "at": "2026-07-19T14:40:10Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent scores 58 and 65. Both confirmed better road continuity but rejected missing foothills and repeated bright-centered radial rosettes."},
-        {"state": "rejected", "at": "2026-07-19T14:40:10Z", "actor": "Codex", "note": "G4 is retained as protection-policy evidence only. The next attempt must keep protection fixed and replace only the relief vocabulary."}
+        {
+          "state": "planned",
+          "at": "2026-07-19T13:54:00Z",
+          "actor": "Codex",
+          "note": "Changed only G3's broad protection policy; the ImageGen raw output, topology, base, and visual vocabulary remained byte-locked."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-19T14:08:00Z",
+          "actor": "Codex",
+          "note": "Versioned schema and control locked the narrower 16px road core and high-frequency AND dark detail protection."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-19T14:12:00Z",
+          "actor": "Codex deterministic protected composite",
+          "note": "Recomposited the unchanged G3 ImageGen raw output over the unchanged D4 base."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-19T14:16:00Z",
+          "actor": "Codex",
+          "note": "All five identity gates passed with zero differences; G1-G3 outputs also remained byte-identical under compatibility verification."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-19T14:40:10Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent scores 58 and 65. Both confirmed better road continuity but rejected missing foothills and repeated bright-centered radial rosettes."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-19T14:40:10Z",
+          "actor": "Codex",
+          "note": "G4 is retained as protection-policy evidence only. The next attempt must keep protection fixed and replace only the relief vocabulary."
+        }
       ],
       "notes": "Rejected safely. The narrow protection strategy is accepted as an implementation component, but the visual candidate is not Golden and must never be published. Three foothills remain unreadable and repeated radial bright-centered forms fail immediate visual gates."
     },
@@ -993,16 +1977,49 @@
       "sheet_id": "style-candidate-h",
       "parent_job_id": "style-candidate-b-v1",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-h-v4-plan-view-golden-board.generation.txt", "sha256": "ab066d73cd05d3d7b9bb5abfe3d76a70ae80b814fc8af51d48ead19784548675", "role": "strict-plan-view-golden-style-generation-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-b-v1.png", "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003", "role": "candidate-b1-composition-material-and-palette-reference"},
-        {"path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board-raw.png", "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-h-v4-plan-view-golden-board.json", "sha256": "9f1d7b88b8696ec61e05810864e2236afffc088a6f58b042d699c77419829f31", "role": "automated-artifact-and-raster-audit"},
-        {"path": "world/map-production/qa/style-candidate-h-v4-plan-view-golden-board.json", "sha256": "fe6ae43c61a2718d6d5e3ceeb66ba64f09ff2b46d61e56fa5c07c984aa51455d", "role": "independent-vision-review-a"},
-        {"path": "world/map-production/qa/style-candidate-h-v4-plan-view-golden-board-review2.json", "sha256": "7447351b0ca1e7732c8de7092c6d97161a02888957589610b8e760a42f10848f", "role": "independent-vision-review-b"}
+        {
+          "path": "world/map-production/prompts/style-candidate-h-v4-plan-view-golden-board.generation.txt",
+          "sha256": "ab066d73cd05d3d7b9bb5abfe3d76a70ae80b814fc8af51d48ead19784548675",
+          "role": "strict-plan-view-golden-style-generation-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-b-v1.png",
+          "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+          "role": "candidate-b1-composition-material-and-palette-reference"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board-raw.png",
+          "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
+          "role": "imagegen-raw-output"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-h-v4-plan-view-golden-board.json",
+          "sha256": "9f1d7b88b8696ec61e05810864e2236afffc088a6f58b042d699c77419829f31",
+          "role": "automated-artifact-and-raster-audit"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-h-v4-plan-view-golden-board.json",
+          "sha256": "fe6ae43c61a2718d6d5e3ceeb66ba64f09ff2b46d61e56fa5c07c984aa51455d",
+          "role": "independent-vision-review-a"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-h-v4-plan-view-golden-board-review2.json",
+          "sha256": "7447351b0ca1e7732c8de7092c6d97161a02888957589610b8e760a42f10848f",
+          "role": "independent-vision-review-b"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in)",
@@ -1032,12 +2049,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-19T15:30:00Z", "actor": "Codex", "note": "Planned a non-canonical Golden style-board attempt using Candidate B1 while replacing floating and pictorial relief with strict plan-view terrain."},
-        {"state": "inputs-ready", "at": "2026-07-19T15:31:24Z", "actor": "Codex", "note": "Locked the H4 prompt and Candidate B1 reference by SHA-256."},
-        {"state": "generated", "at": "2026-07-19T15:33:03Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 RGB H4 candidate; raw and final outputs are byte-identical."},
-        {"state": "automated-qa", "at": "2026-07-19T15:52:00Z", "actor": "Codex", "note": "All automated artifact, image-contract, boundary, B1 palette, exact-repetition proxy, and downsample-readability gates passed pending Vision review."},
-        {"state": "vision-qa", "at": "2026-07-19T16:23:27.158Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent reviews scored A 74 and B 88; both rejected H4. Primary A detected perspective, missing required flat replacements, and semantic repetition, while B classified perspective as the sole immediate failure."},
-        {"state": "rejected", "at": "2026-07-19T16:23:27.158Z", "actor": "Codex", "note": "H4 was retained as rejected evidence because both A 74 and B 88 are below the 94-point Golden threshold and both reviews detect prohibited perspective."}
+        {
+          "state": "planned",
+          "at": "2026-07-19T15:30:00Z",
+          "actor": "Codex",
+          "note": "Planned a non-canonical Golden style-board attempt using Candidate B1 while replacing floating and pictorial relief with strict plan-view terrain."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-19T15:31:24Z",
+          "actor": "Codex",
+          "note": "Locked the H4 prompt and Candidate B1 reference by SHA-256."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-19T15:33:03Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 RGB H4 candidate; raw and final outputs are byte-identical."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-19T15:52:00Z",
+          "actor": "Codex",
+          "note": "All automated artifact, image-contract, boundary, B1 palette, exact-repetition proxy, and downsample-readability gates passed pending Vision review."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-19T16:23:27.158Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent reviews scored A 74 and B 88; both rejected H4. Primary A detected perspective, missing required flat replacements, and semantic repetition, while B classified perspective as the sole immediate failure."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-19T16:23:27.158Z",
+          "actor": "Codex",
+          "note": "H4 was retained as rejected evidence because both A 74 and B 88 are below the 94-point Golden threshold and both reviews detect prohibited perspective."
+        }
       ],
       "notes": "Rejected production evidence only. H4 preserves strong Candidate B1 material and removes floating islands, but it is not a Golden reference: the city and port remain modeled, and repeated triangular highland and tree symbols violate strict plan-view requirements. It must not be tiled, staged, or published."
     },
@@ -1046,16 +2093,49 @@
       "sheet_id": "style-candidate-h",
       "parent_job_id": "style-candidate-h-v4-plan-view-golden-board",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-h-v5-strict-plan-symbols.generation.txt", "sha256": "2cff3a30dbc94ff620496f464bcae8c2e2dad20c302fd376e8bef8a39853f4ca", "role": "strict-plan-symbol-replacement-generation-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png", "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837", "role": "h4-geometry-material-and-palette-reference"},
-        {"path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols-raw.png", "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-h-v5-strict-plan-symbols.json", "sha256": "43b82a26c7854a377e2a4a99229798bc2adb758eab3130565b98a90164bd473e", "role": "automated-artifact-and-raster-audit"},
-        {"path": "world/map-production/qa/style-candidate-h-v5-strict-plan-symbols.json", "sha256": "416846a4d386049682aaf02d2dfad54c67cf29c773cdd9245f76553fdf91ccb1", "role": "independent-vision-review-a"},
-        {"path": "world/map-production/qa/style-candidate-h-v5-strict-plan-symbols-review2.json", "sha256": "a97c5e4881130f6d3201b6e9768de538c284d6994fba4cff55bd97109573ca92", "role": "independent-vision-review-b"}
+        {
+          "path": "world/map-production/prompts/style-candidate-h-v5-strict-plan-symbols.generation.txt",
+          "sha256": "2cff3a30dbc94ff620496f464bcae8c2e2dad20c302fd376e8bef8a39853f4ca",
+          "role": "strict-plan-symbol-replacement-generation-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+          "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
+          "role": "h4-geometry-material-and-palette-reference"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols-raw.png",
+          "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe",
+          "role": "imagegen-raw-output"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-h-v5-strict-plan-symbols.json",
+          "sha256": "43b82a26c7854a377e2a4a99229798bc2adb758eab3130565b98a90164bd473e",
+          "role": "automated-artifact-and-raster-audit"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-h-v5-strict-plan-symbols.json",
+          "sha256": "416846a4d386049682aaf02d2dfad54c67cf29c773cdd9245f76553fdf91ccb1",
+          "role": "independent-vision-review-a"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-h-v5-strict-plan-symbols-review2.json",
+          "sha256": "a97c5e4881130f6d3201b6e9768de538c284d6994fba4cff55bd97109573ca92",
+          "role": "independent-vision-review-b"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in)",
@@ -1085,12 +2165,42 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-19T15:43:00Z", "actor": "Codex", "note": "Planned a second H-series attempt that preserved H4 geography while globally replacing pictorial height with strict plan symbols."},
-        {"state": "inputs-ready", "at": "2026-07-19T15:45:01Z", "actor": "Codex", "note": "Locked the H5 prompt and H4 reference by SHA-256."},
-        {"state": "generated", "at": "2026-07-19T15:48:14Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 RGB H5 candidate; raw and final outputs are byte-identical."},
-        {"state": "automated-qa", "at": "2026-07-19T15:58:36Z", "actor": "Codex", "note": "Automated identity, image-contract, boundary, and exact-clone proxies passed, but B1 palette continuity and downsample-readability proxies failed."},
-        {"state": "vision-qa", "at": "2026-07-19T16:00:51Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent reviews scored 73 and 84. The primary A review rejected retained city and port height, missing required replacement detail, and conspicuous rounded-canopy repetition."},
-        {"state": "rejected", "at": "2026-07-19T16:00:51Z", "actor": "Codex", "note": "H5 was retained as rejected evidence because automated gates failed, the primary score is below 94, and three immediate visual gates fail."}
+        {
+          "state": "planned",
+          "at": "2026-07-19T15:43:00Z",
+          "actor": "Codex",
+          "note": "Planned a second H-series attempt that preserved H4 geography while globally replacing pictorial height with strict plan symbols."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-19T15:45:01Z",
+          "actor": "Codex",
+          "note": "Locked the H5 prompt and H4 reference by SHA-256."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-19T15:48:14Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 RGB H5 candidate; raw and final outputs are byte-identical."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-19T15:58:36Z",
+          "actor": "Codex",
+          "note": "Automated identity, image-contract, boundary, and exact-clone proxies passed, but B1 palette continuity and downsample-readability proxies failed."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-19T16:00:51Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent reviews scored 73 and 84. The primary A review rejected retained city and port height, missing required replacement detail, and conspicuous rounded-canopy repetition."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-19T16:00:51Z",
+          "actor": "Codex",
+          "note": "H5 was retained as rejected evidence because automated gates failed, the primary score is below 94, and three immediate visual gates fail."
+        }
       ],
       "notes": "Rejected production evidence only. H5 flattens the highland and keeps routes readable, but it is not a Golden reference: city and port perspective remains, copperplate micro-detail is simplified, and rounded canopy or dot repetition dominates the land. It must not be tiled, staged, or published."
     },
@@ -1099,17 +2209,54 @@
       "sheet_id": "style-candidate-h",
       "parent_job_id": "style-candidate-h-v5-strict-plan-symbols",
       "status": "rejected",
-      "bounds": {"west": 0, "south": 0, "east": 10000, "north": 10000},
-      "zoom": {"min": 0, "max": 2, "native": 2},
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
       "acceptance_threshold": 94,
       "inputs": [
-        {"path": "world/map-production/prompts/style-candidate-h-v6-dual-reference-flat-gis.generation.txt", "sha256": "824848427e0f6aebe79457317c48cf46774d932e286b7f2a4c70da10d6bf20dd", "role": "dual-reference-flat-gis-generation-prompt"},
-        {"path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols.png", "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe", "role": "h5-geometry-and-projection-reference"},
-        {"path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png", "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837", "role": "h4-material-and-palette-reference"},
-        {"path": "world/map-production/candidates/style-candidate-h-v6-dual-reference-flat-gis-raw.png", "sha256": "86d61909913a3c6a402ae2c12211a79a2a15e755e98fba622fcb0e2d7bcfaaf6", "role": "imagegen-raw-output"},
-        {"path": "world/map-production/qa/automated/style-candidate-h-v6-dual-reference-flat-gis.json", "sha256": "f2f62b613fd628029a58008ce94007ba6e44752f889cdb6b976a8c73f9acf297", "role": "automated-artifact-and-raster-audit"},
-        {"path": "world/map-production/qa/style-candidate-h-v6-dual-reference-flat-gis.json", "sha256": "201be0ad9a15807504a6026fbd0a5d3cc1d5b8f944b23a96fd02c8f39c327449", "role": "independent-vision-review-a"},
-        {"path": "world/map-production/qa/style-candidate-h-v6-dual-reference-flat-gis-review2.json", "sha256": "e7167b15a341eea18ab4fa2c151373a46b6747f7b2cfd3070a3c905fbd8dcee1", "role": "independent-vision-review-b"}
+        {
+          "path": "world/map-production/prompts/style-candidate-h-v6-dual-reference-flat-gis.generation.txt",
+          "sha256": "824848427e0f6aebe79457317c48cf46774d932e286b7f2a4c70da10d6bf20dd",
+          "role": "dual-reference-flat-gis-generation-prompt"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols.png",
+          "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe",
+          "role": "h5-geometry-and-projection-reference"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+          "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
+          "role": "h4-material-and-palette-reference"
+        },
+        {
+          "path": "world/map-production/candidates/style-candidate-h-v6-dual-reference-flat-gis-raw.png",
+          "sha256": "86d61909913a3c6a402ae2c12211a79a2a15e755e98fba622fcb0e2d7bcfaaf6",
+          "role": "imagegen-raw-output"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-h-v6-dual-reference-flat-gis.json",
+          "sha256": "f2f62b613fd628029a58008ce94007ba6e44752f889cdb6b976a8c73f9acf297",
+          "role": "automated-artifact-and-raster-audit"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-h-v6-dual-reference-flat-gis.json",
+          "sha256": "201be0ad9a15807504a6026fbd0a5d3cc1d5b8f944b23a96fd02c8f39c327449",
+          "role": "independent-vision-review-a"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-h-v6-dual-reference-flat-gis-review2.json",
+          "sha256": "e7167b15a341eea18ab4fa2c151373a46b6747f7b2cfd3070a3c905fbd8dcee1",
+          "role": "independent-vision-review-b"
+        }
       ],
       "generation": {
         "model": "OpenAI ImageGen (Codex built-in)",
@@ -1139,14 +2286,162 @@
         }
       },
       "history": [
-        {"state": "planned", "at": "2026-07-19T16:01:00Z", "actor": "Codex", "note": "Planned a third H-series attempt using H5 solely for geometry and projection and H4 solely for material and palette."},
-        {"state": "inputs-ready", "at": "2026-07-19T16:02:17Z", "actor": "Codex", "note": "Locked the H6 prompt, H5 geometry reference, and H4 material reference by SHA-256 and preserved their distinct roles."},
-        {"state": "generated", "at": "2026-07-19T16:03:50Z", "actor": "OpenAI ImageGen", "note": "Produced the formal 1536x1024 RGB H6 candidate; raw and final outputs are byte-identical."},
-        {"state": "automated-qa", "at": "2026-07-19T16:10:05Z", "actor": "Codex", "note": "Automated identity, image-contract, boundary, and exact-clone proxies passed, but B1 palette continuity and downsample-readability proxies failed."},
-        {"state": "vision-qa", "at": "2026-07-19T16:17:54Z", "actor": "Independent Codex Vision QA A and B", "note": "Independent reviews scored 71 and 82. The primary A review rejected retained city and port height, missing required flat replacements, circular canopy repetition, and triangular highland repetition."},
-        {"state": "rejected", "at": "2026-07-19T16:17:54Z", "actor": "Codex", "note": "H6 was retained as rejected evidence because automated gates failed, the primary score is below 94, and three immediate visual gates fail."}
+        {
+          "state": "planned",
+          "at": "2026-07-19T16:01:00Z",
+          "actor": "Codex",
+          "note": "Planned a third H-series attempt using H5 solely for geometry and projection and H4 solely for material and palette."
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-07-19T16:02:17Z",
+          "actor": "Codex",
+          "note": "Locked the H6 prompt, H5 geometry reference, and H4 material reference by SHA-256 and preserved their distinct roles."
+        },
+        {
+          "state": "generated",
+          "at": "2026-07-19T16:03:50Z",
+          "actor": "OpenAI ImageGen",
+          "note": "Produced the formal 1536x1024 RGB H6 candidate; raw and final outputs are byte-identical."
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-07-19T16:10:05Z",
+          "actor": "Codex",
+          "note": "Automated identity, image-contract, boundary, and exact-clone proxies passed, but B1 palette continuity and downsample-readability proxies failed."
+        },
+        {
+          "state": "vision-qa",
+          "at": "2026-07-19T16:17:54Z",
+          "actor": "Independent Codex Vision QA A and B",
+          "note": "Independent reviews scored 71 and 82. The primary A review rejected retained city and port height, missing required flat replacements, circular canopy repetition, and triangular highland repetition."
+        },
+        {
+          "state": "rejected",
+          "at": "2026-07-19T16:17:54Z",
+          "actor": "Codex",
+          "note": "H6 was retained as rejected evidence because automated gates failed, the primary score is below 94, and three immediate visual gates fail."
+        }
       ],
       "notes": "Rejected production evidence only. H6 restores richer H4/B1 color and detail, but it is not a Golden reference: the city and port remain modeled, forests repeat circular canopy stamps, and the highland repeats prohibited triangular peak symbols. It must not be tiled, staged, or published."
+    },
+    {
+      "id": "style-candidate-k-v3-semantic-cleanup",
+      "sheet_id": "style-candidate-k",
+      "status": "automated-qa",
+      "bounds": {
+        "west": 0,
+        "south": 0,
+        "east": 10000,
+        "north": 10000
+      },
+      "zoom": {
+        "min": 0,
+        "max": 2,
+        "native": 2
+      },
+      "acceptance_threshold": 94,
+      "inputs": [
+        {
+          "path": "world/map-production/candidates/style-candidate-k-v3-golden-v2-raw.png",
+          "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+          "role": "golden-raw-output"
+        },
+        {
+          "path": "world/map-production/prompts/style-candidate-k-v3-golden-v2.provenance-receipt.json",
+          "sha256": "fc0b89b532bffb4f8829d3c8ee75ceb6a5a9fc23ef989d7f961dd58930153cbd",
+          "role": "promotion-provenance"
+        },
+        {
+          "path": "world/map-production/qa/style-candidate-k-v3-golden-v2-root-review.json",
+          "sha256": "82ed6e726ca50b2a00ba4c9df722698e84fcebf4d28d446d02b592f17dae9c09",
+          "role": "root-vision-authorization"
+        },
+        {
+          "path": "world/map-production/qa/automated/style-candidate-k-v3-golden-v2.json",
+          "sha256": "fc93d69fc243959cb73e72da9a47d8c40495b05bb4ca076390d9dcd5f7841832",
+          "role": "persistent-automated-audit"
+        },
+        {
+          "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/deterministic-replay.png",
+          "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+          "role": "deterministic-replay-output"
+        },
+        {
+          "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/deterministic-replay-2.png",
+          "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+          "role": "deterministic-replay-output-2"
+        },
+        {
+          "path": "world/map-production/qa/blind-packets/phase4-k3-v2/3df44f8f71180c68bb528605bfcde6cf6e5e78e3eb856615cd14fe34f855b39f.json",
+          "sha256": "3df44f8f71180c68bb528605bfcde6cf6e5e78e3eb856615cd14fe34f855b39f",
+          "role": "blind-review-packet"
+        },
+        {
+          "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-native.png",
+          "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+          "role": "root-review-view-native"
+        },
+        {
+          "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full25.png",
+          "sha256": "2648cc8ec2a9714dce0d0c41ed9cd0a51463593fde344e76b3d72b2fc5d07bd9",
+          "role": "root-review-view-full25"
+        },
+        {
+          "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full50.png",
+          "sha256": "1bfb21cd8415a237548dc36cc040411695ea934df3ce18436f73d6df3f35475a",
+          "role": "root-review-view-full50"
+        },
+        {
+          "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland200.png",
+          "sha256": "fd3e717400642a524dd61787191216c728a04f55ae8d19af05fa30da2ff20cc3",
+          "role": "root-review-view-highland200"
+        },
+        {
+          "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland400.png",
+          "sha256": "68a58bbf012cfe4792e83df9d48e04ff6149221a2e2a7ecdaa12da3ed01069fc",
+          "role": "root-review-view-highland400"
+        }
+      ],
+      "generation": {
+        "model": "generic-phase4-golden-emission-v2",
+        "attempt": 1
+      },
+      "master": {
+        "path": "world/map-production/candidates/style-candidate-k-v3-golden-v2.png",
+        "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+        "width": 1536,
+        "height": 1024,
+        "color_profile": "untagged RGB"
+      },
+      "qa": {
+        "automated": {
+          "status": "passed",
+          "report_path": "world/map-production/qa/automated/style-candidate-k-v3-golden-v2.json"
+        }
+      },
+      "history": [
+        {
+          "state": "planned",
+          "at": "2026-08-30T08:34:37Z",
+          "actor": "halc8312"
+        },
+        {
+          "state": "inputs-ready",
+          "at": "2026-08-30T08:34:37Z",
+          "actor": "halc8312"
+        },
+        {
+          "state": "generated",
+          "at": "2026-08-30T08:34:37Z",
+          "actor": "halc8312"
+        },
+        {
+          "state": "automated-qa",
+          "at": "2026-08-30T08:34:37Z",
+          "actor": "halc8312"
+        }
+      ]
     }
   ]
 }
