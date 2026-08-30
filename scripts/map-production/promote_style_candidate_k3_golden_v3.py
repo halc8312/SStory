@@ -25,6 +25,7 @@ from PIL import Image
 
 import audit_style_candidate_k3_golden_v3 as strict_audit
 import generate_style_candidate_k3_golden_v3_four_candidate_phase_v1 as derivation
+import generate_style_candidate_k3_golden_v3_balanced_phase_v2 as balanced_derivation
 import promote_style_candidate_k3_golden_v2 as manifest_cas
 from production_common import REPO_ROOT, parse_rfc3339, utc_now
 from release_bound_artifact import (
@@ -49,13 +50,18 @@ AUTHORITY_PATH = (
     "style-candidate-k3-golden-v3-promotion-authority-v1.json"
 )
 EXPECTED_AUTHORITY_SHA256 = (
-    "f65d5fc073d0270d515ad16627516e104018e2de6e7b1162fbc184518e5b8dfa"
+    "37766c595214cde3c277b0147b93dae2b17daf07c811de9c1581d1a5d8cf11e0"
 )
 JOB_ID = "style-candidate-k-v3-golden-v3"
+FOUR_CANDIDATE_V1 = "four-candidate-v1"
+BALANCED_PHASE_V2 = "balanced-phase-v2"
+GENERATION_CONTRACT_IDS = (FOUR_CANDIDATE_V1, BALANCED_PHASE_V2)
 
 V3_ACCEPTANCE_RECEIPT_ROLE = "golden-v3-acceptance-receipt"
 V3_PROMOTION_AUTHORITY_ROLE = "golden-v3-promotion-authority"
 V3_DERIVATION_AUTHORITY_ROLE = "golden-v3-four-candidate-derivation-authority"
+V3_BALANCED_AUTHORITY_ROLE = "golden-v3-balanced-phase-v2-authority"
+V3_BALANCED_GENERATOR_ROLE = "golden-v3-balanced-phase-v2-generator"
 V3_STRICT_AUTHORITY_ROLE = "golden-v3-strict-audit-authority"
 V3_STRICT_REPORT_ROLE = "golden-v3-strict-audit-report"
 V3_ROOT_REVIEW_ROLE = "golden-v3-root-vision-authorization"
@@ -66,6 +72,8 @@ V3_ONLY_ROLES = frozenset(
         V3_ACCEPTANCE_RECEIPT_ROLE,
         V3_PROMOTION_AUTHORITY_ROLE,
         V3_DERIVATION_AUTHORITY_ROLE,
+        V3_BALANCED_AUTHORITY_ROLE,
+        V3_BALANCED_GENERATOR_ROLE,
         V3_STRICT_AUTHORITY_ROLE,
         V3_STRICT_REPORT_ROLE,
         V3_ROOT_REVIEW_ROLE,
@@ -121,6 +129,8 @@ class AuthorityBundle:
     document: dict[str, Any]
     strict_authority: BoundArtifact
     derivation_authority: BoundArtifact
+    balanced_authority: BoundArtifact
+    balanced_generator: BoundArtifact
     schemas: dict[str, BoundArtifact]
 
 
@@ -249,6 +259,8 @@ def load_authority() -> AuthorityBundle:
     if not isinstance(authorities, dict) or set(authorities) != {
         "strict_audit",
         "four_candidate_derivation",
+        "balanced_phase_v2",
+        "balanced_phase_v2_generator",
     }:
         raise GoldenV3PromotionError("Golden-v3 authority reference set changed")
     strict_authority = _bind_record(
@@ -258,15 +270,38 @@ def load_authority() -> AuthorityBundle:
         authorities["four_candidate_derivation"],
         label="Golden-v3 four-candidate derivation authority",
     )
+    balanced_authority = _bind_record(
+        authorities["balanced_phase_v2"],
+        label="Golden-v3 balanced-phase-v2 authority",
+    )
+    balanced_generator = _bind_record(
+        authorities["balanced_phase_v2_generator"],
+        label="Golden-v3 balanced-phase-v2 generator",
+    )
     if strict_authority.sha256 != strict_audit.EXPECTED_AUTHORITY_SHA256:
         raise GoldenV3PromotionError("strict-v3 authority identity changed")
     if derivation_authority.sha256 != derivation.AUTHORITY_SHA256:
         raise GoldenV3PromotionError("four-candidate derivation authority identity changed")
+    if balanced_authority.path != balanced_derivation.AUTHORITY_PATH.resolve():
+        raise GoldenV3PromotionError("balanced-phase-v2 authority path changed")
+    balanced_document = _strict_json(
+        balanced_authority.data, label="Golden-v3 balanced-phase-v2 authority"
+    )
+    try:
+        balanced_derivation.validate_authority(balanced_document)
+    except balanced_derivation.DerivationError as exc:
+        raise GoldenV3PromotionError(
+            f"balanced-phase-v2 authority validation failed: {exc}"
+        ) from exc
+    if balanced_generator.path != Path(balanced_derivation.__file__).resolve():
+        raise GoldenV3PromotionError("balanced-phase-v2 generator path changed")
     return AuthorityBundle(
         binding=authority,
         document=document,
         strict_authority=strict_authority,
         derivation_authority=derivation_authority,
+        balanced_authority=balanced_authority,
+        balanced_generator=balanced_generator,
         schemas=schemas,
     )
 
@@ -322,42 +357,87 @@ def _validate_output_paths(paths: PromotionPaths, authority: AuthorityBundle) ->
         )
 
 
-def _validate_generation_seals(
-    seal_paths: Sequence[Path],
+def _generation_context(
+    authority: AuthorityBundle, generation_contract_id: str
+) -> tuple[dict[str, Any], BoundArtifact, BoundArtifact | None]:
+    contracts = authority.document["generation_contract"]["contracts"]
+    if generation_contract_id not in GENERATION_CONTRACT_IDS:
+        raise GoldenV3PromotionError("Golden-v3 generation contract id is not allowed")
+    contract = contracts[generation_contract_id]
+    if generation_contract_id == FOUR_CANDIDATE_V1:
+        return contract, authority.derivation_authority, None
+    return contract, authority.balanced_authority, authority.balanced_generator
+
+
+def _validate_generation_payload(
+    payload: bytes,
     *,
     authority: AuthorityBundle,
+    generation_contract_id: str,
+) -> tuple[dict[str, Any], str]:
+    contract, generation_authority, _ = _generation_context(
+        authority, generation_contract_id
+    )
+    document = _strict_json(
+        generation_authority.data,
+        label=f"Golden-v3 {generation_contract_id} authority",
+    )
+    try:
+        if generation_contract_id == FOUR_CANDIDATE_V1:
+            seal = derivation.validate_output_seal_payload(payload, document)
+            profile = seal["runtime_profile_id"]
+        else:
+            seal = balanced_derivation.validate_output_seal_payload(payload, document)
+            profile = seal["runtime_attestation"]["profile_id"]
+    except (derivation.DerivationError, balanced_derivation.DerivationError) as exc:
+        raise GoldenV3PromotionError(str(exc)) from exc
+    if seal.get("schema_id") != contract["seal_schema_id"]:
+        raise GoldenV3PromotionError("Golden-v3 generation seal schema changed")
+    return seal, profile
+
+
+def _generation_comparable(
+    seal: Mapping[str, Any], generation_contract_id: str
+) -> dict[str, Any]:
+    excluded = (
+        "runtime_profile_id"
+        if generation_contract_id == FOUR_CANDIDATE_V1
+        else "runtime_attestation"
+    )
+    return {key: value for key, value in seal.items() if key != excluded}
+
+
+def _validate_generation_set(
+    seals: Sequence[dict[str, Any]],
+    profiles: Sequence[str],
+    *,
+    authority: AuthorityBundle,
+    generation_contract_id: str,
     candidate_id: str,
     candidate: BoundArtifact,
-) -> tuple[tuple[BoundArtifact, ...], list[dict[str, str]]]:
-    expected_count = authority.document["generation_contract"]["generation_seal_count"]
-    if len(seal_paths) != expected_count:
-        raise GoldenV3PromotionError(
-            f"Golden-v3 promotion requires exactly {expected_count} generation seals"
-        )
-    derivation_document = _strict_json(
-        authority.derivation_authority.data,
-        label="Golden-v3 four-candidate derivation authority",
-    )
-    bindings: list[BoundArtifact] = []
-    seals: list[dict[str, Any]] = []
-    for index, path in enumerate(seal_paths):
-        binding = _bind(path, label=f"Golden-v3 generation seal {index + 1}", trackable=False)
-        try:
-            seal = derivation.validate_output_seal_payload(
-                binding.data, derivation_document
+    require_source_path: bool,
+) -> None:
+    contract, _, _ = _generation_context(authority, generation_contract_id)
+    expected_profiles = contract["required_runtime_profile_ids"]
+    if expected_profiles is None:
+        if len(set(profiles)) != contract["generation_seal_count"]:
+            raise GoldenV3PromotionError(
+                "generation seals must use distinct runtime profiles"
             )
-        except derivation.DerivationError as exc:
-            raise GoldenV3PromotionError(str(exc)) from exc
-        bindings.append(binding)
-        seals.append(seal)
-    profiles = [seal["runtime_profile_id"] for seal in seals]
-    if len(set(profiles)) != expected_count:
-        raise GoldenV3PromotionError("generation seals must use distinct runtime profiles")
-    left = {key: value for key, value in seals[0].items() if key != "runtime_profile_id"}
-    right = {key: value for key, value in seals[1].items() if key != "runtime_profile_id"}
-    if left != right:
+    elif set(profiles) != set(expected_profiles) or len(set(profiles)) != len(profiles):
+        raise GoldenV3PromotionError(
+            "balanced generation seals must use the exact Windows/Linux profiles"
+        )
+    comparable = [
+        _generation_comparable(seal, generation_contract_id) for seal in seals
+    ]
+    if any(value != comparable[0] for value in comparable[1:]):
         raise GoldenV3PromotionError("cross-profile generation seals disagree")
     candidates = seals[0]["candidates"]
+    if [item.get("candidate_id") for item in candidates] != contract["candidate_ids"]:
+        raise GoldenV3PromotionError("generation seal candidate ordering changed")
+    if [item.get("path") for item in candidates] != contract["output_paths"]:
+        raise GoldenV3PromotionError("generation seal output path ordering changed")
     if len({item["candidate_id"] for item in candidates}) != len(candidates):
         raise GoldenV3PromotionError("generation seal candidate ids are not unique")
     if len({item["path"] for item in candidates}) != len(candidates):
@@ -369,19 +449,57 @@ def _validate_generation_seals(
         raise GoldenV3PromotionError("candidate id is not exactly one sealed candidate")
     record = selected[0]
     if (
-        record["path"] != candidate.relative
+        (require_source_path and record["path"] != candidate.relative)
         or record["sha256"] != candidate.sha256
         or record["bytes"] != len(candidate.data)
     ):
         raise GoldenV3PromotionError("candidate bytes do not match both generation seals")
+
+
+def _validate_generation_seals(
+    seal_paths: Sequence[Path],
+    *,
+    authority: AuthorityBundle,
+    generation_contract_id: str,
+    candidate_id: str,
+    candidate: BoundArtifact,
+) -> tuple[tuple[BoundArtifact, ...], list[dict[str, str]]]:
+    contract, _, _ = _generation_context(authority, generation_contract_id)
+    expected_count = contract["generation_seal_count"]
+    if len(seal_paths) != expected_count:
+        raise GoldenV3PromotionError(
+            f"Golden-v3 promotion requires exactly {expected_count} generation seals"
+        )
+    bindings: list[BoundArtifact] = []
+    seals: list[dict[str, Any]] = []
+    profiles: list[str] = []
+    for index, path in enumerate(seal_paths):
+        binding = _bind(path, label=f"Golden-v3 generation seal {index + 1}", trackable=False)
+        seal, profile = _validate_generation_payload(
+            binding.data,
+            authority=authority,
+            generation_contract_id=generation_contract_id,
+        )
+        bindings.append(binding)
+        seals.append(seal)
+        profiles.append(profile)
+    _validate_generation_set(
+        seals,
+        profiles,
+        authority=authority,
+        generation_contract_id=generation_contract_id,
+        candidate_id=candidate_id,
+        candidate=candidate,
+        require_source_path=True,
+    )
     summaries = sorted(
         (
             {
-                "runtime_profile_id": seal["runtime_profile_id"],
+                "runtime_profile_id": profile,
                 "sha256": binding.sha256,
                 "payload_utf8": binding.data.decode("utf-8"),
             }
-            for binding, seal in zip(bindings, seals, strict=True)
+            for binding, profile in zip(bindings, profiles, strict=True)
         ),
         key=lambda item: item["runtime_profile_id"],
     )
@@ -391,17 +509,15 @@ def _validate_generation_seals(
 def _validate_embedded_generation_seals(
     seals: Any,
     *,
+    generation_contract_id: str,
     candidate_id: str,
     master: BoundArtifact,
     authority: AuthorityBundle,
 ) -> None:
-    expected_count = authority.document["generation_contract"]["generation_seal_count"]
+    contract, _, _ = _generation_context(authority, generation_contract_id)
+    expected_count = contract["generation_seal_count"]
     if not isinstance(seals, list) or len(seals) != expected_count:
         raise GoldenV3PromotionError("Golden-v3 receipt generation seal count changed")
-    derivation_document = _strict_json(
-        authority.derivation_authority.data,
-        label="Golden-v3 derivation authority",
-    )
     documents: list[dict[str, Any]] = []
     profiles: list[str] = []
     for index, summary in enumerate(seals):
@@ -424,59 +540,33 @@ def _validate_embedded_generation_seals(
                 f"Golden-v3 embedded generation seal {index + 1} SHA-256 changed"
             )
         try:
-            document = derivation.validate_output_seal_payload(
-                payload, derivation_document
+            document, profile = _validate_generation_payload(
+                payload,
+                authority=authority,
+                generation_contract_id=generation_contract_id,
             )
-        except derivation.DerivationError as exc:
+        except GoldenV3PromotionError as exc:
             raise GoldenV3PromotionError(
                 f"Golden-v3 embedded generation seal {index + 1} failed: {exc}"
             ) from exc
-        profile = document["runtime_profile_id"]
         if summary.get("runtime_profile_id") != profile:
             raise GoldenV3PromotionError(
                 f"Golden-v3 embedded generation seal {index + 1} profile changed"
             )
         documents.append(document)
         profiles.append(profile)
-    if len(set(profiles)) != expected_count:
-        raise GoldenV3PromotionError(
-            "Golden-v3 embedded generation seals require distinct runtime profiles"
+    try:
+        _validate_generation_set(
+            documents,
+            profiles,
+            authority=authority,
+            generation_contract_id=generation_contract_id,
+            candidate_id=candidate_id,
+            candidate=master,
+            require_source_path=False,
         )
-    comparable = [
-        {key: value for key, value in document.items() if key != "runtime_profile_id"}
-        for document in documents
-    ]
-    if any(document != comparable[0] for document in comparable[1:]):
-        raise GoldenV3PromotionError(
-            "Golden-v3 embedded cross-profile generation seals disagree"
-        )
-    candidates = documents[0]["candidates"]
-    if len({item["candidate_id"] for item in candidates}) != len(candidates):
-        raise GoldenV3PromotionError(
-            "Golden-v3 embedded generation seal candidate ids are not unique"
-        )
-    if len({item["path"] for item in candidates}) != len(candidates):
-        raise GoldenV3PromotionError(
-            "Golden-v3 embedded generation seal candidate paths are not unique"
-        )
-    if len({item["sha256"] for item in candidates}) != len(candidates):
-        raise GoldenV3PromotionError(
-            "Golden-v3 embedded generation seal candidate payloads are not unique"
-        )
-    selected = [
-        item
-        for item in candidates
-        if item.get("candidate_id") == candidate_id
-    ]
-    if len(selected) != 1:
-        raise GoldenV3PromotionError(
-            "Golden-v3 receipt candidate id is not exactly one sealed candidate"
-        )
-    record = selected[0]
-    if record.get("sha256") != master.sha256 or record.get("bytes") != len(master.data):
-        raise GoldenV3PromotionError(
-            "Golden-v3 receipt candidate bytes do not match both embedded seals"
-        )
+    except GoldenV3PromotionError as exc:
+        raise GoldenV3PromotionError(f"Golden-v3 embedded {exc}") from exc
 
 
 def _recomputed_strict_report(candidate_path: Path) -> dict[str, Any]:
@@ -834,6 +924,7 @@ def _validate_review_set(
 def _receipt_document(
     *,
     authority: AuthorityBundle,
+    generation_contract_id: str,
     candidate_id: str,
     candidate: BoundArtifact,
     raw: BoundArtifact,
@@ -847,10 +938,13 @@ def _receipt_document(
     accepted_at: str,
 ) -> dict[str, Any]:
     threshold = authority.document["review_contract"]["acceptance_threshold"]
+    _, generation_authority, generation_generator = _generation_context(
+        authority, generation_contract_id
+    )
     return {
         "$schema": "https://sstory.example/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
-        "schema_version": "1.0.0",
-        "id": "sstory-k3-golden-v3-acceptance-receipt-v1",
+        "schema_version": "2.0.0",
+        "id": "sstory-k3-golden-v3-acceptance-receipt-v2",
         "job_id": JOB_ID,
         "status": "accepted",
         "acceptance_threshold": threshold,
@@ -858,7 +952,11 @@ def _receipt_document(
         "candidate": {**_artifact(master), "bytes": len(candidate.data)},
         "raw": _artifact(raw),
         "promotion_authority": _artifact(authority.binding),
-        "four_candidate_derivation_authority": _artifact(authority.derivation_authority),
+        "generation_contract_id": generation_contract_id,
+        "generation_authority": _artifact(generation_authority),
+        "generation_generator": (
+            _artifact(generation_generator) if generation_generator is not None else None
+        ),
         "generation_seals": generation_seals,
         "strict_audit_authority": _artifact(authority.strict_authority),
         "strict_audit_report": _artifact(strict_report),
@@ -878,6 +976,7 @@ def _input_record(binding: BoundArtifact, role: str) -> dict[str, str]:
 def _project_job(
     *,
     authority: AuthorityBundle,
+    generation_contract_id: str,
     raw: BoundArtifact,
     master: BoundArtifact,
     strict_report: BoundArtifact,
@@ -890,14 +989,24 @@ def _project_job(
 ) -> dict[str, Any]:
     prepared_at = packet.document["created_at"]
     primary = blind_reviews[0]
-    roles = authority.document["manifest_contract"]["input_role_order"]
+    roles = authority.document["manifest_contract"]["input_role_orders"][
+        generation_contract_id
+    ]
     identity = authority.document["identity"]
     threshold = authority.document["review_contract"]["acceptance_threshold"]
     manifest_contract = authority.document["manifest_contract"]
-    bindings = (
+    _, generation_authority, generation_generator = _generation_context(
+        authority, generation_contract_id
+    )
+    bindings = [
         raw,
         authority.binding,
-        authority.derivation_authority,
+        generation_authority,
+    ]
+    if generation_generator is not None:
+        bindings.append(generation_generator)
+    bindings.extend(
+        (
         authority.strict_authority,
         strict_report,
         root_review.binding,
@@ -905,6 +1014,7 @@ def _project_job(
         blind_reviews[0].binding,
         blind_reviews[1].binding,
         receipt,
+        )
     )
     inputs = [_input_record(binding, role) for binding, role in zip(bindings, roles, strict=True)]
     history_states = authority.document["manifest_contract"]["history_state_order"]
@@ -916,7 +1026,9 @@ def _project_job(
         "zoom": dict(manifest_contract["zoom"]),
         "acceptance_threshold": threshold,
         "inputs": inputs,
-        "generation": dict(manifest_contract["generation"]),
+        "generation": dict(
+            manifest_contract["generation_by_contract"][generation_contract_id]
+        ),
         "master": {
             **_artifact(master),
             "width": identity["canvas_width"],
@@ -975,6 +1087,7 @@ def _validate_receipt_links(
     receipt: dict[str, Any],
     *,
     authority: AuthorityBundle,
+    generation_contract_id: str,
     master: BoundArtifact,
     raw: BoundArtifact,
     strict_report: BoundArtifact,
@@ -983,11 +1096,14 @@ def _validate_receipt_links(
     blind_reviews: Sequence[ReviewEvidence],
 ) -> None:
     _schema_errors(receipt, authority.schemas["acceptance_receipt"], label="Golden-v3 acceptance receipt")
+    _, generation_authority, generation_generator = _generation_context(
+        authority, generation_contract_id
+    )
     exact_artifacts = {
         "candidate": _artifact(master),
         "raw": _artifact(raw),
         "promotion_authority": _artifact(authority.binding),
-        "four_candidate_derivation_authority": _artifact(authority.derivation_authority),
+        "generation_authority": _artifact(generation_authority),
         "strict_audit_authority": _artifact(authority.strict_authority),
         "strict_audit_report": _artifact(strict_report),
         "blind_packet": _artifact(packet.binding),
@@ -995,6 +1111,13 @@ def _validate_receipt_links(
     for key, expected in exact_artifacts.items():
         if not _same_artifact(receipt.get(key), expected):
             raise GoldenV3PromotionError(f"Golden-v3 receipt {key} binding changed")
+    expected_generator = (
+        _artifact(generation_generator) if generation_generator is not None else None
+    )
+    if receipt.get("generation_contract_id") != generation_contract_id:
+        raise GoldenV3PromotionError("Golden-v3 receipt generation discriminator changed")
+    if receipt.get("generation_generator") != expected_generator:
+        raise GoldenV3PromotionError("Golden-v3 receipt generation generator changed")
     if receipt["candidate"].get("bytes") != len(master.data):
         raise GoldenV3PromotionError("Golden-v3 receipt candidate byte count changed")
     expected_root = _review_receipt_record(root_review)
@@ -1035,7 +1158,6 @@ def _validate_accepted_job(
         or job.get("acceptance_threshold") != threshold
         or job.get("bounds") != manifest_contract["bounds"]
         or job.get("zoom") != manifest_contract["zoom"]
-        or job.get("generation") != manifest_contract["generation"]
         or job.get("notes") != manifest_contract["notes"]
         or not isinstance(master_record, dict)
         or master_record.get("width") != identity["canvas_width"]
@@ -1044,9 +1166,19 @@ def _validate_accepted_job(
     ):
         raise GoldenV3PromotionError("Golden-v3 manifest accepted identity changed")
     roles, by_role = _manifest_roles(job)
-    expected_roles = authority.document["manifest_contract"]["input_role_order"]
-    if roles != expected_roles:
+    role_orders = authority.document["manifest_contract"]["input_role_orders"]
+    matches = [
+        contract_id
+        for contract_id in GENERATION_CONTRACT_IDS
+        if roles == role_orders[contract_id]
+    ]
+    if len(matches) != 1:
         raise GoldenV3PromotionError("Golden-v3 manifest input role order changed")
+    generation_contract_id = matches[0]
+    if job.get("generation") != manifest_contract["generation_by_contract"][
+        generation_contract_id
+    ]:
+        raise GoldenV3PromotionError("Golden-v3 manifest generation identity changed")
     bound = {
         role: _bind_record(
             {"path": record["path"], "sha256": record["sha256"]},
@@ -1056,8 +1188,21 @@ def _validate_accepted_job(
     }
     if bound[V3_PROMOTION_AUTHORITY_ROLE].sha256 != authority.binding.sha256:
         raise GoldenV3PromotionError("Golden-v3 manifest promotion authority changed")
-    if bound[V3_DERIVATION_AUTHORITY_ROLE].sha256 != authority.derivation_authority.sha256:
-        raise GoldenV3PromotionError("Golden-v3 manifest derivation authority changed")
+    contract, generation_authority, generation_generator = _generation_context(
+        authority, generation_contract_id
+    )
+    authority_role = contract["manifest_authority_role"]
+    if bound[authority_role].sha256 != generation_authority.sha256:
+        raise GoldenV3PromotionError("Golden-v3 manifest generation authority changed")
+    generator_role = contract["manifest_generator_role"]
+    if generator_role is None:
+        if generation_generator is not None:
+            raise GoldenV3PromotionError("Golden-v3 generation contract is inconsistent")
+    elif (
+        generation_generator is None
+        or bound[generator_role].sha256 != generation_generator.sha256
+    ):
+        raise GoldenV3PromotionError("Golden-v3 manifest generation generator changed")
     if bound[V3_STRICT_AUTHORITY_ROLE].sha256 != authority.strict_authority.sha256:
         raise GoldenV3PromotionError("Golden-v3 manifest strict authority changed")
     master = _bind_record(
@@ -1105,6 +1250,7 @@ def _validate_accepted_job(
     _validate_receipt_links(
         receipt,
         authority=authority,
+        generation_contract_id=generation_contract_id,
         master=master,
         raw=raw,
         strict_report=strict_report,
@@ -1112,13 +1258,13 @@ def _validate_accepted_job(
         packet=packet,
         blind_reviews=blind_reviews,
     )
-    derivation_document = _strict_json(
-        authority.derivation_authority.data,
-        label="Golden-v3 derivation authority",
+    generation_document = _strict_json(
+        generation_authority.data,
+        label=f"Golden-v3 {generation_contract_id} authority",
     )
     candidate_ids = {
         item.get("candidate_id")
-        for item in derivation_document.get("candidates", {}).get("records", [])
+        for item in generation_document.get("candidates", {}).get("records", [])
         if isinstance(item, dict)
     }
     candidate_id = receipt.get("candidate_id")
@@ -1126,6 +1272,7 @@ def _validate_accepted_job(
         raise GoldenV3PromotionError("Golden-v3 receipt candidate id is not preregistered")
     _validate_embedded_generation_seals(
         receipt.get("generation_seals"),
+        generation_contract_id=generation_contract_id,
         candidate_id=candidate_id,
         master=master,
         authority=authority,
@@ -1179,6 +1326,7 @@ def _validate_accepted_job(
         )
     return {
         "evidence_contract_version": "v3",
+        "generation_contract_id": generation_contract_id,
         "job_id": JOB_ID,
         "master": _artifact(master),
         "vision_report": primary.binding.relative,
@@ -1239,6 +1387,7 @@ def _cleanup_created(created: Sequence[tuple[Path, str]]) -> None:
 
 def promote_candidate(
     *,
+    generation_contract_id: str,
     candidate_id: str,
     candidate_path: Path,
     generation_seal_paths: Sequence[Path],
@@ -1253,6 +1402,7 @@ def promote_candidate(
     if not actor:
         raise GoldenV3PromotionError("authorized_by must be non-empty")
     authority = load_authority()
+    _generation_context(authority, generation_contract_id)
     blind_roles = tuple(authority.document["review_contract"]["blind_role_order"])
     if len(review_paths) != authority.document["review_contract"]["blind_review_count"]:
         raise GoldenV3PromotionError(
@@ -1279,6 +1429,7 @@ def promote_candidate(
     seal_bindings, seal_summaries = _validate_generation_seals(
         generation_seal_paths,
         authority=authority,
+        generation_contract_id=generation_contract_id,
         candidate_id=candidate_id,
         candidate=candidate,
     )
@@ -1333,6 +1484,7 @@ def promote_candidate(
         created.append((master.path, master.sha256))
         receipt_document = _receipt_document(
             authority=authority,
+            generation_contract_id=generation_contract_id,
             candidate_id=candidate_id,
             candidate=candidate,
             raw=raw,
@@ -1357,6 +1509,7 @@ def promote_candidate(
         created.append((receipt.path, receipt.sha256))
         job = _project_job(
             authority=authority,
+            generation_contract_id=generation_contract_id,
             raw=raw,
             master=master,
             strict_report=strict_report,
@@ -1376,6 +1529,8 @@ def promote_candidate(
             authority.binding,
             authority.strict_authority,
             authority.derivation_authority,
+            authority.balanced_authority,
+            authority.balanced_generator,
             *authority.schemas.values(),
             candidate,
             *seal_bindings,
@@ -1405,6 +1560,7 @@ def promote_candidate(
             "status": "accepted",
             "job_id": JOB_ID,
             "candidate_id": candidate_id,
+            "generation_contract_id": generation_contract_id,
             "master": _artifact(master),
             "receipt": _artifact(receipt),
             "review_target": _artifact(master),
@@ -1426,6 +1582,12 @@ def promote_candidate(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--generation-contract",
+        required=True,
+        choices=GENERATION_CONTRACT_IDS,
+        dest="generation_contract_id",
+    )
     parser.add_argument("--candidate-id", required=True)
     parser.add_argument("--candidate", required=True, type=Path)
     parser.add_argument(
@@ -1451,6 +1613,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         result = promote_candidate(
+            generation_contract_id=args.generation_contract_id,
             candidate_id=args.candidate_id,
             candidate_path=args.candidate,
             generation_seal_paths=args.generation_seals,

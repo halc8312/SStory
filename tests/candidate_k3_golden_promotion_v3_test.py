@@ -52,6 +52,8 @@ class PromotionV3Fixture:
     """Candidate-blind synthetic evidence graph; no production candidate is read."""
 
     def __init__(self) -> None:
+        self.generation_contract_id = promotion.FOUR_CANDIDATE_V1
+        self.candidate_id = "F094-M148"
         self._temps = [
             tempfile.TemporaryDirectory(
                 prefix=".golden-v3-promotion-test-",
@@ -328,10 +330,77 @@ class PromotionV3Fixture:
         )
         return stack
 
+    def use_balanced_generation(self) -> None:
+        authority = promotion.load_authority()
+        balanced = json.loads(authority.balanced_authority.data.decode("utf-8"))
+        self.generation_contract_id = promotion.BALANCED_PHASE_V2
+        self.candidate_id = "B125-M400"
+        candidates = []
+        for index, record in enumerate(balanced["candidates"]["records"]):
+            selected = record["candidate_id"] == self.candidate_id
+            candidates.append(
+                {
+                    "candidate_id": record["candidate_id"],
+                    "path": record["output_path"],
+                    "sha256": (
+                        self.candidate_sha256
+                        if selected
+                        else hashlib.sha256(
+                            f"synthetic-balanced-nonselected-{index}".encode("ascii")
+                        ).hexdigest()
+                    ),
+                    "bytes": self.candidate.stat().st_size if selected else index + 101,
+                }
+            )
+        profiles = balanced["cli_contract"]["required_comparison_profile_ids"]
+        self.seal_paths = tuple(
+            self.evidence_root / f"synthetic-balanced-{index}-seal.json"
+            for index in range(len(profiles))
+        )
+        firewall_sha = promotion.balanced_derivation.source_bindings(balanced)[
+            "sealed-v19-statistics-firewall"
+        ]["sha256"]
+        for path, profile in zip(self.seal_paths, profiles, strict=True):
+            path.write_bytes(
+                promotion.balanced_derivation.canonical_output_seal_json(
+                    {
+                        "schema_id": (
+                            "sstory.k3.golden-v3."
+                            "balanced-phase-v2-output-seal.v1"
+                        ),
+                        "authority_self_sha256": balanced["canonical_self_sha256"],
+                        "statistics_firewall_sha256": firewall_sha,
+                        "runtime_attestation": (
+                            promotion.balanced_derivation.expected_runtime_attestation(
+                                balanced, profile
+                            )
+                        ),
+                        "candidate_count": 4,
+                        "candidates": copy.deepcopy(candidates),
+                    }
+                )
+            )
+        candidate = promotion._bind(
+            self.candidate, label="synthetic balanced candidate", trackable=False
+        )
+        selected_path = next(
+            record["output_path"]
+            for record in balanced["candidates"]["records"]
+            if record["candidate_id"] == self.candidate_id
+        )
+        self.seal_bindings, self.seal_summaries = promotion._validate_generation_seals(
+            self.seal_paths,
+            authority=authority,
+            generation_contract_id=self.generation_contract_id,
+            candidate_id=self.candidate_id,
+            candidate=replace(candidate, relative=selected_path),
+        )
+
     def promote(self) -> dict[str, object]:
         with self.promotion_patches():
             return promotion.promote_candidate(
-                candidate_id="F094-M148",
+                generation_contract_id=self.generation_contract_id,
+                candidate_id=self.candidate_id,
                 candidate_path=self.candidate,
                 generation_seal_paths=self.seal_paths,
                 strict_audit_report_path=self.strict_report_path,
@@ -386,6 +455,15 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertFalse(authority.document["promotion_performed"])
         self.assertEqual(authority.document["candidate_evaluations_before_freeze"], 0)
         self.assertFalse(authority.document["threshold_selection_from_candidate_values"])
+        self.assertEqual(authority.document["schema_version"], "2.0.0")
+        self.assertEqual(
+            authority.balanced_authority.sha256,
+            "f108d6e8c66d9e64723e53b881b6931131573f260e6bf43c96a9efafd5eabe80",
+        )
+        self.assertEqual(
+            authority.balanced_generator.sha256,
+            "da33c03ac0724086803b500b8f13ad6edf09898f6489870197738b86e3587981",
+        )
 
     def test_canonical_synthetic_seals_pass_real_cross_profile_validator(self) -> None:
         authority = promotion.load_authority()
@@ -405,6 +483,7 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         bindings, summaries = promotion._validate_generation_seals(
             self.fixture.seal_paths,
             authority=authority,
+            generation_contract_id=promotion.FOUR_CANDIDATE_V1,
             candidate_id="F094-M148",
             candidate=sealed_candidate,
         )
@@ -425,6 +504,7 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
             promotion._validate_generation_seals(
                 self.fixture.seal_paths,
                 authority=authority,
+                generation_contract_id=promotion.FOUR_CANDIDATE_V1,
                 candidate_id="F094-M148",
                 candidate=sealed_candidate,
             )
@@ -448,6 +528,94 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertEqual(len(evidence["manifest_vision_reports"]), 2)
         self.assertEqual(len(evidence["blind_packet_views"]), 5)
 
+    def test_balanced_phase_v2_promotes_with_canonical_phase5_provenance(self) -> None:
+        self.fixture.use_balanced_generation()
+        result = self.fixture.promote()
+        self.assertEqual(result["candidate_id"], "B125-M400")
+        self.assertEqual(
+            result["generation_contract_id"], promotion.BALANCED_PHASE_V2
+        )
+        receipt = json.loads(self.fixture.paths.receipt.read_text(encoding="utf-8"))
+        self.assertEqual(
+            receipt["generation_contract_id"], promotion.BALANCED_PHASE_V2
+        )
+        self.assertEqual(
+            receipt["generation_authority"]["sha256"],
+            promotion.load_authority().balanced_authority.sha256,
+        )
+        self.assertEqual(
+            receipt["generation_generator"]["sha256"],
+            promotion.load_authority().balanced_generator.sha256,
+        )
+        evidence = self.fixture.verify_phase5()
+        self.assertEqual(
+            evidence["generation_contract_id"], promotion.BALANCED_PHASE_V2
+        )
+
+    def test_mixed_v1_and_balanced_seals_fail_before_promotion(self) -> None:
+        v1_seal = self.fixture.seal_paths[0]
+        self.fixture.use_balanced_generation()
+        candidate = promotion._bind(
+            self.fixture.candidate,
+            label="synthetic mixed-generation candidate",
+            trackable=False,
+        )
+        contract = promotion.load_authority().document["generation_contract"][
+            "contracts"
+        ][promotion.BALANCED_PHASE_V2]
+        sealed_candidate = replace(candidate, relative=contract["output_paths"][0])
+        with self.assertRaises(promotion.GoldenV3PromotionError):
+            promotion._validate_generation_seals(
+                (self.fixture.seal_paths[0], v1_seal),
+                authority=promotion.load_authority(),
+                generation_contract_id=promotion.BALANCED_PHASE_V2,
+                candidate_id=self.fixture.candidate_id,
+                candidate=sealed_candidate,
+            )
+
+    def test_balanced_phase5_rejects_structured_runtime_attestation_tamper(self) -> None:
+        self.fixture.use_balanced_generation()
+        self.fixture.promote()
+        receipt = json.loads(self.fixture.paths.receipt.read_text(encoding="utf-8"))
+        summary = receipt["generation_seals"][0]
+        seal = json.loads(summary["payload_utf8"])
+        seal["runtime_attestation"]["common"]["opencv_threads"] = 2
+        payload = promotion.balanced_derivation.canonical_output_seal_json(seal)
+        summary["payload_utf8"] = payload.decode("utf-8")
+        summary["sha256"] = hashlib.sha256(payload).hexdigest()
+        self.fixture._write_json(self.fixture.paths.receipt, receipt)
+        manifest = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        receipt_input = next(
+            item
+            for item in manifest["jobs"][0]["inputs"]
+            if item["role"] == promotion.V3_ACCEPTANCE_RECEIPT_ROLE
+        )
+        receipt_input["sha256"] = digest(self.fixture.paths.receipt)
+        self.fixture._write_json(self.fixture.manifest, manifest)
+        with self.assertRaisesRegex(
+            phase5.Phase5BuildError, "runtime attestation"
+        ):
+            self.fixture.verify_phase5()
+
+    def test_phase5_rejects_mixed_v1_and_balanced_generation_evidence(self) -> None:
+        self.fixture.use_balanced_generation()
+        self.fixture.promote()
+        manifest = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        v1_authority = promotion.load_authority().derivation_authority
+        manifest["jobs"][0]["inputs"].insert(
+            4,
+            {
+                "path": v1_authority.relative,
+                "sha256": v1_authority.sha256,
+                "role": promotion.V3_DERIVATION_AUTHORITY_ROLE,
+            },
+        )
+        self.fixture._write_json(self.fixture.manifest, manifest)
+        with self.assertRaisesRegex(
+            phase5.Phase5BuildError, "input role order changed"
+        ):
+            self.fixture.verify_phase5()
+
     def test_strict_report_tamper_fails_before_any_output(self) -> None:
         forged = copy.deepcopy(self.fixture.strict_report)
         forged["passed"] = False
@@ -458,6 +626,7 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
             promotion.GoldenV3PromotionError, "passed must be True"
         ):
             promotion.promote_candidate(
+                generation_contract_id=promotion.FOUR_CANDIDATE_V1,
                 candidate_id="F094-M148",
                 candidate_path=self.fixture.candidate,
                 generation_seal_paths=self.fixture.seal_paths,
