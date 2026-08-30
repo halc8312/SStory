@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-j-v1-full-board-generation-receipt",
+  "type": "sstory-imagegen-candidate-generation-receipt",
+  "receipt_created_at": "2026-07-19T23:58:05.4908554Z",
+  "scope": "One root-approved fresh full-board J1 ImageGen attempt and a byte-identical review copy only; not formal QA, Golden acceptance, manifest adoption, renderer adoption, docs publication, or release evidence.",
+  "approved_preflight": {
+    "path": "tmp/map-production/j1-full-board-preflight-v1/j1-full-board-preflight-v1.json",
+    "sha256": "9473f436291cda0967ae7a037f5d13b018fc51ded624d895deb9f7e209058f7b",
+    "approval": "Root approved the exact preflight prompt and two-input role contract before generation."
+  },
+  "generation_policy": {
+    "calls_authorized": 1,
+    "calls_performed": 1,
+    "retry_performed": false,
+    "tool_mode": "OpenAI ImageGen through Codex built-in image generation",
+    "intent": "fresh two-reference generation, not edit or local patch"
+  },
+  "provenance_limitations": {
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The retained built-in tool output exposed a default saved filename but no authoritative model identifier, model snapshot, generation identifier, or generation timestamp. No missing value is inferred from the filename or receipt creation time."
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-j-v1-full-board.generation.txt",
+    "sha256": "36ef51d80e42614fb1418902b73d5402fb2eff3d46d378c90123e66f48c75f0c",
+    "bytes": 9165,
+    "exact_text_retained": true,
+    "preflight_source_path": "tmp/map-production/j1-full-board-preflight-v1/style-candidate-j-v1-full-board.preflight-v1.generation.txt"
+  },
+  "inputs": [
+    {
+      "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
+      "sha256": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc",
+      "bytes": 311514,
+      "role": "Image 1: exact and sole composition, geometry, topology, relative-placement, footprint, and connection authority; explicitly not palette, line-style, surface-material, or finish authority"
+    },
+    {
+      "path": "world/map-production/candidates/phase5-royal-subtile1-x0000-y0000-raw.png",
+      "sha256": "ec9eafe3796ec509abd11cedcf507a483f5ebe01fdc5f399d40105720aa09003",
+      "bytes": 4632998,
+      "role": "Image 2: sole palette, paper, ink, copperplate line-weight, print-grain, tonal-density, readability, and material-finish authority; explicitly not geography authority"
+    }
+  ],
+  "input_control_metadata": {
+    "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.json",
+    "sha256": "a357e4e8d6da7b2626b9c4d79a6f69374b7477d97536aa51d981be9914708d79",
+    "bytes": 1924,
+    "generation_input": false,
+    "role": "Receipt-side verification metadata for Image 1 only"
+  },
+  "requested_output": {
+    "width": 1536,
+    "height": 1024,
+    "format": "PNG",
+    "mode": "RGB"
+  },
+  "built_in_tool_output_observation": {
+    "default_saved_path": "C:/Users/User/.codex/generated_images/019f7cc5-0936-7e61-8a00-bb40b72558b9/exec-8b61c8ba-72b1-4f15-9474-2d16ce154bf8.png",
+    "default_copy_retained": true,
+    "filename_is_not_treated_as_generation_id": true
+  },
+  "raw_output": {
+    "path": "world/map-production/candidates/style-candidate-j-v1-full-board-raw.png",
+    "sha256": "6a1bc15d6bbab2536c542c206949c359ca6eac554ff8082faa9489abf128f5eb",
+    "bytes": 4749143,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "accepted_as_final": false
+  },
+  "registration": {
+    "needed": false,
+    "performed": false,
+    "reason": "The built-in output already matched the requested 1536x1024 RGB contract exactly.",
+    "raw_dimensions": [
+      1536,
+      1024
+    ],
+    "review_dimensions": [
+      1536,
+      1024
+    ],
+    "downsample_performed": false,
+    "upscale_performed": false,
+    "crop_performed": false,
+    "rotation_performed": false,
+    "affine_or_projective_warp_performed": false,
+    "pixel_or_palette_postprocess_performed": false
+  },
+  "byte_identical_review_candidate": {
+    "path": "world/map-production/candidates/style-candidate-j-v1-full-board.png",
+    "sha256": "6a1bc15d6bbab2536c542c206949c359ca6eac554ff8082faa9489abf128f5eb",
+    "bytes": 4749143,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "raw_byte_identity": true,
+    "review_only": true,
+    "manifest_registered": false,
+    "golden_accepted": false,
+    "note": "Stable review path only. It does not represent automated-gate success, Vision approval, Golden acceptance, manifest adoption, staging, or publication."
+  },
+  "promotion_state": {
+    "formal_qa_created": false,
+    "manifest_modified": false,
+    "docs_modified": false,
+    "renderer_modified": false,
+    "golden_accepted": false,
+    "published": false
+  }
+}

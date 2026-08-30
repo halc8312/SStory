@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "generation_id": "microtexture-v2-calibration-positive-imagegen-v4",
+  "status": "approved-restricted-calibration-source",
+  "generated_at": "2026-07-25T16:17:00+09:00",
+  "generator": "image_gen.imagegen",
+  "generator_model_name_claimed": false,
+  "operation": "new-generation-followed-by-three-single-change-edits",
+  "prompt_chain": {
+    "path": "world/map-production/prompts/microtexture-v2-calibration-positive-imagegen-v4.generation-chain.txt",
+    "sha256": "55e35ca721a394ed6005bb75a4f7649d6057ff756cbb2d83f692f8fce96c1b79",
+    "exact_prompt_text_preserved": true,
+    "step_count": 4
+  },
+  "vision_disposition": {
+    "steps_1_through_3": "rejected and not promoted",
+    "step_4": "approved only as qualitative low/mid-frequency smooth anchor",
+    "high_density_positive_claimed": false
+  },
+  "reference_chain": {
+    "step_1": "new image without a referenced image",
+    "steps_2_through_4": "the immediately preceding conversation image",
+    "intermediate_images_promoted": false,
+    "byte_exact_intermediate_replay_claimed": false,
+    "final_output_persisted_from_returned_data_url": true
+  },
+  "output": {
+    "path": "world/map-production/style-assets/microtexture-v2-calibration-positive-imagegen-v4.png",
+    "sha256": "c83ea94d5e82a1b00e86a9357df443ed38f86a58b2c98e511f068ff7201b5575",
+    "bytes": 1365947,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "root_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-calibration-positive-imagegen-v4-root-vision.json",
+    "sha256": "0fab56c412b57a40e94f78e33401958649c4be794db6f445d979ee45adce2ca8",
+    "decision": "approved-only-as-qualitative-low-mid-frequency-smooth-anchor",
+    "score": 94
+  },
+  "use_contract": {
+    "threshold_selection_allowed": false,
+    "post_freeze_numeric_validation_allowed": false,
+    "visual_smooth_anchor_only": true,
+    "production_candidate_use_allowed": false,
+    "golden_input_allowed": false,
+    "final_pixel_transfer_allowed": false,
+    "geography_or_semantic_authority": false,
+    "rgb_chroma_or_absolute_luminance_transfer_allowed": false
+  }
+}

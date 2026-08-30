@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/sheet-tile-index.schema.json",
+  "title": "SStory schema-2 sheet tile publication index",
+  "description": "Fail-closed runtime index for one world root and all 22 bounded descendant sheets. The root is loaded by the rollback-capable world release path; sheets is consumed by the Phase 6 lazy tile runtime.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "bounds_order",
+    "generated_by",
+    "generated_at",
+    "release_id",
+    "bounded_sheet_count",
+    "root_id",
+    "root",
+    "description",
+    "sheets"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/sheet-tile-index.schema.json"
+    },
+    "schema_version": {"const": "2.0.0"},
+    "type": {"const": "sstory-sheet-tile-index"},
+    "coordinate_reference_system": {"const": "EA-WORLD-1"},
+    "bounds_order": {
+      "const": ["min_x", "min_y", "max_x", "max_y"]
+    },
+    "generated_by": {
+      "const": "sstory-map-production/build_phase5_assets.py@2"
+    },
+    "generated_at": {"type": "string", "format": "date-time"},
+    "release_id": {"$ref": "#/definitions/id"},
+    "bounded_sheet_count": {"const": 23},
+    "root_id": {"const": "sheet_world"},
+    "root": {"$ref": "#/definitions/world_entry"},
+    "description": {"type": "string", "minLength": 1},
+    "sheets": {
+      "type": "array",
+      "minItems": 22,
+      "maxItems": 22,
+      "items": {"$ref": "#/definitions/descendant_entry"}
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "bounds": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"type": "number", "minimum": 0, "maximum": 10000}
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["provenance", "automated_qa", "vision_reviews"],
+      "properties": {
+        "provenance": {"$ref": "#/definitions/artifact"},
+        "automated_qa": {"$ref": "#/definitions/artifact"},
+        "vision_reviews": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/definitions/artifact"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "world_entry": {
+      "type": "object",
+      "required": [
+        "id",
+        "sheet_id",
+        "name",
+        "sheet_type",
+        "parent_id",
+        "secondary_parent_ids",
+        "source_feature_id",
+        "bounds",
+        "zoom_range",
+        "native_zoom",
+        "review_status",
+        "status",
+        "manifest_url",
+        "priority",
+        "master_sha256",
+        "manifest_sha256",
+        "tile_set_sha256",
+        "tile_count",
+        "evidence"
+      ],
+      "properties": {
+        "id": {"const": "sheet_world"},
+        "sheet_id": {"const": "sheet_world"},
+        "name": {"type": "string", "minLength": 1},
+        "sheet_type": {"const": "world"},
+        "parent_id": {"type": "null"},
+        "secondary_parent_ids": {"const": []},
+        "source_feature_id": {"type": "null"},
+        "bounds": {"const": [0, 0, 10000, 10000]},
+        "zoom_range": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "integer", "minimum": 0, "maximum": 24}
+        },
+        "native_zoom": {"type": "integer", "minimum": 0, "maximum": 24},
+        "review_status": {"const": "accepted"},
+        "status": {"enum": ["tiled", "staging", "published"]},
+        "manifest_url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![A-Za-z][A-Za-z0-9+.-]*:)(?!/)(?!.*\\\\)(?!.*[?#]).+\\.json$"
+        },
+        "priority": {"type": "integer", "minimum": 0},
+        "master_sha256": {"$ref": "#/definitions/sha256"},
+        "manifest_sha256": {"$ref": "#/definitions/sha256"},
+        "tile_set_sha256": {"$ref": "#/definitions/sha256"},
+        "tile_count": {"type": "integer", "minimum": 1},
+        "evidence": {"$ref": "#/definitions/evidence"}
+      },
+      "additionalProperties": false
+    },
+    "descendant_entry": {
+      "type": "object",
+      "required": [
+        "id",
+        "sheet_id",
+        "name",
+        "sheet_type",
+        "parent_id",
+        "secondary_parent_ids",
+        "source_feature_id",
+        "bounds",
+        "zoom_range",
+        "native_zoom",
+        "review_status",
+        "status",
+        "manifest_url",
+        "priority",
+        "master_sha256",
+        "manifest_sha256",
+        "tile_set_sha256",
+        "tile_count",
+        "evidence"
+      ],
+      "properties": {
+        "id": {"$ref": "#/definitions/id"},
+        "sheet_id": {"$ref": "#/definitions/id"},
+        "name": {"type": "string", "minLength": 1},
+        "sheet_type": {"enum": ["continent", "region", "corridor", "settlement"]},
+        "parent_id": {"$ref": "#/definitions/id"},
+        "secondary_parent_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/definitions/id"}
+        },
+        "source_feature_id": {
+          "oneOf": [{"$ref": "#/definitions/id"}, {"type": "null"}]
+        },
+        "bounds": {"$ref": "#/definitions/bounds"},
+        "zoom_range": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"type": "integer", "minimum": 0, "maximum": 24}
+        },
+        "native_zoom": {"type": "integer", "minimum": 0, "maximum": 24},
+        "review_status": {"const": "accepted"},
+        "status": {"enum": ["tiled", "staging", "published"]},
+        "manifest_url": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?![A-Za-z][A-Za-z0-9+.-]*:)(?!/)(?!.*\\\\)(?!.*[?#]).+\\.json$"
+        },
+        "priority": {"type": "integer", "minimum": 0},
+        "master_sha256": {"$ref": "#/definitions/sha256"},
+        "manifest_sha256": {"$ref": "#/definitions/sha256"},
+        "tile_set_sha256": {"$ref": "#/definitions/sha256"},
+        "tile_count": {"type": "integer", "minimum": 1},
+        "evidence": {"$ref": "#/definitions/evidence"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

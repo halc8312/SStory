@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sstory.example/schemas/luminance-plate-calibration.schema.json",
+  "title": "SStory deterministic luminance plate calibration control",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "report_id",
+    "created_at",
+    "coordinate_space",
+    "canvas",
+    "source_image",
+    "transfer_control",
+    "calibration",
+    "numeric_contract",
+    "safety",
+    "expected_transfer_preflight",
+    "purpose"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"},
+    "report_id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "coordinate_space": {"const": "source-pixels-y-down"},
+    "canvas": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "source_image": {
+      "type": "object",
+      "required": ["path", "sha256", "mode", "role"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "mode": {"const": "RGB"},
+        "role": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "transfer_control": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256",
+        "raster_path",
+        "raster_sha256",
+        "functional_reference_path",
+        "functional_reference_sha256",
+        "allowed_metadata_differences"
+      ],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "raster_path": {"type": "string", "minLength": 1},
+        "raster_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "functional_reference_path": {"type": "string", "minLength": 1},
+        "functional_reference_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "allowed_metadata_differences": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "id"},
+            {"const": "transfer_report_id"},
+            {"const": "purpose"},
+            {"const": "notes"}
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        }
+      },
+      "additionalProperties": false
+    },
+    "calibration": {
+      "type": "object",
+      "properties": {
+        "low_pass": {
+          "type": "object",
+          "required": ["method", "radius_px"],
+          "properties": {
+            "method": {"const": "gaussian"},
+            "radius_px": {"type": "integer", "minimum": 1, "maximum": 256}
+          },
+          "additionalProperties": false
+        },
+        "regional_gain": {
+          "type": "object",
+          "required": [
+            "region_id",
+            "gain",
+            "center_statistic",
+            "sample_scope",
+            "preserve_high_frequency_residual",
+            "apply_transfer_region_feather"
+          ],
+          "properties": {
+            "region_id": {"type": "string", "minLength": 1},
+            "gain": {"type": "number", "exclusiveMinimum": 1, "maximum": 4},
+            "center_statistic": {"const": "median"},
+            "sample_scope": {"const": "opaque-core-excluding-road-guard"},
+            "preserve_high_frequency_residual": {"const": true},
+            "apply_transfer_region_feather": {"const": true}
+          },
+          "additionalProperties": false
+        },
+        "minimum_areal_support": {
+          "type": "object",
+          "required": [
+            "region_id",
+            "target_quadrant",
+            "shape",
+            "center",
+            "radii",
+            "amplitude_levels",
+            "apply_transfer_region_feather",
+            "purpose"
+          ],
+          "properties": {
+            "region_id": {"type": "string", "minLength": 1},
+            "target_quadrant": {"type": "integer", "minimum": 1, "maximum": 4},
+            "shape": {"const": "cosine-squared-ellipse"},
+            "center": {
+              "type": "array",
+              "prefixItems": [{"type": "integer"}, {"type": "integer"}],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "radii": {
+              "type": "array",
+              "prefixItems": [
+                {"type": "integer", "minimum": 1},
+                {"type": "integer", "minimum": 1}
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "amplitude_levels": {"type": "integer", "minimum": -20, "maximum": 20, "not": {"const": 0}},
+            "apply_transfer_region_feather": {"const": true},
+            "purpose": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        }
+      },
+      "oneOf": [
+        {
+          "required": ["low_pass", "regional_gain"],
+          "not": {"required": ["minimum_areal_support"]}
+        },
+        {
+          "required": ["minimum_areal_support"],
+          "not": {"anyOf": [{"required": ["low_pass"]}, {"required": ["regional_gain"]}]}
+        }
+      ],
+      "additionalProperties": false
+    },
+    "numeric_contract": {
+      "type": "object",
+      "required": [
+        "pillow_version",
+        "luminance_mode",
+        "pixel_sample_origin",
+        "ellipse_boundary",
+        "mask_normalization",
+        "rounding",
+        "operation_order",
+        "range_handling"
+      ],
+      "properties": {
+        "pillow_version": {"const": "12.3.0"},
+        "luminance_mode": {"const": "Pillow-L"},
+        "pixel_sample_origin": {"const": "integer-top-left-no-half-pixel-offset"},
+        "ellipse_boundary": {"const": "strict-r-less-than-one"},
+        "mask_normalization": {"const": "mask-byte-divided-by-255"},
+        "rounding": {"const": "python-half-even-each-operation-before-integer-sum"},
+        "operation_order": {"const": "derive-from-source-sum-integers-then-apply-equal-rgb-delta"},
+        "range_handling": {"const": "reject-before-write-never-clamp"}
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "maximum_absolute_raw_channel_delta_levels",
+        "maximum_rgb_delta_spread_levels",
+        "maximum_clipping_pixels",
+        "require_exact_outside_calibration_permission",
+        "require_source_high_frequency_residual_preserved",
+        "raw_high_frequency_gaussian_radius_px",
+        "maximum_raw_high_frequency_rms_levels",
+        "maximum_raw_high_frequency_p99_levels",
+        "maximum_raw_high_frequency_levels",
+        "require_full_transfer_preflight",
+        "expected_transfer_preflight_status",
+        "expected_transfer_failure",
+        "require_deterministic_png",
+        "publication"
+      ],
+      "properties": {
+        "maximum_absolute_raw_channel_delta_levels": {"type": "integer", "minimum": 1, "maximum": 64},
+        "maximum_rgb_delta_spread_levels": {"const": 0},
+        "maximum_clipping_pixels": {"const": 0},
+        "require_exact_outside_calibration_permission": {"const": true},
+        "require_source_high_frequency_residual_preserved": {"const": true},
+        "raw_high_frequency_gaussian_radius_px": {"type": "integer", "minimum": 1, "maximum": 64},
+        "maximum_raw_high_frequency_rms_levels": {"type": "number", "minimum": 0},
+        "maximum_raw_high_frequency_p99_levels": {"type": "number", "minimum": 0},
+        "maximum_raw_high_frequency_levels": {"type": "number", "minimum": 0},
+        "require_full_transfer_preflight": {"const": true},
+        "expected_transfer_preflight_status": {"enum": ["passed", "rejected"]},
+        "expected_transfer_failure": {"type": ["string", "null"]},
+        "require_deterministic_png": {"const": true},
+        "publication": {"const": "atomic-output-and-report-no-overwrite"}
+      },
+      "additionalProperties": false
+    },
+    "expected_transfer_preflight": {
+      "type": "object",
+      "required": [
+        "status",
+        "north_east_input_q90_q10_levels",
+        "south_east_input_q90_q10_levels",
+        "north_east_bandpass_q90_q10_levels",
+        "south_east_bandpass_q90_q10_levels",
+        "north_east_final_q90_q10_levels",
+        "south_east_final_q90_q10_levels",
+        "region_quadrant_p90_absolute_delta_levels",
+        "traceable_components",
+        "road_changed_pixels",
+        "outside_mask_changed_pixels",
+        "maximum_absolute_delta_levels",
+        "maximum_active_high_frequency_p99_levels"
+      ],
+      "properties": {
+        "status": {"enum": ["passed", "rejected"]},
+        "north_east_input_q90_q10_levels": {"type": "number"},
+        "south_east_input_q90_q10_levels": {"type": "number"},
+        "north_east_bandpass_q90_q10_levels": {"type": "number"},
+        "south_east_bandpass_q90_q10_levels": {"type": "number"},
+        "north_east_final_q90_q10_levels": {"type": "number"},
+        "south_east_final_q90_q10_levels": {"type": "number"},
+        "region_quadrant_p90_absolute_delta_levels": {
+          "type": "array",
+          "items": {"type": "number"},
+          "minItems": 8,
+          "maxItems": 8
+        },
+        "traceable_components": {"type": "integer", "minimum": 0},
+        "road_changed_pixels": {"type": "integer", "minimum": 0},
+        "outside_mask_changed_pixels": {"type": "integer", "minimum": 0},
+        "maximum_absolute_delta_levels": {"type": "number", "minimum": 0},
+        "maximum_active_high_frequency_p99_levels": {"type": "number", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "purpose": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

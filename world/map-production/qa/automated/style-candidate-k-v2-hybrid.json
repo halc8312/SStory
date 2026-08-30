@@ -1,0 +1,804 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-k-v2-hybrid-automated-audit",
+  "status": "passed",
+  "scope": "automated locked-artifact, provenance, raster, and geometry proxies only",
+  "decision": "automated-gates-passed-pending-root-vision",
+  "failed_gates": [],
+  "decision_authority": false,
+  "formal_qa": false,
+  "golden_accepted": false,
+  "manifest_mutation": false,
+  "docs_mutation": false,
+  "renderer_mutation": false,
+  "generated_by": {
+    "path": "scripts/map-production/audit_style_candidate_k2_hybrid.py",
+    "sha256": "dd5891bc079bc5aab801edee054d2f75f533269838c59e9e4bf9ddb9f091094f",
+    "bytes": 39839
+  },
+  "artifacts": {
+    "raw": {
+      "path": "world/map-production/candidates/style-candidate-k-v2-hybrid-raw.png",
+      "sha256": "25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92",
+      "bytes": 3881004
+    },
+    "final_review_candidate": {
+      "path": "world/map-production/candidates/style-candidate-k-v2-hybrid.png",
+      "sha256": "25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92",
+      "bytes": 3881004,
+      "review_only": true,
+      "accepted": false
+    },
+    "provenance_receipt": {
+      "path": "world/map-production/prompts/style-candidate-k-v2-hybrid.provenance-receipt.json",
+      "sha256": "221c9e6385223d10ce3abe19736877c95ce78489d326f516c6fa3f5acce73167",
+      "bytes": 12433
+    },
+    "deterministic_builder": {
+      "path": "scripts/map-production/build_style_candidate_k2_hybrid.py",
+      "sha256": "f594d686a356b4ca9e041488f5f8cbd3d33d7a9b6cc1ef446b33e10979f7d16c",
+      "bytes": 31620
+    },
+    "canonical_geometry_guide": {
+      "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
+      "sha256": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc",
+      "bytes": 311514
+    },
+    "reference_b1": {
+      "path": "world/map-production/candidates/style-candidate-b-v1.png",
+      "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "bytes": 4180383
+    },
+    "reference_h4": {
+      "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+      "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
+      "bytes": 4091428
+    },
+    "geometry_warp_base": {
+      "path": "world/map-production/controls/style-candidate-k-v2-hybrid/k1-geometry-warp-base.png",
+      "sha256": "c21c5c07515f2bcc11d0ab8e613f3a6e52ec407606cb5afac4f5946579e62e9a",
+      "bytes": 3497043
+    },
+    "edit_masks": {
+      "highland": {
+        "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-highland-edit-mask-v1.png",
+        "sha256": "59402816ee289913d3e3c7134fc2f3301ffc180271dfcc7994ab0f95f12b7d44",
+        "bytes": 4012
+      },
+      "fields": {
+        "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-fields-edit-mask-v1.png",
+        "sha256": "2fa5471dc6f1cfcaf0201d088f0bd74c4a5fb3b131ed650b6163cbeae7fc6e8a",
+        "bytes": 4966
+      },
+      "capital": {
+        "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-capital-edit-mask-v1.png",
+        "sha256": "bae4f8e266c646e828b5e3bc49cf072bb2f07032d44b4e3169874cd38ca2041d",
+        "bytes": 3348
+      },
+      "geometry": {
+        "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-geometry-edit-mask-v1.png",
+        "sha256": "5e98a94f9f35f4c591e8da30247cb7b7078a42f42bfbc8d6aea48ae323acdf8c",
+        "bytes": 4782
+      },
+      "union": {
+        "path": "world/map-production/qa/masks/style-candidate-k-v2-hybrid-edit-mask-v1.png",
+        "sha256": "a419fd398e5339c7df26c84c5d130fbc6161f7c8d9981e678234a8c7f1156e16",
+        "bytes": 11296
+      }
+    }
+  },
+  "identity": {
+    "passed": true,
+    "raw_final_byte_identical": true,
+    "approved_sha256": "25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92"
+  },
+  "provenance": {
+    "passed": true,
+    "receipt_sha256_locked": true,
+    "builder_sha256_locked": true,
+    "ordered_donor_count": 4,
+    "ordered_verbatim_prompt_count": 4,
+    "imagegen_calls_by_this_builder": 0,
+    "upstream_imagegen_calls_with_verbatim_prompts": 4,
+    "no_final_board_upscale": true,
+    "spatial_pixel_reassignment": false,
+    "histogram_or_cdf_matching": false,
+    "golden_accepted": false,
+    "promotion_state": "review-only-pending-strict-audit-and-root-vision"
+  },
+  "image_contract": {
+    "passed": true,
+    "required": {
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1536,
+      "height": 1024,
+      "bit_depth": 8,
+      "png_color_type": 2,
+      "alpha_or_transparency_present": false
+    },
+    "records_passed": {
+      "raw": true,
+      "final": true,
+      "reference_b1": true,
+      "reference_h4": true
+    },
+    "profile_matches_b1": true,
+    "images": {
+      "raw": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "final": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "reference_b1": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "reference_h4": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      }
+    }
+  },
+  "local_pre_style_reconstruction": {
+    "passed": true,
+    "method": "deterministic in-memory reconstruction from the locked builder and locked donors; no candidate or contact artifact is written",
+    "persisted_mask_checks": {
+      "highland": {
+        "mode": "L",
+        "width": 1536,
+        "height": 1024,
+        "unique_values": [
+          0,
+          255
+        ],
+        "changed_pixels": 247906,
+        "byte_exact_boolean_identity": true,
+        "binary_0_255": true
+      },
+      "fields": {
+        "mode": "L",
+        "width": 1536,
+        "height": 1024,
+        "unique_values": [
+          0,
+          255
+        ],
+        "changed_pixels": 98062,
+        "byte_exact_boolean_identity": true,
+        "binary_0_255": true
+      },
+      "capital": {
+        "mode": "L",
+        "width": 1536,
+        "height": 1024,
+        "unique_values": [
+          0,
+          255
+        ],
+        "changed_pixels": 65049,
+        "byte_exact_boolean_identity": true,
+        "binary_0_255": true
+      },
+      "geometry": {
+        "mode": "L",
+        "width": 1536,
+        "height": 1024,
+        "unique_values": [
+          0,
+          255
+        ],
+        "changed_pixels": 11476,
+        "byte_exact_boolean_identity": true,
+        "binary_0_255": true
+      },
+      "union": {
+        "mode": "L",
+        "width": 1536,
+        "height": 1024,
+        "unique_values": [
+          0,
+          255
+        ],
+        "changed_pixels": 422142,
+        "byte_exact_boolean_identity": true,
+        "binary_0_255": true
+      }
+    },
+    "component_permission_leakage": {
+      "highland": {
+        "changed_pixels": 247906,
+        "allowed_pixels": 249619,
+        "outside_allowed_pixels": 0,
+        "passed": true
+      },
+      "fields": {
+        "changed_pixels": 98062,
+        "allowed_pixels": 98360,
+        "outside_allowed_pixels": 0,
+        "passed": true
+      },
+      "capital": {
+        "changed_pixels": 65049,
+        "allowed_pixels": 65049,
+        "outside_allowed_pixels": 0,
+        "passed": true
+      },
+      "geometry": {
+        "changed_pixels": 11476,
+        "allowed_pixels": 11478,
+        "outside_allowed_pixels": 0,
+        "passed": true
+      }
+    },
+    "union_matches_actual_pre_style_delta": true,
+    "outside_independent_allowed_union_pixels": 0,
+    "pre_style_metrics": {
+      "changed_pixels": 422142,
+      "changed_fraction": 0.26839066,
+      "byte_identical_pixel_fraction": 0.73160934,
+      "outside_allowed_mask_changed_pixels": 0,
+      "outside_allowed_mask_max_channel_delta": 0,
+      "maximum_channel_delta": 158
+    },
+    "receipt_pre_style_metrics_match": true,
+    "operation_records_match_receipt": {
+      "highland": true,
+      "fields": true,
+      "capital": true,
+      "geometry": true
+    },
+    "style_record_matches_receipt": true,
+    "approved_final_reproduced_pixel_exactly": true,
+    "approved_final_differing_pixels": 0,
+    "approved_final_max_channel_delta": 0
+  },
+  "boundary": {
+    "passed": true,
+    "method": "edge-band color diversity, exact-color runs, and multi-side outer/inset mean-color gap; decorative semantics still require Vision review",
+    "thresholds": {
+      "band_width_px": 16,
+      "maximum_dominant_exact_rgb_ratio": 0.05,
+      "minimum_unique_rgb": 256,
+      "maximum_outer_identical_run_ratio": 0.25,
+      "frame_mean_rgb_gap": 18.0,
+      "frame_minimum_suspicious_sides": 2
+    },
+    "solid_color_signal_detected": false,
+    "solid_color_sides": [],
+    "decorative_frame_proxy_detected": false,
+    "frame_gap_sides": [],
+    "sides": [
+      {
+        "side": "left",
+        "pixels": 16384,
+        "unique_rgb": 6163,
+        "dominant_rgb": [
+          83,
+          95,
+          95
+        ],
+        "dominant_exact_rgb_ratio": 0.001587,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001953,
+        "luma_stddev": 13.443212,
+        "luma_entropy_bits": 5.779126,
+        "outer_to_inset_mean_rgb_distance": 6.206466,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "top",
+        "pixels": 24576,
+        "unique_rgb": 15959,
+        "dominant_rgb": [
+          161,
+          139,
+          96
+        ],
+        "dominant_exact_rgb_ratio": 0.000692,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 31.274167,
+        "luma_entropy_bits": 6.950959,
+        "outer_to_inset_mean_rgb_distance": 4.155861,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "right",
+        "pixels": 16384,
+        "unique_rgb": 9081,
+        "dominant_rgb": [
+          160,
+          138,
+          98
+        ],
+        "dominant_exact_rgb_ratio": 0.001221,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001953,
+        "luma_stddev": 20.007346,
+        "luma_entropy_bits": 6.29785,
+        "outer_to_inset_mean_rgb_distance": 1.895084,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "bottom",
+        "pixels": 24576,
+        "unique_rgb": 15325,
+        "dominant_rgb": [
+          75,
+          88,
+          88
+        ],
+        "dominant_exact_rgb_ratio": 0.000651,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 25.261901,
+        "luma_entropy_bits": 6.652699,
+        "outer_to_inset_mean_rgb_distance": 7.30662,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      }
+    ]
+  },
+  "palette_continuity_with_b1": {
+    "passed": true,
+    "reference": "Candidate B1",
+    "method": "composition-tolerant palette proxy using 8x8x8 RGB and 24x6x6 HSV histograms sampled at 384x256",
+    "thresholds": {
+      "minimum_rgb_histogram_intersection": 0.72,
+      "minimum_hsv_histogram_intersection": 0.62,
+      "minimum_rgb_bhattacharyya": 0.9,
+      "maximum_mean_channel_delta": 12.0
+    },
+    "candidate_mean_rgb": [
+      130.636915,
+      120.920296,
+      91.844245
+    ],
+    "reference_mean_rgb": [
+      127.759797,
+      118.919413,
+      89.78157
+    ],
+    "mean_channel_absolute_delta": [
+      2.877118,
+      2.000884,
+      2.062674
+    ],
+    "maximum_mean_channel_delta": 2.877118,
+    "rgb_histogram_intersection": 0.727173,
+    "hsv_histogram_intersection": 0.656362,
+    "rgb_bhattacharyya": 0.931975
+  },
+  "exact_repetition": {
+    "passed": true,
+    "method": "exact SHA-256 of overlapping RGB blocks at one-quarter-block stride; this is a large-clone proxy, not semantic motif recognition",
+    "minimum_block_size_px": 64,
+    "duplicate_groups": 0,
+    "maximum_copy_count": 1,
+    "examples": [],
+    "scales": [
+      {
+        "block_size_px": 256,
+        "stride_px": 64,
+        "scanned_blocks": 273,
+        "unique_block_hashes": 273,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 128,
+        "stride_px": 32,
+        "scanned_blocks": 1305,
+        "unique_block_hashes": 1305,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 64,
+        "stride_px": 16,
+        "scanned_blocks": 5673,
+        "unique_block_hashes": 5673,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      }
+    ]
+  },
+  "downsample_readability": {
+    "passed": true,
+    "method": "LANCZOS downsample; Shannon luma entropy, global RMS contrast, and 24x16 macrocell contrast coverage are readability proxies",
+    "macrocell_grid": [
+      24,
+      16
+    ],
+    "minimum_macrocell_luma_stddev": 6.0,
+    "native": {
+      "scale": 1.0,
+      "width": 1536,
+      "height": 1024,
+      "luma_entropy_bits": 7.081434,
+      "luma_rms_contrast": 33.14645,
+      "macrocell_contrast_coverage": 1.0,
+      "minimum_macrocell_luma_stddev": 12.791858,
+      "median_macrocell_luma_stddev": 27.288861
+    },
+    "scales": [
+      {
+        "scale": 0.5,
+        "width": 768,
+        "height": 512,
+        "luma_entropy_bits": 6.797087,
+        "luma_rms_contrast": 27.773744,
+        "macrocell_contrast_coverage": 1.0,
+        "minimum_macrocell_luma_stddev": 7.981943,
+        "median_macrocell_luma_stddev": 19.48071,
+        "entropy_retention": 0.959846,
+        "rms_contrast_retention": 0.83791,
+        "thresholds": {
+          "minimum_entropy_retention": 0.94,
+          "minimum_rms_contrast_retention": 0.82,
+          "minimum_macrocell_contrast_coverage": 0.9
+        },
+        "passed": true
+      },
+      {
+        "scale": 0.25,
+        "width": 384,
+        "height": 256,
+        "luma_entropy_bits": 6.528359,
+        "luma_rms_contrast": 23.939635,
+        "macrocell_contrast_coverage": 0.872396,
+        "minimum_macrocell_luma_stddev": 4.919752,
+        "median_macrocell_luma_stddev": 12.76363,
+        "entropy_retention": 0.921898,
+        "rms_contrast_retention": 0.722238,
+        "thresholds": {
+          "minimum_entropy_retention": 0.9,
+          "minimum_rms_contrast_retention": 0.68,
+          "minimum_macrocell_contrast_coverage": 0.85
+        },
+        "passed": true
+      }
+    ]
+  },
+  "semantic_repetition_proxies_vs_h4": {
+    "passed": true,
+    "method": "far-patch normalized correlation, 63-bit DCT perceptual hashes, and windowed high-pass spectral concentration relative to H4",
+    "semantic_claim": null,
+    "limitation": "These statistics can flag clone-like or periodic amplification, but cannot decide whether mountains, trees, rocks, or buildings repeat semantically. That decision remains Vision-only.",
+    "thresholds": {
+      "maximum_p99_best_normalized_correlation": 0.8,
+      "maximum_fraction_best_correlation_at_least_0_90": 0.01,
+      "maximum_phash_related_patch_fraction": 0.01,
+      "maximum_spectral_peak_to_top100_mean": 2.0
+    },
+    "candidate_near_patch": {
+      "patch_size_px": 64,
+      "stride_px": 32,
+      "minimum_pair_separation_px_chebyshev": 128,
+      "patches": 1457,
+      "p99_best_normalized_correlation": 0.612241,
+      "fraction_best_correlation_at_least_0_90": 0.0,
+      "phash_hamming_at_most_3_pairs": 0,
+      "phash_related_patch_fraction": 0.0
+    },
+    "reference_h4_near_patch": {
+      "patch_size_px": 64,
+      "stride_px": 32,
+      "minimum_pair_separation_px_chebyshev": 128,
+      "patches": 1457,
+      "p99_best_normalized_correlation": 0.569026,
+      "fraction_best_correlation_at_least_0_90": 0.0,
+      "phash_hamming_at_most_3_pairs": 0,
+      "phash_related_patch_fraction": 0.0
+    },
+    "candidate_periodicity": {
+      "sample_size": [
+        384,
+        256
+      ],
+      "spectral_peak_to_top100_mean": 1.37397
+    },
+    "reference_h4_periodicity": {
+      "sample_size": [
+        384,
+        256
+      ],
+      "spectral_peak_to_top100_mean": 1.317672
+    }
+  },
+  "field_highland_capital_contract": {
+    "passed": true,
+    "method": "locked-builder reconstruction plus exact canonical permission masks; artistic calmness and motif semantics remain Vision-only",
+    "semantic_claim": null,
+    "fields": {
+      "canonical_parcel_count": 8,
+      "nonempty_edited_parcel_count": 8,
+      "edited_pixels_per_parcel": [
+        13027,
+        13699,
+        12100,
+        8926,
+        14254,
+        9419,
+        11465,
+        12047
+      ],
+      "outside_canonical_permission_pixels": 0
+    },
+    "highland": {
+      "edited_pixels": 247906,
+      "permission_pixels": 249619,
+      "outside_canonical_permission_pixels": 0
+    },
+    "capital": {
+      "edited_pixels": 65049,
+      "outside_canonical_permission_pixels": 0,
+      "outer_wall_center_xy": [
+        842,
+        510
+      ],
+      "outer_wall_radius_px": 138,
+      "exact_gate_count": 5,
+      "complete_interior_rings_added": 0,
+      "uniform_radial_spokes_added": 0
+    }
+  },
+  "guide_geometry_alignment": {
+    "stable_land_water_agreement": 0.999681,
+    "full_land_water_agreement": 0.99073,
+    "candidate_boundary_within_8px": 0.965139,
+    "guide_boundary_within_8px": 0.973259,
+    "candidate_boundary_distance_p95_px": 7.0,
+    "guide_boundary_distance_p95_px": 6.0,
+    "passes_proof_target": true,
+    "passed": true,
+    "thresholds": {
+      "minimum_stable_land_water_agreement": 0.98,
+      "minimum_candidate_boundary_within_8px": 0.95,
+      "minimum_guide_boundary_within_8px": 0.95,
+      "maximum_candidate_boundary_distance_p95_px": 8.0,
+      "maximum_guide_boundary_distance_p95_px": 8.0
+    },
+    "method": "locked K1 warp helper: fixed guide/candidate cool-water segmentation, 17px transition guard, and bidirectional L2 distance transforms",
+    "helper": {
+      "path": "scripts/map-production/build_style_candidate_k2_geometry_warp.py",
+      "sha256": "e1d74785ec90bf5c6b3f14f043e3432142dcd7a9cfb0cf2acb4f4dcd7034c624",
+      "bytes": 23791
+    },
+    "limitation": "This color-segmentation proxy covers land/water and its boundary. Root Vision must still inspect exact roads, city, port, and semantic regions."
+  },
+  "automated_gates": {
+    "sha256_locked_inputs": true,
+    "raw_final_byte_identity": true,
+    "locked_provenance_receipt": true,
+    "image_contract_alpha_profile": true,
+    "pre_style_local_mask_leakage_and_reconstruction": true,
+    "boundary_proxy_unchanged_h4": true,
+    "palette_continuity_with_b1_unchanged_h4": true,
+    "no_large_exact_repetition_proxy_unchanged_h4": true,
+    "downsample_readability_proxy_unchanged_h4": true,
+    "semantic_repetition_proxies_vs_h4": true,
+    "field_highland_capital_structural_contract": true,
+    "strict_canonical_geometry_alignment": true
+  },
+  "vision_handoff": {
+    "status": "required-pending-root-vision",
+    "schema": {
+      "path": "world/map-production/schemas/qa-report.schema.json",
+      "sha256": "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db",
+      "bytes": 6949
+    },
+    "automated_audit_is_not_vision": true,
+    "automated_audit_is_not_golden_acceptance": true,
+    "required_focus": [
+      "fields: independent broken marks, nonperiodic drift, calm gaps, and no CAD or wallpaper cadence",
+      "highland: broad planar tone, sparse short independent hatches, and no chains or contours",
+      "capital: irregular shared-boundary fabric, varied tiny footprints, one exact outer wall, and five exact junctions",
+      "water and forest: sparse print material, quiet gaps, no connected cells, loops, glyphs, or repeated stamps",
+      "exact coast, islands, river/delta, roads, city, port footprint, seams, text or pseudo-text, plan projection, and borderless edges"
+    ]
+  }
+}

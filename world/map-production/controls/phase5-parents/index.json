@@ -1,0 +1,454 @@
+{
+  "$schema": "https://sstory.example/schemas/phase5-parent-control-index.schema.json",
+  "schema_version": "1.1.0",
+  "type": "sstory-phase5-parent-control-index",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "generated_by": "sstory-map-production/render_phase5_parent_control_masks.py@3",
+  "render_contract": {
+    "sheet_ids": [
+      "sheet_world",
+      "sheet_continent_elysion",
+      "sheet_continent_lumiera",
+      "sheet_continent_chaos_ria",
+      "sheet_continent_atlantis",
+      "sheet_continent_grimoire"
+    ],
+    "sheet_types": [
+      "world",
+      "continent"
+    ],
+    "image_format": "PNG",
+    "mask_color_mode": "L",
+    "land_sea_semantics": "255=canonical-conservative-land-interior;0=water-or-boundary",
+    "transport_semantics": "255=canonical-route-centerline;0=no-canonical-route",
+    "coordinate_quantization": "global-native-grid-round-half-up-v1",
+    "control_rasterizer": "independent-parent-canonical-raster-v1",
+    "source_policy": "canonical-ea-world-1-only",
+    "direct17_control_index_required": false,
+    "observed_renderer_builders_consumed": false,
+    "parent_observed_masks_consumed": false,
+    "composited_masters_consumed": false
+  },
+  "inputs": {
+    "resolution_contract": {
+      "path": "world/map-production/spec/resolution-contract.json",
+      "sha256": "f65984a6e162e6f60eb93873aa38e0daf1a263975f89cb063092c80389bb0290"
+    },
+    "map_sheets": {
+      "path": "world/map-production/source/map-sheets.json",
+      "sha256": "20204c1bf14c8cb7b1204066c1b0755a0a74f62f9c7c6418b76754540a9a3c15"
+    },
+    "canonical_sources": [
+      {
+        "role": "landmasses",
+        "path": "world/map-production/source/landmasses.geojson",
+        "sha256": "d5e9600590bf2d122f33405c1f1924a8274a76f4bac1669f35f6adaaaa854b20"
+      },
+      {
+        "role": "regions",
+        "path": "world/map-production/source/regions.geojson",
+        "sha256": "233053f8ed4214016d8d4c841bceeb5192f5912dfd721325ad9657313752dbb4"
+      },
+      {
+        "role": "terrain",
+        "path": "world/map-production/source/terrain.geojson",
+        "sha256": "fd186efd744c5dd31d5abe039d23e7fc2f04ff4e689233b48dc4bd9b397ab3aa"
+      },
+      {
+        "role": "hydrography",
+        "path": "world/map-production/source/hydrography.geojson",
+        "sha256": "33e23b5c85cc41f3ac6a65ced65284b81e04664ae373d85c1afb55dc67f8677d"
+      },
+      {
+        "role": "transport",
+        "path": "world/map-production/source/transport-geometries.geojson",
+        "sha256": "4beabac07fbfa6c67a4340f4a45a5199cb4c536e1b081ea5d5ba20a6c19c4565"
+      },
+      {
+        "role": "settlements",
+        "path": "world/map-production/source/settlement-footprints.geojson",
+        "sha256": "48baf5f1a4857ef9500b6aab80468356869c5e8651196718a83a78a50cb89974"
+      }
+    ],
+    "executable_inputs": [
+      {
+        "role": "generator",
+        "path": "scripts/map-production/render_phase5_parent_control_masks.py",
+        "sha256": "fbf04297a54c8abb8f306b558c3687403fba482650a93adef50aa4533245b0cb"
+      },
+      {
+        "role": "production-common",
+        "path": "scripts/map-production/production_common.py",
+        "sha256": "1fdcc20dcc47e68162a38498c23eea29128a66ded649ec5ff8eab48c12fed1e3"
+      },
+      {
+        "role": "canonical-source-contract",
+        "path": "scripts/map-production/render_world_master.py",
+        "sha256": "d7ef3f8eb70b3d59bb2e883f54143819e7d924071cb6f2bbbbdcfc3d1aa0cf16"
+      },
+      {
+        "role": "resolution-contract-validator",
+        "path": "scripts/map-production/validate_resolution_contract.py",
+        "sha256": "37c11c765e05732b8da8a5e1e944c612e985100d30cf9dcb714ce885b3d73dec"
+      }
+    ],
+    "validation_schemas": [
+      {
+        "role": "index-schema",
+        "path": "world/map-production/schemas/phase5-parent-control-index.schema.json",
+        "sha256": "757a09f28f8a174d131be997a106439b5689811372da214e50f35f4ce7aaf01a"
+      },
+      {
+        "role": "report-schema",
+        "path": "world/map-production/schemas/phase5-parent-control-report.schema.json",
+        "sha256": "eaaa0261cd820d2941209aea45edeb27e9d4682b27b7b938089babb9aa1b7b79"
+      }
+    ],
+    "runtime_compatibility": {
+      "python_implementation": "CPython",
+      "python_series": "3.12",
+      "pillow_version": "12.3.0",
+      "jsonschema_version": "4.26.0",
+      "png_encoding_contract": "pillow-png-l-compress9-no-optimize-v1"
+    }
+  },
+  "summary": {
+    "sheet_count": 6,
+    "world_sheet_count": 1,
+    "continent_sheet_count": 5,
+    "control_mask_count": 12,
+    "input_artifact_count": 14
+  },
+  "sheets": [
+    {
+      "sheet_id": "sheet_world",
+      "sheet_type": "world",
+      "parent_id": null,
+      "source_feature_id": null,
+      "bounds": [
+        0,
+        0,
+        10000,
+        10000
+      ],
+      "native_zoom": 3,
+      "pixel_bounds": [
+        0,
+        0,
+        4096,
+        2730
+      ],
+      "width": 4096,
+      "height": 2730,
+      "qa_controls": {
+        "land_sea_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_world/qa/land-sea-control.png",
+          "sha256": "245e3da417a630f7ec30d5a6edc86c5810a4e8eb973e378cd7a4ab7cc631c418",
+          "width": 4096,
+          "height": 2730,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 3920309
+        },
+        "transport_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_world/qa/transport-control.png",
+          "sha256": "0b7c46d217e408ba36bd7fd3b8c33c0af8de73c719182e16ec24a44eac60b988",
+          "width": 4096,
+          "height": 2730,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 15731
+        }
+      },
+      "metrics": {
+        "total_pixel_count": 11182080,
+        "land_pixel_count": 3920309,
+        "water_pixel_count": 7261771,
+        "transport_pixel_count": 15731
+      }
+    },
+    {
+      "sheet_id": "sheet_continent_elysion",
+      "sheet_type": "continent",
+      "parent_id": "sheet_world",
+      "source_feature_id": "elysion",
+      "bounds": [
+        2800,
+        3000,
+        6300,
+        6550
+      ],
+      "native_zoom": 4,
+      "pixel_bounds": [
+        2293,
+        1638,
+        5161,
+        3577
+      ],
+      "width": 2868,
+      "height": 1939,
+      "qa_controls": {
+        "land_sea_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_elysion/qa/land-sea-control.png",
+          "sha256": "a4d1560a13de7a0b1de5373d19ea6d73174710dcdd191d0850722d343182fef3",
+          "width": 2868,
+          "height": 1939,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 3815137
+        },
+        "transport_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_elysion/qa/transport-control.png",
+          "sha256": "c32fe1979f789614daef661ae5dcb0b37216e3f04fa4584962bb70e12b16a05e",
+          "width": 2868,
+          "height": 1939,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 19447
+        }
+      },
+      "metrics": {
+        "total_pixel_count": 5561052,
+        "land_pixel_count": 3815137,
+        "water_pixel_count": 1745915,
+        "transport_pixel_count": 19447
+      }
+    },
+    {
+      "sheet_id": "sheet_continent_lumiera",
+      "sheet_type": "continent",
+      "parent_id": "sheet_world",
+      "source_feature_id": "lumiera",
+      "bounds": [
+        6350,
+        2050,
+        9950,
+        7050
+      ],
+      "native_zoom": 4,
+      "pixel_bounds": [
+        5201,
+        1119,
+        8152,
+        3850
+      ],
+      "width": 2951,
+      "height": 2731,
+      "qa_controls": {
+        "land_sea_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_lumiera/qa/land-sea-control.png",
+          "sha256": "fccc3acc869f3c92a7e10dff4f0da216a9a5f435885841e63abb7d0b9a6d4439",
+          "width": 2951,
+          "height": 2731,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 3661179
+        },
+        "transport_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_lumiera/qa/transport-control.png",
+          "sha256": "410b7deb74b53ca384dce3f6e36fd094b108a23baeb0d53ecfd697bcab44d178",
+          "width": 2951,
+          "height": 2731,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 3361
+        }
+      },
+      "metrics": {
+        "total_pixel_count": 8059181,
+        "land_pixel_count": 3661179,
+        "water_pixel_count": 4398002,
+        "transport_pixel_count": 3361
+      }
+    },
+    {
+      "sheet_id": "sheet_continent_chaos_ria",
+      "sheet_type": "continent",
+      "parent_id": "sheet_world",
+      "source_feature_id": "chaos_ria",
+      "bounds": [
+        2950,
+        4800,
+        6600,
+        9650
+      ],
+      "native_zoom": 4,
+      "pixel_bounds": [
+        2416,
+        2620,
+        5407,
+        5269
+      ],
+      "width": 2991,
+      "height": 2649,
+      "qa_controls": {
+        "land_sea_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_chaos_ria/qa/land-sea-control.png",
+          "sha256": "b47cb3e509afddfed6a5451757c73b238fa4f2294bc553ae182bea5da30b4632",
+          "width": 2991,
+          "height": 2649,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 5514654
+        },
+        "transport_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_chaos_ria/qa/transport-control.png",
+          "sha256": "b68a0b0f9b760990548ae745ebbe9910096d2ca222e1bb65f115ba7b7d9a087c",
+          "width": 2991,
+          "height": 2649,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 4415
+        }
+      },
+      "metrics": {
+        "total_pixel_count": 7923159,
+        "land_pixel_count": 5514654,
+        "water_pixel_count": 2408505,
+        "transport_pixel_count": 4415
+      }
+    },
+    {
+      "sheet_id": "sheet_continent_atlantis",
+      "sheet_type": "continent",
+      "parent_id": "sheet_world",
+      "source_feature_id": "atlantis",
+      "bounds": [
+        50,
+        1700,
+        2950,
+        7300
+      ],
+      "native_zoom": 4,
+      "pixel_bounds": [
+        40,
+        928,
+        2417,
+        3986
+      ],
+      "width": 2377,
+      "height": 3058,
+      "qa_controls": {
+        "land_sea_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_atlantis/qa/land-sea-control.png",
+          "sha256": "a727063970d3b7bfca448315382c9a3c8e47e78d8b2a8e48b23a51d834b3f2fb",
+          "width": 2377,
+          "height": 3058,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 3052082
+        },
+        "transport_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_atlantis/qa/transport-control.png",
+          "sha256": "e6aa8d1c2cdf7120970ba2756c88872d9bd40d9c73195b169d7469e964c725cc",
+          "width": 2377,
+          "height": 3058,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 7547
+        }
+      },
+      "metrics": {
+        "total_pixel_count": 7268866,
+        "land_pixel_count": 3052082,
+        "water_pixel_count": 4216784,
+        "transport_pixel_count": 7547
+      }
+    },
+    {
+      "sheet_id": "sheet_continent_grimoire",
+      "sheet_type": "continent",
+      "parent_id": "sheet_world",
+      "source_feature_id": "grimoire",
+      "bounds": [
+        3150,
+        750,
+        6150,
+        3000
+      ],
+      "native_zoom": 4,
+      "pixel_bounds": [
+        2580,
+        409,
+        5039,
+        1638
+      ],
+      "width": 2459,
+      "height": 1229,
+      "qa_controls": {
+        "land_sea_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_grimoire/qa/land-sea-control.png",
+          "sha256": "de9f6370ce76eab1df2810506fe32b073f26b92b275447f4a9c044ccc4d47834",
+          "width": 2459,
+          "height": 1229,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 1562158
+        },
+        "transport_control": {
+          "path": "world/map-production/controls/phase5-parents/sheet_continent_grimoire/qa/transport-control.png",
+          "sha256": "95e59580297f241ebff01dfe37c6e5ea29b1baacad0876969e8556bdf6020358",
+          "width": 2459,
+          "height": 1229,
+          "format": "PNG",
+          "color_mode": "L",
+          "binary_values": [
+            0,
+            255
+          ],
+          "on_pixel_count": 1304
+        }
+      },
+      "metrics": {
+        "total_pixel_count": 3022111,
+        "land_pixel_count": 1562158,
+        "water_pixel_count": 1459953,
+        "transport_pixel_count": 1304
+      }
+    }
+  ]
+}

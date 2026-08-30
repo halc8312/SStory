@@ -1,0 +1,344 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-generation-receipt.schema.json",
+  "title": "SStory Phase 5 ImageGen metatile generation receipt",
+  "description": "A hash-lockable, fail-closed receipt for one row-major Phase 5 2048 px ImageGen metatile attempt and its deterministic protected composite. Cross-field and file-content consistency is additionally enforced by the Phase 5 builder.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "sheet_id",
+    "column",
+    "row",
+    "generation_order",
+    "attempt",
+    "single_change",
+    "tool",
+    "requested_output",
+    "actual_output",
+    "raw_output",
+    "prompt",
+    "control",
+    "parent",
+    "neighbors",
+    "inputs",
+    "postprocess",
+    "output",
+    "created_at"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-generation-receipt.schema.json"
+    },
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "type": {
+      "const": "sstory-phase5-metatile-generation-receipt"
+    },
+    "coordinate_reference_system": {
+      "const": "EA-WORLD-1"
+    },
+    "sheet_id": {
+      "$ref": "#/definitions/id"
+    },
+    "column": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "row": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "generation_order": {
+      "const": "row-major"
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "single_change": {
+      "$ref": "#/definitions/single_change"
+    },
+    "tool": {
+      "$ref": "#/definitions/tool"
+    },
+    "requested_output": {
+      "$ref": "#/definitions/output_specification"
+    },
+    "actual_output": {
+      "$ref": "#/definitions/output_specification"
+    },
+    "raw_output": {
+      "$ref": "#/definitions/artifact"
+    },
+    "prompt": {
+      "$ref": "#/definitions/artifact"
+    },
+    "control": {
+      "$ref": "#/definitions/artifact"
+    },
+    "parent": {
+      "$ref": "#/definitions/artifact"
+    },
+    "neighbors": {
+      "$ref": "#/definitions/neighbors"
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/input_artifact"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "role"
+            ],
+            "properties": {
+              "role": {
+                "const": "golden-style"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "role"
+            ],
+            "properties": {
+              "role": {
+                "const": "geometry-control"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "role"
+            ],
+            "properties": {
+              "role": {
+                "const": "parent-context"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "postprocess": {
+      "$ref": "#/definitions/postprocess"
+    },
+    "output": {
+      "$ref": "#/definitions/artifact"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "single_change": {
+      "type": "object",
+      "required": [
+        "confirmed",
+        "instruction"
+      ],
+      "properties": {
+        "confirmed": {
+          "const": true
+        },
+        "instruction": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      },
+      "additionalProperties": false
+    },
+    "tool": {
+      "type": "object",
+      "required": [
+        "mode",
+        "image_model"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "codex-built-in-imagegen"
+          ]
+        },
+        "image_model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": false
+    },
+    "output_specification": {
+      "type": "object",
+      "required": [
+        "width",
+        "height",
+        "format",
+        "color_mode"
+      ],
+      "properties": {
+        "width": {
+          "const": 2048
+        },
+        "height": {
+          "const": 2048
+        },
+        "format": {
+          "const": "PNG"
+        },
+        "color_mode": {
+          "const": "RGB"
+        }
+      },
+      "additionalProperties": false
+    },
+    "neighbors": {
+      "type": "object",
+      "required": [
+        "north",
+        "east",
+        "south",
+        "west"
+      ],
+      "properties": {
+        "north": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/artifact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "east": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/artifact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "south": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/artifact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "west": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/artifact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "postprocess": {
+      "type": "object",
+      "required": [
+        "mode",
+        "control",
+        "report"
+      ],
+      "properties": {
+        "mode": {
+          "const": "deterministic-protected-composite"
+        },
+        "control": {
+          "$ref": "#/definitions/artifact"
+        },
+        "report": {
+          "$ref": "#/definitions/artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "input_artifact": {
+      "type": "object",
+      "required": [
+        "role",
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "golden-style",
+            "geometry-control",
+            "parent-context",
+            "neighbor-north",
+            "neighbor-west",
+            "continuation-reference",
+            "correction-mask"
+          ]
+        },
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,9 @@
+Edit the FIRST reference as a role-limited integrated GROUND DONOR for the northeast highland area of this fantasy map.
+
+Preserve the first reference's strict top-down orthographic map composition, muted parchment palette, calm integration into surrounding terrain, and broad low/mid-frequency land relief. Use the second reference only as the canonical palette/context reference and the third reference only as a model of quiet direction-neutral material grain.
+
+Make exactly one substantive change: remove the dense repeated dendritic/frond/leaf-vein/fishbone micro-patterns from the northeast highland and replace them with calm, non-semantic, non-repeating, matte parchment/soil/stone terrain material that transitions continuously into adjacent land. Retain meaningful broad-scale elevation variation, but do not invent recognizable new geography.
+
+Hard constraints: no rectangular highland panel or visible edit boundary; no body silhouettes; no added coastlines, roads, rivers, cities, labels, symbols, settlements, forests, fields, or POIs; no side-view mountains; no contour loops; no directional hatch bundles; no cloud/stain shapes; no halo, glow, mist, white crests, bright particles, vignette, frame, or text. Strict nadir/top-down. Maintain calm negative space and natural multiscale ground continuity.
+
+This output is a donor, not a final map: prioritize seamless low-frequency ground/palette continuity and clean material over semantic detail.

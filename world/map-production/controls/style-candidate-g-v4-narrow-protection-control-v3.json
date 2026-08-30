@@ -1,0 +1,101 @@
+{
+  "schema_version": "3.0.0",
+  "schema_lock": {
+    "path": "world/map-production/schemas/protected-relief-composite-v3.schema.json",
+    "sha256": "b9f98dc78985be9de19c3e502d283256e17326420d4eb3eafa48c9811fd56601"
+  },
+  "id": "style-candidate-g-v4-narrow-protection-control-v3",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-g-v3-hachure-skeleton.generation.txt",
+    "sha256": "24ed8b4e96a03c5ce991d8d2536e33fe6273f756bb0831c39dbedcbc83d3604d"
+  },
+  "generated_input": {
+    "path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton-raw.png",
+    "sha256": "3b00eeb44fc2141ca421393cb69d7faf16a6fae7b889ac07076be329f25b9774",
+    "format": "PNG",
+    "mode": "RGB"
+  },
+  "references": [
+    {
+      "index": 1,
+      "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+      "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+      "format": "PNG",
+      "mode": "RGB",
+      "role": "pixel-authoritative-base"
+    },
+    {
+      "index": 2,
+      "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+      "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f",
+      "format": "PNG",
+      "mode": "RGB",
+      "role": "flat-color-topology-guide"
+    },
+    {
+      "index": 3,
+      "path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.png",
+      "sha256": "dc8978b184755de6ba21f10a120bfb413b0976fed642b106065eff82dee34da3",
+      "format": "PNG",
+      "mode": "RGB",
+      "role": "open-hachure-skeleton-guide"
+    }
+  ],
+  "guide_contract": {
+    "source_control": {
+      "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json",
+      "sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01"
+    },
+    "background_rgb": [128, 128, 128],
+    "active_colors": [
+      {"role": "main-massif", "rgb": [206, 74, 62], "expected_components": 2},
+      {"role": "foothill-a", "rgb": [232, 151, 61], "expected_components": 2},
+      {"role": "foothill-b", "rgb": [126, 93, 178], "expected_components": 2}
+    ],
+    "expected_components": 6,
+    "permission_feather_inside_px": 24
+  },
+  "skeleton_contract": {
+    "source_control": {
+      "path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.json",
+      "sha256": "d6d68f39861802aa28ebf4a42fece89433da80fe616a79fdba57a34aca3baeb6"
+    },
+    "background_rgb": [240, 238, 232],
+    "stroke_rgb": [54, 48, 42],
+    "expected_landforms": 6,
+    "expected_rise_groups": 4,
+    "expected_open_saddles": 2,
+    "expected_foothills": 4,
+    "permission_source_reference_index": 2,
+    "permission_contribution": "none"
+  },
+  "protection_policy": "narrow-structural-intersection-v1",
+  "road_protection": {
+    "guard_width_px": 16,
+    "feather_px": 3,
+    "strokes": [
+      {
+        "id": "north_road",
+        "points": [[1085,160],[1060,180],[1035,200],[1005,225],[982,250],[970,280],[966,320],[960,350],[946,375],[918,400],[910,425],[900,455],[895,485]]
+      },
+      {
+        "id": "east_road",
+        "points": [[930,505],[1050,515],[1180,540],[1270,535],[1370,490],[1535,450]]
+      },
+      {
+        "id": "south_east_road",
+        "points": [[910,558],[1000,610],[1090,666],[1180,725],[1270,785],[1360,840],[1450,892],[1535,936]]
+      }
+    ]
+  },
+  "detail_protection": {
+    "selection_operator": "high-frequency-and-dark",
+    "gaussian_radius_px": 3,
+    "high_frequency_threshold_levels": 18,
+    "dark_luminance_max": 105,
+    "feather_px": 1
+  },
+  "purpose": "Change only the protected-composite policy from G3: reuse the exact locked G3 raw image and all three locked generation references, replace the broad 64px road guard with a 16px centerline core, and protect only pixels that are both high-frequency and dark."
+}

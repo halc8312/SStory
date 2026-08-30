@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "base_path": "world/map-production/candidates/style-candidate-b-v4b-mask-refinement.png",
+  "edit_path": "world/map-production/candidates/style-candidate-b-v5-sparse-ridges-raw.png",
+  "control_path": "world/map-production/controls/style-candidate-b-mountain-mask-v2.json",
+  "output_path": "world/map-production/candidates/style-candidate-b-v5-sparse-ridges.png",
+  "width": 1536,
+  "height": 1024,
+  "masked_pixels": 530444,
+  "opaque_mask_pixels": 170080,
+  "protected_pixels_verified": 1042420,
+  "outside_mask_max_channel_difference": 0,
+  "output_sha256": "170a46cab759cb9d3f7b7728ff9148430c5457fdf4c0572420a2213f53e0fe94"
+}

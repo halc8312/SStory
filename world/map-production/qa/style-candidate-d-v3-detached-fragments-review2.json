@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-d-v3-detached-fragments",
+  "image_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "created_at": "2026-07-18T19:53:07Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 composite inspected independently.", "notes": "The five-plus-five layout is retained but the fragments form route-like chains."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "north-east.png and south-east.png inspected at native scale.", "notes": "Dark capsules dominate the faint relief at 100%."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "zoom4-ne-detail.png and zoom4-se-detail.png inspected.", "notes": "Uniform double-outline capsules are unmistakable at 400%."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "No new protected-area defect was found."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Ten ridge zones compared to the fragment guide.", "notes": "Three-plus-one placement broadly passes, but ridge semantics fail."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared with the localized v2 base at identical coordinates.", "notes": "Parent geography is continuous; broad relief remains too weak."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Boundary and road crops inspected.", "notes": "No visible edit seam or protected-road break."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Route, boundary, and label conflicts assessed.", "notes": "The new terrain marks compete directly with route and boundary vectors."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; style board is not staged as tiles.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; style board is not staged as tiles.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "1,194,316 protected pixels are exact and outside-mask channel difference is zero."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": true, "evidence": "The required readable broad mountain relief and hierarchy are absent."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No noncanonical major place appears."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No letters or pseudo-writing remain."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No outer, road-strip, or crop seam is visible."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "No scenic side face or directional light is visible."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "The same dark curved capsule motif repeats in all ten ridges."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 22, "notes": "Ten locations are stable, but relief identity is weak."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 13, "notes": "The parent layout and protected geography remain continuous."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 14, "notes": "No hard boundary or road seam."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 8, "notes": "Outlined capsules do not match natural terrain ink."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 6, "notes": "The broad relief signal is too faint relative to the symbols."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 4, "notes": "Uniform repeated capsules are a dominant artifact."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 5, "notes": "The capsules can be confused with routes or boundaries."}
+  ],
+  "total_score": 72,
+  "decision": "rejected",
+  "summary": "v3 preserves the map and removes pseudo-writing, but the uniform double-outline capsules read as dashed routes and the broad relief remains visually absent.",
+  "required_changes": ["Replace only the thirty dark capsule crests with short, irregular, tapered, low-contrast single-line terrain strokes; preserve the ten detached hatches and every other pixel class."]
+}

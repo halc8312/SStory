@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "generation_id": "microtexture-v2-r6-locked-clean-reference-imagegen-v18",
+  "status": "approved-vision-only-pending-post-freeze-numeric-validation",
+  "documented_at": "2026-07-26T07:53:43+09:00",
+  "generation_time_exactly_attested": false,
+  "generator": "image_gen.imagegen",
+  "generator_model_name_claimed": false,
+  "operation": "one-brand-new-generation-adopted",
+  "prompt_chain": {
+    "path": "world/map-production/prompts/microtexture-v2-r6-locked-clean-reference-imagegen-v18.generation-chain.txt",
+    "sha256": "b7b34e6bcce6298994a96a9d14aba93ec09a047f75a6b3f14119dec8a2227c76",
+    "exact_prompt_text_preserved": false,
+    "prompt_record_method": "reconstructed_from_recorded_prompt_intent",
+    "r6_foundation_reference_used": false,
+    "r5_reference_used": false
+  },
+  "generation_chain": {
+    "step_1": {"id": "v18", "operation": "new_generation", "decision": "adopted-as-locked-clean-reference-candidate", "final_output_persisted_from_returned_data_url": true}
+  },
+  "output": {
+    "path": "world/map-production/style-assets/microtexture-v2-r6-locked-clean-reference-imagegen-v18.png",
+    "sha256": "e2eeb08046994b549c2eee5245c9410c329847d9cfe06ea6cb435dca5862512d",
+    "bytes": 1081552,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "root_vision_review": {
+    "path": "world/map-production/qa/microtexture-v2-r6-locked-clean-reference-imagegen-v18-root-vision.json",
+    "sha256": "87cf47f38b90ed894bf2cea35bb2d2e16718e13f9b0cbf842e1a4ef6f45081ad",
+    "decision": "approved-as-r6-locked-clean-reference-candidate",
+    "score": 99
+  },
+  "independent_vision_reviews": [
+    {
+      "role": "independent-a",
+      "path": "world/map-production/qa/microtexture-v2-r6-locked-clean-reference-imagegen-v18-independent-vision-a.json",
+      "sha256": "f9734097e4f4132eb618265cd716114ca6864ecd972cac21f90e2599e4a71e0e",
+      "reviewer": "Descartes the 2nd",
+      "decision": "approved-as-r6-locked-clean-reference-candidate",
+      "score": 99
+    },
+    {
+      "role": "independent-b",
+      "path": "world/map-production/qa/microtexture-v2-r6-locked-clean-reference-imagegen-v18-independent-vision-b.json",
+      "sha256": "6238bdedaa2308e94d16ba2bbac681c568af480a2969e0af404e331683db8f31",
+      "reviewer": "Ohm the 2nd",
+      "decision": "approved-as-r6-locked-clean-reference-candidate",
+      "score": 99
+    }
+  ],
+  "numeric_isolation": {
+    "numeric_metric_evaluation_performed_before_threshold_freeze": false,
+    "threshold_selection_allowed": false,
+    "calibration_or_holdout_control_use_allowed": false,
+    "post_freeze_one_shot_validation_required": true
+  },
+  "use_contract": {
+    "production_candidate_use_allowed": false,
+    "texture_donor_use_allowed": false,
+    "golden_input_allowed": false,
+    "final_pixel_transfer_allowed": false,
+    "geography_or_semantic_authority": false,
+    "rgb_chroma_or_absolute_luminance_transfer_allowed": false
+  }
+}

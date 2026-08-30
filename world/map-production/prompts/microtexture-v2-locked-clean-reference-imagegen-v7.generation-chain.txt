@@ -1,0 +1,33 @@
+MICROTEXTURE V2 R4 LOCKED CLEAN REFERENCE V7 — INDEPENDENT IMAGEGEN CHAIN
+
+Role
+----
+Independent post-freeze false-reject validation source for Microtexture v2-r4.
+It is excluded from threshold selection, calibration controls, holdout controls,
+production artwork, Golden artwork, and final pixels.
+
+Independence
+------------
+This chain started as a brand-new generation. It did not reference the r3
+ImageGen v4/v5 calibration sources, any map candidate, any foundation, or any
+calibration/holdout control. The first returned image was rejected by Root
+Vision because its 200% and 400% views contained fine mottled and short-wisp
+structure. That rejected raster is not tracked and is not an authority input.
+
+Step 1 — brand-new generation, rejected by Root Vision
+------------------------------------------------------
+Create a brand-new 1536×1024 landscape raster intended only as an independent post-freeze CLEAN REFERENCE for a fantasy-map microtexture quality detector. It must be a completely flat, orthographic, edge-to-edge warm-neutral cartographic ground field with no geography, no objects, no symbols, and no text. Use very restrained low-contrast amorphous tonal modulation at broad and medium wavelengths only: principal structures roughly 40–220 pixels, softly nested within broader 180–700 pixel masses. The modulation must be nonperiodic, continuously blended, irregular in scale and placement, and visually natural, like an extremely smooth mineral-paper wash viewed straight on.
+
+Hard prohibitions: no visible feature smaller than 24 pixels; no grain, noise, specks, salt-and-pepper, dots, pores, particles, pinholes, bounded microblobs, stipple, fibers, scratches, brush marks, short dashes, ridges, lines, hatching, parallel bundles, contours, cells, rings, rosettes, fingerprints, curls, veins, roots, fern/fishbone structures, repeated stamps, grids, tiling, seams, borders, panels, vignettes, gradients caused by lighting, highlights, shadows, perspective, embossing, 3D relief, pure black, or pure white. Do not imitate an old manuscript or fibrous paper because those add microdetail. Preserve a quiet matte surface across every edge. The result should look intentionally smooth even when enlarged 400%, while retaining only broad, open, cloudlike tonal variation.
+
+Step 2 — one focused edit of the rejected Step 1 image, adopted candidate
+--------------------------------------------------------------------------
+Edit the supplied independent clean-reference field with exactly one focused change: remove and smoothly integrate ALL visible fine texture below a 32-pixel source-image wavelength. Eliminate every tiny mottled fleck, pore, microblob, wormlike wisp, short brush trace, grain cluster, sharp local edge, and dense paper-like texture. Replace those fine structures with continuous, softly interpolated color so that a 256×192 center crop enlarged to 1024×768 remains visibly smooth and contains no isolated marks or short line fragments. Preserve the existing 1536×1024 dimensions, flat orthographic warm-neutral palette, edge-to-edge coverage, low contrast, and only the broad amorphous 64–700px tonal masses. Do not add any new motif, object, geography, text, line, contour, cell, ring, fiber, dot, particle, repeat, seam, lighting, shadow, or 3D relief. Aim for a matte airbrushed mineral wash, not textured paper.
+
+Adopted output
+--------------
+`world/map-production/style-assets/microtexture-v2-locked-clean-reference-imagegen-v7.png`
+SHA-256: `667e55d2ab326c666b6087c53512eebc1942c068e397ab0dfa7e86776502c4d3`
+
+The adopted output remains visually qualified only until thresholds are frozen.
+It must not be numerically measured before the one-shot post-freeze validation.

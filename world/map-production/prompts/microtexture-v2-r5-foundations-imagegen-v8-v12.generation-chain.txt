@@ -1,0 +1,50 @@
+MICROTEXTURE V2 R5 CONTROL FOUNDATIONS — IMAGEGEN V8–V12 CHAIN
+
+Role
+----
+Fresh, Vision-qualified reference foundations for the r5 blinded synthetic
+calibration and holdout controls. These images are not production art, a
+Golden input, a texture donor, or final pixels. The r4 foundations, controls,
+labels, key, and measurements were not used as r5 authority inputs.
+
+Step 1 — v8, rejected by Root Vision
+------------------------------------
+Create one production-calibration reference image only: a seamless flat orthographic material field for a premium hand-painted fantasy map ground. Warm ivory–gold parchment color, restrained natural mineral/paper variation, extremely smooth and calm at close zoom. The usable center and all edges must be visually clean and evenly illuminated. Allow only very broad, low-contrast tonal drift with characteristic scale larger than roughly 100 pixels. Absolutely no map geography, coastlines, roads, rivers, borders, labels, symbols, objects, frames, vignette, gradients toward edges, folds, stains, blotches, clouds, rings, halos, brush marks, scratches, fibers, crosshatching, stippling, dots, specks, grain, halftone, repeated texture, short lines, parallel lines, or sharp micro-detail. No embedded text. Natural but nearly featureless, suitable as a clean baseline that remains artifact-free when inspected at 200% and 400%. Landscape 3:2 composition, target 1536×1024, opaque RGB.
+
+Decision: rejected. The full-200 and quadrant-400 views exposed a subtle
+diagonal lattice/repeating texture. The raster is not tracked or authoritative.
+
+Step 2 — v9, rejected after independent review
+------------------------------------------------
+Generate a completely new clean calibration baseline, not a variation of the previous result. Premium fantasy-map ground color only: a flat matte warm ivory-gold digital wash, landscape 3:2, target 1536×1024, opaque RGB. It must remain visually featureless under nearest-neighbor enlargement to 400%. Remove all paper texture and all fine material detail. Permit only one or two extremely broad, irregular, non-repeating tonal drifts whose scale is greater than 300 pixels and whose contrast is barely perceptible. No diagonal pattern, checker pattern, lattice, weave, fibers, grain, noise, stipple, dots, specks, mottling, cloudy blobs, watercolor blooms, rings, bands, brush marks, scratches, short lines, parallel lines, halos, stains, folds, vignette, edge shading, objects, symbols, geography, labels, or text. Uniform illumination and clean center/edges. Think smooth low-noise studio color field created with a very large soft airbrush, not photographed paper.
+
+Decision: rejected. One blind-independent reviewer reproduced the Root concern
+that the full-200 view contained faint diagonal/mesh regularity and scored it
+92. The copied workspace raster was moved to tmp/rejected-imagegen and the
+original generator output remains outside the repository authority graph.
+
+Step 3 — v10, adopted foundation
+---------------------------------
+Create a fresh, independent calibration foundation image for the same premium fantasy-map ground family; do not derive it from any previous image. Flat matte pale warm cream/ivory digital color field, slightly less golden than typical parchment, landscape 3:2, target 1536×1024, opaque RGB. It must look clean at native size and under nearest-neighbor enlargement to 200% and 400%. Use no visible surface texture. Only extremely broad, irregular, non-periodic tonal drift above 300-pixel scale, with almost imperceptible contrast. Uniform illumination. No paper grain, noise, dither, diagonal pattern, checker, lattice, weave, fibers, stipple, dots, specks, mottling, cloudy blobs, watercolor blooms, rings, bands, brush marks, scratches, short lines, parallel lines, halos, stains, folds, vignette, edge shading, objects, geography, symbols, labels, borders, or text. Smooth low-noise airbrushed color field, not photographed material.
+
+Step 4 — v11, adopted foundation
+---------------------------------
+Create another fresh independent clean calibration foundation, not a derivative of prior images. Smooth matte light sand-beige fantasy-map ground, neutral warm rather than yellow, landscape 3:2, target 1536×1024, opaque RGB. The central 512×384 region must be exceptionally uniform and artifact-free at nearest-neighbor 200% and 400% inspection. No visible surface texture at any scale below 300 pixels; only nearly imperceptible broad non-periodic tonal drift. No grain, noise, dither, diagonal pattern, checker, lattice, weave, fibers, stipple, dots, specks, mottling, cloudy blobs, blooms, rings, bands, brush marks, scratches, short lines, parallel lines, stains, folds, halos, vignette, edge lighting, objects, map features, labels, symbols, borders, or text. Use a clean low-noise digital airbrush field, not paper photography.
+
+Step 5 — v12, adopted foundation
+---------------------------------
+Create a fourth fresh independent clean calibration foundation, unrelated to earlier outputs. Smooth matte muted honey-ivory fantasy-map ground, subtle and refined, landscape 3:2, target 1536×1024, opaque RGB. The central 512×384 region must be visually clean under nearest-neighbor 200% and 400% inspection. No visible surface texture below a 300-pixel scale; allow only barely perceptible, irregular, non-repeating macro tonal drift. Strictly exclude grain, random noise, dithering, diagonals, checkerboards, lattices, weave, fibers, stippling, dots, specks, small or medium blotches, cloud-like patches, watercolor blooms, rings, bands, brush strokes, scratches, short lines, parallel lines, halos, stains, folds, vignette, directional lighting, edge shading, objects, geography, borders, symbols, labels, and text. Render as a very clean low-noise digital airbrush color field, not photographed paper.
+
+Adopted outputs
+---------------
+- `world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v10.png`
+  SHA-256 `df37429388f42649611388172d1dd60890f5a7d6b3437937181f0c078b76b5d5`
+- `world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v11.png`
+  SHA-256 `6dbb2126ac795d509cd248d95f81a4c5d91c8258d2a4845ea4030d96fdb0ee2f`
+- `world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v12.png`
+  SHA-256 `e05ca849d950d5b8c5eadcf85ba6cb246b1cecaa284a49e6f85722d253a7e44e`
+
+Only the exact central source crop xywh `[512,320,512,384]` of each adopted
+image may be used as an r5 control foundation. Every formal control retains the
+exact corresponding reference bytes; metrics operate only on control minus
+reference. Foundation substitution after freeze is forbidden.

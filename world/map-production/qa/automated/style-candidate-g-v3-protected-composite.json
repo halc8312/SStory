@@ -1,0 +1,348 @@
+{
+  "control_path": "world/map-production/controls/style-candidate-g-v3-generation-control-v2.json",
+  "control_sha256": "c76814865952855c86f5806da0e5c378388b8aa6d443dd9535a4b1da6c788fe9",
+  "generated_path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton-raw.png",
+  "generated_sha256": "3b00eeb44fc2141ca421393cb69d7faf16a6fae7b889ac07076be329f25b9774",
+  "guide": {
+    "active_pixels": 227663,
+    "background_pixels": 1345201,
+    "colors": [
+      {
+        "components": 2,
+        "pixels": 159369,
+        "rgb": [
+          206,
+          74,
+          62
+        ],
+        "role": "main-massif"
+      },
+      {
+        "components": 2,
+        "pixels": 33212,
+        "rgb": [
+          232,
+          151,
+          61
+        ],
+        "role": "foothill-a"
+      },
+      {
+        "components": 2,
+        "pixels": 35082,
+        "rgb": [
+          126,
+          93,
+          178
+        ],
+        "role": "foothill-b"
+      }
+    ],
+    "components": 6
+  },
+  "id": "style-candidate-g-v3-generation-control-v2-protected-composite",
+  "mask_output_path": "world/map-production/qa/automated/style-candidate-g-v3-edit-mask.png",
+  "mask_sha256": "44f05ea401cc96f1cefc5ab6ea191e5e6370f9ea83d41b713bb2ea2cdf0a8541",
+  "metrics": {
+    "detail_core_permission_pixels": 53216,
+    "detail_core_pixels": 626255,
+    "editable_pixels": 151419,
+    "gates": {
+      "detail_core": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      },
+      "outside_permission": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      },
+      "road_core": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      },
+      "zero_mask": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      }
+    },
+    "mean_editable_alpha": 213.904754,
+    "median_editable_alpha": 232,
+    "opaque_editable_pixels": 32774,
+    "p90_editable_alpha": 255,
+    "permission_pixels": 227663,
+    "protected_core_pixels": 1421445,
+    "road_core_permission_pixels": 33928,
+    "road_core_pixels": 116489
+  },
+  "output_path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton.png",
+  "output_sha256": "f4ccf4f53f89f3d4643e5d77db181654430c4c84717413fdb8b4deabf8a34b5b",
+  "parameters": {
+    "dark_luminance_max": 105,
+    "feather_px": 0,
+    "gaussian_radius_px": 3,
+    "high_frequency_threshold_levels": 18,
+    "permission_feather_inside_px": 24,
+    "permission_source": "exact-three-declared-flat-guide-colors",
+    "permission_source_reference_index": 2,
+    "road_feather_px": 8,
+    "road_guard_width_px": 64,
+    "road_order": [
+      "north_road",
+      "east_road",
+      "south_east_road"
+    ],
+    "skeleton_permission_contribution": "none"
+  },
+  "prompt_path": "world/map-production/prompts/style-candidate-g-v3-hachure-skeleton.generation.txt",
+  "prompt_sha256": "24ed8b4e96a03c5ce991d8d2536e33fe6273f756bb0831c39dbedcbc83d3604d",
+  "protection_output_path": "world/map-production/qa/automated/style-candidate-g-v3-protection.png",
+  "protection_sha256": "22ac0c9f4a21616b40413a6fe34827756abd8ffc59475a0d04d1979c26adaa36",
+  "reference_order": [
+    {
+      "index": 1,
+      "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+      "role": "pixel-authoritative-base",
+      "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016"
+    },
+    {
+      "index": 2,
+      "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+      "role": "flat-color-topology-guide",
+      "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f"
+    },
+    {
+      "index": 3,
+      "path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.png",
+      "role": "open-hachure-skeleton-guide",
+      "sha256": "dc8978b184755de6ba21f10a120bfb413b0976fed642b106065eff82dee34da3"
+    }
+  ],
+  "report_path": "world/map-production/qa/automated/style-candidate-g-v3-protected-composite.json",
+  "schema_path": "world/map-production/schemas/protected-relief-composite-v2.schema.json",
+  "schema_sha256": "56bf15ae7c4137850f32d507bd6bc128f18bfa65f08e1690ea8adbe2ef63d2bc",
+  "schema_version": "1.0.0",
+  "skeleton": {
+    "background_rgb": [
+      240,
+      238,
+      232
+    ],
+    "canvas": {
+      "height": 1024,
+      "width": 1536
+    },
+    "closed_path_count": 0,
+    "foothill_count": 4,
+    "foothill_segment_counts": [
+      8,
+      9,
+      10,
+      11
+    ],
+    "footprint_reference": {
+      "raster_path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+      "raster_sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f",
+      "source_path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json",
+      "source_sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01"
+    },
+    "landform_count": 6,
+    "landforms": [
+      {
+        "connected_components": 20,
+        "group_count": 2,
+        "groups": [
+          {
+            "id": "ne-main-west-rise",
+            "kind": "rise",
+            "radial_alignment_fraction": 0.083333,
+            "segment_count": 12
+          },
+          {
+            "id": "ne-main-east-rise",
+            "kind": "rise",
+            "radial_alignment_fraction": 0.375,
+            "segment_count": 8
+          }
+        ],
+        "id": "ne-main-massif",
+        "ink_pixels": 1784,
+        "maximum_segment_length_px": 34.525353,
+        "minimum_segment_length_px": 26.400758,
+        "orientation_bins": 11,
+        "outside_footprint_ink_pixels": 0,
+        "role": "main-massif",
+        "saddle_clear": true,
+        "segment_count": 20,
+        "unique_rounded_lengths": 9
+      },
+      {
+        "connected_components": 8,
+        "group_count": 1,
+        "groups": [
+          {
+            "id": "ne-west-foothill-slope",
+            "kind": "foothill",
+            "radial_alignment_fraction": 0.0,
+            "segment_count": 8
+          }
+        ],
+        "id": "ne-west-foothill",
+        "ink_pixels": 593,
+        "maximum_segment_length_px": 28.460499,
+        "minimum_segment_length_px": 23.853721,
+        "orientation_bins": 5,
+        "outside_footprint_ink_pixels": 0,
+        "role": "foothill-a",
+        "saddle_clear": false,
+        "segment_count": 8,
+        "unique_rounded_lengths": 5
+      },
+      {
+        "connected_components": 9,
+        "group_count": 1,
+        "groups": [
+          {
+            "id": "ne-central-foothill-slope",
+            "kind": "foothill",
+            "radial_alignment_fraction": 0.333333,
+            "segment_count": 9
+          }
+        ],
+        "id": "ne-central-foothill",
+        "ink_pixels": 696,
+        "maximum_segment_length_px": 32.249031,
+        "minimum_segment_length_px": 24.166092,
+        "orientation_bins": 7,
+        "outside_footprint_ink_pixels": 0,
+        "role": "foothill-b",
+        "saddle_clear": false,
+        "segment_count": 9,
+        "unique_rounded_lengths": 8
+      },
+      {
+        "connected_components": 21,
+        "group_count": 2,
+        "groups": [
+          {
+            "id": "se-main-west-rise",
+            "kind": "rise",
+            "radial_alignment_fraction": 0.384615,
+            "segment_count": 13
+          },
+          {
+            "id": "se-main-east-rise",
+            "kind": "rise",
+            "radial_alignment_fraction": 0.375,
+            "segment_count": 8
+          }
+        ],
+        "id": "se-main-massif",
+        "ink_pixels": 1809,
+        "maximum_segment_length_px": 33.837849,
+        "minimum_segment_length_px": 19.313208,
+        "orientation_bins": 11,
+        "outside_footprint_ink_pixels": 0,
+        "role": "main-massif",
+        "saddle_clear": true,
+        "segment_count": 21,
+        "unique_rounded_lengths": 12
+      },
+      {
+        "connected_components": 10,
+        "group_count": 1,
+        "groups": [
+          {
+            "id": "se-west-foothill-slope",
+            "kind": "foothill",
+            "radial_alignment_fraction": 0.4,
+            "segment_count": 10
+          }
+        ],
+        "id": "se-west-foothill",
+        "ink_pixels": 844,
+        "maximum_segment_length_px": 31.016125,
+        "minimum_segment_length_px": 23.323808,
+        "orientation_bins": 8,
+        "outside_footprint_ink_pixels": 0,
+        "role": "foothill-a",
+        "saddle_clear": false,
+        "segment_count": 10,
+        "unique_rounded_lengths": 7
+      },
+      {
+        "connected_components": 11,
+        "group_count": 1,
+        "groups": [
+          {
+            "id": "se-east-foothill-slope",
+            "kind": "foothill",
+            "radial_alignment_fraction": 0.363636,
+            "segment_count": 11
+          }
+        ],
+        "id": "se-east-foothill",
+        "ink_pixels": 763,
+        "maximum_segment_length_px": 29.068884,
+        "minimum_segment_length_px": 21.095023,
+        "orientation_bins": 10,
+        "outside_footprint_ink_pixels": 0,
+        "role": "foothill-b",
+        "saddle_clear": false,
+        "segment_count": 11,
+        "unique_rounded_lengths": 8
+      }
+    ],
+    "long_parallel_band_count": 0,
+    "main_massif_count": 2,
+    "maximum_declared_segment_length_px": 42,
+    "mode": "RGB",
+    "normalized_template_comparisons": [
+      {
+        "left": "ne-west-foothill",
+        "normalized_iou": 0.031111,
+        "right": "ne-central-foothill"
+      },
+      {
+        "left": "ne-west-foothill",
+        "normalized_iou": 0.012121,
+        "right": "se-west-foothill"
+      },
+      {
+        "left": "ne-west-foothill",
+        "normalized_iou": 0.021073,
+        "right": "se-east-foothill"
+      },
+      {
+        "left": "ne-central-foothill",
+        "normalized_iou": 0.017204,
+        "right": "se-west-foothill"
+      },
+      {
+        "left": "ne-central-foothill",
+        "normalized_iou": 0.047718,
+        "right": "se-east-foothill"
+      },
+      {
+        "left": "se-west-foothill",
+        "normalized_iou": 0.036329,
+        "right": "se-east-foothill"
+      }
+    ],
+    "open_saddle_count": 2,
+    "radial_convergence_failure_count": 0,
+    "reused_normalized_template_count": 0,
+    "rise_group_count": 4,
+    "schema_version": "1.0.0",
+    "segment_count": 79,
+    "status": "passed",
+    "stroke_rgb": [
+      54,
+      48,
+      42
+    ],
+    "stroke_width_px": 3
+  },
+  "skeleton_source_path": "world/map-production/controls/style-candidate-g-v3-hachure-skeleton.json",
+  "skeleton_source_sha256": "d6d68f39861802aa28ebf4a42fece89433da80fe616a79fdba57a34aca3baeb6",
+  "status": "passed"
+}

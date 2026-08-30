@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "highland-exact-calm-plan-v47",
+  "image_path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/highland-context-sparse-ridgeline-v20.png",
+  "image_sha256": "98aa5a14d7b1c2ba413e604403057ec05d0787cfd35d3c9dd770e88b850488aa",
+  "dimensions": [1536, 1024],
+  "mode": "RGB",
+  "reviewer": "Codex Root Vision",
+  "review_scope": "generated source image at original 1536x1024 resolution",
+  "decision": "approved-only-as-derived-highland-source",
+  "golden_reference": false,
+  "total_score": 88,
+  "strengths": [
+    "The highland is integrated into continuous ochre parchment without a rectangular panel, white crack network, halo, seam, or pasted edge.",
+    "The landforms use broad connected sepia bodies with wide quiet corridors and remain legible at overview scale.",
+    "The ridge marks read substantially closer to overhead branching terrain than the rejected v46 perspective-peak treatment.",
+    "No text, labels, icons, or new infrastructure appear in the highland, and the road remains visually continuous."
+  ],
+  "immediate_failures": [
+    {
+      "id": "exact_component_count",
+      "detected": true,
+      "evidence": "The generated highland contains more than the requested eight separated landform bodies; it cannot be accepted directly as the Golden geometry."
+    },
+    {
+      "id": "residual_peak_vocabulary",
+      "detected": true,
+      "evidence": "Several internal ridge marks still converge like small peak or tree silhouettes rather than remaining purely hypsometric overhead facets."
+    },
+    {
+      "id": "full_board_coordinate_lock",
+      "detected": true,
+      "evidence": "As a generative full-board output, pixels outside the permitted highland are not guaranteed identical to the v18 authority and therefore require deterministic v18 restoration."
+    }
+  ],
+  "required_derivation": [
+    "Retain exactly the eight largest valid highland bodies.",
+    "Simplify their outer geometry into calm irregular hypsometric patches.",
+    "Use only low-frequency dark-only luminance and restrained chroma anatomy from v47.",
+    "Restore every pixel outside the permission mask, protected feature, road calm mask, and alpha-zero region from v18 exactly.",
+    "Emit exactly five review PNGs and require a new Root Vision score of at least 94 before promotion."
+  ],
+  "notes": "v47 is accepted solely as an exact-prompt, provenance-closed source for deterministic highland derivation. It is rejected as a direct Golden image and must not be copied or promoted unchanged."
+}

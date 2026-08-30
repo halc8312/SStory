@@ -1,0 +1,335 @@
+{
+  "artifact": "microtexture-v2-r6-dev-r19-development-private-audit-failure-audit",
+  "schema_version": "microtexture-v2-r6-development-private-audit-failure-audit/1",
+  "authority": false,
+  "formal_use_forbidden": true,
+  "audit_recorded_at": "2026-08-16T01:25:20.118Z",
+  "development_edition": "r19",
+  "outcome": "failed_closed",
+  "failure_phase": "private-audit-before-population-audit",
+  "failure_class": "holdout-artifact-duplicate-obvious-short-line-clean-miss",
+  "measurement_started": false,
+  "selection_status": "not_started_private_duplicate_gate_failed",
+  "development_hard_threshold": null,
+  "calibration_endpoint_performance": null,
+  "holdout_endpoint_performance": null,
+  "threshold_selection_audit": null,
+  "one_shot_contract": {
+    "generation_completed_exactly_once": true,
+    "root_vision_completed_exactly_once_before_private_reveal": true,
+    "independent_vision_completed_exactly_once_before_private_reveal": true,
+    "all_440_records_reviewed_by_each_reviewer": true,
+    "root_initial_snapshot_and_receipt_sealed_exactly_once": true,
+    "independent_initial_snapshot_and_receipt_sealed_exactly_once": true,
+    "root_and_independent_decisions_reconciled_exactly_once_before_preflight": true,
+    "review_preflight_invoked_exactly_once": true,
+    "review_preflight_passed": true,
+    "labels_sealed_exactly_once_before_private_reveal": true,
+    "private_reveal_started_after_label_seal": true,
+    "private_audit_started_exactly_once": true,
+    "private_regeneration_and_public_surface_match_audit_passed": true,
+    "protocol_zero_audits_passed_both_splits": true,
+    "duplicate_audit_passed": false,
+    "population_audit_started": false,
+    "population_audit_passed": false,
+    "analysis_started_exactly_once": true,
+    "numeric_metric_called": false,
+    "threshold_search_started": false,
+    "development_threshold_selected": false,
+    "postmortem_invoked_exactly_once": true,
+    "formal_cli_invoked": false,
+    "formal_marker_created": false,
+    "formal_threshold_created": false,
+    "locked_clean_v18_decoded_or_measured": false,
+    "failure_marker_created": true,
+    "rerun_resume_relabel_retune_subset_topup_resample_or_reuse_for_r19_forbidden": true,
+    "r19_closed": true
+  },
+  "vision_review": {
+    "records_per_split_per_reviewer": 220,
+    "review_boards_per_split_per_reviewer": 37,
+    "logical_comparison_fields": [
+      "page",
+      "row",
+      "anonymous_code",
+      "disposition",
+      "severity",
+      "flags"
+    ],
+    "evidence_notes_excluded_from_logical_comparison": true,
+    "initial_snapshots_persisted_immutably": true,
+    "initial_snapshots_official_decision_dsl_conformant": true,
+    "initial_snapshot_receipts_verified": true,
+    "splits": {
+      "calibration": {
+        "root_initial_decisions_sha256": "51aafa2ca2bccdede96c83379ac96c66cb726c6c0d71db1c4f2f87f1d7efb08a",
+        "root_initial_receipt_sha256": "2df8dafeefe97021884f17e33f2dd7f1a4170c7643e178443b92c631af93b5d2",
+        "independent_initial_decisions_sha256": "76b622659da89f7e4cfb3afed38d5cc23ec143e12fd7ccc103dbba3f8edc3d8c",
+        "independent_initial_receipt_sha256": "23f38e7029bf956260fa20b7ec8db65d4ed318b4b85542bb70c00281d1bb7e63",
+        "initial_exact_logical_agreement": false,
+        "initial_logical_difference_count": 62,
+        "initial_notes_only_difference_count": 92,
+        "all_differences_reinspected_native_then_evidence": true,
+        "reconciled": true,
+        "root_final_decisions_sha256": "0887d65c29a14dd5fcb3c5ca1b45b44ac9f4e1ebad60c2fc323169c5d929d03b",
+        "independent_final_decisions_sha256": "0887d65c29a14dd5fcb3c5ca1b45b44ac9f4e1ebad60c2fc323169c5d929d03b",
+        "canonical_final_decisions_sha256": "0887d65c29a14dd5fcb3c5ca1b45b44ac9f4e1ebad60c2fc323169c5d929d03b",
+        "completed_labels_sha256": "119223f40c1d2540f8e75bbda144cac550238d7fb57db470f1c511e15d467871",
+        "record_dispositions": {
+          "clean": 116,
+          "warning": 54,
+          "reject": 50
+        },
+        "reconciled_final_official_parser_and_ev3_passed": true,
+        "final_visible_flags_subset_of_both_initial_flag_sets": true
+      },
+      "holdout": {
+        "root_initial_decisions_sha256": "4e912f991894e61da294b8eef64d4557284cd39ff6cdf3701e7549e40829185d",
+        "root_initial_receipt_sha256": "a423494e21e42d3f0ab03237296625ff2a084092eb8b17edb676be4331fb9525",
+        "independent_initial_decisions_sha256": "0b39089bdde2cc8e2eb94d1e8f4f6b8142723d3b49d72a52cdd55e2236741c6e",
+        "independent_initial_receipt_sha256": "a4ff17e669662ce1f388dbab585c8338a76a0fe6ec6f34a2abf1f222c9e87a9a",
+        "initial_exact_logical_agreement": false,
+        "initial_logical_difference_count": 77,
+        "initial_notes_only_difference_count": 81,
+        "all_differences_reinspected_native_then_evidence": true,
+        "reconciled": true,
+        "root_final_decisions_sha256": "26c0acd4753cda19ff0dd4b10604eaeb1520cb64e12f2f38751431deb7809e57",
+        "independent_final_decisions_sha256": "26c0acd4753cda19ff0dd4b10604eaeb1520cb64e12f2f38751431deb7809e57",
+        "canonical_final_decisions_sha256": "26c0acd4753cda19ff0dd4b10604eaeb1520cb64e12f2f38751431deb7809e57",
+        "completed_labels_sha256": "3830172e17f7c46335ec4894a9313c01dd4b41dfc69b13adf3a67636d0937948",
+        "record_dispositions": {
+          "clean": 118,
+          "warning": 47,
+          "reject": 55
+        },
+        "reconciled_final_official_parser_and_ev3_passed": true,
+        "final_visible_flags_subset_of_both_initial_flag_sets": true
+      }
+    },
+    "all_differences_reinspected_native_then_evidence": true,
+    "final_reconciled": true,
+    "canonical_labels_equal_both_reviewers": true,
+    "total_initial_logical_and_notes_only_difference_count": 312,
+    "initial_snapshots_and_receipts_preserved_after_reconciliation": true,
+    "bilateral_initial_visible_flag_intersection_gate": {
+      "revision": "dev-r17-bilateral-initial-visible-flag-intersection-gate-v1",
+      "manifest_sha256": "f042250290f80d4304923e3b564746e8311515f5c649811678db934bb3ad6ffd",
+      "both_official_initial_snapshots_and_receipts_required": true,
+      "final_visible_flag_set_relation": "subset-of-root-initial-intersection-independent-initial",
+      "private_role_input": false,
+      "passed": true
+    }
+  },
+  "private_audit_failure": {
+    "all_splits_passed": false,
+    "affected_split": "holdout",
+    "failed_audit": "artifact-duplicate-obvious-artifact-contract",
+    "private_regeneration_and_public_surface_match_audit_passed": true,
+    "protocol_zero_audits_passed_both_splits": true,
+    "anonymous_code_page_row_ev3_locator_private_identity_or_pixel_binding_tracked": false,
+    "semantic_signature_at_failure": [
+      "disposition",
+      "severity_equivalence_class",
+      "grain_visible",
+      "tiny_speck_visible",
+      "microblob_visible",
+      "short_line_visible",
+      "parallel_bundle_visible"
+    ],
+    "splits": {
+      "calibration": {
+        "record_count": 220,
+        "artifact_record_count": 200,
+        "protocol_zero_record_count": 16,
+        "protocol_zero_clean_count": 16,
+        "duplicate_audit_record_count": 4,
+        "duplicate_group_count": 2,
+        "contact_sheet_count": 185,
+        "review_board_count": 37,
+        "regenerated_public_commitments_matched": true,
+        "regenerated_contact_sheet_bytes_matched": true,
+        "regenerated_review_board_bytes_matched": true,
+        "protocol_zero_audit_passed": true,
+        "clean_duplicate_group_passed": true,
+        "artifact_duplicate_group_passed": true,
+        "duplicate_audit_passed": true
+      },
+      "holdout": {
+        "record_count": 220,
+        "artifact_record_count": 200,
+        "protocol_zero_record_count": 16,
+        "protocol_zero_clean_count": 16,
+        "duplicate_audit_record_count": 4,
+        "duplicate_group_count": 2,
+        "contact_sheet_count": 185,
+        "review_board_count": 37,
+        "regenerated_public_commitments_matched": true,
+        "regenerated_contact_sheet_bytes_matched": true,
+        "regenerated_review_board_bytes_matched": true,
+        "protocol_zero_audit_passed": true,
+        "clean_duplicate_group_passed": true,
+        "artifact_duplicate_group_passed": false,
+        "duplicate_audit_passed": false
+      }
+    },
+    "calibration_duplicate_aggregate_observation": {
+      "clean_duplicate": {
+        "record_count": 2,
+        "dispositions": [
+          "clean",
+          "clean"
+        ],
+        "severity_ordinals": [
+          0,
+          0
+        ],
+        "visible_flags_in_canonical_order": [
+          [],
+          []
+        ],
+        "semantic_equivalence_passed": true
+      },
+      "artifact_duplicate": {
+        "record_count": 2,
+        "dispositions": [
+          "reject",
+          "reject"
+        ],
+        "severity_ordinals": [
+          3,
+          3
+        ],
+        "severity_equivalence_classes": [
+          "reject-band",
+          "reject-band"
+        ],
+        "visible_flags_in_canonical_order": [
+          [
+            "l"
+          ],
+          [
+            "l"
+          ]
+        ],
+        "disposition_exact_match": true,
+        "severity_equivalence_class_match": true,
+        "all_five_visible_flags_exact_match": true,
+        "both_obvious_artifacts_individually_reject_severity_2_or_3_with_short_line_visible": true,
+        "semantic_equivalence_and_obvious_artifact_contract_passed": true
+      }
+    },
+    "interpretation": "The holdout obvious-artifact duplicate pair agreed exactly under the preregistered duplicate equivalence signature, but both sealed labels were clean severity 0 with no visible flags. The pair therefore failed the independent obvious-artifact requirement that each record be reject severity 2 or 3 with short-line visible, and the edition closed before population audit.",
+    "holdout_artifact_duplicate_observation": {
+      "record_count": 2,
+      "dispositions": [
+        "clean",
+        "clean"
+      ],
+      "severity_ordinals": [
+        0,
+        0
+      ],
+      "severity_equivalence_classes": [
+        "clean-exact",
+        "clean-exact"
+      ],
+      "visible_flags_in_canonical_order": [
+        [],
+        []
+      ],
+      "disposition_exact_match": true,
+      "severity_equivalence_class_match": true,
+      "all_five_visible_flags_exact_match": true,
+      "both_records_clean_severity_zero_with_no_visible_flags": true,
+      "required_obvious_artifact_contract": "each record reject severity 2 or 3 with short_line_visible true",
+      "required_obvious_artifact_contract_passed": false
+    }
+  },
+  "failure_marker_summary": {
+    "artifact": "microtexture-v2-r6-development-analysis-failure",
+    "schema_version": "microtexture-v2-r6-development-analysis-failure/1",
+    "authority": false,
+    "formal_use_forbidden": true,
+    "development_edition": "r19",
+    "development_closed": true,
+    "measurement_started": false,
+    "error_type": "RuntimeError",
+    "message": "holdout development sealed labels obvious-artifact duplicate sentinel was not rejected as a short line: [redacted-opaque-code]"
+  },
+  "hash_bindings": {
+    "captured_repository_head": "8fcb229f1ee49b0889e61828644ad3d3c594c0d4",
+    "preregistered_spec_sha256": "1fbf850662373dee6368626024df1298feed1913558edcdb15691ed19dbf6414",
+    "implementation_bindings_sha256": "01680d9484f5f13d4f73aa19c292031e4a72df803eac43bbe383de199b3a8968",
+    "development_authority_manifest_sha256": "b96a98c0c6a35f227a9b81c80220af9ffa99621828a71d10a2ddecb84cccb963",
+    "dev_r18_failure_audit_sha256": "7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122",
+    "development_boundary_sha256": "e0231e2b1caf65d67c87b4d946a070dbf499fcd2dd7c9fe01934f90349841e89",
+    "generation_start_sha256": "c18f6a1ce82585a6aa800dd3f695e9da43f7221368bc09daf09bae23354e6717",
+    "generation_summary_sha256": "c53bfed5d4ee828f2240c3a7dc806a4b2ad535842ed095a73b8e4987c554f2c8",
+    "generation_seal_sha256": "25460dbe3691c1fc6a7c771dd1fc4f6e8134c42f125875ef5b73c55632136148",
+    "generation_completion_sha256": "1fb0a3d2d9e82f535d62dadc460471082320616397c51ab996ed73090ac86a47",
+    "blind_key_commitment": "c84482d79047682475647c36ecc91eecb7b49e9a7dad29a5d85284ed9f577888",
+    "calibration_manifest_sha256": "95d1b3c10dcdc4c74a4aa1ab394c0f6cfec688146e15f3874c978f1b334c5acb",
+    "calibration_blank_labels_sha256": "f493bdb3552ca40a8cd4b4ce408c046755cd1ad8ac61af3f8f2531f3ae14906f",
+    "calibration_review_index_sha256": "39a52c8635a4be4fb4cce155637c06dab3f5035fc13ea4b3c78044c5650bbd22",
+    "holdout_manifest_sha256": "7293445860640b17737d3b9e2aad53068974732aedb01dbd0dbdf9f68944e8e0",
+    "holdout_blank_labels_sha256": "059dd10b9ebecb0106f6df4ea9cee698fd004006af9e0abd0f44a3f8fd949fdc",
+    "holdout_review_index_sha256": "0fbda402328d8a555e1023dd33245ff92446c0fa63b9b4930c8a43e381da102f",
+    "label_seal_receipt_sha256": "9d4c5ca1f4c4eb8df8cbc9138ddce942037f026b8aa35a41ba34f36f623a7ccd",
+    "failure_marker_sha256": "98aec4dd4f5e8ac5f0d4a5b8e96a19e785d0d1b3afa8d7a401dfa75ed2a3ea9d"
+  },
+  "measurement_artifacts": {
+    "sealed_calibration_labels_present": true,
+    "sealed_holdout_labels_present": true,
+    "label_seal_receipt_present": true,
+    "failure_marker_present": true,
+    "population_audit_present": false,
+    "calibration_measurements_present": false,
+    "holdout_measurements_present": false,
+    "analysis_result_present": false,
+    "threshold_selection_result_present": false,
+    "holdout_endpoint_result_present": false
+  },
+  "postmortem": {
+    "invoked_exactly_once": true,
+    "read_only": true,
+    "raw_output_tracked": false,
+    "sanitized_aggregate_only_in_this_audit": true,
+    "anonymous_code_page_row_ev3_locator_or_private_identity_mapping_tracked": false,
+    "used_to_relabel_resample_subset_topup_retune_or_select_a_threshold": false
+  },
+  "root_cause": {
+    "generation_or_runtime_failure": false,
+    "decision_reconciliation_failure": false,
+    "private_regeneration_or_public_surface_mismatch": false,
+    "protocol_zero_failure": false,
+    "duplicate_obvious_artifact_contract_failure": "The holdout obvious-artifact duplicate records agreed with each other as clean severity 0 with no visible flags, but each independently violated the required reject severity 2 or 3 with short-line visible contract.",
+    "population_or_metric_failure_evaluated": false,
+    "premature_measurement_ruled_out": "The edition closed during the private duplicate audit before population aggregation and before the first numeric metric; no population, measurement, threshold, or endpoint result exists.",
+    "postmortem": "One read-only invocation confirmed only the sanitized aggregate cause and supplied no raw output, code, page, locator, or private identity mapping.",
+    "repair_forbidden": "The sealed dev-r19 edition cannot be repaired by relabeling, rerunning, resuming, replacing, subsetting, topping up, resampling the key, regenerating, retuning, or reusing any dev-r19 material."
+  },
+  "successor_constraints": {
+    "r19_data_role": "development_only_prepopulation_private_duplicate_audit_failure_evidence",
+    "formal_r6_must_not_start_from_r19_failure": true,
+    "successor_preregistered_in_this_audit": false,
+    "any_successor_must_be_fully_fresh": true,
+    "successor_requires_fresh_preregistered_revision": true,
+    "successor_requires_fresh_root_key_public_nonces_hmac_domains_parameter_nonces_controls_references_identities_codes_commitments_labels_decisions_and_measurements": true,
+    "r19_root_key_private_material_controls_references_pixels_identities_codes_commitments_labels_decisions_measurements_nonces_public_surfaces_and_postmortem_output_reuse_forbidden": true,
+    "closed_r19_morphologies_tiers_metric_threshold_population_and_rate_contracts_may_not_be_changed_in_place": true,
+    "holdout_obvious_artifact_miss_may_not_be_repaired_in_place": true,
+    "successor_may_change_any_contract_only_under_fresh_preregistered_authority": true,
+    "successor_may_use_only_this_sanitized_aggregate_failure_evidence": true,
+    "successor_authority_must_be_committed_pushed_and_dual_ci_green_before_generation": true,
+    "formal_r6_root_and_environment_must_remain_absent": true
+  },
+  "secret_handling": {
+    "blind_key_present_in_this_artifact": false,
+    "blind_key_value_logged_or_tracked": false,
+    "anonymous_code_to_private_identity_mapping_tracked": false,
+    "private_labels_measurements_identities_or_pixels_tracked": false,
+    "postmortem_raw_output_tracked": false,
+    "development_blind_key_and_private_material_reuse_forbidden": true,
+    "closed_development_root_reuse_forbidden": true
+  }
+}

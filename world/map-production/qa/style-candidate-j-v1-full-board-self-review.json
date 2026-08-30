@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-j-v1-full-board-self-review",
+  "image_path": "world/map-production/candidates/style-candidate-j-v1-full-board.png",
+  "created_at": "2026-07-20T00:13:19.7972691Z",
+  "reviewer": "root-vision-decision-recorded-by-codex",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "Full composition",
+      "complete": true,
+      "evidence": "The 1536x1024 RGB review candidate and overview contact were inspected against the exact composition guide. Candidate SHA-256: 6a1bc15d6bbab2536c542c206949c359ca6eac554ff8082faa9489abf128f5eb. Review mode: strict root Vision decision with Codex evidence recording, non-independent; root score: 84/100.",
+      "notes": "J1 preserves the complete flat board: left sea, low coast, braided delta islands, north forest, connected river, circular capital, south-west port, road network, upper-right highland, and lower-right fields. This is the strongest full composition in the series so far. It remains unregistered and unpublished: docs and renderer were not modified, and no formal Golden promotion occurred."
+    },
+    {
+      "id": "scale_25",
+      "label": "25% review",
+      "complete": true,
+      "evidence": "tmp/map-production/j1-full-board-review/style-candidate-j-v1-full-board.25-contact.png; automated entropy retention 0.928280, RMS contrast retention 0.717348, and macrocell contrast coverage 0.924479.",
+      "notes": "The major regions, settlements, waterways, and network remain legible. The automated 25% readability gate passes."
+    },
+    {
+      "id": "scale_50",
+      "label": "50% review",
+      "complete": true,
+      "evidence": "tmp/map-production/j1-full-board-review/style-candidate-j-v1-full-board.50-contact.png; automated entropy retention 0.959799, RMS contrast retention 0.816674, and macrocell contrast coverage 1.000000.",
+      "notes": "The composition remains readable, but RMS contrast retention is 0.816674, below the strict 0.82 threshold, so the formal 50% readability gate fails."
+    },
+    {
+      "id": "automated_evidence",
+      "label": "Automated evidence summary",
+      "complete": true,
+      "evidence": "world/map-production/qa/automated/style-candidate-j-v1-full-board.json (SHA-256 51add75881d5381a5b9a1caf67951fbe879ed72c2ad3b83eac9985fd2d628e58), status failed. Failed gates: palette_continuity_with_b1 and downsample_readability_proxy. Passed gates: image_contract_alpha_profile, boundary_proxy, no_large_exact_repetition_proxy, and semantic_repetition_proxies_vs_h4.",
+      "notes": "B1 palette measurements fail at RGB intersection 0.544535, HSV intersection 0.426768, Bhattacharyya 0.795501, and maximum mean channel delta 10.746760 against thresholds 0.72, 0.62, 0.90, and 12.0. At 50%, entropy retention is 0.959799, RMS 0.816674, and macrocell coverage 1.0, so RMS misses 0.82; at 25%, entropy is 0.928280, RMS 0.717348, and macrocell coverage 0.924479 and the scale passes. Exact and near-repetition proxies do not replace Vision and did not detect the region-specific semantic wallpaper behind the rejection."
+    },
+    {
+      "id": "native",
+      "label": "Native review",
+      "complete": true,
+      "evidence": "tmp/map-production/j1-full-board-review/style-candidate-j-v1-full-board.native-contact.png.",
+      "notes": "The board is coherent, borderless, and strictly flat. The sea is calmer and materially more successful than prior I-series attempts, while forest, highland, fields, and capital begin to show overly uniform mark systems."
+    },
+    {
+      "id": "zoom_200",
+      "label": "200% review",
+      "complete": true,
+      "evidence": "tmp/map-production/j1-full-board-review/style-candidate-j-v1-full-board.200-contact.png.",
+      "notes": "Forest resolves into dense repeated loop/glyph/noise wallpaper; upper-right highland resolves into long parallel flowing hatch bands; lower-right fields resolve into rigid repeated rows and CAD-like parcels. Capital blocks also remain mechanically repeated."
+    },
+    {
+      "id": "zoom_400",
+      "label": "400% review",
+      "complete": true,
+      "evidence": "tmp/map-production/j1-full-board-review/style-candidate-j-v1-full-board.400-contact.png.",
+      "notes": "The same semantic repetition becomes unequivocal at deep zoom. Forest marks read as a reusable loop/glyph vocabulary and isotropic noise; highland marks form dominant long parallel flow bands; field rows and parcel geometry repeat mechanically. These are immediate Golden-rejection failures."
+    },
+    {
+      "id": "nine_regions",
+      "label": "Nine-region review",
+      "complete": true,
+      "evidence": "tmp/map-production/j1-full-board-review/style-candidate-j-v1-full-board.nine-region-contact.png.",
+      "notes": "All required regions are present with clean edge continuation and no pasted patch. The material defects are region-specific semantic repetition rather than missing geography or seam failure."
+    },
+    {
+      "id": "sea_delta_river",
+      "label": "Sea, delta, and river",
+      "complete": true,
+      "evidence": "Native, 200%, 400%, and western nine-region panels were inspected.",
+      "notes": "J1 has the best sea treatment so far: a calm dark wash with sparse short disconnected non-cellular marks, no I2-style cell lattice, and clean coast/delta/river continuity. The rejected-not-Golden candidate may retain only this water treatment as a material-only reference after an explicit future preflight; it is not authority for the full board, composition or geometry, forest, highland, fields, or capital."
+    },
+    {
+      "id": "forest",
+      "label": "Forest",
+      "complete": true,
+      "evidence": "North and north-centre panels at native, 200%, and 400%.",
+      "notes": "The forest footprint and river/road clearances are correct, but dense closed curls, glyph-like micro-shapes, and isotropic-noise texture repeat across the region instead of reading as irregular stipple and broken micro-hachure."
+    },
+    {
+      "id": "highland",
+      "label": "Highland",
+      "complete": true,
+      "evidence": "Upper-right panels at native, 200%, and 400%.",
+      "notes": "Projection remains flat and has no pictorial side faces, but the surface is dominated by long parallel flowing hatch bands rather than broad tonal zones with sparse direction-neutral broken hachure."
+    },
+    {
+      "id": "fields_and_capital",
+      "label": "Fields and capital",
+      "complete": true,
+      "evidence": "Centre and lower-right panels at native, 200%, and 400%.",
+      "notes": "Fields use rigid repeated row fills and CAD-like parcel construction. The capital is complete and flat with clear connections, but its rings, blocks, and repeated footprint vocabulary remain mechanically regular."
+    },
+    {
+      "id": "port_and_networks",
+      "label": "Port and networks",
+      "complete": true,
+      "evidence": "Overview, native, 200%, 400%, and nine-region contacts.",
+      "notes": "The port, roads, river, delta branches, and capital connections are continuous and clean. No material network break was found."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "Text or pseudo-writing",
+      "detected": false,
+      "evidence": "No labels, readable strings, pseudo-writing rows, watermark, signature, or legend were identified in the reviewed views."
+    },
+    {
+      "id": "perspective_or_side_faces",
+      "label": "Perspective, side faces, or directional lighting",
+      "detected": false,
+      "evidence": "The capital, port, coast, river, and highland remain in a strict vertical plan grammar without raised sides or cast shadows."
+    },
+    {
+      "id": "missing_required_composition",
+      "label": "Missing required composition",
+      "detected": false,
+      "evidence": "Sea, delta, forest, river, circular capital, port, roads, highland, fields, and quiet intervening ground are all present."
+    },
+    {
+      "id": "broken_network",
+      "label": "Broken road or river network",
+      "detected": false,
+      "evidence": "Roads, river, delta branches, coast connections, capital links, and port links remain continuous."
+    },
+    {
+      "id": "forest_semantic_wallpaper",
+      "label": "Forest loop/glyph/noise wallpaper",
+      "detected": true,
+      "evidence": "At 200% and 400%, the forest is filled by dense repeated closed curls, glyph-like micro-shapes, and isotropic-noise texture across broad areas."
+    },
+    {
+      "id": "highland_directional_hatch_wallpaper",
+      "label": "Highland long parallel hatch bands",
+      "detected": true,
+      "evidence": "At 200% and 400%, long near-parallel flowing hatch families dominate the upper-right highland and create a repeated directional band field."
+    },
+    {
+      "id": "field_row_cad_repetition",
+      "label": "Rigid repeated field rows and CAD parcels",
+      "detected": true,
+      "evidence": "At 200% and 400%, lower-right parcels use repeated uniform row fills and mechanically regular CAD-like parcel construction."
+    },
+    {
+      "id": "visible_edge_seam",
+      "label": "Visible edge seam or pasted patch",
+      "detected": false,
+      "evidence": "The automated boundary proxy passes, and the reviewed edges show no border, pasted patch, or material seam."
+    }
+  ],
+  "scores": [
+    {
+      "id": "prompt_geometry",
+      "label": "Composition and strict plan geometry",
+      "maximum": 25,
+      "score": 25,
+      "notes": "Complete flat composition, intact topology, and all required features and connections."
+    },
+    {
+      "id": "parent_style_continuity",
+      "label": "Palette and parent-style continuity",
+      "maximum": 15,
+      "score": 10,
+      "notes": "Royal copperplate character is strong, but the strict B1 RGB, HSV, and Bhattacharyya gates fail."
+    },
+    {
+      "id": "edge_seam_continuity",
+      "label": "Edge and seam continuity",
+      "maximum": 15,
+      "score": 15,
+      "notes": "Borderless full board with no visible pasted patch, frame, or edge seam."
+    },
+    {
+      "id": "style_consistency",
+      "label": "Material and line-style consistency",
+      "maximum": 15,
+      "score": 12,
+      "notes": "Sea treatment is excellent, but highland flow bands, rigid fields, and mechanical capital grammar weaken the intended material hierarchy."
+    },
+    {
+      "id": "detail_density",
+      "label": "Multiscale detail and readability",
+      "maximum": 10,
+      "score": 8,
+      "notes": "25% readability passes; 50% RMS retention misses the strict threshold by 0.003326."
+    },
+    {
+      "id": "artifact_nonrepetition",
+      "label": "Semantic nonrepetition",
+      "maximum": 10,
+      "score": 5,
+      "notes": "Immediate failures in forest, highland, and fields override favourable automated exact/near-repetition proxies."
+    },
+    {
+      "id": "vector_readability",
+      "label": "Network and overlay readability",
+      "maximum": 10,
+      "score": 9,
+      "notes": "Roads, waterways, capital, port, and major region boundaries remain clean and readable."
+    }
+  ],
+  "total_score": 84,
+  "decision": "rejected",
+  "summary": "J1 is a strong compositional improvement: it preserves the complete strictly flat board, delivers the best sea treatment so far, and keeps roads, river, delta, capital, and port connections clean. It is nevertheless rejected as a Golden board. At deep zoom, forest becomes dense loop/glyph/isotropic-noise wallpaper, highland becomes long parallel flowing hatch bands, fields become rigid repeated row/CAD parcels, and the capital remains mechanically repeated. Automated B1 palette and 50% RMS failures also stand.",
+  "required_changes": [
+    "Retain J1's complete strict-plan composition, continuous networks, and water material grammar.",
+    "Replace forest loops and isotropic glyph/noise texture with genuinely irregular areal stipple and broken micro-hachure without closed crowns or reusable motifs.",
+    "Replace upper-right long directional hatch bands with broad planar tonal zones plus sparse short direction-neutral broken hachure.",
+    "Replace field row wallpaper and rigid CAD parcels with irregular parcels and locally varied restrained crop marks.",
+    "Break the capital's mechanically repeated footprint vocabulary while preserving its circular plan and connections.",
+    "Meet the strict B1 palette gate and raise 50% RMS contrast retention to at least 0.82 without sacrificing quiet water or network clarity."
+  ]
+}

@@ -1,0 +1,386 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-h-v9-dense-flat-plan-provenance",
+  "status": "formal_candidate_pending_automated_and_independent_vision_qa",
+  "generated_by": {
+    "id": "sstory-map-production/render_candidate_h9_dense_flat_plan.py@2",
+    "path": "scripts/map-production/render_candidate_h9_dense_flat_plan.py",
+    "sha256": "c4e8a94f821122f90b0d5f81b72148e1d72cbc7950773b1f2f015a07e45c4870",
+    "bytes": 39825
+  },
+  "inputs": {
+    "h5_edit_target": {
+      "path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols.png",
+      "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe",
+      "bytes": 3870049
+    },
+    "atlas_forest_material": {
+      "path": "world/map-production/style-assets/phase5-cartographic-material-atlas-v1.png",
+      "sha256": "9b42dcce48d275d392bc28235925ac02f37690ace3418d6cb65920f4da05c6e3",
+      "bytes": 4744978
+    },
+    "atlas_crop_px": [
+      0,
+      0,
+      512,
+      480
+    ]
+  },
+  "constraints": {
+    "localized_semantic_edit_only": true,
+    "histogram_or_rank_transfer_used": false,
+    "full_image_blur_used": false,
+    "directional_shading_used": false,
+    "side_faces_or_facades_used": false,
+    "h5_outside_semantic_mask_byte_identical": true,
+    "forest_fill_only_inter_circle_gaps": true,
+    "protected_water_coast_roads_fields_highland": true
+  },
+  "semantic_mask": {
+    "path": "world/map-production/qa/automated/style-candidate-h-v9-dense-flat-plan.semantic-mask.png",
+    "colors": {
+      "protected": [
+        0,
+        0,
+        0
+      ],
+      "forest_gap_fill": [
+        58,
+        126,
+        68
+      ],
+      "port": [
+        224,
+        154,
+        52
+      ],
+      "city": [
+        202,
+        58,
+        50
+      ]
+    },
+    "allowed_edit_pixels": 93028
+  },
+  "protected_pixel_equality": {
+    "comparison": "exact full-resolution RGB tuple equality",
+    "protected_pixels": 1479836,
+    "protected_equal_pixels": 1479836,
+    "protected_violation_pixels": 0,
+    "protected_pixel_equality_percent": 100.0,
+    "changed_pixels": 92742
+  },
+  "render_stats": {
+    "city_flat_building_footprints": 354,
+    "city_district_count": 8,
+    "city_district_building_counts": [
+      44,
+      33,
+      44,
+      31,
+      40,
+      53,
+      47,
+      62
+    ],
+    "city_recursive_leaf_blocks": 80,
+    "city_ragged_ring_streets": 3,
+    "city_radial_avenues": 8,
+    "city_courtyards_markets_parks": 7,
+    "city_gate_count": 5,
+    "city_side_faces": 0,
+    "city_directional_shadows": 0,
+    "port_flat_building_footprints": 55,
+    "port_warehouse_footprints": 5,
+    "port_courtyards": 3,
+    "port_lane_paths": 7,
+    "port_flat_piers": 8,
+    "port_boat_hull_outlines": 0,
+    "port_side_faces": 0,
+    "port_directional_shadows": 0,
+    "forest_gap_fill_pixels": 13316,
+    "forest_existing_canopy_pixels_modified": 0,
+    "forest_new_round_stamps": 0,
+    "forest_new_heavy_outlines": 0,
+    "forest_atlas_high_frequency_strength": 0.08
+  },
+  "canopy_component_audit": {
+    "before": {
+      "component_count": 3379,
+      "component_size_pixels": {
+        "min": 1,
+        "p50": 4,
+        "p75": 11,
+        "p90": 45,
+        "p99": 291,
+        "max": 38670,
+        "mean": 39.8269
+      },
+      "mean_component_circularity_area_ge_8": 0.450005,
+      "area_weighted_component_circularity_area_ge_8": 0.16118,
+      "round_stamp_like_components_area_8_to_500_circularity_ge_0_52": 400
+    },
+    "after": {
+      "component_count": 3101,
+      "component_size_pixels": {
+        "min": 1,
+        "p50": 3,
+        "p75": 9,
+        "p90": 30,
+        "p99": 338,
+        "max": 50083,
+        "mean": 47.6914
+      },
+      "mean_component_circularity_area_ge_8": 0.454589,
+      "area_weighted_component_circularity_area_ge_8": 0.117277,
+      "round_stamp_like_components_area_8_to_500_circularity_ge_0_52": 290
+    },
+    "mean_circularity_reduction_percent": -1.018655,
+    "area_weighted_circularity_reduction_percent": 27.238491,
+    "round_stamp_like_component_reduction_percent": 27.5,
+    "component_count_reduction": 278
+  },
+  "contact_panels": [
+    {
+      "id": "overview_50_percent",
+      "source_box_px": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "destination_px": [
+        16,
+        16
+      ],
+      "display_size_px": [
+        768,
+        512
+      ],
+      "zoom_percent": 50
+    },
+    {
+      "id": "city_100_percent",
+      "source_box_px": [
+        710,
+        370,
+        990,
+        620
+      ],
+      "destination_px": [
+        16,
+        548
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 100,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "city_200_percent",
+      "source_box_px": [
+        780,
+        432,
+        920,
+        558
+      ],
+      "destination_px": [
+        312,
+        548
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 200,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "city_400_percent",
+      "source_box_px": [
+        815,
+        464,
+        885,
+        526
+      ],
+      "destination_px": [
+        608,
+        548
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 400,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "port_100_percent",
+      "source_box_px": [
+        360,
+        720,
+        640,
+        970
+      ],
+      "destination_px": [
+        16,
+        804
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 100,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "port_200_percent",
+      "source_box_px": [
+        430,
+        782,
+        570,
+        908
+      ],
+      "destination_px": [
+        312,
+        804
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 200,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "port_400_percent",
+      "source_box_px": [
+        465,
+        814,
+        535,
+        876
+      ],
+      "destination_px": [
+        608,
+        804
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 400,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "forest_100_percent",
+      "source_box_px": [
+        420,
+        0,
+        700,
+        250
+      ],
+      "destination_px": [
+        16,
+        1060
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 100,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "forest_200_percent",
+      "source_box_px": [
+        490,
+        62,
+        630,
+        188
+      ],
+      "destination_px": [
+        312,
+        1060
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 200,
+      "nearest_neighbour_review": true
+    },
+    {
+      "id": "forest_400_percent",
+      "source_box_px": [
+        525,
+        94,
+        595,
+        156
+      ],
+      "destination_px": [
+        608,
+        1060
+      ],
+      "display_size_px": [
+        280,
+        240
+      ],
+      "zoom_percent": 400,
+      "nearest_neighbour_review": true
+    }
+  ],
+  "self_vision_review": {
+    "status": "author_preview_only",
+    "acceptance_authority": false,
+    "independent_review_required": true,
+    "score": 94,
+    "threshold": 94,
+    "reviewed_views": [
+      "overview_50_percent",
+      "city_100_200_400_percent",
+      "port_100_200_400_percent",
+      "forest_100_200_400_percent"
+    ],
+    "score_breakdown": {
+      "strict_plan_view_and_flat_tone": 20,
+      "urban_density_and_irregularity": 18,
+      "port_legibility_and_organic_quay": 19,
+      "canopy_continuity_without_semantic_damage": 18,
+      "h5_style_integration_and_protected_equality": 19
+    },
+    "immediate_failure_detected": false,
+    "findings": [
+      "No side faces, cast shadows, or directional light are visible.",
+      "Eight unequal districts and civic voids break the old identical wedge cadence.",
+      "The port remains land-grounded and uses thin plan-view piers without a settlement blob.",
+      "Canopy joins are confined to existing inter-crown gaps and leave water, roads, coast, fields, and highland unchanged."
+    ],
+    "automatic_reject_conditions": [
+      "perspective_or_side_faces",
+      "identical_wedge_or_round_canopy_repetition",
+      "protected_semantic_damage"
+    ]
+  },
+  "outputs": {
+    "master": {
+      "path": "world/map-production/candidates/style-candidate-h-v9-dense-flat-plan.png",
+      "sha256": "bd813e93287b15fe12e654ca5d28633a6902bbbdb3c6d81b0c3e69816a7b2580",
+      "bytes": 3344121,
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB"
+    },
+    "semantic_mask": {
+      "path": "world/map-production/qa/automated/style-candidate-h-v9-dense-flat-plan.semantic-mask.png",
+      "sha256": "c8b0e9350f55042245237ac3e7936b38bbf178cd4203ffc8c382d3f2d44e4deb",
+      "bytes": 26308
+    },
+    "contact_sheet": {
+      "path": "world/map-production/qa/automated/style-candidate-h-v9-dense-flat-plan.contact-sheet.png",
+      "sha256": "187e64221d22096ea4295b375fa81439bbcf7d8a07ddb3b47b72104f3a44c394",
+      "bytes": 1400161
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-e-v2-preflight",
+  "created_at": "2026-07-19T00:09:26Z",
+  "status": "passed",
+  "candidate_series": "E",
+  "candidate_attempt": 2,
+  "single_change": "Increase only the amplitude of the existing south-east broad tonal masses around their current regional median; preserve north-east, the remaining canvas, spatial shapes, scale, transitions, transfer geometry, and every safety threshold.",
+  "generation_authorization": "ready",
+  "imagegen_contract": {
+    "mode": "precise-object-edit",
+    "referenced_images": 1,
+    "edit_target": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+    "use_num_last_images_to_include": false,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "south_east_target_q10_levels": [105, 109],
+    "south_east_target_q90_levels": [141, 145],
+    "required_input_plate_q90_q10_levels": [31, 40],
+    "locked_north_east_input_q90_q10_levels": 33,
+    "dominant_scale_px": [160, 320],
+    "transition_width_px": [64, 80]
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-e-v2-strengthen-south-east-plate.md",
+    "sha256": "9d589e887e02daf0a0802e20db5d733b974a52077586ca8b04aa0007413327b9",
+    "markdownlint": "passed",
+    "cspell": "passed",
+    "frontmatter": "passed"
+  },
+  "edit_source": {
+    "path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+    "sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "role": "sole ImageGen edit target"
+  },
+  "pixel_authoritative_base": {
+    "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+    "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+    "signal_role": "none",
+    "final_composite_role": "pixel-authoritative RGB base only"
+  },
+  "transfer_control": {
+    "path": "world/map-production/controls/style-candidate-e-v2-relief-mask-v1.json",
+    "sha256": "13288618d15f92e4e7d5f95d9014775407dc95c44c110baab7ab26997830bba8",
+    "raster_path": "world/map-production/controls/style-candidate-e-v2-relief-mask-v1.png",
+    "raster_sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a",
+    "signal_mode": "luminance_delta_plate",
+    "input_plate_q90_q10_levels": [31, 40],
+    "functional_diff_from_e_v1": [],
+    "metadata_diff_from_e_v1": ["id", "transfer_report_id", "purpose", "notes"],
+    "json_rendered_mask_equals_e_v1": true,
+    "committed_png_byte_identical_to_e_v1": true,
+    "width": 1536,
+    "height": 1024,
+    "nonzero_pixels": 531024,
+    "opaque_pixels": 324685,
+    "feather_pixels": 206339,
+    "protected_pixels": 1041840,
+    "maximum_equal_channel_delta_levels": 6,
+    "minimum_bandpass_q90_q10_levels": 3.5,
+    "maximum_normalization_gain": 2,
+    "publication": "atomic",
+    "report_id": "style-candidate-e-v2-relief-transfer"
+  },
+  "implementation": {
+    "script_path": "scripts/map-production/transfer_low_frequency_relief.py",
+    "script_sha256": "390201e105ee928ac08d60ea5ba4e50cb842298b626d9e7d183a5c5848ac84f3",
+    "test_path": "tests/low_frequency_relief_transfer_test.py",
+    "test_sha256": "5cca8d4c7a2f71e3f7d2be34769f3a9665c6a46697dfe174d23358e32c12ac27",
+    "manifest_path": "world/map-production/production-manifest.json",
+    "manifest_sha256": "304d32e2bb09fa46edb63d6dee3c28480640ec6a065d76132a2d638fd39dcf98"
+  },
+  "rejection_evidence": {
+    "path": "world/map-production/qa/automated/style-candidate-e-v1-rejection-audit.json",
+    "sha256": "73819a4b30fc621b1c22aa8be7f69107c554a4a8e4b573b8ff1c9667123d7f92",
+    "north_east_input_span": 33,
+    "south_east_input_span": 17,
+    "south_east_bandpass_span": 2,
+    "published_success_artifacts": 0
+  },
+  "feasibility_checks": [
+    {"target_q10": 109, "target_q90": 141, "input_span": 32, "bandpass_span": 6, "normalization_gain": 1.1667, "result": "passes"},
+    {"target_q10": 107, "target_q90": 143, "input_span": 36, "bandpass_span": 6, "normalization_gain": 1.1667, "result": "passes"},
+    {"target_q10": 105, "target_q90": 145, "input_span": 40, "bandpass_span": 8, "normalization_gain": 0.875, "result": "passes"}
+  ],
+  "independent_reviews": [
+    {
+      "reviewer": "Independent Codex Preflight QA A",
+      "decision": "GO",
+      "evidence": "After resolving the inherited-residual wording, the prompt has one numeric amplitude change, all endpoint pairs yield span 32-40, north-east and all spatial invariants are locked, and generation can proceed fail-closed."
+    },
+    {
+      "reviewer": "Independent Codex Preflight QA B",
+      "decision": "GO",
+      "evidence": "The only functional edit is south-east amplitude; E v1 and E v2 controls have zero functional difference and byte-identical masks; every transfer and road-safety gate remains unchanged."
+    },
+    {
+      "reviewer": "Independent Codex Transfer Code Audit",
+      "decision": "GO",
+      "evidence": "Three in-memory amplitude-only targets pass input, band-pass, and gain gates without threshold relaxation; all masks, geometry, high-frequency, topology, quadrant, road, range, and atomic-publication contracts are unchanged."
+    }
+  ],
+  "verification": {
+    "focused_transfer_tests": "16 passed in 56.959 seconds",
+    "markdownlint": "passed",
+    "cspell": "1 file, 0 issues",
+    "frontmatter": "145 files, 0 errors, 0 warnings, 0 broken links",
+    "manifest_validation": "passed; 13 jobs; rejected=10; revise=3",
+    "non_strict_release_validation": "passed; 23 QA reports"
+  }
+}

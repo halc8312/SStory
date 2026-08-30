@@ -1,0 +1,219 @@
+{
+  "$schema": "https://sstory.example/schemas/phase5-protected-control.schema.json",
+  "schema_version": "1.0.0",
+  "type": "sstory-phase5-protected-metatile-control",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "generated_by": "sstory-map-production/render_phase5_metatile_controls.py@1",
+  "sheet_id": "sheet_corridor_astralis_port_zephia",
+  "column": 4,
+  "row": 2,
+  "dimensions": {
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG"
+  },
+  "visual_geometry_control": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/geometry-control.png",
+    "sha256": "3d09247933c88dd3e6a1e2f60c31a64bf769b9a19b2cdb77fce5dc0ae461379e",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "parent_context": {
+    "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/parent-context.png",
+    "sha256": "6294787c17c447283016512bba4e7cc0af942f696a73af5b35b96a51fa4c29c0",
+    "width": 2048,
+    "height": 2048,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "prior_neighbor_contexts": [
+    {
+      "direction": "north",
+      "source_tile": {
+        "column": 4,
+        "row": 1
+      },
+      "context": {
+        "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/neighbor-north-geometry-context.png",
+        "sha256": "fadb50e78a8e5df11e26d833981515323386c5aecd7cc3788dff0d8807e07561",
+        "width": 2048,
+        "height": 2048,
+        "format": "PNG",
+        "color_mode": "RGB"
+      }
+    },
+    {
+      "direction": "west",
+      "source_tile": {
+        "column": 3,
+        "row": 2
+      },
+      "context": {
+        "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/neighbor-west-geometry-context.png",
+        "sha256": "1f033dd8fe72103b880650d4a92937be73ee42bcea9a271138d6978b8eba4268",
+        "width": 2048,
+        "height": 2048,
+        "format": "PNG",
+        "color_mode": "RGB"
+      }
+    }
+  ],
+  "land_sea": {
+    "land_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/land-mask.png",
+      "sha256": "235e43408369cc24e51d2d4cfbd4a25b84bd093cb97667c5cc25546fcaa0a2ab",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "water_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/water-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "known_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/known-mask.png",
+      "sha256": "235e43408369cc24e51d2d4cfbd4a25b84bd093cb97667c5cc25546fcaa0a2ab",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "unknown_mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/unknown-mask.png",
+      "sha256": "0c348930c941927bb00f25e7c53f460af4166d03818adc025f69c53f36ea4694",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/land-sea-overlay.png",
+      "sha256": "6294787c17c447283016512bba4e7cc0af942f696a73af5b35b96a51fa4c29c0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "partition": {
+      "algorithm": "canon-land-water-unknown-partition-v1",
+      "pixel_count": 4194304,
+      "land_pixel_count": 916760,
+      "water_pixel_count": 0,
+      "unknown_pixel_count": 3277544,
+      "overlap_pixel_count": 0,
+      "unclassified_pixel_count": 0
+    }
+  },
+  "transport": {
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/transport-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/transport-overlay.png",
+      "sha256": "6e84541fac14f31507b9d68f110245775261bfd6f75fb997b4b053e25a0614b0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [
+      "central_sea_marineport_jadeport",
+      "southern_air_corridor_astralis_jade_airport"
+    ],
+    "rasterization": "source-lines-global-native-grid-v1"
+  },
+  "detail": {
+    "status": "explicit-empty",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/detail-mask.png",
+      "sha256": "bc1ccaedb8aad8de3e64ef7b2d4fa2099f917e9995488e376bc94899c40c6fa8",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "authoritative_overlay": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/detail-overlay.png",
+      "sha256": "6e84541fac14f31507b9d68f110245775261bfd6f75fb997b4b053e25a0614b0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    },
+    "feature_ids": [],
+    "provenance": "No reviewed raster-safe detail exists; provisional outlines remain guide-only and labels/POIs remain vector data."
+  },
+  "unknown_fallback": {
+    "policy": "replace-raw-with-parent-context",
+    "mask": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/unknown-mask.png",
+      "sha256": "0c348930c941927bb00f25e7c53f460af4166d03818adc025f69c53f36ea4694",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "L"
+    },
+    "source": {
+      "path": "world/map-production/controls/phase5-metatiles/sheet_corridor_astralis_port_zephia/c04-r02/parent-context.png",
+      "sha256": "6294787c17c447283016512bba4e7cc0af942f696a73af5b35b96a51fa4c29c0",
+      "width": 2048,
+      "height": 2048,
+      "format": "PNG",
+      "color_mode": "RGB"
+    }
+  },
+  "source_inputs": {
+    "resolution_contract": {
+      "path": "world/map-production/spec/resolution-contract.json",
+      "sha256": "f65984a6e162e6f60eb93873aa38e0daf1a263975f89cb063092c80389bb0290"
+    },
+    "map_sheets": {
+      "path": "world/map-production/source/map-sheets.json",
+      "sha256": "20204c1bf14c8cb7b1204066c1b0755a0a74f62f9c7c6418b76754540a9a3c15"
+    },
+    "canon_sources": [
+      {
+        "role": "landmasses",
+        "path": "world/map-production/source/landmasses.geojson",
+        "sha256": "d5e9600590bf2d122f33405c1f1924a8274a76f4bac1669f35f6adaaaa854b20"
+      },
+      {
+        "role": "regions",
+        "path": "world/map-production/source/regions.geojson",
+        "sha256": "233053f8ed4214016d8d4c841bceeb5192f5912dfd721325ad9657313752dbb4"
+      },
+      {
+        "role": "terrain",
+        "path": "world/map-production/source/terrain.geojson",
+        "sha256": "fd186efd744c5dd31d5abe039d23e7fc2f04ff4e689233b48dc4bd9b397ab3aa"
+      },
+      {
+        "role": "hydrography",
+        "path": "world/map-production/source/hydrography.geojson",
+        "sha256": "33e23b5c85cc41f3ac6a65ced65284b81e04664ae373d85c1afb55dc67f8677d"
+      },
+      {
+        "role": "settlement-footprints",
+        "path": "world/map-production/source/settlement-footprints.geojson",
+        "sha256": "48baf5f1a4857ef9500b6aab80468356869c5e8651196718a83a78a50cb89974"
+      },
+      {
+        "role": "transport-geometries",
+        "path": "world/map-production/source/transport-geometries.geojson",
+        "sha256": "4beabac07fbfa6c67a4340f4a45a5199cb4c536e1b081ea5d5ba20a6c19c4565"
+      }
+    ]
+  }
+}

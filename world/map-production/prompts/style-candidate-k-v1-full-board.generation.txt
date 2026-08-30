@@ -1,0 +1,45 @@
+Use case: stylized-concept
+Asset type: fresh full-board antique cartographic style candidate
+
+REFERENCE ROLES — EXACTLY THREE:
+1. Image 1 is the exact and sole composition, geometry, topology, footprint, adjacency, relative-placement, junction, and connection authority. Reconstruct its complete borderless 1536 x 1024 arrangement exactly. Its flat colors, clean vector finish, and lack of material detail are not style or palette authority.
+2. Image 2 is the aligned spatial material-grammar control only. Follow where it keeps water calm, varies forest density, places sparse highland hachure and broad tonal zones, breaks field-row cadence, and leaves city, port, roads, rivers, and quiet corridors free of patterned fill. Use its grammar and negative-space distribution, not its schematic geometry-line finish and not its colors as an independent palette source.
+3. Image 3 is the sole palette and print authority. Use only its warm aged parchment, restrained sepia/umber and olive-brown ink, dusty slate-blue water, copperplate line weight, dry print grain, tonal range, and overall material finish. Do not copy its geography, perspective cues, floating-island forms, mountains, coastline, routes, settlements, individual motifs, framing, text-like marks, or repeated local vocabulary.
+
+Primary request: Generate one entirely new, coherent, edge-to-edge full board. This is a fresh synthesis, not an edit, inpaint, protected composite, crop repair, or regional patch. Keep Image 1's exact successful vertical-plan composition while using Image 2's aligned nonperiodic spatial grammar and Image 3's locked Golden palette and print finish. The result must read as one plate, with no quadrant logic, panels, seams, rectangular material zones, or abrupt transitions.
+
+Projection and composition:
+- Exactly 90-degree vertical orthographic plan view everywhere; no horizon, perspective, isometric cue, roof face, wall face, extrusion, underside, cliff face, cast shadow, or directional lighting.
+- Preserve Image 1's open sea on the left; low irregular west and south-west coast; five braided delta islands; north-to-centre river and all four western branches; north and north-centre forest; circular-plan capital centred near x=842,y=510; compact coastal port near x=500,y=850; all five road routes and junctions; upper-right highland footprint; eight large lower-right field parcels; and calm connecting corridors.
+- Preserve all major silhouettes, proportions, adjacencies, coast and river connections, road continuity, city and port footprints, and borderless canvas edges. Do not add, delete, move, reroute, split, merge, or disconnect any required feature.
+
+Water grammar:
+- Keep most open sea as quiet dusty slate-blue wash with restrained Royal paper-and-ink variation.
+- Add only sparse, short, individually disconnected engraved fragments with nonperiodic spacing, locally varied orientation, and irregular large, medium, and small calm gaps, matching Image 2's water grammar.
+- Every water mark must end independently. No touching, crossing, chaining, long band, dominant directional cadence, contour-following line, closed contour, cell, diamond, honeycomb, net, web, lattice, grid, scallop row, fish scale, repeated wave symbol, or moire.
+- Water must remain materially quieter than every major land region at 25% and 50%.
+
+Forest grammar:
+- Render the forest as one continuous overhead land-cover material made from irregular multi-scale fine stipple and broken micro-hachure, with broad organic variation between dense, medium, and open areas.
+- Use asymmetric clusters and irregular negative-space openings. Merge density changes gradually while keeping the footprint, river, roads, and clearings immediately legible.
+- Do not outline individual trees. No closed crown loop, circle, oval, dome, lollipop, trunk, conifer, rosette, blob stamp, repeated dot field, cloned cluster, orchard spacing, glyph row, symbol row, or uniform procedural wallpaper.
+
+Highland grammar:
+- Render the upper-right highland as broad, soft, planar low-frequency tonal zones contained within the exact Image 1 footprint.
+- Add only sparse broken copperplate hatches shorter than 18 pixels at native scale, with locally changing direction and density and large calm gaps, following Image 2's distribution.
+- No long band, long parallel snake, ridge line, nested contour, closed ring, oval, S-curve, spiral, fingerprint, directional lattice, hard tonal polygon, raised landform, pictorial peak, mountain, rock icon, cloudy relief blob, lighting gradient, or side shading.
+
+Fields and clean geometry:
+- Retain all eight large field parcels. Use varied broken crop-row cadence, unequal spacing, local angular drift, irregular interruptions, and substantial quiet gaps. Keep parcel boundaries legible. No mechanically parallel fill, CAD grid, cross-grid, repeated parcel stamp, regular array, halftone, or moire.
+- Keep the capital, port, roads, rivers, coasts, and piers as clean, readable overhead geometry rather than patterned surfaces. Use varied plan footprints, courts, lanes, quays, walls, and street logic only where Image 1 requires them; never teach or repeat a texture stamp through these features.
+- Keep quiet corridors as finished low-contrast parchment with restrained print grain and no visible blank patch.
+
+Global material and hierarchy:
+- Use Image 3's palette and print language consistently across the complete canvas. Image 1 and Image 2 must not introduce a competing hue family.
+- Use organic nonperiodic variation across broad, medium, and fine scales in spacing, mark length, orientation, density, tonal strength, and negative space.
+- No repeated stamp vocabulary anywhere: no cloned waves, trees, rocks, hachure clusters, buildings, field marks, dots, lozenges, curls, hooks, rings, rosettes, triangles, glyphs, or pseudo-symbols.
+- At 25% (384 x 256), sea, coast/delta, forest, river, capital, port, highland, fields, and the primary road network must separate immediately.
+- At 50% (768 x 512), all connections and boundaries must remain crisp and the broad density hierarchy must remain intact.
+- At native and 200%, every natural mark family must remain broken, nonperiodic, non-glyphic, and visibly subordinate to clean geography.
+
+Output constraints: one borderless, full-bleed, landscape RGB image at exactly 1536 x 1024 pixels. No labels, letters, digits, words, pseudo-writing, glyph rows, signature, watermark, legend, compass, cartouche, title, caption, decorative emblem, frame, margin, inset, UI, modern object, quadrant boundary, panel boundary, pasted band, halo, or seam.

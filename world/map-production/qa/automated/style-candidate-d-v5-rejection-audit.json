@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-v5-rejection-audit",
+  "created_at": "2026-07-18T23:06:40Z",
+  "status": "rejected",
+  "candidate_attempt": 5,
+  "preflight": {
+    "path": "world/map-production/qa/automated/style-candidate-d-v5-preflight.json",
+    "sha256": "f260086416bba918b68cdb5ca8e87a228ebc8e176fa29e74fe7a1fe4aa81ecfe",
+    "status": "passed"
+  },
+  "raw_output": {
+    "path": "world/map-production/candidates/style-candidate-d-v5-broad-relief-raw.png",
+    "sha256": "bd3388ea2de264509a36c44954c121d9d9c358a3e483ca1e94a5d88b00137b6f",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 4063702
+  },
+  "transfer_result": {
+    "status": "rejected-before-publication",
+    "reason": "north_east_range robust low-frequency signal is too weak: 2.0000",
+    "minimum_raw_q90_q10_levels": 3.5,
+    "region_metrics": [
+      {
+        "id": "north_east_range",
+        "raw_band_median_levels": 0,
+        "raw_band_q10_levels": -1,
+        "raw_band_q90_levels": 1,
+        "raw_band_q90_q10_levels": 2
+      },
+      {
+        "id": "south_east_range",
+        "raw_band_median_levels": 0,
+        "raw_band_q10_levels": -1,
+        "raw_band_q90_levels": 0,
+        "raw_band_q90_q10_levels": 1
+      }
+    ],
+    "published_candidate": false,
+    "published_mask": false,
+    "published_field": false,
+    "published_report": false
+  },
+  "raw_drift": {
+    "total_pixels": 1572864,
+    "changed_pixels": 1572560,
+    "changed_fraction": 0.999806722,
+    "maximum_rgb_channel_delta": 183,
+    "p95_maximum_rgb_channel_delta": 50,
+    "outside_generation_mask_pixels": 1034843,
+    "outside_generation_mask_changed_pixels": 1034592,
+    "outside_generation_mask_changed_fraction": 0.999757451,
+    "outside_p95_maximum_rgb_channel_delta": 53
+  },
+  "vision_findings": {
+    "decision": "rejected",
+    "broad_hierarchy": "Neither mountain field has readable massif, saddle, and foothill hierarchy at 100 percent; the north-east remains a nearly uniform small-symbol field.",
+    "high_frequency_integrity": "Rocks, trees, road edges, coastlines, water texture, paper grain, fields, and city linework were regenerated or shifted in the raw output.",
+    "route_artifacts": "No dominant new route, contour, or dashed chain was found, but the required broad substrate is absent.",
+    "mask_boundary": "No conspicuous straight mask edge was found, but almost every pixel outside the permission mask drifted."
+  },
+  "next_candidate": {
+    "id": "style-candidate-e-v1-independent-relief-plate",
+    "single_change": "Generate an independent low-frequency luminance plate instead of editing the detailed map; retain the identical deterministic final transfer and all protection gates.",
+    "reason": "Editing the detailed map forces ImageGen to reconstruct high-frequency cartography while producing too little low-frequency signal. A featureless plate removes that conflict without changing the requested final visual effect."
+  }
+}

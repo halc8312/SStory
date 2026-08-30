@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-d-v4-erase-route-marks",
+  "image_path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+  "created_at": "2026-07-18T21:11:32Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "Candidate D v4 final, v4 raw, and D v3 were inspected independently.", "notes": "Free-floating capsule chains are absent; the eastern terrain still reads as rubble-covered flat ground."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Full image plus native north-east, south-east, and road-crossing crops were inspected.", "notes": "No route-like double capsules, broken road, missing tree, or visible repair boundary appears."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "All provided 400% regional and targeted detail crops were inspected.", "notes": "Several repairs have a faint low-frequency oval smoothness, but no halo or hard seam."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "A full nine-region scan was completed.", "notes": "No composition drift, scale jump, or unrelated generated object was found."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "All north-east and south-east mask overlays and quadrant crops were checked.", "notes": "The forty-four narrow targets are covered and the tree false-positive remains outside the edit."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "D v4 was compared with D v3 and the localized D v2 base.", "notes": "The deterministic composite suppresses the raw generation's global drift and retains the parent composition."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Regional boundaries and the east-road crossing were checked at native and enlarged scale.", "notes": "There is no visible outer seam, mask edge, or road discontinuity."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road, route, boundary, and label conflicts were assessed.", "notes": "Tree shadows remain legible as shadows and are no longer confused with a route; the mountain zone lacks contextual relief."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability was reviewed; the style board is not yet tiled.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability was reviewed; the style board is not yet tiled.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "The final composite changes no protected pixel outside the reviewed mask."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": true, "evidence": "Broad massifs, ridge direction, valley structure, and elevation hierarchy are not readable in the eastern mountain zone."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No noncanonical settlement, road, facility, field, or landmark appears."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No letters, pseudo-writing, or route-like symbol chain remains."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "Extreme zoom reveals slight smoothing but no hard seam, halo, clone edge, or mask outline."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern element, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "The result remains flat plan view with stable scale and no scenic mountain face."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": false, "evidence": "The capsule repetition is removed; dense small rock symbols are mildly repetitive but remain below the immediate-failure threshold."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 24, "notes": "Canonical composition and all protected feature classes remain stable."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 14, "notes": "The final composite restores only the reviewed local marks and suppresses raw global drift."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 15, "notes": "No visible outer, mask, or protected-road seam is present."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 12, "notes": "The repair is stylistically coherent; the rubble-like mountain field lacks broad tonal structure."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 6, "notes": "Fine texture is abundant but macro-scale relief information is absent."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 8, "notes": "No dominant repeated capsule remains; a few repaired spots are subtly smooth at 400%."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 9, "notes": "Roads and future route vectors are clear after artifact removal."}
+  ],
+  "total_score": 88,
+  "decision": "revise",
+  "summary": "Candidate D v4 passes the forty-four-target artifact-removal task, preserves the mark_26 tree and all protected map features, and has no visible seam. It remains below the golden threshold because the eastern mountains have fine symbols but no readable broad relief hierarchy.",
+  "required_changes": [
+    "Change only the mountain relief substrate: introduce broad, irregular, low-contrast plan-view tonal massifs and slope-density gradients while preserving all existing rocks, trees, roads, fields, cities, repaired targets, and protected geography."
+  ]
+}

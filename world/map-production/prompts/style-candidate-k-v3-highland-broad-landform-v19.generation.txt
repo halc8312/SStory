@@ -1,0 +1,10 @@
+Use case: precise-object-edit
+Asset type: orthographic antique fantasy-map terrain correction
+
+Image 1 is the exact map to edit. Preserve its canvas, composition, geography, coastline, sea, islands, forest, river, capital, port, roads, field parcels, colours, print age, and every feature outside the pale upper-right highland. Image 2 is a style reference only for the convincing hand-printed terrain language; do not copy its geography or its individual mountain symbols.
+
+Replace only the pale highland interior in the upper-right of Image 1. Make it read as one coherent elevated plateau at normal map scale, using seven to eleven broad, irregular, overlapping landform masses. Each mass should span roughly 80 to 220 pixels in the final 1536 x 1024 map, with varied size, direction, spacing, and softly interlocking edges. Use restrained warm ochre and umber dry-print tone, shallow planar relief, broken contour-like scumble, and generous quiet parchment valleys. The large forms should continue naturally beyond the highland crop where appropriate, so there is no central arrangement or repeated cadence.
+
+Keep the treatment flat and orthographic. New terrain contrast must remain clearly weaker than roads, city walls, coastlines, and field borders. Preserve the road through the highland exactly and leave a calm readable shoulder around it. Preserve the highland boundary transition with no pale polygon, dark polygon, halo, seam, or rectangular plate. At 25% and 50% the area should read as subtle varied high terrain integrated into the same printed sheet; at 200% and 400% it should reveal irregular broken dry ink and natural paper, never a repeated microscopic fill.
+
+Use positive, unique landform drawing rather than an all-over texture. Avoid repeated hatches, parallel bundles, chevrons, herringbone, woven grain, rows, grids, identical mountain icons, evenly scattered dots, pebble fields, bubbles, rings, curls, cells, camouflage blobs, cloudy airbrush, or a uniform flat fill. Do not add labels, borders, settlements, buildings, rivers, roads, signatures, frames, or watermarks. Do not crop, resize, rotate, reframe, relight, or recolour the map.

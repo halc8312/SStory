@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "generation_id": "k3-v246-ground-material-donor-v5",
+  "status": "approved-derived-source",
+  "generated_at": "2026-07-25T15:31:41.3194512+09:00",
+  "generator": "image_gen.imagegen",
+  "generator_model_name_claimed": false,
+  "operation": "new-generation-followed-by-four-single-change-edits",
+  "prompt_chain": {
+    "path": "world/map-production/prompts/k3-v246-ground-material-donor-v5.generation-chain.txt",
+    "sha256": "42fda3a3c05988b1271fb39dc95a868320c40e0ac86617ae3a98a772d916f462",
+    "exact_prompt_text_preserved": true,
+    "step_count": 5
+  },
+  "reference_chain": {
+    "step_1": "new image without a referenced image",
+    "steps_2_through_5": "the immediately preceding conversation image",
+    "intermediate_images_promoted": false,
+    "intermediate_cache_failure": "The C-drive generated-image cache was full and wrote zero-byte intermediate placeholders.",
+    "byte_exact_intermediate_replay_claimed": false,
+    "final_output_persisted_from_returned_data_url": true
+  },
+  "output": {
+    "path": "world/map-production/style-assets/k3-v246-imagegen-ground-material-donor-v5.png",
+    "sha256": "555054ea3c03c8ecb80cb9ae1287d57feac1058022495d73fe3dea75657fb1f5",
+    "bytes": 1813712,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "root_vision_review": {
+    "path": "world/map-production/qa/k3-v246-ground-material-donor-v5-root-vision.json",
+    "sha256": "822dd00486a8a75326647ca2405f16b5ddabc90b2138081cc332cb904c527bb3",
+    "decision": "approved-only-as-low-mid-frequency-luminance-source",
+    "score": 94,
+    "direct_golden_accepted": false
+  },
+  "derivation_contract": {
+    "source_role": "relative low-and-mid-frequency luminance phase only",
+    "raw_rgb_chroma_or_absolute_luminance_transfer_allowed": false,
+    "semantic_geometry_authority": false,
+    "direct_final_pixel_promotion_allowed": false,
+    "sub_12px_detail_transfer_allowed": false,
+    "candidate_use_requires_separate_preregistered_numeric_audit": true,
+    "final_use_requires_exact_five_root_and_blind_vision": true
+  }
+}

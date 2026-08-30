@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-v4-preflight",
+  "created_at": "2026-07-18T20:55:40Z",
+  "status": "passed",
+  "candidate_attempt": 4,
+  "single_change": "Erase the forty-four visually reviewed route-like marks and locally restore only the covered parchment texture.",
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-d-v4-erase-route-marks.md",
+    "sha256": "5ca33bcac30fb22e36a69df562d467ca864c09316e2eb779e46ba0f91deaca78",
+    "markdownlint": "passed",
+    "cspell": "passed",
+    "frontmatter": "passed"
+  },
+  "edit_source": {
+    "path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+    "sha256": "8112f35363cc5e314e2b9793d06603bf5274a516e9a5ec72c5a06c5f421a73f8"
+  },
+  "mask_control": {
+    "path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.json",
+    "sha256": "b437aff4c4ed0ed16b477095562861f66c53bafdfe971e286601dc79caea2775"
+  },
+  "mask_raster": {
+    "path": "world/map-production/controls/style-candidate-d-v3-mark-mask-v1.png",
+    "sha256": "6978665cf6acc1b466ec991d6133f66b43c47a3e4d6baea2b25e1af28f38fc3c",
+    "width": 1536,
+    "height": 1024,
+    "nonzero_pixels": 33591,
+    "opaque_pixels": 20410
+  },
+  "mask_audit": {
+    "path": "world/map-production/qa/automated/style-candidate-d-v3-mark-mask-v1.json",
+    "sha256": "0cf41dc6a40c0641eb5f6fd17b49d3e035f17a7dacf7900ad6b4cda56a1d2ca3",
+    "automated_candidates": 40,
+    "reviewed_true_positives": 39,
+    "reviewed_false_positives": 1,
+    "reviewed_manual_additions": 5,
+    "reviewed_targets": 44,
+    "detected_target_pixels_without_opaque_core": 0,
+    "masked_false_positive_pixels": 0,
+    "manual_endpoint_core_failures": 0,
+    "outside_parent_edit_mask_pixels": 0
+  },
+  "independent_prompt_reviews": [
+    {
+      "reviewer": "Independent Codex Vision QA A",
+      "decision": "GO",
+      "evidence": "Forty-four targets, overlapping-mask wording, and outside-mask pixel preservation match the reviewed artifacts."
+    },
+    {
+      "reviewer": "Independent Codex Vision QA B",
+      "decision": "GO",
+      "evidence": "The prompt matches the reviewed target count, opaque-core contract, overlap semantics, and technical gates."
+    }
+  ],
+  "tests": {
+    "candidate_d_v3_mark_mask_and_composite": "12 passed",
+    "manifest_validation": "passed",
+    "non_strict_release_validation": "passed"
+  }
+}

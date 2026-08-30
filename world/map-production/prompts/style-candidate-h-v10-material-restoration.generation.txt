@@ -1,0 +1,23 @@
+SStory map production — Candidate H10, one-change material restoration
+
+Reference roles, in order:
+
+1. Candidate H9 is the pixel-authoritative geography, projection, and flat-plan symbol reference. Preserve its coastline, islands, river and delta channels, roads, field boundaries, circular capital footprint and street plan, port footprint and piers, terrain envelopes, and every feature position.
+2. Candidate B1 is a material, palette, local-contrast, and copperplate-density reference only. Do not copy its perspective cliffs, floating islands, mountain faces, roofs, facades, or cast shadows.
+
+Make exactly one conceptual revision: restore the rich hand-engraved copperplate material, B1 colour family, and useful small-scale contrast that H9 lost, while retaining H9's strict orthographic plan geometry.
+
+Required result:
+
+- Exact 90-degree overhead cartographic plan view across the whole image.
+- Deep muted slate-blue water with fine non-directional engraved grain; warm ochre parchment land; dark olive vegetation; restrained umber linework.
+- Dense but legible high-frequency paper, ink, vegetation, wetland, field, and rock hachure detail. Detail must remain spatially distributed and readable when the image is reduced to 50% and 25%.
+- Replace the visual impression of repeated round tree dots with irregular connected canopy masses, broken edges, varied clearings, and non-repeating engraved foliage. Keep the H9 forest envelope and all protected routes and water channels.
+- Keep the H9 capital as an irregular, dense, flat footprint plan with unequal districts and civic voids. Keep the H9 port as a land-grounded flat plan with thin piers. Buildings are footprint polygons only.
+- Highlands and rock are flat hachure or tonal plan symbols only: no triangular peaks, scenic mountains, cliff faces, or directional relief.
+- Equal tonal treatment on every side of every object. No directional lighting, highlights, shadows, side faces, roofs, facades, tree trunks, cliff undersides, floating-island undersides, or atmospheric perspective.
+- Preserve uncluttered corridors around the canonical roads and river centerlines for later vector overlays.
+- No labels, letters, numbers, pseudo-writing, signatures, watermarks, border, title cartouche, compass rose, scale bar, legend, or decorative frame.
+- No repeated stamp grid, radial rosette texture, identical wedges, obvious tiling seams, blur, or upscale softness.
+
+The output is a single borderless 1536 x 1024 RGB map image. It is a style-board candidate, not a labeled map.

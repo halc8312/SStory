@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "schema_lock": {
+    "path": "world/map-production/schemas/protected-relief-composite-v1.schema.json",
+    "sha256": "4e6a46e9c183777209c1a512b0bc98605855ea7a0435ffd6abe1082c799fb97b"
+  },
+  "id": "style-candidate-g-v1-generation-control-v1",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-g-v1-direct-cartographic-relief.generation.txt",
+    "sha256": "63b8b81270d17ef9e3084b45ee3c66668629fee34a6e80cf3f3bfdc28858a987"
+  },
+  "references": [
+    {
+      "index": 1,
+      "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+      "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+      "format": "PNG",
+      "mode": "RGB",
+      "role": "pixel-authoritative-base"
+    },
+    {
+      "index": 2,
+      "path": "world/map-production/controls/style-candidate-g-v1-topology-guide.png",
+      "sha256": "4238d100542e0169ff34a4c3c2977ec286ea411df71a8d513c56ca4f74df26c8",
+      "format": "PNG",
+      "mode": "RGB",
+      "role": "flat-color-topology-guide"
+    }
+  ],
+  "guide_contract": {
+    "source_control": {
+      "path": "world/map-production/controls/style-candidate-g-v1-topology-guide.json",
+      "sha256": "9e93675fe3eca6a82887f421f2d939f3d8279c446f3971bdf4d4c7ffdfef6347"
+    },
+    "background_rgb": [128, 128, 128],
+    "active_colors": [
+      {"role": "main-massif", "rgb": [206, 74, 62], "expected_components": 2},
+      {"role": "foothill-a", "rgb": [232, 151, 61], "expected_components": 2},
+      {"role": "foothill-b", "rgb": [126, 93, 178], "expected_components": 2}
+    ],
+    "expected_components": 6,
+    "permission_feather_inside_px": 24
+  },
+  "road_protection": {
+    "guard_width_px": 64,
+    "feather_px": 8,
+    "strokes": [
+      {
+        "id": "north_road",
+        "points": [[1085,160],[1060,180],[1035,200],[1005,225],[982,250],[970,280],[966,320],[960,350],[946,375],[918,400],[910,425],[900,455],[895,485]]
+      },
+      {
+        "id": "east_road",
+        "points": [[930,505],[1050,515],[1180,540],[1270,535],[1370,490],[1535,450]]
+      },
+      {
+        "id": "south_east_road",
+        "points": [[910,558],[1000,610],[1090,666],[1180,725],[1270,785],[1360,840],[1450,892],[1535,936]]
+      }
+    ]
+  },
+  "detail_protection": {
+    "gaussian_radius_px": 3,
+    "high_frequency_threshold_levels": 18,
+    "dark_luminance_max": 105,
+    "feather_px": 0
+  },
+  "purpose": "Hash-lock Candidate G reference order before generation, then composite only the six declared flat-color guide footprints while preserving a 64 px guard around all three roads and the base image's high-frequency or dark-line detail core."
+}

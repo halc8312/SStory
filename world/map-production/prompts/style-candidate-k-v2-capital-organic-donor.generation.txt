@@ -1,0 +1,9 @@
+Edit this exact top-down antique-map CAPITAL CROP, keeping the crop framing and registration.
+
+Reference 1 is the current correction crop and the main visual base. Reference 2 is K1 material/style authority. Reference 3 is geometry only; never copy its flat vector colors.
+
+LOCK AND PRESERVE: surrounding terrain, river, forest, all external roads, the capital's single outer circular wall, its center/radius, and exactly five external road gates (north, west, east, south, southeast). Preserve dry warm-sepia copperplate line quality, muted parchment, flat orthographic view, and dense tiny roof texture.
+
+EDIT ONLY INSIDE the outer wall. Remove all mechanically concentric interior ring roads and all regular radial spoke/wedge planning. Rebuild the interior as a believable dense, old, organically accumulated royal capital: many small unequal connected blocks, narrow crooked lanes that bend and offset, irregular courtyards, compact neighborhoods with distinct local orientations, a modest asymmetric central citadel/plaza, and at least two non-circular cross-town routes. The outer wall may be circular, but NOTHING inside may form a complete circle, repeated ring, starburst, pizza wedge, radial template, or modern Voronoi/GIS cells. Strong asymmetry. Roads connect naturally to the five gates, then meander.
+
+No text, labels, glyphs, perspective roofs, shadows, 3D buildings, halos, blur, or new hue. At 200–400% the buildings and alleys must remain crisp and varied; at 25–50% the city must read as one dense landmark without a radial diagram.

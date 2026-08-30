@@ -1,0 +1,23 @@
+{
+  "schema_version": "microtexture-v2-r6-locked-clean-reference-independent-vision/1",
+  "review_id": "microtexture-v2-r6-locked-clean-reference-imagegen-v18-independent-vision-a",
+  "documented_at": "2026-07-26T07:53:43+09:00",
+  "review_completion_time_exactly_attested": false,
+  "reviewer": "Descartes the 2nd",
+  "review_mode": "blind-independent-vision-only-clean-reference-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-r6-locked-clean-reference-imagegen-v18.png",
+    "sha256": "e2eeb08046994b549c2eee5245c9410c329847d9cfe06ea6cb435dca5862512d",
+    "bytes": 1081552,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "review_context_excluded": ["generation prompts", "Root review", "numeric detector measurements", "control identities", "other independent review"],
+  "views_actually_inspected": ["persisted-original", "center-native-512x384", "northwest-native-512x384", "northeast-native-512x384", "southwest-native-512x384", "southeast-native-512x384"],
+  "numeric_metric_evaluation_performed": false,
+  "score": 99,
+  "threshold": 94,
+  "decision": "approved-as-r6-locked-clean-reference-candidate",
+  "observations": "No isolated speck, microblob, grain, repeat, line, ridge, parallel bundle, ring, seam, edge artifact, compression trace, directional pattern, or semantic content. Only extremely broad warm-neutral drift is perceptible.",
+  "passed_for_declared_source_role": true
+}

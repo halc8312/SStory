@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v6-dual-reference-flat-gis",
+  "image_path": "world/map-production/candidates/style-candidate-h-v6-dual-reference-flat-gis.png",
+  "created_at": "2026-07-19T16:16:40.709Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "The 1536x1024 RGB final, the H6 generation prompt, H5 geometry reference, H4 material reference, and Candidate B1 style reference were inspected together.",
+      "notes": "The major coastline, delta, river, road, city, port, forest, highland, and field composition remains recognizable, and H6 restores stronger water-land and terrain contrast."
+    },
+    {
+      "id": "original",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "The final PNG was inspected at its native 1536x1024 resolution.",
+      "notes": "Road and river hierarchy is readable, but the central city and lower-left port retain modeled height, while circular forest stamps and triangular highland marks are visible without enlargement."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "The complete image was reduced to 384x256 and inspected.",
+      "notes": "Dusty-blue water, warm land, forest, city, highland, roads, and fields remain clearly differentiated, satisfying the requested broad B1/H4 contrast recovery."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "The complete image was reduced to 768x512 and inspected.",
+      "notes": "Local hierarchy remains strong, but rounded canopy repetition and the dense triangular highland vocabulary already read as conspicuous patterns at this scale."
+    },
+    {
+      "id": "zoom_200",
+      "label": "9領域200%拡大",
+      "complete": true,
+      "evidence": "North-west, north-center, north-east, middle-west, center, middle-east, south-west, south-center, and south-east crops were each inspected at 200%.",
+      "notes": "The city wall facade and tower forms, port roof and pier side marks, repeated circular canopies, and repeated A-shaped or triangular highland marks are all confirmed."
+    },
+    {
+      "id": "zoom_400",
+      "label": "9領域400%拡大",
+      "complete": true,
+      "evidence": "The same nine regions were each inspected at 400%, with an additional 400% port-centered crop.",
+      "notes": "The city contains cylindrical towers, a raised domed or spired center, and modeled roof faces; port buildings and piers contain directional side faces and vertical post-like strokes. Some transition trees also expose trunk-like strokes."
+    },
+    {
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
+      "complete": true,
+      "evidence": "All nine spatial regions were scanned for text, modern objects, geometry breaks, perspective, repetition, and edge defects at enlarged scale.",
+      "notes": "No text, watermark, or modern object was found. The central city, lower-left port, broad forests, and eastern to southern highland contain the principal failures."
+    },
+    {
+      "id": "h5_geometry",
+      "label": "H5形状参照との比較",
+      "complete": true,
+      "evidence": "H6 and style-candidate-h-v5-strict-plan-symbols.png were compared at matching full extent and enlarged detail.",
+      "notes": "H6 preserves H5's geography and route continuity while improving material richness and contrast, but it retains the city and port perspective defects and reintroduces a much more explicit triangular highland vocabulary."
+    },
+    {
+      "id": "h4_material",
+      "label": "H4素材参照との比較",
+      "complete": true,
+      "evidence": "H6 and style-candidate-h-v4-plan-view-golden-board-raw.png were compared for palette, parchment, ink density, terrain texture, and pictorial height.",
+      "notes": "The warmer parchment, dusty-blue water, darker ink, and richer material are closer to H4, but H4's prohibited modeled city and port grammar also remains, and H6's forest repetition is more mechanical."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1画風比較",
+      "complete": true,
+      "evidence": "H6 was compared with style-candidate-b-v1.png for parchment, palette, copperplate character, density, and hierarchy.",
+      "notes": "H6 is materially closer to B1 than H5 and avoids B1's large floating-island and mountain-range defects, yet it still fails the strict orthographic and non-repetition requirements."
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・継ぎ目拡張性",
+      "complete": true,
+      "evidence": "All four outer edges were inspected at native and enlarged views for borders, abrupt tonal bands, clipped motifs, and continuation defects.",
+      "notes": "The output is frame-free and no visible edge seam is present; an actual neighboring-tile composite was not part of this single-image review."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳可読性",
+      "complete": true,
+      "evidence": "Road, river, coast, field, city, and quiet-corridor readability was assessed at native, 25%, 50%, 200%, and 400% views.",
+      "notes": "Routes and terrain classes remain readable at reduced size, but the dense canopy discs, highland triangles, and dark modeled city compete with future labels and POI overlays."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "No readable text, pseudo-label, letter, number, legend, compass, or scale bar was found at native or 400% inspection."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "No watermark, logo, signature, frame, border, modern object, or decorative corner element was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島・島下面",
+      "detected": false,
+      "evidence": "All detached land is drawn as ordinary sea-level islands or delta bars; no floating underside or suspended landform was found."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "側面・遠近法・方向光",
+      "detected": true,
+      "evidence": "At 400%, the circular city retains a dark lower wall facade, cylindrical tower forms, modeled roofs, and a raised domed or spired monument. Port buildings retain roof and side faces, and piers retain double edges plus downward post-like strokes. Trunk-like tree strokes and faceted triangular highland marks add further directional-height cues."
+    },
+    {
+      "id": "missing_composition",
+      "label": "必須構成・置換の欠落",
+      "detected": true,
+      "evidence": "Four explicit H6 replacements were not achieved: the city is not flat, the port is not footprint-only, forests are dominated by repeated rounded canopy marks rather than irregular merged patches, and the highland contains repeated triangular peak-like symbols rather than purely direction-neutral chips and stipple."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "Major roads, river paths, delta channels, crossings, and field access lines remain continuously readable with no unintended interior break."
+    },
+    {
+      "id": "repetition",
+      "label": "目立つ反復",
+      "detected": true,
+      "evidence": "Large forest areas use similarly outlined circular or rounded canopy marks in honeycomb-like repetition, while eastern and southern highlands contain thousands of repeated triangular, A-shaped, or pyramidal marks. Both patterns are conspicuous at native, 50%, 200%, and 400% views."
+    },
+    {
+      "id": "edge_seam",
+      "label": "端の継ぎ目",
+      "detected": false,
+      "evidence": "No visible border, abrupt edge band, or frame seam was found on the top, right, bottom, or left edge."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "prompt構成・平面形状",
+      "maximum": 25,
+      "score": 15,
+      "notes": "Major geography and routes are preserved and coastlines remain low, but the explicitly required flat city, flat port, irregular merged forest, and triangle-free highland replacements all fail."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親画像・画風の連続性",
+      "maximum": 15,
+      "score": 13,
+      "notes": "H6 restores H4/B1-like parchment warmth, dusty-blue water, ink richness, and terrain contrast while preserving H5's core geography."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "端・継ぎ目拡張性",
+      "maximum": 15,
+      "score": 14,
+      "notes": "All edges are frame-free and visually extensible; only an actual neighbor composite remains untested."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 11,
+      "notes": "The palette and material are cohesive, but the detailed three-dimensional city and port, honeycomb forest marks, and triangular highland symbols conflict with the requested unified flat GIS grammar."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 8,
+      "notes": "H6 restores substantial terrain and ink detail and remains legible when reduced, although much of the apparent density comes from overpacked reusable symbols."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 2,
+      "notes": "No text or gross deformation appears, but two large prohibited repetitive vocabularies—rounded canopy stamps and triangular highland marks—cover broad portions of the land."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 8,
+      "notes": "Roads, rivers, fields, coast, and terrain classes remain clear, but the dense forest and highland patterns plus the dark radial city reduce quiet label and POI space."
+    }
+  ],
+  "total_score": 71,
+  "decision": "rejected",
+  "summary": "H6 is rejected and cannot be a Golden reference. It successfully restores richer H4/B1 material, dusty-blue water, warm parchment, and strong 25%/50% terrain contrast while preserving the major geography, routes, and frame-free edges. However, the city and port remain visibly three-dimensional, forests use conspicuous repeated circular canopy stamps, and eastern to southern highlands reintroduce thousands of explicitly prohibited triangular peak-like marks. Three immediate-failure gates are triggered and the 71 score is below the required 94.",
+  "required_changes": [
+    "Replace the city and port themselves with genuinely orthographic footprints and centerlines only: remove wall facades, cylindrical towers, domed or spired height, pitched roof faces, pier double-edge depth, posts, directional highlights, and cast shadows.",
+    "Remove every repeated circular canopy, honeycomb cluster, and triangular or pyramidal highland symbol; use varied merged overhead canopy patches without trunks and irregular non-convergent chips, stipple, and short strokes without reusable stamp silhouettes.",
+    "Preserve H6's successful dusty-blue water, warm parchment, local contrast, route continuity, low coastlines, and frame-free edges while reducing texture competition and retaining quiet corridors for future labels and POI vectors."
+  ]
+}

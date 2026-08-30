@@ -1,0 +1,60 @@
+{
+  "control_path": "world/map-production/controls/style-candidate-g-v2-generation-control-v1.json",
+  "control_sha256": "939ffde3c072c3e33bde070054d9df5a6328328dc597143ab0d61995cdfe09c8",
+  "guide": {
+    "active_pixels": 227663,
+    "background_pixels": 1345201,
+    "colors": [
+      {
+        "components": 2,
+        "pixels": 159369,
+        "rgb": [206, 74, 62],
+        "role": "main-massif"
+      },
+      {
+        "components": 2,
+        "pixels": 33212,
+        "rgb": [232, 151, 61],
+        "role": "foothill-a"
+      },
+      {
+        "components": 2,
+        "pixels": 35082,
+        "rgb": [126, 93, 178],
+        "role": "foothill-b"
+      }
+    ],
+    "components": 6
+  },
+  "guide_source_path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json",
+  "guide_source_sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01",
+  "prompt_path": "world/map-production/prompts/style-candidate-g-v2-orthographic-hachure.generation.txt",
+  "prompt_sha256": "9c6af16c5a104930656c8e7d3cb6d98d93df854a079a581ded5a24423657c5b7",
+  "reference_order": [
+    {
+      "format": "PNG",
+      "height": 1024,
+      "index": 1,
+      "mode": "RGB",
+      "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+      "role": "pixel-authoritative-base",
+      "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016",
+      "width": 1536
+    },
+    {
+      "format": "PNG",
+      "height": 1024,
+      "index": 2,
+      "mode": "RGB",
+      "path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+      "role": "flat-color-topology-guide",
+      "sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f",
+      "width": 1536
+    }
+  ],
+  "road_guard_width_px": 64,
+  "road_order": ["north_road", "east_road", "south_east_road"],
+  "schema_path": "world/map-production/schemas/protected-relief-composite-v1.schema.json",
+  "schema_sha256": "4e6a46e9c183777209c1a512b0bc98605855ea7a0435ffd6abe1082c799fb97b",
+  "status": "passed"
+}

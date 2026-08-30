@@ -1,0 +1,19 @@
+Edit the FIRST reference only into a higher-information, lighting-free SCALAR ELEVATION ATLAS for deterministic cartographic compositing.
+
+The FIRST reference is the edit target and supplies the exact calm scalar-atlas presentation. Preserve its exact canvas organization: exactly eight isolated, unequal mountain systems in the same 4-by-2 placement, with no ninth mass and no joined systems.
+
+Use the SECOND reference only to understand the amount and hierarchy of natural geographic information that should exist at deep zoom: each system needs a different main ridge, branching secondary spurs, saddles, basins, valley cuts, broad quiet slopes, and several scales of irregular erosion. Do not copy its map, its continuous mountain mass, its lighting, its bright crests, or its fern-like strokes.
+
+The THIRD and FOURTH references are topology authorities. Preserve the identity and internal ridge/spur/saddle/valley relationships of the eight systems while expressing them as continuous scalar fields, not line drawings.
+
+Critical rendering contract:
+- strict 90-degree nadir / orthographic technical atlas, not a scenic mountain picture;
+- continuous matte ochre/taupe scalar values only, moderately expanded midtone range;
+- no directional light, cast shadow, cliff face, perspective, bevel, silhouette outline, embossed edge, highlight, glow, white crest, or black trench;
+- body boundaries dissolve softly into one uniform warm parchment background with no halo;
+- significantly more authored multi-scale internal information than the first reference, so 400% reveals meaningful fine tributary valleys and ridge hierarchy beyond 200%;
+- natural irregularity, no repeated grammar.
+
+Absolutely no contour-line loops, rings, hatching, short-line bundles, fronds, leaf veins, fishbones, fingerprints, maze curls, particles, holes, craters, clouds, stains, symbols, text, roads, rivers, settlements, panels, frames, or vegetation. No visible periodic noise. Fine detail must be continuous elevation modulation, not drawn marks.
+
+This output is a donor atlas only. Exact geography will still be enforced deterministically by canonical masks.

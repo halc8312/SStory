@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-b-v2-plan-view",
+  "image_path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+  "created_at": "2026-07-18T15:55:00Z",
+  "reviewer": "Independent Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 overview inspected independently.", "notes": "Candidate B hierarchy and negative space remain intact."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Original-resolution PNG inspected.", "notes": "Plan-view city, port, river, and road geometry are readable."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Mountain, city, port, forest, delta, and island areas inspected at high detail.", "notes": "Mountain marks resolve into conspicuous repeated concentric targets."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "No text, watermark, or hard seam; repetition is concentrated in mountain footprints."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Applicability reviewed; this style board intentionally has no canon control geometry.", "notes": "Production region assets still require a control overlay."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared directly with candidate B v1.", "notes": "The requested projection correction succeeded while the broader composition stayed stable."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Applicability reviewed; the style board has no neighbors and retains frame-free edges.", "notes": "Production seam continuity remains unproven."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Line hierarchy and quiet label corridors inspected.", "notes": "Overlay readability remains strong outside the mountain target symbols."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; candidate is not a production tile set.", "notes": "Not staged in Leaflet."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; candidate is not a production tile set.", "notes": "Not staged in Leaflet."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "No material composition shift from candidate B v1 was found."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": false, "evidence": "All representative prompt elements remain present."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "Representative non-canon elements remain isolated from production geography."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text or pseudo-writing found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No hard internal seam found."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "City, port, roads, river, terrain, and islands are rendered from a strict overhead plan view."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Mountain footprints repeat concentric rings, center dots, and diamond motifs as obvious bullseye symbols."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 22, "notes": "Projection lock succeeded; style-board geometry remains representative rather than canonical."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 12, "notes": "Composition is stable, but terrain symbology changed visibly from B v1."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 13, "notes": "Even frame-free edges; no production neighbor exists."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 13, "notes": "Palette and line hierarchy remain coherent."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 8, "notes": "Useful detail, weakened by schematic target-like mountain marks."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 7, "notes": "The repeated concentric mountain motif triggers the repetition gate."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 9, "notes": "Road and label corridors remain clear; mountain symbols compete locally."}
+  ],
+  "total_score": 84,
+  "decision": "revise",
+  "summary": "The strict plan-view edit succeeded and clears the perspective gate, but repeated bullseye mountain symbols trigger the repetition gate, so this image is not a golden reference.",
+  "required_changes": [
+    "Change only the mountain rendering: replace concentric targets, center dots, and diamonds with irregular connected ridges, saddles, valleys, nonconcentric contours, and variable hatching while preserving every other feature."
+  ]
+}

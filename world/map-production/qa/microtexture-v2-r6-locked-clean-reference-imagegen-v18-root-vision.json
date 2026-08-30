@@ -1,0 +1,33 @@
+{
+  "schema_version": "microtexture-v2-r6-locked-clean-reference-root-vision/1",
+  "review_id": "microtexture-v2-r6-locked-clean-reference-imagegen-v18-root-vision",
+  "documented_at": "2026-07-26T07:53:43+09:00",
+  "review_completion_time_exactly_attested": false,
+  "reviewer": "Codex Root Vision",
+  "review_mode": "vision-only-pre-freeze-clean-reference-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-r6-locked-clean-reference-imagegen-v18.png",
+    "sha256": "e2eeb08046994b549c2eee5245c9410c329847d9cfe06ea6cb435dca5862512d",
+    "bytes": 1081552,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "views_actually_inspected": ["persisted-original", "center-native-512x384", "northwest-native-512x384", "northeast-native-512x384", "southwest-native-512x384", "southeast-native-512x384"],
+  "numeric_metric_evaluation_performed": false,
+  "score": 99,
+  "threshold": 94,
+  "decision": "approved-as-r6-locked-clean-reference-candidate",
+  "immediate_failure_checks": {
+    "isolated_speck_or_salt_pepper": false,
+    "bounded_microblob_or_grain_cluster": false,
+    "short_ridge_dash_or_parallel_bundle": false,
+    "cell_ring_fingerprint_or_contour": false,
+    "periodic_repeat_grid_or_seam": false,
+    "semantic_geography_text_or_object": false,
+    "perspective_relief_or_directional_light": false,
+    "visible_panel_border_or_vignette": false,
+    "compression_blocking_ringing_or_halo": false
+  },
+  "rejected_predecessor": null,
+  "passed_for_declared_source_role": true
+}

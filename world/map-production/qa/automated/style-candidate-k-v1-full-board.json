@@ -1,0 +1,554 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-k-v1-full-board-automated-audit",
+  "status": "failed",
+  "decision": "automated-gates-failed-pending-root-vision-decision",
+  "failed_gates": [
+    "palette_continuity_with_b1",
+    "downsample_readability_proxy",
+    "guide_geometry_alignment_proxy"
+  ],
+  "decision_authority": false,
+  "formal_qa": false,
+  "golden_accepted": false,
+  "manifest_mutation": false,
+  "docs_mutation": false,
+  "renderer_mutation": false,
+  "generated_by": {
+    "path": "tmp/map-production/k1-full-board-review-v1/audit_k1_full_board.py",
+    "sha256": "bfd3deb7316cb1606ce2707de71fcd3844476d906bc504bceb1d8d99fc4dd433",
+    "bytes": 13675
+  },
+  "artifacts": {
+    "raw": {
+      "path": "world/map-production/candidates/style-candidate-k-v1-full-board-raw.png",
+      "sha256": "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a",
+      "bytes": 4009164
+    },
+    "final_review_candidate": {
+      "path": "world/map-production/candidates/style-candidate-k-v1-full-board.png",
+      "sha256": "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a",
+      "bytes": 4009164,
+      "review_only": true,
+      "accepted": false
+    },
+    "prompt": {
+      "path": "world/map-production/prompts/style-candidate-k-v1-full-board.generation.txt",
+      "sha256": "9f46cf9ba6349c16982f16b13ee70bc03a0d31d050c40b64dcf48584bd438cab",
+      "bytes": 6607
+    },
+    "generation_receipt": {
+      "path": "world/map-production/prompts/style-candidate-k-v1-full-board.generation-receipt.json",
+      "sha256": "a25a5e061aac01598efeacff8b370809a3ddce7e4f8de51fbee2724e98efbbac",
+      "bytes": 5767
+    },
+    "approved_preflight": {
+      "path": "tmp/map-production/k1-spatial-grammar-preflight-v1/k1-spatial-grammar-preflight-evidence.json",
+      "sha256": "b32fcbbceecb78e9f4ac61cebb8aea547fdac7540d91fc33df1e343b908eaddc",
+      "bytes": 29745
+    },
+    "image_1_geometry": {
+      "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
+      "sha256": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc",
+      "bytes": 311514
+    },
+    "image_2_aligned_grammar": {
+      "path": "tmp/map-production/k1-spatial-grammar-preflight-v1/k1-aligned-spatial-material-grammar-control-1536x1024.png",
+      "sha256": "752aba1777b146e58ac89090a99fa376c7aa4634c26a65968789eb54e26e2551",
+      "bytes": 1626135
+    },
+    "image_3_b1_palette_print": {
+      "path": "world/map-production/candidates/style-candidate-b-v1.png",
+      "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "bytes": 4180383
+    },
+    "local_review_contacts": {
+      "25": {
+        "path": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.25-contact.png",
+        "sha256": "477a4c3d64b36a12800395c0ff29031b698b0c43dbbb9b511f39afa06593c7e2",
+        "bytes": 192046,
+        "repository_artifact": false,
+        "vision_report": false
+      },
+      "50": {
+        "path": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.50-contact.png",
+        "sha256": "d06569fe10d7bd3a5f2cb84ce002d840747379fad0ffe7389f10e092d174f690",
+        "bytes": 834904,
+        "repository_artifact": false,
+        "vision_report": false
+      },
+      "native": {
+        "path": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.native-contact.png",
+        "sha256": "b5b8f22996143efd346df9dcebfb07a9af5379adaa24ad5d69f4435dd6f6ea3e",
+        "bytes": 3503312,
+        "repository_artifact": false,
+        "vision_report": false
+      },
+      "200": {
+        "path": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.200-contact.png",
+        "sha256": "30c3f2eb13f36a2ab9487869e3519f775444b844a0a46e9f8937b9c20fc74abb",
+        "bytes": 1045762,
+        "repository_artifact": false,
+        "vision_report": false
+      },
+      "400": {
+        "path": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.400-contact.png",
+        "sha256": "38212e52a57074ef47d7aab167157b9a8b6870a3a789314dcbfc2f4f978869a5",
+        "bytes": 329437,
+        "repository_artifact": false,
+        "vision_report": false
+      },
+      "nine_regions": {
+        "path": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.nine-region-contact.png",
+        "sha256": "b7ecf928646669d607493b12ed399c22835addd6a8e7d1971f1bd938d4b9bd84",
+        "bytes": 3529102,
+        "repository_artifact": false,
+        "vision_report": false
+      }
+    }
+  },
+  "image_contract": {
+    "passed": true,
+    "required": {
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 1536,
+      "height": 1024,
+      "bit_depth": 8,
+      "png_color_type": 2,
+      "alpha_or_transparency_present": false
+    },
+    "records_passed": {
+      "raw": true,
+      "final": true,
+      "reference_b1": true,
+      "style_royal": true,
+      "reference_h4": true
+    },
+    "profile_matches_b1": true,
+    "images": {
+      "raw": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "final": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "reference_b1": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "style_royal": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "reference_h4": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      }
+    }
+  },
+  "boundary": {
+    "passed": true,
+    "method": "edge-band color diversity, exact-color runs, and multi-side outer/inset mean-color gap; decorative semantics still require Vision review",
+    "thresholds": {
+      "band_width_px": 16,
+      "maximum_dominant_exact_rgb_ratio": 0.05,
+      "minimum_unique_rgb": 256,
+      "maximum_outer_identical_run_ratio": 0.25,
+      "frame_mean_rgb_gap": 18.0,
+      "frame_minimum_suspicious_sides": 2
+    },
+    "solid_color_signal_detected": false,
+    "solid_color_sides": [],
+    "decorative_frame_proxy_detected": false,
+    "frame_gap_sides": [],
+    "sides": [
+      {
+        "side": "left",
+        "pixels": 16384,
+        "unique_rgb": 3110,
+        "dominant_rgb": [
+          78,
+          92,
+          95
+        ],
+        "dominant_exact_rgb_ratio": 0.002686,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001953,
+        "luma_stddev": 8.481912,
+        "luma_entropy_bits": 5.118916,
+        "outer_to_inset_mean_rgb_distance": 5.036285,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "top",
+        "pixels": 24576,
+        "unique_rgb": 12963,
+        "dominant_rgb": [
+          81,
+          94,
+          96
+        ],
+        "dominant_exact_rgb_ratio": 0.000814,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 24.006827,
+        "luma_entropy_bits": 6.524765,
+        "outer_to_inset_mean_rgb_distance": 7.873355,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "right",
+        "pixels": 16384,
+        "unique_rgb": 7271,
+        "dominant_rgb": [
+          162,
+          139,
+          96
+        ],
+        "dominant_exact_rgb_ratio": 0.00116,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001953,
+        "luma_stddev": 14.720703,
+        "luma_entropy_bits": 5.861339,
+        "outer_to_inset_mean_rgb_distance": 2.97559,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "bottom",
+        "pixels": 24576,
+        "unique_rgb": 9803,
+        "dominant_rgb": [
+          84,
+          99,
+          100
+        ],
+        "dominant_exact_rgb_ratio": 0.001221,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 20.423935,
+        "luma_entropy_bits": 6.252991,
+        "outer_to_inset_mean_rgb_distance": 6.404528,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      }
+    ]
+  },
+  "palette_continuity_with_b1": {
+    "passed": false,
+    "reference": "Candidate B1",
+    "method": "composition-tolerant palette proxy using 8x8x8 RGB and 24x6x6 HSV histograms sampled at 384x256",
+    "thresholds": {
+      "minimum_rgb_histogram_intersection": 0.72,
+      "minimum_hsv_histogram_intersection": 0.62,
+      "minimum_rgb_bhattacharyya": 0.9,
+      "maximum_mean_channel_delta": 12.0
+    },
+    "candidate_mean_rgb": [
+      132.982227,
+      122.870036,
+      93.814498
+    ],
+    "reference_mean_rgb": [
+      127.759797,
+      118.919413,
+      89.78157
+    ],
+    "mean_channel_absolute_delta": [
+      5.22243,
+      3.950623,
+      4.032927
+    ],
+    "maximum_mean_channel_delta": 5.22243,
+    "rgb_histogram_intersection": 0.690745,
+    "hsv_histogram_intersection": 0.618622,
+    "rgb_bhattacharyya": 0.888634
+  },
+  "exact_repetition": {
+    "passed": true,
+    "method": "exact SHA-256 of overlapping RGB blocks at one-quarter-block stride; this is a large-clone proxy, not semantic motif recognition",
+    "minimum_block_size_px": 64,
+    "duplicate_groups": 0,
+    "maximum_copy_count": 1,
+    "examples": [],
+    "scales": [
+      {
+        "block_size_px": 256,
+        "stride_px": 64,
+        "scanned_blocks": 273,
+        "unique_block_hashes": 273,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 128,
+        "stride_px": 32,
+        "scanned_blocks": 1305,
+        "unique_block_hashes": 1305,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 64,
+        "stride_px": 16,
+        "scanned_blocks": 5673,
+        "unique_block_hashes": 5673,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      }
+    ]
+  },
+  "downsample_readability": {
+    "passed": false,
+    "method": "LANCZOS downsample; Shannon luma entropy, global RMS contrast, and 24x16 macrocell contrast coverage are readability proxies",
+    "macrocell_grid": [
+      24,
+      16
+    ],
+    "minimum_macrocell_luma_stddev": 6.0,
+    "native": {
+      "scale": 1.0,
+      "width": 1536,
+      "height": 1024,
+      "luma_entropy_bits": 6.708375,
+      "luma_rms_contrast": 26.538225,
+      "macrocell_contrast_coverage": 1.0,
+      "minimum_macrocell_luma_stddev": 7.891859,
+      "median_macrocell_luma_stddev": 18.447182
+    },
+    "scales": [
+      {
+        "scale": 0.5,
+        "width": 768,
+        "height": 512,
+        "luma_entropy_bits": 6.501427,
+        "luma_rms_contrast": 23.543303,
+        "macrocell_contrast_coverage": 0.963542,
+        "minimum_macrocell_luma_stddev": 5.242461,
+        "median_macrocell_luma_stddev": 13.8215,
+        "entropy_retention": 0.969151,
+        "rms_contrast_retention": 0.887147,
+        "thresholds": {
+          "minimum_entropy_retention": 0.94,
+          "minimum_rms_contrast_retention": 0.82,
+          "minimum_macrocell_contrast_coverage": 0.9
+        },
+        "passed": true
+      },
+      {
+        "scale": 0.25,
+        "width": 384,
+        "height": 256,
+        "luma_entropy_bits": 6.319999,
+        "luma_rms_contrast": 21.565888,
+        "macrocell_contrast_coverage": 0.802083,
+        "minimum_macrocell_luma_stddev": 3.729696,
+        "median_macrocell_luma_stddev": 9.758878,
+        "entropy_retention": 0.942106,
+        "rms_contrast_retention": 0.812635,
+        "thresholds": {
+          "minimum_entropy_retention": 0.9,
+          "minimum_rms_contrast_retention": 0.68,
+          "minimum_macrocell_contrast_coverage": 0.85
+        },
+        "passed": false
+      }
+    ]
+  },
+  "semantic_repetition_proxies_vs_h4": {
+    "passed": true,
+    "method": "far-patch normalized correlation, 63-bit DCT perceptual hashes, and windowed high-pass spectral concentration relative to H4",
+    "semantic_claim": null,
+    "limitation": "These statistics can flag clone-like or periodic amplification, but cannot decide whether mountains, trees, rocks, or buildings repeat semantically. That decision remains Vision-only.",
+    "thresholds": {
+      "maximum_p99_best_normalized_correlation": 0.8,
+      "maximum_fraction_best_correlation_at_least_0_90": 0.01,
+      "maximum_phash_related_patch_fraction": 0.01,
+      "maximum_spectral_peak_to_top100_mean": 2.0
+    },
+    "candidate_near_patch": {
+      "patch_size_px": 64,
+      "stride_px": 32,
+      "minimum_pair_separation_px_chebyshev": 128,
+      "patches": 1457,
+      "p99_best_normalized_correlation": 0.727556,
+      "fraction_best_correlation_at_least_0_90": 0.0,
+      "phash_hamming_at_most_3_pairs": 0,
+      "phash_related_patch_fraction": 0.0
+    },
+    "reference_h4_near_patch": {
+      "patch_size_px": 64,
+      "stride_px": 32,
+      "minimum_pair_separation_px_chebyshev": 128,
+      "patches": 1457,
+      "p99_best_normalized_correlation": 0.569026,
+      "fraction_best_correlation_at_least_0_90": 0.0,
+      "phash_hamming_at_most_3_pairs": 0,
+      "phash_related_patch_fraction": 0.0
+    },
+    "candidate_periodicity": {
+      "sample_size": [
+        384,
+        256
+      ],
+      "spectral_peak_to_top100_mean": 1.429898
+    },
+    "reference_h4_periodicity": {
+      "sample_size": [
+        384,
+        256
+      ],
+      "spectral_peak_to_top100_mean": 1.317672
+    }
+  },
+  "guide_geometry_alignment": {
+    "passed": false,
+    "method": "fixed cool-water segmentation; land/water agreement outside an 8px guide transition guard; bidirectional water-boundary distance",
+    "thresholds": {
+      "minimum_stable_land_water_agreement": 0.98,
+      "minimum_candidate_boundary_within_8px": 0.95,
+      "minimum_guide_boundary_within_8px": 0.95
+    },
+    "full_land_water_agreement": 0.977869,
+    "stable_land_water_agreement": 0.99615,
+    "candidate_boundary_within_8px": 0.764898,
+    "guide_boundary_within_8px": 0.814361,
+    "candidate_boundary_distance_p95_px": 15.787598,
+    "guide_boundary_distance_p95_px": 13.181398,
+    "limitation": "Color segmentation is a geometry proxy; root Vision must inspect exact coast, river, road, city, port, forest, highland, and field alignment."
+  },
+  "automated_gates": {
+    "sha256_locked_inputs": true,
+    "approved_prompt_byte_identity": true,
+    "one_imagegen_call_no_retry_receipt": true,
+    "exactly_three_ordered_references": true,
+    "built_in_default_copy_raw_byte_identity": true,
+    "raw_review_candidate_byte_identity": true,
+    "no_registration_upscale_warp_or_postprocess": true,
+    "image_contract_alpha_profile": true,
+    "boundary_proxy": true,
+    "palette_continuity_with_b1": false,
+    "no_large_exact_repetition_proxy": true,
+    "downsample_readability_proxy": false,
+    "semantic_repetition_proxies_vs_h4": true,
+    "guide_geometry_alignment_proxy": false
+  },
+  "vision_handoff": {
+    "status": "pending-root-vision",
+    "automated_audit_is_not_vision": true,
+    "automated_audit_is_not_golden_acceptance": true,
+    "required_focus": [
+      "fields: dense mechanically parallel row fill, CAD cadence, or moire",
+      "highland: repeated chained or curving dash grammar, long bands, contours, or directional cadence",
+      "capital: overly regular concentric/radial and repeated block cadence",
+      "forest: loops, glyphs, uniform noise, or repeated stamp vocabulary",
+      "water: connected cells, long bands, repeated symbols, or loss of quiet gaps",
+      "exact guide geometry, all networks, text/pseudo-writing, plan projection, seams, and borderless edges"
+    ]
+  }
+}

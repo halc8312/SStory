@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101820">
+  <meta name="description" content="エターナル・アルカディアの深度ズーム対応インタラクティブ世界地図">
+  <!-- Version pointers are rollback-safe: unavailable v3/v2 metadata falls through to retained v1. -->
+  <meta name="ea-map-world-release" content="world-v1">
+  <meta name="ea-map-world-target-release" content="world-v3">
+  <meta name="ea-map-world-fallback-releases" content="world-v2,world-v1">
+  <meta name="ea-map-world-v3-manifest" content="../assets/images/maps/tiles/world-v3/metadata.json">
+  <meta name="ea-map-world-v2-manifest" content="../assets/images/maps/tiles/world-v2/metadata.json">
+  <meta name="ea-map-world-v1-manifest" content="../assets/images/maps/tiles/world-v1/metadata.json">
+  <meta name="ea-map-cache-key" content="world-v3-contract-20260720">
+  <!-- Optional accepted 512px per-sheet tile index; it never blocks the world base. -->
+  <meta name="ea-map-sheet-tile-index" content="../data/map/region-rasters.json">
+  <title>深度世界地図 v3 — エターナル・アルカディア</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+  <link rel="stylesheet" href="../vendor/leaflet/leaflet.css?v=1.9.4">
+  <link rel="stylesheet" href="../assets/css/interactive-map-v3.css?v=20260720a">
+</head>
+<body>
+  <a class="skip-link" href="#mapV3">地図へ移動</a>
+
+  <main class="map-app" aria-labelledby="mapTitle">
+    <header class="map-toolbar" aria-label="地図ツールバー">
+      <a class="brand" href="maps.html" aria-label="地図一覧へ戻る">
+        <span class="brand-mark" aria-hidden="true">EA</span>
+        <span class="brand-copy">
+          <span id="mapTitle" class="brand-title">深度世界地図</span>
+          <span class="brand-subtitle">Eternal Arcadia · v3 preview</span>
+        </span>
+      </a>
+
+      <div id="mapSearch" class="map-search" role="search" aria-label="地図内を検索">
+        <button
+          id="mapSearchToggle"
+          class="icon-button map-search__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mapSearchSurface"
+          aria-label="場所を検索"
+          title="場所を検索"
+        >
+          <span aria-hidden="true">⌕</span>
+        </button>
+        <div id="mapSearchSurface" class="map-search__surface">
+          <label class="visually-hidden" for="mapSearchInput">拠点・地域・施設を検索</label>
+          <div class="map-search__field">
+            <span class="map-search__icon" aria-hidden="true">⌕</span>
+            <input
+              id="mapSearchInput"
+              class="map-search__input"
+              type="search"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-controls="mapSearchResults"
+              aria-describedby="mapSearchHint"
+              autocomplete="off"
+              enterkeyhint="search"
+              spellcheck="false"
+              placeholder="拠点・地域・施設を検索"
+              disabled
+            >
+            <button
+              id="mapSearchClear"
+              class="map-search__clear"
+              type="button"
+              aria-label="検索語を消去"
+              title="検索語を消去"
+              hidden
+            >×</button>
+            <button
+              id="mapSearchClose"
+              class="map-search__close"
+              type="button"
+              aria-label="場所の検索を閉じる"
+              title="場所の検索を閉じる"
+            >×</button>
+          </div>
+          <p id="mapSearchHint" class="visually-hidden">文字を入力し、上下矢印キーで候補を選び、Enterキーで地図へ移動します。</p>
+          <div id="mapSearchResults" class="map-search__results" role="listbox" aria-label="検索候補" hidden></div>
+          <p id="mapSearchStatus" class="visually-hidden" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="toolbar-status" aria-label="表示状態">
+        <span id="baseModeBadge" class="status-badge status-badge--loading">地図を準備中</span>
+        <span id="lodBadge" class="status-badge">世界</span>
+        <span id="zoomValue" class="zoom-value" aria-label="ズームレベル">Z --</span>
+      </div>
+
+      <div class="toolbar-actions">
+        <button
+          id="fitMapButton"
+          class="icon-button"
+          type="button"
+          aria-label="世界地図全体を表示"
+          title="全体表示"
+        >
+          <span aria-hidden="true">⌖</span>
+        </button>
+        <button
+          id="helpButton"
+          class="icon-button"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="helpDialog"
+          aria-label="地図の操作方法を表示"
+          title="操作方法"
+        >
+          <span aria-hidden="true">?</span>
+        </button>
+        <button
+          id="layerPanelButton"
+          class="toolbar-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="layerPanel"
+          aria-label="表示レイヤーを開く"
+        >
+          <span aria-hidden="true">◫</span>
+          <span>レイヤー</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="map-stage" aria-label="地図表示領域">
+      <div
+        id="mapV3"
+        class="map-canvas"
+        role="application"
+        tabindex="0"
+        aria-label="エターナル・アルカディア世界地図。矢印キーで移動、プラスとマイナスキーで拡大縮小できます。"
+        aria-describedby="mapInstructions"
+      ></div>
+
+      <p id="mapInstructions" class="visually-hidden">
+        地図上の拠点や施設はTabキーで選択できます。Enterキーで詳細を開きます。
+        ツールバーの検索欄では拠点、地域、施設を名前から検索できます。
+        レイヤーボタンから交通路、拠点、施設、地名、危険区域の表示を切り替えられます。
+      </p>
+
+      <div id="loadingPanel" class="loading-panel" role="status" aria-live="polite">
+        <span class="loading-spinner" aria-hidden="true"></span>
+        <span id="loadingMessage">地図データを読み込んでいます…</span>
+      </div>
+
+      <div id="mapError" class="map-error" role="alert" hidden>
+        <strong>地図を読み込めませんでした</strong>
+        <span id="mapErrorDetail">時間をおいて再読み込みしてください。</span>
+        <button id="reloadButton" type="button">再読み込み</button>
+      </div>
+
+      <div class="map-meta" aria-label="地図情報">
+        <output id="coordinateReadout" aria-live="off">X ---- / Y ----</output>
+        <span id="featureCount">データ読込中</span>
+      </div>
+    </section>
+
+    <button id="panelScrim" class="panel-scrim" type="button" aria-label="レイヤーパネルを閉じる" hidden></button>
+
+    <aside id="layerPanel" class="layer-panel" aria-labelledby="layerPanelTitle" aria-hidden="true" inert>
+      <div class="panel-handle" aria-hidden="true"></div>
+      <header class="layer-panel-header">
+        <div>
+          <p class="eyebrow">MAP CONTENTS</p>
+          <h2 id="layerPanelTitle">表示レイヤー</h2>
+        </div>
+        <button id="layerPanelClose" class="icon-button" type="button" aria-label="レイヤーパネルを閉じる">×</button>
+      </header>
+
+      <div class="layer-panel-body">
+        <fieldset class="layer-fieldset">
+          <legend>地図情報</legend>
+
+          <label class="layer-option">
+            <input type="checkbox" data-map-layer="routes" checked>
+            <span class="layer-swatch layer-swatch--route" aria-hidden="true"></span>
+            <span>
+              <strong>交通路</strong>
+              <small>陸路・鉄道・海路・空路・特殊路</small>
+            </span>
+          </label>
+
+          <label class="layer-option">
+            <input type="checkbox" data-map-layer="nodes" checked>
+            <span class="layer-swatch layer-swatch--node" aria-hidden="true"></span>
+            <span>
+              <strong>拠点</strong>
+              <small>都市・港・空港・交通拠点</small>
+            </span>
+          </label>
+
+          <label class="layer-option">
+            <input type="checkbox" data-map-layer="pois" checked>
+            <span class="layer-swatch layer-swatch--poi" aria-hidden="true"></span>
+            <span>
+              <strong>施設（POI）</strong>
+              <small>地域では主要施設、詳細では全施設</small>
+            </span>
+          </label>
+
+          <label class="layer-option">
+            <input type="checkbox" data-map-layer="labels" checked>
+            <span class="layer-swatch layer-swatch--label" aria-hidden="true">Aa</span>
+            <span>
+              <strong>地名ラベル</strong>
+              <small>縮尺に応じて情報量を調整</small>
+            </span>
+          </label>
+
+          <label class="layer-option">
+            <input type="checkbox" data-map-layer="hazards" checked>
+            <span class="layer-swatch layer-swatch--hazard" aria-hidden="true"></span>
+            <span>
+              <strong>危険区域</strong>
+              <small>地域ズーム以上で自動表示</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <section class="layer-note" aria-labelledby="lodExplanationTitle">
+          <h3 id="lodExplanationTitle">ズームLOD</h3>
+          <p>世界 → 大陸 → 地域 → 詳細の順に、ラベル・施設・危険区域を段階表示します。</p>
+        </section>
+
+        <section class="layer-note" aria-labelledby="baseLayerTitle">
+          <h3 id="baseLayerTitle">ベース地図</h3>
+          <p id="baseLayerDescription">利用可能な最も詳細な地図を自動選択します。</p>
+        </section>
+      </div>
+    </aside>
+  </main>
+
+  <dialog id="helpDialog" class="help-dialog" aria-labelledby="helpDialogTitle">
+    <form method="dialog">
+      <header>
+        <div>
+          <p class="eyebrow">ACCESSIBLE MAP</p>
+          <h2 id="helpDialogTitle">地図の操作方法</h2>
+        </div>
+        <button class="icon-button" value="close" aria-label="操作方法を閉じる">×</button>
+      </header>
+      <dl class="shortcut-list">
+        <div><dt>矢印キー</dt><dd>地図を移動</dd></div>
+        <div><dt>＋ / −</dt><dd>拡大・縮小</dd></div>
+        <div><dt>Tab</dt><dd>拠点・施設を順に選択</dd></div>
+        <div><dt>Enter / Space</dt><dd>選択した地点の詳細を表示</dd></div>
+        <div><dt>Esc</dt><dd>パネルまたはポップアップを閉じる</dd></div>
+      </dl>
+      <p>タッチ操作では、1本指で移動、2本指で拡大縮小できます。</p>
+      <button class="dialog-primary" value="close">地図へ戻る</button>
+    </form>
+  </dialog>
+
+  <noscript>
+    <div class="noscript-message">
+      この地図を表示するにはJavaScriptが必要です。
+      <a href="../assets/images/maps/world/world-map-hires.jpg">高解像度の世界地図画像を開く</a>
+    </div>
+  </noscript>
+
+  <div id="announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="../vendor/leaflet/leaflet.js?v=1.9.4" defer></script>
+  <script src="../assets/js/interactive-map-v3-core.js?v=20260720a" defer></script>
+  <script src="../assets/js/interactive-map-v3.js?v=20260720a" defer></script>
+</body>
+</html>

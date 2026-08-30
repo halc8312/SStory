@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "id": "phase5-neutral-land-material-h4-v1-generation-receipt",
+  "type": "sstory-imagegen-candidate-generation-receipt",
+  "provenance_limitations": {
+    "tool_family": "OpenAI ImageGen through Codex built-in image generation",
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The retained tool output exposed no authoritative model identifier, model snapshot, request or generation identifier, or generation timestamp. No value is inferred or reconstructed. Exactly one built-in generation call was made for this version; no retry or generated variant was used."
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/phase5-neutral-land-material-h4-v1.generation.txt",
+    "sha256": "ed893787243e03249130d5c4f8245d31c4a0c83483ac4a76be04b6f8d29e2256",
+    "exact_text_retained": true
+  },
+  "inputs": [
+    {
+      "path": "world/map-production/candidates/style-candidate-h-v4-plan-view-golden-board.png",
+      "sha256": "b4fc951af5d29c78bb98b5ee5007395b5fc3c1addc7070d76ac8074545259837",
+      "role": "sole visual-style reference for parchment, palette, copperplate line character, and handmade micro-detail; all depicted geography and semantic content explicitly excluded"
+    }
+  ],
+  "output": {
+    "path": "world/map-production/candidates/phase5-neutral-land-material-h4-v1-raw.png",
+    "sha256": "f848f79a6022c6bfd0341ed6d1e67de73c47b2077e8f96ae4afef208bedc3cfa",
+    "bytes": 4423724,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "alpha_or_transparency_present": false,
+    "accepted_as_final": false
+  },
+  "byte_identical_review_candidate": {
+    "path": "world/map-production/candidates/phase5-neutral-land-material-h4-v1.png",
+    "sha256": "f848f79a6022c6bfd0341ed6d1e67de73c47b2077e8f96ae4afef208bedc3cfa",
+    "bytes": 4423724,
+    "manifest_registered": false,
+    "formal_qa_created": false,
+    "production_accepted": false,
+    "note": "This byte-identical path is a stable experimental review candidate only. It does not represent root Vision approval, renderer adoption, manifest registration, staging, or publication."
+  }
+}

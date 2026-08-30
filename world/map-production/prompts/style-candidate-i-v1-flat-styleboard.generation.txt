@@ -1,0 +1,30 @@
+Use case: stylized-concept
+Asset type: Golden cartographic style-board candidate for a finite deep-zoom fantasy atlas
+
+Create one richly detailed, coherent, borderless antique copperplate map board from the two supplied references.
+
+Input images and strict roles:
+- Image 1 is geometry and composition only. Preserve its major regions, topology, relative positions, and connections: open sea on the left; low irregular west and south-west coast; braided delta islands; forest across the north and north-centre; north-to-centre river splitting through the western delta; dense circular-plan city in the centre; small coastal port in the lower-left; connected roads; fields in the lower-right; irregular rocky/highland ground in the upper-right; and generous quiet corridors between major features. Do not copy Image 1's flat placeholder colors, line style, geometric regularity, or lack of detail.
+- Image 2 is the sole authority for visual style, material language, projection, palette, engraving density, aged paper, ink character, water treatment, organic irregularity, and strict top-down flatness. Transfer its dense, varied, hand-engraved cartographic material across the composition in Image 1. Do not copy Image 2's geography, settlements, roads, river placement, coast orientation, or framing.
+
+Style and material:
+- A single antique copperplate map made by one skilled cartographer, with warm aged parchment land, dark slate-blue water, restrained umber/sepia ink, delicate copperplate linework, and dense but legible organic microdetail.
+- Every terrain class must read as continuous mapped ground material rather than a collection of icons. Use direction-neutral, broken hachure, irregular stipple, varied mark length, varied density, natural gaps, and interwoven local detail. Avoid uniform arrays, repeated symbols, cloned stamps, dot wallpaper, moire, or mechanically parallel fill.
+- Keep the open sea richly engraved yet quieter than land. Give the coast and river clean low plan boundaries and varied fine water strokes. Do not render thick uniform blue bands, glow, halos, or cliff edges.
+- Render forest as a continuous irregular top-down woodland texture with varied openings and density, never rows of tree icons or circular stamp clusters.
+- Render the upper-right highland as an irregular, continuous, flat rocky terrain region using broken planimetric hachure and stipple. It must not become peaks, cones, triangular mountains, boulders with side shading, or a raised plateau.
+- Render lower-right agriculture as varied, connected parcels with subtle crop-direction changes and natural boundaries, avoiding a rigid CAD grid.
+
+Settlements and networks:
+- The central city must be a dense circular urban plan seen from exactly overhead: many varied building footprints, courtyards, alleys, ring streets, radial streets, small civic voids, and gates expressed only as plan geometry. Keep its footprint and connections from Image 1, but remove the guide's diagrammatic regularity.
+- The lower-left port must be a compact settlement plan integrated into the shoreline, with varied building footprints, narrow lanes, quays, basins, and pier centre-lines seen exactly overhead.
+- Roads must remain connected exactly as a network, with subtle varied widths and natural junctions. River branches must remain connected to the sea and must not be interrupted by terrain texture.
+- Preserve several calm, low-contrast, unmarked corridors for future labels, but include no writing.
+
+Projection and non-negotiable exclusions:
+- True vertical orthographic plan view everywhere, with no oblique or isometric depiction.
+- No roofs, facades, side faces, visible wall thickness, extrusion, cast shadows, drop shadows, directional lighting, cliff faces, raised ramparts, raised piers, raised banks, cones, pyramids, triangular mountain glyphs, or horizon cues.
+- No labels, letters, numbers, legends, compass roses, symbols resembling writing, pseudo-writing, signatures, watermarks, frames, margins, borders, inset panels, tile seams, pasted patches, or abrupt texture boundaries.
+- No repeated stamps, repeated dots, repeated lozenges, repeated tree crowns, repeated triangular marks, wallpaper patterns, or large empty unfinished zones.
+
+Output one seamless 1536 x 1024 RGB landscape map artwork. It must remain intricate, crisp, varied, and convincing at 25%, 50%, native scale, 200%, and 400%, while reading clearly as one connected composition at overview scale.

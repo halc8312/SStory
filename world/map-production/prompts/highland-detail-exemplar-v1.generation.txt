@@ -1,0 +1,31 @@
+Create one full 1536x1024 registered cartographic source plate for the same antique fantasy map.
+
+REFERENCE ROLES, IN ORDER:
+1) The first image is the immutable coordinate/base-map authority. Match its canvas, framing, coastline, river, cities, roads, fields, and all non-mountain features exactly in position.
+2) The second image is the mountain GEOMETRY authority. In the upper-right highland only, preserve its convincing network of separate mountain masses, peaks, saddles, branching ridges, valleys, and NW-SE / NE-SW varied directions.
+3) The third image is the MATERIAL authority. Use its dry brown engraved mountain anatomy--dark lee faces, tapered irregular hatching, broken open marks, nested spurs--but substantially reduce mark density.
+
+OUTPUT INTENT:
+Produce a registered full-map edit whose only meaningful new artwork is the upper-right mountain system. It will later be mask-composited over image 1, so registration matters more than beautifying any other area.
+
+HIGHLAND DESIGN:
+- Real mountains, not contour lines, rivers, cracks, routes, clouds, camouflage, or a smooth relief plate.
+- Several bounded organic mountain bodies with generous untouched/quiet paper valleys and ground between them; do not fill the entire rectangular highland.
+- Clear peak -> saddle -> branching spur hierarchy at native scale.
+- Broad dark lee-side facets in muted sepia, with gentle low-contrast paper-toned light faces.
+- Sparse dry engraved hatch marks: irregular, tapered, open, nonparallel, nonrepeating. Target only about 5-8% visually active dark ink in the highland; leave at least 90% calm at fine scale.
+- No rows, bundles, woven texture, stipple carpet, repeated chevrons, or parallel dash pairs.
+- No bright white crest lines, no glow, no clipped highlights. Highlights must remain parchment colored.
+- No pale rectangular inset, hard crop edge, fog bank, airbrush, or all-over blur. Mountain body edges taper organically into unchanged ground.
+
+PROTECTED MAP CONTENT:
+Keep the vertical road beside the highland, the east-west road below it, the round city, all bridges, coast, river, fields, labels (if any), and borders unobscured and geometrically unchanged. Do not add text, icons, settlements, roads, water, or boundaries.
+
+STYLE:
+High-detail antique atlas engraving on warm parchment; physically coherent top-down oblique relief; restrained sepia/olive palette matching the base map; crisp enough for 400% inspection but legible at 25% and 50%.
+
+REFERENCE FILES:
+- tmp/map-production/k3-semantic-cleanup-proof-v18/style-candidate-k-v3-semantic-cleanup-proof-v18.png
+- tmp/map-production/k3-branching-ridge-v22-source/highland-context-branching-ridge-network-v22.png
+- tmp/map-production/k3-v33-registered-ink-overlay-source/highland-registered-ink-overlay-v33.png
+

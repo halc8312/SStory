@@ -1,0 +1,15 @@
+Create one 3:2 orthographic fantasy cartography correction plate at 1536x1024.
+
+REFERENCE ROLES:
+1) First image is the authoritative K1 visual base. Match its parchment print, muted blue-gray water, warm sepia linework, flat orthographic camera, scale, canvas registration, and fine antique material character.
+2) Second image is geometry-only. It indicates the exact overall placement of coast, river/delta, roads, fields, circular capital and port. Do not copy its flat colors or vector/GIS look.
+3) Third image is palette/material inspiration only. Borrow its restrained muted antique palette and dense hand-inked richness. Do not copy its perspective cliffs, mountains, floating islands, or composition.
+
+This is a LOCAL CORRECTION PLATE, not a redesign. Preserve the first image's full 1536x1024 registration and all calm sea, coast, forest, river, roads, islands, delta and port pixels visually unchanged as closely as possible. Do not introduce text, labels, legends, borders, frames, shadows, perspective, relief, aerial photography, halos, bloom, CAD/GIS styling, or thick gray rails.
+
+EDIT ONLY THESE THREE semantic zones while keeping their outside boundaries in the same positions:
+A) EASTERN HIGHLAND (upper-right): replace the repeated long parallel scratch bundles with sparse, irregular, independent warm-sepia plan-view hachures and subtle broad tonal zones. Marks are short (visual equivalent of 3–11 source pixels), varied angles and spacing, no chains, no repeated bundles, no peaks, no 3D mountains, no ridgeline wall.
+B) SOUTHEAST FIELD PARCELS: retain the exact eight parcel outlines and road crossings, but replace dense mechanically parallel rows with irregular historical survey texture—mostly calm paper, scattered short broken marks, varied angles within each parcel, some sparse dots/stubble, no every-row cadence, no blur, no flat solid fills.
+C) CENTRAL ROYAL CAPITAL: retain the same outer circular wall size/center and exactly five external road gates, but replace the mechanically perfect concentric rings/radial spokes inside the wall with a dense organic medieval capital in strict top-down plan: asymmetric curved alleys, many small irregular warm-roof footprints, several compact wards, one modest central citadel/plaza, no dominant radial template, no empty modern Voronoi blocks. Keep the outer wall crisp and antique.
+
+The result must read beautifully and clearly at 25%, 50%, 100%, 200% and 400%. Hand-engraved, restrained, highly detailed, flat plan-view cartography. No pseudo-writing or glyph-like marks.

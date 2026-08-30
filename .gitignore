@@ -24,6 +24,15 @@ docs-site/site/
 .playwright-cli/
 output/playwright/
 
+# Local map-production previews and build staging
+/tmp*/
+/output/
+/world/map-production/builds/
+/world/map-production/tmp-*/
+/world/map-production/masters/.*.lock
+/.published-runtime-test-*/
+/.phase7-finalizer-test-*/
+
 # Exports (generated)
 world/map-data/exports/*.geojson
 world/map-data/exports/*.svg

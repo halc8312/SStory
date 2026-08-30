@@ -1,0 +1,63 @@
+TASK
+Edit/reference synthesis for a strictly top-down antique fantasy map material donor.
+Return one 1536 x 1024 RGB landscape image.
+
+REFERENCE ROLES (ORDER IS AUTHORITATIVE)
+1. k3-v18-reconstruction-base.png is the exact map context. Preserve its canvas, crop,
+   orientation, scale, coastline, river, roads, cities, fields, forest, palette, and
+   copperplate/printed parchment character.
+2. k3-v52-canonical-body-control.png is an INVISIBLE indexed placement control only.
+   Its eight gray bodies indicate where eight distinct subtle upland/ridge systems must
+   be centered. Never draw, fill, trace, outline, feather, or reveal these mask shapes.
+   Black and gray values are not colors for the result.
+3. style-candidate-h-v4-plan-view-golden-board.png is a palette and antique print
+   material reference only. Do not copy its scenic triangular mountains, trees, city,
+   coast, roads, or geometry.
+
+SINGLE EDIT
+Replace only the visually empty upper-right highland ground of reference 1, roughly
+x=980..1535 and y=0..510, with ONE CONTINUOUS, SEAMLESS highland parchment/material
+field containing exactly eight distinguishable but understated plan-view ridge systems
+at the eight placement-control locations from reference 2.
+
+REQUIRED APPEARANCE
+- The entire highland is one continuous terrain region, not eight islands or patches.
+- Match the surrounding old-map parchment at the highland boundary: no rectangle,
+  polygon, panel, matte edge, pasted layer, color step, or texture discontinuity.
+- Each of the eight ridge systems is expressed by low-contrast, irregular, broken
+  copperplate terrain texture: sparse short curved hachure fragments, dry stipple,
+  broad subdued umber tonal drift, and occasional incomplete contour suggestions.
+- Terrain marks must taper and dissolve naturally into shared quiet ground. The exact
+  placement-mask silhouettes must be impossible to infer from the final pixels.
+- Eight centers remain spatially separate and countable, but the intervening ground is
+  the same continuous highland material.
+- Keep wide calm gaps for future vector labels and POIs.
+- Use one restrained sepia/umber ink family. No alternating colors and no saturated
+  orange, red, green, purple, or game-selection appearance.
+- Strict orthographic 90-degree overhead cartography. Flat print semantics only.
+- At 25% and 50%, read as one coherent mountainous/highland region with subtle local
+  variation, never as eight dark blobs.
+- At 200% and 400%, reveal irregular hand-printed grain and nonrepeating ridge anatomy.
+
+ABSOLUTE NEGATIVES
+- No filled mask silhouettes, hard carrier edges, dark stains, floating islands,
+  plaques, panels, cutouts, or separate paper pieces.
+- No closed target rings, onion rings, repeated concentric contours, bullseyes, halos,
+  uniform contour intervals, or identical ridge templates.
+- No scenic mountain faces, triangular peaks, cliff walls, shadows, lighting direction,
+  perspective, isometric view, horizon, or raised 3D relief.
+- No leaf veins, roots, fishbones, woven hatching, repeated dash bundles, stamp rows,
+  wallpaper, CAD grids, or procedural-looking repetition.
+- No text, letters, labels, numerals, symbols, signatures, watermarks, legends, borders,
+  frames, compass roses, UI, or new settlements.
+- Do not move or repaint the main road through/beside the highland, the circular capital,
+  river, coast, forest, fields, port, or any other authored feature.
+
+PRIORITY ORDER
+1. Seamless continuous highland material with no visible mask/panel boundary.
+2. Exactly eight subtle placement-controlled ridge systems without filled silhouettes.
+3. Strict flat plan-view and exact preservation of map context.
+4. Restrained antique sepia palette and quiet overlay corridors.
+5. Nonrepeating microdetail that improves under zoom.
+
+The output is a MATERIAL DONOR, not a final map and not a labeled illustration.

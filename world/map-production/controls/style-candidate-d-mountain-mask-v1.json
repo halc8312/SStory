@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-mountain-mask-v1",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_image": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+  "purpose": "Candidate D mountain-only edit mask with region-specific inward transitions and road-specific 4px protection transitions aligned to the source artwork.",
+  "include_polygons": [
+    {
+      "id": "north_east_range",
+      "feather_inside_px": 64,
+      "points": [[882, 0], [1535, 0], [1535, 596], [1458, 610], [1370, 596], [1288, 612], [1194, 598], [1098, 620], [1010, 590], [934, 552], [884, 486], [872, 392], [884, 286]]
+    },
+    {
+      "id": "south_east_range",
+      "feather_inside_px": 16,
+      "points": [[884, 782], [996, 764], [1118, 770], [1234, 798], [1348, 844], [1454, 910], [1535, 974], [1535, 1023], [752, 1023], [786, 958], [820, 900]]
+    }
+  ],
+  "exclude_strokes": [
+    {
+      "id": "east_road",
+      "width": 12,
+      "feather_px": 4,
+      "points": [[930, 505], [1050, 515], [1180, 540], [1270, 535], [1370, 490], [1535, 450]]
+    },
+    {
+      "id": "south_east_road",
+      "width": 12,
+      "feather_px": 4,
+      "points": [[910, 558], [1000, 610], [1090, 666], [1180, 725], [1270, 785], [1360, 840], [1450, 892], [1535, 936]]
+    }
+  ],
+  "feather_inside_px": 64,
+  "review_status": "provisional",
+  "notes": "Include polygons are unchanged from the B v2 refinement. The north-east field retains its 64px transition; the narrower south-east field uses 16px so at least 80% of the ten-ridge guide footprint remains in the fully editable core. Road centerlines were retraced against the B v2 pixels and use independent 4px transitions."
+}

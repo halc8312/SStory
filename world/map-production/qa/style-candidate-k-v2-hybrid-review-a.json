@@ -1,0 +1,290 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-k-v2-hybrid-review-a",
+  "image_path": "world/map-production/candidates/style-candidate-k-v2-hybrid.png",
+  "created_at": "2026-07-20T03:19:43.537Z",
+  "reviewer": "independent-codex-vision-review-a",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "scale_25_percent",
+      "label": "Exact 25 percent composition view",
+      "complete": true,
+      "evidence": "Inspected an exact 384x256 downsample of the locked 1536x1024 raster. The coast, river, delta, capital, port, roads, and field block remain distinguishable, while the field parcels already read as unusually regimented blocks.",
+      "notes": "The overall hierarchy survives, but this view exposes field cadence at normal overview distance."
+    },
+    {
+      "id": "scale_50_percent",
+      "label": "Exact 50 percent composition view",
+      "complete": true,
+      "evidence": "Inspected an exact 768x512 downsample. All primary landmarks and route directions remain legible; repeated rank-like field marks and the very even forest texture become apparent without zooming further.",
+      "notes": "No missing landmark or disconnected primary route was found."
+    },
+    {
+      "id": "scale_native",
+      "label": "Native 100 percent raster view",
+      "complete": true,
+      "evidence": "Inspected the source at native 1536x1024 resolution. Coast and river edges are continuous, the capital and port are orthographic, and the three semantic repetition problems are visible in their actual pixels.",
+      "notes": "Native inspection was performed on the exact SHA-256 locked candidate, not a proxy."
+    },
+    {
+      "id": "scale_200_percent",
+      "label": "Exact 200 percent nearest-neighbor view",
+      "complete": true,
+      "evidence": "Inspected a 3072x2048 nearest-neighbor enlargement plus 200 percent motif crops. Forest loops, highland slash clusters, and parcel-aligned field rows resolve as authored motifs rather than downsampling artifacts.",
+      "notes": "This view supplies the clearest whole-board confirmation of the three immediate-failure patterns."
+    },
+    {
+      "id": "scale_400_percent",
+      "label": "Exact 400 percent nearest-neighbor view",
+      "complete": true,
+      "evidence": "Inspected a 6144x4096 nearest-neighbor enlargement and targeted 400 percent crops. Repeated same-scale forest curls, recurring four-to-seven-stroke highland bundles, and aligned field dash ranks persist at pixel level.",
+      "notes": "The enlargement also confirmed that city and port marks have no perspective side faces."
+    },
+    {
+      "id": "full_composition_guide",
+      "label": "Full composition against canonical geometry guide",
+      "complete": true,
+      "evidence": "Compared the full candidate with style-candidate-i-v1-composition-guide.png. The coastline, guide islands and delta landforms, north-south river, central-right circular capital, southeast eight-parcel field group, southwest port, and principal routes are all present in their intended locations.",
+      "notes": "The automated geometry evidence independently reports 0.990730 full land-water agreement and bidirectional boundary p95 distances of 7 px and 6 px; Vision found no semantic composition omission."
+    },
+    {
+      "id": "region_1_northwest",
+      "label": "Region 1 northwest",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=0-511, y=0-341 at 200 percent. Open water reaches both outer edges without a frame; the northwest coast and forest edge are continuous and free of pasted bands.",
+      "notes": "Water marks are sparse and do not form text strings."
+    },
+    {
+      "id": "region_2_north",
+      "label": "Region 2 north",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=512-1023, y=0-341 at 200 percent. The river enters from the top and remains continuous; the forest is a coherent mass but its surface is densely tiled with similar loop and crown-like marks.",
+      "notes": "This region contributes to the forest-icon-wallpaper failure."
+    },
+    {
+      "id": "region_3_northeast",
+      "label": "Region 3 northeast",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=1024-1535, y=0-341 at 200 and 400 percent. The broad highland plane is present, but many recurring bundles of parallel diagonal slashes share similar length, angle, and internal spacing.",
+      "notes": "This region establishes the repeated-highland-hatch-bundles failure."
+    },
+    {
+      "id": "region_4_west",
+      "label": "Region 4 west",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=0-511, y=342-682 at 200 percent. Offshore forms and delta channels match the guide, water remains connected, and no branch terminates as an accidental broken line.",
+      "notes": "The water wavelets are irregularly spaced and retain quiet gaps."
+    },
+    {
+      "id": "region_5_center",
+      "label": "Region 5 center",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=512-1023, y=342-682 at 200 and 400 percent. The capital has one outer wall, five visible gate junctions, irregular interior blocks, varied small footprints, and continuous incoming roads.",
+      "notes": "There are no complete interior rings or uniformly spaced spokes, although the broad arteries retain a mild central-hub emphasis."
+    },
+    {
+      "id": "region_6_east",
+      "label": "Region 6 east",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=1024-1535, y=342-682 at 200 percent. Eastbound routes are continuous, the highland transition is not a pasted strip, and the upper field parcels contain aligned ranks of repeated short marks.",
+      "notes": "This region contributes to the rigid field cadence finding."
+    },
+    {
+      "id": "region_7_southwest",
+      "label": "Region 7 southwest",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=0-511, y=683-1023 at 200 percent. The port sits on the southwest coast, open water reaches the left and bottom edges, and all visible pier strokes end cleanly without perspective extrusion.",
+      "notes": "No border, caption, or pseudo-writing was found."
+    },
+    {
+      "id": "region_8_south",
+      "label": "Region 8 south",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=512-1023, y=683-1023 at 200 percent. The port-to-capital road and south-gate route are connected, the coast is continuous, and there is no rectangular tonal cutoff around the port or road loop.",
+      "notes": "Ground texture is busy but not organized into a visible pasted band."
+    },
+    {
+      "id": "region_9_southeast",
+      "label": "Region 9 southeast",
+      "complete": true,
+      "evidence": "Inspected source coordinates x=1024-1535, y=683-1023 at 200 and 400 percent. Multiple parcels show evenly spaced dotted ranks while others show long parallel hatch bands; the diagonal road remains continuous across the field group.",
+      "notes": "This is the strongest regional evidence for rigid field row and CAD repetition."
+    },
+    {
+      "id": "water_delta_river",
+      "label": "Water, delta, coast, islands, and river detail",
+      "complete": true,
+      "evidence": "Inspected x=0-719, y=190-799 at 200 percent and a water-core crop at 400 percent. River and delta channels join continuously, shorelines do not self-break, and sparse wave marks do not form connected cells, labels, or repeated writing-like baselines.",
+      "notes": "The water and geometry pass Vision review."
+    },
+    {
+      "id": "forest_detail",
+      "label": "Forest detail",
+      "complete": true,
+      "evidence": "Inspected x=280-819, y=0-469 at 200 percent and x=400-749, y=80-379 at 400 percent. The forest interior is filled almost edge-to-edge with similar small U, loop, and crown-like marks at nearly uniform scale and density, leaving few calm gaps.",
+      "notes": "The texture reads as icon wallpaper rather than sparse, non-repeating print material."
+    },
+    {
+      "id": "highland_detail",
+      "label": "Highland detail",
+      "complete": true,
+      "evidence": "Inspected x=930-1535, y=0-519 at 200 percent and x=1030-1459, y=30-409 at 400 percent. Recurrent clusters of roughly four to seven parallel diagonal strokes repeat across the planar tone with similar orientation and spacing.",
+      "notes": "The plane and quiet areas are present, but the clustered stamps violate the independent-hatch requirement."
+    },
+    {
+      "id": "fields_detail",
+      "label": "Fields detail",
+      "complete": true,
+      "evidence": "Inspected x=960-1535, y=500-1023 at 200 and 400 percent. All eight canonical parcels are present, yet their interiors use straight aligned ranks of dots or dashes, repeated row spacing, and in several parcels dense parallel bands that follow a CAD-like cadence.",
+      "notes": "The marks are broken locally but remain globally regimented."
+    },
+    {
+      "id": "capital_detail",
+      "label": "Capital detail",
+      "complete": true,
+      "evidence": "Inspected x=675-1014, y=350-679 at 400 percent. One outer wall and five gate junctions are clear; small footprints vary, shared boundaries are irregular, and no full inner ring or evenly repeated spoke set is visible.",
+      "notes": "A mild central convergence remains, but it is asymmetric enough not to trigger the mechanical-capital immediate failure."
+    },
+    {
+      "id": "port_detail",
+      "label": "Port detail",
+      "complete": true,
+      "evidence": "Inspected x=375-644, y=745-979 at 400 percent and compared it with the equivalent guide crop. The polygonal footprint, three water piers, two landward connections, and internal top-down blocks are present and connected.",
+      "notes": "No perspective side wall, orphan road, or missing pier was found."
+    },
+    {
+      "id": "seam_sweep",
+      "label": "Hybrid edit-boundary and pasted-band sweep",
+      "complete": true,
+      "evidence": "Swept 400 percent crops around the highland left and lower transitions, all field margins, the capital perimeter, and the river-delta geometry edit. Texture and tone cross those areas without a straight rectangular cutoff, halo, duplicated edge, or pasted strip.",
+      "notes": "No visible seam immediate failure was detected."
+    },
+    {
+      "id": "outer_edges",
+      "label": "Borderless outer-edge inspection",
+      "complete": true,
+      "evidence": "Inspected all four outer edges at native through 400 percent. Image content runs full bleed with natural paper and terrain variation; there is no solid border, ornamental frame, caption band, or clipped text.",
+      "notes": "This agrees with the automated boundary proxy while remaining a separate visual judgment."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "text_or_pseudo_writing",
+      "label": "Any text or pseudo-writing",
+      "detected": false,
+      "evidence": "No label, word-like string, number, caption, or baseline of glyphs appears in the full, nine-region, or 400 percent sweeps. Isolated water wavelets and terrain marks do not assemble into writing."
+    },
+    {
+      "id": "perspective_or_side_faces",
+      "label": "Perspective or visible side faces",
+      "detected": false,
+      "evidence": "Capital blocks, port blocks, roads, walls, piers, coast, and terrain all read in orthographic plan; there are no extruded sides, horizon cues, vanishing-point construction, or cast-shadowed elevations."
+    },
+    {
+      "id": "missing_composition",
+      "label": "Missing canonical composition",
+      "detected": false,
+      "evidence": "Full-guide comparison retains the intended coast and islands, river and delta, capital, port, eight fields, and route layout in their canonical positions."
+    },
+    {
+      "id": "broken_network",
+      "label": "Broken road or water network",
+      "detected": false,
+      "evidence": "The river and delta branches meet cleanly; all five capital gates connect to roads; the east, north, southeast, south, and west approaches remain continuous; and port roads and piers have intentional endpoints."
+    },
+    {
+      "id": "forest_icon_wallpaper",
+      "label": "Forest icon wallpaper",
+      "detected": true,
+      "evidence": "At 200 and 400 percent, the northwestern forest is a near-uniform carpet of repeated same-scale U, loop, and crown-like micro-motifs with little negative-space relief across x=280-819, y=0-469. The dense recurring symbols read as wallpaper."
+    },
+    {
+      "id": "repeated_highland_hatch_bundles",
+      "label": "Repeated highland hatch bundles",
+      "detected": true,
+      "evidence": "Across the northeast highland, especially x=1030-1459, y=30-409, many distinct clusters repeat as four-to-seven parallel diagonal slashes with similar length, angle, and internal spacing. They are bundles rather than independent sparse marks."
+    },
+    {
+      "id": "rigid_field_row_or_cad_repetition",
+      "label": "Rigid field row or CAD repetition",
+      "detected": true,
+      "evidence": "All eight southeast parcels contain aligned dotted or dashed ranks; several also contain long, densely parallel hatch bands. At 200 and 400 percent the repeated spacing and parcel-wide alignment produce an unmistakable row-grid CAD cadence."
+    },
+    {
+      "id": "mechanical_concentric_or_radial_capital",
+      "label": "Mechanical concentric or radial capital",
+      "detected": false,
+      "evidence": "The capital has one outer circular wall, but its interior blocks and secondary streets are irregular; no complete inner rings or uniformly spaced spoke system is visible. The five gate arteries are asymmetric, although their mild central convergence merits a small score deduction."
+    },
+    {
+      "id": "visible_seam_or_pasted_band",
+      "label": "Visible seam or pasted band",
+      "detected": false,
+      "evidence": "Targeted 400 percent sweeps around highland, field, capital, and delta edit boundaries show no rectangular cutoff, halo, duplicated outline, straight tonal band, or visibly pasted strip."
+    }
+  ],
+  "scores": [
+    {
+      "id": "composition_and_geometry",
+      "label": "Canonical composition and geometry",
+      "maximum": 20,
+      "score": 20,
+      "notes": "All major canonical forms and placements are present; visual comparison and the allowed automated geometry evidence agree."
+    },
+    {
+      "id": "network_and_topology",
+      "label": "Road, river, delta, gate, and port topology",
+      "maximum": 15,
+      "score": 15,
+      "notes": "No broken primary route, water branch, city junction, port connection, or unintended dead end was found."
+    },
+    {
+      "id": "projection_and_semantic_clarity",
+      "label": "Plan projection and semantic clarity",
+      "maximum": 10,
+      "score": 10,
+      "notes": "The board is consistently top-down and remains legible from 25 percent through native scale."
+    },
+    {
+      "id": "terrain_water_forest_and_highland",
+      "label": "Terrain, water, forest, and highland material",
+      "maximum": 20,
+      "score": 11,
+      "notes": "Coast, river, delta, and sparse water marks are strong, but forest icon wallpaper and repeated highland hatch bundles are both immediate failures."
+    },
+    {
+      "id": "fields_and_pattern_control",
+      "label": "Fields and agricultural pattern control",
+      "maximum": 15,
+      "score": 5,
+      "notes": "All eight parcels exist, but every parcel uses regimented rows, ranks, or parallel bands, directly failing the no-CAD/no-wallpaper requirement."
+    },
+    {
+      "id": "capital_port_and_settlement_fabric",
+      "label": "Capital, port, and settlement fabric",
+      "maximum": 10,
+      "score": 9,
+      "notes": "Capital and port are detailed, orthographic, and connected; one point is withheld for residual central-hub emphasis in the capital's broad arteries."
+    },
+    {
+      "id": "seams_text_edges_and_finish",
+      "label": "Seams, text, outer edges, and raster finish",
+      "maximum": 10,
+      "score": 10,
+      "notes": "No seam, pasted band, text, pseudo-writing, frame, alpha issue, or edge artifact is visible in the locked raster."
+    }
+  ],
+  "total_score": 80,
+  "decision": "rejected",
+  "summary": "The exact locked candidate preserves the canonical composition, plan projection, water and road topology, capital and port footprints, full-bleed edges, and clean hybrid seams. It nevertheless fails strict Vision QA because three immediate-failure patterns are plainly visible: dense repeated forest loop/crown wallpaper, recurring bundled highland slashes, and rigid parcel-wide field rows and hatch bands. The score is 80/100, below the 94/100 threshold; the decision is rejected regardless of the otherwise strong geometry and network.",
+  "required_changes": [
+    "Replace the northwestern forest carpet with sparser non-symbolic print material: eliminate repeated same-scale U, loop, and crown stamps; introduce larger calm gaps, varied density, and genuinely non-recurring local marks while preserving the exact forest footprint, coast, and river.",
+    "Rebuild the northeast highland surface so hatches are isolated single marks or occasional non-repeating pairs with varied length, angle, spacing, and placement; remove every recurring four-to-seven-stroke bundle and preserve the broad planar tone and canonical geometry.",
+    "Rebuild all eight field interiors with independent broken marks, nonperiodic drift, irregular gaps, and parcel-to-parcel variation; remove aligned dot ranks, repeated row spacing, continuous parallel bands, and any CAD-grid cadence while preserving parcel outlines and crossing roads.",
+    "Reduce the capital's residual central-hub emphasis by offsetting or interrupting broad arterial convergence while retaining one exact outer wall, five exact gate junctions, irregular shared-boundary blocks, varied tiny footprints, and the canonical external road topology.",
+    "Submit the revised exact raster through the same 25, 50, native, 200, 400, nine-region, motif, and seam review; it must clear all immediate failures and score at least 94 before promotion."
+  ]
+}

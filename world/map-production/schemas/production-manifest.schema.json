@@ -1,0 +1,431 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/production-manifest.schema.json",
+  "title": "SStory map-production manifest",
+  "description": "Versioned source of truth for generated map sheets, their lineage, QA, and publication state.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project_id",
+    "map_id",
+    "coordinate_system",
+    "jobs"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "$ref": "#/definitions/id"
+    },
+    "map_id": {
+      "$ref": "#/definitions/id"
+    },
+    "coordinate_system": {
+      "enum": [
+        "EA-WORLD-1",
+        "eternia-geographic",
+        "eternia-world",
+        "pixel"
+      ]
+    },
+    "epoch": {
+      "type": "string",
+      "minLength": 1
+    },
+    "style_guide_path": {
+      "$ref": "#/definitions/path"
+    },
+    "updated_at": {
+      "$ref": "#/definitions/timestamp"
+    },
+    "jobs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/job"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Repository-relative POSIX path; absolute paths, backslashes, and parent traversal are forbidden for cross-platform reproducibility.",
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "inputs-ready",
+        "generated",
+        "automated-qa",
+        "vision-qa",
+        "accepted",
+        "revise",
+        "rejected",
+        "tiled",
+        "staging",
+        "published"
+      ]
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "history_event": {
+      "type": "object",
+      "required": [
+        "state",
+        "at",
+        "actor"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/definitions/state"
+        },
+        "at": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "bounds": {
+      "type": "object",
+      "required": [
+        "west",
+        "south",
+        "east",
+        "north"
+      ],
+      "properties": {
+        "west": {
+          "type": "number"
+        },
+        "south": {
+          "type": "number"
+        },
+        "east": {
+          "type": "number"
+        },
+        "north": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "zoom": {
+      "type": "object",
+      "required": [
+        "min",
+        "max",
+        "native"
+      ],
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        },
+        "native": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        }
+      },
+      "additionalProperties": false
+    },
+    "master": {
+      "type": "object",
+      "required": [
+        "path",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "color_profile": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "generation": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_snapshot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt_path": {
+          "$ref": "#/definitions/path"
+        },
+        "prompt_sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "control_image_path": {
+          "$ref": "#/definitions/path"
+        },
+        "parent_image_path": {
+          "$ref": "#/definitions/path"
+        },
+        "seed": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      },
+      "additionalProperties": false
+    },
+    "automated_qa": {
+      "type": "object",
+      "required": [
+        "status",
+        "report_path"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "passed",
+            "failed"
+          ]
+        },
+        "report_path": {
+          "$ref": "#/definitions/path"
+        },
+        "land_sea_mask_match": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "boundary_within_tolerance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "overlap_ssim": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "vision_qa": {
+      "type": "object",
+      "required": [
+        "decision",
+        "score",
+        "report_path",
+        "reviewer",
+        "reviewed_at"
+      ],
+      "properties": {
+        "decision": {
+          "enum": [
+            "accepted",
+            "revise",
+            "rejected"
+          ]
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "report_path": {
+          "$ref": "#/definitions/path"
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewed_at": {
+          "$ref": "#/definitions/timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "qa": {
+      "type": "object",
+      "properties": {
+        "automated": {
+          "$ref": "#/definitions/automated_qa"
+        },
+        "vision": {
+          "$ref": "#/definitions/vision_qa"
+        }
+      },
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "required": [
+        "tiles_path",
+        "metadata_path"
+      ],
+      "properties": {
+        "tiles_path": {
+          "$ref": "#/definitions/path"
+        },
+        "metadata_path": {
+          "$ref": "#/definitions/path"
+        },
+        "tile_set_sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "job": {
+      "type": "object",
+      "required": [
+        "id",
+        "sheet_id",
+        "status",
+        "bounds",
+        "zoom",
+        "history"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "sheet_id": {
+          "$ref": "#/definitions/id"
+        },
+        "parent_job_id": {
+          "$ref": "#/definitions/id"
+        },
+        "status": {
+          "$ref": "#/definitions/state"
+        },
+        "bounds": {
+          "$ref": "#/definitions/bounds"
+        },
+        "zoom": {
+          "$ref": "#/definitions/zoom"
+        },
+        "acceptance_threshold": {
+          "type": "integer",
+          "minimum": 90,
+          "maximum": 100,
+          "default": 90,
+          "description": "Minimum Vision QA score; use 94 for golden reference sheets."
+        },
+        "neighbors": {
+          "type": "object",
+          "properties": {
+            "north": {
+              "$ref": "#/definitions/id"
+            },
+            "east": {
+              "$ref": "#/definitions/id"
+            },
+            "south": {
+              "$ref": "#/definitions/id"
+            },
+            "west": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          "additionalProperties": false
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/artifact"
+          }
+        },
+        "generation": {
+          "$ref": "#/definitions/generation"
+        },
+        "master": {
+          "$ref": "#/definitions/master"
+        },
+        "qa": {
+          "$ref": "#/definitions/qa"
+        },
+        "output": {
+          "$ref": "#/definitions/output"
+        },
+        "history": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/history_event"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

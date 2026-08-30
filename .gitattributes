@@ -10,6 +10,10 @@
 *.yaml text eol=lf
 *.yml text eol=lf
 
+# This hash-locked ImageGen prompt intentionally preserves its original
+# terminal blank line as part of the generation provenance.
+world/map-production/prompts/highland-detail-exemplar-v1.generation.txt whitespace=-blank-at-eof
+
 # Binary assets must never undergo newline conversion.
 *.jpg binary
 *.png binary

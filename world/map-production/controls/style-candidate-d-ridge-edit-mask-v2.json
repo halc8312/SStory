@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-ridge-edit-mask-v2",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_image": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands.png",
+  "composite_base": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains.png",
+  "topology_control": {
+    "path": "world/map-production/controls/style-candidate-d-ridge-guide-v1.json",
+    "sha256": "094f23f2a9515add9fccc6f52868d720ac53c40ca4985b804dd0da8a48062a13"
+  },
+  "purpose": "Localize candidate D attempt 3 to ten ridge neighborhoods after attempt 2 repainted almost the whole broad mountain mask. The 160px corridors cover the attempt-1 scenic faces while preserving D v1 substrate between and beyond ridges.",
+  "include_strokes": [
+    {"id": "ne_ridge_01", "points": [[945, 122], [977, 94], [1018, 80], [1060, 86], [1096, 111]], "width": 160, "feather_inside_px": 20},
+    {"id": "ne_ridge_02", "points": [[1160, 62], [1190, 37], [1228, 35], [1260, 54], [1282, 89], [1276, 128]], "width": 160, "feather_inside_px": 20},
+    {"id": "ne_ridge_03", "points": [[1402, 54], [1434, 76], [1448, 111], [1441, 147], [1418, 176]], "width": 160, "feather_inside_px": 20},
+    {"id": "ne_ridge_04", "points": [[1030, 252], [1062, 222], [1104, 211], [1147, 222], [1181, 248], [1204, 282]], "width": 160, "feather_inside_px": 20},
+    {"id": "ne_ridge_05", "points": [[1280, 302], [1311, 279], [1348, 282], [1378, 307], [1402, 340], [1438, 354], [1470, 344]], "width": 160, "feather_inside_px": 20},
+    {"id": "se_ridge_01", "points": [[806, 974], [840, 943], [884, 925], [931, 932], [974, 958]], "width": 160, "feather_inside_px": 20},
+    {"id": "se_ridge_02", "points": [[949, 844], [986, 818], [1028, 813], [1068, 832], [1098, 858], [1111, 878]], "width": 160, "feather_inside_px": 20},
+    {"id": "se_ridge_03", "points": [[1074, 990], [1107, 960], [1149, 944], [1192, 951], [1230, 977]], "width": 160, "feather_inside_px": 20},
+    {"id": "se_ridge_04", "points": [[1181, 875], [1215, 850], [1256, 854], [1291, 878], [1319, 909]], "width": 160, "feather_inside_px": 20},
+    {"id": "se_ridge_05", "points": [[1339, 993], [1378, 974], [1422, 979], [1460, 1002], [1494, 1010]], "width": 160, "feather_inside_px": 20}
+  ],
+  "exclude_strokes": [
+    {"id": "east_road", "width": 12, "feather_px": 4, "points": [[930, 505], [1050, 515], [1180, 540], [1270, 535], [1370, 490], [1535, 450]]},
+    {"id": "south_east_road", "width": 12, "feather_px": 4, "points": [[910, 558], [1000, 610], [1090, 666], [1180, 725], [1270, 785], [1360, 840], [1450, 892], [1535, 936]]}
+  ],
+  "feather_inside_px": 20,
+  "review_status": "provisional",
+  "notes": "The 160px localized corridors cover the visible D v1 scenic faces while reducing editable area relative to the broad polygon mask. Include-stroke support is deterministic and backward-compatible with byte-stable candidate B masks; road cores remain fully protected."
+}

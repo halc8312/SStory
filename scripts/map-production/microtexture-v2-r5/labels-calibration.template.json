@@ -1,0 +1,13 @@
+{
+  "artifact": "microtexture-v2-r5-root-vision-labels",
+  "schema_version": "microtexture-v2-r5-root-vision-labels/2",
+  "split": "calibration",
+  "spec_sha256": "GENERATED",
+  "manifest_sha256": "GENERATED",
+  "implementation_bindings_sha256": "GENERATED",
+  "blind_key_commitment": "GENERATED",
+  "runtime": {},
+  "contact_sheet_bundle": [],
+  "reviewer": "Root",
+  "items": []
+}

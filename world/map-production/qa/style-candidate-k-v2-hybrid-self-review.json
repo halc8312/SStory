@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-k-v2-hybrid-self-review",
+  "image_path": "world/map-production/candidates/style-candidate-k-v2-hybrid.png",
+  "created_at": "2026-07-20T02:52:26.1295463Z",
+  "reviewer": "root-codex-vision-self-review",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "Full composition",
+      "complete": true,
+      "evidence": "The exact 1536x1024 RGB candidate SHA-256 25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92 was inspected at full-board scale.",
+      "notes": "The complete flat board contains calm sea, five delta islands, forest, river, organic royal capital, port, roads, quiet highland, eight field parcels, and continuous surrounding ground. It reads as one restrained antique printed map rather than a GIS or assembled collage."
+    },
+    {
+      "id": "scale_25",
+      "label": "25 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k2-hybrid-local-composite-proof-v3/root-vision/full-25.png; automated 25 percent macrocell contrast coverage 0.872396.",
+      "notes": "The coast, water network, forest, settlements, roads, highland, and eight field parcels remain distinct. The strict downsample gate passes without turning the sea into a dark texture field."
+    },
+    {
+      "id": "scale_50",
+      "label": "50 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k2-hybrid-local-composite-proof-v3/root-vision/full-50.png; automated 50 percent macrocell contrast coverage 1.0.",
+      "notes": "Regional hierarchy and all major connections are immediately legible. The capital reads as a dense landmark without becoming a radial diagram."
+    },
+    {
+      "id": "native",
+      "label": "Native review",
+      "complete": true,
+      "evidence": "world/map-production/candidates/style-candidate-k-v2-hybrid.png was inspected at native resolution and verified against SHA-256 25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92.",
+      "notes": "Dry warm-sepia linework, muted slate water, ochre ground, paper grain, roads, wall lines, coast, and semantic materials remain coherent with no pasted quadrant or color discontinuity."
+    },
+    {
+      "id": "zoom_200",
+      "label": "200 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k2-hybrid-local-composite-proof-v3/root-vision/sea-200.png, forest-200.png, delta-200.png, and port-200.png.",
+      "notes": "Sea marks are sparse and disconnected; forest is mottled areal texture; the continuously warped delta and port retain crisp banks, islands, roads, and piers without folds, bands, double lines, or smearing."
+    },
+    {
+      "id": "zoom_400",
+      "label": "400 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k2-hybrid-local-composite-proof-v3/root-vision/capital-400.png, highland-400.png, and fields-400.png.",
+      "notes": "The capital resolves into many unequal blocks and crooked connected lanes; highland marks are sparse and independently ending; field marks are short, broken, and subordinate to ample quiet ground. No complete inner urban ring, starburst, dense row wallpaper, or widespread hatch-bundle stamp is present."
+    },
+    {
+      "id": "nine_regions",
+      "label": "Nine-region continuity review",
+      "complete": true,
+      "evidence": "All nine thirds of the native board and the complete 25/50 percent contacts were inspected for transitions, dead zones, and pasted boundaries.",
+      "notes": "Every region is populated at an appropriate density. Coast, river, forest edge, highland edge, fields, capital, port, roads, and neutral corridors transition continuously with no rectangular or feather-mask signature."
+    },
+    {
+      "id": "water_delta_river",
+      "label": "Water, delta, and river",
+      "complete": true,
+      "evidence": "The sea, coastline, islands, river, delta junctions, and south-coast outlet were inspected at 25, 50, 100, and 200 percent; the automated geometry gate also passes all six strict measures.",
+      "notes": "Water remains calm and nonperiodic. The smooth geometry warp improves guide alignment without the broad gray/beige bands or port damage seen in the rejected projection proof."
+    },
+    {
+      "id": "forest",
+      "label": "Forest material and warp continuity",
+      "complete": true,
+      "evidence": "tmp/map-production/k2-hybrid-local-composite-proof-v3/root-vision/forest-200.png and the full native board.",
+      "notes": "The forest is dense continuous mottled print texture without crown-loop icons or tree rows. A subtle flow-like bend is visible in one upper dense patch, but it remains organic, seamless, and nonsemantic rather than reading as a warp fold or repeated stamp."
+    },
+    {
+      "id": "highland",
+      "label": "Highland plan material",
+      "complete": true,
+      "evidence": "tmp/map-production/k2-hybrid-local-composite-proof-v3/root-vision/highland-400.png plus 25/50/native views.",
+      "notes": "The eastern highland is a broad quiet planar tonal zone with sparse short marks and no raised terrain, peak symbols, long ridge wall, or dominant repeated bundle system. A few widely separated three-to-four-dash clusters remain minor handcrafted texture, not wallpaper."
+    },
+    {
+      "id": "fields_and_capital",
+      "label": "Fields and royal capital",
+      "complete": true,
+      "evidence": "tmp/map-production/k2-hybrid-local-composite-proof-v3/root-vision/fields-400.png and capital-400.png plus full-board 25/50/native views.",
+      "notes": "All eight field parcels and crossing roads remain crisp. Field interiors are mostly calm with sparse short marks. The circular capital has exactly five externally connected gates, dense unequal blocks, asymmetrical crooked lanes, and no complete concentric inner road or starburst; one northwest wall bastion has no external road and does not read as an extra gate."
+    },
+    {
+      "id": "automated_contract",
+      "label": "Strict automated contract",
+      "complete": true,
+      "evidence": "world/map-production/qa/automated/style-candidate-k-v2-hybrid.json passes every unchanged gate: geometry stable 0.999681, bidirectional within-8px 0.965139/0.973259, p95 7/6 px; B1 palette RGB 0.727173, HSV 0.656362, Bhattacharyya 0.931975; 25 percent coverage 0.872396.",
+      "notes": "Boundary, exact-repetition, semantic-repetition proxy, deterministic reproduction, raw/final identity, input locks, geometry, palette, and downsample readability all pass. Automated evidence supports but does not replace this Vision decision."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "Text or pseudo-writing",
+      "detected": false,
+      "evidence": "No readable label, pseudo-writing row, signature, watermark, legend, cartouche, or glyph-like text system appears at any reviewed scale."
+    },
+    {
+      "id": "perspective_or_side_faces",
+      "label": "Perspective, side faces, or directional lighting",
+      "detected": false,
+      "evidence": "Coast, islands, forest, settlements, highland, fields, roads, and water use a strict vertical plan view without cliffs, raised landforms, roof perspective, cast shadows, or directional relief."
+    },
+    {
+      "id": "missing_required_composition",
+      "label": "Missing required composition",
+      "detected": false,
+      "evidence": "The required coastline, five delta islands, river and branches, forest, capital, port, roads, highland, eight fields, and surrounding land are all present."
+    },
+    {
+      "id": "broken_network",
+      "label": "Broken road or river network",
+      "detected": false,
+      "evidence": "River, delta branches, coast, capital roads and five external gates, port access, crossing roads, and piers remain continuous in native and enlarged views."
+    },
+    {
+      "id": "forest_semantic_wallpaper",
+      "label": "Forest loop or icon wallpaper",
+      "detected": false,
+      "evidence": "The 200 percent forest view shows mottled areal texture without dominant closed crown loops, rosettes, repeated tree icons, or aligned glyph rows."
+    },
+    {
+      "id": "highland_repeated_hatch_bundles",
+      "label": "Repeated highland hatch bundles",
+      "detected": false,
+      "evidence": "At 400 percent the highland is predominantly quiet grain with sparse, separated, varied short marks; the rejected widespread three-to-five-stroke bundle system is absent."
+    },
+    {
+      "id": "field_row_cad_repetition",
+      "label": "Rigid field-row and parcel repetition",
+      "detected": false,
+      "evidence": "At 400 percent the field interiors retain ample calm ground and sparse short broken marks. Faint local cadence does not form continuous dense rows, crosshatch, or CAD-like parcel wallpaper."
+    },
+    {
+      "id": "capital_radial_repetition",
+      "label": "Mechanical capital radial repetition",
+      "detected": false,
+      "evidence": "At native and 400 percent the capital contains unequal blocks and crooked non-circular lanes. No complete inner ring, uniform spoke set, repeated wedge, or starburst planning remains."
+    },
+    {
+      "id": "visible_edge_seam",
+      "label": "Visible edge seam or pasted patch",
+      "detected": false,
+      "evidence": "Full-board and enlarged transition reviews show no rectangular patch, wide geometry band, feather halo, quadrant edge, frame, double coastline, or pasted color boundary."
+    }
+  ],
+  "scores": [
+    {
+      "id": "prompt_geometry",
+      "label": "Composition and strict plan geometry",
+      "maximum": 25,
+      "score": 25,
+      "notes": "Complete strict plan composition; all unchanged geometry thresholds pass with fold-free continuous warp evidence."
+    },
+    {
+      "id": "parent_style_continuity",
+      "label": "Palette and parent-style continuity",
+      "maximum": 15,
+      "score": 15,
+      "notes": "The dry antique print character is coherent and all strict B1 palette thresholds pass."
+    },
+    {
+      "id": "edge_seam_continuity",
+      "label": "Edge and seam continuity",
+      "maximum": 15,
+      "score": 15,
+      "notes": "The full-bleed plate, warped geometry, and three local donor zones show no visible seam, band, frame, or patch boundary."
+    },
+    {
+      "id": "style_consistency",
+      "label": "Material and line-style consistency",
+      "maximum": 15,
+      "score": 13,
+      "notes": "Materials and linework are consistently warm, dry, and plan-view. Minor deductions reflect subtle flow in one dense forest patch and a few residual tiny dash clusters in the quiet highland."
+    },
+    {
+      "id": "detail_density",
+      "label": "Multiscale detail and readability",
+      "maximum": 10,
+      "score": 9,
+      "notes": "The strict 25 and 50 percent gates pass and the city resolves deeply; the intentionally calm highland and fields are slightly less information-rich at extreme zoom."
+    },
+    {
+      "id": "artifact_nonrepetition",
+      "label": "Semantic nonrepetition",
+      "maximum": 10,
+      "score": 8,
+      "notes": "No immediate repetition failure remains. Minor deductions reflect faint local dash cadence in several field interiors and a few widely separated highland dash groups visible only at 400 percent."
+    },
+    {
+      "id": "vector_readability",
+      "label": "Network and overlay readability",
+      "maximum": 10,
+      "score": 10,
+      "notes": "Coast, river, delta, roads, five capital connections, port, piers, parcel borders, and region hierarchy remain exceptionally clear at every reviewed scale."
+    }
+  ],
+  "total_score": 95,
+  "decision": "accepted",
+  "summary": "K2 passes root Vision at 95/100 with no immediate-failure trigger. It preserves K1's strongest antique material character while a fold-free continuous warp satisfies the unchanged geometry contract, localized ImageGen donors replace the mechanical capital, highland, and field grammars, and a restrained deterministic final style stage passes palette and multiscale readability. Minor residual dash cadence and subtle dense-forest flow are below rejection severity. This is root self-acceptance only; Golden promotion still requires two blind independent complete reviews, each at least 94 with no immediate failure.",
+  "required_changes": []
+}

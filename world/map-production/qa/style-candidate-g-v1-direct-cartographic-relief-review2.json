@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-g-v1-direct-cartographic-relief",
+  "image_path": "world/map-production/candidates/style-candidate-g-v1-direct-cartographic-relief.png",
+  "created_at": "2026-07-19T05:16:07Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "Base, raw, protected final, guide, masks, and composite report were independently inspected.", "notes": "The main ranges are visible, but their scenic peak language conflicts with the surrounding plan-view map."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "The 1536x1024 images were inspected at native resolution.", "notes": "Triangular peaks and dark vertical-looking faces are visible without magnification; four foothills do not read independently."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "All thirteen diagnostic crops under tmp/map-production/g1-review-v1 were independently inspected.", "notes": "Magnification confirms comb hachure repetition, edge clipping, and closed dark ridges instead of low planar relief."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "The full protected final and amplified difference were scanned region by region.", "notes": "Unrelated geography is stable, while generated relief reaches the south and east canvas boundaries."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Guide, edit mask, protection mask, and difference were compared at matching coordinates.", "notes": "Six intended roles collapse into two dominant ranges plus faint fragments, with large protected cavities."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Candidate D v4 and G1 final were compared at identical extents.", "notes": "Exact features continue, but mountain scale, lighting, and viewpoint jump relative to the base."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "The north-east and south-east edge crops and full difference were checked.", "notes": "Changes touch the east edge for 126 pixels of height and the south edge for 257 pixels of width, leaving relief visibly cut."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Protected roads, water, city wall, fields, trees, and overlay quiet space were inspected.", "notes": "Protected vectors remain legible, but dense dark relief reduces future label and POI capacity."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Desktop suitability was assessed from native and 200% views; staging was stopped by image hard failures.", "notes": "Perspective and repetition would be prominent at the intended regional scale."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Mobile suitability was assessed from the full overview; staging was stopped by image hard failures.", "notes": "Main massifs remain dark while all detached foothill roles collapse."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "The composite report records exact preservation in every protected gate and visual inspection found continuous roads, water, city wall, fields, and trees."},
+    {"id": "missing_required", "label": "必須地点・地形の欠落", "detected": true, "evidence": "Four foothills and both quiet saddles fail to read as the six required independent landform roles."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No noncanonical major settlement, facility, road, or landmark was introduced."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No generated words, pseudo-writing, compass, legend, scale, or signature was found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": true, "evidence": "The north-east relief is cut at the right edge and the south-east relief at the bottom/right edges; guide-conditioned boundaries remain visible."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern element, watermark, logo, or signature was found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": true, "evidence": "NE (1060-1510,80-350) and SE (950-1380,800-1023) contain triangular peaks, dark side walls, and forward-falling slopes."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Both ranges repeat the same triangular summit, two-face lighting, and comb-like hachure pattern."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 18, "notes": "Canonical protected features remain exact, but the required six-part terrain hierarchy is not realized."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 10, "notes": "Palette continuity is reasonable; viewpoint, lighting, and relief density jump from the parent."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 8, "notes": "Internal roads remain continuous, but east/south clipping prevents neighbor continuity."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 7, "notes": "Engraved color is compatible, while scenic side-view peaks violate strict plan view."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 5, "notes": "Main ranges are detailed but over-dense; foothills and saddles do not carry usable regional information."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 4, "notes": "Repeated triangular peaks, comb hachures, protection cavities, and clipping remain."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 7, "notes": "Exact road guards help, but dark relief competes with future labels and POIs."}
+  ],
+  "total_score": 59,
+  "decision": "rejected",
+  "summary": "Candidate G1 is rejected independently. Its protection mechanics are exact, but both edited regions use oblique scenic mountain glyphs, omit readable foothills and saddles, repeat peak motifs, and are clipped at the canvas boundaries.",
+  "required_changes": [
+    "Generate relief-only, strictly top-down terrain with no summit silhouettes, vertical side faces, or directional scenic lighting.",
+    "Inset all six complete landforms from canvas edges, fix minimum foothill readability, and keep saddles open before protected compositing."
+  ]
+}

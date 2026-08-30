@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "base_path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+  "edit_path": "world/map-production/candidates/style-candidate-b-v4-masked-topography-raw.png",
+  "control_path": "world/map-production/controls/style-candidate-b-mountain-mask-v2.json",
+  "output_path": "world/map-production/candidates/style-candidate-b-v4b-mask-refinement.png",
+  "width": 1536,
+  "height": 1024,
+  "masked_pixels": 530444,
+  "opaque_mask_pixels": 170080,
+  "protected_pixels_verified": 1042420,
+  "outside_mask_max_channel_difference": 0,
+  "output_sha256": "04c43a797ee49c12fe92cfd3f3fc097cf0c369eacf4427a8189ea8a561f7e604"
+}

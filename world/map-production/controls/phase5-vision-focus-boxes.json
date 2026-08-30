@@ -1,0 +1,41 @@
+{
+  "$schema": "https://sstory.example/schemas/phase5-vision-focus-boxes.schema.json",
+  "schema_version": "1.0.0",
+  "type": "sstory-phase5-canonical-vision-focus-boxes",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "coordinate_convention": "left-top-inclusive_right-bottom-exclusive",
+  "focus_crop_size_px": 512,
+  "map_catalog": {
+    "path": "world/map-production/source/map-sheets.json",
+    "sha256": "20204c1bf14c8cb7b1204066c1b0755a0a74f62f9c7c6418b76754540a9a3c15"
+  },
+  "resolution_contract": {
+    "path": "world/map-production/spec/resolution-contract.json",
+    "sha256": "f65984a6e162e6f60eb93873aa38e0daf1a263975f89cb063092c80389bb0290"
+  },
+  "entries": [
+    {"sheet_id": "sheet_world", "source_size": [4096, 2730], "box_px": [1792, 1109, 2304, 1621], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_continent_elysion", "source_size": [2868, 1939], "box_px": [1178, 713, 1690, 1225], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_continent_lumiera", "source_size": [2951, 2731], "box_px": [1219, 1109, 1731, 1621], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_continent_chaos_ria", "source_size": [2991, 2649], "box_px": [1239, 1068, 1751, 1580], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_continent_atlantis", "source_size": [2377, 3058], "box_px": [932, 1273, 1444, 1785], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_continent_grimoire", "source_size": [2459, 1229], "box_px": [973, 358, 1485, 870], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_royal_capital_region", "source_size": [2294, 1421], "box_px": [891, 454, 1403, 966], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_silver_plains_region", "source_size": [3605, 2294], "box_px": [1546, 891, 2058, 1403], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_soaring_mountains_region", "source_size": [2213, 1257], "box_px": [850, 372, 1362, 884], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_moonlit_forest_region", "source_size": [1967, 1694], "box_px": [727, 591, 1239, 1103], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_emerald_plains_region", "source_size": [2623, 2075], "box_px": [1055, 781, 1567, 1293], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_port_zephia_region", "source_size": [2377, 1147], "box_px": [932, 317, 1444, 829], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_lumiera_arch_region", "source_size": [4917, 3823], "box_px": [2202, 1655, 2714, 2167], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_emerald_belt_region", "source_size": [3606, 4805], "box_px": [1547, 2146, 2059, 2658], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_red_sea_desert_region", "source_size": [5325, 3659], "box_px": [2406, 1573, 2918, 2085], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_jade_oasis_region", "source_size": [2049, 1420], "box_px": [768, 454, 1280, 966], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_marineport_region", "source_size": [3278, 4369], "box_px": [1383, 1928, 1895, 2440], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_atlantia_region", "source_size": [2541, 2622], "box_px": [1014, 1055, 1526, 1567], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_time_port_region", "source_size": [2295, 1311], "box_px": [891, 399, 1403, 911], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_region_ethernia_core_region", "source_size": [2377, 1311], "box_px": [932, 399, 1444, 911], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_corridor_astralis_port_zephia", "source_size": [7210, 3932], "box_px": [3349, 1710, 3861, 2222], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_settlement_astralis", "source_size": [7866, 4543], "box_px": [3677, 2015, 4189, 2527], "purpose": "Central representative detail at canonical native resolution."},
+    {"sheet_id": "sheet_settlement_port_zephia", "source_size": [4719, 3234], "box_px": [2103, 1361, 2615, 1873], "purpose": "Central representative detail at canonical native resolution."}
+  ]
+}

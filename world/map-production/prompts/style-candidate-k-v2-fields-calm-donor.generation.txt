@@ -1,0 +1,9 @@
+Edit this exact SOUTHEAST AGRICULTURAL FIELD CROP as a restrained antique-map restoration, preserving the crop framing and registration.
+
+Reference 1 is the current correction crop. Reference 2 is K1 material/style authority. Reference 3 is geometry only; never copy its flat vector colors.
+
+LOCK AND PRESERVE: every one of the exact eight parcel outer boundaries, the dirt strips between parcels, both crossing roads and their widths/linework, surrounding terrain, and all pixels outside parcel interiors.
+
+EDIT ONLY THE EIGHT PARCEL INTERIORS. Remove at least 80% of the dense continuous parallel-row wallpaper and scribble. Make at least 70% of each parcel calm, readable paper/soil with the same K1 ochre tone and dry fine grain. Add only sparse historical survey texture: isolated unequal broken furrows under 18 source pixels, irregular gaps, slight local angular drift, occasional tiny stubble dots or short curved marks, different non-repeating orientations from parcel to parcel. No continuous stripe crossing a parcel, no uniform row cadence, no crosshatch, no dense fill, no blur/smear, no solid polygons, no perfect grids, no CAD/GIS appearance, no new hue.
+
+Maintain crisp warm-sepia parcel borders and road crossings. Flat orthographic plan view, muted antique palette, no text, labels, glyphs, perspective, shadows, 3D crops, halos, gradients, or borders. At 25% the eight parcels must remain distinct; at 200–400% the interiors must look sparse, varied, and handcrafted.

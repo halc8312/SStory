@@ -1,0 +1,106 @@
+{
+  "schema_version": "0.1.0",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "status": "provisional",
+  "description": "既存Map Dataのz値を地図描画レイヤーへ割り当てる制作上の区分。高度境界は正典上の物理法則ではない。",
+  "source_refs": [
+    "world/map-data/data/regions.json",
+    "world/map-data/data/nodes.json",
+    "world/map-data/data/pois.json"
+  ],
+  "axis": {
+    "name": "z",
+    "positive_direction": "up",
+    "zero_definition": "nominal ground or sea level",
+    "unit": "legacy abstract height unit"
+  },
+  "layers": [
+    {
+      "id": "deep_undersea",
+      "name": "深海層",
+      "z_min_inclusive": -2000,
+      "z_max_exclusive": -500,
+      "render_order": 0,
+      "geometry_confidence": "estimated",
+      "review_status": "provisional",
+      "current_feature_ids": []
+    },
+    {
+      "id": "undersea",
+      "name": "海中・地下層",
+      "z_min_inclusive": -500,
+      "z_max_exclusive": 0,
+      "render_order": 10,
+      "geometry_confidence": "estimated",
+      "review_status": "provisional",
+      "current_feature_ids": ["atlantia_region", "atlantia_undersea_city"]
+    },
+    {
+      "id": "surface",
+      "name": "地表・海面層",
+      "z_min_inclusive": 0,
+      "z_max_exclusive": 200,
+      "render_order": 20,
+      "geometry_confidence": "estimated",
+      "review_status": "provisional",
+      "current_feature_ids": [
+        "elysion", "lumiera", "chaos_ria", "atlantis", "grimoire",
+        "astralis", "granrock", "port_zephia", "silverport",
+        "moonlight_grace", "moonport", "emerald_city", "blood_fort",
+        "jade_oasis", "jade_north", "jade_capital", "warrior_port",
+        "jade_port", "marineport", "iron_mountain_port", "glacier_city",
+        "time_port", "labyrinth_of_time", "ethernia_core", "spirit_gate",
+        "sealed_lands"
+      ]
+    },
+    {
+      "id": "elevated_terrain",
+      "name": "高地層",
+      "z_min_inclusive": 200,
+      "z_max_exclusive": 700,
+      "render_order": 30,
+      "geometry_confidence": "estimated",
+      "review_status": "provisional",
+      "current_feature_ids": ["soaring_mountains_region", "eye_of_storm"]
+    },
+    {
+      "id": "lower_sky",
+      "name": "低空層",
+      "z_min_inclusive": 700,
+      "z_max_exclusive": 1100,
+      "render_order": 40,
+      "geometry_confidence": "estimated",
+      "review_status": "provisional",
+      "current_feature_ids": [
+        "silver_airport", "jade_airport", "wind_rest_isle",
+        "atlantis_floating_base", "astralis_airport", "time_airport", "stormhold"
+      ]
+    },
+    {
+      "id": "middle_sky",
+      "name": "中空層",
+      "z_min_inclusive": 1100,
+      "z_max_exclusive": 1400,
+      "render_order": 50,
+      "geometry_confidence": "estimated",
+      "review_status": "provisional",
+      "current_feature_ids": [
+        "lumiera_arch_region", "moonlight_platform", "lumiera_arch_air_terminal"
+      ]
+    },
+    {
+      "id": "upper_sky",
+      "name": "高空層",
+      "z_min_inclusive": 1400,
+      "z_max_exclusive": 3000,
+      "render_order": 60,
+      "geometry_confidence": "estimated",
+      "review_status": "provisional",
+      "current_feature_ids": ["moonshadow_floating_island", "griffin_nest"]
+    }
+  ],
+  "unbounded_policy": {
+    "below_min": "assign to deep_undersea and flag for review",
+    "above_max": "assign to upper_sky and flag for review"
+  }
+}

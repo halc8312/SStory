@@ -1,0 +1,1025 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-h-v9-dense-flat-plan-automated-audit",
+  "status": "failed",
+  "scope": "automated artifact, protected-edit, and raster proxies only",
+  "decision": "automated-gates-failed-not-eligible-for-golden",
+  "golden_eligible": false,
+  "threshold_policy": {
+    "legacy_h4_b1_golden_thresholds_unchanged": true,
+    "h5_non_regression_is_supplemental_only": true,
+    "failed_legacy_gates_cannot_be_overridden_by_local_improvement": true
+  },
+  "failed_gates": [
+    "palette_continuity_with_b1",
+    "downsample_readability_proxy"
+  ],
+  "generated_by": {
+    "path": "scripts/map-production/audit_style_candidate_h9.py",
+    "sha256": "c654cc202fa1673b1d2b365c53ddd867101a823e41b33e0861f77431ccf16f50",
+    "bytes": 35217
+  },
+  "artifacts": {
+    "final": {
+      "path": "world/map-production/candidates/style-candidate-h-v9-dense-flat-plan.png",
+      "sha256": "bd813e93287b15fe12e654ca5d28633a6902bbbdb3c6d81b0c3e69816a7b2580",
+      "bytes": 3344121
+    },
+    "h5": {
+      "path": "world/map-production/candidates/style-candidate-h-v5-strict-plan-symbols.png",
+      "sha256": "d95ea917ee2b0a414c3e32de762208af4fb2239d7bbc65fa7633e85218ad56fe",
+      "bytes": 3870049
+    },
+    "semantic_mask": {
+      "path": "world/map-production/qa/automated/style-candidate-h-v9-dense-flat-plan.semantic-mask.png",
+      "sha256": "c8b0e9350f55042245237ac3e7936b38bbf178cd4203ffc8c382d3f2d44e4deb",
+      "bytes": 26308
+    },
+    "contact_sheet": {
+      "path": "world/map-production/qa/automated/style-candidate-h-v9-dense-flat-plan.contact-sheet.png",
+      "sha256": "187e64221d22096ea4295b375fa81439bbcf7d8a07ddb3b47b72104f3a44c394",
+      "bytes": 1400161
+    },
+    "provenance": {
+      "path": "world/map-production/qa/automated/style-candidate-h-v9-dense-flat-plan.provenance.json",
+      "sha256": "34bcb70b256445f7ae97ee184b97e1f37df4885a967278dbd0d26658128f4983",
+      "bytes": 9303
+    },
+    "atlas": {
+      "path": "world/map-production/style-assets/phase5-cartographic-material-atlas-v1.png",
+      "sha256": "9b42dcce48d275d392bc28235925ac02f37690ace3418d6cb65920f4da05c6e3",
+      "bytes": 4744978
+    },
+    "atlas_receipt": {
+      "path": "world/map-production/prompts/phase5-cartographic-material-atlas-v1.generation-receipt.json",
+      "sha256": "bd02d77f972ee1146e6381aa7f769fe7caf0c49b5304d7de58f6ed4ad9c1cd28",
+      "bytes": 4359
+    },
+    "atlas_brief": {
+      "path": "world/map-production/prompts/phase5-cartographic-material-atlas-v1.normalized-generation-brief.txt",
+      "sha256": "f585872376d79dd59afae1d51ae10a86e3271a4208074d8bef7e095241b72cd8",
+      "bytes": 2409
+    },
+    "reference_b1": {
+      "path": "world/map-production/candidates/style-candidate-b-v1.png",
+      "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "bytes": 4180383
+    },
+    "renderer": {
+      "path": "scripts/map-production/render_candidate_h9_dense_flat_plan.py",
+      "sha256": "c4e8a94f821122f90b0d5f81b72148e1d72cbc7950773b1f2f015a07e45c4870",
+      "bytes": 39851
+    }
+  },
+  "image_contract": {
+    "passed": true,
+    "required": {
+      "format": "PNG",
+      "mode": "RGB",
+      "bit_depth": 8,
+      "png_color_type": 2,
+      "alpha_or_transparency_present": false
+    },
+    "expected_sizes": {
+      "final": [
+        1536,
+        1024
+      ],
+      "h5": [
+        1536,
+        1024
+      ],
+      "semantic_mask": [
+        1536,
+        1024
+      ],
+      "contact_sheet": [
+        912,
+        1320
+      ],
+      "atlas": [
+        1536,
+        1024
+      ],
+      "reference_b1": [
+        1536,
+        1024
+      ]
+    },
+    "records_passed": {
+      "final": true,
+      "h5": true,
+      "semantic_mask": true,
+      "contact_sheet": true,
+      "atlas": true,
+      "reference_b1": true
+    },
+    "records": {
+      "final": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "h5": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "semantic_mask": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "contact_sheet": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 912,
+        "height": 1320,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "atlas": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      },
+      "reference_b1": {
+        "format": "PNG",
+        "mode": "RGB",
+        "width": 1536,
+        "height": 1024,
+        "bands": [
+          "R",
+          "G",
+          "B"
+        ],
+        "bit_depth": 8,
+        "png_color_type": 2,
+        "alpha_or_transparency_present": false,
+        "icc_profile_present": false,
+        "icc_profile_sha256": null,
+        "profile_chunk_types": [],
+        "png_chunk_types": [
+          "IHDR",
+          "caBX",
+          "IDAT",
+          "IEND"
+        ],
+        "pillow_info_keys": []
+      }
+    }
+  },
+  "atlas_receipt": {
+    "passed": true,
+    "raw_invocation_absences_recorded_without_inference": true,
+    "artifact_record_exact": true,
+    "normalized_brief_required_phrases_present": true,
+    "whole_image_explicitly_rejected": true,
+    "accepted_crops": [
+      {
+        "id": "h9_forest_high_frequency_source",
+        "rect_px": [
+          0,
+          0,
+          512,
+          480
+        ],
+        "raw_rgb_sha256": "2c9968be64cb9d6aebc21d0ab1fcb3f1d5a38bfff873563737b873a1c09e5b00",
+        "passed": true
+      },
+      {
+        "id": "connected_forest",
+        "rect_px": [
+          24,
+          24,
+          472,
+          472
+        ],
+        "raw_rgb_sha256": "81a2a305c7a957ce2b998ba83f793854b81fffc4803ba9161f8f3e21de66f5a4",
+        "passed": true
+      },
+      {
+        "id": "cultivated_hatching",
+        "rect_px": [
+          32,
+          600,
+          600,
+          1000
+        ],
+        "raw_rgb_sha256": "1fe55bfd83eaac0b91acb5e9d685c5b1ed6a98e938cab869aa166380b6539734",
+        "passed": true
+      },
+      {
+        "id": "wetland",
+        "rect_px": [
+          760,
+          620,
+          1120,
+          1000
+        ],
+        "raw_rgb_sha256": "9392ead6cb954a8d1893c3012ee5001b81c90ebf593db741c4b6a9159e6d5cd1",
+        "passed": true
+      },
+      {
+        "id": "neutral_parchment",
+        "rect_px": [
+          1336,
+          296,
+          1368,
+          328
+        ],
+        "raw_rgb_sha256": "63e04598ab885f0d461b2209f672ad558e43f02cfad1f7565a52c32b3a10b659",
+        "passed": true
+      },
+      {
+        "id": "flat_rock_hachure",
+        "rect_px": [
+          970,
+          210,
+          1070,
+          310
+        ],
+        "raw_rgb_sha256": "d090585ff5ba68d955b8fb26d4940142b8a7148290916c94e997a2a2981f59ce",
+        "passed": true
+      }
+    ],
+    "rejected_zones": [
+      {
+        "id": "central_dimensional_rock_cluster",
+        "rect_px": [
+          620,
+          0,
+          960,
+          600
+        ],
+        "disjoint_from_accepted_crops": true,
+        "passed": true
+      },
+      {
+        "id": "upper_right_triangular_rock_cluster",
+        "rect_px": [
+          1080,
+          0,
+          1280,
+          180
+        ],
+        "disjoint_from_accepted_crops": true,
+        "passed": true
+      },
+      {
+        "id": "right_repeated_grass_bundle_field",
+        "rect_px": [
+          1180,
+          380,
+          1536,
+          1024
+        ],
+        "disjoint_from_accepted_crops": true,
+        "passed": true
+      }
+    ]
+  },
+  "formal_provenance": {
+    "passed": true,
+    "formal_status": "formal_candidate_pending_automated_and_independent_vision_qa",
+    "generated_by": {
+      "id": "sstory-map-production/render_candidate_h9_dense_flat_plan.py@2",
+      "path": "scripts/map-production/render_candidate_h9_dense_flat_plan.py",
+      "sha256": "c4e8a94f821122f90b0d5f81b72148e1d72cbc7950773b1f2f015a07e45c4870",
+      "bytes": 39825
+    },
+    "outputs_exact": true,
+    "self_review_has_no_acceptance_authority": true
+  },
+  "full_resolution_protection": {
+    "passed": true,
+    "method": "exact tuple comparison for every full-resolution RGB pixel",
+    "canvas_pixels": 1572864,
+    "semantic_color_counts": {
+      "protected": 1479836,
+      "forest_gap_fill": 13316,
+      "port": 29101,
+      "city": 50611
+    },
+    "unexpected_semantic_colors": [],
+    "allowed_edit_pixels": 93028,
+    "protected_pixels": 1479836,
+    "changed_pixels": 92742,
+    "changed_pixels_by_zone": {
+      "protected": 0,
+      "forest_gap_fill": 13316,
+      "port": 28817,
+      "city": 50609
+    },
+    "protected_violation_pixels": 0,
+    "protected_pixel_equality_percent": 100.0,
+    "locked_expectations": {
+      "semantic_color_counts": {
+        "protected": 1479836,
+        "city": 50611,
+        "port": 29101,
+        "forest_gap_fill": 13316
+      },
+      "allowed_edit_pixels": 93028,
+      "changed_pixels": 92742,
+      "protected_violation_pixels": 0
+    }
+  },
+  "urban_plan_metrics": {
+    "passed": true,
+    "city": {
+      "passed": true,
+      "independent_exact_fill_components_area_ge_2": 344,
+      "independent_exact_fill_component_pixels": 3571,
+      "independent_largest_exact_fill_component_pixels": 934,
+      "generator_stats": {
+        "city_flat_building_footprints": 354,
+        "city_district_count": 8,
+        "city_district_building_counts": [
+          44,
+          33,
+          44,
+          31,
+          40,
+          53,
+          47,
+          62
+        ],
+        "city_recursive_leaf_blocks": 80,
+        "city_ragged_ring_streets": 3,
+        "city_radial_avenues": 8,
+        "city_courtyards_markets_parks": 7,
+        "city_gate_count": 5,
+        "city_side_faces": 0,
+        "city_directional_shadows": 0
+      }
+    },
+    "port": {
+      "passed": true,
+      "independent_exact_fill_components_area_ge_2": 54,
+      "independent_exact_fill_component_pixels": 1101,
+      "independent_largest_exact_fill_component_pixels": 52,
+      "generator_stats": {
+        "port_flat_building_footprints": 55,
+        "port_warehouse_footprints": 5,
+        "port_courtyards": 3,
+        "port_lane_paths": 7,
+        "port_flat_piers": 8,
+        "port_boat_hull_outlines": 0,
+        "port_side_faces": 0,
+        "port_directional_shadows": 0
+      }
+    }
+  },
+  "forest_metrics": {
+    "passed": true,
+    "semantic_gap_mask_matches_independent_reconstruction": true,
+    "gap_fill_pixels": 13316,
+    "before": {
+      "component_count": 3379,
+      "component_size_pixels": {
+        "min": 1,
+        "p50": 4,
+        "p75": 11,
+        "p90": 45,
+        "p99": 291,
+        "max": 38670,
+        "mean": 39.8269
+      },
+      "mean_component_circularity_area_ge_8": 0.450005,
+      "area_weighted_component_circularity_area_ge_8": 0.16118,
+      "round_stamp_like_components_area_8_to_500_circularity_ge_0_52": 400
+    },
+    "after": {
+      "component_count": 3101,
+      "component_size_pixels": {
+        "min": 1,
+        "p50": 3,
+        "p75": 9,
+        "p90": 30,
+        "p99": 338,
+        "max": 50083,
+        "mean": 47.6914
+      },
+      "mean_component_circularity_area_ge_8": 0.454589,
+      "area_weighted_component_circularity_area_ge_8": 0.117277,
+      "round_stamp_like_components_area_8_to_500_circularity_ge_0_52": 290
+    },
+    "component_count_reduction": 278,
+    "area_weighted_circularity_reduction_percent": 27.238491,
+    "round_stamp_like_component_reduction_percent": 27.5,
+    "thresholds": {
+      "minimum_component_count_reduction": 250,
+      "minimum_area_weighted_circularity_reduction_percent": 20.0,
+      "minimum_round_stamp_like_component_reduction_percent": 20.0,
+      "maximum_atlas_high_frequency_strength": 0.08
+    }
+  },
+  "contact_sheet": {
+    "passed": true,
+    "pixel_identical_to_deterministic_reconstruction": true,
+    "panel_manifest_matches_provenance": true,
+    "image_contract": {
+      "format": "PNG",
+      "mode": "RGB",
+      "width": 912,
+      "height": 1320
+    },
+    "panel_count": 10
+  },
+  "boundary": {
+    "passed": true,
+    "method": "edge-band color diversity, exact-color runs, and multi-side outer/inset mean-color gap; decorative semantics still require Vision review",
+    "thresholds": {
+      "band_width_px": 16,
+      "maximum_dominant_exact_rgb_ratio": 0.05,
+      "minimum_unique_rgb": 256,
+      "maximum_outer_identical_run_ratio": 0.25,
+      "frame_mean_rgb_gap": 18.0,
+      "frame_minimum_suspicious_sides": 2
+    },
+    "solid_color_signal_detected": false,
+    "solid_color_sides": [],
+    "decorative_frame_proxy_detected": false,
+    "frame_gap_sides": [],
+    "sides": [
+      {
+        "side": "left",
+        "pixels": 16384,
+        "unique_rgb": 3686,
+        "dominant_rgb": [
+          105,
+          133,
+          139
+        ],
+        "dominant_exact_rgb_ratio": 0.001892,
+        "outer_edge_longest_identical_run_px": 3,
+        "outer_edge_longest_identical_run_ratio": 0.00293,
+        "luma_stddev": 9.408144,
+        "luma_entropy_bits": 5.253307,
+        "outer_to_inset_mean_rgb_distance": 1.35144,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "top",
+        "pixels": 24576,
+        "unique_rgb": 12014,
+        "dominant_rgb": [
+          177,
+          155,
+          116
+        ],
+        "dominant_exact_rgb_ratio": 0.000773,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 21.667975,
+        "luma_entropy_bits": 6.351751,
+        "outer_to_inset_mean_rgb_distance": 5.181384,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "right",
+        "pixels": 16384,
+        "unique_rgb": 9324,
+        "dominant_rgb": [
+          180,
+          159,
+          118
+        ],
+        "dominant_exact_rgb_ratio": 0.001343,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001953,
+        "luma_stddev": 21.531444,
+        "luma_entropy_bits": 6.277541,
+        "outer_to_inset_mean_rgb_distance": 4.538675,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      },
+      {
+        "side": "bottom",
+        "pixels": 24576,
+        "unique_rgb": 10681,
+        "dominant_rgb": [
+          98,
+          128,
+          136
+        ],
+        "dominant_exact_rgb_ratio": 0.001017,
+        "outer_edge_longest_identical_run_px": 2,
+        "outer_edge_longest_identical_run_ratio": 0.001302,
+        "luma_stddev": 18.583748,
+        "luma_entropy_bits": 6.16005,
+        "outer_to_inset_mean_rgb_distance": 3.735612,
+        "solid_color_signal": false,
+        "frame_gap_signal": false
+      }
+    ]
+  },
+  "palette_continuity_b1_required": {
+    "passed": false,
+    "reference": "Candidate B1 locked Golden palette reference",
+    "method": "composition-tolerant palette proxy using 8x8x8 RGB and 24x6x6 HSV histograms sampled at 384x256",
+    "thresholds": {
+      "minimum_rgb_histogram_intersection": 0.72,
+      "minimum_hsv_histogram_intersection": 0.62,
+      "minimum_rgb_bhattacharyya": 0.9,
+      "maximum_mean_channel_delta": 12.0
+    },
+    "candidate_mean_rgb": [
+      140.043222,
+      135.41596,
+      108.706842
+    ],
+    "reference_mean_rgb": [
+      127.759797,
+      118.919413,
+      89.78157
+    ],
+    "mean_channel_absolute_delta": [
+      12.283426,
+      16.496548,
+      18.925271
+    ],
+    "maximum_mean_channel_delta": 18.925271,
+    "rgb_histogram_intersection": 0.457214,
+    "hsv_histogram_intersection": 0.571991,
+    "rgb_bhattacharyya": 0.698758
+  },
+  "palette_continuity_h5_supplemental": {
+    "passed": true,
+    "reference": "Candidate H5 protected edit source",
+    "method": "composition-tolerant palette proxy using 8x8x8 RGB and 24x6x6 HSV histograms sampled at 384x256",
+    "thresholds": {
+      "minimum_rgb_histogram_intersection": 0.72,
+      "minimum_hsv_histogram_intersection": 0.62,
+      "minimum_rgb_bhattacharyya": 0.9,
+      "maximum_mean_channel_delta": 12.0
+    },
+    "candidate_mean_rgb": [
+      140.043222,
+      135.41596,
+      108.706842
+    ],
+    "reference_mean_rgb": [
+      140.329269,
+      135.578352,
+      109.113585
+    ],
+    "mean_channel_absolute_delta": [
+      0.286046,
+      0.162392,
+      0.406743
+    ],
+    "maximum_mean_channel_delta": 0.406743,
+    "rgb_histogram_intersection": 0.979869,
+    "hsv_histogram_intersection": 0.972066,
+    "rgb_bhattacharyya": 0.999168
+  },
+  "exact_repetition": {
+    "passed": true,
+    "method": "exact SHA-256 of overlapping RGB blocks at one-quarter-block stride; this is a large-clone proxy, not semantic motif recognition",
+    "minimum_block_size_px": 64,
+    "duplicate_groups": 0,
+    "maximum_copy_count": 1,
+    "examples": [],
+    "scales": [
+      {
+        "block_size_px": 256,
+        "stride_px": 64,
+        "scanned_blocks": 273,
+        "unique_block_hashes": 273,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 128,
+        "stride_px": 32,
+        "scanned_blocks": 1305,
+        "unique_block_hashes": 1305,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      },
+      {
+        "block_size_px": 64,
+        "stride_px": 16,
+        "scanned_blocks": 5673,
+        "unique_block_hashes": 5673,
+        "duplicate_groups": 0,
+        "maximum_copy_count": 1
+      }
+    ]
+  },
+  "downsample_readability_required": {
+    "passed": false,
+    "method": "LANCZOS downsample; Shannon luma entropy, global RMS contrast, and 24x16 macrocell contrast coverage are readability proxies",
+    "macrocell_grid": [
+      24,
+      16
+    ],
+    "minimum_macrocell_luma_stddev": 6.0,
+    "native": {
+      "scale": 1.0,
+      "width": 1536,
+      "height": 1024,
+      "luma_entropy_bits": 6.386043,
+      "luma_rms_contrast": 22.046469,
+      "macrocell_contrast_coverage": 1.0,
+      "minimum_macrocell_luma_stddev": 8.675456,
+      "median_macrocell_luma_stddev": 21.314001
+    },
+    "scales": [
+      {
+        "scale": 0.5,
+        "width": 768,
+        "height": 512,
+        "luma_entropy_bits": 6.195729,
+        "luma_rms_contrast": 19.337556,
+        "macrocell_contrast_coverage": 0.979167,
+        "minimum_macrocell_luma_stddev": 5.75939,
+        "median_macrocell_luma_stddev": 18.573515,
+        "entropy_retention": 0.970198,
+        "rms_contrast_retention": 0.877127,
+        "thresholds": {
+          "minimum_entropy_retention": 0.94,
+          "minimum_rms_contrast_retention": 0.82,
+          "minimum_macrocell_contrast_coverage": 0.9
+        },
+        "passed": true
+      },
+      {
+        "scale": 0.25,
+        "width": 384,
+        "height": 256,
+        "luma_entropy_bits": 5.940271,
+        "luma_rms_contrast": 16.216456,
+        "macrocell_contrast_coverage": 0.776042,
+        "minimum_macrocell_luma_stddev": 3.605532,
+        "median_macrocell_luma_stddev": 14.352117,
+        "entropy_retention": 0.930196,
+        "rms_contrast_retention": 0.735558,
+        "thresholds": {
+          "minimum_entropy_retention": 0.9,
+          "minimum_rms_contrast_retention": 0.68,
+          "minimum_macrocell_contrast_coverage": 0.85
+        },
+        "passed": false
+      }
+    ]
+  },
+  "edited_zone_readability_supplemental": {
+    "passed": true,
+    "method": "Each edited review crop must improve 25% LANCZOS luma RMS contrast over the locked H5 source. This supplemental gate does not replace the whole-image H4 Golden thresholds.",
+    "zones": [
+      {
+        "id": "city",
+        "bounds_px": [
+          710,
+          370,
+          990,
+          620
+        ],
+        "candidate": {
+          "native": {
+            "luma_entropy_bits": 4.562577,
+            "luma_rms_contrast": 31.775281
+          },
+          "scales": [
+            {
+              "scale": 0.5,
+              "width": 140,
+              "height": 125,
+              "luma_entropy_bits": 6.425969,
+              "luma_rms_contrast": 24.888349
+            },
+            {
+              "scale": 0.25,
+              "width": 70,
+              "height": 62,
+              "luma_entropy_bits": 6.050214,
+              "luma_rms_contrast": 19.70328
+            }
+          ]
+        },
+        "h5_source": {
+          "native": {
+            "luma_entropy_bits": 6.664702,
+            "luma_rms_contrast": 25.84785
+          },
+          "scales": [
+            {
+              "scale": 0.5,
+              "width": 140,
+              "height": 125,
+              "luma_entropy_bits": 6.339882,
+              "luma_rms_contrast": 20.772588
+            },
+            {
+              "scale": 0.25,
+              "width": 70,
+              "height": 62,
+              "luma_entropy_bits": 6.036613,
+              "luma_rms_contrast": 17.16231
+            }
+          ]
+        },
+        "candidate_minus_h5_25_percent_rms_contrast": 2.54097,
+        "passed": true
+      },
+      {
+        "id": "port",
+        "bounds_px": [
+          360,
+          720,
+          640,
+          970
+        ],
+        "candidate": {
+          "native": {
+            "luma_entropy_bits": 6.208804,
+            "luma_rms_contrast": 22.167026
+          },
+          "scales": [
+            {
+              "scale": 0.5,
+              "width": 140,
+              "height": 125,
+              "luma_entropy_bits": 5.950405,
+              "luma_rms_contrast": 16.915203
+            },
+            {
+              "scale": 0.25,
+              "width": 70,
+              "height": 62,
+              "luma_entropy_bits": 5.584162,
+              "luma_rms_contrast": 14.010687
+            }
+          ]
+        },
+        "h5_source": {
+          "native": {
+            "luma_entropy_bits": 6.262299,
+            "luma_rms_contrast": 19.866534
+          },
+          "scales": [
+            {
+              "scale": 0.5,
+              "width": 140,
+              "height": 125,
+              "luma_entropy_bits": 5.891027,
+              "luma_rms_contrast": 16.514621
+            },
+            {
+              "scale": 0.25,
+              "width": 70,
+              "height": 62,
+              "luma_entropy_bits": 5.504941,
+              "luma_rms_contrast": 13.544006
+            }
+          ]
+        },
+        "candidate_minus_h5_25_percent_rms_contrast": 0.466681,
+        "passed": true
+      },
+      {
+        "id": "forest",
+        "bounds_px": [
+          420,
+          0,
+          700,
+          250
+        ],
+        "candidate": {
+          "native": {
+            "luma_entropy_bits": 6.320189,
+            "luma_rms_contrast": 23.41441
+          },
+          "scales": [
+            {
+              "scale": 0.5,
+              "width": 140,
+              "height": 125,
+              "luma_entropy_bits": 6.106602,
+              "luma_rms_contrast": 21.30287
+            },
+            {
+              "scale": 0.25,
+              "width": 70,
+              "height": 62,
+              "luma_entropy_bits": 5.925842,
+              "luma_rms_contrast": 18.543892
+            }
+          ]
+        },
+        "h5_source": {
+          "native": {
+            "luma_entropy_bits": 6.386655,
+            "luma_rms_contrast": 23.812223
+          },
+          "scales": [
+            {
+              "scale": 0.5,
+              "width": 140,
+              "height": 125,
+              "luma_entropy_bits": 6.238109,
+              "luma_rms_contrast": 21.47498
+            },
+            {
+              "scale": 0.25,
+              "width": 70,
+              "height": 62,
+              "luma_entropy_bits": 5.999455,
+              "luma_rms_contrast": 17.532336
+            }
+          ]
+        },
+        "candidate_minus_h5_25_percent_rms_contrast": 1.011556,
+        "passed": true
+      }
+    ]
+  },
+  "automated_gates": {
+    "sha256_locked_inputs": true,
+    "image_contract_alpha_profile": true,
+    "atlas_origin_and_crop_receipt": true,
+    "formal_provenance_contract": true,
+    "h5_full_resolution_protected_pixel_equality": true,
+    "city_and_port_density_geometry": true,
+    "forest_gap_join_and_de_repetition": true,
+    "contact_sheet_deterministic_reconstruction": true,
+    "boundary_proxy": true,
+    "palette_continuity_with_b1": false,
+    "no_large_exact_repetition_proxy": true,
+    "downsample_readability_proxy": false,
+    "edited_zone_25_percent_rms_improvement": true
+  },
+  "vision_handoff": {
+    "status": "blocked_by_required_automated_gate_failure",
+    "independent_reviewer_count_required": 2,
+    "minimum_score_each": 94,
+    "self_review_is_not_independent_acceptance": true,
+    "automated_claims_about_perspective_text_or_semantics": null
+  }
+}

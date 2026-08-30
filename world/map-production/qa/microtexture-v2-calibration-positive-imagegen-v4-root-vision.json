@@ -1,0 +1,54 @@
+{
+  "schema_version": "microtexture-v2-calibration-source-root-vision/1",
+  "review_id": "microtexture-v2-calibration-positive-imagegen-v4-root-vision",
+  "reviewed_at": "2026-07-25T16:17:00+09:00",
+  "reviewer": "Codex Root Vision",
+  "review_mode": "calibration-source-role-visual-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-calibration-positive-imagegen-v4.png",
+    "sha256": "c83ea94d5e82a1b00e86a9357df443ed38f86a58b2c98e511f068ff7201b5575",
+    "bytes": 1365947,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "generation_steps_reviewed_in_conversation": 4,
+  "intermediate_dispositions": [
+    {"step": 1, "decision": "rejected", "reason": "visible sand-like micrograin and brush filaments"},
+    {"step": 2, "decision": "rejected", "reason": "faint cell and fingerprint boundaries remained"},
+    {"step": 3, "decision": "rejected", "reason": "weak closed micro-boundaries remained"},
+    {"step": 4, "decision": "approved-restricted", "reason": "artifact-free broad and medium amorphous field"}
+  ],
+  "final_views_actually_inspected": [
+    {"view": "generation-output-full-frame", "detail": "native conversation image"},
+    {"view": "workspace-original", "detail": "view_image original on persisted SHA-bound PNG"}
+  ],
+  "score": 94,
+  "threshold": 94,
+  "decision": "approved-only-as-qualitative-low-mid-frequency-smooth-anchor",
+  "production_use_allowed": false,
+  "high_density_positive_claimed": false,
+  "immediate_failure_checks": {
+    "text_symbol_or_geography": false,
+    "perspective_or_3d_relief": false,
+    "directional_light_or_cast_shadow": false,
+    "hard_outline_or_contour": false,
+    "dot_particle_hole_or_crater": false,
+    "cell_ring_rosette_or_fingerprint": false,
+    "vein_root_fern_fishbone_or_ribbon": false,
+    "dash_hatching_or_short_line_bundle": false,
+    "stamp_grid_symmetry_or_repeat": false,
+    "pure_white_or_pure_black_feature": false,
+    "visible_rectangular_panel_or_edge_seam": false
+  },
+  "limitations": [
+    "The accepted fourth image is intentionally smooth and cannot establish high-density clean-texture tolerance.",
+    "RGB chroma, absolute luminance, semantic geometry, and direct pixels are forbidden in production.",
+    "The rejected first through third conversation images are not retained or represented as accepted sources."
+  ],
+  "allowed_use": [
+    "qualitative non-production smooth-anchor comparison only"
+  ],
+  "threshold_selection_allowed": false,
+  "post_freeze_numeric_validation_allowed": false,
+  "passed_for_declared_source_role": true
+}

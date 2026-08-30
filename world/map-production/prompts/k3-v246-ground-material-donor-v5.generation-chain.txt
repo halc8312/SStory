@@ -1,0 +1,39 @@
+K3 v246 ground-material donor v5 — exact ImageGen prompt chain
+
+Generator: image_gen.imagegen
+Final operation date: 2026-07-25 (Asia/Tokyo)
+Final output role: low/mid-frequency luminance source only
+
+Step 1 — new generation, no referenced image
+
+Create one production-source raster donor for a deep-zoom fantasy cartographic map. Canvas: landscape 3:2, intended native size 1536 x 1024. This is NOT a finished map and contains no geography. Make a strictly orthographic, flat, edge-to-edge neutral grayscale scalar material field on a medium-dark warm parchment value. The full frame must read as one continuous material, with natural nested scale: broad irregular tonal undulations roughly 50–140 px across, blended mid-scale relief roughly 18–45 px across, and softly interlocking amorphous regions whose strongest tonal areas remain wider than 12 px. Use gentle matte tonal variation only; retain useful internal detail at 200% and 400% without sharpening.
+
+Hard constraints: no text, labels, symbols, borders, coastline, rivers, roads, mountains, objects, horizon, perspective, 3D peaks, directional lighting, cast shadows, embossing, outlines, contour lines, rings, closed loops, rosettes, dots, speckles, grains, white particles, holes, craters, cells, bubbles, scales, fingerprint patterns, veins, roots, branching trees, ferns, fishbones, ribbons, hatching, dashes, repeated stamps, tiles, symmetry, grids, or periodic pattern. No pure white and no pure black. No isolated small feature. No visible rectangular panel or edge seam. Avoid recognizable shapes. Keep local gradients soft, non-directional, nonperiodic, and organic. The image will be converted to a bounded low/mid-frequency luminance scalar and masked by deterministic canonical geography later, so prioritize coherent continuous tonal material rather than illustration.
+
+Step 2 — edit the immediately preceding conversation image
+
+Edit the supplied scalar-material donor while preserving only its successful broad, nonperiodic, edge-to-edge tonal composition. Make one focused correction: remove the fine paper grain, pepper-like microtexture, scalloped/cellular borders, and any small enclosed patch edges. Blend those boundaries into continuous matte low- and mid-frequency undulations. The result must remain a strictly flat orthographic grayscale-to-warm-gray scalar material source, not a finished map.
+
+Retain broad 50–140 px amorphous tonal masses, but replace visible cell-like outlines with overlapping soft asymmetric gradients and open irregular transitions. Retain useful 18–45 px internal variation, with every strongest feature wider than 12 px. No sharpening. No outlines, contour lines, rings, dots, grain, speckles, holes, bubbles, rosettes, veins, roots, ribbons, dashes, hatching, repeated stamps, directional lighting, 3D relief, geography, symbols, text, pure white, or pure black. Keep the frame seamless at its own outer edges only in the sense of having no visible panel border; do not make a repeating tile. Preserve landscape 3:2 composition and high resolution.
+
+Step 3 — edit the immediately preceding conversation image
+
+Preserve the supplied donor's broad nonperiodic composition and all large tonal masses. Make one final correction only: remove the remaining fine paper grain and fuzzy micro-speckle so that the smallest visible tonal feature is about 12 pixels wide at a 1536 x 1024 canvas. Replace microtexture with smoothly overlapping, asymmetric low/mid-frequency matte gradients. Soften any nearly closed cloud boundary into an open transition, without introducing blur bands or flat empty areas.
+
+Keep it a strictly flat orthographic scalar-material source: no map geography, no objects, no perspective, no 3D relief, no directional light, no outlines, no contours, no cells, no rings, no dots, no particles, no holes, no veins, no roots, no ribbons, no dashes, no hatching, no stamps, no repeating tile, no symmetry, no text, no pure white or black. Maintain landscape 3:2 high resolution and a continuous edge-to-edge warm-gray midtone range.
+
+Step 4 — edit the immediately preceding conversation image
+
+Use the supplied image as the exact composition source. Apply only a very mild final denoise to the residual fine paper grain; preserve the broad and mid-scale tonal masses, their positions, their proportions, the warm-gray value range, and the flat edge-to-edge appearance. Do not invent or remove any large feature. The smallest visible texture should remain broader than roughly 12 pixels at 1536 x 1024.
+
+No outlines, contours, cells, rings, dots, particles, holes, veins, roots, ribbons, dashes, hatching, stamps, repeating pattern, symmetry, map geography, objects, perspective, 3D relief, directional lighting, text, pure white, or pure black. This remains a nonperiodic orthographic scalar-material donor, not a finished map.
+
+Step 5 — final edit of the immediately preceding conversation image
+
+Preserve the supplied image's composition, broad tonal masses, positions, scale hierarchy, warm-gray range, and flat orthographic character. Do not redesign it. Apply only an imperceptibly mild cleanup of any residual pixel-scale grain so no distinct feature is smaller than roughly 12 pixels at 1536 x 1024. Keep all broad and mid-scale information unchanged.
+
+No new objects or shapes; no outlines, contours, cells, rings, dots, particles, holes, veins, roots, ribbons, dashes, hatching, stamps, repeating pattern, symmetry, map geography, perspective, 3D relief, directional lighting, text, pure white, or pure black. Output one high-resolution landscape 3:2 scalar-material donor.
+
+Provenance note
+
+Steps 1–4 were conversation-scoped edit inputs and were not promoted. The C-drive image cache was full, so those intermediate cache files were zero-byte failures. The final step-5 data URL was persisted directly to the F-drive workspace and SHA-256 bound. No byte-exact replay of the intermediate images is claimed.

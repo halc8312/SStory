@@ -1,0 +1,1347 @@
+{
+  "artifact": "microtexture-v2-r6-control-only-preregistered-spec",
+  "schema_version": "microtexture-v2-r6-preregistered-spec/3",
+  "authority": true,
+  "created_before_control_generation": true,
+  "created_before_metric_threshold_selection": true,
+  "production_candidate_inputs_forbidden": true,
+  "preregistered_foundation_inputs_required": true,
+  "purpose": "One-shot operationally blinded calibration and holdout of a Vision-aligned multi-morphology residual-window microartifact detector over fresh, independently Vision-qualified foundations, followed by an independent locked-clean-reference validation and hash-bound external threshold authority.",
+  "history": {
+    "r3_status": "failed-and-closed",
+    "r3_role": "development-only evidence; no r3 control, key, label, threshold, locked source, or holdout is reusable",
+    "r3_failure_audit": "world/map-production/qa/microtexture-v2-r3-calibration-failure.json",
+    "r4_status": "failed-and-closed",
+    "r4_role": "development-only evidence; no r4 control, key, label, threshold, foundation, locked source, or holdout is reusable",
+    "r4_failure_audit": "world/map-production/qa/microtexture-v2-r4-calibration-failure.json",
+    "r5_status": "failed-and-closed",
+    "r5_role": "development-only failure evidence used before r6 generation to define bounded-unit scores, worst-case condition-cluster truth aggregation, population feasibility, and corpus coverage; no r5 control, key, label, threshold, foundation, locked source, or holdout is reusable",
+    "r5_failure_audit": "world/map-production/qa/microtexture-v2-r5-calibration-failure.json",
+    "dev_r6_status": "failed-and-closed-before-measurement",
+    "dev_r6_role": "development-only premeasurement population-feasibility failure evidence; the one-shot edition closed before any numeric measurement, and no dev-r6 key, control, label, identity, placement, parameter schedule, metric, threshold, or artifact root is reusable",
+    "dev_r7_status": "failed-and-closed-after-measurement",
+    "dev_r7_role": "development-only score-saturation failure evidence; both splits passed the population gate, measurement ran once, no endpoint-admissible threshold existed, and no dev-r7 key, control, label, pixel, identity, measurement, threshold diagnostic, parameter nonce, or artifact root is reusable",
+    "dev_r7_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r7-development-failure.json",
+    "dev_r7_failure_audit_sha256": "00ab198c5e0be28775436d22927e9bd8523304f41e2c310d6e81c0cf2ea7131f",
+    "dev_r8_status": "failed-and-closed-before-measurement",
+    "dev_r8_role": "development-only population-feasibility failure evidence; both splits failed only the tiny-speck-visible reject population endpoint after all 440 records were blindly reviewed and reconciled, the edition closed before any numeric metric call, and no dev-r8 key, control, label, pixel, identity, placement, parameter nonce, measurement, threshold, commitment, or artifact root is reusable",
+    "dev_r8_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r8-development-failure.json",
+    "dev_r8_failure_audit_sha256": "39c7472f8018cbbf25cbd029cb915c43696a07b6c52e8e586e02fe5a99dbc07d",
+    "dev_r9_status": "failed-and-closed-after-measurement",
+    "dev_r9_role": "development-only threshold-feasibility failure evidence; both splits passed every population floor and were measured once, but calibration had no scalar threshold satisfying warning acceptance at least 0.75 together with severity-3 detection exactly 1.0, no threshold was selected, holdout endpoint performance was not evaluated, and no dev-r9 key, control, label, pixel, identity, measurement, threshold diagnostic, nonce, commitment, or artifact root is reusable",
+    "dev_r9_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r9-development-failure.json",
+    "dev_r9_failure_audit_sha256": "10c832fb2b7131b942cad54c7412672a98a2f0401db1aae31ce2b1383952f202",
+    "dev_r10_status": "failed-and-closed-during-generation",
+    "dev_r10_role": "development-only generation-interruption evidence; one-shot generation started with a fresh key and produced the calibration public surface only; the required two-split generation did not reach terminal summary, seal, or completion, no Vision review or analysis started, and no dev-r10 root, key, control, reference, pixel, identity, code, commitment, label, measurement, nonce, or public surface is reusable",
+    "dev_r10_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r10-development-failure.json",
+    "dev_r10_failure_audit_sha256": "9e5533453e7ec25bed75b54a67cb63129329aca392c1c7db4bf60d9c0a7393fa",
+    "dev_r11_status": "failed-and-closed-before-measurement",
+    "dev_r11_role": "development-only premeasurement Vision-gate failure evidence; generation and both blind reviews completed, labels were sealed, and the private sentinel audit then found one sealed holdout false positive on an exact-zero protocol sentinel before population aggregation or numeric measurement; no dev-r11 root, key, control, reference, pixel, identity, code, commitment, label, measurement, nonce, or public surface is reusable",
+    "dev_r11_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r11-development-failure.json",
+    "dev_r11_failure_audit_sha256": "a1dcf2354ec6b0bc81ae89f75eadc11f1a522be73de66032f94048d1a411ef04",
+    "dev_r12_status": "failed-and-closed-before-measurement",
+    "dev_r12_role": "development-only premeasurement population failure evidence; both private audits passed, calibration warning population 10 met formal minimum 10 but missed development floor 13, holdout warning population 9 missed formal minimum 10 and development floor 13, every other endpoint passed both minima, no numeric metric or threshold search started, and no dev-r12 root, key, control, reference, pixel, identity, code, commitment, label, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r12_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r12-development-failure.json",
+    "dev_r12_failure_audit_sha256": "d972da0d73d3e9b057a37941b186e0b7b16eaefe1e18a28ed3a7f9bbdadb60f6",
+    "dev_r13_status": "failed-and-closed-before-measurement",
+    "dev_r13_role": "development-only premeasurement population failure evidence; both private audits passed, calibration warning population 14 passed formal minimum 10 and development floor 13, holdout warning population 12 passed formal minimum 10 but missed development floor 13, every other endpoint passed both minima, no numeric metric or threshold search started, and no dev-r13 root, key, control, reference, pixel, identity, code, commitment, label, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r13_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r13-development-failure.json",
+    "dev_r13_failure_audit_sha256": "2fbc67f05b3b5ec065f79e7f9118fd5d06b5966dd78c95da191c37761f215634",
+    "dev_r14_status": "failed-and-closed-before-measurement",
+    "dev_r14_role": "development-only premeasurement population failure evidence; both private audits passed, calibration microblob population 4 met formal minimum 4 but missed development floor 6, every other calibration endpoint and every holdout endpoint passed both minima, no numeric metric or threshold search started, and no dev-r14 root, key, control, reference, pixel, identity, code, commitment, label, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r14_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r14-development-failure.json",
+    "dev_r14_failure_audit_sha256": "79acad1ef7972293e2697bd4c81edcc2c6ec017b4121e6609b94b95391c25476",
+    "dev_r15_status": "failed-and-closed-before-measurement",
+    "dev_r15_role": "development-only premeasurement population failure evidence; both private audits passed, calibration warning population 12 met formal minimum 10 but missed development floor 13, holdout warning population 9 missed formal minimum 10 and development floor 13, every other endpoint passed both minima, no numeric metric or threshold search started, and no dev-r15 root, key, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r15_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r15-development-failure.json",
+    "dev_r15_failure_audit_sha256": "faa420e63af8b3f647e045ae4d71ac2fbe32316175e68999cc16b3e278311200",
+    "dev_r16_status": "failed-and-closed-before-measurement",
+    "dev_r16_role": "development-only premeasurement Vision-gate failure evidence; generation, both blind 440-record reviews, reconciliation, official preflight, label sealing, and private reveal each completed exactly once, then the private audits failed on one sealed holdout severity-1 short-line warning false positive on an exact-zero protocol sentinel; population aggregation, numeric measurement, and threshold search never started, one read-only postmortem ran exactly once, all initial snapshots remain immutable, and no dev-r16 root, key, secret, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, postmortem output, or private material is reusable",
+    "dev_r16_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r16-development-failure.json",
+    "dev_r16_failure_audit_sha256": "4637978a7ac5d59c99ec076e527b7be6e5d2ad1c0477077e2587fda7091ca169",
+    "dev_r17_status": "failed-and-closed-before-measurement",
+    "dev_r17_role": "development-only premeasurement population failure evidence; both private audits passed, every calibration endpoint passed formal and development minima, holdout tiny-speck population 0 missed formal minimum 4 and development floor 6, holdout spot population 9 passed formal minimum 8 but missed development floor 10, every other holdout endpoint passed both minima, no numeric metric or threshold search started, one read-only postmortem ran exactly once, all Root and Independent initial snapshots and receipts remain immutable, and no dev-r17 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r17_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r17-development-failure.json",
+    "dev_r17_failure_audit_sha256": "2177b04b6f79b75394cbdef6204423194603cd81e3a84b5a673c58393ccf5856",
+    "dev_r18_status": "failed-and-closed-before-population-audit",
+    "dev_r18_role": "development-only prepopulation private-audit failure evidence; generation, both blind 440-record reviews, bilateral reconciliation, official preflight, label sealing, private reveal, regeneration, and protocol-zero audits each completed exactly once, but calibration's obvious-artifact duplicate pair had identical reject dispositions and short-line flags with ordinal severities 2 and 3, so the then-exact severity semantic check failed before population audit or any numeric measurement; one read-only postmortem ran exactly once, all initial snapshots and receipts remain immutable, and no dev-r18 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r18_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r18-development-failure.json",
+    "dev_r18_failure_audit_sha256": "7800ab0f33363df30decb1c744e1b1ed3b7c822bb2f94fc4a17fd44d35541122",
+    "dev_r19_status": "failed-and-closed-before-population-audit",
+    "dev_r19_role": "development-only prepopulation private-audit failure evidence; generation, both blind 440-record reviews, bilateral reconciliation, official preflight, label sealing, private reveal, regeneration, and protocol-zero audits each completed exactly once, calibration clean and obvious-artifact duplicate groups plus the holdout clean duplicate group passed, but holdout's obvious-artifact duplicate pair was clean severity 0 with no visible flags, so the required rejected short-line artifact contract failed before population audit or any numeric measurement; one read-only postmortem ran exactly once, all initial snapshots and receipts remain immutable, and no dev-r19 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable",
+    "dev_r19_failure_audit": "world/map-production/qa/microtexture-v2-r6-dev-r19-development-failure.json",
+    "dev_r19_failure_audit_sha256": "96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0",
+    "dev_r20_status": "fresh-development-only",
+    "dev_r20_role": "fresh one-shot development role used only to strengthen the obvious-artifact duplicate sentinel after the closed dev-r19 prepopulation private-audit miss; it preserves all 200 dev-r19 artifact morphologies, every design tier, metric, threshold, population and rate contract, the dev-r19 reject severity-band duplicate policy, and the clean duplicate construction, and changes only the obvious-artifact duplicate payload to a fresh-keyed finite axial short-line sentinel with static geometry checks; Vision truth is not guaranteed, all identities and audit roles remain private, and it can never supply formal authority"
+  },
+  "roots": {
+    "blind_key_environment": "MICROTEXTURE_V2_R6_BLIND_KEY",
+    "blind_key_format": "exactly 64 lowercase or uppercase hexadecimal characters decoded to exactly 32 bytes",
+    "formal_blind_key_operational_requirement": "must be generated by a cryptographically secure random source inside a dedicated long-lived custodian process; human-chosen or patterned values are forbidden, and the key must not be inherited by or exposed to the Vision review process",
+    "formal_blind_key_artifact_or_log_persistence_forbidden": true,
+    "artifact_root_environment": "MICROTEXTURE_V2_R6_ARTIFACT_ROOT",
+    "artifact_root_required_repo_relative": "tmp/map-production/microtexture-v2-r6-artifacts",
+    "code_root_required_repo_relative": "scripts/map-production/microtexture-v2-r6",
+    "code_root_policy": "CODE_ROOT must equal the exact required tracked repository path; every authority byte must be tracked and identical to one captured upstream Git HEAD"
+  },
+  "development_probe_secret_handling": {
+    "scope": "non-authority dev-r20 only; no development key, root, output, or commitment can become formal authority",
+    "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
+    "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r20/private/development-key.bin",
+    "gitignore_required_repo_relative": ".gitignore",
+    "gitignore_required_pattern": "/tmp*/",
+    "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": true,
+    "ignored_private_key_must_be_absent_from_head_and_index_and_git_ignored": true,
+    "ignored_private_key_persistence_required_for_one_shot_analysis_and_closed_postmortem": true,
+    "key_value_logging_or_git_tracking_forbidden": true,
+    "vision_process_key_read_or_inheritance_forbidden": true,
+    "same_principal_attack_non_claim_applies": true,
+    "closed_private_root_retained_for_forensic_reproducibility": true,
+    "key_reuse_in_any_successor_or_formal_operation_forbidden": true,
+    "development_root_existence_is_consumed_evidence": true,
+    "generation_start_required_before_public_output": true,
+    "catchable_post_start_generation_failure_uses_exclusive_failure_report": true,
+    "generation_success_requires_summary_seal_and_completion": true,
+    "public_generation_writes_are_exclusive": true
+  },
+  "external_threshold_authority": {
+    "receipt_repo_relative_path": "world/map-production/qa/microtexture-v2-r6-threshold-authority.json",
+    "schema_version": "microtexture-v2-r6-threshold-authority/2",
+    "must_be_tracked_at_captured_head": true,
+    "must_be_byte_identical_to_captured_head": true,
+    "required_approval": "approved-for-holdout",
+    "required_review_mode": "blind-independent-authority",
+    "eligible_reviewer_ids": ["Cicero the 2nd", "Descartes the 2nd"],
+    "reviewer_matching": "NFKC, casefold, collapse whitespace, then exact allow-list match",
+    "clock_future_tolerance_seconds": 300,
+    "assurance": "procedural trusted-agent assurance from a preregistered allow-list and tracked hash-bound receipt; not a cryptographic signature or proof of human identity",
+    "head_binding": "receipt must name the calibration captured Git HEAD and the locked-clean-reference captured Git HEAD; both must be equal, and the calibration HEAD must be an ancestor of the receipt commit used for holdout"
+  },
+  "foundation_corpus": {
+    "role": "fresh pre-freeze control/reference foundations; exact central crops only; never production art, Golden inputs, texture donors, or final pixels",
+    "source_dimensions": [1536, 1024],
+    "vision_qualification_minimum_score": 94,
+    "source_crop_xywh": [512, 320, 512, 384],
+    "metric_window_xywh_within_source_crop": [128, 96, 256, 192],
+    "rgb_to_l": "float32 0.299*R + 0.587*G + 0.114*B; reference=np.rint(L), clip, uint8; control=np.rint(reference_uint8.astype(float32)+requested_delta), clip, uint8 so unclipped paired encoded deltas are exact sign inverses",
+    "foundations": [
+      {"id": "v15", "path": "world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v15.png", "sha256": "15695cf533d0aa495a83cbd35657e1d68244538e79028e83bbb32d952db0379f"},
+      {"id": "v16", "path": "world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v16.png", "sha256": "4e6cd844c88cf550d8f85da65d63525f99c58fd599a06d7a568c38412e54712f"},
+      {"id": "v17", "path": "world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v17.png", "sha256": "fa08d0921ee319a279038e84e5318a8b0e759ff3ac55fb439a635329c9e8b6ea"}
+    ],
+    "generation_chain": "world/map-production/prompts/microtexture-v2-r6-foundations-imagegen-v15-v17.generation-chain.txt",
+    "generation_chain_sha256": "6cce98957d345ee39b57a3fa37906340eaf53f4735b3f16baa5faff3ec72b655",
+    "generation_receipt": "world/map-production/prompts/microtexture-v2-r6-foundations-imagegen-v15-v17.generation-receipt.json",
+    "generation_receipt_sha256": "374305b8c8144986984d05c08cf5e196f828670450f428b9c042b70f75af1910",
+    "root_vision_review": "world/map-production/qa/microtexture-v2-r6-foundations-root-vision.json",
+    "root_vision_review_sha256": "8b1fe61869b938c55fab3b9eede98e0aa0d3e5f4ea42981ee46b40ab5f4112d3",
+    "independent_vision_reviews": [
+      {"path": "world/map-production/qa/microtexture-v2-r6-foundations-independent-vision-a.json", "sha256": "979339d03f302271f37ea7fa8e1875c4a475ed7d614813b4e82d7fd1950ab453"},
+      {"path": "world/map-production/qa/microtexture-v2-r6-foundations-independent-vision-b.json", "sha256": "2e04775e8de1aad7c0a1e10795d5cacc92c69abfbeae6252d268aa8207b4a143"}
+    ],
+    "rejected_candidates_forbidden": [],
+    "foundation_assignment": "secret-HMAC-derived across v15, v16, and v17; cluster mates may share one source asset but every public record receives a distinct private HMAC-PRF reference transform",
+    "formal_preflight": "every source, generation artifact, and Vision review must be tracked, byte-identical to captured HEAD, and SHA-bound before any r6 control generation"
+  },
+  "locked_clean_reference": {
+    "repo_relative_path": "world/map-production/style-assets/microtexture-v2-r6-locked-clean-reference-imagegen-v18.png",
+    "sha256": "e2eeb08046994b549c2eee5245c9410c329847d9cfe06ea6cb435dca5862512d",
+    "production_use_forbidden": true,
+    "vision_qualification_minimum_score": 94,
+    "source_dimensions": [1536, 1024],
+    "source_crop_xywh": [512, 320, 512, 384],
+    "metric_window_xywh_within_source_crop": [128, 96, 256, 192],
+    "effective_source_xywh": [640, 416, 256, 192],
+    "rgb_to_l": "float32 0.299*R + 0.587*G + 0.114*B",
+    "residual_reference": "Gaussian filter of exact metric-window luminance, sigma 24.0, reflect mode, truncate 4.0",
+    "threshold_selection_use_forbidden": true,
+    "numeric_evaluation_before_freeze_forbidden": true,
+    "validation_once_only_after_freeze": true,
+    "hard_composite_must_accept": true,
+    "report_repo_relative_artifact_path": "reports/locked-clean-reference-report.json",
+    "generation_chain": "world/map-production/prompts/microtexture-v2-r6-locked-clean-reference-imagegen-v18.generation-chain.txt",
+    "generation_chain_sha256": "b7b34e6bcce6298994a96a9d14aba93ec09a047f75a6b3f14119dec8a2227c76",
+    "generation_receipt": "world/map-production/prompts/microtexture-v2-r6-locked-clean-reference-imagegen-v18.generation-receipt.json",
+    "generation_receipt_sha256": "25ab960f773379a5cea521c131f7db890e258feeb631efe65d0525fa999ba724",
+    "root_vision_review": "world/map-production/qa/microtexture-v2-r6-locked-clean-reference-imagegen-v18-root-vision.json",
+    "root_vision_review_sha256": "87cf47f38b90ed894bf2cea35bb2d2e16718e13f9b0cbf842e1a4ef6f45081ad",
+    "independent_vision_review": "world/map-production/qa/microtexture-v2-r6-locked-clean-reference-imagegen-v18-independent-vision-a.json",
+    "independent_vision_review_sha256": "f9734097e4f4132eb618265cd716114ca6864ecd972cac21f90e2599e4a71e0e",
+    "supplementary_independent_review_note": "Independent B is supplementary evidence hash-bound inside the generation receipt; Independent A is the sole independent review directly required by the five-path formal preflight.",
+    "holdout_preflight_revalidation": {
+      "required_at": ["holdout-control-generation", "holdout-evaluation-before-marker"],
+      "exact_path_fields": ["repo_relative_path", "generation_chain", "generation_receipt", "root_vision_review", "independent_vision_review"],
+      "requirements": ["tracked at the current receipt HEAD", "working bytes identical to that HEAD", "SHA-256 identical to this preregistration"],
+      "numeric_measurement_forbidden": true
+    }
+  },
+  "canvas": {
+    "width": 512,
+    "height": 384,
+    "mode": "L",
+    "neutral_luminance": 196,
+    "png_compress_level": 9,
+    "background": "exact HMAC-selected central crop from the frozen r6 Vision-qualified foundation corpus",
+    "metric_window": {
+      "placement": "exact-center",
+      "xywh": [128, 96, 256, 192],
+      "width": 256,
+      "height": 192,
+      "pixels": 49152,
+      "filter_order": "crop first, then apply every reflect-boundary metric filter",
+      "vision_binding": "identical to the complete 200 percent contact-sheet source crop"
+    }
+  },
+  "splits": {
+    "calibration": {"public_nonce": "r6-calibration-v15", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2},
+    "holdout": {"public_nonce": "r6-holdout-v15", "default_replicates_per_variant": 1, "duplicate_audit_replicates_per_variant": 2, "generation_once_only": true, "evaluation_once_only": true}
+  },
+  "runtime_contract": {
+    "all_formal_stages_same_machine_and_exact_runtime_fingerprint_required": true,
+    "cross_os_or_cross_runtime_continuation_forbidden": true,
+    "ubuntu_and_windows_ci_role": "static, unit, and golden-vector preflight only; CI does not create formal controls or continue a formal run",
+    "fingerprint_includes": ["platform", "Python version", "Python executable SHA-256", "NumPy", "SciPy", "Pillow", "zlib compile and runtime versions", "NumPy core binary SHA-256", "SciPy ndimage binary SHA-256", "Pillow imaging binary SHA-256", "canonical component fingerprint SHA-256"]
+  },
+  "one_shot_failure_reporting": {
+    "marker_write_precedes": ["current-stage private identity reveal", "current-stage target image decode", "new numeric measurement", "new threshold selection", "new endpoint evaluation"],
+    "prior_authority_preflight_revalidation": "before a new stage marker, prior consumed reports, frozen thresholds, stored metrics, reviewed labels, receipts, and tracked provenance may be parsed and their stored decisions recomputed; this is validation of prior authority, not a rerun of its source-image measurement or the new stage",
+    "marker_exact_schema_and_hash_validation_required": true,
+    "marker_fields_include": ["captured Git HEAD", "exact runtime", "implementation bindings SHA-256", "UTC started_at", "one_shot_consumed=true"],
+    "post_marker_exception_report_schema": "microtexture-v2-r6-one-shot-failure-report/2",
+    "exception_report_paths": {
+      "calibration": "reports/calibration-failure-report.json",
+      "locked-clean-reference": "reports/locked-clean-reference-failure-report.json",
+      "holdout": "reports/holdout-failure-report.json"
+    },
+    "completion_report_schema": "microtexture-v2-r6-stage-completion/2",
+    "completion_report_paths": {
+      "calibration": "completions/calibration.json",
+      "locked-clean-reference": "completions/locked-clean-reference.json",
+      "holdout": "completions/holdout.json"
+    },
+    "completion_exact_binding_fields": ["manifest_sha256", "labels_sha256", "frozen_thresholds_sha256", "threshold_authority_receipt_sha256", "locked_clean_reference_sha256"],
+    "completion_is_exclusive_final_stage_operation": true,
+    "normal_endpoint_failure_writes_passed_false_completion": true,
+    "authority_loaders_require_completion_and_reject_failure_coexistence": true,
+    "terminal_authority_reload_after_completion_required_for_all_stages": true,
+    "exception_report_exact_binding_fields": ["manifest_sha256", "labels_sha256", "frozen_thresholds_sha256", "threshold_authority_receipt_sha256"],
+    "caught_throwable_scope": "all Python BaseException values caught after durable marker creation are reported and then re-raised",
+    "failure_report_persistence_second_fault": "if the exclusive failure-report path is preoccupied or storage persistence itself fails, preserve and re-raise the original throwable and best-effort add a note; failure of add_note itself is suppressed so the original throwable is never replaced; the missing exclusive final completion remains fail-closed evidence and the durable marker proves the edition is consumed and not rerunnable",
+    "normal_endpoint_failure_uses_normal_report_with_passed_false": true,
+    "any_failure_consumes_and_closes_edition": true
+  },
+  "independent_condition_clusters": {
+    "private_cluster_id_primitive": "HMAC-SHA-256",
+    "message_prefix": "microtexture-v2-r6/private-condition-cluster/v15/",
+    "identity_includes": ["split", "public_nonce", "private_role", "family", "variant_index", "parameters", "duplicate_audit_group", "foundation_id"],
+    "identity_excludes": ["polarity", "replicate"],
+    "public_manifest_or_labels_must_not_expose_cluster_id": true,
+    "reveal_allowed_only_after_one_shot_marker": true,
+    "aggregation": "after reveal, aggregate artifact record-level truth within each condition cluster using disposition precedence reject > warning > clean, maximum severity, and logical OR for every visible flag; require metric-equivalent cluster members; assign exactly one prediction to the cluster; then give every eligible unique cluster equal weight",
+    "polarity_is_a_paired_observation_not_an_independent_cluster": true,
+    "paired_render_contract": "dark and light polarity records use distinct secret-transformed references but identical positions, angles, and unsigned requested deltas; quantized decoded int16 residuals must be exact sign inverses",
+    "partial_endpoint_eligibility": "forbidden: a condition cluster may enter exactly one disposition population after worst-case truth aggregation and can never appear simultaneously in acceptance and rejection populations",
+    "expected_unique_clusters_per_split": 118,
+    "expected_protocol_zero_clusters_per_split": 16,
+    "expected_duplicate_audit_clusters_per_split": 2,
+    "expected_artifact_clusters_per_split": 100,
+    "expected_artifact_clusters_per_family": 20
+  },
+  "control_catalog_authority": {
+    "exact_variant_source": "the tracked control_catalog.py named by implementation-bindings.json; r20 preserves the full hash-bound r19 artifact morphology catalog and dev-r19 duplicate semantic-equivalence policy byte-for-byte, preserves the clean duplicate, and changes only the obvious-artifact duplicate sentinel construction",
+    "records_per_split": 220,
+    "private_role_records_per_split": {"artifact": 200, "protocol-zero": 16, "duplicate-audit": 4},
+    "artifact_contract": "five morphology families, exactly 20 nonzero conditions per family, paired dark/light polarities, one replicate per polarity, and no zero-count artifact condition",
+    "protocol_zero_contract": "16 independent private clusters with control bytes exactly equal to reference bytes, distributed across all three foundations",
+    "duplicate_audit_contract": "one unchanged clean and one strengthened obvious-artifact private semantic-replicate cluster; the strengthened pair uses twelve keyed finite 24-by-3 pixel positive-L axial bars, exactly three per metric quadrant with both orientations; pair deltas, decoded residuals, and metrics are exact while references, controls, codes, and control identities remain distinct and private",
+    "split_separation": "calibration and holdout use disjoint public nonces, parameter nonces, HMAC identities, opaque codes, control ids, and nonzero requested-delta hashes; exact-zero sentinels intentionally share the canonical all-zero requested-delta hash",
+    "foundation_assignment": "secret-HMAC-derived; cluster mates may share a v15/v16/v17 source asset but every record receives a distinct keyed private reference transform",
+    "private_identity_domains": {"private_reference_transform_prefix": "private-reference-transform-v15/", "foundation_offset_lane": "foundation-offset-v14", "foundation_assignment_lane": "foundation-assignment-v14", "delta_lane": "delta-v14", "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v14/"},
+    "private_reference_transform": {
+      "primitive": "full-output HMAC-SHA-256 counter-mode PRF coefficient grids",
+      "identity": "full private record identity including polarity and replicate",
+      "control_grid_hw": [7, 9],
+      "maximum_displacement_px": 1.75,
+      "maximum_tone_l": 0.75,
+      "interpolation_order": 1,
+      "coefficient_interpolation_order": 3,
+      "boundary_mode": "reflect",
+      "encoded_luminance_minimum": 16,
+      "encoded_luminance_maximum": 243,
+      "public_reference_files_forbidden": true,
+      "all_220_private_reference_hashes_unique": true,
+      "all_220_public_control_hashes_unique": true,
+      "purpose": "remove exact byte-level known-foundation, control/reference equality, pair-midpoint, and duplicate-equality oracles from the review surface while preserving a visually clean locally warped foundation; this is defense in depth, not a claim that visible morphology is cryptographically hidden"
+    }
+  },
+  "population_anchor_schedule": {
+    "revision": "dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1",
+    "fresh_from_closed_dev_r18": true,
+    "r18_parameter_nonce_reuse_forbidden": true,
+    "r18_per_family_residue_rotation": {
+      "calibration": {
+        "artifact-fine-grain": 2,
+        "artifact-speck": 4,
+        "artifact-microblob": 6,
+        "artifact-short-dash": 8,
+        "artifact-parallel-bundle": 10
+      },
+      "holdout": {
+        "artifact-fine-grain": 3,
+        "artifact-speck": 5,
+        "artifact-microblob": 7,
+        "artifact-short-dash": 9,
+        "artifact-parallel-bundle": 11
+      }
+    },
+    "r19_parameter_nonce_bases": {
+      "calibration_artifact": 1173000,
+      "holdout_artifact": 1183000,
+      "calibration_protocol_zero": 1151000,
+      "holdout_protocol_zero": 1161000,
+      "calibration_duplicate_audit": [
+        1191000,
+        1191001,
+        1191002
+      ],
+      "holdout_duplicate_audit": [
+        1201000,
+        1201001,
+        1201002
+      ]
+    },
+    "inherited_r18_schedule_revision": "dev-r18-symmetric-direct-visible-speck-reinforcement-schedule-v1",
+    "private_reference_prequalification_manifest": {
+      "revision": "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1",
+      "applies_to_private_roles": ["artifact", "protocol-zero", "duplicate-audit"],
+      "candidate_count": 8,
+      "coefficient_grid_hw": [7, 9],
+      "candidate_domain": "candidate/{index:02d}/",
+      "score_lane_integer_weights": {"displacement-y": 7, "displacement-x": 7, "tone": 3},
+      "score_terms_in_lexicographic_order": ["maximum-weighted-orthogonal-neighbor-jump", "sum-weighted-orthogonal-neighbor-jumps", "maximum-weighted-centered-coefficient-magnitude", "sum-weighted-centered-coefficient-magnitudes", "candidate-index"],
+      "selection_rule": "lexicographic-minimum",
+      "selection_uses_pixels": false,
+      "selection_uses_requested_delta": false,
+      "selection_uses_labels_or_decisions": false,
+      "selection_branches_on_private_role": false,
+      "selected_score_not_worse_than_candidate_zero": true,
+      "truth_guarantee_claimed": false
+    },
+    "private_reference_prequalification_manifest_sha256": "a3cfdec84b58bebec38f581c03fbe9947975bf93e11741477cd3bb22f0931119",
+    "initial_decision_gate_manifest": {
+      "revision": "dev-r17-bilateral-initial-visible-flag-intersection-gate-v1",
+      "snapshot_files": {"root": "decisions-root.initial.dev.txt", "independent": "decisions-independent.initial.dev.txt"},
+      "receipt_files": {"root": "decisions-root.initial.dev.txt.sha256", "independent": "decisions-independent.initial.dev.txt.sha256"},
+      "receipt_format": "lowercase-sha256 two-spaces snapshot-basename newline",
+      "final_files": ["vision-decisions.dev.txt", "decisions-root.dev.txt", "decisions-independent.dev.txt"],
+      "final_three_way_exact_bytes_required": true,
+      "initial_snapshots_require_official_parser_coverage_and_code_binding": true,
+      "visible_flags": ["g", "t", "b", "l", "p"],
+      "final_visible_flag_set_relation": "subset-of-root-initial-intersection-independent-initial",
+      "reconciled_fields_not_restricted_by_this_gate": ["disposition", "severity_0_to_3", "notes"],
+      "private_role_input": false,
+      "read_only_attribute_required_by_runner": false
+    },
+    "initial_decision_gate_manifest_sha256": "f042250290f80d4304923e3b564746e8311515f5c649811678db934bb3ad6ffd",
+    "preserved_r17_artifact_morphology_conditions_across_splits": 180,
+    "preserved_r17_artifact_morphology_sha256": "03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf",
+    "r18_exact_morphology_change_count_across_splits": 20,
+    "r18_speck_reinforcement_revision": "dev-r18-symmetric-reject-speck-direct-visible-cross-v1",
+    "r18_speck_reinforcement_manifest_sha256": "355c6c588c3d698288a3545752c13cea734db85e1e7a9a95416cbe3163f633d4",
+    "r18_full_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+    "r18_target_speck_conditions_per_split": 10,
+    "r18_target_speck_tiers_per_split": {
+      "clear-reject-candidate": 6,
+      "dominant-reject-candidate": 4
+    },
+    "r18_tiny_speck_structural_miss_budget": 4,
+    "r18_spot_detection_increment_required_from_sanitized_r17_holdout": 1,
+    "r18_sanitized_r17_basis": {
+      "calibration_formal_and_development_endpoint_floors_passed": true,
+      "holdout": {
+        "tiny_speck_reject_detection": {
+          "observed": 0,
+          "formal_minimum": 4,
+          "development_minimum": 6
+        },
+        "spot_reject_detection": {
+          "observed": 9,
+          "formal_minimum": 8,
+          "development_minimum": 10
+        },
+        "all_other_endpoints_passed": true
+      },
+      "private_audits_passed": true,
+      "metric_or_threshold_evaluation_performed": false
+    },
+    "r18_sanitized_r17_basis_sha256": "88860fea0dbdf5ebfa454bf7f038aae53c957808d4c4d344b1ea0fc8e54042e9",
+    "r18_metric_threshold_population_and_rate_contract_changes_forbidden": true,
+    "r19_preserved_r18_artifact_morphology_conditions_across_splits": 200,
+    "r19_preserved_r18_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+    "r19_exact_morphology_change_count_across_splits": 0,
+    "r19_duplicate_equivalence_policy_revision": "dev-r19-reject-ordinal-band-duplicate-equivalence-v1",
+    "r19_duplicate_equivalence_policy_manifest": {
+      "revision": "dev-r19-reject-ordinal-band-duplicate-equivalence-v1",
+      "scope": {
+        "private_role": "duplicate-audit",
+        "duplicate_audit_group": "artifact"
+      },
+      "pair_equivalence": {
+        "disposition": {
+          "comparison": "exact-across-pair",
+          "required_value": "reject"
+        },
+        "visible_flags": {
+          "comparison": "exact-across-pair",
+          "fields": [
+            "grain_visible",
+            "tiny_speck_visible",
+            "microblob_visible",
+            "short_line_visible",
+            "parallel_bundle_visible"
+          ]
+        },
+        "severity_0_to_3": {
+          "comparison": "per-member-inclusive-ordinal-band",
+          "allowed_values": [
+            2,
+            3
+          ],
+          "exact_across_pair_required": false
+        }
+      },
+      "unchanged_semantics": {
+        "clean_duplicate_pair_full_semantic_equality_required": true,
+        "warning_semantics_unchanged": true,
+        "all_non_scoped_duplicate_comparisons_unchanged": true
+      },
+      "obvious_artifact_required_label": {
+        "disposition": "reject",
+        "severity_0_to_3_allowed_values": [
+          2,
+          3
+        ],
+        "short_line_visible_required": true
+      },
+      "preservation_contract": {
+        "artifact_morphology_change_count_across_splits": 0,
+        "full_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+        "tier_cardinality_minimum_metric_threshold_and_rate_contracts_unchanged": true,
+        "reference_prequalification_unchanged": true,
+        "bilateral_initial_visible_flag_gate_unchanged": true,
+        "vision_truth_guaranteed": false
+      }
+    },
+    "r19_duplicate_equivalence_policy_manifest_sha256": "292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6",
+    "r19_sanitized_r18_basis": {
+      "calibration": {
+        "duplicate_clean_audit_passed": true,
+        "duplicate_artifact_pair": {
+          "agreed_disposition": "reject",
+          "agreed_visible_flags": {
+            "grain_visible": false,
+            "tiny_speck_visible": false,
+            "microblob_visible": false,
+            "short_line_visible": true,
+            "parallel_bundle_visible": false
+          },
+          "observed_severity_0_to_3_values": [
+            2,
+            3
+          ],
+          "only_label_difference": "severity_0_to_3"
+        },
+        "protocol_zero_audit_passed": true
+      },
+      "holdout": {
+        "duplicate_clean_audit_passed": true,
+        "duplicate_artifact_audit_passed": true,
+        "protocol_zero_audit_passed": true
+      },
+      "population_aggregation_started": false,
+      "numeric_measurement_started": false,
+      "metric_evaluation_started": false,
+      "threshold_search_started": false
+    },
+    "r19_sanitized_r18_basis_sha256": "f4f4c80a406818da30ab18ac270eb466dda2ef42b4f301bde6ce2dea8698ade1",
+    "r19_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden": true,
+    "fresh_from_closed_dev_r19": true,
+    "r19_parameter_nonce_reuse_forbidden": true,
+    "r20_parameter_nonce_bases": {
+      "calibration_artifact": 1273000,
+      "holdout_artifact": 1283000,
+      "calibration_protocol_zero": 1251000,
+      "holdout_protocol_zero": 1261000,
+      "calibration_duplicate_audit": [
+        1291000,
+        1291001,
+        1291002
+      ],
+      "holdout_duplicate_audit": [
+        1301000,
+        1301001,
+        1301002
+      ]
+    },
+    "inherited_r19_schedule_revision": "dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1",
+    "r20_predecessor_catalog_authority_sha256": "f2edfca7ee3f696ddaf815b4be3f316973626ed5cc602cba3dbc5585203d5b37",
+    "r20_preserved_r19_artifact_morphology_conditions_across_splits": 200,
+    "r20_preserved_r19_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+    "r20_exact_morphology_change_count_across_splits": 0,
+    "r20_duplicate_equivalence_policy_revision": "dev-r19-reject-ordinal-band-duplicate-equivalence-v1",
+    "r20_duplicate_equivalence_policy_manifest": {
+      "revision": "dev-r19-reject-ordinal-band-duplicate-equivalence-v1",
+      "scope": {
+        "private_role": "duplicate-audit",
+        "duplicate_audit_group": "artifact"
+      },
+      "pair_equivalence": {
+        "disposition": {
+          "comparison": "exact-across-pair",
+          "required_value": "reject"
+        },
+        "visible_flags": {
+          "comparison": "exact-across-pair",
+          "fields": [
+            "grain_visible",
+            "tiny_speck_visible",
+            "microblob_visible",
+            "short_line_visible",
+            "parallel_bundle_visible"
+          ]
+        },
+        "severity_0_to_3": {
+          "comparison": "per-member-inclusive-ordinal-band",
+          "allowed_values": [
+            2,
+            3
+          ],
+          "exact_across_pair_required": false
+        }
+      },
+      "unchanged_semantics": {
+        "clean_duplicate_pair_full_semantic_equality_required": true,
+        "warning_semantics_unchanged": true,
+        "all_non_scoped_duplicate_comparisons_unchanged": true
+      },
+      "obvious_artifact_required_label": {
+        "disposition": "reject",
+        "severity_0_to_3_allowed_values": [
+          2,
+          3
+        ],
+        "short_line_visible_required": true
+      },
+      "preservation_contract": {
+        "artifact_morphology_change_count_across_splits": 0,
+        "full_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+        "tier_cardinality_minimum_metric_threshold_and_rate_contracts_unchanged": true,
+        "reference_prequalification_unchanged": true,
+        "bilateral_initial_visible_flag_gate_unchanged": true,
+        "vision_truth_guaranteed": false
+      }
+    },
+    "r20_duplicate_equivalence_policy_manifest_sha256": "292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6",
+    "r20_duplicate_sentinel_revision": "dev-r20-keyed-axial-short-line-duplicate-sentinel-v1",
+    "r20_duplicate_sentinel_manifest": {
+      "revision": "dev-r20-keyed-axial-short-line-duplicate-sentinel-v1",
+      "scope": {
+        "private_role": "duplicate-audit",
+        "duplicate_audit_group": "artifact"
+      },
+      "construction": {
+        "render_family": "duplicate-obvious-short-line-sentinel",
+        "bar_count_in_metric_window": 12,
+        "bars_per_exact_metric_quadrant": 3,
+        "encoded_bar_length_px": 24,
+        "encoded_bar_width_px": 3,
+        "encoded_amplitude_l": 12.0,
+        "polarity": 1,
+        "minimum_center_chebyshev_separation_px": 32,
+        "center_margin_per_exact_metric_quadrant_px": 14,
+        "minimum_support_guard_px": 2,
+        "orientation_contract": "keyed-phase-2-to-1-horizontal-or-vertical-per-quadrant",
+        "placement_contract": "fresh-keyed-split-and-condition-derived"
+      },
+      "raster_contract": {
+        "connected_component_count": 12,
+        "pixels_per_component": 72,
+        "nonzero_pixel_count": 864,
+        "nonzero_values_exact": [
+          12.0
+        ],
+        "component_shapes_hw": [
+          [
+            3,
+            24
+          ],
+          [
+            24,
+            3
+          ]
+        ],
+        "each_quadrant_contains_horizontal_and_vertical": true,
+        "all_support_inside_one_exact_metric_quadrant_per_component": true,
+        "all_support_inside_metric_window": true
+      },
+      "pair_equality_contract": {
+        "requested_delta_float32_exact": true,
+        "decoded_residual_exact": true,
+        "metric_values_exact": true,
+        "reference_bytes_distinct": true,
+        "control_bytes_distinct": true,
+        "anonymous_codes_and_control_ids_distinct": true
+      },
+      "zero_key_static_delta_float32_sha256": {
+        "calibration": "0f34c8f787be57c7c0c074888a73ec15e007c63e98d5c5606d4d5d8bbc6de823",
+        "holdout": "027140de4d34eb78c06b00c282b37caade6393ce6240165bfa65825a286a644f"
+      },
+      "preservation_contract": {
+        "clean_duplicate_construction_unchanged": true,
+        "artifact_catalog_morphology_change_count_across_splits": 0,
+        "full_artifact_morphology_sha256": "9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365",
+        "duplicate_equivalence_policy_revision": "dev-r19-reject-ordinal-band-duplicate-equivalence-v1",
+        "duplicate_equivalence_policy_manifest_sha256": "292ebced789826a46ac792a10f716c70c1a4ed5960d5a299dd7a89e816143cc6",
+        "tier_metric_threshold_population_and_rate_contracts_unchanged": true,
+        "vision_truth_guaranteed": false
+      }
+    },
+    "r20_duplicate_sentinel_manifest_sha256": "2ee513f2a3182741fbf9df569a2c5137a7f25b4fd27d3fbba6b00344497b85a1",
+    "r20_sanitized_r19_basis": {
+      "failure_class": "holdout-artifact-duplicate-obvious-short-line-clean-miss",
+      "calibration": {
+        "duplicate_clean_audit_passed": true,
+        "duplicate_artifact_pair": {
+          "member_count": 2,
+          "agreed_disposition": "reject",
+          "agreed_severity_0_to_3": 3,
+          "agreed_visible_flags": {
+            "grain_visible": false,
+            "tiny_speck_visible": false,
+            "microblob_visible": false,
+            "short_line_visible": true,
+            "parallel_bundle_visible": false
+          },
+          "required_obvious_artifact_contract_passed": true
+        },
+        "protocol_zero_audit_passed": true,
+        "duplicate_audit_passed": true
+      },
+      "holdout": {
+        "duplicate_clean_audit_passed": true,
+        "duplicate_artifact_pair": {
+          "member_count": 2,
+          "agreed_disposition": "clean",
+          "agreed_severity_0_to_3": 0,
+          "agreed_visible_flags": {
+            "grain_visible": false,
+            "tiny_speck_visible": false,
+            "microblob_visible": false,
+            "short_line_visible": false,
+            "parallel_bundle_visible": false
+          },
+          "required_obvious_artifact_contract_passed": false
+        },
+        "protocol_zero_audit_passed": true,
+        "duplicate_audit_passed": false
+      },
+      "population_aggregation_started": false,
+      "numeric_measurement_started": false,
+      "metric_evaluation_started": false,
+      "threshold_search_started": false
+    },
+    "r20_sanitized_r19_basis_sha256": "8a99bb7038b5936ac7e44ac339114dc46f78e5d2a8df923a7be0674693d85933",
+    "r20_sanitized_r19_failure_audit_canonical_sha256": "54833ae6c35d7ec864f05fabefb8416844c63fe259780bda0ca309b6c31285e0",
+    "r20_obvious_artifact_duplicate_sentinel_construction_changes_across_splits": 2,
+    "r20_clean_duplicate_construction_changes_across_splits": 0,
+    "r20_morphology_tier_minimum_metric_threshold_and_rate_changes_forbidden": true,
+    "r20_duplicate_sentinel_vision_truth_guaranteed": false,
+    "private_until_one_shot_marker": true,
+    "public_manifest_exposure_forbidden": true,
+    "generation_design_tiers_are_truth": false,
+    "tier_counts_per_artifact_family": {
+      "artifact-fine-grain": {
+        "clean-candidate": 5,
+        "warning-candidate": 4,
+        "clear-reject-candidate": 7,
+        "dominant-reject-candidate": 4
+      },
+      "artifact-speck": {
+        "clean-candidate": 4,
+        "warning-candidate": 6,
+        "clear-reject-candidate": 6,
+        "dominant-reject-candidate": 4
+      },
+      "artifact-microblob": {
+        "clean-candidate": 4,
+        "warning-candidate": 6,
+        "clear-reject-candidate": 6,
+        "dominant-reject-candidate": 4
+      },
+      "artifact-short-dash": {
+        "clean-candidate": 4,
+        "warning-candidate": 6,
+        "clear-reject-candidate": 6,
+        "dominant-reject-candidate": 4
+      },
+      "artifact-parallel-bundle": {
+        "clean-candidate": 4,
+        "warning-candidate": 6,
+        "clear-reject-candidate": 6,
+        "dominant-reject-candidate": 4
+      }
+    },
+    "artifact_families_covered": [
+      "artifact-fine-grain",
+      "artifact-speck",
+      "artifact-microblob",
+      "artifact-short-dash",
+      "artifact-parallel-bundle"
+    ],
+    "tier_variant_index_modulo_three_residues_per_family": [
+      0,
+      1,
+      2
+    ],
+    "all_100_artifact_clusters_reviewed_and_evaluated": true,
+    "subset_selection_forbidden": true,
+    "top_up_forbidden": true,
+    "replacement_forbidden": true,
+    "key_resampling_forbidden": true,
+    "actual_sealed_vision_labels_are_decisive": true,
+    "inherited_warning_acceptance_anchor_revision": "dev-r14-quantized-direct-visible-sparse-warning-v1",
+    "inherited_warning_acceptance_anchor_conditions_per_split": 16,
+    "inherited_warning_acceptance_anchor_schedule_sha256": "5e997df4c7d4e0c6106b3060437235a7f665b08a6b02e00a86f4a4f024dc77e6",
+    "warning_acceptance_anchor_revision": "dev-r16-six-per-sparse-family-direct-visible-warning-v1",
+    "warning_acceptance_anchor_conditions_per_split": 24,
+    "warning_acceptance_anchor_conditions_per_family": {
+      "artifact-speck": 6,
+      "artifact-microblob": 6,
+      "artifact-short-dash": 6,
+      "artifact-parallel-bundle": 6
+    },
+    "warning_acceptance_anchor_structural_miss_budget_against_development_floor": 11,
+    "warning_acceptance_anchor_truth_guarantee_claimed": false,
+    "warning_acceptance_anchor_schedule_sha256": "bfc0e95e402c4f5751212c67759940c8c01802bb0a938899304ec4db576aa5df",
+    "warning_conversion_revision": "dev-r16-one-clean-one-clear-per-sparse-family-v1",
+    "warning_conversion_conditions_per_split": 8,
+    "warning_conversion_source_tiers_per_sparse_family": {
+      "artifact-speck": {
+        "clean-candidate": 1,
+        "clear-reject-candidate": 1
+      },
+      "artifact-microblob": {
+        "clean-candidate": 1,
+        "clear-reject-candidate": 1
+      },
+      "artifact-short-dash": {
+        "clean-candidate": 1,
+        "clear-reject-candidate": 1
+      },
+      "artifact-parallel-bundle": {
+        "clean-candidate": 1,
+        "clear-reject-candidate": 1
+      }
+    },
+    "warning_conversion_schedule_sha256": "0f0f4e0865249d34ff8f83537f60dcaee1c2ee0fd64836551b6aa754251fb8e7",
+    "exact_morphology_change_count_across_splits": 16,
+    "nonconversion_morphology_change_forbidden": true,
+    "predecessor_full_morphology_sha256": "7adf59546337cded9910d17fbff5d383fc36e1058e69f98ed633890c2dd60f5b",
+    "preserved_nonconversion_morphology_conditions_across_splits": 184,
+    "preserved_nonconversion_morphology_sha256": "b8e7429a62e78c6e67efbfa6ec8b3b2fb0f16fb07f61ea9c7590f83f1b637ecd",
+    "preserved_nonwarning_morphology_conditions_across_splits": 144,
+    "preserved_nonwarning_morphology_sha256": "72212f11b453526bd6cec7e11420bcb9a0df7bbae2e097168393a5ee0c9a48b4",
+    "calibration_microblob_clear_reject_anchor_manifest": {
+      "revision": "dev-r15-calibration-quantized-microblob-reject-v1",
+      "split": "calibration",
+      "family": "artifact-microblob",
+      "entries": [
+        {
+          "variant_index": 1,
+          "parameters": {
+            "design_tier": "clear-reject-candidate",
+            "diameter_px": 4,
+            "amplitude_l": 11.6,
+            "count_in_metric_window": 64,
+            "support_radius_px": 2,
+            "minimum_separation_px": 13
+          }
+        },
+        {
+          "variant_index": 2,
+          "parameters": {
+            "design_tier": "clear-reject-candidate",
+            "diameter_px": 4,
+            "amplitude_l": 11.8,
+            "count_in_metric_window": 64,
+            "support_radius_px": 2,
+            "minimum_separation_px": 14
+          }
+        },
+        {
+          "variant_index": 9,
+          "parameters": {
+            "design_tier": "clear-reject-candidate",
+            "diameter_px": 4,
+            "amplitude_l": 11.4,
+            "count_in_metric_window": 64,
+            "support_radius_px": 2,
+            "minimum_separation_px": 12
+          }
+        },
+        {
+          "variant_index": 13,
+          "parameters": {
+            "design_tier": "clear-reject-candidate",
+            "diameter_px": 6,
+            "amplitude_l": 11.6,
+            "count_in_metric_window": 44,
+            "support_radius_px": 3,
+            "minimum_separation_px": 16
+          }
+        },
+        {
+          "variant_index": 16,
+          "parameters": {
+            "design_tier": "clear-reject-candidate",
+            "diameter_px": 5,
+            "amplitude_l": 12.0,
+            "count_in_metric_window": 52,
+            "support_radius_px": 3,
+            "minimum_separation_px": 15
+          }
+        },
+        {
+          "variant_index": 17,
+          "parameters": {
+            "design_tier": "clear-reject-candidate",
+            "diameter_px": 6,
+            "amplitude_l": 11.8,
+            "count_in_metric_window": 44,
+            "support_radius_px": 3,
+            "minimum_separation_px": 17
+          }
+        },
+        {
+          "variant_index": 18,
+          "parameters": {
+            "design_tier": "clear-reject-candidate",
+            "diameter_px": 6,
+            "amplitude_l": 11.4,
+            "count_in_metric_window": 44,
+            "support_radius_px": 3,
+            "minimum_separation_px": 15
+          }
+        }
+      ]
+    },
+    "calibration_microblob_clear_reject_anchor_conditions": 7,
+    "calibration_microblob_clear_reject_anchor_truth_guarantee_claimed": false,
+    "calibration_microblob_clear_reject_anchor_schedule_sha256": "dd2ce7fd13f624bd065e8c7a6bacc2ab8bd593821dec8d46250a40e57ef64833",
+    "calibration_microblob_clear_reject_active_indices": [
+      1,
+      2,
+      9,
+      13,
+      17,
+      18
+    ],
+    "calibration_microblob_clear_reject_active_conditions": 6,
+    "calibration_microblob_clear_reject_converted_to_warning_index": 16,
+    "calibration_microblob_clear_reject_active_schedule_sha256": "2c207dfb5249d42056e164e7553091a9a617d8b673aecfb5ea25e4d757651f0c",
+    "speck_reject_source_anchor_conditions_per_split": 10,
+    "speck_reject_active_anchor_conditions_per_split": 10,
+    "speck_reject_anchor_structural_miss_budget_against_development_floor": 4,
+    "speck_reject_anchor_truth_guarantee_claimed": false,
+    "speck_reject_anchor_schedule": {
+      "revision": "dev-r18-symmetric-reject-speck-direct-visible-cross-v1",
+      "inherited_schedule_revision": "dev-r17-protocol-zero-reference-prequalification-schedule-v1",
+      "family": "artifact-speck",
+      "target_tiers": ["clear-reject-candidate", "dominant-reject-candidate"],
+      "target_indices": {
+        "calibration": [3, 5, 6, 7, 8, 12, 15, 16, 17, 19],
+        "holdout": [1, 3, 4, 6, 9, 10, 11, 13, 14, 18]
+      },
+      "target_conditions_per_split": 10,
+      "clear_reject_conditions_per_split": 6,
+      "dominant_reject_conditions_per_split": 4,
+      "diameter_px": 1,
+      "core_count_bounds": [4, 7],
+      "center_amplitude_l_bounds": [11.2, 12.0],
+      "shoulder_fraction_bounds": [0.42, 0.56],
+      "minimum_encoded_axial_shoulder_l": 5,
+      "minimum_separation_px": 30,
+      "quadrant_stratified": true,
+      "returns_to_uninjected_background_outside_one_axial_neighbor": true,
+      "microblob_blur_forbidden": true,
+      "split_structural_profiles_symmetric": true,
+      "split_morphology_tuples_disjoint": true,
+      "vision_truth_guaranteed": false
+    },
+    "grain_reject_anchor_conditions_per_split": 11,
+    "grain_reject_anchor_truth_guarantee_claimed": false,
+    "grain_reject_anchor_schedule": {
+      "metric_coherence_period_bounds_px": [
+        2,
+        13
+      ],
+      "preferred_reject_period_bounds_px": [
+        3,
+        12
+      ],
+      "calibration": {
+        "clear": [
+          [
+            "fine-band",
+            8.8
+          ],
+          [
+            "halftone",
+            11
+          ],
+          [
+            "fine-band",
+            12.0
+          ],
+          [
+            "fine-band",
+            6.7
+          ],
+          [
+            "halftone",
+            10
+          ],
+          [
+            "fine-band",
+            11.6
+          ],
+          [
+            "fine-band",
+            4.1
+          ]
+        ],
+        "dominant": [
+          [
+            "halftone",
+            7
+          ],
+          [
+            "fine-band",
+            4.8
+          ],
+          [
+            "fine-band",
+            8.0
+          ],
+          [
+            "fine-band",
+            3.0
+          ]
+        ]
+      },
+      "holdout": {
+        "clear": [
+          [
+            "halftone",
+            9
+          ],
+          [
+            "fine-band",
+            11.4
+          ],
+          [
+            "fine-band",
+            7.1
+          ],
+          [
+            "fine-band",
+            11.8
+          ],
+          [
+            "halftone",
+            12
+          ],
+          [
+            "fine-band",
+            4.5
+          ],
+          [
+            "fine-band",
+            9.2
+          ]
+        ],
+        "dominant": [
+          [
+            "fine-band",
+            5.1
+          ],
+          [
+            "fine-band",
+            8.4
+          ],
+          [
+            "fine-band",
+            3.3
+          ],
+          [
+            "halftone",
+            8
+          ]
+        ]
+      },
+      "split_pattern_period_tuples_disjoint": true
+    },
+    "blind_key_selection_forbidden_for": [
+      "split",
+      "family",
+      "generation-design-tier",
+      "variant-index",
+      "parameter-tuple"
+    ],
+    "blind_key_allowed_uses": [
+      "foundation-assignment",
+      "private-reference-transform",
+      "sparse-placement-within-frozen-packing-invariants",
+      "private-identities-and-anonymous-codes",
+      "public-record-order"
+    ],
+    "development_premeasurement_safety_floor_formula": "max(M+2,ceil(1.25*M)) for each unchanged formal endpoint minimum M",
+    "development_premeasurement_safety_floors": {
+      "clean_acceptance": 19,
+      "warning_acceptance": 13,
+      "reject_detection": 38,
+      "severity3_detection": 6,
+      "grain_reject_detection": 10,
+      "tiny_speck_reject_detection": 6,
+      "microblob_reject_detection": 6,
+      "spot_reject_detection": 10,
+      "short_line_reject_detection": 10,
+      "parallel_bundle_reject_detection": 8
+    }
+  },
+  "control_families": [
+    {
+      "id": "artifact-fine-grain", "private_role": "artifact", "polarities": [-1, 1],
+      "expected_clusters_per_split": 20, "expected_records_per_split": 40
+    },
+    {
+      "id": "artifact-speck", "private_role": "artifact", "polarities": [-1, 1],
+      "expected_clusters_per_split": 20, "expected_records_per_split": 40
+    },
+    {
+      "id": "artifact-microblob", "private_role": "artifact", "polarities": [-1, 1],
+      "expected_clusters_per_split": 20, "expected_records_per_split": 40
+    },
+    {
+      "id": "artifact-short-dash", "private_role": "artifact", "polarities": [-1, 1],
+      "expected_clusters_per_split": 20, "expected_records_per_split": 40
+    },
+    {
+      "id": "artifact-parallel-bundle", "private_role": "artifact", "polarities": [-1, 1],
+      "expected_clusters_per_split": 20, "expected_records_per_split": 40
+    },
+    {
+      "id": "protocol-zero", "private_role": "protocol-zero", "polarities": [1],
+      "expected_clusters_per_split": 16, "expected_records_per_split": 16
+    },
+    {
+      "id": "duplicate-audit", "private_role": "duplicate-audit", "polarities": [1],
+      "expected_clusters_per_split": 2, "expected_records_per_split": 4,
+      "replicates_per_cluster": 2, "groups": ["clean", "artifact"]
+    }
+  ],
+  "blind_derivation": {
+    "primitive": "HMAC-SHA-256",
+    "key_commitment_message": "microtexture-v2-r6/key-commitment/v14",
+    "seed_message_prefix": "microtexture-v2-r6/render-seed/v15/",
+    "code_message_prefix": "microtexture-v2-r6/opaque-code/v15/",
+    "opaque_code_hex_characters": 24,
+    "formal_secret_value_artifact_or_log_persistence_forbidden": true,
+    "same_key_commitment_required_for_calibration_freeze_locked_clean_reference_receipt_holdout": true
+  },
+  "rendering": {
+    "quantization": "reference=secret HMAC-PRF nonrigid foundation transform plus tone field, np.rint and safety clip to uint8 16..243; encoded_delta=np.rint(requested_delta).astype(int16); control=reference_uint8.astype(int16)+encoded_delta with clipping forbidden; every artifact polarity pair must have exact opposite decoded int16 residuals",
+    "requested_delta_hash": "SHA-256 over contiguous little-endian float32 requested delta bytes",
+    "encoded_png_hash": "SHA-256 over deterministic Pillow L-mode PNG bytes",
+    "public_payload_binding": "the public manifest exposes only opaque codes and per-code, per-lane HMAC-SHA-256 commitments over each private raw payload SHA; no raw control path, reference path, control bytes, or reference bytes exist as individual pre-marker artifacts, and raw control/reference/delta hashes are revealed only after the durable marker",
+    "public_commitment_domain": "microtexture-v2-r6/public-payload-commitment/v16/{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}",
+    "commitment_equality_hiding": "domain separation plus the opaque code makes all 660 commitments unique even when private requested deltas repeat; repeated or cross-lane commitments are rejected",
+    "single_read_validation": "read each contact sheet once and validate the same in-memory bytes; regenerate every private control/reference only after the marker from the frozen catalog and blind key",
+    "sparse_injection_domain": "all specks, microblobs, short dashes, and parallel bundles are positioned completely inside the exact metric window",
+    "artifact_nonzero_contract": "all 100 artifact clusters encode a nonzero requested delta and a control that differs from its reference; zero-count conditions are forbidden from artifact endpoint populations",
+    "sparse_parameter_crossing_contract": "the 20 conditions in every sparse family cross count, size or length, amplitude, width, and spacing through frozen nonmonotone permutations; calibration and holdout use different offsets and nonce ranges",
+    "fine_grain_contract": "artifact-fine-grain contains exactly 20 frozen nonzero oriented fine-band or halftone conditions per split with split-specific scale, amplitude, pattern, and metric-window support schedules; any sparse-support candidate retains deterministic nonzero support, every remaining condition retains its frozen full-support contract, and all eleven full-support reject-tier grain periods per split are statically constrained to the inclusive 3..12 pixel guard-banded interior of the unchanged 2..13 pixel coherence support",
+    "sparse_position_contract": "every injected center and angle is secret-HMAC-derived with no forced center, axis, or fixed-angle item; all geometry including parallel-pair extent remains wholly inside the metric window",
+    "hard_speck_integer_core_contract": "artifact-speck retains an unblurred exact one-pixel integer-lattice core; clean and warning conditions retain their inherited shoulders, while the ten preregistered reject targets per split use only four axial neighbours whose encoded magnitude is at least 5 L",
+    "hard_speck_separation_contract": "all inherited artifact-speck conditions retain their prior separation; the ten r18 reject targets per split require at least 30-pixel pairwise Chebyshev separation, disjoint one-neighbour crosses, and uninjected background beyond that support",
+    "hard_speck_quadrant_stratification_contract": "artifact-speck integer centers use deterministic round-robin packing across the four exact metric-window quadrants with quadrant counts differing by at most one; a count of at least four covers every quadrant",
+    "hard_speck_reject_anchor_contract": "the ten r18 target conditions per split preserve reject-tier membership and replace only their speck morphology with four through seven quadrant-stratified direct-visible one-pixel cores; this is a preregistered coverage reinforcement, not assigned Vision truth, and cannot bypass the post-seal population gate",
+    "microblob_separation_contract": "artifact-microblob uses integer centers and a finite Gaussian truncated at explicit support_radius_px; minimum_separation_px is at least 2*support_radius_px+1, supports have a positive uninjected gap, and every center has unsigned requested-delta peak amplitude_l",
+    "parallel_geometry_contract": "each artifact-parallel-bundle pair uses an exact 0- or 90-degree axis, equal even-integer length_px, even-integer centerline spacing_px, zero axial offset and therefore 100 percent axial overlap; edge gap equals spacing_px-width_px and satisfies 1<=gap<=length_px; every same-polarity non-touching pair is wholly contained in exactly one 400-percent quadrant",
+    "sparse_deterministic_packing_contract": "speck, microblob, short-dash, and parallel-bundle centers use a bounded deterministic candidate permutation and deterministic first-fit acceptance stratified across the four exact quadrants with count difference at most one; short-dash separation is at least ceil(length_px)+width_px+3 and parallel-bundle separation is at least max(length_px,spacing_px)+width_px+3; failure to place the full requested count raises without adaptive count, parameter, tier, split, or key replacement",
+    "protocol_zero_contract": "all 16 protocol-zero controls are exact control/reference byte duplicates with a zero requested delta",
+    "duplicate_audit_contract": "the clean semantic audit group retains its exact-zero construction; the obvious-artifact group uses the r20 fresh-keyed finite axial short-line sentinel; each group contains two separately coded records with distinct private reference and control bytes, equal requested-delta bytes, exact decoded-residual and metric equality, and labels satisfying the preserved dev-r19 reject-band policy"
+  },
+  "contact_sheets": {
+    "views": [
+      {"id": "full-200", "scale_percent": 200, "source_crop_xywh": [128, 96, 256, 192]},
+      {"id": "northwest-400", "scale_percent": 400, "source_crop_xywh": [128, 96, 128, 96]},
+      {"id": "northeast-400", "scale_percent": 400, "source_crop_xywh": [256, 96, 128, 96]},
+      {"id": "southwest-400", "scale_percent": 400, "source_crop_xywh": [128, 192, 128, 96]},
+      {"id": "southeast-400", "scale_percent": 400, "source_crop_xywh": [256, 192, 128, 96]}
+    ],
+    "resize": "nearest", "columns": 2, "rows_per_page": 3,
+    "panel_dimensions": [512, 384], "label_height": 30,
+    "sheet_mode": "L", "sheet_background_l": 238,
+    "label_band_position": "above-panel",
+    "label_origin_in_slot": [8, 18], "panel_origin_in_slot": [0, 30],
+    "label_panel_overlap_forbidden": true, "label_fill_l": 0,
+    "label_font": "fixed built-in 3x5 lowercase hexadecimal bitmap, scale 2, one scale-unit column gap",
+    "sheet_dimensions": [1024, 1242],
+    "expected_controls_per_split": 220,
+    "expected_pages_per_view": 37,
+    "expected_pages_per_split": 185,
+    "all_220_source_panels_unique_in_every_view": true,
+    "all_four_400_percent_quadrants_required": true,
+    "label_binding": "manifest SHA plus exact ordered full path, SHA, and item-code bundle regenerated from secret-derived controls"
+  },
+  "labels": {
+    "schema_version": "microtexture-v2-r6-root-vision-labels/2",
+    "exact_artifact_paths": {
+      "calibration": "controls/calibration/labels-calibration.json",
+      "holdout": "controls/holdout/labels-holdout.json"
+    },
+    "sealed_authority_paths": {
+      "calibration": "sealed-inputs/calibration-reviewed-labels.json",
+      "holdout": "sealed-inputs/holdout-reviewed-labels.json"
+    },
+    "path_and_bytes_binding": "the review input must be a regular non-link file at its exact split path; immediately after the one-shot marker and before any new decode, reveal, or measurement, its validated bytes are exclusively copied to the exact sealed authority path; every report binds that SHA-256 and every later authority load uses the immutable sealed bytes before recomputing endpoints",
+    "required_fields": ["anonymous_code", "disposition", "grain_visible", "tiny_speck_visible", "microblob_visible", "short_line_visible", "parallel_bundle_visible", "severity_0_to_3", "reviewed_at_200_percent", "reviewed_at_all_400_percent_quadrants", "notes"],
+    "allowed_dispositions": ["clean", "warning", "reject"],
+    "consistency": {
+      "clean": "severity 0 and no visible labels",
+      "warning": "severity 1 and at least one visible label",
+      "reject": "severity 2 or 3 and at least one visible label"
+    },
+    "vision_observation_rubric": {
+      "id": "microtexture-v2-r6-injected-morphology-only/3",
+      "application": "apply identically to every anonymous record before reveal",
+      "judgment_target": "synthetic morphology visibly distinct from the permitted clean substrate; absolute nonuniformity alone is not an artifact",
+      "native_clean_variation": "broad edge-free low-frequency nonperiodic parchment clouding, smooth mottling, gentle tone drift, and sparse isolated soft irregular low-contrast organic flecks remain clean and set no visible flag; a faint diffuse or soft-edged pinprick first noticed only at 400 percent is also clean",
+      "cross_scale_evidence_gate": "count a morphology only when it is directly visible without enhancement in the full-200 panel and can be reidentified at the same location in the corresponding 400-percent quadrant; 400-percent-only impressions set no flag",
+      "grain_visible": "dense or coherent periodic/directional high-frequency texture beyond broad permitted mottling",
+      "tiny_speck_visible": "at least three independently locatable separated point-like hard cores of similar footprint and polarity; every counted core is directly visible without enhancement in the native full-200 panel, is uniquely locatable at 400 percent, returns toward local background in every direction within roughly one core width, is clearly sharper or higher contrast than the soft substrate, and matches the same visible center at full-200; diffuse, feathered, irregular soft flecks, solitary cores, mere tonal extrema, and extremely faint point impressions inferred only from 400 percent are excluded",
+      "microblob_visible": "localized compact blobs with separable centers or boundaries; broad edge-free low-frequency permitted clouding is excluded",
+      "short_line_visible": "discrete straight finite dashes or lines; smooth tonal contours and permitted fiber-like variation are excluded",
+      "parallel_bundle_visible": "true only when one candidate pair satisfies every condition: each of two same-polarity non-touching finite strokes is independently visible in full-200; both strokes can be reidentified together in one corresponding 400-percent quadrant; the pair uses one shared evidence locator whose 3-by-3 sector is selected by the midpoint between the two stroke midpoints and the strokes need not be wholly contained in that sector; the minimum undirected centerline-angle difference modulo 180 degrees is at most 10 degrees; the minimum edge-to-edge perpendicular gap is greater than zero and no greater than the arithmetic mean of the two visible centerline lengths; and overlap of the two centerline projections on their mean axis is at least 50 percent of the shorter visible centerline length. Scattered, crossing, touching, merged, opposite-polarity, or merely similarly angled dashes are insufficient",
+      "parallel_bundle_implies_short_line": true,
+      "flags_nonexclusive": true,
+      "positive_flag_evidence_recording": "for every true visible flag, notes identify the evidence that is visible in full-200 and reidentified in the corresponding 400-percent quadrant; tiny speck identifies at least three distinct locations; a parallel bundle uses the same pair-midpoint locator for l and p; inability to record required evidence leaves the flag false",
+      "evidence_notes_contract": {
+        "exact_form": "ev3:g=<set>;t=<set>;b=<set>;l=<set>;p=<set>",
+        "locator_form": "(NW|NE|SW|SE)-R[1-3]C[1-3]-N(01..99)",
+        "locator_meaning": "the quadrant and 3-by-3 sector reidentifying the same evidence in full-200 and the corresponding 400-percent view; N is a record-local distinct evidence ordinal and may distinguish multiple centers in one sector",
+        "empty_set": "-",
+        "canonicalization": "ASCII only; clauses occur exactly once in g,t,b,l,p order; no whitespace, free text, trailing delimiter, duplicate locator, or noncanonical locator order; locator order is NW,NE,SW,SE then row, column, ordinal",
+        "flag_binding": "a false visible flag requires '-' and a true visible flag requires a nonempty locator set",
+        "tiny_speck_cardinality": "t=true requires at least three distinct locators",
+        "parallel_binding": "p=true requires l=true and every p locator must occur identically in the l locator set",
+        "clean_binding": "clean requires exactly ev3:g=-;t=-;b=-;l=-;p=-"
+      },
+      "warning": "an observed morphology that passes every applicable evidence predicate but is weak, severity 1; warning is not an uncertainty category",
+      "reject_severity_2": "clearly visible localized or repeated synthetic morphology, severity 2",
+      "reject_severity_3": "dominant, high-contrast, or field-wide synthetic morphology, severity 3",
+      "recording_protocol": "record and verify every decision against the exact printed anonymous code before moving to the next page; delayed page-row-only transcription is forbidden",
+      "blind_prohibitions": "source/reference/hash/diff/family/role/polarity/sentinel/duplicate inference or comparison is forbidden before label sealing",
+      "private_audit_policy": "private sentinel checks occur only after marker and label sealing; failure closes the edition and never authorizes relabeling"
+    },
+    "public_pre_marker_validation": "schema, authority bindings, code coverage, completeness, reviewed-view booleans, per-record disposition/severity/visible consistency, canonical ev3 evidence syntax, public flag/evidence binding, tiny-speck cardinality, and parallel l/p locator binding only; image-hash equality and private sentinel membership must not be used to correct labels before consumption",
+    "post_marker_private_audits": {
+      "ordering": "durable one-shot marker, exact label-byte sealing, secret catalog regeneration, then private audits before any control/reference measurement",
+      "protocol_zero": "all 16 secret-role protocol-zero records must be clean, severity 0, with no visible flags",
+      "duplicate_clean": "the two separately coded clean-group records must have identical semantic labels and both must be clean",
+      "duplicate_artifact": "the two separately coded obvious-artifact records must have exact disposition and exact values for all five visible flags across the pair, both must be reject with short_line_visible=true, and each severity must independently belong to the inclusive reject ordinal band {2,3}; severity equality within that band is not required",
+      "failure_policy": "any disagreement or wrong sentinel outcome is a post-marker failure that consumes and closes the edition"
+    },
+    "spot_endpoint": "tiny_speck_visible OR microblob_visible"
+  },
+  "metric_definition": {
+    "expected_shape_hw": [192, 256],
+    "density_unit_pixels": 1000000,
+    "gaussian_mode": "reflect",
+    "gaussian_truncate": 4.0,
+    "hard_metric": {
+      "name": "hard_composite_score",
+      "formula": "max(grain_score, spot_score, finite_line_score, parallel_bundle_score)",
+      "direction": "maximum"
+    },
+    "grain_parameters": {
+      "highpass_sigma_px": 4.0,
+      "absolute_floor_l": 3.0,
+      "coherence_low_sigma_px": 0.6,
+      "coherence_high_sigma_px": 2.5,
+      "coherence_min_period_px": 2,
+      "coherence_max_period_px": 13,
+      "coherence_angles_degrees": [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165]
+    },
+    "spot_parameters": {
+      "component_floor_l": 4.5,
+      "tiny_area_max_pixels": 12,
+      "tiny_top_count": 9,
+      "blob_area_min_pixels": 4,
+      "blob_area_max_pixels": 400,
+      "blob_elongation_maximum": 2.5,
+      "blob_sigmas_px": [0.8, 1.2, 1.8, 2.6, 3.6]
+    },
+    "finite_line_parameters": {
+      "angles_degrees": [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165],
+      "lengths_px": [5, 9, 15, 23],
+      "core_half_width_px": 0.5,
+      "flank_inner_px": 1.0,
+      "flank_outer_px": 4.0,
+      "nms_size_px": 5,
+      "response_floor_l": 4.5,
+      "peaks_per_filter": 64,
+      "duplicate_peak_radius_px": 4
+    },
+    "parallel_pair_parameters": {
+      "response_floor_l": 4.5,
+      "peaks_per_filter": 64,
+      "nms_size_px": 5,
+      "minimum_matched_pair_count": 2,
+      "along_maximum_px": 15.5,
+      "perpendicular_minimum_px": 4.0,
+      "perpendicular_maximum_px": 24.0
+    },
+    "parallel_pair_response_source": "absolute normalized core-only raw-delta line mean; finite-line center-surround flank responses are forbidden as parallel evidence",
+    "parallel_pair_evidence_coupling": "pair peak and greedy matched-pair count must come from the same angle/length filter and same matching; fewer than two matched pairs is canonical zero bundle evidence; select the single filter maximizing its actual bounded parallel score with deterministic tie-breaks",
+    "score_reference_constants": {
+      "grain_occupancy_per_mp": 2400.0,
+      "grain_rms_l": 0.875,
+      "tiny_mass_l": 15.0,
+      "tiny_component_count": 9.0,
+      "multiscale_blob_strength_l_sqrt_px": 4.0,
+      "finite_line_peak_l": 4.5,
+      "finite_line_top4_mean_l": 2.25,
+      "parallel_pair_peak_l": 4.5,
+      "parallel_matched_pair_count": 2.0
+    },
+    "score_reference_revision": "dev-r8-soft-unit-robustness-v1",
+    "score_reference_changes_from_closed_dev_r7": {"grain_rms_l": {"from": 0.7, "to": 0.875}, "tiny_mass_l": {"from": 20.0, "to": 15.0}, "finite_line_top4_mean_l": {"from": 4.5, "to": 2.25}},
+    "score_reference_revision_guardrails": {"basis": "aggregate-only closed dev-r7 development diagnostics before fresh dev-r8 generation; dev-r8 stopped before measurement and therefore supplied no score or threshold evidence", "single_reference_candidates_passed": 0, "two_reference_candidates_passed": 1, "chosen_three_reference_diagnostic_threshold": 0.7027857840028129, "chosen_three_reference_calibration_score_gap": 0.025614718437003, "chosen_three_reference_holdout_score_gap": 0.025614718437003, "chosen_third_reference_purpose": "increase the minimum calibration/holdout decision-boundary distance without changing endpoint results", "raw_metrics_unchanged": true, "branch_composition_unchanged": true, "endpoint_counts_and_rates_unchanged": true, "dev_r9_completed_failed_closed": true, "dev_r10_generation_interrupted_failed_closed": true, "dev_r11_premeasurement_vision_gate_failed_closed": true, "dev_r12_premeasurement_population_gate_failed_closed": true, "dev_r12_measurement_or_threshold_reuse_forbidden_because_absent": true, "fresh_successor_after_dev_r12_required": true, "dev_r13_premeasurement_population_gate_failed_closed": true, "dev_r13_measurement_or_threshold_reuse_forbidden_because_absent": true, "fresh_successor_after_dev_r13_required": true, "dev_r7_threshold_or_measurement_reuse_for_formal_forbidden": true, "dev_r8_measurement_or_threshold_reuse_forbidden_because_absent": true, "dev_r9_measurement_threshold_diagnostic_or_holdout_reuse_forbidden": true, "dev_r10_measurement_or_threshold_reuse_forbidden_because_absent": true, "dev_r11_measurement_or_threshold_reuse_forbidden_because_absent": true},
+    "score_normalization": "unit_soft(x, reference)=0 when x<=0 else (2/pi)*atan(x/reference), where reference is a frozen fixed half-scale and every finite positive input maps strictly monotonically into (0,1); grain=max(min(unit_soft occupancy,unit_soft rms),coherence_0_to_1*unit_soft rms); spot=max(unit_soft tiny mass,unit_soft tiny component count,unit_soft multiscale blob); finite-line=max(unit_soft peak,unit_soft top4); parallel=min(unit_soft absolute weaker-pair peak,unit_soft matched-pair count); hard=max four branches",
+    "raw_metric_recomputation_required": true,
+    "parallel_pair_ratio_diagnostic_only": true,
+    "diagnostic_branch_flag_cutoff": 0.5,
+    "artifact_dependent_score_denominators_forbidden": true,
+    "development_basis": "reference constants, strictly monotone bounded soft-unit score structure, worst-case truth aggregation, and fixed filters were designed from the revealed failed r5 report plus closed non-formal dev-r6/dev-r7 evidence; dev-r8 stopped before measurement because tiny-speck-visible rejects were 3 and 1 clusters; dev-r9 fixed that population deficit but failed after one measurement because warning acceptance and severity-3 detection had no common scalar threshold; dev-r10 was interrupted during generation before any Vision review or measurement; dev-r11 completed blind review but failed the private exact-zero sentinel gate before population aggregation or numeric measurement; dev-r12 passed private audits but closed before measurement because warning population was 10 calibration and 9 holdout against development floor 13, with holdout also below formal minimum 10; dev-r13 passed every formal population minimum but closed before measurement because holdout warning population 12 missed development floor 13; dev-r14 passed all formal minima and every holdout development floor but closed before measurement because calibration microblob population 4 missed development floor 6; dev-r15 passed both private audits but closed before measurement because warning population was 12 calibration and 9 holdout against development floor 13, with holdout also below formal minimum 10; dev-r16 preserved the metric and every threshold/count/rate requirement and applied the frozen warning rebalance, but closed before population aggregation or measurement after one sealed holdout exact-zero sentinel received a severity-1 short-line warning; dev-r17 passed private audits and every calibration population floor but closed before measurement because holdout tiny-speck population 0 missed formal minimum 4 and development floor 6 and holdout spot population 9 missed development floor 10; dev-r18 preserved the other 180 r17 artifact morphologies, all tier cardinalities, population minima, metric, threshold, and rate contracts plus the r17 role-agnostic reference prequalification and bilateral initial flag gate, but closed before population audit or numeric measurement because calibration's obvious-artifact duplicate pair matched reject disposition and all five visible flags while using ordinal severities 2 and 3 under the then-exact severity check; fresh dev-r19 preserves all 200 dev-r18 artifact morphologies, every design tier, metric, threshold, population, and rate contract, and changes only duplicate semantic equivalence so reject severities 2 and 3 share one reject ordinal band while disposition and all five visible flags remain exact; every prior corpus remains development-only; dev-r19 then closed before population aggregation or numeric measurement because its holdout obvious-artifact duplicate pair was labeled clean severity 0 with no visible flags; fresh dev-r20 preserves the full dev-r19 artifact catalog, tier/metric/threshold/population/rate contracts, reject severity-band policy, and clean duplicate, and changes only the obvious-artifact duplicate construction to a keyed 12-bar finite axial short-line payload whose native-pixel geometry is statically checked but whose Vision outcome is not guaranteed"
+  },
+  "threshold_selection": {
+    "endpoint_eligible_private_role": "artifact",
+    "protocol_zero_and_duplicate_audit_excluded": true,
+    "hard_gate": {"metric": "hard_composite_score", "direction": "maximum", "threshold_count": 1, "complete_hard_composite": "max(grain_score, spot_score, finite_line_score, parallel_bundle_score) > frozen scalar threshold"},
+    "candidate_thresholds": "exact domain floor 0, nonnegative minimum-epsilon when distinct, adjacent-value midpoints, and an upper outward sentinel maximum+epsilon",
+    "candidate_audit_required_even_when_no_threshold_is_admissible": true,
+    "admissibility": {"clean_cluster_acceptance_minimum": 0.95, "warning_cluster_acceptance_minimum": 0.75},
+    "endpoint_truth_aggregation": {
+      "unit": "artifact-condition-cluster",
+      "members_per_cluster": 2,
+      "disposition_precedence": ["reject", "warning", "clean"],
+      "severity_aggregation": "maximum",
+      "visible_flag_aggregation": "logical-or",
+      "metric_equivalent_polarity_pair_prediction": "single-shared-prediction"
+    },
+    "authority_candidate_gate": {
+      "all_endpoint_count_passed_required": true,
+      "all_endpoint_rate_passed_required": true,
+      "diagnostic_admissibility_scope": "clean-warning-only",
+      "diagnostic_best_authority_forbidden": true,
+      "diagnostic_best_location": "threshold-selection-audit-only",
+      "no_candidate_status": "no-endpoint-admissible-threshold",
+      "population_feasibility_order": "post-marker-post-label-seal-post-private-audit-pre-measurement-pre-threshold-selection",
+      "population_failure_policy": "raise a post-marker failure before numeric measurement; consume and close the edition without a frozen threshold"
+    },
+    "objective_order": ["maximize minimum of grain, tiny-speck, microblob, short-line, and parallel-bundle reject-cluster detection", "maximize combined spot reject-cluster detection", "maximize overall reject-cluster detection", "maximize severity-3 cluster detection", "maximize clean-cluster acceptance", "maximize warning-cluster acceptance", "prefer stricter lower threshold"],
+    "selection_status_state_machine": {
+      "no-endpoint-admissible-threshold": {"hard_threshold": null, "passed": false, "freeze_forbidden": true},
+      "selected-and-passed": {"hard_threshold": "selected nonnegative scalar", "passed": true, "freeze_required": true}
+    },
+    "no_endpoint_admissible_report_binding": {
+      "hard_threshold": null,
+      "passed": false,
+      "endpoint_performance_and_results_source": "diagnostic-best-candidate",
+      "diagnostic_threshold_location": "threshold-selection-audit-only",
+      "threshold_file_forbidden": true
+    },
+    "warning_disposition_zero_policy": "failure because a minimum independent warning-cluster count is preregistered",
+    "diagnostic_metrics_are_nonblocking": true,
+    "endpoint_definitions": [
+      {"id": "clean_acceptance", "population": "disposition_clean", "expected_result": "accept", "minimum_unique_clusters": 15, "calibration_minimum": 0.95, "holdout_minimum": 0.95},
+      {"id": "warning_acceptance", "population": "disposition_warning", "expected_result": "accept", "minimum_unique_clusters": 10, "calibration_minimum": 0.75, "holdout_minimum": 0.75},
+      {"id": "reject_detection", "population": "disposition_reject", "expected_result": "reject", "minimum_unique_clusters": 30, "calibration_minimum": 0.95, "holdout_minimum": 0.95},
+      {"id": "severity3_detection", "population": "severity_3", "expected_result": "reject", "minimum_unique_clusters": 4, "calibration_minimum": 1.0, "holdout_minimum": 1.0},
+      {"id": "grain_reject_detection", "population": "grain_visible_reject", "expected_result": "reject", "minimum_unique_clusters": 8, "calibration_minimum": 0.80, "holdout_minimum": 0.75},
+      {"id": "tiny_speck_reject_detection", "population": "tiny_speck_visible_reject", "expected_result": "reject", "minimum_unique_clusters": 4, "calibration_minimum": 0.75, "holdout_minimum": 0.75},
+      {"id": "microblob_reject_detection", "population": "microblob_visible_reject", "expected_result": "reject", "minimum_unique_clusters": 4, "calibration_minimum": 0.75, "holdout_minimum": 0.75},
+      {"id": "spot_reject_detection", "population": "spot_visible_reject", "expected_result": "reject", "minimum_unique_clusters": 8, "calibration_minimum": 0.80, "holdout_minimum": 0.75},
+      {"id": "short_line_reject_detection", "population": "short_line_visible_reject", "expected_result": "reject", "minimum_unique_clusters": 8, "calibration_minimum": 0.80, "holdout_minimum": 0.75},
+      {"id": "parallel_bundle_reject_detection", "population": "parallel_bundle_visible_reject", "expected_result": "reject", "minimum_unique_clusters": 6, "calibration_minimum": 0.80, "holdout_minimum": 0.75}
+    ],
+    "all_endpoint_counts_and_minima_block_freeze": true
+  },
+  "statistical_interpretation": {
+    "kind": "deterministic finite-corpus coverage gate",
+    "confidence_interval_or_population_estimate_claimed": false,
+    "endpoint_independence_claimed": false,
+    "paired_condition_cluster_aggregation_is_explicit": true,
+    "allowed_claim": "pass means the single frozen gate met every preregistered cluster count and rate on these exact calibration and holdout corpora; it does not estimate an unrestricted artifact population"
+  },
+  "holdout_pass_targets": {
+    "uses_frozen_single_threshold_without_change": true,
+    "all_preregistered_endpoint_counts_and_holdout_minima_required": true,
+    "diagnostic_metrics_nonblocking": true,
+    "threshold_changes_forbidden": true,
+    "terminal_report_authority_reload_required": true,
+    "terminal_report_reload_bindings": ["actual holdout manifest and every contact-sheet SHA plus every secret-regenerated control/reference/delta commitment and raw SHA", "sealed reviewed-label bytes", "one-shot marker SHA and timestamp", "frozen threshold SHA", "tracked receipt SHA", "captured HEAD and runtime", "exclusive final holdout completion and absence of a coexisting failure report", "secret-derived exact identity reveal", "all nested metrics, results, endpoints, and final pass"]
+  },
+  "production_scope": {
+    "detector_input": "a 256x192 float32 luminance residual window produced by a separately preregistered background reference",
+    "eligible_pixels": "non-protected background only; roads, rivers, coasts, labels, symbols, settlements, and canonical geometry must be excluded before production promotion",
+    "window_eligibility": "a production window is measurable only when every one of its 49152 pixels lies inside the eligible-background mask after erosion by the maximum support radius of every production-reference and detector filter; partial windows and denominator renormalization are forbidden",
+    "eligible_pixel_minimum_per_window": 49152,
+    "masked_density_denominator_pixels": 49152,
+    "mask_filter_order": "construct the protected-feature mask, compute the maximum support radius from every preregistered production-reference and detector filter, erode eligibility by that radius, select complete 256x192 windows, then compute reference/residual/metric; filtering before mask eligibility is fixed is forbidden",
+    "insufficient_eligible_area_policy": "record the window as not evaluable and block any aggregate that preregistered it as required; never fill protected pixels or silently reduce coverage",
+    "direct_unmasked_use_on_semantic_map_pixels_forbidden": true,
+    "r6_holdout_pass_does_not_itself_authorize_a_production_derivation": true,
+    "locked_clean_reference_or_control_pixel_transfer_forbidden": true,
+    "required_separate_preregistration": [
+      "hash-bound production reference or reference-construction algorithm and every source asset",
+      "exact eligible-background mask construction including protected-feature classes and pixel-space erosion radius",
+      "exact production residual-reference filters, truncation, boundary mode, and their maximum effective support radius",
+      "tile overlap, halo, crop, seam-equivalence, and edge-boundary rules",
+      "color-space, alpha, compositing, quantization, and resampling rules",
+      "covered zoom levels, tile coordinates, and deterministic output hashes",
+      "all required window origins, exact per-tile/per-master aggregation, multiple-window stopping conditions, and release stop conditions",
+      "an untouched production holdout set with independent Vision review at native, 200 percent, and all four 400 percent quadrants"
+    ],
+    "required_master_aggregation_rule": "the separate preregistration must define all required window origins, the treatment of non-evaluable windows, and the exact window-to-master and master-to-release pass rule before any candidate is measured",
+    "promotion_gate": "the frozen r6 threshold must pass both the synthetic holdout and the separately preregistered production holdout without threshold or implementation change"
+  },
+  "public_identity_policy": {
+    "forbidden_fields": ["family", "family_id", "control_id", "variant", "variant_id", "role", "polarity", "parameters", "cluster_id", "condition_cluster_id", "private_role", "foundation_id", "duplicate_audit_group", "control_png", "reference_png", "control_path", "reference_path", "control_sha256", "reference_sha256", "delta_float32_sha256"],
+    "applies_to": ["public manifest", "public record", "contact sheet", "Vision labels"],
+    "identity_reveal_allowed_only_after": "validated labels and durable one-shot evaluation marker",
+    "authority_reload_secret_rebinding_required": true,
+    "blindness_scope": "operational honest-reviewer blindness: opaque code assignment and private identities are hidden from the Vision review surface; no information-theoretic or same-OS-principal adversarial secrecy is claimed for visible morphology",
+    "review_surface": "only the 185 anonymous contact-sheet pages, deterministic crop-only derivatives of those same bytes including each row's native 512-by-384 full-200 panel, and the code-only label form; individual controls, references, source foundations, authority code, private key, filesystem comparisons, automated image differencing, enhancement, and identity-regeneration tools are outside the review surface",
+    "reviewer_access_contract": "the formal blind key remains only in a dedicated custodian process; every closed development blind key through dev-r19 remains only in its retained Git-ignored private probe root and is never reused; the fresh dev-r20 blind key remains only in its separate Git-ignored private probe root and tracked custodian runner; neither Vision review process may read or inherit any key or private audit role, and both must use visual page inspection only until both official initial snapshots and receipts exist before reconciliation and label sealing",
+    "same_principal_attack_non_claim": "a reviewer who deliberately uses arbitrary local process or filesystem access is outside the preregistered threat model; HMAC commitments prevent accidental/public metadata disclosure, not compromise by the key custodian or a malicious same-principal reviewer"
+  },
+  "timestamps": {
+    "format": "ISO-8601 with UTC timezone",
+    "required_order": ["calibration marker started_at <= calibration evaluated_at <= calibration completion completed_at; on pass only, evaluated_at <= frozen_at <= completion completed_at", "frozen_at <= locked-clean-reference marker started_at <= locked-clean-reference evaluated_at <= locked-clean-reference completion completed_at", "max(frozen_at, locked-clean-reference completion completed_at) <= receipt reviewed_at", "receipt reviewed_at <= holdout marker started_at <= holdout evaluated_at <= holdout completion completed_at and receipt reviewed_at <= holdout preflight UTC now plus clock tolerance"]
+  },
+  "authority_files": ["preregistered-spec.json", "PREREGISTERED-SPEC.md", "README.md", "common.py", "control_catalog.py", "metrics_v2_r6.py", "generate_controls.py", "calibration_harness.py", "development_probe.py", "self_test.py", "labels-calibration.template.json", "labels-holdout.template.json", "threshold-authority.template.json", "implementation-bindings.json"],
+  "forbidden": ["reading production candidates, Golden candidates, or any non-preregistered image during formal calibration or holdout", "persisting or logging the formal blind key", "logging, Git-tracking, exposing to Vision, or reusing a development blind key outside its ignored closed private probe root", "exposing or inheriting any blind key in the Vision review process", "using source foundations, authority code, raw control extraction, filesystem/hash comparison, automated differencing, or identity-regeneration tools while assigning Vision labels", "deriving public codes from public data alone", "measuring the locked clean reference before threshold freeze", "using diagnostic metrics as hard rejectors", "using the locked clean reference for threshold selection", "generating holdout without the tracked approved external receipt", "evaluating calibration or holdout twice", "changing thresholds after freeze"]
+}

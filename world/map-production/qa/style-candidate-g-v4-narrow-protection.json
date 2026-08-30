@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-g-v4-narrow-protection",
+  "image_path": "world/map-production/candidates/style-candidate-g-v4-narrow-protection.png",
+  "created_at": "2026-07-19T14:40:10Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "D4 base, G3, G4, topology guide, protected-composite report, and full comparison were independently inspected.", "notes": "Narrow protection restores more relief beside roads, but the six-landform hierarchy remains unreadable."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "The 1536x1024 G4 final was inspected at native scale.", "notes": "Both main fields remain repeated bright-centered radial mounds; only one foothill is independently visible."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "North-east and south-east relief fields were inspected at enlarged detail.", "notes": "The narrower mask improves raw support but does not turn three weak foothills into recognizable terrain."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "The full final and four border gates were scanned across nine regions.", "notes": "External geometry is exact; defects are confined to the declared relief vocabulary."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "All six controlled footprints and automated edit/protection evidence were compared.", "notes": "Raw support retention improves, while required two-rise saddles and four foothills still fail visually."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Candidate D v4 and G4 were compared at matching extent and reduced scale.", "notes": "Palette continues, but raised conical rosettes introduce an incompatible terrain grammar."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Border, road-adjacent, and permission-boundary evidence was checked.", "notes": "The former broad road voids are substantially removed; only slight mechanical hachure stopping remains."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Roads, city, coast, fields, forests, and protected detail were inspected.", "notes": "Canonical linework remains exact and more readable than G3."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Desktop suitability was assessed from native and enlarged views without staging the rejected image.", "notes": "Repeated radial mounds remain conspicuous."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Mobile suitability was assessed from the reduced overview without staging the rejected image.", "notes": "Three foothills disappear and the two main fields read as repeated texture."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "All automated outside-permission, road-core, detail-core, zero-mask, and border gates report zero difference."},
+    {"id": "missing_required", "label": "必須地点・地形の欠落", "detected": true, "evidence": "NE-west, SE-west, and SE-east do not read as independent foothills; both main massifs also lack a stable two-rise plus open-saddle reading."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No noncanonical settlement, facility, route, or landmark was introduced."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No generated text, pseudo-label, legend, compass, signature, or route label was found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "The 16px road core removes G3's broad flat channels; slight local stroke stopping is not a major seam."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern element, watermark, logo, or signature was found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": true, "evidence": "Bright centers and convergent dark lines read as top-lit conical or volcanic rises rather than flat cartographic hachure."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "At least fifteen bright-centered radial rosette or fingerprint forms repeat across both main fields."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 17, "notes": "Protected canon is exact, but three foothills and both saddle hierarchies are missing."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 9, "notes": "Palette continues; radial pseudo-relief does not."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 11, "notes": "Outer and road continuity improve substantially, with minor mechanical stopping."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 8, "notes": "Historical color is compatible, while repeated bright-centered rosettes are not."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 4, "notes": "Main fields are over-articulated and secondary terrain is too weak."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 2, "notes": "Repeated radial centers remain the dominant artifact."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 7, "notes": "Narrow protection improves road and detail continuity, but relief texture still competes."}
+  ],
+  "total_score": 58,
+  "decision": "rejected",
+  "summary": "G4 is rejected. Narrow protection fixes G3's broad road voids and preserves canonical pixels exactly, but ImageGen's radial bright-centered terrain remains repetitive and three foothills plus the required saddle hierarchy are unreadable.",
+  "required_changes": [
+    "Keep the validated narrow protection policy unchanged.",
+    "Replace only the generated relief vocabulary with compact, non-convergent, non-illuminated and individually distinct terrain marks for all six footprints."
+  ]
+}

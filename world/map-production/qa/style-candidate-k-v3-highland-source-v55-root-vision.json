@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "k3-v55-topographic-contour-atlas",
+  "image_path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+  "image_sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f",
+  "dimensions": [1536, 1024],
+  "mode": "RGB",
+  "reviewer": "Codex Root Vision",
+  "review_scope": "generated exact-eight contour atlas at original 1536x1024 resolution",
+  "views_completed": ["original"],
+  "decision": "approved-only-as-derived-contour-topology-source",
+  "golden_reference": false,
+  "total_score": 95,
+  "observed_landform_count": 8,
+  "strengths": [
+    "Exactly eight separated bodies remain in the prescribed four-by-two layout, with no ninth mark outside a footprint.",
+    "All relief is represented in a strict overhead flat contour vocabulary without scenic faces, lighting, tree veins, fishbones, or dash bundles.",
+    "Peak counts, saddle shapes, valley indentations, dominant directions, and contour spacing differ materially between bodies.",
+    "Compound multi-peak terrain and the three-knoll narrow chain remain legible at original resolution while the overall atlas stays calm.",
+    "Fine dry-sepia contour lines provide authored information suitable for deterministic 200-400 percent transfer."
+  ],
+  "immediate_failures": [],
+  "required_derivation": [
+    "Treat the atlas as topology and line-material authority only; do not promote its four-by-two layout or background.",
+    "Reverse each body through the recorded atlas-to-source affine into the canonical mask and restore all outside, protected, and road-calm pixels from v18 exactly.",
+    "Tune contour contrast and foundation grain against the immutable quiet, dash, orientation, and texture gates before emitting a Golden candidate.",
+    "Emit exactly five candidate review PNGs and require a separate Root Vision score of at least 94 for the full canonical board."
+  ],
+  "notes": "v55 is the first generated source in this branch to satisfy exact count, flatness, distinct topographic semantics, and high-resolution authored detail simultaneously. It is not itself a Golden or canonical map."
+}

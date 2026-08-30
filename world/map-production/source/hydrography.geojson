@@ -1,0 +1,106 @@
+{
+  "type": "FeatureCollection",
+  "name": "hydrography",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "metadata": {
+    "version": "0.1.0",
+    "status": "provisional",
+    "source": "docs/assets/images/maps/world/world-map-hires.jpg",
+    "geometry_role": "water texture masks and provisional channel axes"
+  },
+  "features": [
+    {
+      "type": "Feature", "id": "central_sea",
+      "properties": {
+        "id": "central_sea", "name": "中央海", "water_type": "sea",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [2480, 2710], [3200, 2420], [4150, 2460], [5150, 2500],
+        [6200, 2700], [6570, 3190], [6220, 3540], [5600, 3350],
+        [4800, 3060], [4000, 3010], [3260, 3370], [2630, 3490], [2480, 2710]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "void_ocean_west",
+      "properties": {
+        "id": "void_ocean_west", "name": "虚無海・西域", "water_type": "ocean",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [0, 0], [3300, 0], [3300, 1500], [2750, 2300],
+        [2200, 2050], [1400, 1700], [700, 2300], [0, 2600], [0, 0]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "void_ocean_east",
+      "properties": {
+        "id": "void_ocean_east", "name": "虚無海・東域", "water_type": "ocean",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [6000, 0], [10000, 0], [10000, 2850], [9400, 2800],
+        [8900, 2400], [8200, 2100], [7400, 2250], [6500, 2450], [6000, 0]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "sea_of_stars",
+      "properties": {
+        "id": "sea_of_stars", "name": "星の海", "water_type": "sea",
+        "source_confidence": "canon", "geometry_confidence": "estimated",
+        "review_status": "provisional", "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "Polygon", "coordinates": [[
+        [6400, 6750], [7050, 6600], [7900, 7000], [8800, 6600],
+        [10000, 6500], [10000, 10000], [6100, 10000], [6250, 9000],
+        [6500, 8200], [6400, 6750]
+      ]]}
+    },
+    {
+      "type": "Feature", "id": "elysion_surface_rivers",
+      "properties": {
+        "id": "elysion_surface_rivers", "name": "エリュシオン河川系",
+        "water_type": "river_system", "continent_id": "elysion",
+        "source_confidence": "inferred", "geometry_confidence": "estimated",
+        "review_status": "provisional", "nominal_width": 35,
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "MultiLineString", "coordinates": [
+        [[3840, 3540], [3990, 3970], [3950, 4450], [4140, 4850], [4090, 5350], [4240, 5960]],
+        [[4510, 3450], [4500, 3920], [4700, 4300], [4620, 4800], [4810, 5280], [4770, 6100]],
+        [[5200, 3600], [5050, 4050], [5240, 4500], [5140, 5000], [5450, 5520], [5400, 5850]]
+      ]}
+    },
+    {
+      "type": "Feature", "id": "lumiera_surface_rivers",
+      "properties": {
+        "id": "lumiera_surface_rivers", "name": "リュミエラ河川系",
+        "water_type": "river_system", "continent_id": "lumiera",
+        "source_confidence": "inferred", "geometry_confidence": "estimated",
+        "review_status": "provisional", "nominal_width": 45,
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "MultiLineString", "coordinates": [
+        [[7420, 2600], [7300, 3200], [7480, 3800], [7350, 4470], [7530, 5200], [7440, 6100]],
+        [[8050, 2750], [7900, 3370], [8060, 3970], [7940, 4620], [8140, 5300], [8010, 6310]]
+      ]}
+    },
+    {
+      "type": "Feature", "id": "chaos_ria_seasonal_channels",
+      "properties": {
+        "id": "chaos_ria_seasonal_channels", "name": "カオス・リア季節河川",
+        "water_type": "seasonal_channel_system", "continent_id": "chaos_ria",
+        "source_confidence": "inferred", "geometry_confidence": "estimated",
+        "review_status": "provisional", "nominal_width": 25,
+        "source_ref": "docs/assets/images/maps/world/world-map-hires.jpg"
+      },
+      "geometry": {"type": "MultiLineString", "coordinates": [
+        [[4350, 6460], [4490, 6920], [4420, 7400], [4630, 7920], [4570, 8420]],
+        [[5260, 6570], [5110, 7070], [5260, 7570], [5160, 8100]]
+      ]}
+    }
+  ]
+}

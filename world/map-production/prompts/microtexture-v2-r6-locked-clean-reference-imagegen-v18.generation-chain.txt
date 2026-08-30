@@ -1,0 +1,42 @@
+MICROTEXTURE V2 R6 LOCKED CLEAN REFERENCE V18 — INDEPENDENT IMAGEGEN CHAIN
+
+Role
+----
+Brand-new independent post-calibration false-reject validation source for r6.
+It is excluded from r6 control foundations, threshold selection, calibration,
+holdout, production artwork, Golden artwork, texture donation, semantic
+authority, and final pixels.
+
+Prompt record status
+--------------------
+The original byte-for-byte generator request string was not retained in the
+available record. The instruction below is a faithful, self-contained
+reconstruction of the recorded prompt intent and is not represented as an
+exact transcript.
+
+Step 1 — v18, adopted locked-clean candidate
+------------------------------------------------
+Generate a brand-new independent locked-clean reference image, not an edit,
+variation, or derivative of any calibration foundation or earlier image.
+Landscape 3:2, target 1536×1024, opaque RGB. Create a nearly white ivory
+digital color field with extremely restrained warm-neutral low-frequency
+drift and no visible surface texture. The entire center and all edges must be
+smooth, quiet, and evenly illuminated. Strictly exclude microtexture, grain,
+noise, dither, dots, specks, pores, stipple, bounded blobs, mottling, cloudy
+patches, blooms, fibers, scratches, brush marks, short lines, ridges, parallel
+lines or bundles, hatching, diagonal weave, checker, lattice, periodic or
+directional patterns, bands, rings, contours, repeats, seams, panels, borders,
+frames, vignette, directional lighting, edge shading, halos, ringing,
+compression artifacts, text, labels, symbols, objects, geography, and
+terrain. Render an almost featureless low-noise digital fill, not photographed
+paper or material.
+
+Adopted output
+--------------
+`world/map-production/style-assets/microtexture-v2-r6-locked-clean-reference-imagegen-v18.png`
+SHA-256: `e2eeb08046994b549c2eee5245c9410c329847d9cfe06ea6cb435dca5862512d`
+
+This source must remain numerically unread until r6 calibration has selected
+and frozen its one scalar threshold. It cannot be used as a control foundation
+or to tune any metric definition, transform, reference constant, endpoint, or
+threshold.

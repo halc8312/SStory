@@ -1,0 +1,56 @@
+{
+  "schema_version": "microtexture-v2-r5-foundation-corpus-root-vision/1",
+  "review_id": "microtexture-v2-r5-foundations-root-vision",
+  "reviewed_at": "2026-07-26T03:17:23+09:00",
+  "reviewer": "Codex Root Vision",
+  "review_mode": "vision-only-pre-freeze-foundation-qualification",
+  "required_views_per_candidate": ["persisted-original", "full-200", "northwest-400", "northeast-400", "southwest-400", "southeast-400"],
+  "source_crop_xywh": [512, 320, 512, 384],
+  "metric_window_xywh_within_source_crop": [128, 96, 256, 192],
+  "numeric_metric_evaluation_performed": false,
+  "threshold": 94,
+  "candidates": [
+    {
+      "id": "v10",
+      "path": "world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v10.png",
+      "sha256": "df37429388f42649611388172d1dd60890f5a7d6b3437937181f0c078b76b5d5",
+      "bytes": 1337057,
+      "size": [1536, 1024],
+      "mode": "RGB",
+      "score": 98,
+      "decision": "approved",
+      "all_six_views_inspected": true,
+      "observations": "Smooth warm-cream field. No isolated spot, bounded blob, grain, repeat, short line, parallel bundle, ring, seam, or semantic feature in any inspected view."
+    },
+    {
+      "id": "v11",
+      "path": "world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v11.png",
+      "sha256": "6dbb2126ac795d509cd248d95f81a4c5d91c8258d2a4845ea4030d96fdb0ee2f",
+      "bytes": 1280636,
+      "size": [1536, 1024],
+      "mode": "RGB",
+      "score": 98,
+      "decision": "approved",
+      "all_six_views_inspected": true,
+      "observations": "Only continuous very-low-frequency warm tonal drift. No discrete or repeating microstructure at 200 or 400 percent."
+    },
+    {
+      "id": "v12",
+      "path": "world/map-production/style-assets/microtexture-v2-r5-foundation-imagegen-v12.png",
+      "sha256": "e05ca849d950d5b8c5eadcf85ba6cb246b1cecaa284a49e6f85722d253a7e44e",
+      "bytes": 1437439,
+      "size": [1536, 1024],
+      "mode": "RGB",
+      "score": 99,
+      "decision": "approved",
+      "all_six_views_inspected": true,
+      "observations": "Most uniform accepted foundation. All four 400-percent quadrants are free of points, blobs, grids, lines, rings, and seams."
+    }
+  ],
+  "rejected_predecessors": [
+    {"id": "v8", "reason": "Root observed subtle diagonal lattice/repetition at 200 and 400 percent."},
+    {"id": "v9", "reason": "Root noted faint diagonal regularity and an independent reviewer reproduced it at score 92."}
+  ],
+  "all_adopted_candidates_passed": true,
+  "passed_for_declared_source_role": true
+}

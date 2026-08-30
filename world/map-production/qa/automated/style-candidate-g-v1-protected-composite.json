@@ -1,0 +1,117 @@
+{
+  "control_path": "world/map-production/controls/style-candidate-g-v1-generation-control-v1.json",
+  "control_sha256": "49dd3b3c18c6a8f7d323dd29632ef15d3e44545d2c4d9683c59485a03a0563f0",
+  "generated_path": "world/map-production/candidates/style-candidate-g-v1-direct-cartographic-relief-raw.png",
+  "generated_sha256": "56dd602f58952e238134d2241590eb22e5a6866243f1fdd737c22c30c9134b56",
+  "guide": {
+    "active_pixels": 193377,
+    "background_pixels": 1379487,
+    "colors": [
+      {
+        "components": 2,
+        "pixels": 132517,
+        "rgb": [
+          206,
+          74,
+          62
+        ],
+        "role": "main-massif"
+      },
+      {
+        "components": 2,
+        "pixels": 32895,
+        "rgb": [
+          232,
+          151,
+          61
+        ],
+        "role": "foothill-a"
+      },
+      {
+        "components": 2,
+        "pixels": 27965,
+        "rgb": [
+          126,
+          93,
+          178
+        ],
+        "role": "foothill-b"
+      }
+    ],
+    "components": 6
+  },
+  "id": "style-candidate-g-v1-generation-control-v1-protected-composite",
+  "mask_output_path": "world/map-production/qa/automated/style-candidate-g-v1-edit-mask.png",
+  "mask_sha256": "f986453f14165c86656fb0b6a2748c3f075627a0494cd4e5f58b7ad2f85f09bc",
+  "metrics": {
+    "detail_core_permission_pixels": 36746,
+    "detail_core_pixels": 626255,
+    "editable_pixels": 138101,
+    "gates": {
+      "detail_core": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      },
+      "outside_permission": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      },
+      "road_core": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      },
+      "zero_mask": {
+        "changed_pixels": 0,
+        "maximum_channel_difference": 0
+      }
+    },
+    "mean_editable_alpha": 199.607823,
+    "median_editable_alpha": 207,
+    "opaque_editable_pixels": 3056,
+    "p90_editable_alpha": 250,
+    "permission_pixels": 193377,
+    "protected_core_pixels": 1434763,
+    "road_core_permission_pixels": 24487,
+    "road_core_pixels": 116489
+  },
+  "output_path": "world/map-production/candidates/style-candidate-g-v1-direct-cartographic-relief.png",
+  "output_sha256": "cc7726fa213fe7ddfbbd1d974a906dea478235d718a00ef34337a82dd8e82de8",
+  "parameters": {
+    "dark_luminance_max": 105,
+    "feather_px": 0,
+    "gaussian_radius_px": 3,
+    "high_frequency_threshold_levels": 18,
+    "permission_feather_inside_px": 24,
+    "permission_source": "exact-three-declared-flat-guide-colors",
+    "road_feather_px": 8,
+    "road_guard_width_px": 64,
+    "road_order": [
+      "north_road",
+      "east_road",
+      "south_east_road"
+    ]
+  },
+  "prompt_path": "world/map-production/prompts/style-candidate-g-v1-direct-cartographic-relief.generation.txt",
+  "prompt_sha256": "63b8b81270d17ef9e3084b45ee3c66668629fee34a6e80cf3f3bfdc28858a987",
+  "protection_output_path": "world/map-production/qa/automated/style-candidate-g-v1-protection.png",
+  "protection_sha256": "2f6adeee3d93ecff85f65e3a9e009e64e8a9f762c9d24cce961e730490c3030f",
+  "reference_order": [
+    {
+      "index": 1,
+      "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+      "role": "pixel-authoritative-base",
+      "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016"
+    },
+    {
+      "index": 2,
+      "path": "world/map-production/controls/style-candidate-g-v1-topology-guide.png",
+      "role": "flat-color-topology-guide",
+      "sha256": "4238d100542e0169ff34a4c3c2977ec286ea411df71a8d513c56ca4f74df26c8"
+    }
+  ],
+  "report_path": "world/map-production/qa/automated/style-candidate-g-v1-protected-composite.json",
+  "schema_path": "world/map-production/schemas/protected-relief-composite-v1.schema.json",
+  "schema_sha256": "4e6a46e9c183777209c1a512b0bc98605855ea7a0435ffd6abe1082c799fb97b",
+  "schema_version": "1.0.0",
+  "status": "passed"
+}

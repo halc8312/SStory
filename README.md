@@ -2,7 +2,7 @@
 title: "SStory - エターナル・アルカディア世界構築プロジェクト"
 version: "1.1.0"
 created: "2026-05-01"
-last_updated: "2026-07-18"
+last_updated: "2026-07-19"
 author: "halc8312"
 category: "project"
 tags: ["project", "worldbuilding", "introduction"]
@@ -76,7 +76,7 @@ node scripts/run-python.js -m http.server 8000 --directory docs
 
 - ビルド不要の静的HTML/CSS/JS
 - `docs/` フォルダを GitHub Pages の公開元として直接配置
-- MkDocs / GitHub Actions は使用せず
+- MkDocsやPagesデプロイ用GitHub Actionsは使用せず（品質検証CIは使用）
 - Pages デプロイ用 GitHub Actions ワークフローは削除済み (`pages.yml`, `jekyll-gh-pages.yml`)
 
 **注意**: 本リポジトリは **Project Pages** として `https://halc8312.github.io/SStory/` に公開されます。
@@ -100,6 +100,9 @@ docs/
 │   ├── geography.html              # 地理
 │   ├── transportation.html         # 交通
 │   ├── maps.html                   # 地図ギャラリー
+│   ├── interactive-map.html        # v1 現行安定版
+│   ├── interactive-map-v2.html     # v2 試験版
+│   ├── interactive-map-v3.html     # v3 深度ズーム・プレビュー
 │   ├── map-data.html               # Map Data 仕様
 │   └── roadmap.html                # 開発ロードマップ
 └── data/
@@ -125,7 +128,8 @@ node scripts/run-python.js -m http.server 8000 --directory docs
 - ✅ **ポータル基盤**: 静的HTMLポータル、地図ギャラリー、Map Data公開コピー
 - ✅ **インタラクティブマップ v1**: 現行安定版（Leaflet、POI、Web版ルート検索）
 - 🧪 **インタラクティブマップ v2**: 試験版・次世代候補（v1は引き続き現行）
-- ⏳ **今後**: Markdown閲覧導線の強化、タイルマップ、世界設定データベース化
+- 🧪 **深度世界地図 v3**: 512 px 分割タイル、ズーム階層、ベクターレイヤー対応の[プレビュー](./docs/pages/interactive-map-v3.html)（v1/v2を保持）
+- ⏳ **今後**: Markdown閲覧導線の強化、タイル充実、世界設定データベース化
 
 詳細な開発ロードマップ: [docs/pages/roadmap.html](./docs/pages/roadmap.html)
 

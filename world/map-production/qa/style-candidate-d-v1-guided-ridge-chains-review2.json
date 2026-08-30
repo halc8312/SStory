@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-d-v1-guided-ridge-chains",
+  "image_path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains.png",
+  "created_at": "2026-07-18T18:40:01Z",
+  "reviewer": "Independent Codex Vision QA B",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "1536x1024 composite inspected independently.", "notes": "Five separated chains appear in each field, but every chain reads as a conventional scenic mountain glyph."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "Original-resolution image inspected across both edited fields.", "notes": "Triangular crests and oblique side faces are visible without magnification."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Ten ridges, road crossings, and field boundaries inspected at enlarged scale.", "notes": "Crest outlines and dense hachures touch into continuous serrated scarps."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "Independent nine-region scan completed.", "notes": "No generated defect was found outside the two permitted fields."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "Guide and composite report compared to the output.", "notes": "All ten placements broadly match and no Y/T connection crosses the large gaps."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Compared with candidate B v2 at matching coordinates.", "notes": "Old fingerprint cores are removed, while the new rendering introduces an explicit perspective cue."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Mask edges and both road exclusions inspected at 100%, 200%, and 400%.", "notes": "No hard outer or road-corridor seam is visible."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road prominence and future label space assessed.", "notes": "Roads remain unobstructed, but scenic ridge silhouettes are too semantically strong."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Applicability reviewed; this style board is not yet a production tile set.", "notes": "Not staged."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Applicability reviewed; this style board is not yet a production tile set.", "notes": "Not staged."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "Deterministic composite verifies zero difference on all protected pixels and exact unobstructed roads."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": false, "evidence": "All ten required ridge positions and existing map features remain present."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No new major place or facility appears."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text, pseudo-writing, cyan guide residue, or mask artifact appears."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No 100%-visible mask seam or protected-road strip was found."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": true, "evidence": "Pictorial triangular peaks, oblique side faces, and directional slope shading appear across all ten chains."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "The same continuous serrated crest plus touching hatch construction repeats on all ten chains."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 23, "notes": "Canonical geometry and ridge locations are retained."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 13, "notes": "Parent layout is stable; relief projection is not."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 14, "notes": "No visible outer or road-exclusion seam."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 7, "notes": "Scenic mountain faces contradict the strict plan-view grammar."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 6, "notes": "Dense face hatching overwhelms the intended low-contrast bands."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 4, "notes": "Continuous serrated scarps repeat as a strong generated motif."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 6, "notes": "Dark silhouettes compete with labels and other vector semantics."}
+  ],
+  "total_score": 73,
+  "decision": "rejected",
+  "summary": "Roads, geography, seams, and ten-chain topology pass, but the mountain marks are scenic triangular side faces with connected hatching and therefore fail the golden plan-view gate.",
+  "required_changes": ["Replace only the ten scenic ridge drawings with 40±3 px low-contrast irregular parchment bands containing discontinuous crest fragments and one fully detached short hatch per band; preserve every other output pixel."]
+}

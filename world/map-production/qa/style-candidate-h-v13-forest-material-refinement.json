@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v13-forest-material-refinement",
+  "image_path": "world/map-production/candidates/style-candidate-h-v13-forest-material-refinement-raw.png",
+  "created_at": "2026-07-19T19:01:30.784Z",
+  "reviewer": "Root Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "The complete locked raw PNG (SHA-256 0b2083904607287c14a8b10e3d111f5d500c2904a8b1e9894bb2ca5041e10aa2) was inspected against the exact H13 forest-refinement prompt, H12 authority, and H11 density reference.",
+      "notes": "The map remains legible, but forest regions now form conspicuous interlocking diamond, lozenge, or lattice-like canopy fields. The requested non-repeating organic refinement was not achieved."
+    },
+    {
+      "id": "original",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "The 1536x1024 RGB PNG was inspected at native resolution.",
+      "notes": "The forest has fine linework and high apparent density, yet its dark outlined units repeat in a near-grid cadence. Highlands also contain repeated short glyph families."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "The full map was inspected at 384x256; unchanged H4 macrocell contrast coverage measured 0.802083 against the 0.85 minimum.",
+      "notes": "Broad geography survives, but numerous cells lose sufficient local contrast and the dark lattice canopy merges into repetitive blocks. The 25% gate fails."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "The full map was inspected at 768x512; the 50% proxy passes narrowly with RMS contrast retention 0.822115 against 0.82.",
+      "notes": "Primary map classes remain readable, while forest blocks still reveal a regular diamond or tessellated cadence."
+    },
+    {
+      "id": "zoom_200",
+      "label": "9領域200%拡大",
+      "complete": true,
+      "evidence": "Nine standard regions were inspected at 200%, with emphasis on northern forest, delta islands, city surroundings, southern forest, highland, port, and fields.",
+      "notes": "Interlocking dark lozenges and diamond-like canopy cells recur across independent forest envelopes with similar scale, outline weight, and spacing."
+    },
+    {
+      "id": "zoom_400",
+      "label": "9領域400%拡大",
+      "complete": true,
+      "evidence": "The same nine regions were inspected at 400% for closed motifs, grid cadence, text, structure, perspective, and seams.",
+      "notes": "Local strokes are not exact clones, but they repeatedly close into the same cookie or diamond family and align into a visible lattice. This remains a semantic immediate failure."
+    },
+    {
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
+      "complete": true,
+      "evidence": "Center, corners, and edge-midpoints were checked against all eight immediate-failure categories.",
+      "notes": "No text, watermark, route break, or border was found. The forest replacement and semantic repetition defects recur across multiple regions rather than one isolated patch."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1画風比較",
+      "complete": true,
+      "evidence": "H13 was compared to B1 with direct inspection and the unchanged H4 palette metrics.",
+      "notes": "H13 fails RGB intersection (0.680064 < 0.72), HSV intersection (0.548055 < 0.62), and Bhattacharyya (0.895404 < 0.9). Mean-channel delta remains within its 12.0 limit at 6.642775."
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・継ぎ目拡張性",
+      "complete": true,
+      "evidence": "All outer edges were inspected at native and enlarged views; the unchanged H4 boundary proxy passed.",
+      "notes": "No decorative frame or abrupt edge band was found. Boundary quality does not compensate for palette, readability, and repetition failures."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳可読性",
+      "complete": true,
+      "evidence": "Road, river, coast, city, port, field, and prospective overlay corridors were inspected across overview and enlarged scales.",
+      "notes": "Roads and waterways remain traceable, but dense dark lattice canopy competes strongly with future labels and POIs and degrades balanced 25% detail."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "No readable text, pseudo-writing, label, letter, number, signature, legend, or compass was found."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "No watermark, logo, frame, decorative border, or modern object was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島・島下面",
+      "detected": false,
+      "evidence": "All detached land reads as ordinary sea-level islands or delta bars with no underside."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "側面・遠近法・方向光",
+      "detected": false,
+      "evidence": "No separate dominant side-face or cast-shadow system was confirmed; the forest is rejected for its closed repeated lattice vocabulary."
+    },
+    {
+      "id": "missing_composition",
+      "label": "必須構成・置換の欠落",
+      "detected": true,
+      "evidence": "H13 required fine, irregular, connected, non-repeating forest with broken organic edges and varied clearings. The result instead uses repeated outlined diamond, lozenge, and cookie-like canopy cells in a visible grid cadence."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "Major roads, rivers, delta channels, and crossings remain continuously traceable."
+    },
+    {
+      "id": "repetition",
+      "label": "目立つ反復",
+      "detected": true,
+      "evidence": "Forest envelopes are filled with repeated diamond, lozenge, cookie-like, and lattice-aligned canopy motifs. Pixel blocks remain non-identical, but the semantic repetition is obvious at overview, native, 200%, and 400% views."
+    },
+    {
+      "id": "edge_seam",
+      "label": "端の継ぎ目",
+      "detected": false,
+      "evidence": "No border, abrupt solid edge band, or visible tiling seam was found."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "prompt構成・平面形状",
+      "maximum": 25,
+      "score": 15,
+      "notes": "The principal map geometry survives, but the sole requested forest refinement fails visibly."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親画像・画風の連続性",
+      "maximum": 15,
+      "score": 10,
+      "notes": "H12 remains recognizable, while the B1-family palette regresses outside three locked thresholds."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "端・継ぎ目拡張性",
+      "maximum": 15,
+      "score": 14,
+      "notes": "Edges remain borderless and pass the H4 boundary proxy."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 8,
+      "notes": "Engraved line density is present, but the forest becomes a conspicuous geometric lattice rather than organic copperplate material."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 8,
+      "notes": "Native detail is high and 50% narrowly passes, but 25% macrocell contrast coverage fails at 0.802083."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 1,
+      "notes": "The widespread diamond and lattice canopy cadence is an immediate repetition failure."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 6,
+      "notes": "Routes remain visible, but dark grid-like forest fields strongly compete with overlays."
+    }
+  ],
+  "total_score": 62,
+  "decision": "rejected",
+  "summary": "H13 is rejected and cannot be a Golden reference. Its forest refinement produces conspicuous diamond, lozenge, cookie-like, and grid-aligned canopy repetition instead of fine irregular connected material. It also fails three of four unchanged B1 palette conditions and the 25% macrocell-coverage gate (0.802083 < 0.85). Two Vision immediate failures are present, and the score is 62/100, below the required 94.",
+  "required_changes": [
+    "Remove every closed diamond, lozenge, cookie-like, and lattice-aligned canopy unit; rebuild forest from branching connected masses, broken edges, natural gaps, stipple, and short varied strokes.",
+    "Restore RGB intersection to at least 0.72, HSV intersection to at least 0.62, and Bhattacharyya similarity to at least 0.9 without changing canonical geometry.",
+    "Restore 25% macrocell contrast coverage to at least 0.85 without reintroducing a repeated stamp or grid cadence."
+  ]
+}

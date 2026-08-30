@@ -1,0 +1,17 @@
+SStory Candidate H12 — one-change removal of repeated triangular/conical map glyphs.
+
+The reference H11 is authoritative for every coastline, island, river and delta channel, road, field boundary, city footprint and street, port footprint and pier, terrain envelope, colour, copperplate density, paper/water grain, and feature position. Preserve all of that.
+
+Make one conceptual change only: remove every repeated small triangular, conical, peaked, arrowhead-like, roof-like, or individual tree-stamp glyph that currently covers the land, especially the north-east highlands, northern forest, central plains, and southern areas.
+
+Replace those repeated discrete glyphs in place with strict flat-plan cartographic material:
+
+- forest: irregular connected dark-olive canopy masses, broken organic edges, branching clusters, varied clearings, stipple and short non-directional foliage hatches; no isolated round or triangular tree stamps and no trunks;
+- highland/rock: sinuous low-relief plan hachures, broken ridge-axis strokes, irregular pebble/stipple fields, and soft tonal bands; never triangular peaks, mountain faces, contour rings, or scenic relief;
+- scrub/plains: sparse irregular flecks and short varied strokes with large natural gaps, never a repeated grid or motif.
+
+Keep H11's exact successful B1-family palette and 25%/50% readable contrast. Keep the city and port as flat footprint plans. Preserve clear corridors around every road and river. Equal tone on all sides, exact 90-degree orthographic view.
+
+Hard prohibitions: no perspective, 3D, peaks, cliffs, floating islands, side faces, roofs, facades, trunks, directional lighting, highlights, cast shadows, atmospheric perspective, text, pseudo-writing, labels, watermark, border, legend, compass, cartouche, repeated stamp grid, radial rosette, tiling seam, blur, or upscale softness.
+
+Return one borderless 1536 x 1024 RGB image.

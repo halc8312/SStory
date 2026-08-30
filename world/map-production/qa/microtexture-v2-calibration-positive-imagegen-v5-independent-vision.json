@@ -1,0 +1,49 @@
+{
+  "schema_version": "microtexture-v2-calibration-source-independent-vision/1",
+  "review_id": "microtexture-v2-calibration-positive-imagegen-v5-independent-vision",
+  "reviewed_at": "2026-07-25T16:34:00+09:00",
+  "reviewer": "Cicero the 2nd",
+  "review_mode": "blind-independent-source-role-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-calibration-positive-imagegen-v5.png",
+    "sha256": "b9e21a0e32cf88d099f81503915c5649affc192c9ae025ce3f893dce472a88e7",
+    "bytes": 1543707,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "review_context_excluded": [
+    "generation history",
+    "Root review JSON",
+    "control family identity",
+    "numeric candidate metrics"
+  ],
+  "views_actually_inspected": [
+    "original",
+    "central 200 percent equivalent",
+    "central 400 percent equivalent"
+  ],
+  "score": 95,
+  "decision": "approved-only-as-post-freeze-low-mid-frequency-clean-positive",
+  "immediate_failure_checks": {
+    "isolated_speck_or_salt_pepper": false,
+    "bounded_microblob": false,
+    "short_ridge_dash_or_parallel_bundle": false,
+    "cell_ring_fingerprint_or_contour": false,
+    "periodic_repeat_grid_or_seam": false,
+    "perspective_relief_or_directional_light": false,
+    "semantic_geography_or_object": false
+  },
+  "allowed_visual_band": {
+    "minimum_wavelength_px": 32,
+    "principal_wavelength_px": [40, 180],
+    "description": "low-contrast continuous amorphous mottle"
+  },
+  "does_not_authorize": [
+    "1-3px particles or specks",
+    "4-16px microblobs",
+    "4-24px short ridges or lines",
+    "regular repetition below 32px",
+    "production or Golden pixel use"
+  ],
+  "passed_for_declared_source_role": true
+}

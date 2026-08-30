@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v10-material-restoration",
+  "image_path": "world/map-production/candidates/style-candidate-h-v10-material-restoration-raw.png",
+  "created_at": "2026-07-19T19:01:30.784Z",
+  "reviewer": "Root Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "The complete locked raw PNG (SHA-256 543cb36aa37b6d3f572f7d7379636205ec60760c73157caa0235034dad08d32e) was inspected against the exact H10 prompt, H9 geometry authority, and Candidate B1 material reference.",
+      "notes": "The coast, delta, city, port, fields, roads, and terrain zones remain legible, but the land is covered by a conspicuous repeated small-glyph vocabulary and no longer reads as H9's varied organic plan material."
+    },
+    {
+      "id": "original",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "The 1536x1024 RGB PNG was inspected at native resolution.",
+      "notes": "Copperplate density is high and the sheet is sharp, but forests and highlands resolve into many similarly sized round, triangular, and conical marks. The city also reads more regular and diagrammatic than the H9 authority."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "The complete map was inspected at 384x256; the automated H4 proxy measured 0.851562 macrocell contrast coverage against a 0.85 minimum.",
+      "notes": "Macro land, water, city, port, and fields remain readable, so the downsample gate passes narrowly. The repeated terrain texture still forms visible bands and fields at this scale."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "The complete map was inspected at 768x512; all H4 50% proxy thresholds passed.",
+      "notes": "The strong tonal hierarchy survives, but the repeated triangular or conical highland field and repeated forest crowns become a dominant texture rather than locally varied cartography."
+    },
+    {
+      "id": "zoom_200",
+      "label": "9領域200%拡大",
+      "complete": true,
+      "evidence": "North-west, north-center, north-east, middle-west, center, middle-east, south-west, south-center, and south-east regions were inspected at 200%.",
+      "notes": "Repeated round tree units are visible across the northern and southern forests, while the east and north-east contain dense families of similarly shaped peaked, arrowhead-like, or triangular marks."
+    },
+    {
+      "id": "zoom_400",
+      "label": "9領域400%拡大",
+      "complete": true,
+      "evidence": "The same nine regions, with focused city, forest, highland, port, road, and coast inspection, were reviewed at 400%.",
+      "notes": "Small marks differ at pixel level but repeat the same semantic silhouettes and spacing cadence. This is precisely the class of defect the exact-block hash proxy cannot recognize."
+    },
+    {
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
+      "complete": true,
+      "evidence": "All nine spatial regions were checked for text, modern objects, missing features, broken routes, perspective, repetition, and edge defects.",
+      "notes": "No text, watermark, modern object, route break, or border was found. Semantic motif repetition is widespread rather than isolated, and the requested irregular connected forest treatment is absent."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1画風比較",
+      "complete": true,
+      "evidence": "H10 was compared with B1 for palette, parchment, water, ink density, and copperplate material; H9 was used only for the required geometry comparison.",
+      "notes": "H10 restores useful material density but is too dark and cool relative to B1. H4 metrics fail RGB intersection (0.685099), HSV intersection (0.546844), Bhattacharyya (0.893971), and maximum mean-channel delta (13.67663)."
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・継ぎ目拡張性",
+      "complete": true,
+      "evidence": "All four edges were inspected at native and enlarged views, and the unchanged H4 boundary proxy passed.",
+      "notes": "No decorative frame, solid edge band, or visible tiling seam was found. Edge extensibility does not override the palette and repetition failures."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳可読性",
+      "complete": true,
+      "evidence": "Road, river, coast, settlement, field, and quiet-corridor readability was assessed across native, reduced, and enlarged views.",
+      "notes": "Primary routes and water remain traceable, but dense repeated marks compete with future labels and POI vectors across much of the land."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "No readable label, pseudo-writing, letter, number, signature, scale, legend, or compass text was found."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "No watermark, logo, signature, frame, decorative border, or modern object was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島・島下面",
+      "detected": false,
+      "evidence": "All islands read as ordinary sea-level land with no suspended underside."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "側面・遠近法・方向光",
+      "detected": false,
+      "evidence": "No dominant cast-shadow or facade system was found; the rejection is based on palette, semantic repetition, and composition drift rather than a separate perspective finding."
+    },
+    {
+      "id": "missing_composition",
+      "label": "必須構成・置換の欠落",
+      "detected": true,
+      "evidence": "The prompt required H9's pixel-authoritative irregular flat-plan geometry and connected, non-repeating canopy material. H10 regularizes the city and replaces broad land areas with repeated discrete terrain and vegetation glyphs instead."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "Major roads, river centerlines, delta channels, and crossings remain continuously traceable."
+    },
+    {
+      "id": "repetition",
+      "label": "目立つ反復",
+      "detected": true,
+      "evidence": "Large areas contain an immediately visible cadence of repeated round forest crowns and repeated triangular, conical, or arrowhead-like highland marks. Exact 64-256px block hashes are unique, but semantic motifs visibly repeat."
+    },
+    {
+      "id": "edge_seam",
+      "label": "端の継ぎ目",
+      "detected": false,
+      "evidence": "No border, abrupt solid edge band, or tiling seam was visible on any outer edge."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "prompt構成・平面形状",
+      "maximum": 25,
+      "score": 13,
+      "notes": "The principal map features survive, but H9's pixel-authoritative irregular city and organic material were not preserved faithfully."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親画像・画風の連続性",
+      "maximum": 15,
+      "score": 11,
+      "notes": "Material density moves toward B1, while the measured palette remains outside four locked H4 limits and geometry drifts from H9."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "端・継ぎ目拡張性",
+      "maximum": 15,
+      "score": 14,
+      "notes": "The borderless edges are visually extensible and pass the automated boundary proxy."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 10,
+      "notes": "Copperplate density is coherent, but the dark/cool palette and stamped terrain vocabulary undermine the requested material continuity."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 9,
+      "notes": "The map is detailed and passes both downsample proxy scales, though much of the density comes from repeated symbols."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 2,
+      "notes": "Widespread repeated semantic motifs trigger an immediate failure despite zero exact duplicated large pixel blocks."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 6,
+      "notes": "Major routes are readable, but dense repeated land texture competes with future labels and POIs."
+    }
+  ],
+  "total_score": 65,
+  "decision": "rejected",
+  "summary": "H10 is rejected and is not a Golden reference. It restores sharp copperplate density and passes the unchanged H4 boundary, exact-clone, and 50%/25% readability proxies, but it fails the locked B1 palette gate and visibly replaces varied plan material with widespread repeated round, triangular, and conical glyphs. Two Vision immediate failures are present, and the score is 65/100, below the required 94.",
+  "required_changes": [
+    "Retain H9's irregular city, port, routes, terrain envelopes, and exact flat-plan geometry instead of regularizing or redrawing them.",
+    "Replace repeated round, triangular, conical, and arrowhead-like glyph fields with connected irregular canopy, non-convergent flat hachure, stipple, and varied natural gaps.",
+    "Calibrate the palette back inside every unchanged H4 B1 threshold without sacrificing the passing 50% and 25% readability results."
+  ]
+}

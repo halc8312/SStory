@@ -1,0 +1,247 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-k-v2-hybrid-review-b",
+  "image_path": "world/map-production/candidates/style-candidate-k-v2-hybrid.png",
+  "created_at": "2026-07-20T12:13:44.4845400+09:00",
+  "reviewer": "independent-codex-vision-review-b",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "artifact-identity",
+      "label": "Exact locked raster identity",
+      "complete": true,
+      "evidence": "Get-FileHash on the reviewed PNG returned SHA-256 25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92, exactly matching the supplied lock and the permitted automated evidence.",
+      "notes": "The reviewed artifact is the requested 1536x1024 RGB PNG; no alternate candidate was inspected in its place."
+    },
+    {
+      "id": "full-composition-guide",
+      "label": "Full composition against canonical geometry guide",
+      "complete": true,
+      "evidence": "Native full-frame view_image comparison with style-candidate-i-v1-composition-guide.png preserves the west sea, northwest mainland, offshore islands, central river and delta, circular capital, southwest port, eastern eight-parcel field block, northeastern highland, and principal road exits in their canonical locations.",
+      "notes": "No major composition element is absent; the permitted automated alignment evidence also reports 0.999681 stable land-water agreement and boundary p95 distances of 7 px candidate / 6 px guide."
+    },
+    {
+      "id": "scale-25",
+      "label": "25 percent full-frame readability",
+      "complete": true,
+      "evidence": "view_image of a 384x256 high-quality reduction keeps the capital, port, river/delta, islands, roads, fields, forest mass, and land-water split immediately legible.",
+      "notes": "Hierarchy survives, but the forest becomes a uniformly granular dark carpet and the fields retain conspicuous ordered parcel texture."
+    },
+    {
+      "id": "scale-50",
+      "label": "50 percent full-frame readability",
+      "complete": true,
+      "evidence": "view_image of the 768x512 reduction shows continuous road and water paths, five capital junctions, a distinct port, eight field parcels, and the intended coast/island silhouette without collapse.",
+      "notes": "At this scale the repeated short marks in the fields and the highland's uniform hatch language become visible as cadence rather than isolated print accents."
+    },
+    {
+      "id": "scale-native",
+      "label": "Native 1536x1024 raster",
+      "complete": true,
+      "evidence": "Native-detail view_image confirms crisp plan-view linework, continuous coast and river edges, readable irregular capital blocks, and consistent aged-print palette across the entire raster.",
+      "notes": "Native inspection also exposes the repeated loop-like forest marks, recurring highland hatch bundles, and ordered field dash rows."
+    },
+    {
+      "id": "scale-200",
+      "label": "200 percent raster inspection",
+      "complete": true,
+      "evidence": "view_image of a nearest-neighbor 3072x2048 enlargement plus 2x regional crops confirms that coastline, riverbanks, road joins, walls, and parcel borders are intact and that the three repeated-mark problems are embedded in the raster rather than downsampling artifacts.",
+      "notes": "No pasted edge or broken line was revealed at 200 percent."
+    },
+    {
+      "id": "scale-400",
+      "label": "400 percent raster inspection",
+      "complete": true,
+      "evidence": "view_image of a nearest-neighbor 6144x4096 enlargement and 4x forest, water, highland, field, capital, and port details confirms pixel-level continuity and makes the repeated semantic motifs unambiguous.",
+      "notes": "The forest is a dense carpet of similar loop/leaf cells; highland marks recur as same-direction short bundles; field interiors use systematic parallel dash/furrow rows."
+    },
+    {
+      "id": "nine-region-sweep",
+      "label": "Nine-region raster sweep",
+      "complete": true,
+      "evidence": "All nine 512-pixel-wide thirds (NW, N, NE, W, C, E, SW, S, SE) were separately viewed at 2x. NW/W/SW water and islands are continuous; N forest is overpacked; NE repeats hatch bundles; C capital is organic; E/SE fields are row-patterned; S and coast remain coherent.",
+      "notes": "The sweep found no omitted corner, blank band, text, off-projection object, or regional paste seam."
+    },
+    {
+      "id": "water",
+      "label": "Sea and water material",
+      "complete": true,
+      "evidence": "West-water views at 2x and 4x show a continuous blue-gray print field with sparse light wave accents, generous gaps, and no label-like strings or hard cellular tiling.",
+      "notes": "The underlying etched grain is busy at 400 percent but does not create a broken water body or a decisive immediate-failure pattern."
+    },
+    {
+      "id": "river-delta",
+      "label": "River, delta, coast, and islands",
+      "complete": true,
+      "evidence": "The 2x delta/river crop shows the north river flowing continuously into the central junction, the westward distributaries opening into the sea around the canonical islands, and the south channel remaining open to the coastal outlet.",
+      "notes": "No pinched-off branch, accidental land bridge, detached bank segment, or missing island was seen."
+    },
+    {
+      "id": "forest",
+      "label": "Northern forest material",
+      "complete": true,
+      "evidence": "The 2x forest overview and 4x interior crop show near-continuous coverage by similarly sized loop, leaf, crescent, and cell-like marks with almost no calm negative space across both forest masses.",
+      "notes": "This reads as icon/glyph wallpaper rather than sparse independent print vegetation and triggers an immediate failure."
+    },
+    {
+      "id": "highland",
+      "label": "Northeastern highland material",
+      "complete": true,
+      "evidence": "The NE grid tile plus 2x and 4x highland crops reveal recurring short diagonal multi-stroke bundles on a broadly uniform woven diagonal ground, repeated across the entire highland area.",
+      "notes": "The repeated bundle language is visually systematic and triggers the named highland immediate failure."
+    },
+    {
+      "id": "fields",
+      "label": "Eastern field parcels",
+      "complete": true,
+      "evidence": "The E/SE tiles and 4x field crop confirm all eight canonical parcels, but every parcel is filled with parallel rows of similarly oriented broken dashes; several triangular edge parcels intensify into tightly packed furrow bands.",
+      "notes": "The marks remain CAD/row-like despite minor jitter and trigger the rigid field repetition immediate failure."
+    },
+    {
+      "id": "capital",
+      "label": "Capital wall, gates, and interior fabric",
+      "complete": true,
+      "evidence": "The 4x capital crop shows one continuous outer circular wall, five exact road junctions, varied irregular blocks, many nonuniform tiny footprints, offset streets, and no added complete interior rings.",
+      "notes": "The required circular enclosure remains, but the interior is sufficiently irregular to avoid a mechanical concentric/radial immediate failure."
+    },
+    {
+      "id": "port",
+      "label": "Southwestern port",
+      "complete": true,
+      "evidence": "The 4x port crop shows a coherent polygonal settlement footprint, organic internal streets and footprints, three distinct piers extending into water, and intact land-road connections.",
+      "notes": "The port stays plan-view and visually integrated with the coast; no detached pasted outline or side-face extrusion was found."
+    },
+    {
+      "id": "road-network",
+      "label": "Road network continuity",
+      "complete": true,
+      "evidence": "Full, nine-region, central, and east crops show roads crossing all five capital gates, continuing north, east, southeast, west, and south, linking to the port and field area without unexplained gaps.",
+      "notes": "Intersections remain readable where roads meet the capital wall, cross field boundaries, and approach the port."
+    },
+    {
+      "id": "seams-borders-projection-text",
+      "label": "Seams, pasted bands, borders, projection, and text scan",
+      "complete": true,
+      "evidence": "Dedicated 2x coast/east seam strips and a 4x center transition crop show continuous paper grain, color, and linework across forest, highland, field, capital, delta, coast, and port boundaries; the full perimeter remains borderless. No letters, numerals, pseudo-writing strings, perspective side faces, or visible paste bands were found.",
+      "notes": "Texture regimes change by terrain semantics, but no straight-edged edit seam or rectangular pasted strip is visible."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "text-pseudo-writing",
+      "label": "Text or pseudo-writing",
+      "detected": false,
+      "evidence": "Full-frame, nine-region, and 400 percent scans show no readable labels, letter/number forms, or text-like strings; isolated water and terrain strokes do not organize into writing."
+    },
+    {
+      "id": "perspective-side-faces",
+      "label": "Perspective or visible side faces",
+      "detected": false,
+      "evidence": "Capital blocks, port blocks, walls, piers, fields, roads, coast, and islands are all represented from a consistent overhead plan view with no extruded building sides or oblique terrain faces."
+    },
+    {
+      "id": "missing-composition",
+      "label": "Missing canonical composition",
+      "detected": false,
+      "evidence": "Every canonical guide element is present in its expected region: west sea, islands, river/delta, forest, highland, central capital, southwest port, east fields, and connecting roads."
+    },
+    {
+      "id": "broken-network",
+      "label": "Broken road or water network",
+      "detected": false,
+      "evidence": "River and distributary channels remain open through the delta, roads connect through all five capital junctions and continue to the port/fields/perimeter, and no unintended gaps or isolations were observed."
+    },
+    {
+      "id": "forest-icon-wallpaper",
+      "label": "Forest icon wallpaper",
+      "detected": true,
+      "evidence": "At native, 2x, and especially 4x, the northern forest is a near-solid carpet of similarly scaled loop/leaf/cell glyphs with minimal quiet gaps, creating a repeated wallpaper field."
+    },
+    {
+      "id": "repeated-highland-hatch-bundles",
+      "label": "Repeated highland hatch bundles",
+      "detected": true,
+      "evidence": "The NE tile and 2x/4x highland views repeatedly show small same-direction groups of short parallel diagonal strokes over a woven diagonal ground across the highland."
+    },
+    {
+      "id": "rigid-field-row-repetition",
+      "label": "Rigid field row or CAD repetition",
+      "detected": true,
+      "evidence": "All eight eastern parcels contain organized parallel rows of similar dash marks, with dense straight furrow bands in edge parcels; 4x inspection confirms systematic cadence rather than independent drifting marks."
+    },
+    {
+      "id": "mechanical-capital",
+      "label": "Mechanical concentric or radial capital",
+      "detected": false,
+      "evidence": "Although the required outer wall is circular and five gate routes enter it, the interior has irregular shared boundaries, varied block sizes and angles, offset intersections, and no repeated complete concentric rings or uniform spokes."
+    },
+    {
+      "id": "visible-seam-pasted-band",
+      "label": "Visible seam or pasted band",
+      "detected": false,
+      "evidence": "Dedicated seam views at 2x and 4x show continuous grain and linework across all edited-region boundaries and along all four image edges, with no straight rectangular transition, halo band, or pasted strip."
+    }
+  ],
+  "scores": [
+    {
+      "id": "composition-geometry",
+      "label": "Canonical composition and geometry",
+      "maximum": 20,
+      "score": 19,
+      "notes": "The full layout and land-water geometry are exceptionally faithful; one point is withheld because the highland's semantic differentiation relies too heavily on repetitive texture rather than clear, restrained terrain treatment."
+    },
+    {
+      "id": "plan-view-text-safety",
+      "label": "Plan-view discipline and text safety",
+      "maximum": 15,
+      "score": 15,
+      "notes": "No text, pseudo-writing, perspective object, side face, or decorative border is visible."
+    },
+    {
+      "id": "network-landmarks",
+      "label": "Network continuity and landmark completeness",
+      "maximum": 15,
+      "score": 15,
+      "notes": "River/delta, roads, five capital junctions, islands, fields, and port remain complete and connected."
+    },
+    {
+      "id": "motif-naturalism",
+      "label": "Motif variation, spacing, and naturalism",
+      "maximum": 20,
+      "score": 3,
+      "notes": "Three named instant-fail systems dominate major regions: forest icon/glyph carpet, repeated highland hatch bundles, and rigid repeated field rows."
+    },
+    {
+      "id": "settlement-design",
+      "label": "Capital and port design",
+      "maximum": 10,
+      "score": 9,
+      "notes": "Both settlements are coherent, detailed, top-down, and irregular; the capital successfully avoids full rings and uniform spokes, though its perfect circular silhouette remains visually dominant at small scale."
+    },
+    {
+      "id": "style-readability",
+      "label": "Style coherence and multiscale readability",
+      "maximum": 10,
+      "score": 8,
+      "notes": "Palette, print texture, and hierarchy are coherent at 25 to 400 percent, but forest density and the patterned terrain/field marks create avoidable visual noise."
+    },
+    {
+      "id": "technical-finish",
+      "label": "Raster, edge, and seam integrity",
+      "maximum": 10,
+      "score": 10,
+      "notes": "The locked raster meets the format contract and shows no alpha/profile issue, broken edge, border, rectangular seam, pasted band, or large exact clone in the permitted automated evidence and Vision inspection."
+    }
+  ],
+  "total_score": 79,
+  "decision": "rejected",
+  "summary": "Independent blind Vision QA of locked SHA-256 25b8d6211d1f2970cd59af363c521429863c340780d182253d161a951ed9eb92 scores 79/100 against a strict 94 threshold and is rejected. Composition, geometry, roads, river/delta, capital, port, plan projection, borderless edges, and seam integrity are strong. Acceptance is nevertheless barred by three explicit immediate failures visible at native through 400 percent: forest icon/glyph wallpaper, repeated highland hatch bundles, and rigid field row/CAD repetition.",
+  "required_changes": [
+    "Replace the northern forest's dense loop/leaf/cell carpet with sparse, individually varied vegetation print marks separated by substantial quiet negative space; remove connected cells, repeated glyphs, and stamp-like cadence.",
+    "Remove the northeastern highland's recurring diagonal bundles and woven hatch ground; retain a broad planar tone with only sparse, short, independent hatches whose orientation, length, spacing, and grouping vary without chains or contour bands.",
+    "Redraw all eight field interiors so marks are independent and broken with nonperiodic drift and calm gaps; eliminate parallel dash grids, uniform furrow rows, and CAD-like repetition while preserving canonical parcel boundaries and road crossings.",
+    "After those surface changes, re-run the full 25/50/native/200/400 percent and nine-region Vision pass and confirm that the currently sound coast, islands, river/delta, road network, capital, port, borderless perimeter, and seamless transitions remain unchanged."
+  ]
+}

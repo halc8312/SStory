@@ -1,0 +1,55 @@
+---
+type: "map-production-prompt"
+category: "maps"
+title: "Style Candidate G v1 — Direct Cartographic Relief"
+version: "1.0.0"
+created: "2026-07-19"
+status: "ready"
+candidate_id: "style-candidate-g-v1-direct-cartographic-relief"
+change_from_previous: "Replace the rejected scalar luminance plate with a directly rendered hand-engraved terrain layer."
+---
+
+# Task
+
+Reference priority: reference 1 controls every source pixel and the complete visual style. Reference 2 controls only the approximate footprints and hierarchy of six landforms. Ignore every luminance value, edge, texture, shadow, streak, and clipping boundary in reference 2.
+
+Edit the first reference image into one finished 1536 × 1024 fantasy cartographic raster. The first reference is the pixel-authoritative map and must remain the same composition. The second reference is a geometry-only relief guide: use only the locations and hierarchy of its six flat-color silhouettes; do not copy its colors, hard edges, polygon corners, or background.
+
+# The one permitted change
+
+Redraw only the two existing mountain fields in the north-east and south-east as clearly readable, hand-engraved plan-view mountain terrain. At 100% scale, each field must visibly contain:
+
+- one broad, irregular, curved principal massif;
+- a continuous but softly graded south-east shaded slope;
+- one short, quiet saddle between two principal crowns;
+- two compact foothill masses visibly detached from the principal massif and from one another.
+
+The relief must be materially visible without a difference view, yet remain subordinate to roads, city walls, coastline, rivers, forest, and fields. Integrate the existing small mountain symbols into the new hierarchy instead of erasing all of them.
+
+In reference 2, red means the principal massif, orange means foothill A, and purple means foothill B. Apply that mapping independently to the north-east group and the south-east group. Leave an unbroken band of untouched parchment visually separating all three landforms in each group.
+
+# Exact preservation
+
+Preserve the first reference image's canvas, 90-degree orthographic top-down view, coastline, islands, rivers, delta channels, city and port geometry, all roads, fields, forests, trees, settlement marks, colors, paper texture, engraving weight, and every feature outside the two mountain fields. Roads crossing or bordering the fields remain completely clear and continuous. Do not move, widen, repaint, or invent any road, watercourse, coast, wall, building, farm, or forest edge.
+
+# Rendering grammar
+
+- antique copperplate / hand-inked fantasy atlas matching the first reference;
+- broad asymmetric landform masses, irregular branching shoulders, and nonuniform fine hachure;
+- one coherent north-west light direction;
+- soft areal tone plus sparse short hachures that follow slope, never closed contours;
+- detached foothills must read as landforms, not dots or capsules;
+- saddle is a low, open landform gap, never a cut line;
+- retain enough quiet paper for later vector labels and POIs.
+
+All relief is ink and areal tone printed on the horizontal map plane. No cast or displaced shadow, occlusion, vertical face, ridge silhouette, or scenic depth.
+
+# Forbidden
+
+No text, letters, numbers, runes, symbols resembling writing, labels, legend, compass, scale bar, watermark, signature, border, UI, perspective, oblique side faces, scenic horizon, 3D render, photorealism, closed contour rings, concentric bands, terracing, repeated scallops, equal-size lobes, radial blobs, ellipses, capsules, dashed marks, route-like chains, dark lines down ridge centers, hard polygon edges, rectangular seams, generation-mask edges, blur halos, or copied monochrome steps from the second reference.
+
+# Output contract
+
+Return one full-color PNG at exactly 1536 × 1024. Do not crop or extend the map. Do not add any explanation or text inside the image.
+
+After generation, a deterministic 64 px road guard and protected-feature mask will composite the result over reference 1. Every pixel outside the permitted landforms, and every protected road, water, wall, farm, tree, and settlement pixel, must remain identical to reference 1.

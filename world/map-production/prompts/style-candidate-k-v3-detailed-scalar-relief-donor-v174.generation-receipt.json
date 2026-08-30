@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "candidate": "k3-v174-detailed-scalar-relief-donor",
+  "generator": "OpenAI ImageGen",
+  "generation_mode": "multi-reference image edit",
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-k-v3-detailed-scalar-relief-donor-v174.generation.txt",
+    "sha256": "d20969daf84b190c28b354da1be3dd572e8f907ac44f9b2d372552d8470668ce"
+  },
+  "references_in_order": [
+    {
+      "role": "clean-scalar-relief-edit-target",
+      "path": "world/map-production/style-assets/k3-v171-clean-scalar-relief-donor.png",
+      "sha256": "152fe9231812e6acbc6292181de40e17fedceac3adc01a46a288fd873546d5ff"
+    },
+    {
+      "role": "natural-deep-zoom-complexity-reference",
+      "path": "world/map-production/style-assets/k3-v172-natural-highland-relief-donor.png",
+      "sha256": "e69deee1e5ba91c1bbcb9aa35dda036c8a7ae1cd07b90c94d1aede0beb957b4a"
+    },
+    {
+      "role": "exact-eight-topology-reference",
+      "path": "world/map-production/style-assets/k3-v55-topographic-contour-atlas.png",
+      "sha256": "2ae715fc2800a03adde89a26bd3d663f1bafe179ed845cef09dd616ed1453d3f"
+    },
+    {
+      "role": "exact-eight-identity-and-occupancy-reference",
+      "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-eight-ridge-control-atlas.png",
+      "sha256": "c168f1419d04ffaff313433064bab2b12844041e3845540c8bb6e29c2ef317c4"
+    }
+  ],
+  "output": {
+    "path": "world/map-production/style-assets/k3-v174-detailed-scalar-relief-donor.png",
+    "sha256": "4a1e7d35729546a4f111ccdf52e198fe936f8087b12e565757c9792e8945052f",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB"
+  },
+  "status": "accepted-as-conditional-detailed-scalar-relief-donor",
+  "golden_reference": false,
+  "raw_pixel_transfer_allowed": false,
+  "adoption_scope": "Body-local normalized low- and mid-frequency scalar structure only. Absolute luminance, positive white crests, source edges, background, raw pixels, and frequencies below four pixels are forbidden; v55 and v52 remain the exact geometry authorities."
+}

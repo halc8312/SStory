@@ -1,0 +1,23 @@
+Use case: precise-object-edit
+Asset type: full-context orthographic antique fantasy-map terrain correction
+
+Input images:
+Image 1 is the sole edit target and the absolute authority for the 1536 x 1024 canvas, registration, crop, palette, paper grain, roads, city, coast, water, forest, fields, boundaries, and every feature outside the pale upper-right highland.
+Image 2 is a spatial reference only for the centers, footprints, orientations, spacing, and interlocking arrangement of its nine upper-right highland masses. Do not copy any pixels, colours, linework, or interior texture from Image 2.
+
+Primary request:
+Change only the pale upper-right highland of Image 1. Remove its all-over woven terrain residue and restore a quiet, neutral aged-parchment ground matching Image 1's local colour and natural irregular grain. On that ground, construct exactly nine distinct landforms in Image 2's broad arrangement, each defined by exactly one open medial shoulder.
+
+Required shoulder geometry:
+Each medial shoulder is one large irregular arc located through the middle zone of its landform, not an outline around the outer perimeter. Each arc must have two clearly separated ends and exactly one dominant clean opening spanning 20-35% of its implied circumference. The remaining arc may contain tiny natural dry-print dropouts, but no second major opening. Vary the gap direction, arc curvature, eccentricity, orientation, footprint, and width across all nine shoulders. Mix broader, medium, and slimmer shoulders; do not repeat one template or cadence.
+
+Give each shoulder an asymmetric darker inner flank: concentrate restrained broken sepia ink along only one uneven inside-facing portion, thickest off-centre and tapering irregularly toward both ends. Give each landform one lighter valley cue offset from the dark flank. The lighter cue must have different curvature, distance, length, and endpoints, so it never coincides with or directly parallels the dark flank and never forms a paired band. Use sparse crisp dry-ink breakup and isolated non-symbolic pigment fragments only. Keep every new terrain mark visibly lighter than the roads, city walls, coastlines, and field borders.
+
+Scale behaviour:
+At 25% and 50%, exactly nine separate broad landforms must read through their open shoulder silhouettes, spacing, and varied prominence. At 200% and 400%, the marks must resolve into crisp irregular dry-print fracture with no miniature motifs. Leave the interiors of all nine landforms and the valleys between them calm, neutral, and visually dominated by natural parchment.
+
+Hard invariants:
+Preserve the road through and beside the highland exactly--same route, width, double edges, junctions, colour, and registration--and leave a generous uninterrupted calm parchment buffer around it. Preserve every pixel outside the upper-right highland exactly. Blend the edited ground seamlessly inside the existing highland boundary without creating a visible patch edge.
+
+Avoid:
+No closed shoulders, closed rings, contour loops, nested arcs, concentric marks, enclosing outlines, parallel bands, solid or translucent landform fills, bounded tonal patches, halos, glows, clouds, airbrushing, blurred stains, camouflage, or pasted panels. No curls, spirals, maze lines, worm marks, glyphs, letters, icons, repeated dashes, dots, pebbles, hatching, crosshatching, woven texture, or all-over decorative noise. Do not add or alter labels, borders, settlements, buildings, rivers, roads, signatures, frames, or watermarks. Do not crop, resize, rotate, reframe, relight, or recolour the map. Return the complete original 1536 x 1024 map.

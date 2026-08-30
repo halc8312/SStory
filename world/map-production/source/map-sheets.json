@@ -1,0 +1,148 @@
+{
+  "schema_version": "0.1.0",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "status": "provisional",
+  "description": "世界・大陸・地域・ゴールデン回廊を親子関係付きで管理する画像生成およびタイル制作単位。",
+  "bounds_order": ["min_x", "min_y", "max_x", "max_y"],
+  "tile_profile": {
+    "tile_size_px": 512,
+    "metatile_size_px": 2048,
+    "metatile_gutter_each_side_px": 256,
+    "public_format": "webp",
+    "master_format": "png",
+    "labels_baked_into_raster": false
+  },
+  "source_refs": [
+    "world/map-production/source/landmasses.geojson",
+    "world/map-production/source/regions.geojson",
+    "world/map-production/source/settlement-footprints.geojson"
+  ],
+  "sheets": [
+    {
+      "id": "sheet_world",
+      "name": "エターナル・アルカディア世界",
+      "sheet_type": "world",
+      "parent_id": null,
+      "source_feature_id": null,
+      "bounds": [0, 0, 10000, 10000],
+      "zoom_range": [0, 3],
+      "native_zoom": 3,
+      "review_status": "provisional",
+      "geometry_confidence": "estimated"
+    },
+    {
+      "id": "sheet_continent_elysion", "name": "エリュシオン大陸",
+      "sheet_type": "continent", "parent_id": "sheet_world", "source_feature_id": "elysion",
+      "bounds": [2800, 3000, 6300, 6550], "zoom_range": [3, 4], "native_zoom": 4,
+      "review_status": "provisional", "geometry_confidence": "estimated"
+    },
+    {
+      "id": "sheet_continent_lumiera", "name": "リュミエラ大陸・浮島列",
+      "sheet_type": "continent", "parent_id": "sheet_world", "source_feature_id": "lumiera",
+      "bounds": [6350, 2050, 9950, 7050], "zoom_range": [3, 4], "native_zoom": 4,
+      "review_status": "provisional", "geometry_confidence": "estimated"
+    },
+    {
+      "id": "sheet_continent_chaos_ria", "name": "カオス・リア大陸",
+      "sheet_type": "continent", "parent_id": "sheet_world", "source_feature_id": "chaos_ria",
+      "bounds": [2950, 4800, 6600, 9650], "zoom_range": [3, 4], "native_zoom": 4,
+      "review_status": "provisional", "geometry_confidence": "estimated"
+    },
+    {
+      "id": "sheet_continent_atlantis", "name": "アトランティス大陸",
+      "sheet_type": "continent", "parent_id": "sheet_world", "source_feature_id": "atlantis",
+      "bounds": [50, 1700, 2950, 7300], "zoom_range": [3, 4], "native_zoom": 4,
+      "review_status": "provisional", "geometry_confidence": "estimated"
+    },
+    {
+      "id": "sheet_continent_grimoire", "name": "グリモワール大陸",
+      "sheet_type": "continent", "parent_id": "sheet_world", "source_feature_id": "grimoire",
+      "bounds": [3150, 750, 6150, 3000], "zoom_range": [3, 4], "native_zoom": 4,
+      "review_status": "provisional", "geometry_confidence": "estimated"
+    },
+
+    {"id": "sheet_region_royal_capital_region", "name": "王都地方", "sheet_type": "region", "parent_id": "sheet_continent_elysion", "source_feature_id": "royal_capital_region", "bounds": [3600, 3150, 5000, 4450], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_silver_plains_region", "name": "銀の平野", "sheet_type": "region", "parent_id": "sheet_continent_elysion", "source_feature_id": "silver_plains_region", "bounds": [3500, 4150, 5700, 6250], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_soaring_mountains_region", "name": "天翔山脈", "sheet_type": "region", "parent_id": "sheet_continent_elysion", "source_feature_id": "soaring_mountains_region", "bounds": [2950, 3050, 4300, 4200], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_moonlit_forest_region", "name": "月影の森", "sheet_type": "region", "parent_id": "sheet_continent_elysion", "source_feature_id": "moonlit_forest_region", "bounds": [2850, 3300, 4050, 4850], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_emerald_plains_region", "name": "翡翠平原", "sheet_type": "region", "parent_id": "sheet_continent_elysion", "source_feature_id": "emerald_plains_region", "bounds": [4600, 3250, 6200, 5150], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_port_zephia_region", "name": "ポートゼフィア港湾圏", "sheet_type": "region", "parent_id": "sheet_continent_elysion", "source_feature_id": "port_zephia_region", "bounds": [3800, 3100, 5250, 4150], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_lumiera_arch_region", "name": "リュミエラ・アーチ", "sheet_type": "region", "parent_id": "sheet_continent_lumiera", "source_feature_id": "lumiera_arch_region", "bounds": [6900, 2100, 9900, 5600], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_emerald_belt_region", "name": "エメラルド・ベルト", "sheet_type": "region", "parent_id": "sheet_continent_lumiera", "source_feature_id": "emerald_belt_region", "bounds": [6450, 2250, 8650, 6650], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_red_sea_desert_region", "name": "紅海砂漠", "sheet_type": "region", "parent_id": "sheet_continent_chaos_ria", "source_feature_id": "red_sea_desert_region", "bounds": [3100, 5400, 6350, 8750], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_jade_oasis_region", "name": "翡翠のオアシス", "sheet_type": "region", "parent_id": "sheet_continent_chaos_ria", "source_feature_id": "jade_oasis_region", "bounds": [3850, 4850, 5100, 6150], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_marineport_region", "name": "マリンポート地方", "sheet_type": "region", "parent_id": "sheet_continent_atlantis", "source_feature_id": "marineport_region", "bounds": [650, 2100, 2650, 6100], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_atlantia_region", "name": "アトランティア", "sheet_type": "region", "parent_id": "sheet_continent_atlantis", "source_feature_id": "atlantia_region", "bounds": [100, 3050, 1650, 5450], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_time_port_region", "name": "時空の港", "sheet_type": "region", "parent_id": "sheet_continent_grimoire", "source_feature_id": "time_port_region", "bounds": [3350, 1200, 4750, 2400], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+    {"id": "sheet_region_ethernia_core_region", "name": "エターニア・コア", "sheet_type": "region", "parent_id": "sheet_continent_grimoire", "source_feature_id": "ethernia_core_region", "bounds": [3450, 800, 4900, 2000], "zoom_range": [4, 5], "native_zoom": 5, "review_status": "provisional", "geometry_confidence": "estimated"},
+
+    {
+      "id": "sheet_corridor_astralis_port_zephia",
+      "name": "アストラリス・ポートゼフィア回廊",
+      "sheet_type": "corridor",
+      "parent_id": "sheet_region_royal_capital_region",
+      "secondary_parent_ids": ["sheet_region_port_zephia_region"],
+      "source_feature_id": "astralis_port_zephia_magic_train",
+      "bounds": [3850, 3200, 4950, 4100],
+      "zoom_range": [5, 7],
+      "native_zoom": 7,
+      "review_status": "provisional",
+      "geometry_confidence": "estimated",
+      "priority": "golden_path"
+    },
+    {
+      "id": "sheet_settlement_astralis",
+      "name": "アストラリス市街",
+      "sheet_type": "settlement",
+      "parent_id": "sheet_region_royal_capital_region",
+      "source_feature_id": "astralis",
+      "bounds": [3850, 3500, 4450, 4020],
+      "zoom_range": [7, 8],
+      "native_zoom": 8,
+      "review_status": "provisional",
+      "geometry_confidence": "estimated",
+      "priority": "golden_path"
+    },
+    {
+      "id": "sheet_settlement_port_zephia",
+      "name": "ポートゼフィア市街・港湾",
+      "sheet_type": "settlement",
+      "parent_id": "sheet_region_port_zephia_region",
+      "source_feature_id": "port_zephia",
+      "bounds": [4500, 3330, 4860, 3700],
+      "zoom_range": [7, 8],
+      "native_zoom": 8,
+      "review_status": "provisional",
+      "geometry_confidence": "estimated",
+      "priority": "golden_path"
+    },
+    {
+      "id": "sheet_district_astralis_royal_quarter",
+      "name": "アストラリス王都区",
+      "sheet_type": "district",
+      "parent_id": "sheet_settlement_astralis",
+      "source_feature_id": null,
+      "bounds": null,
+      "zoom_range": [12, 14],
+      "native_zoom": 14,
+      "review_status": "planned",
+      "geometry_confidence": "unresolved",
+      "blocker": "POI-to-EA-WORLD-1 local transform and district boundary require review",
+      "priority": "golden_path"
+    },
+    {
+      "id": "sheet_block_astralis_palace_square",
+      "name": "王宮前広場周辺",
+      "sheet_type": "block",
+      "parent_id": "sheet_district_astralis_royal_quarter",
+      "source_feature_id": null,
+      "bounds": null,
+      "zoom_range": [14, 16],
+      "native_zoom": 16,
+      "review_status": "planned",
+      "geometry_confidence": "unresolved",
+      "blocker": "no canon block footprint or reviewed local transform exists",
+      "priority": "golden_path"
+    }
+  ]
+}

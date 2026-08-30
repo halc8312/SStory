@@ -1,0 +1,53 @@
+TASK
+Make one controlled sparsification/flattening edit to reference image 1. Return one
+1536 x 1024 RGB landscape image. Reference image 2 is the exact quiet-ground and
+preservation authority.
+
+LOCKED SUCCESSES FROM REFERENCE 1
+- Keep the same canvas, crop, palette, map context, highland boundary, road, and exactly
+  eight existing ridge locations.
+- Keep the highland as one continuous parchment region with no panel, filled carriers,
+  islands, mask outlines, or hard terrain patches.
+- Keep the compact lower knoll and the broad quiet gaps between the eight locations.
+
+THE ONLY CHANGE
+Flatten and sparsify the highland ink grammar. Remove the raised/side-lit diagonal
+mountain-face appearance and the faint woven background cadence. Retain approximately
+25 percent of the current ridge marks as short, disconnected, low-contrast plan-view
+sepia terrain fragments with varied directions, spacing, curvature, length, and density.
+
+REQUIRED RESULT
+- Exactly eight ridge systems remain in the same locations and remain countable.
+- No group has a dominant diagonal crest, triangular mass, shaded face, light side,
+  dark side, or downslope comb.
+- Within each group, use several independently ending open arc fragments, tiny dry
+  stipple patches, and subtle low-frequency umber drift; never a closed perimeter.
+- Orientations must vary within and across groups. Adjacent marks must not form parallel
+  bundles, fishbones, fans, rows, chains, or a repeated template.
+- Restore all highland pixels outside those sparse local marks toward the calm parchment
+  material of reference image 2. The background must not look woven or uniformly etched.
+- At 25% and 50%, show one quiet continuous highland with eight faint local tonal
+  concentrations, not mountain faces, stains, or a diagonal rhythm.
+- At 200% and 400%, show irregular hand-printed fragments and ample untouched paper.
+- Preserve the main road and every map feature outside the highland exactly in role and
+  placement.
+
+ABSOLUTE NEGATIVES
+- No scenic peaks, triangular mountains, crest lines, cliff faces, shadows, lighting,
+  perspective, isometric relief, horizon, or raised forms.
+- No filled blobs, visible masks, outlines, plaques, panels, rectangles, texture seams,
+  color steps, or separate paper pieces.
+- No closed rings, bullseyes, targets, onion contours, halos, repeated loops, uniform
+  contour intervals, or concentric stamps.
+- No dense parallel hachure, repeated dash bundles, roots, leaves, fishbones, woven
+  ground, wallpaper, aligned rows, CAD grids, or repeated glyphs.
+- No text, labels, letters, numerals, signatures, watermarks, legends, borders, frames,
+  compass roses, UI, or new settlements.
+
+PRIORITY
+1. Preserve the exact eight-location continuous-ground composition.
+2. Remove face/shadow semantics and background weave.
+3. Reduce mark density to about one quarter with varied, disconnected plan-view marks.
+4. Preserve quiet v18 parchment and all protected map context.
+
+This is a material/terrain donor, not a final labeled illustration.

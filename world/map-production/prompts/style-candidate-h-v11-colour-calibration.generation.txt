@@ -1,0 +1,9 @@
+SStory Candidate H11 — one-change colour calibration.
+
+The first image (H10) is authoritative for every pixel-level map feature, geometry, projection, line, texture motif, city block, port, field, forest envelope, river, road, coast, and detail. Do not redraw, add, remove, move, simplify, sharpen, blur, or reinterpret any object. Preserve the exact strict 90-degree orthographic flat-plan appearance and H10's successful dense copperplate microdetail.
+
+The second image (B1) is only a colour-statistics reference. Make one change only: gently calibrate H10's global colour distribution toward B1. H10 is currently slightly too dark/cool. Lift red and green midtones modestly and warm the parchment/olive range while keeping deep slate-blue water, dark olive vegetation, restrained umber ink, highlight and shadow detail, and the existing local contrast. Aim for the B1 mean/palette family without copying any B1 geometry.
+
+Hard prohibitions: no perspective, no 3D mountains or cliffs, no triangular peaks, no floating islands, no side faces, roofs, facades, trunks, directional lighting, highlights, cast shadows, text, pseudo-writing, labels, watermark, frame, border, legend, compass, cartouche, repeated stamp grid, tiling seam, blur, or upscale softness.
+
+Return one borderless 1536 x 1024 RGB image. It must look identical in drawing and differ only by subtle global colour calibration.

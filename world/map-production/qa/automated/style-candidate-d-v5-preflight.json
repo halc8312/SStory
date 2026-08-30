@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-v5-preflight",
+  "created_at": "2026-07-18T22:56:36Z",
+  "status": "passed",
+  "candidate_attempt": 5,
+  "single_change": "Add only broad, edgeless, low-frequency plan-view luminance hierarchy beneath the existing north-east and south-east mountain fields.",
+  "generation_authorization": "ready",
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-d-v5-broad-relief.md",
+    "sha256": "2702319cec7f71106a930be60dba26b5424d996c282413591f8e22a733e7cfd0",
+    "markdownlint": "passed",
+    "cspell": "passed",
+    "frontmatter": "passed"
+  },
+  "edit_source": {
+    "path": "world/map-production/candidates/style-candidate-d-v4-erase-route-marks.png",
+    "sha256": "c8c15f3e0fba49165c5d85f8369b91e7171d88d7059a58c0948e0d1339864016"
+  },
+  "generation_mask": {
+    "control_path": "world/map-production/controls/style-candidate-d-v5-generation-mask-v1.json",
+    "control_sha256": "97064a0cee8ee1b446ee16306a4d8eda1cf24e99a320c7686407a337cb3828e0",
+    "raster_path": "world/map-production/controls/style-candidate-d-v5-generation-mask-v1.png",
+    "raster_sha256": "fca035d237685eb4ef5db32a2a05584d772d904c7b105e35479d1230c5156b04",
+    "json_png_byte_identical": true,
+    "width": 1536,
+    "height": 1024,
+    "nonzero_pixels": 538021,
+    "opaque_pixels": 324712,
+    "feather_pixels": 213309,
+    "exclude_strokes": 0
+  },
+  "final_transfer": {
+    "control_path": "world/map-production/controls/style-candidate-d-v5-relief-mask-v1.json",
+    "control_sha256": "bbf298c8e7a462f92fe85476a7044417f0c658101365649d642766c746512fa7",
+    "raster_path": "world/map-production/controls/style-candidate-d-v5-relief-mask-v1.png",
+    "raster_sha256": "3391a302878f5a89e83dfe888483d0aa76969d1fd3d8087bd4df2ff709bb109a",
+    "json_png_byte_identical": true,
+    "width": 1536,
+    "height": 1024,
+    "nonzero_pixels": 531024,
+    "opaque_pixels": 324685,
+    "feather_pixels": 206339,
+    "protected_pixels": 1041840,
+    "script_path": "scripts/map-production/transfer_low_frequency_relief.py",
+    "script_sha256": "0c20b6d8da3620887cb7505ef1f171277cf9d4ce762c291aed7c07c8656c3960",
+    "test_path": "tests/low_frequency_relief_transfer_test.py",
+    "test_sha256": "00d32733ac5e4bc2cdfbf672f413098cd4dbf3fab6ba140b77f53a2f5039c3d7",
+    "maximum_equal_channel_delta_levels": 6,
+    "topology_scope": "all nonzero polygon-mask pixels including feather",
+    "publication": "atomic"
+  },
+  "production_shape_regression": {
+    "valid_areal_final_q90_q10_levels": [7, 7],
+    "valid_areal_quadrant_p90_absolute_delta_levels": [5, 3, 2, 4, 4, 2, 5, 3],
+    "injected_route_width_px": 48,
+    "injected_route_length_px": 620,
+    "maximum_field_difference_levels": 1,
+    "pixels_above_one_level": 0,
+    "traceable_components": 0
+  },
+  "safe_failure_probes": [
+    {
+      "generated_path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains-raw.png",
+      "result": "rejected before publication: north-east robust signal spread 0"
+    },
+    {
+      "generated_path": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands-raw.png",
+      "result": "rejected before publication: north-east robust signal spread 2"
+    },
+    {
+      "generated_path": "world/map-production/candidates/style-candidate-d-v3-detached-fragments-raw.png",
+      "result": "rejected before publication: north-east robust signal spread 0"
+    }
+  ],
+  "independent_reviews": [
+    {
+      "reviewer": "Independent Codex Preflight QA A",
+      "decision": "GO",
+      "evidence": "Prompt, controls, masks, active-plus-feather topology, atomic publication, production route regression, and ten focused tests have no generation blocker."
+    },
+    {
+      "reviewer": "Independent Codex Preflight QA B",
+      "decision": "GO",
+      "evidence": "Prompt, control, script, mask, and tests agree on the final 128/64, coarse 3x3, two-cell Gaussian, 24/128 bandpass, and final 5x5 contract."
+    },
+    {
+      "reviewer": "Independent Codex Transfer Code Audit",
+      "decision": "GO",
+      "evidence": "Resource closure, feather topology, quantized-field median, strict paired regression, and full repository verification have no release blocker."
+    }
+  ],
+  "verification": {
+    "focused_relief_tests": "10 passed",
+    "repository_tests": "103 passed in 91.807 seconds",
+    "markdownlint": "passed",
+    "cspell": "182 files, 0 issues",
+    "frontmatter": "143 files, 0 errors, 0 warnings, 0 broken links",
+    "manifest_validation": "passed; 11 jobs; rejected=8; revise=3",
+    "non_strict_release_validation": "passed"
+  }
+}

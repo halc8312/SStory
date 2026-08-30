@@ -1,0 +1,54 @@
+{
+  "schema_version": "microtexture-v2-r6-foundation-corpus-root-vision/1",
+  "review_id": "microtexture-v2-r6-foundations-root-vision",
+  "documented_at": "2026-07-26T07:53:43+09:00",
+  "review_completion_time_exactly_attested": false,
+  "reviewer": "Codex Root Vision",
+  "review_mode": "vision-only-pre-freeze-foundation-qualification",
+  "required_views_per_candidate": ["persisted-original", "center-native-512x384", "northwest-native-512x384", "northeast-native-512x384", "southwest-native-512x384", "southeast-native-512x384"],
+  "source_crop_xywh": [512, 320, 512, 384],
+  "metric_window_xywh_within_source_crop": [128, 96, 256, 192],
+  "numeric_metric_evaluation_performed": false,
+  "threshold": 94,
+  "candidates": [
+    {
+      "id": "v15",
+      "path": "world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v15.png",
+      "sha256": "15695cf533d0aa495a83cbd35657e1d68244538e79028e83bbb32d952db0379f",
+      "bytes": 1536394,
+      "size": [1536, 1024],
+      "mode": "RGB",
+      "score": 98,
+      "decision": "approved",
+      "all_six_views_inspected": true,
+      "observations": "Smooth warm-ivory field with only extremely broad low-frequency tonal drift. No grain, speck, bounded blob, short line, parallel bundle, periodic or directional microtexture, hard edge, seam, compression artifact, or semantic element in any inspected view."
+    },
+    {
+      "id": "v16",
+      "path": "world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v16.png",
+      "sha256": "4e6cd844c88cf550d8f85da65d63525f99c58fd599a06d7a568c38412e54712f",
+      "bytes": 1603451,
+      "size": [1536, 1024],
+      "mode": "RGB",
+      "score": 99,
+      "decision": "approved",
+      "all_six_views_inspected": true,
+      "observations": "Exceptionally uniform pale warm-gray/light-oatmeal field. No prohibited microstructure, periodicity, directional texture, edge or seam, blocking or ringing, text, symbol, object, or terrain feature."
+    },
+    {
+      "id": "v17",
+      "path": "world/map-production/style-assets/microtexture-v2-r6-foundation-imagegen-v17.png",
+      "sha256": "fa08d0921ee319a279038e84e5318a8b0e759ff3ac55fb439a635329c9e8b6ea",
+      "bytes": 1334043,
+      "size": [1536, 1024],
+      "mode": "RGB",
+      "score": 97,
+      "decision": "approved",
+      "all_six_views_inspected": true,
+      "observations": "Pale sunlit sand/muted-cream field. Warm low-frequency variation is slightly more visible than in v15 or v16 but is diffuse, non-repeating, non-linear, and not a local artifact; all prohibited microstructure, edges, compression traces, and semantic elements are absent."
+    }
+  ],
+  "rejected_predecessors": [],
+  "all_adopted_candidates_passed": true,
+  "passed_for_declared_source_role": true
+}

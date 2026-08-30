@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v11-colour-calibration",
+  "image_path": "world/map-production/candidates/style-candidate-h-v11-colour-calibration-raw.png",
+  "created_at": "2026-07-19T19:01:30.784Z",
+  "reviewer": "Root Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "The complete locked raw PNG (SHA-256 32175b57fa82891045a3f8ffa70c3da134b33e38a790db62b14d11c0256cda75) was inspected with the H11 prompt, H10 source, and B1 colour reference.",
+      "notes": "The colour calibration is materially closer to B1 and the major map features remain legible. However, a vast field of repeated triangular, conical, and rounded vegetation or terrain symbols is immediately visible across the land."
+    },
+    {
+      "id": "original",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "The 1536x1024 RGB PNG was inspected at native resolution.",
+      "notes": "The image is sharp and richly textured, but the apparent detail is dominated by thousands of related small peak/tree silhouettes with a conspicuous cadence rather than unique organic material."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "The full map was inspected at 384x256; the unchanged H4 proxy measured 0.903646 macrocell contrast coverage and passed all 25% thresholds.",
+      "notes": "Land, water, city, routes, port, and fields remain readable, but the repeated-symbol field still reads as a uniform stippled or peaked texture at overview scale."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "The full map was inspected at 768x512 and passed all unchanged H4 50% proxy thresholds.",
+      "notes": "Tonal hierarchy is strong; nevertheless, the north, east, and south reveal broad bands of repeated conical and triangular motifs rather than varied copperplate land material."
+    },
+    {
+      "id": "zoom_200",
+      "label": "9領域200%拡大",
+      "complete": true,
+      "evidence": "Nine standard spatial regions were inspected at 200%, including focused forest, highland, field, city, port, road, and delta areas.",
+      "notes": "Repeated triangle-like peaks, cone-like vegetation marks, and similarly sized round crowns appear in dense families throughout multiple independent regions."
+    },
+    {
+      "id": "zoom_400",
+      "label": "9領域400%拡大",
+      "complete": true,
+      "evidence": "The same nine regions were inspected at 400% for semantic repetition, generated text, structure, and plan-view defects.",
+      "notes": "The marks are not exact pixel clones, explaining the automated clone-proxy pass, but their silhouettes, scale range, and spacing cadence are unmistakably repetitive."
+    },
+    {
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
+      "complete": true,
+      "evidence": "Center, corners, and edge-midpoints were scanned for all eight immediate-failure classes.",
+      "notes": "No text, modern object, floating underside, route break, or edge seam was found. Semantic repetition is widespread enough by itself to disqualify the image."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1画風比較",
+      "complete": true,
+      "evidence": "H11 and B1 were compared for RGB/HSV palette, parchment warmth, slate-blue water, olive land, and engraved contrast.",
+      "notes": "All four unchanged H4 palette conditions pass: RGB intersection 0.751536, HSV intersection 0.631582, Bhattacharyya 0.930908, and maximum mean-channel delta 5.313231. These proxy passes do not assess semantic motif repetition."
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・継ぎ目拡張性",
+      "complete": true,
+      "evidence": "All four outer edges were inspected at native and enlarged views; the H4 boundary proxy also passed.",
+      "notes": "The sheet is borderless and no visible seam or solid frame band was found."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳可読性",
+      "complete": true,
+      "evidence": "Road, river, coast, settlement, field, and planned overlay corridors were checked across overview and enlarged scales.",
+      "notes": "Primary routes remain traceable, but massive repeated symbol density creates visual noise over most prospective label and POI areas."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "No readable text, pseudo-writing, labels, letters, numbers, signature, legend, or compass was found."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "No watermark, logo, frame, border, or modern object was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島・島下面",
+      "detected": false,
+      "evidence": "Islands and delta bars read as ordinary sea-level land without exposed undersides."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "側面・遠近法・方向光",
+      "detected": false,
+      "evidence": "No separate dominant perspective or cast-shadow system was confirmed; the triangular and conical marks are rejected under semantic repetition."
+    },
+    {
+      "id": "missing_composition",
+      "label": "必須構成・置換の欠落",
+      "detected": false,
+      "evidence": "The main coast, delta, city, port, roads, fields, and broad terrain zones remain present; no separate missing-feature finding is needed for rejection."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "Major roads, river paths, delta channels, and crossings remain continuously traceable."
+    },
+    {
+      "id": "repetition",
+      "label": "目立つ反復",
+      "detected": true,
+      "evidence": "Massive areas are filled with repeated triangular, conical, arrowhead-like, and rounded vegetation or terrain symbols. This is an immediate Vision failure even though every tested 64-256px block hash is unique."
+    },
+    {
+      "id": "edge_seam",
+      "label": "端の継ぎ目",
+      "detected": false,
+      "evidence": "No decorative frame, abrupt edge band, or visible tiling seam was found."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "prompt構成・平面形状",
+      "maximum": 25,
+      "score": 16,
+      "notes": "The principal composition and flat route system remain readable, but repeated peak/tree-like glyphs violate the hard material prohibitions."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親画像・画風の連続性",
+      "maximum": 15,
+      "score": 12,
+      "notes": "The B1 colour family is successfully calibrated and H10's broad drawing remains recognizable."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "端・継ぎ目拡張性",
+      "maximum": 15,
+      "score": 14,
+      "notes": "All edges are borderless and pass the H4 boundary proxy."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 10,
+      "notes": "Palette and copperplate density are coherent, but the repeated symbol grammar dominates the style."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 8,
+      "notes": "Both downsample proxy scales pass, while much of the apparent information is redundant motif density."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 2,
+      "notes": "The semantic repetition immediate failure prevents a high integrity score, regardless of exact-block uniqueness."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 6,
+      "notes": "Major routes remain visible, but repeated land symbols compete heavily with future vectors."
+    }
+  ],
+  "total_score": 68,
+  "decision": "rejected",
+  "summary": "H11 is rejected and cannot be a Golden reference. It passes every unchanged H4 automated raster proxy, including all B1 palette and 50%/25% readability thresholds, but automated exact-block hashing cannot detect semantic motif reuse. Root Vision review finds massive repeated triangular, conical, arrowhead-like, and rounded vegetation or terrain symbols across the map. That immediate failure alone disqualifies H11; its score is deliberately limited to 68/100, below the required 94.",
+  "required_changes": [
+    "Keep H11's successful B1-family colour calibration while replacing the entire repeated triangular, conical, arrowhead-like, and rounded-glyph field.",
+    "Use connected irregular canopy masses, varied clearings, non-convergent flat hachure, stipple, and natural gaps with no visible stamp cadence.",
+    "Re-run the unchanged automated gates and a fresh full Vision review; automated proxy success alone must never be treated as Golden acceptance."
+  ]
+}

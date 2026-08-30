@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-ridge-guide-v1",
+  "artifact_role": "image-generation-topology-control",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_image": {
+    "path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+    "role": "faint-parent-map-for-location-only",
+    "sha256": "dbc0ccccb4e41a5ec7ef5d3f70c06a9782760d7fe715b7159678116f41362347"
+  },
+  "purpose": "Candidate D topology control: place five mutually disconnected, broad, short, hand-drawn ridge chains in each existing north-east and south-east mountain field. The colored strokes specify position, length and non-connectivity only; they are not terrain color instructions.",
+  "constraints": {
+    "ridge_chains_per_region": 5,
+    "ridge_band_width_px": 40,
+    "minimum_road_clearance_px": 20,
+    "minimum_chain_gap_px": 20,
+    "maximum_chain_length_px": 240,
+    "forbidden_topologies": [
+      "Y-network",
+      "T-network",
+      "closed-loop",
+      "long-parallel-wave",
+      "triangular-peak",
+      "road-intersection"
+    ],
+    "hatch_gap_from_band_px": 6,
+    "hatch_width_px": 4,
+    "hatch_rule": "Use only the listed one short hatch on one signed side of each directed ridge path, separated from the band edge by 4-8 pixels. Do not touch the band or connect hatches into branches."
+  },
+  "rendering": {
+    "parent_map_role": "low-saturation-low-opacity-location-context",
+    "parent_map_opacity": 0.24,
+    "ridge_outline_color": "#144A56",
+    "ridge_outline_opacity": 0.38,
+    "ridge_band_color": "#00CFE8",
+    "ridge_band_opacity": 0.56,
+    "ridge_width_variation_px": 3,
+    "center_line_drawn": false,
+    "hatch_color": "#00E5FF",
+    "labels_or_legend_baked_into_raster": false
+  },
+  "road_avoidance": {
+    "role": "source-pixel corridors that no ridge or hatch may enter after width and clearance are applied",
+    "corridors": [
+      {
+        "id": "east_road",
+        "path_role": "protected-road-centerline",
+        "width_px": 12,
+        "source_pixels_path": [[930, 505], [1050, 515], [1180, 540], [1270, 535], [1370, 490], [1535, 450]]
+      },
+      {
+        "id": "south_east_road",
+        "path_role": "protected-road-centerline",
+        "width_px": 12,
+        "source_pixels_path": [[910, 558], [1000, 610], [1090, 666], [1180, 725], [1270, 785], [1360, 840], [1450, 892], [1535, 936]]
+      }
+    ]
+  },
+  "regions": [
+    {
+      "id": "north_east_range",
+      "role": "allowed-disconnected-short-ridge-chain-field",
+      "source_pixels_polygon": [[882, 0], [1535, 0], [1535, 596], [1458, 610], [1370, 596], [1288, 612], [1194, 598], [1098, 620], [1010, 590], [934, 552], [884, 486], [872, 392], [884, 286]],
+      "ridge_chains": [
+        {
+          "id": "ne_ridge_01",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[945, 122], [977, 94], [1018, 80], [1060, 86], [1096, 111]],
+          "hatch_side_sign": -1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[990, 62], [986, 49]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_02",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[1160, 62], [1190, 37], [1228, 35], [1260, 54], [1282, 89], [1276, 128]],
+          "hatch_side_sign": -1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1293, 59], [1305, 51]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_03",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[1402, 54], [1434, 76], [1448, 111], [1441, 147], [1418, 176]],
+          "hatch_side_sign": -1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1469, 135], [1483, 138]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_04",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[1030, 252], [1062, 222], [1104, 211], [1147, 222], [1181, 248], [1204, 282]],
+          "hatch_side_sign": -1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1077, 191], [1074, 177]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_05",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[1280, 302], [1311, 279], [1348, 282], [1378, 307], [1402, 340], [1438, 354], [1470, 344]],
+          "hatch_side_sign": -1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1333, 255], [1334, 241]]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "south_east_range",
+      "role": "allowed-disconnected-short-ridge-chain-field",
+      "source_pixels_polygon": [[884, 782], [996, 764], [1118, 770], [1234, 798], [1348, 844], [1454, 910], [1535, 974], [1535, 1023], [752, 1023], [786, 958], [820, 900]],
+      "ridge_chains": [
+        {
+          "id": "se_ridge_01",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[806, 974], [840, 943], [884, 925], [931, 932], [974, 958]],
+          "hatch_side_sign": 1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[872, 958], [877, 971]]}
+          ]
+        },
+        {
+          "id": "se_ridge_02",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[949, 844], [986, 818], [1028, 813], [1068, 832], [1098, 858], [1111, 878]],
+          "hatch_side_sign": 1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1010, 842], [1011, 856]]}
+          ]
+        },
+        {
+          "id": "se_ridge_03",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[1074, 990], [1107, 960], [1149, 944], [1192, 951], [1230, 977]],
+          "hatch_side_sign": 1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1138, 976], [1143, 989]]}
+          ]
+        },
+        {
+          "id": "se_ridge_04",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[1181, 875], [1215, 850], [1256, 854], [1291, 878], [1319, 909]],
+          "hatch_side_sign": 1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1232, 878], [1231, 892]]}
+          ]
+        },
+        {
+          "id": "se_ridge_05",
+          "path_role": "independent-wide-short-ridge-centerline",
+          "width_px": 40,
+          "source_pixels_path": [[1339, 993], [1378, 974], [1422, 979], [1460, 1002], [1494, 1010]],
+          "hatch_side_sign": 1,
+          "hatches": [
+            {"path_role": "detached-one-sided-short-hatch", "source_pixels_path": [[1397, 1002], [1396, 1016]]}
+          ]
+        }
+      ]
+    }
+  ]
+}

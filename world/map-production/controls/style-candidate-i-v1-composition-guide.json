@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-i-v1-composition-guide",
+  "purpose": "geometry-only input for one ImageGen style-board generation",
+  "output": {
+    "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
+    "sha256": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc",
+    "bytes": 311514,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024
+  },
+  "renderer": {
+    "path": "scripts/map-production/render_candidate_i1_composition_guide.py",
+    "supersample": 3,
+    "resampling": "Pillow LANCZOS",
+    "randomness": "none"
+  },
+  "encoded_composition": [
+    "open sea on the left",
+    "low irregular west and south-west coast with braided delta islands",
+    "forest across the north and north-centre",
+    "north-to-centre river splitting through the western delta",
+    "dense circular plan city centred near x=842,y=510",
+    "small flat coastal port near x=500,y=850",
+    "roads connecting city, port, north, east, and lower-right fields",
+    "irregular flat highland region in the upper-right",
+    "large sparse field parcels in the lower-right",
+    "unmarked quiet corridors between major regions"
+  ],
+  "explicit_non_authority": [
+    "style",
+    "palette of the generated candidate",
+    "surface material",
+    "microdetail",
+    "lettering",
+    "pictorial symbols"
+  ],
+  "forbidden_in_guide": [
+    "source-image texture",
+    "perspective pixels",
+    "dots or CAD-like wallpaper",
+    "labels or pseudo-writing",
+    "illustrative terrain glyphs"
+  ],
+  "palette": {
+    "sea": "#426f79",
+    "land": "#d6bd82",
+    "coast": "#263e45",
+    "river": "#5a8c92",
+    "river_edge": "#31555d",
+    "forest": "#67805d",
+    "highland": "#a48b73",
+    "field_a": "#b79c64",
+    "field_b": "#c5aa6f",
+    "urban": "#8e6654",
+    "urban_line": "#513f38",
+    "road": "#765e48",
+    "road_core": "#ead398"
+  }
+}

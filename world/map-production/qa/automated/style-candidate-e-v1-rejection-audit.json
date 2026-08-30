@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-e-v1-rejection-audit",
+  "created_at": "2026-07-18T23:59:17Z",
+  "status": "rejected",
+  "candidate_series": "E",
+  "candidate_attempt": 1,
+  "preflight": {
+    "path": "world/map-production/qa/automated/style-candidate-e-v1-preflight.json",
+    "sha256": "3446149021e3f76ce640b44b7ef1518f04a8aa7d95e14db1cba1c397db7aeecd",
+    "status": "passed"
+  },
+  "raw_output": {
+    "path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+    "sha256": "51549c9568c02b85b9bc5adfad08bc13b5f32f5e53d81a383a27e6c11bed42a0",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "bytes": 1375160
+  },
+  "transfer_result": {
+    "status": "rejected-before-publication",
+    "reason": "south_east_range input plate Q90-Q10 is outside the required range: 17.0000 not in [31, 40]",
+    "required_input_plate_q90_q10_levels": [31, 40],
+    "minimum_bandpass_q90_q10_levels": 3.5,
+    "maximum_normalization_gain": 2,
+    "region_metrics": [
+      {
+        "id": "north_east_range",
+        "opaque_core_pixels": 215045,
+        "input_q10_levels": 126,
+        "input_q90_levels": 159,
+        "input_q90_q10_levels": 33,
+        "bandpass_q10_levels": -2,
+        "bandpass_median_levels": 0,
+        "bandpass_q90_levels": 4,
+        "bandpass_q90_q10_levels": 6,
+        "normalization_gain": 1.166667,
+        "input_gate": "passed"
+      },
+      {
+        "id": "south_east_range",
+        "opaque_core_pixels": 108751,
+        "input_q10_levels": 115,
+        "input_q90_levels": 132,
+        "input_q90_q10_levels": 17,
+        "bandpass_q10_levels": -1,
+        "bandpass_median_levels": 0,
+        "bandpass_q90_levels": 1,
+        "bandpass_q90_q10_levels": 2,
+        "hypothetical_normalization_gain": 3.5,
+        "input_gate": "failed"
+      }
+    ],
+    "published_candidate": false,
+    "published_mask": false,
+    "published_field": false,
+    "published_report": false,
+    "temporary_publication_files_found": 0
+  },
+  "raw_diagnostics": {
+    "rgb_channel_spread_median_levels": 1,
+    "rgb_channel_spread_p90_levels": 2,
+    "rgb_channel_spread_p99_levels": 2,
+    "maximum_rgb_channel_spread_levels": 4,
+    "gaussian_radius_8_high_frequency_rms_levels": 0.6722,
+    "gaussian_radius_8_high_frequency_p99_levels": 2,
+    "gaussian_radius_8_high_frequency_maximum_levels": 4,
+    "north_east_quadrant_input_spreads": [11, 28, 13, 16],
+    "south_east_quadrant_input_spreads": [12, 3, 14, 13]
+  },
+  "vision_findings": {
+    "review_a": {"decision": "rejected", "score": 54},
+    "review_b": {"decision": "rejected", "score": 55},
+    "discrete_artifacts": "No text, hard line, contour, grain, hard rectangle, or watermark appears at 100%, 200%, or 400%.",
+    "broad_field": "North-east is numerically viable, but south-east is a weak haze; three similarly shaped dark masses form a loose vertical chain and the plate reads as cloudy repeated blobs rather than a deliberate areal scalar field.",
+    "south_east_coverage": "The second south-east quadrant has only three levels of Q90-Q10 variation and is effectively flat.",
+    "color": "The plate is sufficiently neutral for equal-channel deterministic transfer."
+  },
+  "change_control": {
+    "same_final_defect_consecutive_count": 2,
+    "history": ["Candidate D v5 south-east band-pass span 1", "Candidate E v1 south-east band-pass span 2"],
+    "decision": "Change the generation prompt only; do not relax the control, input gate, band-pass minimum, or normalization limit."
+  },
+  "next_candidate": {
+    "id": "style-candidate-e-v2-strengthen-south-east-plate",
+    "single_change": "Increase only the existing south-east plate luminance deviation around its regional median to approximately twice E v1, while preserving north-east, zone geometry, scale, transition width, masks, and all transfer gates.",
+    "target_input_q90_q10_levels": [31, 40]
+  }
+}

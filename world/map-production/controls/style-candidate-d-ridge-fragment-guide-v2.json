@@ -1,0 +1,232 @@
+{
+  "schema_version": "2.0.0",
+  "id": "style-candidate-d-ridge-fragment-guide-v2",
+  "artifact_role": "image-generation-ridge-fragment-control",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "source_context": {
+    "path": "world/map-production/candidates/style-candidate-d-v2-flat-relief-bands.png",
+    "role": "very-faint-location-context-only",
+    "sha256": "c968d4422277c9d6ef4aea8186d220d100e741053e9fe658cee80fd3d9bc3cc7"
+  },
+  "topology_control": {
+    "path": "world/map-production/controls/style-candidate-d-ridge-guide-v1.json",
+    "role": "hash-locked-authority-for-five-plus-five-paths-widths-hatches-and-road-clearance",
+    "sha256": "094f23f2a9515add9fccc6f52868d720ac53c40ca4985b804dd0da8a48062a13"
+  },
+  "purpose": "Attempt-three control for the same ten Candidate D ridges. Cyan specifies only each soft broad geometry zone; three magenta zones specify three mutually detached crest fragments; one lime zone specifies one detached hatch. Colors are control semantics, never terrain colors.",
+  "downstream_edit_mask_hint": {
+    "path_field": "regions[].ridge_controls[].geometry_zone.source_pixels_path",
+    "width_field": "regions[].ridge_controls[].geometry_zone.width_px",
+    "interpretation": "center path plus nominal full width; add any mask feather outside this control"
+  },
+  "constraints": {
+    "ridge_count": 10,
+    "ridges_per_region": 5,
+    "ridge_geometry_width_px": [37, 43],
+    "crest_fragment_zones_per_ridge": 3,
+    "crest_fragment_length_px": [12, 24],
+    "minimum_crest_fragment_gap_px": 24,
+    "detached_hatch_zones_per_ridge": 1,
+    "minimum_road_clearance_px": 20,
+    "forbidden_visuals": [
+      "continuous-crisp-band-edge",
+      "continuous-centerline",
+      "joined-crest-fragments",
+      "touching-hatch",
+      "outline",
+      "text",
+      "legend"
+    ]
+  },
+  "rendering": {
+    "render_primitive": "soft-alpha-zones-only",
+    "paper_color": "#F5F2E5",
+    "parent_context_opacity": 0.10,
+    "geometry_zone_color": "#00D4E8",
+    "geometry_zone_opacity": 0.48,
+    "geometry_zone_blur_radius_px": 2.6,
+    "geometry_zone_outline_drawn": false,
+    "continuous_centerline_drawn": false,
+    "crest_fragment_zone_color": "#F500A8",
+    "crest_fragment_zone_opacity": 0.92,
+    "crest_fragment_zone_width_px": 6,
+    "crest_fragment_zone_blur_radius_px": 0.7,
+    "hatch_zone_color": "#9AEC00",
+    "hatch_zone_opacity": 0.95,
+    "hatch_zone_blur_radius_px": 0.6,
+    "labels_or_legend_baked_into_raster": false
+  },
+  "regions": [
+    {
+      "id": "north_east_range",
+      "ridge_controls": [
+        {
+          "id": "ne_ridge_01",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[945, 122], [977, 94], [1018, 80], [1060, 86], [1096, 111]]
+          },
+          "crest_fragment_zones": [
+            {"id": "ne_ridge_01_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "ne_ridge_01_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "ne_ridge_01_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "ne_ridge_01_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[990, 62], [986, 49]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_02",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[1160, 62], [1190, 37], [1228, 35], [1260, 54], [1282, 89], [1276, 128]]
+          },
+          "crest_fragment_zones": [
+            {"id": "ne_ridge_02_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "ne_ridge_02_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "ne_ridge_02_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "ne_ridge_02_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1293, 59], [1305, 51]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_03",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[1402, 54], [1434, 76], [1448, 111], [1441, 147], [1418, 176]]
+          },
+          "crest_fragment_zones": [
+            {"id": "ne_ridge_03_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "ne_ridge_03_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "ne_ridge_03_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "ne_ridge_03_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1469, 135], [1483, 138]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_04",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[1030, 252], [1062, 222], [1104, 211], [1147, 222], [1181, 248], [1204, 282]]
+          },
+          "crest_fragment_zones": [
+            {"id": "ne_ridge_04_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "ne_ridge_04_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "ne_ridge_04_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "ne_ridge_04_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1077, 191], [1074, 177]]}
+          ]
+        },
+        {
+          "id": "ne_ridge_05",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[1280, 302], [1311, 279], [1348, 282], [1378, 307], [1402, 340], [1438, 354], [1470, 344]]
+          },
+          "crest_fragment_zones": [
+            {"id": "ne_ridge_05_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "ne_ridge_05_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "ne_ridge_05_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "ne_ridge_05_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1333, 255], [1334, 241]]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "south_east_range",
+      "ridge_controls": [
+        {
+          "id": "se_ridge_01",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[806, 974], [840, 943], [884, 925], [931, 932], [974, 958]]
+          },
+          "crest_fragment_zones": [
+            {"id": "se_ridge_01_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "se_ridge_01_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "se_ridge_01_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "se_ridge_01_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[872, 958], [877, 971]]}
+          ]
+        },
+        {
+          "id": "se_ridge_02",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[949, 844], [986, 818], [1028, 813], [1068, 832], [1098, 858], [1111, 878]]
+          },
+          "crest_fragment_zones": [
+            {"id": "se_ridge_02_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "se_ridge_02_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "se_ridge_02_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "se_ridge_02_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1010, 842], [1011, 856]]}
+          ]
+        },
+        {
+          "id": "se_ridge_03",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[1074, 990], [1107, 960], [1149, 944], [1192, 951], [1230, 977]]
+          },
+          "crest_fragment_zones": [
+            {"id": "se_ridge_03_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "se_ridge_03_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "se_ridge_03_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "se_ridge_03_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1138, 976], [1143, 989]]}
+          ]
+        },
+        {
+          "id": "se_ridge_04",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[1181, 875], [1215, 850], [1256, 854], [1291, 878], [1319, 909]]
+          },
+          "crest_fragment_zones": [
+            {"id": "se_ridge_04_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "se_ridge_04_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "se_ridge_04_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "se_ridge_04_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1232, 878], [1231, 892]]}
+          ]
+        },
+        {
+          "id": "se_ridge_05",
+          "geometry_zone": {
+            "path_role": "soft-no-outline-cyan-geometry-zone",
+            "width_px": 40,
+            "source_pixels_path": [[1339, 993], [1378, 974], [1422, 979], [1460, 1002], [1494, 1010]]
+          },
+          "crest_fragment_zones": [
+            {"id": "se_ridge_05_crest_01", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.10, "length_px": 18},
+            {"id": "se_ridge_05_crest_02", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.45, "length_px": 18},
+            {"id": "se_ridge_05_crest_03", "path_role": "detached-magenta-crest-fragment-zone", "start_fraction": 0.80, "length_px": 18}
+          ],
+          "hatch_zones": [
+            {"id": "se_ridge_05_hatch_01", "path_role": "detached-lime-hatch-zone", "width_px": 4, "source_pixels_path": [[1397, 1002], [1396, 1016]]}
+          ]
+        }
+      ]
+    }
+  ]
+}

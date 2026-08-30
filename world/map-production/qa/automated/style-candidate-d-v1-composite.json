@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "base_path": "world/map-production/candidates/style-candidate-b-v2-plan-view.png",
+  "edit_path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains-raw.png",
+  "control_path": "world/map-production/controls/style-candidate-d-mountain-mask-v1.json",
+  "output_path": "world/map-production/candidates/style-candidate-d-v1-guided-ridge-chains.png",
+  "width": 1536,
+  "height": 1024,
+  "masked_pixels": 531024,
+  "opaque_mask_pixels": 324685,
+  "protected_pixels_verified": 1041840,
+  "outside_mask_max_channel_difference": 0,
+  "output_sha256": "d833b8bdf83b78a9a4cca6d118a3b5cd8af55b00a029c585abe15d1942057363"
+}

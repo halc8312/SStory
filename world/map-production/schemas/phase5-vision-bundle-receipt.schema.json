@@ -1,0 +1,226 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-vision-bundle-receipt.schema.json",
+  "title": "SStory Phase 5 exact-five Vision bundle receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "type",
+    "sheet_id",
+    "view_order",
+    "inventory",
+    "source",
+    "focus_registry",
+    "focus",
+    "rendering",
+    "views"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1.0"
+    },
+    "type": {
+      "const": "sstory-phase5-root-vision-view-bundle"
+    },
+    "sheet_id": {
+      "type": "string",
+      "pattern": "^sheet_[a-z0-9_]+$"
+    },
+    "view_order": {
+      "const": [
+        "native",
+        "full25",
+        "full50",
+        "focus200",
+        "focus400"
+      ]
+    },
+    "inventory": {
+      "const": [
+        "native.png",
+        "full25.png",
+        "full50.png",
+        "focus200.png",
+        "focus400.png",
+        "receipt.json"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256",
+        "bytes",
+        "mode",
+        "size"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mode": {
+          "const": "RGB"
+        },
+        "size": {
+          "$ref": "#/definitions/size"
+        }
+      },
+      "additionalProperties": false
+    },
+    "focus_registry": {
+      "$ref": "#/definitions/artifact"
+    },
+    "focus": {
+      "type": "object",
+      "required": [
+        "box_px",
+        "crop_size",
+        "coordinate_convention"
+      ],
+      "properties": {
+        "box_px": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "crop_size": {
+          "const": [
+            512,
+            512
+          ]
+        },
+        "coordinate_convention": {
+          "const": "left-top-inclusive_right-bottom-exclusive"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rendering": {
+      "type": "object",
+      "required": [
+        "full_size_rounding",
+        "full_size_rounding_formula",
+        "interpolation",
+        "transforms",
+        "png"
+      ],
+      "properties": {
+        "full_size_rounding": {
+          "const": "positive-integer-round-half-up-minimum-1"
+        },
+        "full_size_rounding_formula": {
+          "const": "max(1,floor(source_dimension*numerator/denominator+0.5))"
+        },
+        "interpolation": {
+          "type": "object"
+        },
+        "transforms": {
+          "type": "object"
+        },
+        "png": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "views": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "filename",
+          "sha256",
+          "pixel_sha256",
+          "bytes",
+          "mode",
+          "size"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "native",
+              "full25",
+              "full50",
+              "focus200",
+              "focus400"
+            ]
+          },
+          "filename": {
+            "enum": [
+              "native.png",
+              "full25.png",
+              "full50.png",
+              "focus200.png",
+              "focus400.png"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "pixel_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mode": {
+            "const": "RGB"
+          },
+          "size": {
+            "$ref": "#/definitions/size"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "definitions": {
+    "artifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "size": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "integer",
+        "minimum": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

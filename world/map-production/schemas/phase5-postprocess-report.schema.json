@@ -1,0 +1,276 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/phase5-postprocess-report.schema.json",
+  "title": "SStory Phase 5 deterministic protected-composite report",
+  "description": "Hash-lockable proof that canonical land/sea, transport, and detail controls were deterministically composited over one raw ImageGen metatile before it became an indexed final tile.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "type",
+    "coordinate_reference_system",
+    "generated_by",
+    "mode",
+    "sheet_id",
+    "column",
+    "row",
+    "raw_output",
+    "control",
+    "output",
+    "protected_layers",
+    "created_at"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/phase5-postprocess-report.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "type": {
+      "const": "sstory-phase5-deterministic-protected-composite-report"
+    },
+    "coordinate_reference_system": {
+      "const": "EA-WORLD-1"
+    },
+    "generated_by": {
+      "const": "sstory-map-production/composite_phase5_protected_tile.py@1"
+    },
+    "mode": {
+      "const": "deterministic-protected-composite"
+    },
+    "sheet_id": {
+      "$ref": "#/definitions/id"
+    },
+    "column": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "row": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "raw_output": {
+      "$ref": "#/definitions/artifact"
+    },
+    "control": {
+      "$ref": "#/definitions/artifact"
+    },
+    "output": {
+      "$ref": "#/definitions/artifact"
+    },
+    "protected_layers": {
+      "const": [
+        "land-sea",
+        "transport",
+        "detail"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "image_contract": {
+      "$ref": "#/definitions/image_contract"
+    },
+    "verification": {
+      "$ref": "#/definitions/verification"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "image_artifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256",
+        "width",
+        "height",
+        "format",
+        "color_mode"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/path"
+        },
+        "sha256": {
+          "$ref": "#/definitions/sha256"
+        },
+        "width": {
+          "const": 2048
+        },
+        "height": {
+          "const": 2048
+        },
+        "format": {
+          "const": "PNG"
+        },
+        "color_mode": {
+          "const": "RGB"
+        }
+      },
+      "additionalProperties": false
+    },
+    "image_contract": {
+      "type": "object",
+      "required": [
+        "raw_output",
+        "runtime_parent_context",
+        "output"
+      ],
+      "properties": {
+        "raw_output": {
+          "$ref": "#/definitions/image_artifact"
+        },
+        "runtime_parent_context": {
+          "$ref": "#/definitions/image_artifact"
+        },
+        "output": {
+          "$ref": "#/definitions/image_artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "partition": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "pixel_count",
+        "land_pixel_count",
+        "water_pixel_count",
+        "unknown_pixel_count",
+        "overlap_pixel_count",
+        "unclassified_pixel_count"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "canon-land-water-unknown-partition-v1"
+        },
+        "pixel_count": {
+          "const": 4194304
+        },
+        "land_pixel_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4194304
+        },
+        "water_pixel_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4194304
+        },
+        "unknown_pixel_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4194304
+        },
+        "overlap_pixel_count": {
+          "const": 0
+        },
+        "unclassified_pixel_count": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "gate": {
+      "type": "object",
+      "required": [
+        "name",
+        "pixel_count",
+        "mismatch_pixel_count",
+        "passed"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "unknown-parent-fallback",
+            "land-water-boundary",
+            "transport",
+            "detail",
+            "known-generated-interior"
+          ]
+        },
+        "pixel_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4194304
+        },
+        "mismatch_pixel_count": {
+          "const": 0
+        },
+        "passed": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "land_water_boundary_filter_size_px",
+        "partition",
+        "gates",
+        "total_mismatch_pixel_count",
+        "passed"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "phase5-protected-composite-v1"
+        },
+        "land_water_boundary_filter_size_px": {
+          "const": 5
+        },
+        "partition": {
+          "$ref": "#/definitions/partition"
+        },
+        "gates": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/gate"
+          }
+        },
+        "total_mismatch_pixel_count": {
+          "const": 0
+        },
+        "passed": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

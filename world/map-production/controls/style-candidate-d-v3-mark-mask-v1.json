@@ -1,0 +1,1589 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-d-v3-mark-mask-v1",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "source_image": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "composite_base": "world/map-production/candidates/style-candidate-d-v3-detached-fragments.png",
+  "detection_base": {
+    "path": "world/map-production/candidates/style-candidate-d-v2-localized-base.png",
+    "sha256": "7945719f6668a3e8d8967ece15a14057d5ad246321a06346e0277e7387e561f4"
+  },
+  "fragment_role_control": {
+    "path": "world/map-production/controls/style-candidate-d-ridge-fragment-guide-v2.json",
+    "sha256": "f63f93966258e1d7ca8150f162ff92692d3542d9959953a966ec40dcab38b352"
+  },
+  "extraction": {
+    "grayscale": "Pillow-L",
+    "darkening_gaussian_radius_px": 0.8,
+    "darkening_threshold": 24,
+    "local_background_gaussian_radius_px": 5.0,
+    "local_contrast_threshold": 12,
+    "candidate_luminance_maximum": 124,
+    "spatial_gate": [
+      [
+        780,
+        0,
+        1536,
+        420
+      ],
+      [
+        780,
+        760,
+        1536,
+        1024
+      ]
+    ],
+    "connectivity": 8,
+    "area_px": [
+      25,
+      120
+    ],
+    "maximum_bbox_axis_px": [
+      8,
+      45
+    ],
+    "minimum_covariance_eigenvalue_ratio": 8.0
+  },
+  "purpose": "Attempt-four erase mask restricted to forty-four visually verified dark route-like capsule marks from Candidate D v3.",
+  "include_strokes": [
+    {
+      "id": "mark_01_feather",
+      "points": [
+        [
+          1161,
+          17
+        ],
+        [
+          1145,
+          27
+        ]
+      ],
+      "width": 19,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_01_core",
+      "points": [
+        [
+          1161,
+          17
+        ],
+        [
+          1145,
+          27
+        ]
+      ],
+      "width": 13,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_02_feather",
+      "points": [
+        [
+          1194,
+          40
+        ],
+        [
+          1216,
+          47
+        ]
+      ],
+      "width": 18,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_02_core",
+      "points": [
+        [
+          1194,
+          40
+        ],
+        [
+          1216,
+          47
+        ]
+      ],
+      "width": 12,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_03_feather",
+      "points": [
+        [
+          1391,
+          50
+        ],
+        [
+          1411,
+          62
+        ]
+      ],
+      "width": 22,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_03_core",
+      "points": [
+        [
+          1391,
+          50
+        ],
+        [
+          1411,
+          62
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_04_feather",
+      "points": [
+        [
+          993,
+          51
+        ],
+        [
+          977,
+          64
+        ]
+      ],
+      "width": 22,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_04_core",
+      "points": [
+        [
+          993,
+          51
+        ],
+        [
+          977,
+          64
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_05_feather",
+      "points": [
+        [
+          1255,
+          52
+        ],
+        [
+          1273,
+          67
+        ]
+      ],
+      "width": 24,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_05_core",
+      "points": [
+        [
+          1255,
+          52
+        ],
+        [
+          1273,
+          67
+        ]
+      ],
+      "width": 18,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_06_feather",
+      "points": [
+        [
+          1036,
+          76
+        ],
+        [
+          1008,
+          85
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_06_core",
+      "points": [
+        [
+          1036,
+          76
+        ],
+        [
+          1008,
+          85
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_07_feather",
+      "points": [
+        [
+          1054,
+          81
+        ],
+        [
+          1073,
+          91
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_07_core",
+      "points": [
+        [
+          1054,
+          81
+        ],
+        [
+          1073,
+          91
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_08_feather",
+      "points": [
+        [
+          1292,
+          88
+        ],
+        [
+          1291,
+          112
+        ]
+      ],
+      "width": 15,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_08_core",
+      "points": [
+        [
+          1292,
+          88
+        ],
+        [
+          1291,
+          112
+        ]
+      ],
+      "width": 9,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_09_feather",
+      "points": [
+        [
+          989,
+          98
+        ],
+        [
+          975,
+          110
+        ]
+      ],
+      "width": 21,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_09_core",
+      "points": [
+        [
+          989,
+          98
+        ],
+        [
+          975,
+          110
+        ]
+      ],
+      "width": 15,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_10_feather",
+      "points": [
+        [
+          1089,
+          97
+        ],
+        [
+          1105,
+          114
+        ]
+      ],
+      "width": 24,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_10_core",
+      "points": [
+        [
+          1089,
+          97
+        ],
+        [
+          1105,
+          114
+        ]
+      ],
+      "width": 18,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_11_feather",
+      "points": [
+        [
+          1446,
+          96
+        ],
+        [
+          1451,
+          117
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_11_core",
+      "points": [
+        [
+          1446,
+          96
+        ],
+        [
+          1451,
+          117
+        ]
+      ],
+      "width": 11,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_12_feather",
+      "points": [
+        [
+          1062,
+          112
+        ],
+        [
+          1045,
+          113
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_12_core",
+      "points": [
+        [
+          1062,
+          112
+        ],
+        [
+          1045,
+          113
+        ]
+      ],
+      "width": 8,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_13_feather",
+      "points": [
+        [
+          1294,
+          128
+        ],
+        [
+          1284,
+          146
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_13_core",
+      "points": [
+        [
+          1294,
+          128
+        ],
+        [
+          1284,
+          146
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_14_feather",
+      "points": [
+        [
+          1487,
+          151
+        ],
+        [
+          1470,
+          162
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_14_core",
+      "points": [
+        [
+          1487,
+          151
+        ],
+        [
+          1470,
+          162
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_15_feather",
+      "points": [
+        [
+          1447,
+          172
+        ],
+        [
+          1429,
+          183
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_15_core",
+      "points": [
+        [
+          1447,
+          172
+        ],
+        [
+          1429,
+          183
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_16_feather",
+      "points": [
+        [
+          1094,
+          197
+        ],
+        [
+          1074,
+          206
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_16_core",
+      "points": [
+        [
+          1094,
+          197
+        ],
+        [
+          1074,
+          206
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_17_feather",
+      "points": [
+        [
+          1121,
+          199
+        ],
+        [
+          1144,
+          207
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_17_core",
+      "points": [
+        [
+          1121,
+          199
+        ],
+        [
+          1144,
+          207
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_18_feather",
+      "points": [
+        [
+          1159,
+          219
+        ],
+        [
+          1178,
+          234
+        ]
+      ],
+      "width": 23,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_18_core",
+      "points": [
+        [
+          1159,
+          219
+        ],
+        [
+          1178,
+          234
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_19_feather",
+      "points": [
+        [
+          1328,
+          260
+        ],
+        [
+          1308,
+          271
+        ]
+      ],
+      "width": 21,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_19_core",
+      "points": [
+        [
+          1328,
+          260
+        ],
+        [
+          1308,
+          271
+        ]
+      ],
+      "width": 15,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_20_feather",
+      "points": [
+        [
+          1359,
+          265
+        ],
+        [
+          1379,
+          277
+        ]
+      ],
+      "width": 21,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_20_core",
+      "points": [
+        [
+          1359,
+          265
+        ],
+        [
+          1379,
+          277
+        ]
+      ],
+      "width": 15,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_21_feather",
+      "points": [
+        [
+          1408,
+          297
+        ],
+        [
+          1424,
+          316
+        ]
+      ],
+      "width": 24,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_21_core",
+      "points": [
+        [
+          1408,
+          297
+        ],
+        [
+          1424,
+          316
+        ]
+      ],
+      "width": 18,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_22_feather",
+      "points": [
+        [
+          1436,
+          337
+        ],
+        [
+          1455,
+          348
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_22_core",
+      "points": [
+        [
+          1436,
+          337
+        ],
+        [
+          1455,
+          348
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_23_feather",
+      "points": [
+        [
+          1515,
+          356
+        ],
+        [
+          1492,
+          357
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_23_core",
+      "points": [
+        [
+          1515,
+          356
+        ],
+        [
+          1492,
+          357
+        ]
+      ],
+      "width": 10,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_24_feather",
+      "points": [
+        [
+          1087,
+          812
+        ],
+        [
+          1110,
+          818
+        ]
+      ],
+      "width": 18,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_24_core",
+      "points": [
+        [
+          1087,
+          812
+        ],
+        [
+          1110,
+          818
+        ]
+      ],
+      "width": 12,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_25_feather",
+      "points": [
+        [
+          1236,
+          839
+        ],
+        [
+          1213,
+          843
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_25_core",
+      "points": [
+        [
+          1236,
+          839
+        ],
+        [
+          1213,
+          843
+        ]
+      ],
+      "width": 10,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_27_feather",
+      "points": [
+        [
+          1263,
+          848
+        ],
+        [
+          1284,
+          860
+        ]
+      ],
+      "width": 22,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_27_core",
+      "points": [
+        [
+          1263,
+          848
+        ],
+        [
+          1284,
+          860
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_28_feather",
+      "points": [
+        [
+          1127,
+          847
+        ],
+        [
+          1136,
+          862
+        ]
+      ],
+      "width": 19,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_28_core",
+      "points": [
+        [
+          1127,
+          847
+        ],
+        [
+          1136,
+          862
+        ]
+      ],
+      "width": 13,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_29_feather",
+      "points": [
+        [
+          1142,
+          882
+        ],
+        [
+          1134,
+          901
+        ]
+      ],
+      "width": 19,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_29_core",
+      "points": [
+        [
+          1142,
+          882
+        ],
+        [
+          1134,
+          901
+        ]
+      ],
+      "width": 13,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_30_feather",
+      "points": [
+        [
+          1303,
+          883
+        ],
+        [
+          1318,
+          903
+        ]
+      ],
+      "width": 24,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_30_core",
+      "points": [
+        [
+          1303,
+          883
+        ],
+        [
+          1318,
+          903
+        ]
+      ],
+      "width": 18,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_31_feather",
+      "points": [
+        [
+          893,
+          914
+        ],
+        [
+          917,
+          917
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_31_core",
+      "points": [
+        [
+          893,
+          914
+        ],
+        [
+          917,
+          917
+        ]
+      ],
+      "width": 11,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_32_feather",
+      "points": [
+        [
+          1132,
+          924
+        ],
+        [
+          1117,
+          936
+        ]
+      ],
+      "width": 21,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_32_core",
+      "points": [
+        [
+          1132,
+          924
+        ],
+        [
+          1117,
+          936
+        ]
+      ],
+      "width": 15,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_33_feather",
+      "points": [
+        [
+          1156,
+          939
+        ],
+        [
+          1180,
+          943
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_33_core",
+      "points": [
+        [
+          1156,
+          939
+        ],
+        [
+          1180,
+          943
+        ]
+      ],
+      "width": 11,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_34_feather",
+      "points": [
+        [
+          944,
+          938
+        ],
+        [
+          964,
+          954
+        ]
+      ],
+      "width": 24,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_34_core",
+      "points": [
+        [
+          944,
+          938
+        ],
+        [
+          964,
+          954
+        ]
+      ],
+      "width": 18,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_35_feather",
+      "points": [
+        [
+          1401,
+          950
+        ],
+        [
+          1423,
+          959
+        ]
+      ],
+      "width": 20,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_35_core",
+      "points": [
+        [
+          1401,
+          950
+        ],
+        [
+          1423,
+          959
+        ]
+      ],
+      "width": 14,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_36_feather",
+      "points": [
+        [
+          1341,
+          948
+        ],
+        [
+          1324,
+          962
+        ]
+      ],
+      "width": 23,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_36_core",
+      "points": [
+        [
+          1341,
+          948
+        ],
+        [
+          1324,
+          962
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_37_feather",
+      "points": [
+        [
+          1198,
+          957
+        ],
+        [
+          1215,
+          971
+        ]
+      ],
+      "width": 23,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_37_core",
+      "points": [
+        [
+          1198,
+          957
+        ],
+        [
+          1215,
+          971
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_38_feather",
+      "points": [
+        [
+          1123,
+          959
+        ],
+        [
+          1105,
+          973
+        ]
+      ],
+      "width": 23,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_38_core",
+      "points": [
+        [
+          1123,
+          959
+        ],
+        [
+          1105,
+          973
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_39_feather",
+      "points": [
+        [
+          1439,
+          979
+        ],
+        [
+          1459,
+          991
+        ]
+      ],
+      "width": 21,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_39_core",
+      "points": [
+        [
+          1439,
+          979
+        ],
+        [
+          1459,
+          991
+        ]
+      ],
+      "width": 15,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "mark_40_feather",
+      "points": [
+        [
+          1384,
+          987
+        ],
+        [
+          1368,
+          994
+        ]
+      ],
+      "width": 17,
+      "feather_inside_px": 2,
+      "review_role": "visually-verified-route-mark-feather"
+    },
+    {
+      "id": "mark_40_core",
+      "points": [
+        [
+          1384,
+          987
+        ],
+        [
+          1368,
+          994
+        ]
+      ],
+      "width": 11,
+      "feather_inside_px": 0,
+      "review_role": "visually-verified-route-mark-opaque-core"
+    },
+    {
+      "id": "manual_ne_east_center_feather",
+      "points": [
+        [
+          1434,
+          158
+        ],
+        [
+          1446,
+          143
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 2,
+      "review_role": "manually-added-route-mark-feather"
+    },
+    {
+      "id": "manual_ne_east_center_core",
+      "points": [
+        [
+          1434,
+          158
+        ],
+        [
+          1446,
+          143
+        ]
+      ],
+      "width": 10,
+      "feather_inside_px": 0,
+      "review_role": "manually-added-route-mark-opaque-core"
+    },
+    {
+      "id": "manual_se_north_feather",
+      "points": [
+        [
+          1038,
+          806
+        ],
+        [
+          1054,
+          795
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 2,
+      "review_role": "manually-added-route-mark-feather"
+    },
+    {
+      "id": "manual_se_north_core",
+      "points": [
+        [
+          1038,
+          806
+        ],
+        [
+          1054,
+          795
+        ]
+      ],
+      "width": 10,
+      "feather_inside_px": 0,
+      "review_role": "manually-added-route-mark-opaque-core"
+    },
+    {
+      "id": "manual_se_under_tree_feather",
+      "points": [
+        [
+          1014,
+          879
+        ],
+        [
+          1038,
+          864
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 2,
+      "review_role": "manually-added-route-mark-feather"
+    },
+    {
+      "id": "manual_se_under_tree_core",
+      "points": [
+        [
+          1014,
+          879
+        ],
+        [
+          1038,
+          864
+        ]
+      ],
+      "width": 10,
+      "feather_inside_px": 0,
+      "review_role": "manually-added-route-mark-opaque-core"
+    },
+    {
+      "id": "manual_se_west_feather",
+      "points": [
+        [
+          836,
+          950
+        ],
+        [
+          851,
+          937
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 2,
+      "review_role": "manually-added-route-mark-feather"
+    },
+    {
+      "id": "manual_se_west_core",
+      "points": [
+        [
+          836,
+          950
+        ],
+        [
+          851,
+          937
+        ]
+      ],
+      "width": 10,
+      "feather_inside_px": 0,
+      "review_role": "manually-added-route-mark-opaque-core"
+    },
+    {
+      "id": "manual_se_east_feather",
+      "points": [
+        [
+          1359,
+          933
+        ],
+        [
+          1383,
+          936
+        ]
+      ],
+      "width": 16,
+      "feather_inside_px": 2,
+      "review_role": "manually-added-route-mark-feather"
+    },
+    {
+      "id": "manual_se_east_core",
+      "points": [
+        [
+          1359,
+          933
+        ],
+        [
+          1383,
+          936
+        ]
+      ],
+      "width": 10,
+      "feather_inside_px": 0,
+      "review_role": "manually-added-route-mark-opaque-core"
+    }
+  ],
+  "exclude_strokes": [],
+  "feather_inside_px": 2,
+  "automated_component_count": 40,
+  "reviewed_component_allowlist": [
+    "mark_01",
+    "mark_02",
+    "mark_03",
+    "mark_04",
+    "mark_05",
+    "mark_06",
+    "mark_07",
+    "mark_08",
+    "mark_09",
+    "mark_10",
+    "mark_11",
+    "mark_12",
+    "mark_13",
+    "mark_14",
+    "mark_15",
+    "mark_16",
+    "mark_17",
+    "mark_18",
+    "mark_19",
+    "mark_20",
+    "mark_21",
+    "mark_22",
+    "mark_23",
+    "mark_24",
+    "mark_25",
+    "mark_27",
+    "mark_28",
+    "mark_29",
+    "mark_30",
+    "mark_31",
+    "mark_32",
+    "mark_33",
+    "mark_34",
+    "mark_35",
+    "mark_36",
+    "mark_37",
+    "mark_38",
+    "mark_39",
+    "mark_40"
+  ],
+  "reviewed_false_positives": [
+    "mark_26"
+  ],
+  "reviewed_manual_strokes": [
+    {
+      "id": "manual_ne_east_center",
+      "points": [
+        [
+          1434,
+          158
+        ],
+        [
+          1446,
+          143
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-ne-east-source-detail.png"
+    },
+    {
+      "id": "manual_se_north",
+      "points": [
+        [
+          1038,
+          806
+        ],
+        [
+          1054,
+          795
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-se-north-source-detail.png"
+    },
+    {
+      "id": "manual_se_under_tree",
+      "points": [
+        [
+          1014,
+          879
+        ],
+        [
+          1038,
+          864
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-se-under-tree-source-detail.png"
+    },
+    {
+      "id": "manual_se_west",
+      "points": [
+        [
+          836,
+          950
+        ],
+        [
+          851,
+          937
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-839-941-source-detail.png"
+    },
+    {
+      "id": "manual_se_east",
+      "points": [
+        [
+          1359,
+          933
+        ],
+        [
+          1383,
+          936
+        ]
+      ],
+      "core_width": 10,
+      "evidence": "400% review of missing-se-east-source-detail.png"
+    }
+  ],
+  "reviewed_target_count": 44,
+  "review_status": "provisional",
+  "notes": "Thirty-nine automated components passed 100% and 400% visual review; mark_26 was rejected as a tree, and five visually verified omissions were added manually. Each target has an opaque core plus a narrow outward feather. The v3 marks do not preserve a reliable per-ridge 3:1 role distribution, so attempt four erases the reviewed artifacts without inventing post-hoc roles."
+}

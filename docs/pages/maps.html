@@ -30,17 +30,19 @@
 
     <section class="intro">
       <p>ここでは生成済みの世界地図・大陸地図・地域地図・交通図をカテゴリ別に閲覧できます。</p>
-      <p>静的画像ギャラリーに加えて、Map Data と連携したインタラクティブマップ v1 / v2 への導線もこのページで整理しています。交通図の元データは <code>world/map-data/</code> に整理されています。</p>
+      <p>静的画像ギャラリーに加えて、Map Data と連携したインタラクティブマップ v1 / v2 / v3 への導線もこのページで整理しています。交通図の元データは <code>world/map-data/</code> に整理されています。</p>
     </section>
 
     <section class="notice">
       <h3>インタラクティブマップの使い分け</h3>
       <ul>
+        <li><strong><code>interactive-map-v3.html</code></strong> — Preview。512px XYZタイルへ対応した深度ズームUI、ズームLOD、ベクターレイヤーを公開前評価中です。タイルが未配置の環境では既存の高解像度世界地図へ安全にフォールバックします。</li>
         <li><strong><code>interactive-map.html</code></strong> — 現行安定版。交通ノード、POI、ルート検索、旧SVGデバッグ表示、既存の公開APIを含みます。</li>
         <li><strong><code>interactive-map-v2.html</code></strong> — Beta / Experimental。フルスクリーン地図、Google Maps風UI、レイヤーパネル、ミニマップなど次世代候補のUIを正式評価中です。</li>
       </ul>
       <p>
-        <a href="./interactive-map-v2.html" style="font-weight:bold;">🗺️ Leaflet v2 試験版マップを開く &rarr;</a>
+        <a href="./interactive-map-v3.html" style="font-weight:bold;">🗺️ 深度世界地図 v3 プレビューを開く &rarr;</a>
+        | <a href="./interactive-map-v2.html">v2 試験版を開く &rarr;</a>
         | <a href="./interactive-map.html">現行安定版 v1 を開く &rarr;</a>
         | <a href="../notes/interactive-map-v2-evaluation.md">v2 評価メモ &rarr;</a>
       </p>
@@ -73,11 +75,13 @@
 
     <section class="future">
       <h3>インタラクティブマップ導線</h3>
-      <p>現在は、現行安定版 v1 と、Google Maps風の全画面UIを検証する v2 試験版を並行公開しています。</p>
+      <p>現行安定版 v1、Google Maps風UIを検証する v2 試験版、有限ディープズームとベクターレイヤーを検証する v3 プレビューを並行公開しています。</p>
       <p>
-        <a href="./interactive-map-v2.html" style="font-weight:bold;">🗺️ インタラクティブワールドマップ v2（試験版） &rarr;</a>
+        <a href="./interactive-map-v3.html" style="font-weight:bold;">🗺️ 深度世界地図 v3（プレビュー） &rarr;</a>
         <br>
-        <a href="./interactive-map.html" style="opacity:0.7;">🗺️ 現行安定版マップ（v1） &rarr;</a>
+        <a href="./interactive-map-v2.html">🗺️ インタラクティブワールドマップ v2（試験版） &rarr;</a>
+        <br>
+        <a href="./interactive-map.html" style="opacity:0.7;">🗺️ 現行安定版マップ v1 &rarr;</a>
         | <a href="../notes/interactive-map-v2-evaluation.md">v2 評価メモ &rarr;</a>
         | <a href="./map-data.html">Map Data について &rarr;</a>
         | <a href="./roadmap.html">ロードマップ &rarr;</a>

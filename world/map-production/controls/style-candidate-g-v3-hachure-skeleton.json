@@ -1,0 +1,214 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-g-v3-hachure-skeleton",
+  "coordinate_space": "source-pixels-y-down",
+  "canvas": {"width": 1536, "height": 1024},
+  "footprint_reference": {
+    "source_path": "world/map-production/controls/style-candidate-g-v2-topology-guide.json",
+    "source_sha256": "9646d14a89dfd7fd9dccba3d1d3bd14fe9b492623d8850d2d7524c5ff42adc01",
+    "raster_path": "world/map-production/controls/style-candidate-g-v2-topology-guide.png",
+    "raster_sha256": "a6c8815d5f1a769a6ebfeda8478cf52f586fdb3fd11156c734c3e43d9b6b188f"
+  },
+  "render_contract": {
+    "background_rgb": [240, 238, 232],
+    "stroke_rgb": [54, 48, 42],
+    "stroke_width_px": 3,
+    "minimum_segment_length_px": 18,
+    "maximum_segment_length_px": 42,
+    "minimum_unique_lengths_per_landform": 5,
+    "minimum_orientation_bins_per_landform": 5,
+    "orientation_bin_degrees": 15,
+    "minimum_ink_pixels_per_landform": 400,
+    "minimum_saddle_clearance_px": 24,
+    "minimum_main_rise_segment_count_delta": 3,
+    "maximum_radial_alignment_fraction": 0.5,
+    "normalized_template_size_px": 64,
+    "maximum_normalized_template_iou": 0.72,
+    "require_disconnected_segments": true,
+    "require_distinct_foothill_segment_counts": true
+  },
+  "landforms": [
+    {
+      "id": "ne-main-massif",
+      "region_id": "north_east_range",
+      "role": "main-massif",
+      "footprint_rgb": [206, 74, 62],
+      "saddle_clear_box": [1200, 165, 1285, 285],
+      "groups": [
+        {
+          "id": "ne-main-west-rise",
+          "kind": "rise",
+          "segments": [
+            {"id": "ne-mw-01", "points": [[1033, 163], [1041, 190]]},
+            {"id": "ne-mw-02", "points": [[1059, 182], [1044, 206]]},
+            {"id": "ne-mw-03", "points": [[1045, 217], [1070, 234]]},
+            {"id": "ne-mw-04", "points": [[1068, 238], [1074, 272]]},
+            {"id": "ne-mw-05", "points": [[1074, 146], [1100, 156]]},
+            {"id": "ne-mw-06", "points": [[1102, 147], [1123, 171]]},
+            {"id": "ne-mw-07", "points": [[1137, 165], [1134, 195]]},
+            {"id": "ne-mw-08", "points": [[1163, 197], [1145, 220]]},
+            {"id": "ne-mw-09", "points": [[1114, 238], [1142, 251]]},
+            {"id": "ne-mw-10", "points": [[1151, 233], [1164, 260]]},
+            {"id": "ne-mw-11", "points": [[1112, 252], [1086, 273]]},
+            {"id": "ne-mw-12", "points": [[1066, 190], [1097, 196]]}
+          ]
+        },
+        {
+          "id": "ne-main-east-rise",
+          "kind": "rise",
+          "segments": [
+            {"id": "ne-me-01", "points": [[1305, 161], [1329, 172]]},
+            {"id": "ne-me-02", "points": [[1329, 156], [1338, 182]]},
+            {"id": "ne-me-03", "points": [[1370, 159], [1359, 184]]},
+            {"id": "ne-me-05", "points": [[1293, 192], [1312, 211]]},
+            {"id": "ne-me-07", "points": [[1386, 206], [1367, 229]]},
+            {"id": "ne-me-08", "points": [[1389, 231], [1419, 238]]},
+            {"id": "ne-me-09", "points": [[1304, 238], [1318, 261]]},
+            {"id": "ne-me-11", "points": [[1393, 257], [1366, 270]]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ne-west-foothill",
+      "region_id": "north_east_range",
+      "role": "foothill-a",
+      "footprint_rgb": [232, 151, 61],
+      "saddle_clear_box": null,
+      "groups": [
+        {
+          "id": "ne-west-foothill-slope",
+          "kind": "foothill",
+          "segments": [
+            {"id": "ne-fw-01", "points": [[820, 388], [842, 375]]},
+            {"id": "ne-fw-02", "points": [[838, 405], [865, 396]]},
+            {"id": "ne-fw-03", "points": [[855, 424], [879, 411]]},
+            {"id": "ne-fw-04", "points": [[878, 444], [899, 426]]},
+            {"id": "ne-fw-05", "points": [[836, 439], [829, 414]]},
+            {"id": "ne-fw-06", "points": [[869, 365], [889, 378]]},
+            {"id": "ne-fw-07", "points": [[901, 392], [923, 404]]},
+            {"id": "ne-fw-08", "points": [[889, 458], [913, 445]]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ne-central-foothill",
+      "region_id": "north_east_range",
+      "role": "foothill-b",
+      "footprint_rgb": [126, 93, 178],
+      "saddle_clear_box": null,
+      "groups": [
+        {
+          "id": "ne-central-foothill-slope",
+          "kind": "foothill",
+          "segments": [
+            {"id": "ne-fc-01", "points": [[1104, 465], [1110, 440]]},
+            {"id": "ne-fc-02", "points": [[1128, 486], [1148, 467]]},
+            {"id": "ne-fc-03", "points": [[1142, 515], [1154, 486]]},
+            {"id": "ne-fc-04", "points": [[1168, 425], [1192, 432]]},
+            {"id": "ne-fc-05", "points": [[1180, 456], [1207, 444]]},
+            {"id": "ne-fc-06", "points": [[1200, 482], [1204, 514]]},
+            {"id": "ne-fc-07", "points": [[1218, 490], [1238, 472]]},
+            {"id": "ne-fc-08", "points": [[1158, 473], [1182, 477]]},
+            {"id": "ne-fc-09", "points": [[1120, 502], [1098, 492]]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "se-main-massif",
+      "region_id": "south_east_range",
+      "role": "main-massif",
+      "footprint_rgb": [206, 74, 62],
+      "saddle_clear_box": [1150, 775, 1205, 900],
+      "groups": [
+        {
+          "id": "se-main-west-rise",
+          "kind": "rise",
+          "segments": [
+            {"id": "se-mw-01", "points": [[985, 802], [1008, 821]]},
+            {"id": "se-mw-02", "points": [[1022, 827], [1025, 857]]},
+            {"id": "se-mw-03", "points": [[1050, 854], [1032, 881]]},
+            {"id": "se-mw-04", "points": [[1058, 773], [1026, 784]]},
+            {"id": "se-mw-05", "points": [[1065, 784], [1084, 811]]},
+            {"id": "se-mw-06", "points": [[1109, 801], [1104, 832]]},
+            {"id": "se-mw-07", "points": [[1092, 839], [1069, 859]]},
+            {"id": "se-mw-08", "points": [[1089, 878], [1117, 888]]},
+            {"id": "se-mw-09", "points": [[1056, 888], [1063, 906]]},
+            {"id": "se-mw-10", "points": [[1013, 895], [1005, 913]]},
+            {"id": "se-mw-11", "points": [[1108, 775], [1083, 790]]},
+            {"id": "se-mw-12", "points": [[988, 840], [1011, 853]]},
+            {"id": "se-mw-13", "points": [[1130, 837], [1128, 864]]}
+          ]
+        },
+        {
+          "id": "se-main-east-rise",
+          "kind": "rise",
+          "segments": [
+            {"id": "se-me-01", "points": [[1238, 792], [1218, 812]]},
+            {"id": "se-me-02", "points": [[1242, 825], [1271, 825]]},
+            {"id": "se-me-04", "points": [[1220, 858], [1230, 886]]},
+            {"id": "se-me-06", "points": [[1287, 877], [1300, 892]]},
+            {"id": "se-me-07", "points": [[1310, 794], [1287, 810]]},
+            {"id": "se-me-09", "points": [[1217, 835], [1235, 849]]},
+            {"id": "se-me-11", "points": [[1226, 894], [1238, 917]]},
+            {"id": "se-me-12", "points": [[1270, 900], [1297, 905]]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "se-west-foothill",
+      "region_id": "south_east_range",
+      "role": "foothill-a",
+      "footprint_rgb": [232, 151, 61],
+      "saddle_clear_box": null,
+      "groups": [
+        {
+          "id": "se-west-foothill-slope",
+          "kind": "foothill",
+          "segments": [
+            {"id": "se-fw-01", "points": [[715, 888], [738, 871]]},
+            {"id": "se-fw-02", "points": [[756, 890], [757, 921]]},
+            {"id": "se-fw-03", "points": [[769, 930], [797, 936]]},
+            {"id": "se-fw-04", "points": [[755, 862], [748, 839]]},
+            {"id": "se-fw-05", "points": [[784, 876], [803, 853]]},
+            {"id": "se-fw-06", "points": [[813, 894], [842, 888]]},
+            {"id": "se-fw-07", "points": [[820, 916], [841, 932]]},
+            {"id": "se-fw-08", "points": [[792, 880], [787, 905]]},
+            {"id": "se-fw-09", "points": [[728, 918], [708, 906]]},
+            {"id": "se-fw-10", "points": [[801, 842], [820, 857]]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "se-east-foothill",
+      "region_id": "south_east_range",
+      "role": "foothill-b",
+      "footprint_rgb": [126, 93, 178],
+      "saddle_clear_box": null,
+      "groups": [
+        {
+          "id": "se-east-foothill-slope",
+          "kind": "foothill",
+          "segments": [
+            {"id": "se-fe-01", "points": [[1375, 835], [1396, 819]]},
+            {"id": "se-fe-02", "points": [[1390, 861], [1416, 852]]},
+            {"id": "se-fe-03", "points": [[1402, 892], [1426, 905]]},
+            {"id": "se-fe-04", "points": [[1399, 800], [1426, 799]]},
+            {"id": "se-fe-05", "points": [[1439, 809], [1439, 836]]},
+            {"id": "se-fe-06", "points": [[1428, 870], [1456, 873]]},
+            {"id": "se-fe-07", "points": [[1408, 850], [1398, 828]]},
+            {"id": "se-fe-08", "points": [[1442, 897], [1429, 923]]},
+            {"id": "se-fe-09", "points": [[1388, 905], [1375, 887]]},
+            {"id": "se-fe-10", "points": [[1439, 848], [1459, 837]]},
+            {"id": "se-fe-11", "points": [[1378, 855], [1380, 876]]}
+          ]
+        }
+      ]
+    }
+  ],
+  "purpose": "Geometry-only G3 conditioning raster. It fixes two open-saddle rise groups in each main footprint and short unequal fall-line segments in all four foothills; colors are not style, permission, or compositing instructions."
+}

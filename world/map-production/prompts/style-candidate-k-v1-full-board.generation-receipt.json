@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0.0",
+  "id": "style-candidate-k-v1-full-board-generation-receipt",
+  "type": "sstory-imagegen-candidate-generation-receipt",
+  "receipt_created_at": "2026-07-20T00:50:58.7585907Z",
+  "scope": "One root-approved fresh full-board K1 ImageGen attempt and a byte-identical review copy only; not Golden acceptance, manifest adoption, renderer adoption, docs publication, or release evidence.",
+  "approved_preflight": {
+    "path": "tmp/map-production/k1-spatial-grammar-preflight-v1/k1-spatial-grammar-preflight-evidence.json",
+    "sha256": "b32fcbbceecb78e9f4ac61cebb8aea547fdac7540d91fc33df1e343b908eaddc",
+    "bytes": 29745,
+    "approval": "Root Vision approved the exact three-input role contract, exact prompt, and aligned control SHA-256 752aba1777b146e58ac89090a99fa376c7aa4634c26a65968789eb54e26e2551 before generation; this was generation-input approval, not completed-candidate approval."
+  },
+  "generation_policy": {
+    "calls_authorized": 1,
+    "calls_performed": 1,
+    "retry_performed": false,
+    "tool_mode": "OpenAI ImageGen through Codex built-in image generation",
+    "intent": "fresh three-reference generation, not edit, inpaint, local patch, or protected composite"
+  },
+  "provenance_limitations": {
+    "exact_image_model_identifier_available": false,
+    "model": "unknown",
+    "model_snapshot_available": false,
+    "model_snapshot": "unavailable",
+    "generation_identifier_available": false,
+    "generation_id": "unavailable",
+    "generation_timestamp_utc": null,
+    "note": "The retained built-in tool output exposed a default saved filename but no authoritative model identifier, model snapshot, generation identifier, or generation timestamp. No missing value is inferred from the filename or receipt creation time."
+  },
+  "prompt": {
+    "path": "world/map-production/prompts/style-candidate-k-v1-full-board.generation.txt",
+    "sha256": "9f46cf9ba6349c16982f16b13ee70bc03a0d31d050c40b64dcf48584bd438cab",
+    "bytes": 6607,
+    "exact_text_retained": true,
+    "preflight_source_path": "tmp/map-production/k1-spatial-grammar-preflight-v1/style-candidate-k-v1-full-board.preflight-v1.generation.txt",
+    "ordered_reference_role_count": 3
+  },
+  "inputs": [
+    {
+      "path": "world/map-production/controls/style-candidate-i-v1-composition-guide.png",
+      "sha256": "52f85e45b61bf889de709d8ea9601bd5865d6021bfbc617473a9e957a6ab8bbc",
+      "bytes": 311514,
+      "role": "Image 1: exact and sole composition, geometry, topology, footprint, adjacency, relative-placement, junction, and connection authority; explicitly not palette, material, or print authority"
+    },
+    {
+      "path": "tmp/map-production/k1-spatial-grammar-preflight-v1/k1-aligned-spatial-material-grammar-control-1536x1024.png",
+      "sha256": "752aba1777b146e58ac89090a99fa376c7aa4634c26a65968789eb54e26e2551",
+      "bytes": 1626135,
+      "role": "Image 2: aligned spatial material grammar and negative-space distribution only; explicitly not an independent palette authority"
+    },
+    {
+      "path": "world/map-production/candidates/style-candidate-b-v1.png",
+      "sha256": "4d505def78acc752ee2611cb73d112cc9a3048f611cb05233274a1eb2ae42003",
+      "bytes": 4180383,
+      "role": "Image 3: sole palette, paper, ink, line-weight, print-grain, tonal-range, and material-finish authority; geography, perspective, floating islands, mountains, and literal motifs forbidden"
+    }
+  ],
+  "explicit_non_inputs": [
+    "world/map-production/candidates/phase5-royal-subtile1-x0000-y0000-raw.png",
+    "world/map-production/candidates/style-candidate-j-v1-full-board.png",
+    "tmp/map-production/i5-water-plate-preflight-v1/i5-water-material-grammar-guide-672x1024.png"
+  ],
+  "requested_output": {
+    "width": 1536,
+    "height": 1024,
+    "format": "PNG",
+    "mode": "RGB"
+  },
+  "built_in_tool_output_observation": {
+    "default_saved_path": "C:/Users/User/.codex/generated_images/019f7cdb-4957-7e71-89af-71ff2a248795/exec-ee2209b7-9a79-4dfd-8563-8a1ddfa5ad26.png",
+    "default_copy_retained": true,
+    "filename_is_not_treated_as_generation_id": true
+  },
+  "raw_output": {
+    "path": "world/map-production/candidates/style-candidate-k-v1-full-board-raw.png",
+    "sha256": "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a",
+    "bytes": 4009164,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "accepted_as_final": false
+  },
+  "registration": {
+    "needed": false,
+    "performed": false,
+    "reason": "The built-in output already matched the requested 1536x1024 RGB contract exactly.",
+    "raw_dimensions": [1536, 1024],
+    "review_dimensions": [1536, 1024],
+    "downsample_performed": false,
+    "upscale_performed": false,
+    "crop_performed": false,
+    "rotation_performed": false,
+    "affine_or_projective_warp_performed": false,
+    "pixel_or_palette_postprocess_performed": false
+  },
+  "byte_identical_review_candidate": {
+    "path": "world/map-production/candidates/style-candidate-k-v1-full-board.png",
+    "sha256": "7e769137c90bad26740bdd095f1795ef1f27ec22d3be1db3e8c0423d4f11540a",
+    "bytes": 4009164,
+    "format": "PNG",
+    "mode": "RGB",
+    "width": 1536,
+    "height": 1024,
+    "raw_byte_identity": true,
+    "review_only": true,
+    "manifest_registered": false,
+    "golden_accepted": false,
+    "note": "Stable review path only. It does not represent automated-gate success, root Vision approval, Golden acceptance, manifest adoption, staging, or publication."
+  },
+  "receipt_creation_state": {
+    "automated_audit_pending": true,
+    "root_vision_review_pending": true,
+    "manifest_modified": false,
+    "docs_modified": false,
+    "renderer_modified": false,
+    "golden_accepted": false,
+    "published": false
+  }
+}

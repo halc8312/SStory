@@ -1,0 +1,93 @@
+{
+  "artifact_role": "image-generation-reference-and-qa-overlay",
+  "coordinate_reference_system": "EA-WORLD-1",
+  "generated_by": "sstory-map-production/render_sheet_controls.py@1",
+  "map_sheets": {
+    "path": "world/map-production/source/map-sheets.json",
+    "sha256": "28a22a2a163d98dca567f4ab200767a6783373a913cec9df6fa1092ec311b74a"
+  },
+  "output": {
+    "bytes": 690700,
+    "format": "PNG",
+    "height": 736,
+    "metadata_path": "world/map-production/controls/sheets/sheet_region_port_zephia_region.json",
+    "mode": "RGB",
+    "path": "world/map-production/controls/sheets/sheet_region_port_zephia_region.png",
+    "sha256": "997b77f787138eaed9b04831e9db99755f2521348e5bfee176a44663934b0162",
+    "width": 1536
+  },
+  "pixel_mapping": {
+    "continuous_pixel_bounds": [
+      1556.1,
+      845.99,
+      2149.875,
+      1132.535
+    ],
+    "pixel_bounds": [
+      1556,
+      845,
+      2151,
+      1134
+    ],
+    "pixel_bounds_semantics": "Pillow half-open [left, top, right, bottom], conservatively includes every touched source pixel",
+    "x_scale": 0.4095,
+    "y_scale": 0.2729
+  },
+  "rendering": {
+    "conservative_source_crop_size": [
+      595,
+      289
+    ],
+    "content_padding_px": {
+      "bottom": 0,
+      "left": 5,
+      "right": 6,
+      "top": 0
+    },
+    "content_size": [
+      1525,
+      736
+    ],
+    "labels_baked_into_raster": false,
+    "long_edge_px": 1536,
+    "padding": "nearest edge-pixel extension",
+    "resampling": "Pillow fractional EXTENT with BICUBIC at uniform contain scale",
+    "short_edge_quantum_px": 16,
+    "stretch": false,
+    "target_size": [
+      1536,
+      736
+    ]
+  },
+  "schema_version": "1.0.0",
+  "sheet": {
+    "bounds": [
+      3800,
+      3100,
+      5250,
+      4150
+    ],
+    "geometry_confidence": "estimated",
+    "id": "sheet_region_port_zephia_region",
+    "name": "ポートゼフィア港湾圏",
+    "native_zoom": 8,
+    "parent_id": "sheet_continent_elysion",
+    "review_status": "provisional",
+    "sheet_type": "region",
+    "source_feature_id": "port_zephia_region",
+    "zoom_range": [
+      6,
+      8
+    ]
+  },
+  "source_control": {
+    "height": 2730,
+    "metadata_path": "world/map-production/controls/world-control-v1.json",
+    "metadata_sha256": "30fc43d0fe6eaf3987f23facc8cb4320fe315335deba71b45b60629607cf1c05",
+    "path": "world/map-production/controls/world-control-v1.png",
+    "sha256": "df189ab294dc2d820ce28d95e920119560425a477099754e1d111489d5be728d",
+    "verified_metadata_output_sha256": "df189ab294dc2d820ce28d95e920119560425a477099754e1d111489d5be728d",
+    "width": 4096
+  },
+  "type": "sstory-sheet-generation-control"
+}

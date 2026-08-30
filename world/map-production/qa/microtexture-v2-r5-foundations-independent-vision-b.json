@@ -1,0 +1,17 @@
+{
+  "schema_version": "microtexture-v2-r5-foundation-corpus-independent-vision/1",
+  "review_id": "microtexture-v2-r5-foundations-independent-vision-b",
+  "reviewed_at": "2026-07-26T03:17:23+09:00",
+  "reviewer": "Descartes the 2nd",
+  "review_mode": "blind-independent-vision-only-foundation-qualification",
+  "review_context_excluded": ["generation prompts", "Root scores", "numeric detector measurements", "control identities"],
+  "all_six_views_per_candidate_inspected": true,
+  "threshold": 94,
+  "results": [
+    {"id": "v10", "sha256": "df37429388f42649611388172d1dd60890f5a7d6b3437937181f0c078b76b5d5", "score": 95, "decision": "approved", "observation": "Broad gentle color change only; every 400-percent quadrant is smooth and nonperiodic."},
+    {"id": "v11", "sha256": "6dbb2126ac795d509cd248d95f81a4c5d91c8258d2a4845ea4030d96fdb0ee2f", "score": 96, "decision": "approved", "observation": "No local grain, repeat, speck, blob, short line, or bundle; only weak wide-field drift."},
+    {"id": "v12", "sha256": "e05ca849d950d5b8c5eadcf85ba6cb246b1cecaa284a49e6f85722d253a7e44e", "score": 97, "decision": "approved", "observation": "Most uniform in this review; no point, microblob, lattice, line, ring, or seam."}
+  ],
+  "rejected_control_candidate": {"id": "v9", "score": 92, "decision": "rejected", "reason": "Faint diagonal/mesh regularity remained perceptible at full-200 and across quadrant-400 views."},
+  "passed_for_declared_source_role": true
+}

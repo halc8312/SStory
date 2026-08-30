@@ -1,0 +1,214 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-k-v1-full-board-self-review",
+  "image_path": "world/map-production/candidates/style-candidate-k-v1-full-board.png",
+  "created_at": "2026-07-20T01:06:14.8416552Z",
+  "reviewer": "root-codex-vision-self-review",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "Full composition",
+      "complete": true,
+      "evidence": "The exact 1536x1024 RGB candidate was inspected against the composition guide and the full native contact.",
+      "notes": "K1 is the strongest complete flat-board candidate so far. Sea, five delta islands, forest, river, capital, port, roads, highland, fields, and connecting ground are all present without perspective or a frame."
+    },
+    {
+      "id": "scale_25",
+      "label": "25 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.25-contact.png; automated macrocell contrast coverage 0.802083.",
+      "notes": "The primary geography remains recognizable, but the strict 25 percent macrocell coverage threshold fails and some quiet land structure collapses."
+    },
+    {
+      "id": "scale_50",
+      "label": "50 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.50-contact.png; automated RMS contrast retention 0.887147.",
+      "notes": "The region hierarchy, river, coast, settlements, and roads remain clear. The 50 percent readability proxy passes."
+    },
+    {
+      "id": "native",
+      "label": "Native review",
+      "complete": true,
+      "evidence": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.native-contact.png.",
+      "notes": "The palette and dry copperplate print finish are coherent. At native scale, dense field rows, repeated upper-right hatch clusters, and the capital's exact radial cadence are already visible as mechanical material systems."
+    },
+    {
+      "id": "zoom_200",
+      "label": "200 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.200-contact.png.",
+      "notes": "Sea marks remain sparse and disconnected and forest reads as mottled areal cover. Highland resolves into many similarly sized multi-stroke dash clusters, fields resolve into dense parallel row wallpaper, and capital blocks repeat concentrically."
+    },
+    {
+      "id": "zoom_400",
+      "label": "400 percent review",
+      "complete": true,
+      "evidence": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.400-contact.png.",
+      "notes": "Deep zoom confirms reusable highland hatch bundles, mechanically parallel agricultural rows, and highly regular radial urban blocks. These are semantic-repetition failures even though exact-block repetition proxies pass."
+    },
+    {
+      "id": "nine_regions",
+      "label": "Nine-region review",
+      "complete": true,
+      "evidence": "tmp/map-production/k1-full-board-review/style-candidate-k-v1-full-board.nine-region-contact.png.",
+      "notes": "Every third of the board is populated and continuous with no pasted patch or quadrant boundary. The defects are repeated regional grammars rather than missing coverage."
+    },
+    {
+      "id": "water_delta_river",
+      "label": "Water, delta, and river",
+      "complete": true,
+      "evidence": "Western and delta panels were inspected at native, 200 percent, 400 percent, and in the nine-region contact.",
+      "notes": "The calm slate-blue sea, sparse disconnected marks, braided delta, and river continuity are successful. No cellular lattice, dominant wave band, or broken junction was found."
+    },
+    {
+      "id": "forest",
+      "label": "Forest material",
+      "complete": true,
+      "evidence": "Northern forest panels were inspected at native, 200 percent, and 400 percent.",
+      "notes": "K1 substantially improves on J1: the forest is continuous mottled stipple and broken micro-texture without obvious closed crown loops or icon rows. It remains dense but is not an immediate rejection by itself."
+    },
+    {
+      "id": "highland",
+      "label": "Highland material",
+      "complete": true,
+      "evidence": "Upper-right panels were inspected at native, 200 percent, 400 percent, and in the nine-region contact.",
+      "notes": "The projection is flat, but the surface repeatedly uses similarly sized three-to-five-stroke bundles and curved dash chains instead of broad tonal zones with sparse independent hachure."
+    },
+    {
+      "id": "fields_and_capital",
+      "label": "Fields and capital",
+      "complete": true,
+      "evidence": "Central and lower-right panels were inspected at native, 200 percent, 400 percent, and in the nine-region contact.",
+      "notes": "All field parcels and the circular capital are legible, but uniform parallel crop rows fill the parcels and the capital repeats concentric rings, radial lanes, and near-identical blocks with machine-like cadence."
+    },
+    {
+      "id": "geometry_alignment",
+      "label": "Guide geometry alignment",
+      "complete": true,
+      "evidence": "world/map-production/qa/automated/style-candidate-k-v1-full-board.json reports stable land-sea agreement 0.996150, candidate-to-guide within-8px coverage 0.764898, guide-to-candidate coverage 0.814361, and p95 distances 15.7876 and 13.1814 px.",
+      "notes": "Macro topology is preserved, but the strict bidirectional 95 percent within 8 px geometry contract fails."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "Text or pseudo-writing",
+      "detected": false,
+      "evidence": "No labels, readable strings, pseudo-writing rows, signature, watermark, title, legend, or cartouche were found."
+    },
+    {
+      "id": "perspective_or_side_faces",
+      "label": "Perspective, side faces, or directional lighting",
+      "detected": false,
+      "evidence": "Coast, river, settlements, forest, highland, and fields remain in a strict vertical plan view without raised landforms, cliffs, walls, roofs, or cast shadows."
+    },
+    {
+      "id": "missing_required_composition",
+      "label": "Missing required composition",
+      "detected": false,
+      "evidence": "All required regions, five delta islands, settlements, roads, waterways, fields, and quiet corridors are present."
+    },
+    {
+      "id": "broken_network",
+      "label": "Broken road or river network",
+      "detected": false,
+      "evidence": "River, delta branches, roads, capital links, port links, and coastline connections remain continuous in every reviewed view."
+    },
+    {
+      "id": "forest_semantic_wallpaper",
+      "label": "Forest loop or icon wallpaper",
+      "detected": false,
+      "evidence": "At 200 and 400 percent the forest is dense mottled areal texture, but no dominant closed crown-loop, tree-icon, rosette, or glyph-row vocabulary was identified."
+    },
+    {
+      "id": "highland_repeated_hatch_bundles",
+      "label": "Repeated highland hatch bundles",
+      "detected": true,
+      "evidence": "At 200 and 400 percent the upper-right region repeatedly uses similarly sized three-to-five-stroke bundles and chained curved dash families across broad areas."
+    },
+    {
+      "id": "field_row_cad_repetition",
+      "label": "Rigid field-row and parcel repetition",
+      "detected": true,
+      "evidence": "At native, 200, and 400 percent the agricultural parcels are filled by dense mechanically parallel rows with little local interruption or spacing variation."
+    },
+    {
+      "id": "capital_radial_repetition",
+      "label": "Mechanical capital radial repetition",
+      "detected": true,
+      "evidence": "At native, 200, and 400 percent the capital repeats concentric rings, uniformly spaced spokes, and near-identical block footprints with an overly mechanical cadence."
+    },
+    {
+      "id": "visible_edge_seam",
+      "label": "Visible edge seam or pasted patch",
+      "detected": false,
+      "evidence": "The boundary proxy passes and all reviewed edges show one continuous borderless plate without frame, patch edge, quadrant seam, or pasted band."
+    }
+  ],
+  "scores": [
+    {
+      "id": "prompt_geometry",
+      "label": "Composition and strict plan geometry",
+      "maximum": 25,
+      "score": 23,
+      "notes": "Complete flat composition and intact macro topology, reduced by the failed bidirectional 95 percent within 8 px alignment contract."
+    },
+    {
+      "id": "parent_style_continuity",
+      "label": "Palette and parent-style continuity",
+      "maximum": 15,
+      "score": 13,
+      "notes": "B1 character is visually close and mean-channel delta passes, but RGB intersection 0.690745, HSV intersection 0.618622, and Bhattacharyya 0.888634 miss their strict minima."
+    },
+    {
+      "id": "edge_seam_continuity",
+      "label": "Edge and seam continuity",
+      "maximum": 15,
+      "score": 15,
+      "notes": "The board is full-bleed and coherent with no visible boundary seam, frame, quadrant, or pasted region."
+    },
+    {
+      "id": "style_consistency",
+      "label": "Material and line-style consistency",
+      "maximum": 15,
+      "score": 12,
+      "notes": "Water and forest are strong, but highland bundles, field rows, and mechanical urban cadence weaken the intended nonperiodic material language."
+    },
+    {
+      "id": "detail_density",
+      "label": "Multiscale detail and readability",
+      "maximum": 10,
+      "score": 8,
+      "notes": "Native and 50 percent hierarchy are clear, while the strict 25 percent macrocell coverage gate fails at 0.802083."
+    },
+    {
+      "id": "artifact_nonrepetition",
+      "label": "Semantic nonrepetition",
+      "maximum": 10,
+      "score": 6,
+      "notes": "Highland, fields, and capital trigger immediate semantic-repetition failures despite passing exact and generic repetition proxies."
+    },
+    {
+      "id": "vector_readability",
+      "label": "Network and overlay readability",
+      "maximum": 10,
+      "score": 10,
+      "notes": "Roads, waterways, coast, settlements, piers, and major region boundaries remain exceptionally clear at all reviewed scales."
+    }
+  ],
+  "total_score": 87,
+  "decision": "rejected",
+  "summary": "K1 is the strongest full-board result so far and materially improves sea, forest, flat projection, palette coherence, and network readability. It is still rejected as Golden at 87/100. Automated B1 palette, 25 percent readability, and 8 px geometry-alignment gates fail. Vision inspection at 200 and 400 percent also finds immediate semantic-repetition failures in highland hatch bundles, agricultural row wallpaper, and the capital's concentric radial block cadence. The candidate remains review-only and must not enter the manifest, renderer, or release.",
+  "required_changes": [
+    "Preserve K1's flat complete composition, calm water, mottled forest, palette direction, port, delta, and network clarity.",
+    "Replace upper-right repeated hatch bundles with broad planar tonal zones and sparse independently ending short marks without recurring multi-stroke motifs.",
+    "Replace dense parallel crop rows with broken, locally drifting, irregularly interrupted agricultural marks and less mechanical parcel cadence.",
+    "Break the capital's repeated concentric block vocabulary while preserving the circular footprint and all road connections.",
+    "Meet all B1 palette thresholds and raise 25 percent macrocell contrast coverage without darkening the sea.",
+    "Keep 95 percent of the bidirectional guide geometry within 8 px while retaining the hand-printed edge character."
+  ]
+}

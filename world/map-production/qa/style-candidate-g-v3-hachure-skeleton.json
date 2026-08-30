@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-g-v3-hachure-skeleton",
+  "image_path": "world/map-production/candidates/style-candidate-g-v3-hachure-skeleton.png",
+  "created_at": "2026-07-19T13:53:29Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "Base, raw, protected final, topology guide, hachure skeleton, masks, automated report, and diagnostic crops were independently inspected.", "notes": "Two main relief fields remain, but the requested six-landform hierarchy is not readable."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "The 1536x1024 protected final was inspected at native scale.", "notes": "Four foothills are absent as independent terrain, while repeated bright-centered radial mounds dominate both main relief fields."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Raw/final crops under tmp/map-production/g3-review-v1 were inspected at original detail.", "notes": "NE-west, SE-west, and SE-east foothills disappear or become faint substrate; NE-central survives only as noisy fragments among rock marks."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "The full raw, final, masks, and difference image were scanned across the center, corners, and edges.", "notes": "Outer borders are restored exactly, while internal permission and road-protection boundaries remain visually abrupt."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "All six skeleton components were compared with raw and final per-landform diagnostics.", "notes": "The deterministic guide has six structures, but ImageGen converts them to repeated convergent mounds and the broad protection mask erases most foothill signal."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "Candidate D v4 and G3 were compared at matching extents and reduced visual scale.", "notes": "Paper and palette continue, but bright-centered pseudo-3D mounds and loss of secondary terrain break the parent-child hierarchy."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "All border metrics are zero and edge/road-adjacent crops were inspected.", "notes": "Canvas edges are safe, but 64px road guards produce broad flat internal channels and clipped relief."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Roads, cities, coast, forest, fields, future label space, and protected pixel evidence were reviewed.", "notes": "Canonical linework is exact; dense radial relief and road-shaped voids weaken overlay readability."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "Desktop suitability was assessed from native and enlarged views without staging a rejected raster.", "notes": "Repeated rosette terrain marks remain conspicuous at normal desktop scale."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "Mobile suitability was assessed from the reduced overview without staging a rejected raster.", "notes": "Only two dark main fields survive; foothills and saddles are not navigationally useful."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "Automated gates report zero changed pixels outside permission, on road cores, on detail cores, wherever the mask is zero, and on all four borders."},
+    {"id": "missing_required", "label": "必須地点・地形の欠落", "detected": true, "evidence": "All four required foothills fail independent recognition in the final, and the two-rise plus open-saddle hierarchy is unclear in both main relief fields."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "No new city, facility, transport route, or major landmark was introduced."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No generated words, pseudo-labels, legend, compass, scale, signature, or route-like marks were found."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": true, "evidence": "Relief stops abruptly at the broad north-east and south-east road guards, leaving flat channels and visible permission-boundary cuts."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature was found."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": true, "evidence": "Bright centers with dark convergent slopes read as raised cones or top-lit volcanic mounds rather than flat, non-illuminated cartographic hachure."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Near-identical bright-centered radial starburst or fingerprint mounds repeat across both main relief fields."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 15, "notes": "Protected canon is exact, but four foothills and clear saddle hierarchy are missing."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 8, "notes": "Palette continues; raised radial mounds and lost secondary terrain break the hierarchy."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 7, "notes": "Outer edges are exact, but road and permission masks visibly cut internal relief."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 8, "notes": "Historical color is compatible, while repeated convergent mounds violate the flat irregular-hachure grammar."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 3, "notes": "Main fields are over-dense and four secondary landforms are unreadable."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 2, "notes": "Radial repetition, bright centers, and mask-derived channels are dominant artifacts."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 6, "notes": "Protected vectors remain exact, but dense relief and flat gaps compete with overlays."}
+  ],
+  "total_score": 49,
+  "decision": "rejected",
+  "summary": "G3 is rejected. The six-part skeleton is valid and protected canon stays pixel-exact, but four foothills disappear, radial bright-centered terrain glyphs repeat, pseudo-3D lighting returns, and road guards expose broad internal seams.",
+  "required_changes": [
+    "Replace the broad road/detail protection strategy with a narrow canonical-line protection that preserves foothill support without moving any protected feature.",
+    "After protection is proven, replace all convergent bright-centered relief with non-radial, non-illuminated short unequal fall-line marks in a separate one-change attempt."
+  ]
+}

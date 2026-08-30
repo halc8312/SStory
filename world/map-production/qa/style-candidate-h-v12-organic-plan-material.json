@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-h-v12-organic-plan-material",
+  "image_path": "world/map-production/candidates/style-candidate-h-v12-organic-plan-material-raw.png",
+  "created_at": "2026-07-19T19:01:30.784Z",
+  "reviewer": "Root Codex Vision QA",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {
+      "id": "overview",
+      "label": "全体構図",
+      "complete": true,
+      "evidence": "The complete locked raw PNG (SHA-256 13633f90ea8f9a1fda7a0102229b19402e02a7144ad7238bdc1ba558f1d01417) was inspected against the exact H12 removal prompt and H11 authority.",
+      "notes": "Many triangular terrain marks are reduced, but large parts of the forest are rebuilt from conspicuous round, oval, diamond, or cookie-like canopy units instead of connected organic material."
+    },
+    {
+      "id": "original",
+      "label": "原寸100%",
+      "complete": true,
+      "evidence": "The 1536x1024 RGB PNG was inspected at native resolution.",
+      "notes": "The sheet remains sharp and the city, port, routes, fields, and water are readable. Forest patches visibly resolve into repeated outlined canopy cookies and lozenges with regular scale and spacing."
+    },
+    {
+      "id": "reduced_25",
+      "label": "25%縮小",
+      "complete": true,
+      "evidence": "The full map was inspected at 384x256; the H4 macrocell contrast coverage is 0.815104 against the unchanged 0.85 minimum.",
+      "notes": "The macro composition survives, but too many quiet cells lose useful contrast and the cookie-canopy masses merge into broad repetitive blobs. The 25% gate fails."
+    },
+    {
+      "id": "reduced_50",
+      "label": "50%縮小",
+      "complete": true,
+      "evidence": "The full map was inspected at 768x512 and passed all unchanged H4 50% proxy thresholds.",
+      "notes": "Primary regions remain distinguishable, while repeated round and diamond canopy units still create a conspicuous field texture."
+    },
+    {
+      "id": "zoom_200",
+      "label": "9領域200%拡大",
+      "complete": true,
+      "evidence": "North-west, north-center, north-east, middle-west, center, middle-east, south-west, south-center, and south-east regions were inspected at 200%.",
+      "notes": "Northern, delta-island, center-west, and southern forest envelopes contain many near-regular cookie or lozenge crowns. Highland areas also retain repeated small ring and chip families."
+    },
+    {
+      "id": "zoom_400",
+      "label": "9領域400%拡大",
+      "complete": true,
+      "evidence": "The same nine regions were reviewed at 400%, with focused canopy-edge, road-corridor, highland, port, and city inspection.",
+      "notes": "The canopy units are individually varied enough to avoid exact block duplication, but their closed outlines, similar size, and tessellated cadence remain an obvious semantic stamp system."
+    },
+    {
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
+      "complete": true,
+      "evidence": "All standard regions were scanned for text, modern objects, missing replacements, broken routes, perspective, repetition, and seams.",
+      "notes": "No text, watermark, route break, or border was found. The required replacement fails specifically in the forest vocabulary, and the defect is distributed over multiple regions."
+    },
+    {
+      "id": "candidate_b1_style",
+      "label": "Candidate B1画風比較",
+      "complete": true,
+      "evidence": "H12 was compared with B1 using the unchanged H4 palette metrics and direct visual inspection.",
+      "notes": "Mean colour is close, but RGB histogram intersection is 0.707662, below the locked 0.72 threshold. HSV intersection (0.620138), Bhattacharyya (0.903503), and mean-channel delta (1.887271) pass individually."
+    },
+    {
+      "id": "edge_seams",
+      "label": "四辺・継ぎ目拡張性",
+      "complete": true,
+      "evidence": "All four outer edges were inspected at native and enlarged views; the H4 boundary proxy passed.",
+      "notes": "No frame or abrupt edge seam was detected. This passing property cannot offset palette, downsample, and semantic repetition failures."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳可読性",
+      "complete": true,
+      "evidence": "Road, river, coast, settlement, field, and overlay-corridor readability was checked at reduced, native, and enlarged scales.",
+      "notes": "Major roads and water remain traceable, but large cookie-canopy masses compete with future labels and lose balanced local contrast at 25%."
+    }
+  ],
+  "immediate_failures": [
+    {
+      "id": "generated_text",
+      "label": "文字・偽文字",
+      "detected": false,
+      "evidence": "No readable text, pseudo-writing, label, letter, number, signature, legend, or compass was found."
+    },
+    {
+      "id": "watermark_frame_modern",
+      "label": "透かし・枠・現代物",
+      "detected": false,
+      "evidence": "No watermark, logo, frame, decorative border, or modern object was found."
+    },
+    {
+      "id": "floating_underside",
+      "label": "浮島・島下面",
+      "detected": false,
+      "evidence": "Detached land reads as ordinary sea-level islands or delta bars with no underside."
+    },
+    {
+      "id": "side_face_perspective",
+      "label": "側面・遠近法・方向光",
+      "detected": false,
+      "evidence": "No separate dominant side-face or cast-shadow system was confirmed; the canopy failure is classified as semantic repetition."
+    },
+    {
+      "id": "missing_composition",
+      "label": "必須構成・置換の欠落",
+      "detected": true,
+      "evidence": "H12 was required to replace discrete tree stamps with irregular connected canopy masses, broken edges, branching clusters, and varied clearings. It instead introduces large round, oval, diamond, and cookie-like closed canopy units."
+    },
+    {
+      "id": "broken_road_river",
+      "label": "道路・河川破断",
+      "detected": false,
+      "evidence": "Major roads, rivers, delta channels, and crossings remain continuously traceable."
+    },
+    {
+      "id": "repetition",
+      "label": "目立つ反復",
+      "detected": true,
+      "evidence": "Forest areas visibly repeat closed round, oval, lozenge, diamond, or cookie-like canopy units at a regular scale and cadence. Exact large-block hashes remain unique, but the semantic motif field is an immediate failure."
+    },
+    {
+      "id": "edge_seam",
+      "label": "端の継ぎ目",
+      "detected": false,
+      "evidence": "No border, abrupt solid edge band, or visible tiling seam was found."
+    }
+  ],
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "prompt構成・平面形状",
+      "maximum": 25,
+      "score": 16,
+      "notes": "Major geometry is present and triangular fields are reduced, but the required organic forest replacement is not achieved."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親画像・画風の連続性",
+      "maximum": 15,
+      "score": 11,
+      "notes": "H11's broad composition remains recognizable, while the palette falls outside the locked RGB intersection threshold."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "端・継ぎ目拡張性",
+      "maximum": 15,
+      "score": 14,
+      "notes": "The borderless edges remain visually extensible and pass the boundary proxy."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 10,
+      "notes": "The sheet is coherent overall, but cookie-like canopy symbols conflict with the requested engraved organic material."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 7,
+      "notes": "Native and 50% detail are substantial, but 25% macrocell contrast coverage fails at 0.815104."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・非反復性",
+      "maximum": 10,
+      "score": 2,
+      "notes": "Widespread cookie and lozenge canopy repetition triggers an immediate failure."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 6,
+      "notes": "Routes are traceable, but repetitive forest masses and uneven reduced-scale contrast constrain overlays."
+    }
+  ],
+  "total_score": 66,
+  "decision": "rejected",
+  "summary": "H12 is rejected and is not a Golden reference. It reduces many of H11's triangular terrain glyphs, but replaces them with conspicuous round, oval, diamond, and cookie-like canopy units rather than irregular connected forest material. It also fails the unchanged H4 RGB palette-intersection gate (0.707662 < 0.72) and the 25% macrocell-coverage gate (0.815104 < 0.85). Two Vision immediate failures are present, and the score is 66/100, below 94.",
+  "required_changes": [
+    "Replace every closed cookie, coin, oval, and lozenge canopy unit with connected branching foliage, broken edges, variable clearings, and non-repeating stipple or hatching.",
+    "Restore RGB palette intersection to at least 0.72 while retaining all other passing palette limits.",
+    "Restore 25% macrocell contrast coverage to at least 0.85 without reintroducing repeated triangular or conical symbols."
+  ]
+}

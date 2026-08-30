@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "style-candidate-e-v1-independent-relief-plate",
+  "image_path": "world/map-production/candidates/style-candidate-e-v1-independent-relief-plate-raw.png",
+  "created_at": "2026-07-18T23:59:17Z",
+  "reviewer": "Independent Codex Vision QA A",
+  "status": "complete",
+  "golden_reference": false,
+  "acceptance_threshold": 94,
+  "review_views": [
+    {"id": "overview", "label": "全体構図", "complete": true, "evidence": "The complete 1536x1024 scalar plate was inspected.", "notes": "Three similarly shaped dark masses make a loose vertical chain; the left forty percent is nearly flat."},
+    {"id": "original", "label": "原寸100%", "complete": true, "evidence": "The source PNG was viewed at native dimensions.", "notes": "North-east has readable broad variation; south-east is too weak and the field reads as cloudy haze."},
+    {"id": "zoom", "label": "200%・400%拡大", "complete": true, "evidence": "Native right-half and 384x256 crops were inspected at enlarged nearest-neighbor scale.", "notes": "No hard line, text, grain, or contour appears, but diffuse cloud-like microvariation and repeated oval masses remain."},
+    {"id": "nine_regions", "label": "中央・四隅・四辺の9領域", "complete": true, "evidence": "All nine overview regions and both transfer polygons were scanned.", "notes": "South-east contrast and its north-east quadrant are inadequate; a soft activity boundary is visible around x=560-650."},
+    {"id": "control_overlay", "label": "制御図との半透明重ね合わせ", "complete": true, "evidence": "The E v1 road-safe polygon mask and opaque cores were used for numeric sampling.", "notes": "North-east input span is 33; south-east is only 17 and fails the unchanged control."},
+    {"id": "parent_zoom", "label": "親ズーム画像との比較", "complete": true, "evidence": "The plate is an independent substrate and D v4 is used only after transfer.", "notes": "No parent map pixels are exposed to ImageGen; transfer refusal preserves D v4 exactly."},
+    {"id": "neighbor_seams", "label": "四方向の隣接合成", "complete": true, "evidence": "Plate edges and tonal-mass continuations were inspected.", "notes": "No hard outer seam or clipped polygon exists, but the south-east field lacks sufficient signal for composition."},
+    {"id": "vector_overlay", "label": "ベクターラベル・道路・POI重畳", "complete": true, "evidence": "Road guards and exact-output publication state were audited.", "notes": "No candidate was published, so canonical roads and vector alignment remain unchanged."},
+    {"id": "desktop", "label": "Leafletデスクトップ表示", "complete": true, "evidence": "The transfer failed before tiling or staging.", "notes": "Not staged; there is no candidate raster to display."},
+    {"id": "mobile", "label": "Leafletモバイル表示", "complete": true, "evidence": "The transfer failed before tiling or staging.", "notes": "Not staged; there is no candidate raster to display."}
+  ],
+  "immediate_failures": [
+    {"id": "geometry_shift", "label": "海岸線・河川・主要道路・城壁の移動", "detected": false, "evidence": "The independent plate was never composited; D v4 remains pixel-authoritative."},
+    {"id": "missing_required", "label": "必須地点の欠落", "detected": true, "evidence": "South-east input Q90-Q10 is 17 instead of 31-40; band-pass span is 2 below 3.5."},
+    {"id": "noncanon_major", "label": "正典外の主要都市・施設", "detected": false, "evidence": "The plate contains no map objects."},
+    {"id": "generated_text", "label": "AI生成文字・記号", "detected": false, "evidence": "No text, symbol, pseudo-writing, or watermark is visible."},
+    {"id": "visible_seam", "label": "目視できる継ぎ目", "detected": false, "evidence": "No hard rectangle, crop edge, or clipped polygon boundary is visible."},
+    {"id": "modern_or_watermark", "label": "現代物・透かし・署名", "detected": false, "evidence": "No modern object, watermark, logo, or signature appears."},
+    {"id": "perspective_jump", "label": "遠近法化・縮尺の急変", "detected": false, "evidence": "The plate remains a flat two-dimensional luminance field."},
+    {"id": "repetition", "label": "建物・樹木・岩の不自然な反復", "detected": true, "evidence": "Three similarly shaped diffuse dark blobs form a vertical chain and the field reads as repeated cloudy masses."}
+  ],
+  "scores": [
+    {"id": "canon_geometry", "label": "正典・地形形状との一致", "maximum": 25, "score": 10, "notes": "The substrate has no canon objects, but the required south-east hierarchy is absent."},
+    {"id": "parent_continuity", "label": "親子ズームの連続性", "maximum": 15, "score": 5, "notes": "Safe refusal preserves the parent, but no adopted child exists."},
+    {"id": "seam_continuity", "label": "隣接画像の継ぎ目", "maximum": 15, "score": 12, "notes": "There is no hard boundary; a soft activity transition remains."},
+    {"id": "style_consistency", "label": "画風・色・線密度", "maximum": 15, "score": 8, "notes": "Neutral color passes, while cloudy repeated blobs violate the scalar-field vocabulary."},
+    {"id": "detail_density", "label": "縮尺相応の情報量", "maximum": 10, "score": 7, "notes": "North-east is readable; south-east is under-specified."},
+    {"id": "artifact_integrity", "label": "生成破綻・反復模様", "maximum": 10, "score": 7, "notes": "No discrete marks occur, but repeated diffuse ovals are visible."},
+    {"id": "vector_readability", "label": "ベクター重畳時の可読性", "maximum": 10, "score": 5, "notes": "The safe pipeline protects vectors, but no candidate reaches overlay review."}
+  ],
+  "total_score": 54,
+  "decision": "rejected",
+  "summary": "Candidate E v1 is rejected. Its independent-input strategy protects the detailed map and north-east meets the raw range, but south-east is too weak for safe normalization and repeated cloudy masses remain. No final candidate artifact was published.",
+  "required_changes": [
+    "Change only the south-east source-plate amplitude around its median to roughly twice E v1; preserve north-east, shapes, scale, transitions, control thresholds, and final transfer behavior."
+  ]
+}

@@ -1,0 +1,25 @@
+Use case: precise-object-edit
+Asset type: native-coordinate cartographic repair patch for the H4 fantasy-map Golden candidate
+
+Input images:
+- Image 1 is the edit target and absolute visual authority: the 416 x 416 H4 crop at full-map coordinates x=642..1058, y=292..708. Preserve its framing, copperplate engraving material, aged-paper grain, palette, line weight, circular city placement, outer wall geometry, gates, radial avenues, incoming roads, and all countryside context.
+- Image 2 is a supporting topology reference only: the exactly aligned H9 crop. Use only its strict flat building-footprint and courtyard logic. Do not copy its simplified palette, dot-field texture, flat-color slabs, line cleanliness, or surrounding terrain style.
+
+Primary request: change only the capital city's modeled or oblique architectural marks inside the circular wall. Replace wall-tower side faces, building side faces, roof-like projections, and directional cast shadows with strict orthographic top-down footprints, courtyards, market voids, and fine direction-neutral plan hachure. The result must read as a dense, hand-engraved city plan at the same scale as Image 1.
+
+Composition/framing: return the same square crop, pixel-aligned in composition. Keep the exact outer circular wall, its radius and center, the same gates, the same radial avenue skeleton, the same incoming road alignments, and the same countryside around it. Do not crop, rotate, zoom, recenter, enlarge, or shrink the city.
+
+Style/medium: richly detailed antique copperplate cartography on weathered ochre paper, matching Image 1. Fine irregular ink hachure, organic hand-drawn variation, dense readable blocks, no directional lighting.
+
+Color palette/materials: preserve Image 1's muted brown, ochre, olive, graphite-black ink, paper grain, patina, and local contrast. No new hue family. No glossy, digital, or clean-vector finish.
+
+Hard invariants:
+- Edit only the city's architectural symbols; preserve Image 1's outer circular wall path, roads, radials, gates, surrounding fields, trees, river, coast, paper, palette, and crop framing.
+- Preserve the exact semantic city footprint and feature count density; do not add districts, rings, roads, monuments, rivers, labels, or settlements.
+- Every building must be a true overhead footprint: no visible facades, side planes, roof perspective, isometric extrusion, tower cones, cast shadows, or directional highlights.
+- Preserve open courtyards and voids as paper-toned negative space with restrained plan hachure.
+- No text, labels, letters, numbers, glyphs, pseudo-writing, watermark, border, legend, or compass.
+
+Avoid: CAD/vector look, flat-color slabs, uniform repeated stamps, rounded-dot wallpaper, identical little rectangles, concentric mechanical perfection, blurry repainting, pasted seams, changed road widths, changed wall geometry, city-scale drift, simplified detail, and any edit outside the capital.
+
+Output: one and only one high-detail square repair candidate. This is a review patch, not an accepted Golden asset.

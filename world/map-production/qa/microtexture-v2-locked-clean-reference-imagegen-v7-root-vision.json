@@ -1,0 +1,77 @@
+{
+  "schema_version": "microtexture-v2-locked-clean-reference-root-vision/1",
+  "review_id": "microtexture-v2-locked-clean-reference-imagegen-v7-root-vision",
+  "reviewed_at": "2026-07-25T23:51:40+09:00",
+  "reviewer": "Codex Root Vision",
+  "review_mode": "vision-only-pre-freeze-clean-reference-qualification",
+  "source": {
+    "path": "world/map-production/style-assets/microtexture-v2-locked-clean-reference-imagegen-v7.png",
+    "sha256": "667e55d2ab326c666b6087c53512eebc1942c068e397ab0dfa7e86776502c4d3",
+    "bytes": 1778101,
+    "size": [1536, 1024],
+    "mode": "RGB"
+  },
+  "views_actually_inspected": [
+    {
+      "view": "persisted-original",
+      "detail": "view_image original on the SHA-bound PNG"
+    },
+    {
+      "view": "center-200-percent",
+      "detail": "central 512x384 source crop enlarged to 1024x768 with nearest-neighbor"
+    },
+    {
+      "view": "center-400-percent",
+      "detail": "central 256x192 metric window enlarged to 1024x768 with nearest-neighbor"
+    },
+    {
+      "view": "metric-window-northwest-quadrant-400-percent",
+      "detail": "northwest 128x96 quadrant of effective source xywh [640,416,256,192], enlarged to 512x384 with nearest-neighbor"
+    },
+    {
+      "view": "metric-window-northeast-quadrant-400-percent",
+      "detail": "northeast 128x96 quadrant of effective source xywh [640,416,256,192], enlarged to 512x384 with nearest-neighbor"
+    },
+    {
+      "view": "metric-window-southwest-quadrant-400-percent",
+      "detail": "southwest 128x96 quadrant of effective source xywh [640,416,256,192], enlarged to 512x384 with nearest-neighbor"
+    },
+    {
+      "view": "metric-window-southeast-quadrant-400-percent",
+      "detail": "southeast 128x96 quadrant of effective source xywh [640,416,256,192], enlarged to 512x384 with nearest-neighbor"
+    }
+  ],
+  "numeric_metric_evaluation_performed": false,
+  "score": 97,
+  "threshold": 94,
+  "decision": "approved-as-r4-locked-clean-reference-candidate",
+  "immediate_failure_checks": {
+    "isolated_speck_or_salt_pepper": false,
+    "bounded_microblob_or_grain_cluster": false,
+    "short_ridge_dash_or_parallel_bundle": false,
+    "cell_ring_fingerprint_or_contour": false,
+    "periodic_repeat_grid_or_seam": false,
+    "semantic_geography_text_or_object": false,
+    "perspective_relief_or_directional_light": false,
+    "pure_black_or_pure_white_feature": false,
+    "visible_panel_border_or_vignette": false
+  },
+  "observations": {
+    "accepted": [
+      "The original is a flat, low-contrast, edge-to-edge warm-neutral field with no semantic content.",
+      "The 200 percent view retains only open, continuously blended tonal modulation without isolated marks.",
+      "The 400 percent metric-window view contains no visible short line, bounded spot, parallel bundle, closed cell, repeat, or seam.",
+      "Every one of the four non-overlapping 400 percent metric-window quadrants remains smooth and free of isolated or repeated microstructure; only broad low-frequency tonal drift is visible."
+    ],
+    "rejected_predecessor": [
+      "The first image in this independent chain was rejected because 200 and 400 percent views exposed fine mottling and short-wisp structure.",
+      "The rejected raster is not tracked and is not an authority input."
+    ],
+    "limitations": [
+      "This visual approval cannot influence threshold selection.",
+      "The source must remain numerically unevaluated until the one-shot post-freeze locked-clean-reference command.",
+      "It cannot be used as production art, a texture donor, a Golden input, or final pixels."
+    ]
+  },
+  "passed_for_declared_source_role": true
+}

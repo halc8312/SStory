@@ -1,0 +1,278 @@
+#!/usr/bin/env python3
+"""Apply the unchanged H4 raster-audit thresholds to Candidate H6.
+
+H4 and H5 implementations and reports remain untouched.  H6 reuses H4's
+quantitative primitives and records failed proxy gates without threshold drift.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any, Sequence
+
+import audit_style_candidate_h4 as h4
+
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_FINAL = (
+    REPO_ROOT
+    / "world/map-production/candidates/style-candidate-h-v6-dual-reference-flat-gis.png"
+)
+DEFAULT_RAW = (
+    REPO_ROOT
+    / "world/map-production/candidates/style-candidate-h-v6-dual-reference-flat-gis-raw.png"
+)
+DEFAULT_PROMPT = (
+    REPO_ROOT
+    / "world/map-production/prompts/"
+    "style-candidate-h-v6-dual-reference-flat-gis.generation.txt"
+)
+DEFAULT_REFERENCE_B1 = h4.DEFAULT_REFERENCE_B1
+DEFAULT_VISION_SCHEMA = h4.DEFAULT_VISION_SCHEMA
+DEFAULT_REPORT = (
+    REPO_ROOT
+    / "world/map-production/qa/automated/"
+    "style-candidate-h-v6-dual-reference-flat-gis.json"
+)
+
+EXPECTED_SHA256 = {
+    "final": "86d61909913a3c6a402ae2c12211a79a2a15e755e98fba622fcb0e2d7bcfaaf6",
+    "raw": "86d61909913a3c6a402ae2c12211a79a2a15e755e98fba622fcb0e2d7bcfaaf6",
+    "prompt": "824848427e0f6aebe79457317c48cf46774d932e286b7f2a4c70da10d6bf20dd",
+    "reference_b1": h4.EXPECTED_SHA256["reference_b1"],
+    "vision_schema": h4.EXPECTED_SHA256["vision_schema"],
+}
+
+
+class H6AuditError(ValueError):
+    """Raised when H6 inputs cannot be safely audited."""
+
+
+def _assert_input(path: Path, expected_hash: str, label: str) -> None:
+    try:
+        h4._assert_input(path, expected_hash, label)
+    except h4.H4AuditError as exc:
+        raise H6AuditError(str(exc)) from exc
+
+
+def audit(
+    *,
+    final_path: Path,
+    raw_path: Path,
+    prompt_path: Path,
+    reference_b1_path: Path,
+    vision_schema_path: Path,
+    report_path: Path,
+    replace: bool = False,
+) -> dict[str, Any]:
+    if report_path.exists() and not replace:
+        raise H6AuditError(f"refusing to overwrite existing output: {report_path}")
+    inputs = (
+        (final_path, EXPECTED_SHA256["final"], "H6 final"),
+        (raw_path, EXPECTED_SHA256["raw"], "H6 raw"),
+        (prompt_path, EXPECTED_SHA256["prompt"], "H6 generation prompt"),
+        (
+            reference_b1_path,
+            EXPECTED_SHA256["reference_b1"],
+            "Candidate B1 reference",
+        ),
+        (
+            vision_schema_path,
+            EXPECTED_SHA256["vision_schema"],
+            "Vision QA schema",
+        ),
+    )
+    for path, expected_hash, label in inputs:
+        _assert_input(path, expected_hash, label)
+
+    try:
+        prompt_text = prompt_path.read_text(encoding="utf-8")
+    except UnicodeDecodeError as exc:
+        raise H6AuditError("H6 generation prompt must be valid UTF-8") from exc
+    required_prompt_phrases = (
+        "strict orthographic 2D GIS raster base",
+        "text or pseudo-text",
+        "1536x1024 landscape RGB image",
+    )
+    missing_prompt_phrases = [
+        phrase for phrase in required_prompt_phrases if phrase not in prompt_text
+    ]
+    if missing_prompt_phrases:
+        raise H6AuditError(
+            "H6 generation prompt lacks locked requirements: "
+            + ", ".join(missing_prompt_phrases)
+        )
+
+    byte_identical = h4.files_are_byte_identical(raw_path, final_path)
+    if not byte_identical:
+        raise H6AuditError("H6 raw and final PNGs are not byte-identical")
+
+    try:
+        final_record, final_image = h4.inspect_png(final_path)
+        raw_record, raw_image = h4.inspect_png(raw_path)
+        reference_record, reference_image = h4.inspect_png(reference_b1_path)
+    except h4.H4AuditError as exc:
+        raise H6AuditError(str(exc)) from exc
+    try:
+        expected_image_contract = {
+            "format": "PNG",
+            "mode": "RGB",
+            "width": h4.EXPECTED_SIZE[0],
+            "height": h4.EXPECTED_SIZE[1],
+            "bit_depth": 8,
+            "png_color_type": 2,
+            "alpha_or_transparency_present": False,
+        }
+        image_records = {
+            "final": final_record,
+            "raw": raw_record,
+            "reference_b1": reference_record,
+        }
+        record_contract_results = {
+            label: all(record[key] == value for key, value in expected_image_contract.items())
+            for label, record in image_records.items()
+        }
+        profile_matches_reference = (
+            h4._profile_signature(final_record)
+            == h4._profile_signature(reference_record)
+            and h4._profile_signature(raw_record)
+            == h4._profile_signature(reference_record)
+        )
+        image_contract_passed = (
+            all(record_contract_results.values()) and profile_matches_reference
+        )
+        image_contract = {
+            "passed": image_contract_passed,
+            "required": expected_image_contract,
+            "records_passed": record_contract_results,
+            "alpha_free": not final_record["alpha_or_transparency_present"],
+            "profile_matches_b1": profile_matches_reference,
+            "profile_interpretation": (
+                "untagged RGB matching B1"
+                if not final_record["profile_chunk_types"]
+                and not final_record["icc_profile_present"]
+                else "embedded profile state matches B1"
+            ),
+            "images": image_records,
+        }
+        boundary = h4.boundary_metrics(final_image)
+        palette = h4.palette_continuity_metrics(final_image, reference_image)
+        repetition = h4.exact_repetition_metrics(final_image)
+        downsample = h4.downsample_readability_metrics(final_image)
+    finally:
+        final_image.close()
+        raw_image.close()
+        reference_image.close()
+
+    automated_gates = {
+        "sha256_locked_inputs": True,
+        "raw_final_byte_identity": byte_identical,
+        "image_contract_alpha_profile": image_contract["passed"],
+        "boundary_proxy": boundary["passed"],
+        "palette_continuity_with_b1": palette["passed"],
+        "no_large_exact_repetition_proxy": repetition["passed"],
+        "downsample_readability_proxy": downsample["passed"],
+    }
+    failed_gates = [name for name, passed in automated_gates.items() if not passed]
+    status = "passed" if not failed_gates else "failed"
+    decision = (
+        "automated-gates-passed-pending-vision"
+        if not failed_gates
+        else "automated-gates-failed"
+    )
+    report = {
+        "schema_version": "1.0.0",
+        "id": "style-candidate-h-v6-dual-reference-flat-gis-automated-audit",
+        "status": status,
+        "scope": "automated artifact and raster proxies only",
+        "decision": decision,
+        "failed_gates": failed_gates,
+        "generated_by": h4._artifact(Path(__file__).resolve()),
+        "audit_engine": {
+            **h4._artifact(Path(h4.__file__).resolve()),
+            "compatibility_contract": (
+                "H4 and H5 implementations and committed reports remain byte-identical"
+            ),
+        },
+        "artifacts": {
+            "final": h4._artifact(final_path),
+            "raw": h4._artifact(raw_path),
+            "prompt": {
+                **h4._artifact(prompt_path),
+                "utf8": True,
+                "required_phrases_present": True,
+            },
+            "reference_b1": h4._artifact(reference_b1_path),
+        },
+        "identity": {
+            "passed": True,
+            "raw_final_byte_identical": byte_identical,
+            "locked_sha256": {
+                key: value
+                for key, value in EXPECTED_SHA256.items()
+                if key != "vision_schema"
+            },
+        },
+        "image_contract": image_contract,
+        "boundary": boundary,
+        "palette_continuity": palette,
+        "exact_repetition": repetition,
+        "downsample_readability": downsample,
+        "automated_gates": automated_gates,
+        "vision_handoff": h4._vision_handoff(vision_schema_path),
+    }
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    return report
+
+
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--final", type=Path, default=DEFAULT_FINAL)
+    parser.add_argument("--raw", type=Path, default=DEFAULT_RAW)
+    parser.add_argument("--prompt", type=Path, default=DEFAULT_PROMPT)
+    parser.add_argument("--reference-b1", type=Path, default=DEFAULT_REFERENCE_B1)
+    parser.add_argument("--vision-schema", type=Path, default=DEFAULT_VISION_SCHEMA)
+    parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
+    parser.add_argument(
+        "--replace",
+        action="store_true",
+        help="replace an existing report after re-running all checks",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = parse_args(argv)
+    try:
+        report = audit(
+            final_path=args.final.resolve(),
+            raw_path=args.raw.resolve(),
+            prompt_path=args.prompt.resolve(),
+            reference_b1_path=args.reference_b1.resolve(),
+            vision_schema_path=args.vision_schema.resolve(),
+            report_path=args.report.resolve(),
+            replace=args.replace,
+        )
+    except (H6AuditError, OSError, ValueError) as exc:
+        print(f"Candidate H6 automated audit could not run: {exc}")
+        return 1
+    palette = report["palette_continuity"]
+    print(
+        f"Candidate H6 automated audit {report['status']}: "
+        f"sha256={report['artifacts']['final']['sha256']} "
+        f"rgb_palette_intersection={palette['rgb_histogram_intersection']} "
+        f"failed_gates={','.join(report['failed_gates']) or 'none'}; "
+        "Vision review remains required for text and strict plan view"
+    )
+    return 0 if report["status"] == "passed" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
