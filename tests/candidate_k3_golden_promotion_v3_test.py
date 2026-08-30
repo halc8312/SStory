@@ -584,6 +584,22 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertEqual(freeze["audit_results_read_before_freeze"], 0)
         self.assertFalse(freeze["threshold_selection_from_candidate_values"])
         self.assertEqual(
+            authority.document["failure_policy"]["manifest_writer_model"],
+            "single-cooperative-writer-respecting-fixed-exclusive-lock",
+        )
+        self.assertEqual(
+            authority.document["failure_policy"]["noncooperative_namespace_race"],
+            "atomic-retention-plus-unknown-manual-reconciliation",
+        )
+        self.assertEqual(
+            authority.document["failure_policy"]["noncooperative_guarantee"],
+            "manifest-target-bytes-atomically-retained-no-silent-success-not-conditional-inode-overwrite-prevention",
+        )
+        self.assertEqual(
+            authority.document["failure_policy"]["windows_backup_namespace"],
+            "exclusive-unpredictable-reservation; post-close-noncooperative-backup-basename-replacement-excluded",
+        )
+        self.assertEqual(
             freeze["legacy_contract_status"],
             {
                 promotion.FOUR_CANDIDATE_V1: (
@@ -685,6 +701,7 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
                 "build_style_candidate_k3_sparse_ridgeline_v19",
                 "golden_v3_strict_metric_core",
                 "promote_style_candidate_k3_golden_v2",
+                "importlib",
             }.isdisjoint(imported)
         )
         authority = promotion.load_authority()
@@ -703,6 +720,33 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertIs(
             authority.strict_module.strict, authority.strict_dependency_modules[2]
         )
+
+    def test_authority_load_never_imports_unbound_legacy_promoter(self) -> None:
+        script = f"""
+import builtins
+import sys
+sys.path.insert(0, {str(SCRIPT_DIR)!r})
+real_import = builtins.__import__
+attempted = []
+def guarded_import(name, *args, **kwargs):
+    if name == 'promote_style_candidate_k3_golden_v2':
+        attempted.append(name)
+        raise AssertionError('unbound legacy promoter import attempted')
+    return real_import(name, *args, **kwargs)
+builtins.__import__ = guarded_import
+import promote_style_candidate_k3_golden_v3 as promotion
+promotion.load_authority()
+assert attempted == []
+assert 'promote_style_candidate_k3_golden_v2' not in sys.modules
+"""
+        result = subprocess.run(
+            [sys.executable, "-c", script],
+            cwd=REPO_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
 
     def test_strict_auditor_tamper_fails_before_module_execution(self) -> None:
         original_bind = promotion._bind
@@ -878,18 +922,25 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
             "sha256": digest(self.fixture.paths.master),
         }
         registry = phase5.bind_manifest_golden_evidence(golden_style, manifest_binding)
-        implementation = promotion.load_authority().promotion_implementation
+        authority = promotion.load_authority()
+        implementation = authority.promotion_implementation
         self.assertIn(implementation.identity, registry)
         self.assertEqual(
             registry[implementation.identity].sha256,
             implementation.sha256,
         )
-        strict_implementation = promotion.load_authority().strict_implementation
+        strict_implementation = authority.strict_implementation
         self.assertIn(strict_implementation.identity, registry)
         self.assertEqual(
             registry[strict_implementation.identity].sha256,
             strict_implementation.sha256,
         )
+        v1_document = json.loads(authority.derivation_authority.data)
+        v1_sources = v1_document["input_policy"]["source_bindings"]
+        self.assertEqual(len(v1_sources), 28)
+        registry_by_path = {item.relative: item.sha256 for item in registry.values()}
+        for source in v1_sources:
+            self.assertEqual(registry_by_path.get(source["path"]), source["sha256"])
         with (
             phase5.bound_artifact_context(registry),
             mock.patch.object(
@@ -1180,9 +1231,9 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         manifest_before = self.fixture.manifest.read_bytes()
         with (
             mock.patch.object(
-                promotion.manifest_cas,
+                promotion,
                 "_conditional_manifest_replace",
-                side_effect=promotion.manifest_cas.K3GoldenPromotionV2Error(
+                side_effect=promotion.GoldenV3PromotionError(
                     "synthetic compare-and-swap failure"
                 ),
             ),
@@ -1303,13 +1354,10 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         manifest_before = self.fixture.manifest.read_bytes()
         with (
             mock.patch.object(
-                promotion.manifest_cas,
+                promotion,
                 "_conditional_manifest_replace",
-                side_effect=promotion.manifest_cas.ManifestCommitStateUnknownError(
-                    manifest=relative(self.fixture.manifest),
-                    reason="synthetic unknown commit state",
-                    debris=(),
-                    cleanup_failures=(),
+                side_effect=promotion.GoldenV3ManifestCommitUnknownError(
+                    "synthetic unknown commit state"
                 ),
             ),
             self.assertRaisesRegex(
@@ -1323,7 +1371,294 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertTrue(self.fixture.paths.receipt.is_file())
         self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
 
-    def test_post_commit_base_exception_retains_exact_evidence(self) -> None:
+    def test_manifest_cas_target_swap_is_unknown_and_retains_both(self) -> None:
+        manifest_before = self.fixture.manifest.read_bytes()
+        detached = self.fixture.evidence_root / "detached-expected-manifest.json"
+        concurrent = b'{"synthetic":"concurrent-manifest"}\n'
+        primitive_name = (
+            "_windows_replace_file" if os.name == "nt" else "_linux_exchange_names"
+        )
+        primitive = getattr(promotion, primitive_name)
+
+        def swap_target_then_commit(*args: object) -> None:
+            self.fixture.manifest.replace(detached)
+            self.fixture.manifest.write_bytes(concurrent)
+            primitive(*args)
+
+        with (
+            mock.patch.object(
+                promotion, primitive_name, side_effect=swap_target_then_commit
+            ),
+            self.assertRaises(promotion.GoldenV3ManifestCommitUnknownError),
+        ):
+            self.fixture.promote()
+        self.assertEqual(detached.read_bytes(), manifest_before)
+        retained = list(
+            self.fixture.evidence_root.glob(".production-manifest.json.k3-golden-v3-*")
+        )
+        self.assertTrue(any(item.read_bytes() == concurrent for item in retained))
+        projected = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        self.assertEqual(projected["jobs"][0]["id"], promotion.JOB_ID)
+        self.assertTrue(self.fixture.paths.raw.is_file())
+        self.assertTrue(self.fixture.paths.master.is_file())
+        self.assertTrue(self.fixture.paths.receipt.is_file())
+
+    def test_manifest_cas_rejects_same_byte_identity_swap_before_commit(self) -> None:
+        manifest_before = self.fixture.manifest.read_bytes()
+        detached = self.fixture.evidence_root / "detached-same-byte-manifest.json"
+
+        def swap_same_bytes(path: Path) -> None:
+            path.replace(detached)
+            path.write_bytes(manifest_before)
+
+        with (
+            mock.patch.object(
+                promotion,
+                "_before_manifest_replace_hook",
+                side_effect=swap_same_bytes,
+            ),
+            self.assertRaisesRegex(
+                promotion.GoldenV3PromotionError, "expected snapshot changed"
+            ),
+        ):
+            self.fixture.promote()
+        self.assertEqual(detached.read_bytes(), manifest_before)
+        self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
+        retained = list(
+            self.fixture.evidence_root.glob(
+                ".production-manifest.json.k3-golden-v3-*.tmp"
+            )
+        )
+        self.assertTrue(retained)
+
+    def test_manifest_cas_rejects_bytes_only_mutation_before_commit(self) -> None:
+        mutated = b'{"synthetic":"mutated-in-place"}\n'
+
+        def mutate_bytes(path: Path) -> None:
+            path.write_bytes(mutated)
+
+        with (
+            mock.patch.object(
+                promotion, "_before_manifest_replace_hook", side_effect=mutate_bytes
+            ),
+            self.assertRaisesRegex(
+                promotion.GoldenV3PromotionError, "expected snapshot changed"
+            ),
+        ):
+            self.fixture.promote()
+        self.assertEqual(self.fixture.manifest.read_bytes(), mutated)
+        self.assertTrue(
+            list(
+                self.fixture.evidence_root.glob(
+                    ".production-manifest.json.k3-golden-v3-*.tmp"
+                )
+            )
+        )
+
+    def test_manifest_cas_post_validation_same_byte_swap_is_unknown(self) -> None:
+        manifest_before = self.fixture.manifest.read_bytes()
+        detached = self.fixture.evidence_root / "detached-post-check-manifest.json"
+        primitive_name = (
+            "_windows_replace_file" if os.name == "nt" else "_linux_exchange_names"
+        )
+        primitive = getattr(promotion, primitive_name)
+
+        def swap_same_bytes_then_commit(*args: object) -> None:
+            self.fixture.manifest.replace(detached)
+            self.fixture.manifest.write_bytes(manifest_before)
+            primitive(*args)
+
+        with (
+            mock.patch.object(
+                promotion, primitive_name, side_effect=swap_same_bytes_then_commit
+            ),
+            self.assertRaises(promotion.GoldenV3ManifestCommitUnknownError),
+        ):
+            self.fixture.promote()
+        self.assertEqual(detached.read_bytes(), manifest_before)
+        projected = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        self.assertEqual(projected["jobs"][0]["id"], promotion.JOB_ID)
+
+    def test_manifest_cas_existing_lock_is_never_overwritten(self) -> None:
+        lock = self.fixture.manifest.with_name(
+            f".{self.fixture.manifest.name}.k3-golden-v3.lock"
+        )
+        sentinel = b"preexisting-lock"
+        lock.write_bytes(sentinel)
+        manifest_before = self.fixture.manifest.read_bytes()
+        with self.assertRaisesRegex(
+            promotion.GoldenV3PromotionError, "lock already exists"
+        ):
+            self.fixture.promote()
+        self.assertEqual(lock.read_bytes(), sentinel)
+        self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
+
+    def test_manifest_cas_existing_temporary_is_never_overwritten(self) -> None:
+        temporary = self.fixture.manifest.with_name(
+            f".{self.fixture.manifest.name}.k3-golden-v3-collision.tmp"
+        )
+        sentinel = b"preexisting-temporary"
+        temporary.write_bytes(sentinel)
+        ids = [mock.Mock(hex="collision"), mock.Mock(hex="backup")]
+        manifest_before = self.fixture.manifest.read_bytes()
+        with (
+            mock.patch.object(promotion.uuid, "uuid4", side_effect=ids),
+            self.assertRaises(FileExistsError),
+        ):
+            self.fixture.promote()
+        self.assertEqual(temporary.read_bytes(), sentinel)
+        self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
+
+    def test_manifest_cas_existing_backup_is_never_overwritten(self) -> None:
+        backup = self.fixture.manifest.with_name(
+            f".{self.fixture.manifest.name}.k3-golden-v3-backup-collision.backup"
+        )
+        sentinel = b"unrelated-preexisting-backup"
+        ids = [mock.Mock(hex="temporary-safe"), mock.Mock(hex="backup-collision")]
+        manifest_before = self.fixture.manifest.read_bytes()
+
+        def collide_backup(_: Path) -> None:
+            backup.write_bytes(sentinel)
+
+        with (
+            mock.patch.object(promotion.uuid, "uuid4", side_effect=ids),
+            mock.patch.object(
+                promotion,
+                "_before_manifest_replace_hook",
+                side_effect=collide_backup,
+            ),
+            self.assertRaises(FileExistsError),
+        ):
+            self.fixture.promote()
+        self.assertEqual(backup.read_bytes(), sentinel)
+        self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
+
+    def test_manifest_cas_primitive_failure_retains_projected_debris(self) -> None:
+        primitive_name = (
+            "_windows_replace_file" if os.name == "nt" else "_linux_exchange_names"
+        )
+        manifest_before = self.fixture.manifest.read_bytes()
+        with (
+            mock.patch.object(
+                promotion,
+                primitive_name,
+                side_effect=OSError("synthetic pre-commit primitive failure"),
+            ),
+            self.assertRaisesRegex(OSError, "synthetic pre-commit primitive failure"),
+        ):
+            self.fixture.promote()
+        self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
+        retained = list(
+            self.fixture.evidence_root.glob(
+                ".production-manifest.json.k3-golden-v3-*.tmp"
+            )
+        )
+        self.assertTrue(retained)
+        self.assertTrue(
+            any(promotion.JOB_ID.encode() in item.read_bytes() for item in retained)
+        )
+
+    def test_manifest_cas_third_state_is_unknown_and_retained(self) -> None:
+        detached = self.fixture.evidence_root / "detached-third-state-manifest.json"
+        third_state = b'{"synthetic":"third-state"}\n'
+        primitive_name = (
+            "_windows_replace_file" if os.name == "nt" else "_linux_exchange_names"
+        )
+
+        def install_third_state_then_fail(*_: object) -> None:
+            self.fixture.manifest.replace(detached)
+            self.fixture.manifest.write_bytes(third_state)
+            raise OSError("synthetic indeterminate primitive failure")
+
+        with (
+            mock.patch.object(
+                promotion, primitive_name, side_effect=install_third_state_then_fail
+            ),
+            self.assertRaises(promotion.GoldenV3ManifestCommitUnknownError),
+        ):
+            self.fixture.promote()
+        self.assertEqual(self.fixture.manifest.read_bytes(), third_state)
+        retained = list(
+            self.fixture.evidence_root.glob(
+                ".production-manifest.json.k3-golden-v3-*.tmp"
+            )
+        )
+        self.assertTrue(
+            any(promotion.JOB_ID.encode() in item.read_bytes() for item in retained)
+        )
+
+    def test_manifest_cas_ancestor_swap_never_touches_outside(self) -> None:
+        parent = self.fixture.evidence_root / "manifest-parent"
+        moved = self.fixture.evidence_root / "manifest-parent-moved"
+        outside = self.fixture.evidence_root / "manifest-outside"
+        parent.mkdir()
+        outside.mkdir()
+        manifest = parent / "manifest.json"
+        outside_manifest = outside / manifest.name
+        original = b'{"jobs":[]}\n'
+        sentinel = b'{"outside":"sentinel"}\n'
+        manifest.write_bytes(original)
+        outside_manifest.write_bytes(sentinel)
+        expected = promotion._bind(manifest, label="synthetic manifest CAS ancestor")
+        swapped = False
+
+        def swap_parent(_: Path) -> None:
+            nonlocal swapped
+            try:
+                parent.rename(moved)
+                create_directory_link(parent, outside)
+                swapped = True
+            except OSError:
+                if moved.exists() and not parent.exists():
+                    moved.rename(parent)
+
+        try:
+            with mock.patch.object(
+                promotion, "_before_manifest_replace_hook", side_effect=swap_parent
+            ):
+                if os.name == "nt":
+                    result = promotion._conditional_manifest_replace(
+                        manifest, {"jobs": [{"id": "projected"}]}, expected=expected
+                    )
+                    self.assertEqual(result.cleanup_status, "debris")
+                else:
+                    with self.assertRaises(
+                        promotion.GoldenV3ManifestCommitUnknownError
+                    ):
+                        promotion._conditional_manifest_replace(
+                            manifest,
+                            {"jobs": [{"id": "projected"}]},
+                            expected=expected,
+                        )
+            self.assertEqual(outside_manifest.read_bytes(), sentinel)
+        finally:
+            if swapped:
+                remove_directory_link(parent)
+                moved.rename(parent)
+
+    def test_manifest_cas_confirms_post_replace_base_exception(self) -> None:
+        if os.name == "nt":
+            primitive_name = "_windows_replace_file"
+        else:
+            primitive_name = "_linux_exchange_names"
+        primitive = getattr(promotion, primitive_name)
+
+        def commit_then_interrupt(*args: object) -> None:
+            primitive(*args)
+            raise KeyboardInterrupt("synthetic post-replace interruption")
+
+        with mock.patch.object(
+            promotion, primitive_name, side_effect=commit_then_interrupt
+        ):
+            result = self.fixture.promote()
+        self.assertEqual(result["status"], "accepted")
+        self.assertTrue(self.fixture.paths.raw.is_file())
+        self.assertTrue(self.fixture.paths.master.is_file())
+        self.assertTrue(self.fixture.paths.receipt.is_file())
+        manifest = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        self.assertEqual(manifest["jobs"][0]["id"], promotion.JOB_ID)
+
+    def test_commit_boundary_base_exception_retains_exact_evidence(self) -> None:
         def commit_then_interrupt(
             path: Path,
             value: dict[str, object],
@@ -1336,7 +1671,7 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
 
         with (
             mock.patch.object(
-                promotion.manifest_cas,
+                promotion,
                 "_conditional_manifest_replace",
                 side_effect=commit_then_interrupt,
             ),

@@ -14,12 +14,12 @@ from __future__ import annotations
 import argparse
 import ctypes
 import hashlib
-import importlib
 import json
 import os
 import re
 import stat
 import sys
+import uuid
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from types import ModuleType
@@ -51,8 +51,8 @@ AUTHORITY_PATH = (
     "style-candidate-k3-golden-v3-promotion-authority-v1.json"
 )
 # fmt: off
-EXPECTED_AUTHORITY_SHA256 = "ee2766c3e27c1cf2ad4f8c4bcb44eafbb2952eba1b5a4db0ad04dca17fc809a9"
-EXPECTED_IMPLEMENTATION_SELF_SHA256 = "76505d9171b9998bf645aa5bcc1686bc1188ed16f6ce88563a537fc0f0bd4b65"
+EXPECTED_AUTHORITY_SHA256 = "ec6e695395d7680648d6559e6607bd533a602674dd99e6d2ff80cfbdfb533036"
+EXPECTED_IMPLEMENTATION_SELF_SHA256 = "391d1d28ce22df76200e8d8cba88b646fbb8bfa829507f9fb4e5925bd711d9c3"
 # fmt: on
 IMPLEMENTATION_HASH_MODE = "sha256-zero-expected-authority-and-self-hashes-v1"
 FOUR_CANDIDATE_AUTHORITY_PATH = REPO_ROOT / (
@@ -84,7 +84,6 @@ strict_audit: ModuleType | None = None
 strict_audit_v2: ModuleType | None = None
 strict_audit_v19: ModuleType | None = None
 strict_audit_core: ModuleType | None = None
-manifest_cas: ModuleType | None = None
 _bound_module_sha256: dict[str, str] = {}
 JOB_ID = "style-candidate-k-v3-golden-v3"
 FOUR_CANDIDATE_V1 = "four-candidate-v1"
@@ -161,6 +160,15 @@ class GoldenV3PromotionError(RuntimeError):
 
 class GoldenV3ManifestCommitUnknownError(GoldenV3PromotionError):
     """The manifest replacement may have committed; evidence is retained."""
+
+
+@dataclass(frozen=True)
+class _ManifestCommitResult:
+    """Proven manifest commit plus intentionally retained reconciliation paths."""
+
+    cleanup_status: str
+    debris: tuple[str, ...]
+    cleanup_failures: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -432,7 +440,6 @@ def _schema_errors(
 
 
 def load_authority() -> AuthorityBundle:
-    global manifest_cas
     authority = _bind(AUTHORITY_PATH, label="Golden-v3 promotion authority")
     if authority.sha256 != EXPECTED_AUTHORITY_SHA256:
         raise GoldenV3PromotionError(
@@ -592,8 +599,6 @@ def load_authority() -> AuthorityBundle:
         raise GoldenV3PromotionError("strict-v3 v2 dependency snapshot changed")
     if strict_module.strict is not strict_dependency_modules[2]:
         raise GoldenV3PromotionError("strict-v3 core dependency snapshot changed")
-    if manifest_cas is None:
-        manifest_cas = importlib.import_module("promote_style_candidate_k3_golden_v2")
     if derivation_authority.path != FOUR_CANDIDATE_AUTHORITY_PATH.resolve():
         raise GoldenV3PromotionError("four-candidate derivation authority path changed")
     derivation_module = _load_bound_module(
@@ -2141,6 +2146,450 @@ def _cleanup_created(created: Sequence[_CreatedOutput]) -> None:
     del created
 
 
+def _manifest_reconciliation_path(path: Path) -> str:
+    try:
+        return path.resolve().relative_to(REPO_ROOT.resolve()).as_posix()
+    except (OSError, ValueError):
+        return os.fspath(path)
+
+
+def _before_manifest_replace_hook(path: Path) -> None:
+    """Test seam immediately before the platform commit primitive."""
+
+
+def _read_descriptor(descriptor: int) -> bytes:
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    chunks: list[bytes] = []
+    while True:
+        chunk = os.read(descriptor, 1024 * 1024)
+        if not chunk:
+            return b"".join(chunks)
+        chunks.append(chunk)
+
+
+def _plain_anchored_signature(
+    anchor: _ParentAnchor, name: str, *, label: str
+) -> tuple[int, int, int, int]:
+    metadata = _lstat_from_anchor(anchor, name)
+    if (
+        not stat.S_ISREG(metadata.st_mode)
+        or _stat_is_reparse(metadata)
+        or metadata.st_nlink != 1
+    ):
+        raise GoldenV3PromotionError(f"{label} is not a single-link plain file")
+    return _stat_signature(metadata)
+
+
+def _linux_exchange_names(anchor: _ParentAnchor, left: str, right: str) -> None:
+    if anchor.parent_fd is None:
+        raise GoldenV3PromotionError("Linux manifest CAS requires a directory fd")
+    libc = ctypes.CDLL(None, use_errno=True)
+    renameat2 = getattr(libc, "renameat2", None)
+    if renameat2 is None:
+        raise GoldenV3PromotionError("Linux renameat2 is unavailable")
+    renameat2.argtypes = [
+        ctypes.c_int,
+        ctypes.c_char_p,
+        ctypes.c_int,
+        ctypes.c_char_p,
+        ctypes.c_uint,
+    ]
+    renameat2.restype = ctypes.c_int
+    if (
+        renameat2(
+            anchor.parent_fd,
+            os.fsencode(left),
+            anchor.parent_fd,
+            os.fsencode(right),
+            0x2,  # RENAME_EXCHANGE
+        )
+        != 0
+    ):
+        error_number = ctypes.get_errno()
+        raise OSError(error_number, os.strerror(error_number))
+
+
+def _windows_open_file_no_replace(path: Path) -> int:
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    create_file = kernel32.CreateFileW
+    create_file.argtypes = [
+        ctypes.c_wchar_p,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+    ]
+    create_file.restype = ctypes.c_void_p
+    handle = create_file(
+        os.fspath(path),
+        0x80000000,  # GENERIC_READ
+        0x0001,  # FILE_SHARE_READ; deny write and delete
+        None,
+        3,  # OPEN_EXISTING
+        0x00200000,  # FILE_FLAG_OPEN_REPARSE_POINT
+        None,
+    )
+    invalid = ctypes.c_void_p(-1).value
+    if handle in {None, invalid}:
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number), path)
+    return int(handle)
+
+
+def _windows_replace_file(path: Path, replacement: Path, backup: Path) -> None:
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    replace_file = kernel32.ReplaceFileW
+    replace_file.argtypes = [
+        ctypes.c_wchar_p,
+        ctypes.c_wchar_p,
+        ctypes.c_wchar_p,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+        ctypes.c_void_p,
+    ]
+    replace_file.restype = ctypes.c_int
+    if not replace_file(
+        os.fspath(path),
+        os.fspath(replacement),
+        os.fspath(backup),
+        0,
+        None,
+        None,
+    ):
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number), path)
+
+
+def _conditional_manifest_replace(
+    path: Path,
+    value: dict[str, Any],
+    *,
+    expected: BoundArtifact,
+) -> _ManifestCommitResult:
+    """Replace the exact manifest snapshot without an executable dependency.
+
+    The normal writer model is a single cooperative process respecting the
+    fixed exclusive lock. Commodity OS APIs do not offer conditional rename by
+    inode against a noncooperative writer: Linux therefore uses anchored
+    ``RENAME_EXCHANGE`` to retain the exact displaced target, while Windows
+    holds no-delete ancestor/manifest handles through validation and uses
+    ``ReplaceFileW`` with an exclusively reserved unique backup. A competing
+    manifest-target change may be applied briefly, but its bytes are atomically
+    retained and force an unknown result for manual reconciliation. This does
+    not promise conditional-inode overwrite prevention. A noncooperative actor
+    that guesses and replaces the random Windows backup basename after its
+    reservation handle closes is outside the model. No created basename is
+    ever unlinked by name.
+    """
+
+    if path.resolve() != expected.path:
+        raise GoldenV3PromotionError("manifest CAS path differs from bound snapshot")
+    lock = path.with_name(f".{path.name}.k3-golden-v3.lock")
+    temporary = path.with_name(f".{path.name}.k3-golden-v3-{uuid.uuid4().hex}.tmp")
+    backup = path.with_name(f".{path.name}.k3-golden-v3-{uuid.uuid4().hex}.backup")
+    replacement_payload = _canonical_json(value)
+    anchor = _open_parent_anchor(path.parent, label="Golden-v3 manifest CAS")
+    linux_commit = anchor.parent_fd is not None
+    lock_fd: int | None = None
+    manifest_fd: int | None = None
+    windows_manifest_handle: int | None = None
+    temporary_fd: int | None = None
+    backup_fd: int | None = None
+    lock_created = False
+    temporary_created = False
+    backup_created = False
+    replace_started = False
+    commit_state = "uncommitted"
+    failure: BaseException | None = None
+    unknown_reason: str | None = None
+    unknown_cause: BaseException | None = None
+    cleanup_failures: list[str] = []
+    try:
+        create_flags = (
+            os.O_CREAT
+            | os.O_EXCL
+            | os.O_RDWR
+            | getattr(os, "O_BINARY", 0)
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0)
+        )
+        try:
+            lock_fd = _open_from_anchor(anchor, lock.name, create_flags)
+            lock_created = True
+        except FileExistsError as exc:
+            raise GoldenV3PromotionError(
+                f"manifest compare-and-swap lock already exists: {lock}"
+            ) from exc
+        _write_all(lock_fd, expected.sha256.encode("ascii"))
+        os.fsync(lock_fd)
+        lock_signature = _stat_signature(os.fstat(lock_fd))
+        temporary_fd = _open_from_anchor(anchor, temporary.name, create_flags)
+        temporary_created = True
+        _write_all(temporary_fd, replacement_payload)
+        os.fsync(temporary_fd)
+        temporary_signature = _stat_signature(os.fstat(temporary_fd))
+        _before_manifest_replace_hook(path)
+        _assert_parent_anchor(anchor, label="Golden-v3 manifest CAS")
+        if _plain_anchored_signature(
+            anchor, lock.name, label="manifest CAS lock"
+        ) != lock_signature or _read_descriptor(lock_fd) != expected.sha256.encode(
+            "ascii"
+        ):
+            raise GoldenV3PromotionError("manifest CAS lock bytes changed")
+        read_flags = (
+            os.O_RDONLY
+            | getattr(os, "O_BINARY", 0)
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0)
+        )
+        if anchor.parent_fd is not None:
+            manifest_fd = _open_from_anchor(anchor, path.name, read_flags)
+            manifest_signature = _stat_signature(os.fstat(manifest_fd))
+            if (
+                manifest_signature != expected.signature
+                or _read_descriptor(manifest_fd) != expected.data
+            ):
+                raise GoldenV3PromotionError(
+                    "manifest compare-and-swap expected snapshot changed"
+                )
+        else:
+            windows_manifest_handle = _windows_open_file_no_replace(path)
+            current = _bind(path, label="manifest compare-and-swap current")
+            if current.signature != expected.signature or current.data != expected.data:
+                raise GoldenV3PromotionError(
+                    "manifest compare-and-swap expected snapshot changed"
+                )
+            manifest_signature = current.signature
+        if (
+            _plain_anchored_signature(
+                anchor, temporary.name, label="manifest CAS temporary"
+            )
+            != temporary_signature
+            or _read_descriptor(temporary_fd) != replacement_payload
+        ):
+            raise GoldenV3PromotionError("manifest CAS temporary bytes changed")
+        _assert_parent_anchor(anchor, label="Golden-v3 manifest CAS")
+        if (
+            _plain_anchored_signature(anchor, path.name, label="manifest CAS target")
+            != manifest_signature
+        ):
+            raise GoldenV3PromotionError(
+                "manifest compare-and-swap expected identity changed"
+            )
+        backup_marker = b"sstory-golden-v3-reserved-backup:" + expected.sha256.encode(
+            "ascii"
+        )
+        if os.name == "nt":
+            backup_fd = _open_from_anchor(anchor, backup.name, create_flags)
+            backup_created = True
+            _write_all(backup_fd, backup_marker)
+            os.fsync(backup_fd)
+            backup_signature = _stat_signature(os.fstat(backup_fd))
+            if (
+                _plain_anchored_signature(
+                    anchor, backup.name, label="manifest CAS backup reservation"
+                )
+                != backup_signature
+                or _read_descriptor(backup_fd) != backup_marker
+            ):
+                raise GoldenV3PromotionError("manifest CAS backup reservation changed")
+        if windows_manifest_handle is not None:
+            _windows_close_handle(windows_manifest_handle)
+            windows_manifest_handle = None
+        if os.name == "nt" and temporary_fd is not None:
+            os.close(temporary_fd)
+            temporary_fd = None
+        if backup_fd is not None:
+            os.close(backup_fd)
+            backup_fd = None
+        replace_started = True
+        if anchor.parent_fd is not None:
+            _linux_exchange_names(anchor, temporary.name, path.name)
+            manifest_visible = _plain_anchored_signature(
+                anchor, path.name, label="manifest CAS committed target"
+            )
+            previous_visible = _plain_anchored_signature(
+                anchor, temporary.name, label="manifest CAS retained previous target"
+            )
+            try:
+                _assert_parent_anchor(anchor, label="Golden-v3 manifest CAS")
+            except GoldenV3PromotionError as anchor_exc:
+                commit_state = "unknown"
+                unknown_reason = "post-exchange-parent-namespace-indeterminate"
+                unknown_cause = anchor_exc
+            else:
+                if (
+                    manifest_visible == temporary_signature
+                    and previous_visible == manifest_signature
+                    and _read_descriptor(temporary_fd) == replacement_payload
+                    and _read_descriptor(manifest_fd) == expected.data
+                ):
+                    commit_state = "committed"
+                else:
+                    commit_state = "unknown"
+                    unknown_reason = "post-exchange-identities-indeterminate"
+        else:
+            _windows_replace_file(path, temporary, backup)
+            committed = _bind(path, label="manifest CAS committed target")
+            previous = _bind(backup, label="manifest CAS retained previous target")
+            if (
+                committed.signature[:2] == temporary_signature[:2]
+                and committed.data == replacement_payload
+                and previous.signature[:2] == manifest_signature[:2]
+                and previous.data == expected.data
+            ):
+                commit_state = "committed"
+            else:
+                commit_state = "unknown"
+                unknown_reason = "post-replace-bytes-indeterminate"
+    except BaseException as exc:
+        if replace_started and commit_state != "committed":
+            try:
+                if anchor.parent_fd is not None:
+                    manifest_visible = _plain_anchored_signature(
+                        anchor, path.name, label="manifest CAS confirmation target"
+                    )
+                    temporary_visible = _plain_anchored_signature(
+                        anchor,
+                        temporary.name,
+                        label="manifest CAS confirmation retained",
+                    )
+                    if (
+                        manifest_visible == temporary_signature
+                        and temporary_visible == manifest_signature
+                        and _read_descriptor(temporary_fd) == replacement_payload
+                        and _read_descriptor(manifest_fd) == expected.data
+                    ):
+                        commit_state = "committed"
+                    elif (
+                        manifest_visible == manifest_signature
+                        and temporary_visible == temporary_signature
+                        and _read_descriptor(manifest_fd) == expected.data
+                        and _read_descriptor(temporary_fd) == replacement_payload
+                    ):
+                        failure = exc
+                    else:
+                        commit_state = "unknown"
+                        unknown_reason = "post-exchange-identities-indeterminate"
+                        unknown_cause = exc
+                else:
+                    committed_manifest = _bind(
+                        path, label="manifest post-replace confirmation"
+                    )
+                    if (
+                        committed_manifest.signature[:2] == temporary_signature[:2]
+                        and committed_manifest.data == replacement_payload
+                    ):
+                        previous = _bind(
+                            backup, label="manifest post-replace retained previous"
+                        )
+                        if (
+                            previous.signature[:2] == manifest_signature[:2]
+                            and previous.data == expected.data
+                        ):
+                            commit_state = "committed"
+                        else:
+                            commit_state = "unknown"
+                            unknown_reason = "post-replace-backup-indeterminate"
+                            unknown_cause = exc
+                    elif (
+                        committed_manifest.signature[:2] == manifest_signature[:2]
+                        and committed_manifest.data == expected.data
+                    ):
+                        pending_manifest = _bind(
+                            temporary, label="manifest pre-replace retained projected"
+                        )
+                        reserved_backup = _bind(
+                            backup, label="manifest pre-replace reserved backup"
+                        )
+                        if (
+                            pending_manifest.signature[:2] == temporary_signature[:2]
+                            and pending_manifest.data == replacement_payload
+                            and reserved_backup.signature[:2] == backup_signature[:2]
+                            and reserved_backup.data == backup_marker
+                        ):
+                            failure = exc
+                        else:
+                            commit_state = "unknown"
+                            unknown_reason = "pre-replace-temporary-indeterminate"
+                            unknown_cause = exc
+                    else:
+                        commit_state = "unknown"
+                        unknown_reason = "post-replace-manifest-bytes-indeterminate"
+                        unknown_cause = exc
+            except BaseException as confirmation_exc:
+                commit_state = "unknown"
+                unknown_reason = "post-replace-manifest-read-failed"
+                unknown_cause = confirmation_exc
+        else:
+            failure = exc
+    finally:
+        if backup_fd is not None:
+            try:
+                os.close(backup_fd)
+            except BaseException:
+                cleanup_failures.append("manifest-backup-reservation-close")
+        if temporary_fd is not None:
+            try:
+                os.close(temporary_fd)
+            except BaseException:
+                cleanup_failures.append("manifest-temporary-close")
+        if manifest_fd is not None:
+            try:
+                os.close(manifest_fd)
+            except BaseException:
+                cleanup_failures.append("manifest-snapshot-close")
+        if windows_manifest_handle is not None:
+            try:
+                _windows_close_handle(windows_manifest_handle)
+            except BaseException:
+                cleanup_failures.append("manifest-snapshot-close")
+        if lock_fd is not None:
+            try:
+                os.close(lock_fd)
+            except BaseException:
+                cleanup_failures.append("manifest-lock-close")
+        try:
+            _close_parent_anchor(anchor)
+        except BaseException:
+            cleanup_failures.append("manifest-parent-anchor-close")
+
+    debris: list[str] = []
+    if lock_created:
+        debris.append(_manifest_reconciliation_path(lock))
+    if temporary_created and (linux_commit or commit_state != "committed"):
+        debris.append(_manifest_reconciliation_path(temporary))
+    if backup_created:
+        debris.append(_manifest_reconciliation_path(backup))
+    if commit_state == "unknown":
+        unknown = GoldenV3ManifestCommitUnknownError(
+            "manifest commit state is unknown; persistent evidence and CAS debris "
+            "were retained for manual reconciliation: "
+            f"manifest={_manifest_reconciliation_path(path)}, "
+            f"reason={unknown_reason or 'post-replace-state-indeterminate'}, "
+            f"debris={debris!r}, cleanup_failures={cleanup_failures!r}"
+        )
+        if unknown_cause is not None:
+            raise unknown from unknown_cause
+        raise unknown
+    if failure is not None:
+        failure.add_note(
+            "manifest CAS evidence was retained by policy: " + ", ".join(debris)
+        )
+        if isinstance(failure, BoundArtifactError):
+            raise GoldenV3PromotionError(str(failure)) from failure
+        raise failure
+    if commit_state != "committed":  # pragma: no cover - defensive invariant
+        raise GoldenV3PromotionError("manifest CAS ended without a commit result")
+    return _ManifestCommitResult(
+        cleanup_status="debris",
+        debris=tuple(debris),
+        cleanup_failures=tuple(cleanup_failures),
+    )
+
+
 def promote_candidate(
     *,
     generation_contract_id: str,
@@ -2323,15 +2772,10 @@ def promote_candidate(
             assert_bindings_unchanged(all_bindings)
         except BoundArtifactError as exc:
             raise GoldenV3PromotionError(str(exc)) from exc
-        try:
-            commit_started = True
-            commit = manifest_cas._conditional_manifest_replace(
-                paths.manifest, projected, expected=manifest_binding
-            )
-        except manifest_cas.ManifestCommitStateUnknownError as exc:
-            raise GoldenV3ManifestCommitUnknownError(str(exc)) from exc
-        except manifest_cas.K3GoldenPromotionV2Error as exc:
-            raise GoldenV3PromotionError(str(exc)) from exc
+        commit_started = True
+        commit = _conditional_manifest_replace(
+            paths.manifest, projected, expected=manifest_binding
+        )
         return {
             "status": "accepted",
             "job_id": JOB_ID,

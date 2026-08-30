@@ -26,7 +26,7 @@
   },
   "promotion_implementation": {
     "path": "scripts/map-production/promote_style_candidate_k3_golden_v3.py",
-    "canonical_self_sha256": "76505d9171b9998bf645aa5bcc1686bc1188ed16f6ce88563a537fc0f0bd4b65",
+    "canonical_self_sha256": "391d1d28ce22df76200e8d8cba88b646fbb8bfa829507f9fb4e5925bd711d9c3",
     "hash_mode": "sha256-zero-expected-authority-and-self-hashes-v1"
   },
   "authorities": {
@@ -66,7 +66,7 @@
   "bound_schemas": {
     "authority": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
-      "sha256": "f8551ae1f2a6e34d449483f7c25f49d4c72a5e8fd38d6ca1023e3a9d81ed900a"
+      "sha256": "0620ab8afb092dfe1d3b3ace5c977d66eb85a3761b50bb0eb8e615e27ab6b2e2"
     },
     "acceptance_receipt": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
@@ -355,6 +355,11 @@
     "partial_v3_manifest_evidence": "reject-without-legacy-fallback",
     "mixed_v2_v3_manifest_evidence": "reject-without-dispatch",
     "existing_output": "refuse-without-overwrite",
-    "candidate_gate_failure": "reject-without-promotion"
+    "candidate_gate_failure": "reject-without-promotion",
+    "manifest_writer_model": "single-cooperative-writer-respecting-fixed-exclusive-lock",
+    "noncooperative_namespace_race": "atomic-retention-plus-unknown-manual-reconciliation",
+    "noncooperative_guarantee": "manifest-target-bytes-atomically-retained-no-silent-success-not-conditional-inode-overwrite-prevention",
+    "windows_backup_namespace": "exclusive-unpredictable-reservation; post-close-noncooperative-backup-basename-replacement-excluded",
+    "created_path_cleanup": "retain-by-name-debris-never-unlink-when-ownership-ambiguous"
   }
 }

@@ -475,7 +475,12 @@
         "partial_v3_manifest_evidence",
         "mixed_v2_v3_manifest_evidence",
         "existing_output",
-        "candidate_gate_failure"
+        "candidate_gate_failure",
+        "manifest_writer_model",
+        "noncooperative_namespace_race",
+        "noncooperative_guarantee",
+        "windows_backup_namespace",
+        "created_path_cleanup"
       ],
       "properties": {
         "missing_or_malformed_input": { "const": "fail-closed-before-write" },
@@ -483,7 +488,22 @@
         "partial_v3_manifest_evidence": { "const": "reject-without-legacy-fallback" },
         "mixed_v2_v3_manifest_evidence": { "const": "reject-without-dispatch" },
         "existing_output": { "const": "refuse-without-overwrite" },
-        "candidate_gate_failure": { "const": "reject-without-promotion" }
+        "candidate_gate_failure": { "const": "reject-without-promotion" },
+        "manifest_writer_model": {
+          "const": "single-cooperative-writer-respecting-fixed-exclusive-lock"
+        },
+        "noncooperative_namespace_race": {
+          "const": "atomic-retention-plus-unknown-manual-reconciliation"
+        },
+        "noncooperative_guarantee": {
+          "const": "manifest-target-bytes-atomically-retained-no-silent-success-not-conditional-inode-overwrite-prevention"
+        },
+        "windows_backup_namespace": {
+          "const": "exclusive-unpredictable-reservation; post-close-noncooperative-backup-basename-replacement-excluded"
+        },
+        "created_path_cleanup": {
+          "const": "retain-by-name-debris-never-unlink-when-ownership-ambiguous"
+        }
       },
       "additionalProperties": false
     }

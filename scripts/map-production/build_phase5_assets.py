@@ -775,11 +775,11 @@ def bind_phase5_artifact_graph(
     """Bind every reachable Phase 5 artifact to stable, trackable bytes."""
 
     registry: dict[str, BoundArtifact] = {}
-    pending = list(roots)
-    root_ids = {root.identity for root in pending}
+    pending = [(root, True) for root in roots]
+    expanded: set[str] = set()
     active = _BOUND_ARTIFACT_CONTEXT.get()
     known = dict(active) if active is not None else {}
-    known.update({root.identity: root for root in pending})
+    known.update({root.identity: root for root, _ in pending})
     aggregate_boundary_ids = {
         path_identity(path)
         for path in (
@@ -792,39 +792,27 @@ def bind_phase5_artifact_graph(
         boundary.identity for boundary in aggregate_boundaries
     )
     while pending:
-        document = pending.pop()
+        document, expand = pending.pop()
         existing = registry.get(document.identity)
         if existing is not None:
             if existing.sha256 != document.sha256:
                 raise Phase5BuildError(
                     f"artifact graph bound conflicting bytes for {document.relative}"
                 )
-            continue
-        registry[document.identity] = document
+        else:
+            registry[document.identity] = document
         if (
-            document.identity in aggregate_boundary_ids
+            not expand
+            or document.identity in aggregate_boundary_ids
             or document.path.suffix.casefold() != ".json"
+            or document.identity in expanded
         ):
             continue
+        expanded.add(document.identity)
         try:
             value = document.json_value()
         except BoundArtifactError as exc:
             raise Phase5BuildError(str(exc)) from exc
-        if (
-            document.identity not in root_ids
-            and isinstance(value, dict)
-            and value.get("interface")
-            in {
-                "sstory-k3-golden-v3-four-candidate-derivation-preregistration-v1",
-                "sstory-k3-golden-v3-balanced-phase-preregistration-v2",
-                "sstory-k3-golden-v3-balanced-open-phase-preregistration-v3",
-            }
-            and value.get("immutable_plan") is True
-        ):
-            # A nested preregistration is already raw-SHA-bound by its parent.
-            # Only a selected manifest authority root expands its own sources;
-            # this avoids importing rejected historical runtime destinations.
-            continue
         for (
             raw_path,
             claimed,
@@ -843,7 +831,8 @@ def bind_phase5_artifact_graph(
                     f"artifact graph {document.relative} {location} hash mismatch: "
                     f"record={claimed.lower()}, actual={referenced.sha256}"
                 )
-            pending.append(referenced)
+            source_closure_leaf = location.startswith("$.input_policy.source_bindings[")
+            pending.append((referenced, not source_closure_leaf))
     return registry
 
 
