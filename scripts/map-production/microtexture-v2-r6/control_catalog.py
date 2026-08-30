@@ -113,13 +113,19 @@ _R18_SCHEDULE_REVISION = (
 _R19_SCHEDULE_REVISION = (
     "dev-r19-duplicate-reject-severity-band-equivalence-schedule-v1"
 )
-_SCHEDULE_REVISION = (
+_R20_SCHEDULE_REVISION = (
     "dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1"
+)
+_SCHEDULE_REVISION = (
+    "dev-r21-symmetric-hard-point-speck-population-schedule-v1"
 )
 _R19_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
     b"microtexture-v2-r6/public-payload-commitment/v15/"
 )
-_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v16/"
+_R20_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
+    b"microtexture-v2-r6/public-payload-commitment/v16/"
+)
+_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v17/"
 _PUBLIC_R15_WARNING_ANCHOR_REVISION = (
     "dev-r14-quantized-direct-visible-sparse-warning-v1"
 )
@@ -143,22 +149,38 @@ _R19_DUPLICATE_AUDIT_NONCES = {
     "calibration": (1191000, 1191001, 1191002),
     "holdout": (1201000, 1201001, 1201002),
 }
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v15/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v14"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v14"
-_DELTA_LANE = "delta-v14"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v14/"
-_ARTIFACT_NONCE_BASES = {"calibration": 1273000, "holdout": 1283000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1251000, "holdout": 1261000}
-_DUPLICATE_AUDIT_NONCES = {
+_R20_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v15/"
+_R20_FOUNDATION_OFFSET_LANE = "foundation-offset-v14"
+_R20_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v14"
+_R20_DELTA_LANE = "delta-v14"
+_R20_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v14/"
+_R20_ARTIFACT_NONCE_BASES = {"calibration": 1273000, "holdout": 1283000}
+_R20_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1251000, "holdout": 1261000}
+_R20_DUPLICATE_AUDIT_NONCES = {
     "calibration": (1291000, 1291001, 1291002),
     "holdout": (1301000, 1301001, 1301002),
+}
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v16/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v15"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v15"
+_DELTA_LANE = "delta-v15"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v15/"
+_ARTIFACT_NONCE_BASES = {"calibration": 1373000, "holdout": 1383000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1351000, "holdout": 1361000}
+_DUPLICATE_AUDIT_NONCES = {
+    "calibration": (1391000, 1391001, 1391002),
+    "holdout": (1401000, 1401001, 1401002),
 }
 _R20_PUBLIC_NONCES = {
     "calibration": "r6-calibration-v15",
     "holdout": "r6-holdout-v15",
 }
 _R20_RENDER_SEED_PREFIX = "microtexture-v2-r6/render-seed/v15/"
+_R21_PUBLIC_NONCES = {
+    "calibration": "r6-calibration-v16",
+    "holdout": "r6-holdout-v16",
+}
+_R21_RENDER_SEED_PREFIX = "microtexture-v2-r6/render-seed/v16/"
 _R17_REFERENCE_PREQUALIFICATION_REVISION = (
     "dev-r17-role-agnostic-private-reference-coefficient-prequalification-v1"
 )
@@ -490,6 +512,116 @@ _R20_DUPLICATE_SENTINEL_MANIFEST = {
 }
 _R20_DUPLICATE_SENTINEL_MANIFEST_SHA256 = (
     "2ee513f2a3182741fbf9df569a2c5137a7f25b4fd27d3fbba6b00344497b85a1"
+)
+_R21_SANITIZED_R20_BASIS = {
+    "failure_class": "both-split-tiny-speck-population-shortfall",
+    "source_failure_audit_sha256": (
+        "e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8"
+    ),
+    "calibration": {
+        "tiny_speck_reject_detection": {
+            "observed": 0,
+            "formal_minimum": 4,
+            "development_minimum": 6,
+        },
+        "all_other_endpoints_passed_formal_and_development_minima": True,
+    },
+    "holdout": {
+        "tiny_speck_reject_detection": {
+            "observed": 1,
+            "formal_minimum": 4,
+            "development_minimum": 6,
+        },
+        "all_other_endpoints_passed_formal_and_development_minima": True,
+    },
+    "private_audits_passed": True,
+    "population_audit_started": True,
+    "population_audit_passed": False,
+    "numeric_measurement_started": False,
+    "metric_evaluation_started": False,
+    "threshold_search_started": False,
+}
+_R21_SANITIZED_R20_BASIS_SHA256 = (
+    "60a781e4a74ce4b31a4513b66bfbae1362c39fe373c3f8ff3f5a4a9c587ce610"
+)
+_R21_HARD_POINT_SPECK_REVISION = "dev-r21-reject-speck-encoded-hard-plus-v1"
+_R21_HARD_POINT_SPECK_MANIFEST = {
+    "revision": _R21_HARD_POINT_SPECK_REVISION,
+    "inherited_schedule_revision": _R20_SCHEDULE_REVISION,
+    "schedule_revision": _SCHEDULE_REVISION,
+    "sanitized_r20_basis": _R21_SANITIZED_R20_BASIS,
+    "sanitized_r20_basis_sha256": _R21_SANITIZED_R20_BASIS_SHA256,
+    "family": "artifact-speck",
+    "target_tiers": ["clear-reject-candidate", "dominant-reject-candidate"],
+    "target_conditions_per_split": 10,
+    "clear_reject_conditions_per_split": 6,
+    "dominant_reject_conditions_per_split": 4,
+    "tiny_speck_formal_minimum": 4,
+    "tiny_speck_development_floor": 6,
+    "tiny_speck_structural_miss_budget": 4,
+    "direct_visibility_contract": {
+        "diameter_px": 1,
+        "center_amplitude_l": 12.0,
+        "shoulder_fraction": 0.92,
+        "encoded_center_l": 12,
+        "encoded_axial_shoulder_l": 11,
+        "connected_component_area_px": 5,
+        "component_count_bounds": [12, 21],
+        "minimum_center_chebyshev_separation_px": 30,
+        "quadrant_stratified": True,
+        "minimum_components_per_exact_metric_quadrant": 3,
+        "maximum_quadrant_count_difference": 1,
+        "returns_to_uninjected_background_outside_one_axial_neighbor": True,
+        "microblob_blur_forbidden": True,
+        "vision_truth_guaranteed": False,
+    },
+    "preservation_contract": {
+        "artifact_condition_count_per_split_unchanged": 100,
+        "artifact_records_per_split_unchanged": 200,
+        "total_records_per_split_unchanged": 220,
+        "clean_and_warning_speck_morphologies_unchanged_per_split": 10,
+        "all_non_speck_morphologies_unchanged_per_split": 80,
+        "exact_morphology_change_count_across_splits": 20,
+        "preserved_predecessor_morphology_conditions_across_splits": 180,
+        "design_tier_membership_unchanged": True,
+        "formal_and_development_minima_unchanged": True,
+        "metric_threshold_population_and_rate_contracts_unchanged": True,
+    },
+    "splits": {
+        "calibration": {
+            3: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 12, "shoulder_fraction": 0.92, "minimum_separation_px": 30},
+            5: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 13, "shoulder_fraction": 0.92, "minimum_separation_px": 32},
+            6: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 18, "shoulder_fraction": 0.92, "minimum_separation_px": 30},
+            7: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 14, "shoulder_fraction": 0.92, "minimum_separation_px": 34},
+            8: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 15, "shoulder_fraction": 0.92, "minimum_separation_px": 31},
+            12: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 19, "shoulder_fraction": 0.92, "minimum_separation_px": 32},
+            15: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 16, "shoulder_fraction": 0.92, "minimum_separation_px": 33},
+            16: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 20, "shoulder_fraction": 0.92, "minimum_separation_px": 34},
+            17: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 21, "shoulder_fraction": 0.92, "minimum_separation_px": 36},
+            19: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 17, "shoulder_fraction": 0.92, "minimum_separation_px": 35},
+        },
+        "holdout": {
+            1: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 18, "shoulder_fraction": 0.92, "minimum_separation_px": 31},
+            3: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 12, "shoulder_fraction": 0.92, "minimum_separation_px": 31},
+            4: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 13, "shoulder_fraction": 0.92, "minimum_separation_px": 33},
+            6: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 14, "shoulder_fraction": 0.92, "minimum_separation_px": 35},
+            9: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 19, "shoulder_fraction": 0.92, "minimum_separation_px": 33},
+            10: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 15, "shoulder_fraction": 0.92, "minimum_separation_px": 32},
+            11: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 16, "shoulder_fraction": 0.92, "minimum_separation_px": 34},
+            13: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 20, "shoulder_fraction": 0.92, "minimum_separation_px": 35},
+            14: {"design_tier": "dominant-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 21, "shoulder_fraction": 0.92, "minimum_separation_px": 37},
+            18: {"design_tier": "clear-reject-candidate", "diameter_px": 1, "amplitude_l": 12.0, "count_in_metric_window": 17, "shoulder_fraction": 0.92, "minimum_separation_px": 36},
+        },
+    },
+}
+_R21_HARD_POINT_SPECK_MANIFEST_SHA256 = (
+    "9f85d79300a23b9c6f7cec27048d91cd8b1bcce98e395f792797a795156210cc"
+)
+_R21_PRESERVED_R20_MORPHOLOGY_SHA256 = (
+    "03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf"
+)
+_R21_FULL_ARTIFACT_MORPHOLOGY_SHA256 = (
+    "99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595"
 )
 _R15_WARNING_ACCEPTANCE_ANCHORS = {
     "revision": _PUBLIC_R15_WARNING_ANCHOR_REVISION,
@@ -1242,14 +1374,17 @@ def _retain_metric_support(
     return retained
 
 
-def _r20_obvious_artifact_duplicate_parameters(split: str) -> dict[str, Any]:
+def _obvious_artifact_duplicate_parameters(
+    split: str,
+    *,
+    schedule_revision: str,
+    duplicate_audit_nonces: dict[str, tuple[int, int, int]],
+) -> dict[str, Any]:
     if split not in {"calibration", "holdout"}:
-        raise ValueError("invalid r20 duplicate-sentinel split")
-    _, artifact_audit_nonce, artifact_condition_nonce = _DUPLICATE_AUDIT_NONCES[
-        split
-    ]
+        raise ValueError("invalid duplicate-sentinel split")
+    _, artifact_audit_nonce, artifact_condition_nonce = duplicate_audit_nonces[split]
     return {
-        "schedule_revision": _SCHEDULE_REVISION,
+        "schedule_revision": schedule_revision,
         "audit_nonce": artifact_audit_nonce,
         "audit_kind": "obvious-artifact-isomorphic-replicate",
         "condition_nonce": artifact_condition_nonce,
@@ -1263,6 +1398,24 @@ def _r20_obvious_artifact_duplicate_parameters(split: str) -> dict[str, Any]:
         "center_margin_px": 14,
         "minimum_support_guard_px": 2,
     }
+
+
+def _r20_obvious_artifact_duplicate_parameters(split: str) -> dict[str, Any]:
+    """Return the byte-stable r20 duplicate sentinel parameters."""
+
+    return _obvious_artifact_duplicate_parameters(
+        split,
+        schedule_revision=_R20_SCHEDULE_REVISION,
+        duplicate_audit_nonces=_R20_DUPLICATE_AUDIT_NONCES,
+    )
+
+
+def _active_obvious_artifact_duplicate_parameters(split: str) -> dict[str, Any]:
+    return _obvious_artifact_duplicate_parameters(
+        split,
+        schedule_revision=_SCHEDULE_REVISION,
+        duplicate_audit_nonces=_DUPLICATE_AUDIT_NONCES,
+    )
 
 
 def _validate_r20_duplicate_sentinel_raster(
@@ -1350,7 +1503,11 @@ def _render_r20_duplicate_obvious_short_line_sentinel(
     metric_window_xywh: tuple[int, int, int, int],
 ) -> np.ndarray:
     expected_parameters = [
-        _r20_obvious_artifact_duplicate_parameters(split)
+        builder(split)
+        for builder in (
+            _r20_obvious_artifact_duplicate_parameters,
+            _active_obvious_artifact_duplicate_parameters,
+        )
         for split in ("calibration", "holdout")
     ]
     if (
@@ -1419,7 +1576,7 @@ def _r20_zero_key_duplicate_sentinel_delta(split: str) -> np.ndarray:
             key,
             _R20_RENDER_SEED_PREFIX,
             cluster_seed_identity,
-            _FOUNDATION_ASSIGNMENT_LANE,
+            _R20_FOUNDATION_ASSIGNMENT_LANE,
         )[:8],
         "big",
     ) % len(_FOUNDATIONS)
@@ -1429,7 +1586,7 @@ def _r20_zero_key_duplicate_sentinel_delta(split: str) -> np.ndarray:
     }
     delta_seed = int.from_bytes(
         _hmac_material(
-            key, _R20_RENDER_SEED_PREFIX, cluster_identity, _DELTA_LANE
+            key, _R20_RENDER_SEED_PREFIX, cluster_identity, _R20_DELTA_LANE
         ),
         "big",
     )
@@ -1504,6 +1661,20 @@ def _render_unsigned_delta(
                 or encoded_shoulder_l < 5
             ):
                 raise RuntimeError("r18 direct-visible speck contract drift")
+        elif reinforcement_revision == _R21_HARD_POINT_SPECK_REVISION:
+            encoded_center_l = int(np.rint(amplitude))
+            encoded_shoulder_l = int(np.rint(amplitude * shoulder_fraction))
+            if (
+                tier
+                not in {"clear-reject-candidate", "dominant-reject-candidate"}
+                or not 12 <= count <= 21
+                or amplitude != 12.0
+                or shoulder_fraction != 0.92
+                or separation < 30
+                or encoded_center_l != 12
+                or encoded_shoulder_l != 11
+            ):
+                raise RuntimeError("r21 hard-point speck contract drift")
         else:
             raise RuntimeError("unknown speck reinforcement revision")
         centers = _stratified_separated_integer_positions(
@@ -1708,9 +1879,12 @@ def _artifact_variants(
     *,
     _include_r16_warning_rebalance: bool = True,
     _include_r18_speck_reinforcement: bool = True,
+    _include_r21_hard_point_speck: bool = True,
     _schedule_revision_override: str | None = None,
     _artifact_nonce_bases_override: dict[str, int] | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
+    if _include_r21_hard_point_speck and not _include_r18_speck_reinforcement:
+        raise RuntimeError("r21 hard-point overlay requires the r18 speck predecessor")
     artifact_nonce_bases = (
         _ARTIFACT_NONCE_BASES
         if _artifact_nonce_bases_override is None
@@ -3493,6 +3667,27 @@ def _artifact_variants(
                 ),
             }
 
+    if _include_r21_hard_point_speck:
+        replacements = _R21_HARD_POINT_SPECK_MANIFEST["splits"][split]
+        if len(replacements) != 10:
+            raise RuntimeError(f"r21 speck replacement cardinality drift: {split}")
+        for index, replacement in replacements.items():
+            source = result["artifact-speck"][index]
+            if (
+                source["design_tier"] != replacement["design_tier"]
+                or source.get("direct_visibility_reinforcement_revision")
+                != _R18_SPECK_REINFORCEMENT_REVISION
+            ):
+                raise RuntimeError(
+                    f"r21 speck replacement predecessor drift: {split}/{index}"
+                )
+            result["artifact-speck"][index] = {
+                **replacement,
+                "direct_visibility_reinforcement_revision": (
+                    _R21_HARD_POINT_SPECK_REVISION
+                ),
+            }
+
     family_nonce_offsets = {
         "artifact-fine-grain": 0,
         "artifact-speck": 100,
@@ -3551,6 +3746,17 @@ def _artifact_variants(
                     f"r6 design tier lacks mod-3 foundation coverage: {family}/{tier}"
                 )
     return result
+
+
+def _r20_artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
+    """Reconstruct the exact closed r20 artifact catalog parameters."""
+
+    return _artifact_variants(
+        split,
+        _include_r21_hard_point_speck=False,
+        _schedule_revision_override=_R20_SCHEDULE_REVISION,
+        _artifact_nonce_bases_override=_R20_ARTIFACT_NONCE_BASES,
+    )
 
 
 def _validate_dev_r17_morphology_schedules() -> None:
@@ -3617,12 +3823,15 @@ def _validate_dev_r17_morphology_schedules() -> None:
             split,
             _include_r16_warning_rebalance=False,
             _include_r18_speck_reinforcement=False,
+            _include_r21_hard_point_speck=False,
         )
         for split in splits
     }
     current = {
         split: _artifact_variants(
-            split, _include_r18_speck_reinforcement=False
+            split,
+            _include_r18_speck_reinforcement=False,
+            _include_r21_hard_point_speck=False,
         )
         for split in splits
     }
@@ -4209,7 +4418,9 @@ def _validate_dev_r17_morphology_schedules() -> None:
     split_tuples: dict[str, set[tuple[str, float]]] = {}
     for split, expected_by_tier in expected_grain_periods.items():
         grain = _artifact_variants(
-            split, _include_r18_speck_reinforcement=False
+            split,
+            _include_r18_speck_reinforcement=False,
+            _include_r21_hard_point_speck=False,
         )["artifact-fine-grain"]
         split_tuples[split] = set()
         for tier, expected in expected_by_tier.items():
@@ -4315,7 +4526,7 @@ def dev_r20_authority_binding() -> dict[str, Any]:
     """Return the tracked, public r20 catalog authority without runtime material."""
 
     return {
-        "schedule_revision": _SCHEDULE_REVISION,
+        "schedule_revision": _R20_SCHEDULE_REVISION,
         "duplicate_equivalence_policy_revision": (
             _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION
         ),
@@ -4323,6 +4534,58 @@ def dev_r20_authority_binding() -> dict[str, Any]:
             _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
         ),
         "sanitized_r19_basis_sha256": _R20_SANITIZED_R19_BASIS_SHA256,
+        "duplicate_sentinel_revision": _R20_DUPLICATE_SENTINEL_REVISION,
+        "duplicate_sentinel_manifest_sha256": (
+            _R20_DUPLICATE_SENTINEL_MANIFEST_SHA256
+        ),
+        "public_payload_commitment_prefix": (
+            _R20_PUBLIC_PAYLOAD_COMMITMENT_PREFIX.decode("ascii")
+        ),
+        "private_reference_transform_prefix": (
+            _R20_PRIVATE_REFERENCE_TRANSFORM_PREFIX.decode("ascii")
+        ),
+        "foundation_offset_lane": _R20_FOUNDATION_OFFSET_LANE,
+        "foundation_assignment_lane": _R20_FOUNDATION_ASSIGNMENT_LANE,
+        "delta_lane": _R20_DELTA_LANE,
+        "private_control_id_prefix": _R20_PRIVATE_CONTROL_ID_PREFIX.decode("ascii"),
+        "artifact_nonce_bases": dict(_R20_ARTIFACT_NONCE_BASES),
+        "protocol_zero_nonce_bases": dict(_R20_PROTOCOL_ZERO_NONCE_BASES),
+        "duplicate_audit_nonces": {
+            split: list(values)
+            for split, values in _R20_DUPLICATE_AUDIT_NONCES.items()
+        },
+        "speck_reinforcement_revision": _R18_SPECK_REINFORCEMENT_REVISION,
+        "speck_reinforcement_manifest_sha256": (
+            _R18_SPECK_REINFORCEMENT_MANIFEST_SHA256
+        ),
+        "predecessor_full_artifact_morphology_sha256": (
+            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "full_artifact_morphology_sha256": (
+            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "exact_morphology_change_count_across_splits": 0,
+        "obvious_artifact_duplicate_sentinel_change_count_across_splits": 2,
+        "clean_duplicate_construction_change_count_across_splits": 0,
+    }
+
+
+def dev_r21_authority_binding() -> dict[str, Any]:
+    """Return the tracked, public r21 catalog authority without runtime material."""
+
+    return {
+        "schedule_revision": _SCHEDULE_REVISION,
+        "predecessor_schedule_revision": _R20_SCHEDULE_REVISION,
+        "duplicate_equivalence_policy_revision": (
+            _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION
+        ),
+        "duplicate_equivalence_policy_manifest_sha256": (
+            _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+        ),
+        "sanitized_r20_basis_sha256": _R21_SANITIZED_R20_BASIS_SHA256,
+        "source_dev_r20_failure_audit_sha256": (
+            _R21_SANITIZED_R20_BASIS["source_failure_audit_sha256"]
+        ),
         "duplicate_sentinel_revision": _R20_DUPLICATE_SENTINEL_REVISION,
         "duplicate_sentinel_manifest_sha256": (
             _R20_DUPLICATE_SENTINEL_MANIFEST_SHA256
@@ -4346,14 +4609,22 @@ def dev_r20_authority_binding() -> dict[str, Any]:
         "speck_reinforcement_manifest_sha256": (
             _R18_SPECK_REINFORCEMENT_MANIFEST_SHA256
         ),
+        "hard_point_speck_revision": _R21_HARD_POINT_SPECK_REVISION,
+        "hard_point_speck_manifest_sha256": (
+            _R21_HARD_POINT_SPECK_MANIFEST_SHA256
+        ),
         "predecessor_full_artifact_morphology_sha256": (
             _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
         ),
-        "full_artifact_morphology_sha256": (
-            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        "preserved_predecessor_morphology_sha256": (
+            _R21_PRESERVED_R20_MORPHOLOGY_SHA256
         ),
-        "exact_morphology_change_count_across_splits": 0,
-        "obvious_artifact_duplicate_sentinel_change_count_across_splits": 2,
+        "preserved_predecessor_morphology_conditions_across_splits": 180,
+        "full_artifact_morphology_sha256": (
+            _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "exact_morphology_change_count_across_splits": 20,
+        "obvious_artifact_duplicate_sentinel_change_count_across_splits": 0,
         "clean_duplicate_construction_change_count_across_splits": 0,
     }
 
@@ -4549,11 +4820,16 @@ def _validate_dev_r18_morphology_schedules() -> None:
 
     inherited = {
         split: _artifact_variants(
-            split, _include_r18_speck_reinforcement=False
+            split,
+            _include_r18_speck_reinforcement=False,
+            _include_r21_hard_point_speck=False,
         )
         for split in splits
     }
-    current = {split: _artifact_variants(split) for split in splits}
+    current = {
+        split: _artifact_variants(split, _include_r21_hard_point_speck=False)
+        for split in splits
+    }
     expected_change_set = {
         (split, family, index)
         for split in splits
@@ -4975,6 +5251,7 @@ def _validate_dev_r19_morphology_schedules() -> None:
     for split in splits:
         variants = _artifact_variants(
             split,
+            _include_r21_hard_point_speck=False,
             _schedule_revision_override=_R19_SCHEDULE_REVISION,
             _artifact_nonce_bases_override=_R19_ARTIFACT_NONCE_BASES,
         )
@@ -5007,6 +5284,10 @@ def _validate_dev_r20_morphology_schedules() -> None:
     _validate_dev_r19_morphology_schedules()
     splits = ("calibration", "holdout")
     binding = dev_r20_authority_binding()
+    if sha256_bytes(canonical_json_bytes(binding)) != (
+        "589497c2e207fd2a24412d943721318aa47c34215b843ceb84f9483ba64d2633"
+    ):
+        raise RuntimeError("r20 catalog authority byte-semantics drift")
     if set(binding) != {
         "schedule_revision",
         "duplicate_equivalence_policy_revision",
@@ -5295,12 +5576,12 @@ def _validate_dev_r20_morphology_schedules() -> None:
     predecessor_nonces: dict[str, set[int]] = {}
     for split in splits:
         current_nonces[split] = {
-            _ARTIFACT_NONCE_BASES[split] + family_offset + index
+            _R20_ARTIFACT_NONCE_BASES[split] + family_offset + index
             for family_offset in (0, 100, 200, 300, 400)
             for index in range(20)
         } | {
-            _PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
-        } | set(_DUPLICATE_AUDIT_NONCES[split])
+            _R20_PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
+        } | set(_R20_DUPLICATE_AUDIT_NONCES[split])
         predecessor_nonces[split] = {
             r19_binding["artifact_nonce_bases"][split] + family_offset + index
             for family_offset in (0, 100, 200, 300, 400)
@@ -5326,13 +5607,13 @@ def _validate_dev_r20_morphology_schedules() -> None:
 
     full_r20: dict[str, dict[str, list[dict[str, Any]]]] = {}
     for split in splits:
-        variants = _artifact_variants(split)
+        variants = _r20_artifact_variants(split)
         full_r20[split] = {
             family: [morphology(parameters) for parameters in family_variants]
             for family, family_variants in variants.items()
         }
         if any(
-            parameters.get("schedule_revision") != _SCHEDULE_REVISION
+            parameters.get("schedule_revision") != _R20_SCHEDULE_REVISION
             for family_variants in variants.values()
             for parameters in family_variants
         ):
@@ -5348,6 +5629,572 @@ def _validate_dev_r20_morphology_schedules() -> None:
         != _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
     ):
         raise RuntimeError("r20 preserved full r19 artifact morphology drift")
+
+
+def _validate_dev_r21_morphology_schedules() -> None:
+    """Prove the bounded r21 hard-point overlay and unchanged r20 complement."""
+
+    _validate_dev_r20_morphology_schedules()
+    splits = ("calibration", "holdout")
+    family = "artifact-speck"
+    binding = dev_r21_authority_binding()
+    expected_binding_keys = {
+        "schedule_revision",
+        "predecessor_schedule_revision",
+        "duplicate_equivalence_policy_revision",
+        "duplicate_equivalence_policy_manifest_sha256",
+        "sanitized_r20_basis_sha256",
+        "source_dev_r20_failure_audit_sha256",
+        "duplicate_sentinel_revision",
+        "duplicate_sentinel_manifest_sha256",
+        "public_payload_commitment_prefix",
+        "private_reference_transform_prefix",
+        "foundation_offset_lane",
+        "foundation_assignment_lane",
+        "delta_lane",
+        "private_control_id_prefix",
+        "artifact_nonce_bases",
+        "protocol_zero_nonce_bases",
+        "duplicate_audit_nonces",
+        "speck_reinforcement_revision",
+        "speck_reinforcement_manifest_sha256",
+        "hard_point_speck_revision",
+        "hard_point_speck_manifest_sha256",
+        "predecessor_full_artifact_morphology_sha256",
+        "preserved_predecessor_morphology_sha256",
+        "preserved_predecessor_morphology_conditions_across_splits",
+        "full_artifact_morphology_sha256",
+        "exact_morphology_change_count_across_splits",
+        "obvious_artifact_duplicate_sentinel_change_count_across_splits",
+        "clean_duplicate_construction_change_count_across_splits",
+    }
+    if set(binding) != expected_binding_keys:
+        raise RuntimeError("r21 catalog authority schema drift")
+    if binding != {
+        "schedule_revision": (
+            "dev-r21-symmetric-hard-point-speck-population-schedule-v1"
+        ),
+        "predecessor_schedule_revision": (
+            "dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1"
+        ),
+        "duplicate_equivalence_policy_revision": (
+            "dev-r19-reject-ordinal-band-duplicate-equivalence-v1"
+        ),
+        "duplicate_equivalence_policy_manifest_sha256": (
+            _R19_DUPLICATE_EQUIVALENCE_POLICY_MANIFEST_SHA256
+        ),
+        "sanitized_r20_basis_sha256": _R21_SANITIZED_R20_BASIS_SHA256,
+        "source_dev_r20_failure_audit_sha256": (
+            "e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8"
+        ),
+        "duplicate_sentinel_revision": (
+            "dev-r20-keyed-axial-short-line-duplicate-sentinel-v1"
+        ),
+        "duplicate_sentinel_manifest_sha256": (
+            _R20_DUPLICATE_SENTINEL_MANIFEST_SHA256
+        ),
+        "public_payload_commitment_prefix": (
+            "microtexture-v2-r6/public-payload-commitment/v17/"
+        ),
+        "private_reference_transform_prefix": "private-reference-transform-v16/",
+        "foundation_offset_lane": "foundation-offset-v15",
+        "foundation_assignment_lane": "foundation-assignment-v15",
+        "delta_lane": "delta-v15",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v15/",
+        "artifact_nonce_bases": {"calibration": 1373000, "holdout": 1383000},
+        "protocol_zero_nonce_bases": {
+            "calibration": 1351000,
+            "holdout": 1361000,
+        },
+        "duplicate_audit_nonces": {
+            "calibration": [1391000, 1391001, 1391002],
+            "holdout": [1401000, 1401001, 1401002],
+        },
+        "speck_reinforcement_revision": (
+            "dev-r18-symmetric-reject-speck-direct-visible-cross-v1"
+        ),
+        "speck_reinforcement_manifest_sha256": (
+            _R18_SPECK_REINFORCEMENT_MANIFEST_SHA256
+        ),
+        "hard_point_speck_revision": (
+            "dev-r21-reject-speck-encoded-hard-plus-v1"
+        ),
+        "hard_point_speck_manifest_sha256": (
+            _R21_HARD_POINT_SPECK_MANIFEST_SHA256
+        ),
+        "predecessor_full_artifact_morphology_sha256": (
+            _R18_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "preserved_predecessor_morphology_sha256": (
+            _R21_PRESERVED_R20_MORPHOLOGY_SHA256
+        ),
+        "preserved_predecessor_morphology_conditions_across_splits": 180,
+        "full_artifact_morphology_sha256": (
+            _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "exact_morphology_change_count_across_splits": 20,
+        "obvious_artifact_duplicate_sentinel_change_count_across_splits": 0,
+        "clean_duplicate_construction_change_count_across_splits": 0,
+    }:
+        raise RuntimeError("r21 catalog authority value drift")
+
+    basis = _R21_SANITIZED_R20_BASIS
+    expected_basis_keys = {
+        "failure_class",
+        "source_failure_audit_sha256",
+        "calibration",
+        "holdout",
+        "private_audits_passed",
+        "population_audit_started",
+        "population_audit_passed",
+        "numeric_measurement_started",
+        "metric_evaluation_started",
+        "threshold_search_started",
+    }
+    split_basis_keys = {
+        "tiny_speck_reject_detection",
+        "all_other_endpoints_passed_formal_and_development_minima",
+    }
+    if (
+        set(basis) != expected_basis_keys
+        or basis["failure_class"]
+        != "both-split-tiny-speck-population-shortfall"
+        or basis["source_failure_audit_sha256"]
+        != "e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8"
+        or set(basis["calibration"]) != split_basis_keys
+        or set(basis["holdout"]) != split_basis_keys
+        or basis["calibration"]["tiny_speck_reject_detection"]
+        != {"observed": 0, "formal_minimum": 4, "development_minimum": 6}
+        or basis["holdout"]["tiny_speck_reject_detection"]
+        != {"observed": 1, "formal_minimum": 4, "development_minimum": 6}
+        or any(
+            basis[split][
+                "all_other_endpoints_passed_formal_and_development_minima"
+            ]
+            is not True
+            for split in splits
+        )
+        or basis["private_audits_passed"] is not True
+        or basis["population_audit_started"] is not True
+        or basis["population_audit_passed"] is not False
+        or any(
+            basis[field] is not False
+            for field in (
+                "numeric_measurement_started",
+                "metric_evaluation_started",
+                "threshold_search_started",
+            )
+        )
+        or sha256_bytes(canonical_json_bytes(basis))
+        != _R21_SANITIZED_R20_BASIS_SHA256
+    ):
+        raise RuntimeError("r21 sanitized r20 basis drift")
+
+    manifest = _R21_HARD_POINT_SPECK_MANIFEST
+    manifest_keys = {
+        "revision",
+        "inherited_schedule_revision",
+        "schedule_revision",
+        "sanitized_r20_basis",
+        "sanitized_r20_basis_sha256",
+        "family",
+        "target_tiers",
+        "target_conditions_per_split",
+        "clear_reject_conditions_per_split",
+        "dominant_reject_conditions_per_split",
+        "tiny_speck_formal_minimum",
+        "tiny_speck_development_floor",
+        "tiny_speck_structural_miss_budget",
+        "direct_visibility_contract",
+        "preservation_contract",
+        "splits",
+    }
+    direct_contract = manifest["direct_visibility_contract"]
+    preservation_contract = manifest["preservation_contract"]
+    if (
+        set(manifest) != manifest_keys
+        or manifest["revision"] != _R21_HARD_POINT_SPECK_REVISION
+        or manifest["inherited_schedule_revision"] != _R20_SCHEDULE_REVISION
+        or manifest["schedule_revision"] != _SCHEDULE_REVISION
+        or manifest["sanitized_r20_basis"] != basis
+        or manifest["sanitized_r20_basis_sha256"]
+        != _R21_SANITIZED_R20_BASIS_SHA256
+        or manifest["family"] != family
+        or manifest["target_tiers"]
+        != ["clear-reject-candidate", "dominant-reject-candidate"]
+        or manifest["target_conditions_per_split"] != 10
+        or manifest["clear_reject_conditions_per_split"] != 6
+        or manifest["dominant_reject_conditions_per_split"] != 4
+        or manifest["tiny_speck_formal_minimum"] != 4
+        or manifest["tiny_speck_development_floor"] != 6
+        or manifest["tiny_speck_structural_miss_budget"] != 4
+        or manifest["target_conditions_per_split"]
+        - manifest["tiny_speck_development_floor"]
+        != manifest["tiny_speck_structural_miss_budget"]
+        or direct_contract
+        != {
+            "diameter_px": 1,
+            "center_amplitude_l": 12.0,
+            "shoulder_fraction": 0.92,
+            "encoded_center_l": 12,
+            "encoded_axial_shoulder_l": 11,
+            "connected_component_area_px": 5,
+            "component_count_bounds": [12, 21],
+            "minimum_center_chebyshev_separation_px": 30,
+            "quadrant_stratified": True,
+            "minimum_components_per_exact_metric_quadrant": 3,
+            "maximum_quadrant_count_difference": 1,
+            "returns_to_uninjected_background_outside_one_axial_neighbor": True,
+            "microblob_blur_forbidden": True,
+            "vision_truth_guaranteed": False,
+        }
+        or preservation_contract
+        != {
+            "artifact_condition_count_per_split_unchanged": 100,
+            "artifact_records_per_split_unchanged": 200,
+            "total_records_per_split_unchanged": 220,
+            "clean_and_warning_speck_morphologies_unchanged_per_split": 10,
+            "all_non_speck_morphologies_unchanged_per_split": 80,
+            "exact_morphology_change_count_across_splits": 20,
+            "preserved_predecessor_morphology_conditions_across_splits": 180,
+            "design_tier_membership_unchanged": True,
+            "formal_and_development_minima_unchanged": True,
+            "metric_threshold_population_and_rate_contracts_unchanged": True,
+        }
+        or set(manifest["splits"]) != set(splits)
+        or sha256_bytes(canonical_json_bytes(manifest))
+        != _R21_HARD_POINT_SPECK_MANIFEST_SHA256
+    ):
+        raise RuntimeError("r21 hard-point speck manifest drift")
+
+    expected_indices = {
+        "calibration": {3, 5, 6, 7, 8, 12, 15, 16, 17, 19},
+        "holdout": {1, 3, 4, 6, 9, 10, 11, 13, 14, 18},
+    }
+    replacement_keys = {
+        "design_tier",
+        "diameter_px",
+        "amplitude_l",
+        "count_in_metric_window",
+        "shoulder_fraction",
+        "minimum_separation_px",
+    }
+    for split in splits:
+        replacements = manifest["splits"][split]
+        if set(replacements) != expected_indices[split] or any(
+            set(replacement) != replacement_keys
+            for replacement in replacements.values()
+        ):
+            raise RuntimeError(f"r21 hard-point replacement schema drift: {split}")
+
+    def morphology(parameters: dict[str, Any]) -> dict[str, Any]:
+        return {
+            key: value
+            for key, value in parameters.items()
+            if key not in {"schedule_revision", "condition_nonce"}
+        }
+
+    def minimum_fallback_quadrant_capacity(separation: int) -> int:
+        margin = 1
+        internal_guard = max(0, math.ceil((separation - (2 * margin + 1)) / 2))
+        capacities: list[int] = []
+        for quadrant_index, (left, top, width, height) in enumerate(
+            _metric_quadrants((128, 96, 256, 192))
+        ):
+            x_min, x_max = left + margin, left + width - margin - 1
+            y_min, y_max = top + margin, top + height - margin - 1
+            if quadrant_index % 2 == 0:
+                x_max -= internal_guard
+            else:
+                x_min += internal_guard
+            if quadrant_index < 2:
+                y_max -= internal_guard
+            else:
+                y_min += internal_guard
+            x_start = x_min + ((x_max - x_min) % separation) // 2
+            y_start = y_min + ((y_max - y_min) % separation) // 2
+            capacities.append(
+                (((x_max - x_start) // separation) + 1)
+                * (((y_max - y_start) // separation) + 1)
+            )
+        return min(capacities)
+
+    predecessor = {split: _r20_artifact_variants(split) for split in splits}
+    current = {split: _artifact_variants(split) for split in splits}
+    expected_change_set = {
+        (split, family, index)
+        for split in splits
+        for index in expected_indices[split]
+    }
+    actual_change_set = {
+        (split, candidate_family, index)
+        for split in splits
+        for candidate_family, variants in current[split].items()
+        for index, parameters in enumerate(variants)
+        if morphology(parameters)
+        != morphology(predecessor[split][candidate_family][index])
+    }
+    if actual_change_set != expected_change_set or len(actual_change_set) != 20:
+        raise RuntimeError("r21 exact hard-point morphology change-set drift")
+
+    full_r21: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    preserved_r20: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    target_profiles: dict[str, Counter[tuple[str, int]]] = {}
+    target_geometry: dict[str, dict[tuple[str, int], tuple[float, float, int]]] = {}
+    target_tuples: dict[str, set[bytes]] = {}
+    expected_total_tiers = Counter(
+        {
+            "clean-candidate": 21,
+            "warning-candidate": 28,
+            "clear-reject-candidate": 31,
+            "dominant-reject-candidate": 20,
+        }
+    )
+    for split_index, split in enumerate(splits):
+        full_r21[split] = {}
+        preserved_r20[split] = {}
+        target_profiles[split] = Counter()
+        target_geometry[split] = {}
+        target_tuples[split] = set()
+        target_tiers: Counter[str] = Counter()
+        for candidate_family, variants in current[split].items():
+            if len(variants) != 20:
+                raise RuntimeError(
+                    f"r21 artifact family cardinality drift: {split}/{candidate_family}"
+                )
+            full_r21[split][candidate_family] = [
+                morphology(parameters) for parameters in variants
+            ]
+            preserved_entries: list[dict[str, Any]] = []
+            for index, parameters in enumerate(variants):
+                actual = morphology(parameters)
+                source = morphology(predecessor[split][candidate_family][index])
+                target_key = (split, candidate_family, index)
+                if target_key not in expected_change_set:
+                    if actual != source:
+                        raise RuntimeError(
+                            f"r21 preserved r20 morphology drift: "
+                            f"{split}/{candidate_family}/{index}"
+                        )
+                    preserved_entries.append(
+                        {"variant_index": index, "parameters": actual}
+                    )
+                    continue
+
+                replacement = manifest["splits"][split][index]
+                expected = {
+                    **replacement,
+                    "direct_visibility_reinforcement_revision": (
+                        _R21_HARD_POINT_SPECK_REVISION
+                    ),
+                }
+                if (
+                    candidate_family != family
+                    or actual != expected
+                    or source["design_tier"] != actual["design_tier"]
+                    or source.get("direct_visibility_reinforcement_revision")
+                    != _R18_SPECK_REINFORCEMENT_REVISION
+                ):
+                    raise RuntimeError(
+                        f"r21 hard-point target morphology drift: {split}/{index}"
+                    )
+
+                tier = str(actual["design_tier"])
+                count = int(actual["count_in_metric_window"])
+                amplitude = float(actual["amplitude_l"])
+                shoulder_fraction = float(actual["shoulder_fraction"])
+                separation = int(actual["minimum_separation_px"])
+                if (
+                    int(actual["diameter_px"]) != direct_contract["diameter_px"]
+                    or not direct_contract["component_count_bounds"][0]
+                    <= count
+                    <= direct_contract["component_count_bounds"][1]
+                    or amplitude != direct_contract["center_amplitude_l"]
+                    or shoulder_fraction != direct_contract["shoulder_fraction"]
+                    or int(np.rint(amplitude))
+                    != direct_contract["encoded_center_l"]
+                    or int(np.rint(amplitude * shoulder_fraction))
+                    != direct_contract["encoded_axial_shoulder_l"]
+                    or separation
+                    < direct_contract["minimum_center_chebyshev_separation_px"]
+                    or minimum_fallback_quadrant_capacity(separation)
+                    < math.ceil(count / 4)
+                ):
+                    raise RuntimeError(
+                        f"r21 hard-point parameter drift: {split}/{index}"
+                    )
+
+                rendered = _render_unsigned_delta(
+                    family,
+                    actual,
+                    np.random.default_rng(210000 + split_index * 1000 + index),
+                    384,
+                    512,
+                    (128, 96, 256, 192),
+                )
+                encoded = np.rint(rendered).astype(np.int16)
+                nonzero = encoded != 0
+                labels, component_count = ndimage.label(
+                    nonzero, structure=np.ones((3, 3), dtype=np.uint8)
+                )
+                outside = nonzero.copy()
+                outside[96:288, 128:384] = False
+                core_y, core_x = np.nonzero(
+                    encoded == direct_contract["encoded_center_l"]
+                )
+                centers = [
+                    (int(x), int(y))
+                    for y, x in zip(core_y, core_x, strict=True)
+                ]
+                quadrant_counts = Counter(
+                    (0 if x < 256 else 1) + (0 if y < 192 else 2)
+                    for x, y in centers
+                )
+                if (
+                    int(component_count) != count
+                    or len(centers) != count
+                    or int(np.count_nonzero(nonzero))
+                    != count * direct_contract["connected_component_area_px"]
+                    or np.unique(encoded[nonzero]).tolist()
+                    != [
+                        direct_contract["encoded_axial_shoulder_l"],
+                        direct_contract["encoded_center_l"],
+                    ]
+                    or np.any(outside)
+                    or set(quadrant_counts) != {0, 1, 2, 3}
+                    or min(quadrant_counts.values())
+                    < direct_contract["minimum_components_per_exact_metric_quadrant"]
+                    or max(quadrant_counts.values())
+                    - min(quadrant_counts.values())
+                    > direct_contract["maximum_quadrant_count_difference"]
+                    or any(
+                        _chebyshev_distance(first, second) < separation
+                        for first_index, first in enumerate(centers)
+                        for second in centers[first_index + 1 :]
+                    )
+                ):
+                    raise RuntimeError(
+                        f"r21 hard-point raster population drift: {split}/{index}"
+                    )
+                for component_index in range(1, int(component_count) + 1):
+                    yy, xx = np.nonzero(labels == component_index)
+                    if (
+                        yy.size != direct_contract["connected_component_area_px"]
+                        or (int(yy.max() - yy.min() + 1), int(xx.max() - xx.min() + 1))
+                        != (3, 3)
+                        or int(np.count_nonzero(encoded[yy, xx] == 12)) != 1
+                        or int(np.count_nonzero(encoded[yy, xx] == 11)) != 4
+                    ):
+                        raise RuntimeError(
+                            f"r21 hard-point component geometry drift: "
+                            f"{split}/{index}/{component_index}"
+                        )
+
+                target_tiers[tier] += 1
+                profile = (tier, count)
+                target_profiles[split][profile] += 1
+                if profile in target_geometry[split]:
+                    raise RuntimeError(
+                        f"r21 duplicate split structural profile: {split}/{index}"
+                    )
+                target_geometry[split][profile] = (
+                    amplitude,
+                    shoulder_fraction,
+                    separation,
+                )
+                target_tuples[split].add(canonical_json_bytes(actual))
+            preserved_r20[split][candidate_family] = preserved_entries
+
+        if (
+            sum(len(variants) for variants in current[split].values()) != 100
+            or Counter(
+                parameters["design_tier"]
+                for variants in current[split].values()
+                for parameters in variants
+            )
+            != expected_total_tiers
+            or target_tiers
+            != Counter(
+                {"clear-reject-candidate": 6, "dominant-reject-candidate": 4}
+            )
+            or len(target_tuples[split]) != 10
+            or any(
+                parameters.get("schedule_revision") != _SCHEDULE_REVISION
+                for variants in current[split].values()
+                for parameters in variants
+            )
+        ):
+            raise RuntimeError(f"r21 population/target cardinality drift: {split}")
+
+    if (
+        target_profiles["calibration"] != target_profiles["holdout"]
+        or target_tuples["calibration"] & target_tuples["holdout"]
+        or set(target_geometry["calibration"]) != set(target_geometry["holdout"])
+        or any(
+            holdout_amplitude != calibration_amplitude
+            or holdout_shoulder != calibration_shoulder
+            or holdout_separation != calibration_separation + 1
+            for profile, (
+                calibration_amplitude,
+                calibration_shoulder,
+                calibration_separation,
+            ) in target_geometry["calibration"].items()
+            for holdout_amplitude, holdout_shoulder, holdout_separation in [
+                target_geometry["holdout"][profile]
+            ]
+        )
+    ):
+        raise RuntimeError("r21 symmetric split hard-point matrix drift")
+
+    if (
+        sum(
+            len(entries)
+            for families in preserved_r20.values()
+            for entries in families.values()
+        )
+        != 180
+        or sha256_bytes(canonical_json_bytes(preserved_r20))
+        != _R21_PRESERVED_R20_MORPHOLOGY_SHA256
+    ):
+        raise RuntimeError("r21 preserved r20 morphology SHA drift")
+    if (
+        sum(
+            len(variants)
+            for families in full_r21.values()
+            for variants in families.values()
+        )
+        != 200
+        or sha256_bytes(canonical_json_bytes(full_r21))
+        != _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+    ):
+        raise RuntimeError("r21 full artifact morphology SHA drift")
+
+    r20_binding = dev_r20_authority_binding()
+    current_nonces: dict[str, set[int]] = {}
+    predecessor_nonces: dict[str, set[int]] = {}
+    for split in splits:
+        current_nonces[split] = {
+            _ARTIFACT_NONCE_BASES[split] + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {
+            _PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
+        } | set(_DUPLICATE_AUDIT_NONCES[split])
+        predecessor_nonces[split] = {
+            r20_binding["artifact_nonce_bases"][split] + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {
+            r20_binding["protocol_zero_nonce_bases"][split] + index
+            for index in range(16)
+        } | set(r20_binding["duplicate_audit_nonces"][split])
+        if (
+            len(current_nonces[split]) != 119
+            or current_nonces[split] & predecessor_nonces[split]
+        ):
+            raise RuntimeError(f"r21 fresh nonce-space drift: {split}")
+    if current_nonces["calibration"] & current_nonces["holdout"]:
+        raise RuntimeError("r21 calibration/holdout nonce-space overlap")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -5536,7 +6383,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r20_morphology_schedules()
+    _validate_dev_r21_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):
@@ -5576,7 +6423,7 @@ def _expected_controls_bounded(
         "audit_nonce": clean_audit_nonce,
         "audit_kind": "clean-isomorphic-replicate",
     }
-    artifact_audit_parameters = _r20_obvious_artifact_duplicate_parameters(split)
+    artifact_audit_parameters = _active_obvious_artifact_duplicate_parameters(split)
     if (
         artifact_audit_parameters["audit_nonce"] != artifact_audit_nonce
         or artifact_audit_parameters["condition_nonce"]
@@ -5717,7 +6564,7 @@ def _expected_controls_bounded(
                 "r6 artifact semantic replicate collapsed during encoding"
             )
         if group_name == "artifact":
-            expected_parameters = _r20_obvious_artifact_duplicate_parameters(split)
+            expected_parameters = _active_obvious_artifact_duplicate_parameters(split)
             requested_nonzero = left.requested_delta[
                 left.requested_delta != np.float32(0.0)
             ]

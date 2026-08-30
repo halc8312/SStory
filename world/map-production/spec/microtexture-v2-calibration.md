@@ -125,7 +125,8 @@ summary: "Google Maps級deep zoom用の微細表現を、画像生成・Root/独
   です。auditは`world/map-production/qa/microtexture-v2-r6-dev-r19-development-failure.json`、raw SHA-256は
   `96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0`です。calibrationのclean / `obvious-artifact` duplicate groupsとholdoutのclean duplicate groupはpassしました。holdout obvious pairは両方`clean`、severity `0`、visible flagなしで、population / measurementは未開始、postmortemはread-onlyで一度だけです。
 - dev-r20: statusは`failed-and-closed-before-measurement`です。両private auditはpassしましたが、calibration / holdout tiny-speck population `0` / `1`がformal minimum `4`とdevelopment floor `6`をともにmissしました。他の全endpointは両minimumをpassし、numeric metricとthreshold searchは未開始です。auditは`world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json`、raw SHA-256は`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。
-- formal r6: dev-r20 population failure後もblockedで、dev-r20はformal authorityを供給できません。formal CLI、one-shot marker、threshold
+- dev-r21: statusは`fresh-development-only`です。closed dev-r20のsanitized aggregateだけから、各splitのreject-tier アーティファクト-speck 10条件をencoded hard-plusへ置換する一回限りsuccessor authorityを登録しました。他180 morphology、duplicate、tier、minima、metric、threshold、rateは不変です。generation、Vision、measurement、threshold、auditは未開始で、Vision truthやpassを主張しません。
+- formal r6: fresh dev-r21登録後もblockedで、dev-r20もdev-r21もformal authorityを供給できません。formal CLI、one-shot marker、threshold
   freeze、v18 numeric measurementはいずれも未使用です。
 
 ## ImageGen入力の境界
@@ -183,7 +184,7 @@ development rootはdev-r8にもformal r6にも渡しません。
 development rootはGit-ignored private evidenceとして閉鎖後も不変に保持し、formal keyは従来どおりartifact/logへ
 永続化しません。
 
-## Closed dev-r14/dev-r15/dev-r16/dev-r17/dev-r18/dev-r19/dev-r20 evidence
+## Closed dev-r14/dev-r15/dev-r16/dev-r17/dev-r18/dev-r19/dev-r20 evidence and fresh dev-r21 authority
 
 dev-r14は両private auditをpassしました。calibration cluster countsはclean `35`、warning `15`、reject `50`、severity-3
 `13`、grain `12`、tiny-speck `12`、microblob `4`、spot `16`、short-line `22`、parallel-bundle `11`です。
@@ -412,7 +413,7 @@ branch別threshold、追加OR gate、diagnostic hard rejectorは禁止します�
 warning acceptance 0.75を含む全endpoint count/rateを満たす候補だけから、事前登録objectiveで1 scalarを選びます。
 候補がなければthresholdを`null`のままeditionを閉じます。holdoutはcalibrationでfreezeした値を変更しません。
 
-## dev-r18/dev-r19/dev-r20 closure and formal block
+## dev-r18/dev-r19/dev-r20 closure, fresh dev-r21, and formal block
 
 dev-r18はgeneration、両reviewerの`440 × 2` blind review、immutable bilateral initial receipts、全差分reconciliation、final
 intersection gate、official preflight、label sealing、private reveal、regeneration、protocol-zero auditを各一度だけ完了しました。
@@ -463,7 +464,17 @@ clean duplicate、dev-r19 reject severity-band policy、全200アーティファ
 `3b87c5aabee0c8c8641d80496123a4f2dd58ca60f6da2bcf822e6bc7dfa80368` /
 `584deb41c74d8beeff030c33f1ed0116c4e583c9c60a41e010fb6233972b05a2`です。
 
-消費済みclosed rootは`tmp/map-production/microtexture-v2-r6-dev-r20`、public noncesは`r6-calibration-v15` / `r6-holdout-v15`です。condition-cluster / render-seed / opaque-code / private-reference-transformはv15、public payload commitmentはv16、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv14です。protocol-zero nonce basesは`1251000` / `1261000`、アーティファクトbasesは`1273000` / `1283000`、duplicate-audit noncesは`1291000..1291002` / `1301000..1301002`です。fresh cryptographic blind key、identities、domains、nonces、controls、references、commitments、labels、decisionsをfresh isolated rootで一度だけ作り、過去editionから再利用しませんでした。両private audit後のpopulation auditでcalibration / holdout tiny-speck population `0` / `1`がformal minimum `4`とdevelopment floor `6`をmissし、他の全endpointは両minimumをpassしました。numeric measurementとthreshold searchは開始していません。auditは`world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json`、raw SHA-256は`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。dev-r20はformal authorityを供給できず、全素材・outputを再利用しません。successorはpreregisterしておらず、formal stageはblockedです。
+消費済みclosed rootは`tmp/map-production/microtexture-v2-r6-dev-r20`、public noncesは`r6-calibration-v15` / `r6-holdout-v15`です。condition-cluster / render-seed / opaque-code / private-reference-transformはv15、public payload commitmentはv16、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv14です。protocol-zero nonce basesは`1251000` / `1261000`、アーティファクトbasesは`1273000` / `1283000`、duplicate-audit noncesは`1291000..1291002` / `1301000..1301002`です。fresh cryptographic blind key、identities、domains、nonces、controls、references、commitments、labels、decisionsをfresh isolated rootで一度だけ作り、過去editionから再利用しませんでした。両private audit後のpopulation auditでcalibration / holdout tiny-speck population `0` / `1`がformal minimum `4`とdevelopment floor `6`をmissし、他の全endpointは両minimumをpassしました。numeric measurementとthreshold searchは開始していません。auditは`world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json`、raw SHA-256は`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。dev-r20はformal authorityを供給できず、全素材・outputを再利用しません。
+
+唯一preregisterしたsuccessorはfresh development-only `dev-r21`です。exact roleは
+`fresh one-shot development role used only to strengthen the reject-tier artifact-speck population after the closed dev-r20 premeasurement tiny-speck population miss; it changes exactly the ten preregistered reject-speck conditions per split to the encoded hard-plus overlay, preserves the other 180 artifact morphologies, every design tier cardinality, metric, threshold, population and rate contract, the dev-r19 reject severity-band duplicate policy, and both r20 duplicate constructions; Vision truth is not guaranteed, all identities and audit roles remain private, and it can never supply formal authority`
+です。schedule / overlay revisionsは`dev-r21-symmetric-hard-point-speck-population-schedule-v1` / `dev-r21-reject-speck-encoded-hard-plus-v1`です。各splitの既存reject-tier speck 10条件だけをdiameter `1`、center amplitude `12.0 L`、shoulder fraction `0.92`、encoded center / axial shoulder `12 L` / `11 L`、count `12..21`、minimum separation `30..37`へ置換します。他180 アーティファクト morphologies、clean/warning speck、全non-speck、r20 duplicate constructions、dev-r19 reject-band policy、tier cardinality、formal/development population minima、metric、threshold、rateは変更しません。
+
+dev-r21 root / keyは`tmp/map-production/microtexture-v2-r6-dev-r21` / `tmp/map-production/microtexture-v2-r6-dev-r21/private/development-key.bin`です。public noncesは`r6-calibration-v16` / `r6-holdout-v16`、condition-cluster / render-seed / opaque-code / private-reference-transformはv16、public payload commitmentはv17、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv15です。protocol-zero nonce basesは`1351000` / `1361000`、アーティファクト basesは`1373000` / `1383000`、duplicate-audit noncesは`1391000..1391002` / `1401000..1401002`です。keyは`secrets.token_bytes(32)`で一度だけ新規生成し、r20以前の全root、key、private material、domains、nonces、controls、references、identities、codes、commitments、labels、decisions、measurements、outputsを再利用しません。
+
+これはauthority登録だけであり、dev-r21 generation、Root/Independent Vision、reconciliation、preflight、label seal、private reveal、measurement、threshold search、success/failure auditは未開始です。生成物・decision・audit outputは存在せず、Vision truthやpassを主張しません。exact authority commitをpushし、その同一commitでUbuntu / Windows CIが両方greenになるまでgenerationは禁止です。dev-r21はformal authorityではなく、formal stageは引き続きblockedです。
+
+dev-r21のsanitized dev-r20 basis / reject-speck overlay manifest / preserved dev-r20 morphology / full dev-r21 アーティファクト morphologyのcanonical SHA-256は、それぞれ`60a781e4a74ce4b31a4513b66bfbae1362c39fe373c3f8ff3f5a4a9c587ce610` / `9f85d79300a23b9c6f7cec27048d91cd8b1bcce98e395f792797a795156210cc` / `03559cb9f26908f6ed59bd8327250c5d63e77e6e96c34d7f08a47e8cb59a7fdf` / `99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595`です。r21 catalog bindingのcanonical SHA-256は`62f9694518072db42601b57f3a88b97c34c34eda344142b0809e3c636b11ff4f`です。
 
 generation start後、marker後の例外、通常endpoint failure、completion欠落はeditionを消費します。失敗後のresume、
 regeneration、relabel、remeasurement、rerun、別key、threshold変更は禁止です。
