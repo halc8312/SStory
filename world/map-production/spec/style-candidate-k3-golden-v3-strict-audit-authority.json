@@ -1,0 +1,290 @@
+{
+  "schema_version": "1.0.0",
+  "id": "sstory-k3-golden-v3-strict-audit-authority-v1",
+  "status": "frozen-before-candidate-evaluation",
+  "candidate_binding": null,
+  "candidate_evaluations_before_freeze": 0,
+  "threshold_selection_from_candidate_values": false,
+  "canvas": {
+    "width": 1536,
+    "height": 1024,
+    "candidate_mode": "RGB",
+    "alpha_profile_or_transparency_allowed": false,
+    "candidate_png_contract": {
+      "signature_hex": "89504e470d0a1a0a",
+      "ihdr": {
+        "bit_depth": 8,
+        "color_type": 2,
+        "compression_method": 0,
+        "filter_method": 0,
+        "allowed_interlace_methods": [
+          0,
+          1
+        ]
+      },
+      "single_frame": true,
+      "forbidden_chunks": [
+        "acTL",
+        "cHRM",
+        "cICP",
+        "cLLi",
+        "eXIf",
+        "fcTL",
+        "fdAT",
+        "gAMA",
+        "iCCP",
+        "mDCv",
+        "sBIT",
+        "sRGB",
+        "tRNS"
+      ],
+      "all_chunk_crc_required": true,
+      "trailing_bytes_after_iend_allowed": false
+    }
+  },
+  "runtime": {
+    "common": {
+      "python_implementation": "CPython",
+      "python_version": "3.12.10",
+      "opencv_api": "4.13.0",
+      "numpy": "2.3.5",
+      "pillow": "12.3.0",
+      "byteorder": "little",
+      "opencv_threads": 1
+    },
+    "allowed_profiles": [
+      {
+        "id": "windows-local-opencv-python-4.13.0.92",
+        "platform_system": "Windows",
+        "platform_machine": "AMD64",
+        "opencv_distributions": [
+          {
+            "name": "opencv-python",
+            "version": "4.13.0.92"
+          }
+        ],
+        "opencv_build_sha256": "8a55f551e40cf84d0fa7e2509bb9544da66782a8cbc017d7ce27a9de0ef9c1ac"
+      },
+      {
+        "id": "windows-ci-opencv-python-headless-4.13.0.92",
+        "platform_system": "Windows",
+        "platform_machine": "AMD64",
+        "opencv_distributions": [
+          {
+            "name": "opencv-python-headless",
+            "version": "4.13.0.92"
+          }
+        ],
+        "opencv_build_sha256": "fc048a2b6c657a1e163e8591b98100d585d65bacf1d1f1a6e28659cae3b531f1"
+      },
+      {
+        "id": "linux-ci-opencv-python-headless-4.13.0.92",
+        "platform_system": "Linux",
+        "platform_machine": "x86_64",
+        "opencv_distributions": [
+          {
+            "name": "opencv-python-headless",
+            "version": "4.13.0.92"
+          }
+        ],
+        "opencv_build_sha256": "9e0b6b5d3c457d7794d56f55acd3afdadd8fd4b5a8a562e78bcab4fadaf1e604"
+      }
+    ],
+    "profile_selection": "exactly one profile must match system, machine, installed OpenCV distribution set, and OpenCV build-information SHA-256"
+  },
+  "runtime_bindings": {
+    "dependency_lock": {
+      "path": "requirements-dev.txt",
+      "sha256": "0398f8befb0b97bce58be366cd3890aa8fb91457bb7f57d1af237a71555bb533"
+    },
+    "ci_workflow": {
+      "path": ".github/workflows/lint.yml",
+      "sha256": "84750e158791e9ffb349b5dffdcb31719b08beb283883ca4cdb3a061e6e7affa"
+    },
+    "synthetic_golden_vector_test": {
+      "path": "tests/golden_v3_strict_audit_test.py",
+      "sha256": "7f4dba51b902d2a3f35c5cc18d1978c58b16aa114f6e8e0ffa0234f325709e0b"
+    }
+  },
+  "pixel_references": {
+    "foundation_v19": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/foundation-v19-canonical.png",
+      "sha256": "2f80740f1ef6a6abec2774ab01294e92069f96809ae94473ee723b0aa8b6f214"
+    },
+    "baseline_v18": {
+      "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+      "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+    }
+  },
+  "mask_bindings": {
+    "measurement_inside": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/measurement-inside.png",
+      "sha256": "1aac375cde9136d64ab05b30cca8b4110c15724488d1c1515c041e5823b87724"
+    },
+    "texture_reference": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/texture-reference.png",
+      "sha256": "5b6b34db3307667ad658f5bfd8f73e4f849576b61c6847185f75fdb72220ea1e"
+    },
+    "permission": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/permission.png",
+      "sha256": "efa65224fd9a1f7623d6a3770b1f7006912e92318ae86c9643a90ba95d22b5dc"
+    },
+    "protected_features": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/protected-features.png",
+      "sha256": "8863e1937fbe3c57e36db26606db7cd73ac4fc805ef4d6cfbbe69008448b2f19"
+    },
+    "road_calm_18px": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/road-calm-18px.png",
+      "sha256": "b4fd7dbb0957c2f31499f9cc5366d252bc3013128b6f818d0cb52ae9b9056d98"
+    },
+    "selected_components": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/selected-components.png",
+      "sha256": "6dbef7b3fe7f82ddada5d8b8759fb3e3405341a563350e45752fbbe00c0cbeb8"
+    },
+    "alpha_zero": {
+      "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/alpha-zero.png",
+      "sha256": "786a87101c3a5e6ccae0222687d9db18dc6e06da13f1aa7d131d42166dc85709"
+    }
+  },
+  "alpha_zero_derivation": {
+    "source_path": "scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py",
+    "source_sha256": "92100794ff519fb77c7bca89af74897dcc422c9bb341582d31355d6b98cd229a",
+    "formula": "derive_controls()['alpha'] == np.float32(0.0)",
+    "true_pixels": 1334836,
+    "uint8_array_sha256": "fd0abd26a95d9370c5e69f2a3e7901c86c2f5a2b10a229b88713a95a1f5e8186"
+  },
+  "body_control": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v20-canonical-body-control.png",
+    "sha256": "aad51a5a92ee0de7c84ecfef4ba9f44c6e99af5add404ebec0f712c808b5e713",
+    "values": [32, 64, 96, 128, 160, 192, 224, 255],
+    "component_count": 8,
+    "connectivity": 8,
+    "non_touching": true
+  },
+  "luma": {
+    "formula": "(19595*R + 38470*G + 7471*B + 32768) >> 16",
+    "coefficients_sum": 65536,
+    "delta": "candidate_luma - foundation_v19_luma"
+  },
+  "signal_definition": {
+    "fixed_point_q_bits": 12,
+    "normalized_mask_weight_q_bits": 20,
+    "normalized_numerator_extra_q_bits": 2,
+    "body_core_erosion_px": 12,
+    "body_core_structuring_element": "integer offsets dx^2+dy^2<=144",
+    "minimum_body_core_pixels": 512,
+    "total": "T_i is the body-centered signed final luma delta in Q12",
+    "A": "E_i is sqrt(mask-normalized Gaussian-sigma8(T_i^2)); T_i^2 is rounded to Q12 before filtering; A_i is E_i body-centered",
+    "unit": "U_i is T_i/max(E_i,1.0 L), body-centered, then normalized to unit RMS in Q12",
+    "rounding": "nearest-ties-away-from-zero",
+    "integer_square_root_rounding": "floor (math.isqrt) for amplitude and unit-RMS normalization",
+    "aggregation": "derive and filter each body independently; sum exact energy numerators and denominators only over 12px-eroded body cores"
+  },
+  "integer_gaussian": {
+    "q_bits": 30,
+    "truncate": 4,
+    "border": "half-sample-symmetric-reflect",
+    "rounding": "nearest-ties-away-from-zero-after-each-pass",
+    "kernels": {
+      "2": {
+        "radius_px": 8,
+        "coefficients_q30": [71851, 468526, 2379372, 9410600, 28986689, 69535452, 129909328, 189016957, 214184274, 189016957, 129909328, 69535452, 28986689, 9410600, 2379372, 468526, 71851]
+      },
+      "4": {
+        "radius_px": 16,
+        "coefficients_q30": [35926, 94653, 234267, 544688, 1189707, 2441121, 4705384, 8520349, 14493603, 23160711, 34768345, 49031226, 64955820, 80838825, 94510161, 103799105, 107094042, 103799105, 94510161, 80838825, 64955820, 49031226, 34768345, 23160711, 14493603, 8520349, 4705384, 2441121, 1189707, 544688, 234267, 94653, 35926]
+      },
+      "8": {
+        "radius_px": 32,
+        "coefficients_q30": [17963, 29386, 47327, 75040, 117135, 180011, 272347, 405660, 594861, 858782, 1220576, 1707893, 2352722, 3190764, 4260228, 5599965, 7246893, 9232781, 11580502, 14300011, 17384392, 20806393, 24515922, 28438967, 32478320, 36516357, 40419922, 44047134, 47255677, 49911942, 51900207, 53130985, 53547694, 53130985, 51900207, 49911942, 47255677, 44047134, 40419922, 36516357, 32478320, 28438967, 24515922, 20806393, 17384392, 14300011, 11580502, 9232781, 7246893, 5599965, 4260228, 3190764, 2352722, 1707893, 1220576, 858782, 594861, 405660, 272347, 180011, 117135, 75040, 47327, 29386, 17963]
+      }
+    }
+  },
+  "primary_thresholds": {
+    "coverage_50_min": 365,
+    "coverage_25_min": 338,
+    "quiet_fraction_min": 0.908,
+    "quiet_fraction_max": 0.925,
+    "dash_bundle_pairs_exact": 0,
+    "orientation_coherence_max": 0.14,
+    "texture_ratio_4_min": 0.615,
+    "texture_ratio_4_max": 0.64,
+    "texture_ratio_8_min": 1.1,
+    "texture_ratio_8_max": 1.2
+  },
+  "strict_field_contract": {
+    "body_core_erosion_px": 12,
+    "minimum_body_core_pixels": 512,
+    "sub8_definition": "sum((S-G2_M(S))^2)/sum((S-G8_M(S))^2) for S=A,unit,total",
+    "sub8_energy_fraction_max": {
+      "numerator": 21,
+      "denominator": 50,
+      "decimal": 0.42
+    },
+    "per_body_unit_energy_definition": "100*sqrt(sum((U-Gsigma_M(U))^2)/sum(U^2)) on each body core",
+    "per_body_unit_energy_min_percent": {
+      "4": 29,
+      "8": 34
+    },
+    "repetition": {
+      "field": "S-G4_M(S)",
+      "lags_xy": [[32, 0], [0, 32], [32, 32], [32, -32], [64, 0], [0, 64], [64, 64], [64, -64], [128, 0], [0, 128], [128, 128], [128, -128], [256, 0], [0, 256]],
+      "minimum_pairs_per_lag": 512,
+      "minimum_eligible_lags_per_body": 4,
+      "minimum_eligible_lags_total": 4,
+      "same_body_pairs_only": true,
+      "A_and_unit_aggregation": "compute Pearson separately for each body and eligible lag, then take the maximum absolute correlation over all body-lag records",
+      "total_aggregation": "for each lag concatenate same-body core pairs from all eight bodies, require at least 8*minimum_pairs_per_lag pairs, compute one Pearson, then take the maximum absolute correlation over eligible lags",
+      "maximum_absolute_correlation": {
+        "A": {"numerator": 1, "denominator": 20, "decimal": 0.05},
+        "unit": {"numerator": 1, "denominator": 20, "decimal": 0.05},
+        "total": {"numerator": 7, "denominator": 100, "decimal": 0.07}
+      }
+    }
+  },
+  "closed_loop_contract": {
+    "signals": ["total-G4_M(total)", "total-G8_M(total)"],
+    "polarities": [-1, 1],
+    "absolute_floor_l": 4.5,
+    "closing": "one 3x3 cross iteration",
+    "background_connectivity": 4,
+    "minimum_hole_area_pixels": 4,
+    "maximum_count": 0
+  },
+  "white_crest_contract": {
+    "local_positive_floor_l": 4.5,
+    "minimum_candidate_minus_foundation_luma": 6,
+    "minimum_candidate_luma": 224,
+    "maximum_candidate_rgb_range": 18,
+    "component_connectivity": 8,
+    "component_area_upper_bound": null,
+    "maximum_count": 0
+  },
+  "identity_contract": {
+    "outside_permission_max": 0,
+    "protected_features_max": 0,
+    "road_calm_18px_max": 0,
+    "alpha_zero_max": 0,
+    "body_outside_full_alpha_max": 0
+  },
+  "v2_metric_value_source": {
+    "path": "scripts/map-production/audit_style_candidate_k3_golden_v2.py",
+    "sha256": "21607b7618e765bbcabc1c36c6880e465b2c08edbebfdea8a9855089d5bd8e69",
+    "reuse": "coverage, quiet, dash, orientation, texture and pixel-derived geometry values only",
+    "v2_gate_results_or_thresholds_reused": false
+  },
+  "strict_core_binding": {
+    "path": "scripts/map-production/golden_v3_strict_metric_core.py",
+    "sha256": "eb4d89da6669e6cda94e43e395d997b870b3c361576dbfb396373dee88562384"
+  },
+  "failure_policy": {
+    "unknown_or_missing_fields": "fail",
+    "hash_mode_size_or_mask_mismatch": "fail",
+    "empty_support_zero_denominator_or_insufficient_lags": "fail",
+    "nonfinite_or_overflow": "fail",
+    "comparison": "A/unit/total, energy and repetition use exact integer cross-products before report rounding; inherited v2 primary metric values retain their frozen six-decimal definitions",
+    "candidate_path_binding": "runtime-only; never written back into this authority",
+    "promotion_allowed": false,
+    "golden_designation_allowed": false
+  }
+}
