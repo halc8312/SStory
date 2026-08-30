@@ -653,11 +653,14 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
         "literal inherited kernels from the SHA-bound v1 authority"
     ):
         raise DerivationError("inherited Gaussian filter identity changed")
-    if filters["masked_normalization"] != {
-        "mask_q_bits": 20,
-        "numerator_extra_q_bits": 2,
-        "rounding": "nearest-ties-away-from-zero after each convolution and division",
-    }:
+    if not _exact_json_equal(
+        filters["masked_normalization"],
+        {
+            "mask_q_bits": 20,
+            "numerator_extra_q_bits": 2,
+            "rounding": "nearest-ties-away-from-zero after each convolution and division",
+        },
+    ):
         raise DerivationError("masked Gaussian normalization changed")
     lag_contract = {
         "lags_xy": [list(pair) for pair in CONSTRUCTION_LAGS],
@@ -669,7 +672,16 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
         "regression_clip_rational": [1, 2],
         "correction_gain_rational": [12, 1],
         "renormalize_each_sweep": True,
-        "order": "support erosion, listed lag, then y/x; fixed sweep count",
+        "sweep_parity_order": {
+            "even": {
+                "support_erosions": "listed order",
+                "lags": "listed order and listed direction",
+            },
+            "odd": {
+                "support_erosions": "reverse listed order",
+                "lags": "reverse listed order, then negate dx and dy",
+            },
+        },
         "early_success_forbidden": True,
     }
     amplitude = derivation["amplitude_construction"]
@@ -752,16 +764,19 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
     }
     if not _exact_json_equal(repair, expected_repair):
         raise DerivationError("construction repair contract changed")
-    if derivation["final_certificate"] != {
-        "source": "final in-memory RGB integer luma minus frozen foundation luma",
-        "signal_q_bits": 12,
-        "fields": "body-centered total; inherited masked-G8 amplitude; unit carrier",
-        "repetition_field": "field minus inherited masked G4",
-        "support_erosions_px": [0, 12, 24],
-        "maximum_absolute_correlation_rational": [1, 128],
-        "timing": "after byte locks and final RGB topology repair; before PNG encoding",
-        "failure_policy": "fail all four before publication; no retry or relaxation",
-    }:
+    if not _exact_json_equal(
+        derivation["final_certificate"],
+        {
+            "source": "final in-memory RGB integer luma minus frozen foundation luma",
+            "signal_q_bits": 12,
+            "fields": "body-centered total; inherited masked-G8 amplitude; unit carrier",
+            "repetition_field": "field minus inherited masked G4",
+            "support_erosions_px": [0, 12, 24],
+            "maximum_absolute_correlation_rational": [1, 128],
+            "timing": "after byte locks and final RGB topology repair; before PNG encoding",
+            "failure_policy": "fail all four before publication; no retry or relaxation",
+        },
+    ):
         raise DerivationError("final construction certificate contract changed")
     if not _exact_json_equal(
         derivation["fixed_gains"],
@@ -774,13 +789,16 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
         },
     ):
         raise DerivationError("fixed gain contract changed")
-    if derivation["finalization"] != {
-        "chroma": "constant v1 firewall body median a/b",
-        "restore": (
-            "unchanged v1 outside-foundation precedence and four v18 byte locks"
-        ),
-        "png": "unchanged v1-bound manual filter-0 encoder",
-    }:
+    if not _exact_json_equal(
+        derivation["finalization"],
+        {
+            "chroma": "constant v1 firewall body median a/b",
+            "restore": (
+                "unchanged v1 outside-foundation precedence and four v18 byte locks"
+            ),
+            "png": "unchanged v1-bound manual filter-0 encoder",
+        },
+    ):
         raise DerivationError("finalization contract changed")
 
     candidates = _require_exact_keys(
@@ -2643,7 +2661,10 @@ def validate_output_seal_payload(
             "topology_pixels",
         ]:
             raise DerivationError(f"output seal candidate {index} receipt changed")
-        if receipt["amplitude_matching_iterations"] != 4:
+        if (
+            type(receipt["amplitude_matching_iterations"]) is not int
+            or receipt["amplitude_matching_iterations"] != 4
+        ):
             raise DerivationError(
                 f"output seal candidate {index} iteration receipt changed"
             )
@@ -2706,24 +2727,160 @@ def _write_exclusive_file(path: Path, payload: bytes) -> None:
         raise DerivationError(f"staged bytes changed: {path.name}")
 
 
-def _rollback_staging(directory: Path, planned_files: Sequence[Path]) -> None:
-    failures: list[str] = []
-    for path in reversed(tuple(planned_files)):
-        try:
-            if path.is_symlink() or path.is_file():
-                path.unlink()
-        except OSError:
-            failures.append(path.name)
+def _is_link_or_junction(path: Path) -> bool:
+    candidate = Path(path)
     try:
-        directory.rmdir()
+        return candidate.is_symlink() or (
+            hasattr(candidate, "is_junction") and candidate.is_junction()
+        )
+    except OSError as exc:
+        raise DerivationError(f"cannot inspect path identity: {candidate}") from exc
+
+
+def _prepare_secure_root(root: Path) -> tuple[Path, Path]:
+    absolute = Path(os.path.abspath(os.fspath(root)))
+    link_or_junction = _is_link_or_junction(absolute)
+    if not absolute.exists() and not link_or_junction:
+        absolute.mkdir(parents=True)
+    if link_or_junction or not absolute.is_dir():
+        raise DerivationError("publication root must be a real directory")
+    try:
+        resolved = absolute.resolve(strict=True)
+    except OSError as exc:
+        raise DerivationError("publication root cannot be resolved") from exc
+    return absolute, resolved
+
+
+def _assert_secure_containment(
+    root: Path,
+    resolved_root: Path,
+    target: Path,
+    *,
+    label: str,
+) -> Path:
+    absolute_target = Path(os.path.abspath(os.fspath(target)))
+    try:
+        relative = absolute_target.relative_to(root)
+    except ValueError as exc:
+        raise DerivationError(f"{label} escaped publication root") from exc
+    current = root
+    for index, part in enumerate(relative.parts):
+        current /= part
+        link_or_junction = _is_link_or_junction(current)
+        if not current.exists() and not link_or_junction:
+            continue
+        if link_or_junction:
+            raise DerivationError(f"{label} contains a link or junction ancestor")
+        if index < len(relative.parts) - 1 and not current.is_dir():
+            raise DerivationError(f"{label} ancestor is not a directory")
+        try:
+            resolved = current.resolve(strict=True)
+            resolved.relative_to(resolved_root)
+        except (OSError, ValueError) as exc:
+            raise DerivationError(
+                f"{label} real path escaped publication root"
+            ) from exc
+    return absolute_target
+
+
+def _enumerate_secure_staging(
+    root: Path,
+    resolved_root: Path,
+    staging_directory: Path,
+) -> dict[str, Path]:
+    staging = _assert_secure_containment(
+        root,
+        resolved_root,
+        staging_directory,
+        label="staging directory",
+    )
+    if _is_link_or_junction(staging) or not staging.is_dir():
+        raise DerivationError("staging directory is not a real directory")
+    entries: dict[str, Path] = {}
+    stack = [staging]
+    while stack:
+        directory = stack.pop()
+        try:
+            children = sorted(directory.iterdir(), key=lambda path: path.name)
+        except OSError as exc:
+            raise DerivationError("cannot enumerate staging directory") from exc
+        for child in children:
+            relative = child.relative_to(staging).as_posix()
+            if relative in entries:
+                raise DerivationError("staging entry identity is duplicated")
+            if _is_link_or_junction(child):
+                raise DerivationError("staging contains a link or junction")
+            _assert_secure_containment(
+                root,
+                resolved_root,
+                child,
+                label="staging entry",
+            )
+            entries[relative] = child
+            if child.is_dir():
+                stack.append(child)
+            elif not child.is_file():
+                raise DerivationError("staging contains a non-regular entry")
+            elif child.stat().st_nlink != 1:
+                raise DerivationError("staging contains a linked regular file")
+    return entries
+
+
+def _verify_staging_before_rename(
+    authority: Mapping[str, Any],
+    root: Path,
+    resolved_root: Path,
+    staging_directory: Path,
+    staged_outputs: Sequence[Path],
+    payloads: Sequence[CandidatePayload],
+    staged_seal: Path,
+    seal_payload: bytes,
+) -> None:
+    entries = _enumerate_secure_staging(root, resolved_root, staging_directory)
+    expected_paths = [*staged_outputs, staged_seal]
+    expected_names = {
+        path.relative_to(staging_directory).as_posix() for path in expected_paths
+    }
+    if set(entries) != expected_names or len(entries) != 5:
+        raise DerivationError("staging file closure changed")
+    for staged, item in zip(staged_outputs, payloads, strict=True):
+        relative = staged.relative_to(staging_directory).as_posix()
+        actual = entries[relative].read_bytes()
+        if len(actual) != len(item.payload) or sha256_bytes(actual) != sha256_bytes(
+            item.payload
+        ):
+            raise DerivationError(f"staged candidate bytes changed: {staged.name}")
+    seal_relative = staged_seal.relative_to(staging_directory).as_posix()
+    actual_seal = entries[seal_relative].read_bytes()
+    if actual_seal != seal_payload:
+        raise DerivationError("staged canonical seal bytes changed")
+    validate_output_seal_payload(actual_seal, authority)
+
+
+def _remove_staging_entry_nofollow(path: Path) -> None:
+    candidate = Path(path)
+    if candidate.is_symlink():
+        candidate.unlink()
+        return
+    if hasattr(candidate, "is_junction") and candidate.is_junction():
+        candidate.rmdir()
+        return
+    if candidate.is_dir():
+        for child in candidate.iterdir():
+            _remove_staging_entry_nofollow(child)
+        candidate.rmdir()
+        return
+    if candidate.exists():
+        candidate.unlink()
+
+
+def _rollback_staging(directory: Path) -> None:
+    try:
+        _remove_staging_entry_nofollow(directory)
     except FileNotFoundError:
         pass
-    except OSError:
-        failures.append(directory.name)
-    if failures:
-        raise DerivationError(
-            "failed to roll back exclusive staging: " + ", ".join(failures)
-        )
+    except OSError as exc:
+        raise DerivationError("failed to roll back exclusive staging") from exc
 
 
 def _rename_directory_noreplace(source: Path, target: Path) -> None:
@@ -2771,13 +2928,25 @@ def publish_payloads_exclusive(
     *,
     root: Path = ROOT,
 ) -> Path:
-    root = Path(root)
+    root, resolved_root = _prepare_secure_root(Path(root))
     cli = authority["cli_contract"]
-    output_directory = root / _safe_relative(
-        cli["output_directory"], label="output directory", output=True
+    output_directory = _assert_secure_containment(
+        root,
+        resolved_root,
+        root
+        / _safe_relative(
+            cli["output_directory"], label="output directory", output=True
+        ),
+        label="output directory",
     )
-    staging_directory = root / _safe_relative(
-        cli["staging_directory"], label="staging directory", output=True
+    staging_directory = _assert_secure_containment(
+        root,
+        resolved_root,
+        root
+        / _safe_relative(
+            cli["staging_directory"], label="staging directory", output=True
+        ),
+        label="staging directory",
     )
     if (
         staging_directory.parent != output_directory.parent
@@ -2826,7 +2995,19 @@ def publish_payloads_exclusive(
     }
     seal_payload = canonical_output_seal_json(seal)
     validate_output_seal_payload(seal_payload, authority)
-    output_directory.parent.mkdir(parents=True, exist_ok=True)
+    output_parent = _assert_secure_containment(
+        root,
+        resolved_root,
+        output_directory.parent,
+        label="output parent",
+    )
+    output_parent.mkdir(parents=True, exist_ok=True)
+    _assert_secure_containment(
+        root,
+        resolved_root,
+        output_parent,
+        label="output parent",
+    )
     if output_directory.exists() or output_directory.is_symlink():
         raise DerivationError("final output directory reservation already exists")
     try:
@@ -2835,19 +3016,40 @@ def publish_payloads_exclusive(
         raise DerivationError("exclusive staging directory already exists") from exc
     except OSError as exc:
         raise DerivationError("exclusive staging directory reservation failed") from exc
+    _assert_secure_containment(
+        root,
+        resolved_root,
+        staging_directory,
+        label="staging directory",
+    )
     staged_outputs = [staging_directory / path.name for path in outputs]
     staged_seal = staging_directory / seal_path.name
-    planned_files = [*staged_outputs, staged_seal]
     try:
         for staged, item in zip(staged_outputs, payload_list, strict=True):
             _write_exclusive_file(staged, item.payload)
         _write_exclusive_file(staged_seal, seal_payload)
         if output_directory.exists() or output_directory.is_symlink():
             raise DerivationError("final output directory appeared during staging")
+        _assert_secure_containment(
+            root,
+            resolved_root,
+            output_directory,
+            label="output directory",
+        )
+        _verify_staging_before_rename(
+            authority,
+            root,
+            resolved_root,
+            staging_directory,
+            staged_outputs,
+            payload_list,
+            staged_seal,
+            seal_payload,
+        )
         _rename_directory_noreplace(staging_directory, output_directory)
     except Exception as exc:
         try:
-            _rollback_staging(staging_directory, planned_files)
+            _rollback_staging(staging_directory)
         except DerivationError as cleanup_exc:
             raise DerivationError(
                 f"staged publication failed and cleanup failed: {cleanup_exc}"

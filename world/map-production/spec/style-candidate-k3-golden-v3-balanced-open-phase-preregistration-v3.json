@@ -3,7 +3,7 @@
   "interface": "sstory-k3-golden-v3-balanced-open-phase-preregistration-v3",
   "status": "preregistered-candidates-not-generated",
   "immutable_plan": true,
-  "canonical_self_sha256": "4276f5feefdd273b33d9133e22541bae7246f2d5b406250404b6fdb85ca06872",
+  "canonical_self_sha256": "38693b232f55b559152240ef5f56e1467ea0985318a68c4e22cbb1551d6f2f9c",
   "strict_audit_authority": {
     "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
     "sha256": "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7",
@@ -101,13 +101,13 @@
       {
         "role": "balanced-open-phase-v3-generator",
         "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_balanced_open_phase_v3.py",
-        "sha256": "948f1b58f9538d20229dfe55073b328ee96344fd591c27f9d809298f74ab2220",
+        "sha256": "ca09af2760c3d0acb958e0e6e7afa92f010aef2593eda2e712c3a8f4e0e76b52",
         "use": "exact successor construction and closed CLI"
       },
       {
         "role": "balanced-open-phase-v3-synthetic-tests",
         "path": "tests/golden_v3_balanced_open_phase_preregistration_test.py",
-        "sha256": "5001d33db20e75eefb796efaf14501c206b946515f3fff0d20ccd997ee7a2bfb",
+        "sha256": "93026720eefb800906229b66915d6b7bc78d3633e9ed27b3d0cbe99e1b490d17",
         "use": "synthetic-only executable contract"
       },
       {
@@ -296,7 +296,16 @@
           1
         ],
         "renormalize_each_sweep": true,
-        "order": "support erosion, listed lag, then y/x; fixed sweep count",
+        "sweep_parity_order": {
+          "even": {
+            "support_erosions": "listed order",
+            "lags": "listed order and listed direction"
+          },
+          "odd": {
+            "support_erosions": "reverse listed order",
+            "lags": "reverse listed order, then negate dx and dy"
+          }
+        },
         "early_success_forbidden": true
       },
       "target_multiplier": "1 + candidate amplitude_depth_rational * certified field",
@@ -396,7 +405,16 @@
           1
         ],
         "renormalize_each_sweep": true,
-        "order": "support erosion, listed lag, then y/x; fixed sweep count",
+        "sweep_parity_order": {
+          "even": {
+            "support_erosions": "listed order",
+            "lags": "listed order and listed direction"
+          },
+          "odd": {
+            "support_erosions": "reverse listed order",
+            "lags": "reverse listed order, then negate dx and dy"
+          }
+        },
         "early_success_forbidden": true
       },
       "reconstruction": "certified unit carrier times pre-whitening G8 amplitude",

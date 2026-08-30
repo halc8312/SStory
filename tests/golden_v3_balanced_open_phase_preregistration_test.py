@@ -6,6 +6,8 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -153,6 +155,42 @@ class GoldenV3BalancedOpenPhasePreregistrationTest(unittest.TestCase):
                 lambda value: value["derivation"]["construction_repair"].__setitem__(
                     "maximum_repairs_per_stage_per_body", True
                 ),
+            ),
+            (
+                "float mask q bits",
+                lambda value: value["derivation"]["filters"][
+                    "masked_normalization"
+                ].__setitem__("mask_q_bits", 20.0),
+            ),
+            (
+                "float signal q bits",
+                lambda value: value["derivation"]["construction_repair"].__setitem__(
+                    "signal_q_bits", 12.0
+                ),
+            ),
+            (
+                "false erosion radius",
+                lambda value: value["derivation"]["amplitude_construction"][
+                    "lag_decorrelation"
+                ]["support_erosions_px"].__setitem__(1, False),
+            ),
+            (
+                "true correlation numerator",
+                lambda value: value["derivation"]["final_certificate"][
+                    "maximum_absolute_correlation_rational"
+                ].__setitem__(0, True),
+            ),
+            (
+                "float nested lag coordinate",
+                lambda value: value["derivation"]["unit_whitening"][
+                    "lag_decorrelation"
+                ]["lags_xy"][0].__setitem__(0, 32.0),
+            ),
+            (
+                "float repair budget numerator",
+                lambda value: value["derivation"]["construction_repair"][
+                    "per_stage_pixel_budget_rational"
+                ].__setitem__(0, 1.0),
             ),
         )
         for label, mutate in mutations:
@@ -412,6 +450,73 @@ class GoldenV3BalancedOpenPhasePreregistrationTest(unittest.TestCase):
                 config["lag_decorrelation"],
                 v1=self.v1,
             )
+
+    def test_lag_whitening_traces_both_sweep_parities_exactly(self) -> None:
+        kernels = self.v1.load_authority()["derivation"]["fixed_filters"]["kernels"]
+        config = copy.deepcopy(
+            self.authority["derivation"]["amplitude_construction"]["lag_decorrelation"]
+        )
+        config.update(
+            {
+                "lags_xy": [[2, 0], [0, 3]],
+                "support_erosions_px": [0, 1],
+                "fixed_sweeps": 2,
+            }
+        )
+        mask = np.ones((24, 24), dtype=bool)
+        yy, xx = np.indices(mask.shape)
+        values = ((xx * 7 + yy * 11) % 23 - 11).astype(np.int64) * generator.Q16
+        events: list[tuple[object, ...]] = []
+
+        def traced_erode(selected: np.ndarray, radius: int) -> np.ndarray:
+            events.append(("erosion", radius))
+            return selected
+
+        def traced_pearson(
+            _field: np.ndarray,
+            _support: np.ndarray,
+            dx: int,
+            dy: int,
+            *,
+            minimum_pairs: int,
+        ) -> None:
+            events.append(("lag", dx, dy, minimum_pairs))
+            return None
+
+        certificate = generator.LagCertificate(4, 0, 1, 0)
+        with (
+            mock.patch.object(generator, "disk_erode", side_effect=traced_erode),
+            mock.patch.object(
+                generator, "_pearson_components", side_effect=traced_pearson
+            ),
+            mock.patch.object(generator, "lag_certificate", return_value=certificate),
+        ):
+            _, observed_certificate = generator.whiten_lagged_field(
+                values,
+                mask,
+                kernels["G4"],
+                config,
+                v1=self.v1,
+            )
+        minimum_pairs = config["minimum_pairs_per_record"]
+        self.assertEqual(
+            events,
+            [
+                ("erosion", 0),
+                ("lag", 2, 0, minimum_pairs),
+                ("lag", 0, 3, minimum_pairs),
+                ("erosion", 1),
+                ("lag", 2, 0, minimum_pairs),
+                ("lag", 0, 3, minimum_pairs),
+                ("erosion", 1),
+                ("lag", 0, -3, minimum_pairs),
+                ("lag", -2, 0, minimum_pairs),
+                ("erosion", 0),
+                ("lag", 0, -3, minimum_pairs),
+                ("lag", -2, 0, minimum_pairs),
+            ],
+        )
+        self.assertEqual(observed_certificate, certificate)
 
     def test_short_dark_repair_dissolves_short_line_and_preserves_long_one(
         self,
@@ -1051,6 +1156,41 @@ class GoldenV3BalancedOpenPhasePreregistrationTest(unittest.TestCase):
                 generator.validate_output_seal_payload(
                     generator.canonical_output_seal_json(invalid_payload), authority
                 )
+            for label, mutate, message in (
+                (
+                    "float seal count",
+                    lambda value: value.__setitem__("candidate_count", 4.0),
+                    "candidate count",
+                ),
+                (
+                    "float matching iterations",
+                    lambda value: value["candidates"][0][
+                        "construction_receipt"
+                    ].__setitem__("amplitude_matching_iterations", 4.0),
+                    "iteration receipt",
+                ),
+                (
+                    "true certificate numerator",
+                    lambda value: value["candidates"][0]["construction_receipt"][
+                        "amplitude_lag_certificate"
+                    ].__setitem__("maximum_numerator", True),
+                    "certificate value",
+                ),
+                (
+                    "false receipt count",
+                    lambda value: value["candidates"][0][
+                        "construction_receipt"
+                    ].__setitem__("quiet_clipped_pixels", False),
+                    "receipt count",
+                ),
+            ):
+                with self.subTest(label=label):
+                    invalid = json.loads(right.read_text(encoding="utf-8"))
+                    mutate(invalid)
+                    with self.assertRaisesRegex(generator.DerivationError, message):
+                        generator.validate_output_seal_payload(
+                            generator.canonical_output_seal_json(invalid), authority
+                        )
             forged = json.loads(right.read_text(encoding="utf-8"))
             forged_certificate = forged["candidates"][0]["construction_receipt"][
                 "amplitude_lag_certificate"
@@ -1101,6 +1241,127 @@ class GoldenV3BalancedOpenPhasePreregistrationTest(unittest.TestCase):
                     )
                     self.assertFalse(output.exists())
                     self.assertFalse(staging.exists())
+
+            def assert_staging_tamper_rejected(
+                label: str,
+                tamper: object,
+                message: str,
+            ) -> None:
+                tamper_root = base / f"tamper-{label}"
+                calls = 0
+
+                def write_then_tamper(path: Path, payload: bytes) -> None:
+                    nonlocal calls
+                    real_write(path, payload)
+                    calls += 1
+                    if calls == 5:
+                        tamper(path.parent)
+
+                with (
+                    mock.patch.object(
+                        generator,
+                        "_write_exclusive_file",
+                        side_effect=write_then_tamper,
+                    ),
+                    self.assertRaisesRegex(generator.DerivationError, message),
+                ):
+                    publish(tamper_root)
+                output = tamper_root / authority["cli_contract"]["output_directory"]
+                staging = tamper_root / authority["cli_contract"]["staging_directory"]
+                self.assertFalse(output.exists())
+                self.assertFalse(staging.exists())
+
+            assert_staging_tamper_rejected(
+                "extra",
+                lambda staging: (staging / "extra.bin").write_bytes(b"extra"),
+                "staging file closure",
+            )
+
+            def swap_payload(staging: Path) -> None:
+                names = [
+                    Path(record["output_path"]).name
+                    for record in authority["candidates"]["records"][:2]
+                ]
+                first = staging / names[0]
+                second = staging / names[1]
+                first_bytes = first.read_bytes()
+                second_bytes = second.read_bytes()
+                first.write_bytes(second_bytes)
+                second.write_bytes(first_bytes)
+
+            assert_staging_tamper_rejected(
+                "swapped-payloads", swap_payload, "staged candidate bytes changed"
+            )
+
+            external_file = base / "external-link-target.bin"
+            external_file.write_bytes(b"external")
+            probe_link = base / "link-probe"
+            symlink_supported = False
+            try:
+                probe_link.symlink_to(external_file)
+                symlink_supported = probe_link.is_symlink()
+            except OSError:
+                pass
+            finally:
+                if probe_link.is_symlink():
+                    probe_link.unlink()
+            if symlink_supported:
+
+                def replace_with_link(staging: Path) -> None:
+                    name = Path(
+                        authority["candidates"]["records"][0]["output_path"]
+                    ).name
+                    staged = staging / name
+                    staged.unlink()
+                    staged.symlink_to(external_file)
+
+                assert_staging_tamper_rejected(
+                    "link-file", replace_with_link, "link or junction"
+                )
+
+            def assert_external_ancestor_rejected(kind: str) -> bool:
+                ancestor_root = base / f"ancestor-{kind}"
+                external = base / f"external-{kind}"
+                ancestor_root.mkdir()
+                external.mkdir()
+                linked = ancestor_root / "tmp"
+                if kind == "symlink":
+                    linked.symlink_to(external, target_is_directory=True)
+                else:
+                    completed = subprocess.run(
+                        [
+                            "cmd.exe",
+                            "/d",
+                            "/c",
+                            "mklink",
+                            "/J",
+                            str(linked),
+                            str(external),
+                        ],
+                        check=False,
+                        capture_output=True,
+                        text=True,
+                    )
+                    if completed.returncode != 0:
+                        return False
+                try:
+                    with self.assertRaisesRegex(
+                        generator.DerivationError, "link or junction ancestor"
+                    ):
+                        publish(ancestor_root)
+                finally:
+                    if linked.is_symlink():
+                        linked.unlink()
+                    elif hasattr(linked, "is_junction") and linked.is_junction():
+                        linked.rmdir()
+                return True
+
+            if symlink_supported:
+                with self.subTest(kind="external ancestor symlink"):
+                    assert_external_ancestor_rejected("symlink")
+            if os.name == "nt":
+                with self.subTest(kind="external ancestor junction"):
+                    assert_external_ancestor_rejected("junction")
 
             race_root = base / "rename-race"
             real_rename = generator._rename_directory_noreplace
