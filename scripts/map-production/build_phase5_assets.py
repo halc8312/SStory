@@ -1988,11 +1988,17 @@ def _verify_manifest_golden_style_v3(
     """Revalidate the full Golden-v3 promotion graph without legacy fallback."""
 
     try:
-        return golden_v3_promotion.verify_accepted_manifest_golden_v3(
+        evidence = golden_v3_promotion.verify_accepted_manifest_golden_v3(
             golden_style, base_manifest_path
         )
     except golden_v3_promotion.GoldenV3PromotionError as exc:
         raise Phase5BuildError(str(exc)) from exc
+    if evidence.get("generation_contract_id") not in (
+        golden_v3_promotion.FOUR_CANDIDATE_V1,
+        golden_v3_promotion.BALANCED_PHASE_V2,
+    ):
+        raise Phase5BuildError("Golden v3 generation discriminator is missing or invalid")
+    return evidence
 
 
 def verify_manifest_golden_style(

@@ -27,8 +27,8 @@
     "$schema": {
       "const": "https://sstory.example/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json"
     },
-    "schema_version": { "const": "1.0.0" },
-    "id": { "const": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v1" },
+    "schema_version": { "const": "2.0.0" },
+    "id": { "const": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v2" },
     "status": { "const": "frozen-before-candidate-evaluation" },
     "candidate_evaluations_before_freeze": { "const": 0 },
     "threshold_selection_from_candidate_values": { "const": false },
@@ -57,10 +57,12 @@
     },
     "authorities": {
       "type": "object",
-      "required": ["strict_audit", "four_candidate_derivation"],
+      "required": ["strict_audit", "four_candidate_derivation", "balanced_phase_v2", "balanced_phase_v2_generator"],
       "properties": {
         "strict_audit": { "$ref": "#/definitions/artifact" },
-        "four_candidate_derivation": { "$ref": "#/definitions/artifact" }
+        "four_candidate_derivation": { "$ref": "#/definitions/artifact" },
+        "balanced_phase_v2": { "$ref": "#/definitions/artifact" },
+        "balanced_phase_v2_generator": { "$ref": "#/definitions/artifact" }
       },
       "additionalProperties": false
     },
@@ -104,16 +106,21 @@
       "required": [
         "candidate_count",
         "generation_seal_count",
+        "discriminator_field",
+        "mixed_generation_evidence",
         "distinct_runtime_profiles",
         "candidate_must_match_both_seals",
         "runtime_candidate_argument_path_persisted",
         "seal_payloads_embedded_in_receipt",
         "seal_source_paths_persisted",
-        "embedded_seal_candidate_paths"
+        "embedded_seal_candidate_paths",
+        "contracts"
       ],
       "properties": {
         "candidate_count": { "const": 4 },
         "generation_seal_count": { "const": 2 },
+        "discriminator_field": { "const": "generation_contract_id" },
+        "mixed_generation_evidence": { "const": "reject-without-fallback" },
         "distinct_runtime_profiles": { "const": true },
         "candidate_must_match_both_seals": { "const": true },
         "runtime_candidate_argument_path_persisted": { "const": false },
@@ -121,6 +128,40 @@
         "seal_source_paths_persisted": { "const": false },
         "embedded_seal_candidate_paths": {
           "const": "preregistered-output-paths-only"
+        },
+        "contracts": {
+          "const": {
+            "four-candidate-v1": {
+              "manifest_authority_role": "golden-v3-four-candidate-derivation-authority",
+              "manifest_generator_role": null,
+              "seal_schema_id": "sstory.k3.golden-v3.four-candidate-output-seal.v1",
+              "runtime_attestation": "runtime-profile-id-string",
+              "required_runtime_profile_ids": null,
+              "generation_seal_count": 2,
+              "candidate_ids": ["F094-M148", "F094-M155", "F097-M148", "F097-M155"],
+              "output_paths": [
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M148.png",
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M155.png",
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M148.png",
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M155.png"
+              ]
+            },
+            "balanced-phase-v2": {
+              "manifest_authority_role": "golden-v3-balanced-phase-v2-authority",
+              "manifest_generator_role": "golden-v3-balanced-phase-v2-generator",
+              "seal_schema_id": "sstory.k3.golden-v3.balanced-phase-v2-output-seal.v1",
+              "runtime_attestation": "structured-exact-common-and-profile",
+              "required_runtime_profile_ids": ["windows-local-opencv-python-4.13.0.92", "linux-ci-opencv-python-headless-4.13.0.92"],
+              "generation_seal_count": 2,
+              "candidate_ids": ["B125-M400", "B125-M450", "B150-M400", "B150-M450"],
+              "output_paths": [
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M400.png",
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M450.png",
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M400.png",
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M450.png"
+              ]
+            }
+          }
         }
       },
       "additionalProperties": false
@@ -267,31 +308,46 @@
       "type": "object",
       "required": [
         "receipt_role",
-        "input_role_order",
+        "input_role_orders",
         "history_state_order",
         "status",
         "bounds",
         "zoom",
-        "generation",
+        "generation_by_contract",
         "notes",
         "pre_vision_history_timestamp_source",
         "history_actor_source"
       ],
       "properties": {
         "receipt_role": { "const": "golden-v3-acceptance-receipt" },
-        "input_role_order": {
-          "const": [
-            "golden-raw-output",
-            "golden-v3-promotion-authority",
-            "golden-v3-four-candidate-derivation-authority",
-            "golden-v3-strict-audit-authority",
-            "golden-v3-strict-audit-report",
-            "golden-v3-root-vision-authorization",
-            "blind-review-packet",
-            "independent-vision-review-a",
-            "independent-vision-review-b",
-            "golden-v3-acceptance-receipt"
-          ]
+        "input_role_orders": {
+          "const": {
+            "four-candidate-v1": [
+              "golden-raw-output",
+              "golden-v3-promotion-authority",
+              "golden-v3-four-candidate-derivation-authority",
+              "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-report",
+              "golden-v3-root-vision-authorization",
+              "blind-review-packet",
+              "independent-vision-review-a",
+              "independent-vision-review-b",
+              "golden-v3-acceptance-receipt"
+            ],
+            "balanced-phase-v2": [
+              "golden-raw-output",
+              "golden-v3-promotion-authority",
+              "golden-v3-balanced-phase-v2-authority",
+              "golden-v3-balanced-phase-v2-generator",
+              "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-report",
+              "golden-v3-root-vision-authorization",
+              "blind-review-packet",
+              "independent-vision-review-a",
+              "independent-vision-review-b",
+              "golden-v3-acceptance-receipt"
+            ]
+          }
         },
         "history_state_order": {
           "const": ["planned", "inputs-ready", "generated", "automated-qa", "vision-qa", "accepted"]
@@ -301,10 +357,16 @@
           "const": { "west": 0, "south": 0, "east": 10000, "north": 10000 }
         },
         "zoom": { "const": { "min": 0, "max": 2, "native": 2 } },
-        "generation": {
+        "generation_by_contract": {
           "const": {
-            "model": "sstory-k3-golden-v3-four-candidate-phase-v1",
-            "attempt": 1
+            "four-candidate-v1": {
+              "model": "sstory-k3-golden-v3-four-candidate-phase-v1",
+              "attempt": 1
+            },
+            "balanced-phase-v2": {
+              "model": "sstory-k3-golden-v3-balanced-independent-band-phase-v2",
+              "attempt": 1
+            }
           }
         },
         "notes": {
@@ -323,8 +385,8 @@
       "type": "object",
       "required": ["schema_version", "id", "status", "promotion_performed"],
       "properties": {
-        "schema_version": { "const": "1.0.0" },
-        "id": { "const": "sstory-k3-golden-v3-acceptance-receipt-v1" },
+        "schema_version": { "const": "2.0.0" },
+        "id": { "const": "sstory-k3-golden-v3-acceptance-receipt-v2" },
         "status": { "const": "accepted" },
         "promotion_performed": { "const": true }
       },

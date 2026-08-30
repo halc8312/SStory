@@ -14,7 +14,9 @@
     "candidate",
     "raw",
     "promotion_authority",
-    "four_candidate_derivation_authority",
+    "generation_contract_id",
+    "generation_authority",
+    "generation_generator",
     "generation_seals",
     "strict_audit_authority",
     "strict_audit_report",
@@ -29,8 +31,8 @@
     "$schema": {
       "const": "https://sstory.example/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json"
     },
-    "schema_version": { "const": "1.0.0" },
-    "id": { "const": "sstory-k3-golden-v3-acceptance-receipt-v1" },
+    "schema_version": { "const": "2.0.0" },
+    "id": { "const": "sstory-k3-golden-v3-acceptance-receipt-v2" },
     "job_id": { "const": "style-candidate-k-v3-golden-v3" },
     "status": { "const": "accepted" },
     "acceptance_threshold": { "const": 94 },
@@ -38,7 +40,16 @@
     "candidate": { "$ref": "#/definitions/sized_artifact" },
     "raw": { "$ref": "#/definitions/artifact" },
     "promotion_authority": { "$ref": "#/definitions/artifact" },
-    "four_candidate_derivation_authority": { "$ref": "#/definitions/artifact" },
+    "generation_contract_id": {
+      "enum": ["four-candidate-v1", "balanced-phase-v2"]
+    },
+    "generation_authority": { "$ref": "#/definitions/artifact" },
+    "generation_generator": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/definitions/artifact" }
+      ]
+    },
     "generation_seals": {
       "type": "array",
       "minItems": 2,
@@ -68,6 +79,21 @@
     "accepted_at": { "type": "string", "format": "date-time" },
     "promotion_performed": { "const": true }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "generation_contract_id": { "const": "four-candidate-v1" } }
+      },
+      "then": {
+        "properties": { "generation_generator": { "type": "null" } }
+      },
+      "else": {
+        "properties": {
+          "generation_generator": { "$ref": "#/definitions/artifact" }
+        }
+      }
+    }
+  ],
   "additionalProperties": false,
   "definitions": {
     "artifact": {
