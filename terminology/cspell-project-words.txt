@@ -30,6 +30,7 @@ desaturated
 DND
 Dothraki
 Doublebound
+DSL
 Druidcraft
 Duolingo
 Durin
@@ -176,6 +177,7 @@ nonwarning
 nonuniformity
 premeasurement
 prequalification
+preseal
 RGB
 retunes
 subsetting
