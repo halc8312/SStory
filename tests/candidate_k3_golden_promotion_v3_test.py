@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import ast
 import copy
 import hashlib
 import json
+import os
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -46,6 +49,27 @@ def digest(path: Path) -> str:
 
 def relative(path: Path) -> str:
     return path.resolve().relative_to(REPO_ROOT.resolve()).as_posix()
+
+
+def create_directory_link(link: Path, target: Path) -> None:
+    if os.name == "nt":
+        result = subprocess.run(
+            ["cmd", "/c", "mklink", "/J", os.fspath(link), os.fspath(target)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode != 0:
+            raise OSError(result.stderr or result.stdout or "mklink /J failed")
+    else:
+        link.symlink_to(target, target_is_directory=True)
+
+
+def remove_directory_link(link: Path) -> None:
+    if hasattr(link, "is_junction") and link.is_junction():
+        link.rmdir()
+    else:
+        link.unlink()
 
 
 class PromotionV3Fixture:
@@ -113,9 +137,7 @@ class PromotionV3Fixture:
             authority.derivation_authority.data.decode("utf-8")
         )
         sealed_candidates = []
-        for index, record in enumerate(
-            derivation_authority["candidates"]["records"]
-        ):
+        for index, record in enumerate(derivation_authority["candidates"]["records"]):
             selected = record["candidate_id"] == "F094-M148"
             sealed_candidates.append(
                 {
@@ -145,9 +167,9 @@ class PromotionV3Fixture:
                     {
                         "schema_id": "sstory.k3.golden-v3.four-candidate-output-seal.v1",
                         "authority_sha256": promotion.derivation.AUTHORITY_SHA256,
-                        "statistics_firewall_sha256": derivation_authority["derivation"][
-                            "v19_statistical_authority"
-                        ]["future_artifact_sha256"],
+                        "statistics_firewall_sha256": derivation_authority[
+                            "derivation"
+                        ]["v19_statistical_authority"]["future_artifact_sha256"],
                         "runtime_profile_id": profile,
                         "candidate_count": 4,
                         "candidates": copy.deepcopy(sealed_candidates),
@@ -178,9 +200,7 @@ class PromotionV3Fixture:
             for view_id in VIEW_IDS:
                 crop, size = VIEW_DEFINITIONS[view_id]
                 working = (
-                    source_image.copy()
-                    if crop is None
-                    else source_image.crop(crop)
+                    source_image.copy() if crop is None else source_image.crop(crop)
                 )
                 try:
                     rendered = working.resize(size, Image.Resampling.LANCZOS)
@@ -215,9 +235,7 @@ class PromotionV3Fixture:
         )
         self.reviews = {
             "root": self._build_review(
-                reviewer=(
-                    "golden-v3-root-vision-authorization/Root Vision Authority"
-                ),
+                reviewer=("golden-v3-root-vision-authorization/Root Vision Authority"),
                 golden=False,
                 review_mode="self",
                 created_at="2000-01-01T00:10:00Z",
@@ -241,9 +259,7 @@ class PromotionV3Fixture:
     def _write_json(path: Path, document: dict[str, object]) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(
-            (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode(
-                "utf-8"
-            )
+            (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
         )
 
     def _build_review(
@@ -324,9 +340,7 @@ class PromotionV3Fixture:
             )
         )
         stack.enter_context(
-            mock.patch.object(
-                promotion, "utc_now", return_value="2000-01-01T00:30:00Z"
-            )
+            mock.patch.object(promotion, "utc_now", return_value="2000-01-01T00:30:00Z")
         )
         return stack
 
@@ -365,8 +379,7 @@ class PromotionV3Fixture:
                 promotion.balanced_derivation.canonical_output_seal_json(
                     {
                         "schema_id": (
-                            "sstory.k3.golden-v3."
-                            "balanced-phase-v2-output-seal.v1"
+                            "sstory.k3.golden-v3.balanced-phase-v2-output-seal.v1"
                         ),
                         "authority_self_sha256": balanced["canonical_self_sha256"],
                         "statistics_firewall_sha256": firewall_sha,
@@ -452,12 +465,9 @@ class PromotionV3Fixture:
                 promotion.balanced_open_derivation.canonical_output_seal_json(
                     {
                         "schema_id": (
-                            "sstory.k3.golden-v3."
-                            "balanced-open-phase-v3-output-seal.v1"
+                            "sstory.k3.golden-v3.balanced-open-phase-v3-output-seal.v1"
                         ),
-                        "authority_self_sha256": balanced_open[
-                            "canonical_self_sha256"
-                        ],
+                        "authority_self_sha256": balanced_open["canonical_self_sha256"],
                         "statistics_firewall_sha256": firewall_sha,
                         "runtime_attestation": (
                             promotion.balanced_open_derivation.expected_runtime_attestation(
@@ -509,7 +519,10 @@ class PromotionV3Fixture:
             return_value=copy.deepcopy(self.strict_report),
         ):
             return phase5.verify_manifest_golden_style(
-                {"path": relative(self.paths.master), "sha256": digest(self.paths.master)},
+                {
+                    "path": relative(self.paths.master),
+                    "sha256": digest(self.paths.master),
+                },
                 self.manifest,
             )
 
@@ -544,9 +557,31 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         )
         self.assertEqual(set(authority.document["runtime_bindings"].values()), {None})
         self.assertFalse(authority.document["promotion_performed"])
-        self.assertEqual(authority.document["candidate_evaluations_before_freeze"], 0)
-        self.assertFalse(authority.document["threshold_selection_from_candidate_values"])
+        freeze = authority.document["freeze_scope"]
+        self.assertEqual(
+            freeze["active_generation_contract_id"],
+            promotion.BALANCED_OPEN_PHASE_V3,
+        )
+        self.assertEqual(freeze["candidate_evaluations_before_freeze"], 0)
+        self.assertEqual(freeze["candidate_images_read_before_freeze"], 0)
+        self.assertEqual(freeze["audit_results_read_before_freeze"], 0)
+        self.assertFalse(freeze["threshold_selection_from_candidate_values"])
+        self.assertEqual(
+            freeze["legacy_contract_status"],
+            {
+                promotion.FOUR_CANDIDATE_V1: (
+                    "evaluated-and-rejected-before-this-revision; compatibility-only"
+                ),
+                promotion.BALANCED_PHASE_V2: (
+                    "evaluated-and-rejected-before-this-revision; compatibility-only"
+                ),
+            },
+        )
         self.assertEqual(authority.document["schema_version"], "3.0.0")
+        self.assertEqual(
+            authority.derivation_generator.sha256,
+            "5a38aece70641c8bda224e076ed41bdd09de0ad9421590cb7aae729936e63b76",
+        )
         self.assertEqual(
             authority.balanced_authority.sha256,
             "f108d6e8c66d9e64723e53b881b6931131573f260e6bf43c96a9efafd5eabe80",
@@ -562,6 +597,52 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertEqual(
             authority.balanced_open_generator.sha256,
             "ca09af2760c3d0acb958e0e6e7afa92f010aef2593eda2e712c3a8f4e0e76b52",
+        )
+        balanced_open = json.loads(
+            authority.balanced_open_authority.data.decode("utf-8")
+        )
+        self.assertEqual(
+            balanced_open["canonical_self_sha256"],
+            "38693b232f55b559152240ef5f56e1467ea0985318a68c4e22cbb1551d6f2f9c",
+        )
+        bindings = {
+            item["role"]: item
+            for item in balanced_open["input_policy"]["source_bindings"]
+        }
+        self.assertEqual(
+            bindings["balanced-open-phase-v3-synthetic-tests"]["sha256"],
+            "93026720eefb800906229b66915d6b7bc78d3633e9ed27b3d0cbe99e1b490d17",
+        )
+        self.assertEqual(
+            authority.promotion_implementation_sha256,
+            promotion.EXPECTED_IMPLEMENTATION_SELF_SHA256,
+        )
+        self.assertEqual(
+            promotion._implementation_self_sha256(
+                authority.promotion_implementation.data
+            ),
+            promotion.EXPECTED_IMPLEMENTATION_SELF_SHA256,
+        )
+
+    def test_generators_are_loaded_only_from_sha_bound_bytes(self) -> None:
+        tree = ast.parse(Path(promotion.__file__).read_text(encoding="utf-8"))
+        imported = {
+            alias.name
+            for node in ast.walk(tree)
+            if isinstance(node, (ast.Import, ast.ImportFrom))
+            for alias in node.names
+        }
+        self.assertFalse(
+            any(
+                name.startswith("generate_style_candidate_k3_golden_v3")
+                for name in imported
+            )
+        )
+        authority = promotion.load_authority()
+        self.assertIs(promotion.derivation, authority.derivation_module)
+        self.assertIs(promotion.balanced_derivation, authority.balanced_module)
+        self.assertIs(
+            promotion.balanced_open_derivation, authority.balanced_open_module
         )
 
     def test_canonical_synthetic_seals_pass_real_cross_profile_validator(self) -> None:
@@ -612,7 +693,9 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         result = self.fixture.promote()
         self.assertEqual(result["status"], "accepted")
         self.assertEqual(result["candidate_id"], "F094-M148")
-        self.assertEqual(self.fixture.paths.raw.read_bytes(), self.fixture.candidate.read_bytes())
+        self.assertEqual(
+            self.fixture.paths.raw.read_bytes(), self.fixture.candidate.read_bytes()
+        )
         self.assertEqual(
             self.fixture.paths.master.read_bytes(), self.fixture.candidate.read_bytes()
         )
@@ -631,13 +714,9 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.fixture.use_balanced_generation()
         result = self.fixture.promote()
         self.assertEqual(result["candidate_id"], "B125-M400")
-        self.assertEqual(
-            result["generation_contract_id"], promotion.BALANCED_PHASE_V2
-        )
+        self.assertEqual(result["generation_contract_id"], promotion.BALANCED_PHASE_V2)
         receipt = json.loads(self.fixture.paths.receipt.read_text(encoding="utf-8"))
-        self.assertEqual(
-            receipt["generation_contract_id"], promotion.BALANCED_PHASE_V2
-        )
+        self.assertEqual(receipt["generation_contract_id"], promotion.BALANCED_PHASE_V2)
         self.assertEqual(
             receipt["generation_authority"]["sha256"],
             promotion.load_authority().balanced_authority.sha256,
@@ -747,7 +826,9 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
                 candidate=sealed_candidate,
             )
 
-    def test_balanced_phase5_rejects_structured_runtime_attestation_tamper(self) -> None:
+    def test_balanced_phase5_rejects_structured_runtime_attestation_tamper(
+        self,
+    ) -> None:
         self.fixture.use_balanced_generation()
         self.fixture.promote()
         receipt = json.loads(self.fixture.paths.receipt.read_text(encoding="utf-8"))
@@ -766,9 +847,7 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         )
         receipt_input["sha256"] = digest(self.fixture.paths.receipt)
         self.fixture._write_json(self.fixture.manifest, manifest)
-        with self.assertRaisesRegex(
-            phase5.Phase5BuildError, "runtime attestation"
-        ):
+        with self.assertRaisesRegex(phase5.Phase5BuildError, "runtime attestation"):
             self.fixture.verify_phase5()
 
     def test_phase5_rejects_mixed_v1_and_balanced_generation_evidence(self) -> None:
@@ -796,8 +875,11 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.fixture.strict_report_path.write_bytes(
             promotion.strict_audit.canonical_json(forged)
         )
-        with self.fixture.promotion_patches(), self.assertRaisesRegex(
-            promotion.GoldenV3PromotionError, "passed must be True"
+        with (
+            self.fixture.promotion_patches(),
+            self.assertRaisesRegex(
+                promotion.GoldenV3PromotionError, "passed must be True"
+            ),
         ):
             promotion.promote_candidate(
                 generation_contract_id=promotion.FOUR_CANDIDATE_V1,
@@ -846,10 +928,13 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
                 path.write_bytes(sentinel)
             return original_write(path, payload, label=label)
 
-        with mock.patch.object(
-            promotion, "_write_exclusive", side_effect=collide_on_master
-        ), self.assertRaisesRegex(
-            promotion.GoldenV3PromotionError, "refusing to overwrite"
+        with (
+            mock.patch.object(
+                promotion, "_write_exclusive", side_effect=collide_on_master
+            ),
+            self.assertRaisesRegex(
+                promotion.GoldenV3PromotionError, "refusing to overwrite"
+            ),
         ):
             self.fixture.promote()
         self.assertFalse(self.fixture.paths.raw.exists())
@@ -857,32 +942,137 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertFalse(self.fixture.paths.receipt.exists())
 
     def test_manifest_cas_failure_removes_all_new_outputs(self) -> None:
-        with mock.patch.object(
-            promotion.manifest_cas,
-            "_conditional_manifest_replace",
-            side_effect=promotion.manifest_cas.K3GoldenPromotionV2Error(
-                "synthetic compare-and-swap failure"
+        with (
+            mock.patch.object(
+                promotion.manifest_cas,
+                "_conditional_manifest_replace",
+                side_effect=promotion.manifest_cas.K3GoldenPromotionV2Error(
+                    "synthetic compare-and-swap failure"
+                ),
             ),
-        ), self.assertRaisesRegex(
-            promotion.GoldenV3PromotionError, "synthetic compare-and-swap failure"
+            self.assertRaisesRegex(
+                promotion.GoldenV3PromotionError, "synthetic compare-and-swap failure"
+            ),
         ):
             self.fixture.promote()
         self.fixture.assert_outputs_absent()
 
+    def test_cleanup_preserves_same_byte_replacement(self) -> None:
+        path = self.fixture.candidate_root / "owned-cleanup-test.bin"
+        payload = b"same bytes do not prove ownership"
+        owned = promotion._write_exclusive(
+            path, payload, label="synthetic cleanup ownership test"
+        )
+        original = self.fixture.candidate_root / "owned-cleanup-original.bin"
+        path.replace(original)
+        path.write_bytes(payload)
+        promotion._cleanup_created([owned])
+        self.assertEqual(path.read_bytes(), payload)
+        self.assertEqual(original.read_bytes(), payload)
+
+    def test_exclusive_write_failure_cleans_its_owned_entry(self) -> None:
+        path = self.fixture.candidate_root / "failed-exclusive-write.bin"
+        with (
+            mock.patch.object(
+                promotion,
+                "_bind",
+                side_effect=promotion.GoldenV3PromotionError(
+                    "synthetic post-write binding failure"
+                ),
+            ),
+            self.assertRaisesRegex(
+                promotion.GoldenV3PromotionError, "post-write binding failure"
+            ),
+        ):
+            promotion._write_exclusive(
+                path,
+                b"owned failure payload",
+                label="synthetic failed exclusive write",
+            )
+        self.assertFalse(path.exists())
+
+    def test_anchored_write_rejects_parent_symlink_swap(self) -> None:
+        parent = self.fixture.candidate_root / "anchored-parent"
+        moved = self.fixture.candidate_root / "anchored-parent-moved"
+        outside = self.fixture.candidate_root / "anchored-outside"
+        parent.mkdir()
+        outside.mkdir()
+        target = parent / "target.bin"
+
+        def swap_parent(_: Path) -> None:
+            parent.rename(moved)
+            try:
+                create_directory_link(parent, outside)
+            except OSError as exc:
+                moved.rename(parent)
+                raise unittest.SkipTest(
+                    f"directory symlinks are unavailable: {exc}"
+                ) from exc
+
+        try:
+            with (
+                mock.patch.object(
+                    promotion, "_before_output_open_hook", side_effect=swap_parent
+                ),
+                self.assertRaises((OSError, promotion.GoldenV3PromotionError)),
+            ):
+                promotion._write_exclusive(
+                    target, b"must stay local", label="synthetic anchored output"
+                )
+            self.assertFalse((outside / target.name).exists())
+        finally:
+            if parent.is_symlink() or (
+                hasattr(parent, "is_junction") and parent.is_junction()
+            ):
+                remove_directory_link(parent)
+            if moved.exists() and not parent.exists():
+                moved.rename(parent)
+
+    def test_cleanup_rejects_swapped_parent_symlink(self) -> None:
+        parent = self.fixture.candidate_root / "cleanup-parent"
+        moved = self.fixture.candidate_root / "cleanup-parent-moved"
+        outside = self.fixture.candidate_root / "cleanup-outside"
+        parent.mkdir()
+        outside.mkdir()
+        path = parent / "target.bin"
+        payload = b"outside sentinel"
+        owned = promotion._write_exclusive(
+            path, payload, label="synthetic swapped-parent cleanup"
+        )
+        parent.rename(moved)
+        (outside / path.name).write_bytes(payload)
+        try:
+            create_directory_link(parent, outside)
+        except OSError as exc:
+            moved.rename(parent)
+            raise unittest.SkipTest(
+                f"directory symlinks are unavailable: {exc}"
+            ) from exc
+        try:
+            promotion._cleanup_created([owned])
+            self.assertEqual((outside / path.name).read_bytes(), payload)
+            self.assertEqual((moved / path.name).read_bytes(), payload)
+        finally:
+            remove_directory_link(parent)
+            moved.rename(parent)
+
     def test_manifest_commit_unknown_retains_exact_evidence(self) -> None:
         manifest_before = self.fixture.manifest.read_bytes()
-        with mock.patch.object(
-            promotion.manifest_cas,
-            "_conditional_manifest_replace",
-            side_effect=promotion.manifest_cas.ManifestCommitStateUnknownError(
-                manifest=relative(self.fixture.manifest),
-                reason="synthetic unknown commit state",
-                debris=(),
-                cleanup_failures=(),
+        with (
+            mock.patch.object(
+                promotion.manifest_cas,
+                "_conditional_manifest_replace",
+                side_effect=promotion.manifest_cas.ManifestCommitStateUnknownError(
+                    manifest=relative(self.fixture.manifest),
+                    reason="synthetic unknown commit state",
+                    debris=(),
+                    cleanup_failures=(),
+                ),
             ),
-        ), self.assertRaisesRegex(
-            promotion.GoldenV3ManifestCommitUnknownError,
-            "synthetic unknown commit state",
+            self.assertRaisesRegex(
+                promotion.GoldenV3ManifestCommitUnknownError,
+                "synthetic unknown commit state",
+            ),
         ):
             self.fixture.promote()
         self.assertTrue(self.fixture.paths.raw.is_file())
@@ -943,6 +1133,84 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         receipt_input["sha256"] = digest(self.fixture.paths.receipt)
         self.fixture._write_json(self.fixture.manifest, manifest)
         with self.assertRaisesRegex(phase5.Phase5BuildError, "review summary changed"):
+            self.fixture.verify_phase5()
+
+    def test_phase5_rejects_equal_float_receipt_fields_after_coherent_rehash(
+        self,
+    ) -> None:
+        self.fixture.promote()
+        original_receipt = json.loads(
+            self.fixture.paths.receipt.read_text(encoding="utf-8")
+        )
+        original_manifest = json.loads(
+            self.fixture.manifest.read_text(encoding="utf-8")
+        )
+        mutations = (
+            (
+                "candidate byte count changed",
+                lambda receipt: receipt["candidate"].__setitem__(
+                    "bytes", float(receipt["candidate"]["bytes"])
+                ),
+            ),
+            (
+                "review summary changed",
+                lambda receipt: receipt["reviews"][0].__setitem__(
+                    "score", float(receipt["reviews"][0]["score"])
+                ),
+            ),
+            (
+                "frozen header changed",
+                lambda receipt: receipt.__setitem__("acceptance_threshold", 94.0),
+            ),
+        )
+        for expected_error, mutate in mutations:
+            with self.subTest(field=expected_error):
+                receipt = copy.deepcopy(original_receipt)
+                manifest = copy.deepcopy(original_manifest)
+                mutate(receipt)
+                self.fixture._write_json(self.fixture.paths.receipt, receipt)
+                receipt_input = next(
+                    item
+                    for item in manifest["jobs"][0]["inputs"]
+                    if item["role"] == promotion.V3_ACCEPTANCE_RECEIPT_ROLE
+                )
+                receipt_input["sha256"] = digest(self.fixture.paths.receipt)
+                self.fixture._write_json(self.fixture.manifest, manifest)
+                with self.assertRaisesRegex(phase5.Phase5BuildError, expected_error):
+                    self.fixture.verify_phase5()
+
+    def test_phase5_rejects_noncanonical_receipt_after_coherent_rehash(self) -> None:
+        self.fixture.promote()
+        receipt = json.loads(self.fixture.paths.receipt.read_text(encoding="utf-8"))
+        self.fixture.paths.receipt.write_bytes(
+            json.dumps(receipt, separators=(",", ":")).encode("utf-8")
+        )
+        manifest = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        receipt_input = next(
+            item
+            for item in manifest["jobs"][0]["inputs"]
+            if item["role"] == promotion.V3_ACCEPTANCE_RECEIPT_ROLE
+        )
+        receipt_input["sha256"] = digest(self.fixture.paths.receipt)
+        self.fixture._write_json(self.fixture.manifest, manifest)
+        with self.assertRaisesRegex(
+            phase5.Phase5BuildError, "receipt bytes are not canonical"
+        ):
+            self.fixture.verify_phase5()
+
+    def test_phase5_rejects_promotion_implementation_binding_tamper(self) -> None:
+        self.fixture.promote()
+        manifest = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        implementation = next(
+            item
+            for item in manifest["jobs"][0]["inputs"]
+            if item["role"] == promotion.V3_PROMOTION_IMPLEMENTATION_ROLE
+        )
+        implementation["sha256"] = "0" * 64
+        self.fixture._write_json(self.fixture.manifest, manifest)
+        with self.assertRaisesRegex(
+            phase5.Phase5BuildError, "promotion implementation changed"
+        ):
             self.fixture.verify_phase5()
 
     def test_phase5_rejects_coherently_relocated_raw_output(self) -> None:

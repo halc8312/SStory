@@ -12,21 +12,22 @@ There is no force, resume, or overwrite mode.
 from __future__ import annotations
 
 import argparse
+import ctypes
 import hashlib
 import json
 import os
+import re
+import stat
 import sys
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
+from types import ModuleType
 from typing import Any, Iterable, Mapping, Sequence
 
 import numpy as np
 from PIL import Image
 
 import audit_style_candidate_k3_golden_v3 as strict_audit
-import generate_style_candidate_k3_golden_v3_four_candidate_phase_v1 as derivation
-import generate_style_candidate_k3_golden_v3_balanced_phase_v2 as balanced_derivation
-import generate_style_candidate_k3_golden_v3_balanced_open_phase_v3 as balanced_open_derivation
 import promote_style_candidate_k3_golden_v2 as manifest_cas
 from production_common import REPO_ROOT, parse_rfc3339, utc_now
 from release_bound_artifact import (
@@ -37,6 +38,7 @@ from release_bound_artifact import (
 )
 from release_path_safety import (
     ReleasePathError,
+    assert_no_reparse_components,
     canonical_repo_relative,
     require_trackable_path,
     same_path,
@@ -46,13 +48,33 @@ from validate_manifest import ValidationFailure, schema_errors
 
 
 AUTHORITY_PATH = (
-    REPO_ROOT
-    / "world/map-production/spec/"
+    REPO_ROOT / "world/map-production/spec/"
     "style-candidate-k3-golden-v3-promotion-authority-v1.json"
 )
-EXPECTED_AUTHORITY_SHA256 = (
-    "7ed1f30653f1d74b75b0b7404516ffa9b7363ce9c9ad6527235d98256dfc6495"
+# fmt: off
+EXPECTED_AUTHORITY_SHA256 = "801a020367dab0390ddc9080961778a148e6de6f073eb2e3b7a24aa7a453a347"
+EXPECTED_IMPLEMENTATION_SELF_SHA256 = "f080e7ac51cc95ce010de5b3626f082df08a4a3f5c03dd45217b499109ebf313"
+# fmt: on
+IMPLEMENTATION_HASH_MODE = "sha256-zero-expected-authority-and-self-hashes-v1"
+FOUR_CANDIDATE_AUTHORITY_PATH = REPO_ROOT / (
+    "world/map-production/spec/"
+    "style-candidate-k3-golden-v3-four-candidate-derivation-preregistration-v1.json"
 )
+BALANCED_AUTHORITY_PATH = REPO_ROOT / (
+    "world/map-production/spec/"
+    "style-candidate-k3-golden-v3-balanced-phase-preregistration-v2.json"
+)
+BALANCED_OPEN_AUTHORITY_PATH = REPO_ROOT / (
+    "world/map-production/spec/"
+    "style-candidate-k3-golden-v3-balanced-open-phase-preregistration-v3.json"
+)
+FOUR_CANDIDATE_MODULE_NAME = "_sstory_bound_golden_v3_four_candidate_phase_v1"
+BALANCED_MODULE_NAME = "_sstory_bound_golden_v3_balanced_phase_v2"
+BALANCED_OPEN_MODULE_NAME = "_sstory_bound_golden_v3_balanced_open_phase_v3"
+derivation: ModuleType | None = None
+balanced_derivation: ModuleType | None = None
+balanced_open_derivation: ModuleType | None = None
+_bound_module_sha256: dict[str, str] = {}
 JOB_ID = "style-candidate-k-v3-golden-v3"
 FOUR_CANDIDATE_V1 = "four-candidate-v1"
 BALANCED_PHASE_V2 = "balanced-phase-v2"
@@ -65,7 +87,9 @@ GENERATION_CONTRACT_IDS = (
 
 V3_ACCEPTANCE_RECEIPT_ROLE = "golden-v3-acceptance-receipt"
 V3_PROMOTION_AUTHORITY_ROLE = "golden-v3-promotion-authority"
+V3_PROMOTION_IMPLEMENTATION_ROLE = "golden-v3-promotion-implementation"
 V3_DERIVATION_AUTHORITY_ROLE = "golden-v3-four-candidate-derivation-authority"
+V3_DERIVATION_GENERATOR_ROLE = "golden-v3-four-candidate-generator"
 V3_BALANCED_AUTHORITY_ROLE = "golden-v3-balanced-phase-v2-authority"
 V3_BALANCED_GENERATOR_ROLE = "golden-v3-balanced-phase-v2-generator"
 V3_BALANCED_OPEN_AUTHORITY_ROLE = "golden-v3-balanced-open-phase-v3-authority"
@@ -79,7 +103,9 @@ V3_ONLY_ROLES = frozenset(
     {
         V3_ACCEPTANCE_RECEIPT_ROLE,
         V3_PROMOTION_AUTHORITY_ROLE,
+        V3_PROMOTION_IMPLEMENTATION_ROLE,
         V3_DERIVATION_AUTHORITY_ROLE,
+        V3_DERIVATION_GENERATOR_ROLE,
         V3_BALANCED_AUTHORITY_ROLE,
         V3_BALANCED_GENERATOR_ROLE,
         V3_BALANCED_OPEN_AUTHORITY_ROLE,
@@ -91,15 +117,13 @@ V3_ONLY_ROLES = frozenset(
 )
 
 DEFAULT_RAW = (
-    REPO_ROOT
-    / "world/map-production/candidates/style-candidate-k-v3-golden-v3-raw.png"
+    REPO_ROOT / "world/map-production/candidates/style-candidate-k-v3-golden-v3-raw.png"
 )
 DEFAULT_MASTER = (
     REPO_ROOT / "world/map-production/candidates/style-candidate-k-v3-golden-v3.png"
 )
 DEFAULT_RECEIPT = (
-    REPO_ROOT
-    / "world/map-production/prompts/"
+    REPO_ROOT / "world/map-production/prompts/"
     "style-candidate-k-v3-golden-v3.acceptance-receipt.json"
 )
 DEFAULT_MANIFEST = REPO_ROOT / "world/map-production/production-manifest.json"
@@ -133,16 +157,41 @@ class PromotionPaths:
     receipt: Path = DEFAULT_RECEIPT
 
 
+@dataclass
+class _ParentAnchor:
+    path: Path
+    identity: tuple[int, int]
+    linux_fds: list[int]
+    windows_handles: list[int]
+    windows_identities: list[tuple[int, int]]
+
+    @property
+    def parent_fd(self) -> int | None:
+        return self.linux_fds[-1] if self.linux_fds else None
+
+
+@dataclass(frozen=True)
+class _CreatedOutput:
+    binding: BoundArtifact
+    parent_identity: tuple[int, int]
+
+
 @dataclass(frozen=True)
 class AuthorityBundle:
     binding: BoundArtifact
     document: dict[str, Any]
+    promotion_implementation: BoundArtifact
+    promotion_implementation_sha256: str
     strict_authority: BoundArtifact
     derivation_authority: BoundArtifact
+    derivation_generator: BoundArtifact
+    derivation_module: ModuleType
     balanced_authority: BoundArtifact
     balanced_generator: BoundArtifact
+    balanced_module: ModuleType
     balanced_open_authority: BoundArtifact
     balanced_open_generator: BoundArtifact
+    balanced_open_module: ModuleType
     schemas: dict[str, BoundArtifact]
 
 
@@ -161,6 +210,25 @@ class ReviewEvidence:
     reviewer_identity: str
     score: int
     created_at: Any
+
+
+class _WindowsFileTime(ctypes.Structure):
+    _fields_ = [("low", ctypes.c_uint32), ("high", ctypes.c_uint32)]
+
+
+class _WindowsFileInformation(ctypes.Structure):
+    _fields_ = [
+        ("attributes", ctypes.c_uint32),
+        ("creation_time", _WindowsFileTime),
+        ("last_access_time", _WindowsFileTime),
+        ("last_write_time", _WindowsFileTime),
+        ("volume_serial", ctypes.c_uint32),
+        ("file_size_high", ctypes.c_uint32),
+        ("file_size_low", ctypes.c_uint32),
+        ("link_count", ctypes.c_uint32),
+        ("file_index_high", ctypes.c_uint32),
+        ("file_index_low", ctypes.c_uint32),
+    ]
 
 
 def _reject_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -185,10 +253,98 @@ def _strict_json(payload: bytes, *, label: str) -> dict[str, Any]:
             parse_constant=reject_constant,
         )
     except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
-        raise GoldenV3PromotionError(f"{label} is not strict UTF-8 JSON: {exc}") from exc
+        raise GoldenV3PromotionError(
+            f"{label} is not strict UTF-8 JSON: {exc}"
+        ) from exc
     if not isinstance(value, dict):
         raise GoldenV3PromotionError(f"{label} must contain exactly one JSON object")
     return value
+
+
+def _exact_json_equal(left: Any, right: Any) -> bool:
+    """Compare JSON values without Python's bool/int/float equivalence."""
+
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        return set(left) == set(right) and all(
+            _exact_json_equal(left[key], right[key]) for key in left
+        )
+    if isinstance(left, list):
+        return len(left) == len(right) and all(
+            _exact_json_equal(left_item, right_item)
+            for left_item, right_item in zip(left, right, strict=True)
+        )
+    return bool(left == right)
+
+
+def _canonical_implementation_payload(payload: bytes) -> bytes:
+    canonical = payload
+    for name in (
+        b"EXPECTED_AUTHORITY_SHA256",
+        b"EXPECTED_IMPLEMENTATION_SELF_SHA256",
+    ):
+        pattern = re.compile(rb"(?m)^" + re.escape(name) + rb' = "[0-9a-f]{64}"$')
+        replacement = name + b' = "' + (b"0" * 64) + b'"'
+        canonical, count = pattern.subn(replacement, canonical)
+        if count != 1:
+            raise GoldenV3PromotionError(
+                f"Golden-v3 promotion implementation {name.decode('ascii')} marker changed"
+            )
+    return canonical
+
+
+def _implementation_self_sha256(payload: bytes) -> str:
+    return hashlib.sha256(_canonical_implementation_payload(payload)).hexdigest()
+
+
+def _load_bound_module(binding: BoundArtifact, *, name: str) -> ModuleType:
+    global derivation, balanced_derivation, balanced_open_derivation
+    public_names = {
+        FOUR_CANDIDATE_MODULE_NAME: "derivation",
+        BALANCED_MODULE_NAME: "balanced_derivation",
+        BALANCED_OPEN_MODULE_NAME: "balanced_open_derivation",
+    }
+    if name not in public_names:
+        raise GoldenV3PromotionError("unknown bound Golden-v3 module name")
+    cached = globals()[public_names[name]]
+    if cached is not None and _bound_module_sha256.get(name) == binding.sha256:
+        return cached
+    try:
+        source = binding.data.decode("utf-8")
+        code = compile(source, os.fspath(binding.path), "exec", dont_inherit=True)
+    except (UnicodeDecodeError, SyntaxError) as exc:
+        raise GoldenV3PromotionError(
+            f"cannot compile bound Golden-v3 module {binding.relative}: {exc}"
+        ) from exc
+    module = ModuleType(name)
+    module.__file__ = os.fspath(binding.path)
+    module.__package__ = ""
+    previous = sys.modules.get(name)
+    sys.modules[name] = module
+    try:
+        exec(code, module.__dict__)
+    except BaseException:
+        if previous is None:
+            sys.modules.pop(name, None)
+        else:
+            sys.modules[name] = previous
+        raise
+    if name == FOUR_CANDIDATE_MODULE_NAME:
+        derivation = module
+    elif name == BALANCED_MODULE_NAME:
+        balanced_derivation = module
+    else:
+        balanced_open_derivation = module
+    _bound_module_sha256[name] = binding.sha256
+    return module
+
+
+def _implementation_artifact(authority: AuthorityBundle) -> dict[str, str]:
+    return {
+        "path": authority.promotion_implementation.relative,
+        "sha256": authority.promotion_implementation_sha256,
+    }
 
 
 def _canonical_json(value: Mapping[str, Any]) -> bytes:
@@ -197,7 +353,9 @@ def _canonical_json(value: Mapping[str, Any]) -> bytes:
             json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n"
         ).encode("utf-8")
     except (TypeError, ValueError) as exc:
-        raise GoldenV3PromotionError(f"document is not canonical JSON data: {exc}") from exc
+        raise GoldenV3PromotionError(
+            f"document is not canonical JSON data: {exc}"
+        ) from exc
 
 
 def _parse_timestamp(value: Any, *, label: str) -> Any:
@@ -211,9 +369,7 @@ def _artifact(binding: BoundArtifact) -> dict[str, str]:
     return {"path": binding.relative, "sha256": binding.sha256}
 
 
-def _bind(
-    path: str | Path, *, label: str, trackable: bool = True
-) -> BoundArtifact:
+def _bind(path: str | Path, *, label: str, trackable: bool = True) -> BoundArtifact:
     try:
         return bind_file(path, label=label, trackable=trackable)
     except (BoundArtifactError, ReleasePathError) as exc:
@@ -236,7 +392,9 @@ def _bind_record(value: Any, *, label: str) -> BoundArtifact:
     return binding
 
 
-def _schema_errors(document: dict[str, Any], schema: BoundArtifact, *, label: str) -> None:
+def _schema_errors(
+    document: dict[str, Any], schema: BoundArtifact, *, label: str
+) -> None:
     schema_document = _strict_json(schema.data, label=f"{label} schema")
     try:
         errors = schema_errors(document, schema_document)
@@ -267,10 +425,32 @@ def load_authority() -> AuthorityBundle:
         for name, record in schemas_raw.items()
     }
     _schema_errors(document, schemas["authority"], label="Golden-v3 authority")
+    implementation_record = document.get("promotion_implementation")
+    if (
+        not isinstance(implementation_record, dict)
+        or set(implementation_record) != {"path", "sha256", "hash_mode"}
+        or implementation_record.get("hash_mode") != IMPLEMENTATION_HASH_MODE
+        or implementation_record.get("sha256") != EXPECTED_IMPLEMENTATION_SELF_SHA256
+    ):
+        raise GoldenV3PromotionError(
+            "Golden-v3 promotion implementation self-binding changed"
+        )
+    promotion_implementation = _bind(
+        implementation_record["path"],
+        label="Golden-v3 promotion implementation",
+    )
+    if promotion_implementation.path != Path(__file__).resolve():
+        raise GoldenV3PromotionError("Golden-v3 promotion implementation path changed")
+    implementation_sha256 = _implementation_self_sha256(promotion_implementation.data)
+    if implementation_sha256 != implementation_record["sha256"]:
+        raise GoldenV3PromotionError(
+            "Golden-v3 promotion implementation canonical SHA-256 changed"
+        )
     authorities = document.get("authorities")
     if not isinstance(authorities, dict) or set(authorities) != {
         "strict_audit",
         "four_candidate_derivation",
+        "four_candidate_generator",
         "balanced_phase_v2",
         "balanced_phase_v2_generator",
         "balanced_open_phase_v3",
@@ -283,6 +463,10 @@ def load_authority() -> AuthorityBundle:
     derivation_authority = _bind_record(
         authorities["four_candidate_derivation"],
         label="Golden-v3 four-candidate derivation authority",
+    )
+    derivation_generator = _bind_record(
+        authorities["four_candidate_generator"],
+        label="Golden-v3 four-candidate generator",
     )
     balanced_authority = _bind_record(
         authorities["balanced_phase_v2"],
@@ -302,44 +486,79 @@ def load_authority() -> AuthorityBundle:
     )
     if strict_authority.sha256 != strict_audit.EXPECTED_AUTHORITY_SHA256:
         raise GoldenV3PromotionError("strict-v3 authority identity changed")
-    if derivation_authority.sha256 != derivation.AUTHORITY_SHA256:
-        raise GoldenV3PromotionError("four-candidate derivation authority identity changed")
-    if balanced_authority.path != balanced_derivation.AUTHORITY_PATH.resolve():
+    if derivation_authority.path != FOUR_CANDIDATE_AUTHORITY_PATH.resolve():
+        raise GoldenV3PromotionError("four-candidate derivation authority path changed")
+    derivation_module = _load_bound_module(
+        derivation_generator,
+        name=FOUR_CANDIDATE_MODULE_NAME,
+    )
+    if Path(derivation_module.__file__).resolve() != derivation_generator.path:
+        raise GoldenV3PromotionError("four-candidate generator path changed")
+    if Path(derivation_module.AUTHORITY_PATH).resolve() != derivation_authority.path:
+        raise GoldenV3PromotionError("four-candidate module authority path changed")
+    if derivation_authority.sha256 != derivation_module.AUTHORITY_SHA256:
+        raise GoldenV3PromotionError(
+            "four-candidate derivation authority identity changed"
+        )
+    if balanced_authority.path != BALANCED_AUTHORITY_PATH.resolve():
         raise GoldenV3PromotionError("balanced-phase-v2 authority path changed")
+    balanced_module = _load_bound_module(
+        balanced_generator,
+        name=BALANCED_MODULE_NAME,
+    )
+    if Path(balanced_module.__file__).resolve() != balanced_generator.path:
+        raise GoldenV3PromotionError("balanced-phase-v2 generator path changed")
+    if Path(balanced_module.AUTHORITY_PATH).resolve() != balanced_authority.path:
+        raise GoldenV3PromotionError("balanced-phase-v2 module authority path changed")
     balanced_document = _strict_json(
         balanced_authority.data, label="Golden-v3 balanced-phase-v2 authority"
     )
     try:
-        balanced_derivation.validate_authority(balanced_document)
-    except balanced_derivation.DerivationError as exc:
+        balanced_module.validate_authority(balanced_document)
+    except balanced_module.DerivationError as exc:
         raise GoldenV3PromotionError(
             f"balanced-phase-v2 authority validation failed: {exc}"
         ) from exc
-    if balanced_generator.path != Path(balanced_derivation.__file__).resolve():
-        raise GoldenV3PromotionError("balanced-phase-v2 generator path changed")
-    if balanced_open_authority.path != balanced_open_derivation.AUTHORITY_PATH.resolve():
+    if balanced_open_authority.path != BALANCED_OPEN_AUTHORITY_PATH.resolve():
         raise GoldenV3PromotionError("balanced-open-phase-v3 authority path changed")
+    balanced_open_module = _load_bound_module(
+        balanced_open_generator,
+        name=BALANCED_OPEN_MODULE_NAME,
+    )
+    if Path(balanced_open_module.__file__).resolve() != balanced_open_generator.path:
+        raise GoldenV3PromotionError("balanced-open-phase-v3 module path changed")
+    if (
+        Path(balanced_open_module.AUTHORITY_PATH).resolve()
+        != balanced_open_authority.path
+    ):
+        raise GoldenV3PromotionError(
+            "balanced-open-phase-v3 module authority path changed"
+        )
     balanced_open_document = _strict_json(
         balanced_open_authority.data,
         label="Golden-v3 balanced-open-phase-v3 authority",
     )
     try:
-        balanced_open_derivation.validate_authority(balanced_open_document)
-    except balanced_open_derivation.DerivationError as exc:
+        balanced_open_module.validate_authority(balanced_open_document)
+    except balanced_open_module.DerivationError as exc:
         raise GoldenV3PromotionError(
             f"balanced-open-phase-v3 authority validation failed: {exc}"
         ) from exc
-    if balanced_open_generator.path != Path(balanced_open_derivation.__file__).resolve():
-        raise GoldenV3PromotionError("balanced-open-phase-v3 generator path changed")
     return AuthorityBundle(
         binding=authority,
         document=document,
+        promotion_implementation=promotion_implementation,
+        promotion_implementation_sha256=implementation_sha256,
         strict_authority=strict_authority,
         derivation_authority=derivation_authority,
+        derivation_generator=derivation_generator,
+        derivation_module=derivation_module,
         balanced_authority=balanced_authority,
         balanced_generator=balanced_generator,
+        balanced_module=balanced_module,
         balanced_open_authority=balanced_open_authority,
         balanced_open_generator=balanced_open_generator,
+        balanced_open_module=balanced_open_module,
         schemas=schemas,
     )
 
@@ -379,7 +598,9 @@ def _resolve_output_paths(
     if len({os.path.normcase(os.fspath(item)) for item in (raw, master, receipt)}) != 3:
         raise GoldenV3PromotionError("Golden-v3 outputs must use three distinct paths")
     if raw.suffix.casefold() != ".png" or master.suffix.casefold() != ".png":
-        raise GoldenV3PromotionError("Golden-v3 raw and master outputs must be PNG paths")
+        raise GoldenV3PromotionError(
+            "Golden-v3 raw and master outputs must be PNG paths"
+        )
     if receipt.suffix.casefold() != ".json":
         raise GoldenV3PromotionError("Golden-v3 receipt output must be a JSON path")
     return raw, master, receipt
@@ -397,13 +618,13 @@ def _validate_output_paths(paths: PromotionPaths, authority: AuthorityBundle) ->
 
 def _generation_context(
     authority: AuthorityBundle, generation_contract_id: str
-) -> tuple[dict[str, Any], BoundArtifact, BoundArtifact | None]:
+) -> tuple[dict[str, Any], BoundArtifact, BoundArtifact]:
     contracts = authority.document["generation_contract"]["contracts"]
     if generation_contract_id not in GENERATION_CONTRACT_IDS:
         raise GoldenV3PromotionError("Golden-v3 generation contract id is not allowed")
     contract = contracts[generation_contract_id]
     if generation_contract_id == FOUR_CANDIDATE_V1:
-        return contract, authority.derivation_authority, None
+        return contract, authority.derivation_authority, authority.derivation_generator
     if generation_contract_id == BALANCED_PHASE_V2:
         return contract, authority.balanced_authority, authority.balanced_generator
     return (
@@ -428,20 +649,24 @@ def _validate_generation_payload(
     )
     try:
         if generation_contract_id == FOUR_CANDIDATE_V1:
-            seal = derivation.validate_output_seal_payload(payload, document)
+            seal = authority.derivation_module.validate_output_seal_payload(
+                payload, document
+            )
             profile = seal["runtime_profile_id"]
         elif generation_contract_id == BALANCED_PHASE_V2:
-            seal = balanced_derivation.validate_output_seal_payload(payload, document)
+            seal = authority.balanced_module.validate_output_seal_payload(
+                payload, document
+            )
             profile = seal["runtime_attestation"]["profile_id"]
         else:
-            seal = balanced_open_derivation.validate_output_seal_payload(
+            seal = authority.balanced_open_module.validate_output_seal_payload(
                 payload, document
             )
             profile = seal["runtime_attestation"]["profile_id"]
     except (
-        derivation.DerivationError,
-        balanced_derivation.DerivationError,
-        balanced_open_derivation.DerivationError,
+        authority.derivation_module.DerivationError,
+        authority.balanced_module.DerivationError,
+        authority.balanced_open_module.DerivationError,
     ) as exc:
         raise GoldenV3PromotionError(str(exc)) from exc
     if seal.get("schema_id") != contract["seal_schema_id"]:
@@ -496,7 +721,9 @@ def _validate_generation_set(
     if len({item["path"] for item in candidates}) != len(candidates):
         raise GoldenV3PromotionError("generation seal candidate paths are not unique")
     if len({item["sha256"] for item in candidates}) != len(candidates):
-        raise GoldenV3PromotionError("generation seal candidate payloads are not unique")
+        raise GoldenV3PromotionError(
+            "generation seal candidate payloads are not unique"
+        )
     selected = [item for item in candidates if item["candidate_id"] == candidate_id]
     if len(selected) != 1:
         raise GoldenV3PromotionError("candidate id is not exactly one sealed candidate")
@@ -506,7 +733,9 @@ def _validate_generation_set(
         or record["sha256"] != candidate.sha256
         or record["bytes"] != len(candidate.data)
     ):
-        raise GoldenV3PromotionError("candidate bytes do not match both generation seals")
+        raise GoldenV3PromotionError(
+            "candidate bytes do not match both generation seals"
+        )
 
 
 def _validate_generation_seals(
@@ -527,7 +756,9 @@ def _validate_generation_seals(
     seals: list[dict[str, Any]] = []
     profiles: list[str] = []
     for index, path in enumerate(seal_paths):
-        binding = _bind(path, label=f"Golden-v3 generation seal {index + 1}", trackable=False)
+        binding = _bind(
+            path, label=f"Golden-v3 generation seal {index + 1}", trackable=False
+        )
         seal, profile = _validate_generation_payload(
             binding.data,
             authority=authority,
@@ -654,8 +885,7 @@ def _validate_strict_report(
     candidate_record = report.get("candidate")
     if (
         not isinstance(candidate_record, dict)
-        or set(candidate_record)
-        != {"binding", "sha256", "bytes", "path_recorded"}
+        or set(candidate_record) != {"binding", "sha256", "bytes", "path_recorded"}
         or candidate_record.get("binding") != "runtime-only"
         or candidate_record.get("sha256") != candidate.sha256
         or candidate_record.get("bytes") != len(candidate.data)
@@ -665,12 +895,16 @@ def _validate_strict_report(
             "Golden-v3 strict audit candidate binding does not match the selected bytes"
         )
     gates = report.get("gates")
-    if not isinstance(gates, dict) or not gates or not all(
-        value is True for value in gates.values()
+    if (
+        not isinstance(gates, dict)
+        or not gates
+        or not all(value is True for value in gates.values())
     ):
         raise GoldenV3PromotionError("Golden-v3 strict audit gate map is not all-pass")
     if strict_audit.canonical_json(report) != binding.data:
-        raise GoldenV3PromotionError("Golden-v3 strict audit report bytes are not canonical")
+        raise GoldenV3PromotionError(
+            "Golden-v3 strict audit report bytes are not canonical"
+        )
     strict_authority_document = _strict_json(
         authority.strict_authority.data, label="Golden-v3 strict audit authority"
     )
@@ -718,16 +952,20 @@ def _validate_packet(
         or packet.get("id") != packet_contract["id"]
         or packet.get("job_id") != JOB_ID
         or packet.get("candidate_sha256") != candidate.sha256
-        or packet.get("candidate_bytes") != len(candidate.data)
-        or packet.get("view_order") != view_ids
+        or not _exact_json_equal(packet.get("candidate_bytes"), len(candidate.data))
+        or not _exact_json_equal(packet.get("view_order"), view_ids)
     ):
         raise GoldenV3PromotionError("Golden-v3 blind packet identity changed")
     if _canonical_json(packet) != binding.data:
         raise GoldenV3PromotionError("Golden-v3 blind packet bytes are not canonical")
-    _parse_timestamp(packet.get("created_at"), label="Golden-v3 blind packet created_at")
+    _parse_timestamp(
+        packet.get("created_at"), label="Golden-v3 blind packet created_at"
+    )
     views = packet.get("views")
     if not isinstance(views, list) or len(views) != len(view_ids):
-        raise GoldenV3PromotionError("Golden-v3 blind packet must contain exact five views")
+        raise GoldenV3PromotionError(
+            "Golden-v3 blind packet must contain exact five views"
+        )
     bindings: list[BoundArtifact] = []
     for expected_id, record in zip(view_ids, views, strict=True):
         if (
@@ -763,14 +1001,10 @@ def _validate_packet(
         for spec, view in zip(view_specs, bindings, strict=True):
             crop = spec["crop"]
             working = (
-                source_image.copy()
-                if crop is None
-                else source_image.crop(tuple(crop))
+                source_image.copy() if crop is None else source_image.crop(tuple(crop))
             )
             try:
-                rendered = working.resize(
-                    tuple(spec["size"]), Image.Resampling.LANCZOS
-                )
+                rendered = working.resize(tuple(spec["size"]), Image.Resampling.LANCZOS)
                 try:
                     expected_pixels = np.asarray(rendered, dtype=np.uint8)
                     try:
@@ -805,9 +1039,15 @@ def _validate_review(
     authority: AuthorityBundle,
 ) -> ReviewEvidence:
     report = _strict_json(binding.data, label=f"Golden-v3 review {role}")
-    _schema_errors(report, authority.schemas["qa_report"], label=f"Golden-v3 review {role}")
-    if "automated" in (part.casefold() for part in PurePosixPath(binding.relative).parts):
-        raise GoldenV3PromotionError("Golden-v3 human review may not be stored under automated QA")
+    _schema_errors(
+        report, authority.schemas["qa_report"], label=f"Golden-v3 review {role}"
+    )
+    if "automated" in (
+        part.casefold() for part in PurePosixPath(binding.relative).parts
+    ):
+        raise GoldenV3PromotionError(
+            "Golden-v3 human review may not be stored under automated QA"
+        )
     review_contract = authority.document["review_contract"]
     root = role == review_contract["root_role"]
     threshold = review_contract["acceptance_threshold"]
@@ -823,7 +1063,7 @@ def _validate_review(
         "required_changes": [],
     }
     for key, expected in exact.items():
-        if report.get(key) != expected:
+        if not _exact_json_equal(report.get(key), expected):
             raise GoldenV3PromotionError(
                 f"Golden-v3 review {role} {key} must be {expected!r}"
             )
@@ -831,7 +1071,7 @@ def _validate_review(
         "receipt": _artifact(packet.binding),
         "reviewer_confirmed_exact_five": True,
     }
-    if report.get("vision_bundle") != expected_packet_attestation:
+    if not _exact_json_equal(report.get("vision_bundle"), expected_packet_attestation):
         raise GoldenV3PromotionError(
             f"Golden-v3 review {role} must attest the exact blind packet path/SHA-256"
         )
@@ -887,13 +1127,17 @@ def _validate_review(
             if isinstance(item, dict)
         )
     ):
-        raise GoldenV3PromotionError("Golden-v3 review immediate-failure evidence failed")
+        raise GoldenV3PromotionError(
+            "Golden-v3 review immediate-failure evidence failed"
+        )
     scores = report.get("scores")
     review_contract = authority.document["review_contract"]
     expected_axes = review_contract["score_axes"]
     axis_count = review_contract["score_axis_count"]
-    if not isinstance(scores, list) or len(scores) != axis_count or not all(
-        isinstance(item, dict) for item in scores
+    if (
+        not isinstance(scores, list)
+        or len(scores) != axis_count
+        or not all(isinstance(item, dict) for item in scores)
     ):
         raise GoldenV3PromotionError("Golden-v3 review score axis count changed")
     maxima = [item.get("maximum") for item in scores]
@@ -903,7 +1147,10 @@ def _validate_review(
     integer_values = maxima + values
     total = report.get("total_score")
     if (
-        not all(isinstance(value, int) and not isinstance(value, bool) for value in integer_values)
+        not all(
+            isinstance(value, int) and not isinstance(value, bool)
+            for value in integer_values
+        )
         or [
             {"id": identifier, "maximum": maximum}
             for identifier, maximum in zip(ids, maxima, strict=True)
@@ -911,7 +1158,10 @@ def _validate_review(
         != expected_axes
         or sum(maxima) != review_contract["score_maximum_total"]
         or not all(isinstance(note, str) and note.strip() for note in notes)
-        or any(value < 0 or value > maximum for value, maximum in zip(values, maxima, strict=True))
+        or any(
+            value < 0 or value > maximum
+            for value, maximum in zip(values, maxima, strict=True)
+        )
         or not isinstance(total, int)
         or isinstance(total, bool)
         or total != sum(values)
@@ -956,7 +1206,9 @@ def _validate_review_set(
         or len(blind) != contract["blind_review_count"]
         or tuple(item.role for item in blind) != blind_roles
     ):
-        raise GoldenV3PromotionError("Golden-v3 blind reviews are not in exact role order")
+        raise GoldenV3PromotionError(
+            "Golden-v3 blind reviews are not in exact role order"
+        )
     identities = {root.reviewer_identity, *(item.reviewer_identity for item in blind)}
     reviewer_count = contract["root_review_count"] + contract["blind_review_count"]
     if len(identities) != reviewer_count:
@@ -969,9 +1221,13 @@ def _validate_review_set(
     if root.created_at < packet_time:
         raise GoldenV3PromotionError("Golden-v3 Root review predates its blind packet")
     if any(item.created_at <= root.created_at for item in blind):
-        raise GoldenV3PromotionError("Golden-v3 blind reviews must occur after Root review")
+        raise GoldenV3PromotionError(
+            "Golden-v3 blind reviews must occur after Root review"
+        )
     if len({item.binding.identity for item in blind}) != contract["blind_review_count"]:
-        raise GoldenV3PromotionError("Golden-v3 blind reviews must be distinct artifacts")
+        raise GoldenV3PromotionError(
+            "Golden-v3 blind reviews must be distinct artifacts"
+        )
 
 
 def _receipt_document(
@@ -1005,11 +1261,10 @@ def _receipt_document(
         "candidate": {**_artifact(master), "bytes": len(candidate.data)},
         "raw": _artifact(raw),
         "promotion_authority": _artifact(authority.binding),
+        "promotion_implementation": _implementation_artifact(authority),
         "generation_contract_id": generation_contract_id,
         "generation_authority": _artifact(generation_authority),
-        "generation_generator": (
-            _artifact(generation_generator) if generation_generator is not None else None
-        ),
+        "generation_generator": _artifact(generation_generator),
         "generation_seals": generation_seals,
         "strict_audit_authority": _artifact(authority.strict_authority),
         "strict_audit_report": _artifact(strict_report),
@@ -1051,25 +1306,36 @@ def _project_job(
     _, generation_authority, generation_generator = _generation_context(
         authority, generation_contract_id
     )
-    bindings = [
+    bindings: list[BoundArtifact | None] = [
         raw,
         authority.binding,
+        None,
         generation_authority,
     ]
-    if generation_generator is not None:
-        bindings.append(generation_generator)
+    bindings.append(generation_generator)
     bindings.extend(
         (
-        authority.strict_authority,
-        strict_report,
-        root_review.binding,
-        packet.binding,
-        blind_reviews[0].binding,
-        blind_reviews[1].binding,
-        receipt,
+            authority.strict_authority,
+            strict_report,
+            root_review.binding,
+            packet.binding,
+            blind_reviews[0].binding,
+            blind_reviews[1].binding,
+            receipt,
         )
     )
-    inputs = [_input_record(binding, role) for binding, role in zip(bindings, roles, strict=True)]
+    inputs = [
+        (
+            {**_implementation_artifact(authority), "role": role}
+            if binding is None
+            else _input_record(binding, role)
+        )
+        for binding, role in zip(bindings, roles, strict=True)
+    ]
+    if inputs[2]["role"] != V3_PROMOTION_IMPLEMENTATION_ROLE:
+        raise GoldenV3PromotionError(
+            "Golden-v3 promotion implementation manifest role changed"
+        )
     history_states = authority.document["manifest_contract"]["history_state_order"]
     return {
         "id": JOB_ID,
@@ -1118,10 +1384,14 @@ def _manifest_roles(job: Mapping[str, Any]) -> tuple[list[str], dict[str, Any]]:
     by_role: dict[str, Any] = {}
     for item in inputs:
         if not isinstance(item, dict) or set(item) != {"path", "sha256", "role"}:
-            raise GoldenV3PromotionError("Golden-v3 manifest inputs must be exact artifacts")
+            raise GoldenV3PromotionError(
+                "Golden-v3 manifest inputs must be exact artifacts"
+            )
         role = item.get("role")
         if not isinstance(role, str) or role in by_role:
-            raise GoldenV3PromotionError("Golden-v3 manifest input roles must be unique")
+            raise GoldenV3PromotionError(
+                "Golden-v3 manifest input roles must be unique"
+            )
         roles.append(role)
         by_role[role] = item
     return roles, by_role
@@ -1148,7 +1418,27 @@ def _validate_receipt_links(
     packet: PacketEvidence,
     blind_reviews: Sequence[ReviewEvidence],
 ) -> None:
-    _schema_errors(receipt, authority.schemas["acceptance_receipt"], label="Golden-v3 acceptance receipt")
+    _schema_errors(
+        receipt,
+        authority.schemas["acceptance_receipt"],
+        label="Golden-v3 acceptance receipt",
+    )
+    receipt_contract = authority.document["receipt_contract"]
+    expected_header = {
+        "schema_version": receipt_contract["schema_version"],
+        "id": receipt_contract["id"],
+        "status": receipt_contract["status"],
+        "promotion_performed": receipt_contract["promotion_performed"],
+        "job_id": JOB_ID,
+        "acceptance_threshold": authority.document["review_contract"][
+            "acceptance_threshold"
+        ],
+    }
+    if any(
+        not _exact_json_equal(receipt.get(key), expected)
+        for key, expected in expected_header.items()
+    ):
+        raise GoldenV3PromotionError("Golden-v3 receipt frozen header changed")
     _, generation_authority, generation_generator = _generation_context(
         authority, generation_contract_id
     )
@@ -1156,26 +1446,33 @@ def _validate_receipt_links(
         "candidate": _artifact(master),
         "raw": _artifact(raw),
         "promotion_authority": _artifact(authority.binding),
+        "promotion_implementation": _implementation_artifact(authority),
         "generation_authority": _artifact(generation_authority),
         "strict_audit_authority": _artifact(authority.strict_authority),
         "strict_audit_report": _artifact(strict_report),
         "blind_packet": _artifact(packet.binding),
     }
     for key, expected in exact_artifacts.items():
-        if not _same_artifact(receipt.get(key), expected):
+        actual = receipt.get(key)
+        if key == "candidate" and isinstance(actual, dict):
+            actual = {name: actual.get(name) for name in ("path", "sha256")}
+        if not _exact_json_equal(actual, expected):
             raise GoldenV3PromotionError(f"Golden-v3 receipt {key} binding changed")
-    expected_generator = (
-        _artifact(generation_generator) if generation_generator is not None else None
-    )
+    expected_generator = _artifact(generation_generator)
     if receipt.get("generation_contract_id") != generation_contract_id:
-        raise GoldenV3PromotionError("Golden-v3 receipt generation discriminator changed")
-    if receipt.get("generation_generator") != expected_generator:
+        raise GoldenV3PromotionError(
+            "Golden-v3 receipt generation discriminator changed"
+        )
+    if not _exact_json_equal(receipt.get("generation_generator"), expected_generator):
         raise GoldenV3PromotionError("Golden-v3 receipt generation generator changed")
-    if receipt["candidate"].get("bytes") != len(master.data):
+    candidate_bytes = receipt["candidate"].get("bytes")
+    if type(candidate_bytes) is not int or candidate_bytes != len(master.data):
         raise GoldenV3PromotionError("Golden-v3 receipt candidate byte count changed")
     expected_root = _review_receipt_record(root_review)
     expected_reviews = [_review_receipt_record(item) for item in blind_reviews]
-    if receipt.get("root_review") != expected_root or receipt.get("reviews") != expected_reviews:
+    if not _exact_json_equal(
+        receipt.get("root_review"), expected_root
+    ) or not _exact_json_equal(receipt.get("reviews"), expected_reviews):
         raise GoldenV3PromotionError("Golden-v3 receipt review summary changed")
 
 
@@ -1185,36 +1482,40 @@ def _validate_accepted_job(
     *,
     authority: AuthorityBundle,
 ) -> dict[str, Any]:
-    _schema_errors(dict(manifest), authority.schemas["production_manifest"], label="production manifest")
+    _schema_errors(
+        dict(manifest),
+        authority.schemas["production_manifest"],
+        label="production manifest",
+    )
     jobs = manifest.get("jobs")
     matches = (
-        [
-            job
-            for job in jobs
-            if isinstance(job, dict) and job.get("id") == JOB_ID
-        ]
+        [job for job in jobs if isinstance(job, dict) and job.get("id") == JOB_ID]
         if isinstance(jobs, list)
         else []
     )
     if len(matches) != 1:
-        raise GoldenV3PromotionError("production manifest must contain exactly one Golden-v3 job")
+        raise GoldenV3PromotionError(
+            "production manifest must contain exactly one Golden-v3 job"
+        )
     job = matches[0]
     master_record = job.get("master")
     identity = authority.document["identity"]
     threshold = authority.document["review_contract"]["acceptance_threshold"]
     manifest_contract = authority.document["manifest_contract"]
     if not _same_artifact(master_record, golden_style):
-        raise GoldenV3PromotionError("Golden-v3 manifest master does not match golden_style")
+        raise GoldenV3PromotionError(
+            "Golden-v3 manifest master does not match golden_style"
+        )
     if (
         job.get("sheet_id") != identity["sheet_id"]
         or job.get("status") != "accepted"
-        or job.get("acceptance_threshold") != threshold
-        or job.get("bounds") != manifest_contract["bounds"]
-        or job.get("zoom") != manifest_contract["zoom"]
+        or not _exact_json_equal(job.get("acceptance_threshold"), threshold)
+        or not _exact_json_equal(job.get("bounds"), manifest_contract["bounds"])
+        or not _exact_json_equal(job.get("zoom"), manifest_contract["zoom"])
         or job.get("notes") != manifest_contract["notes"]
         or not isinstance(master_record, dict)
-        or master_record.get("width") != identity["canvas_width"]
-        or master_record.get("height") != identity["canvas_height"]
+        or not _exact_json_equal(master_record.get("width"), identity["canvas_width"])
+        or not _exact_json_equal(master_record.get("height"), identity["canvas_height"])
         or master_record.get("color_profile") != identity["color_profile"]
     ):
         raise GoldenV3PromotionError("Golden-v3 manifest accepted identity changed")
@@ -1228,9 +1529,10 @@ def _validate_accepted_job(
     if len(matches) != 1:
         raise GoldenV3PromotionError("Golden-v3 manifest input role order changed")
     generation_contract_id = matches[0]
-    if job.get("generation") != manifest_contract["generation_by_contract"][
-        generation_contract_id
-    ]:
+    if not _exact_json_equal(
+        job.get("generation"),
+        manifest_contract["generation_by_contract"][generation_contract_id],
+    ):
         raise GoldenV3PromotionError("Golden-v3 manifest generation identity changed")
     bound = {
         role: _bind_record(
@@ -1238,9 +1540,18 @@ def _validate_accepted_job(
             label=f"Golden-v3 manifest {role}",
         )
         for role, record in by_role.items()
+        if role != V3_PROMOTION_IMPLEMENTATION_ROLE
     }
     if bound[V3_PROMOTION_AUTHORITY_ROLE].sha256 != authority.binding.sha256:
         raise GoldenV3PromotionError("Golden-v3 manifest promotion authority changed")
+    implementation_record = by_role[V3_PROMOTION_IMPLEMENTATION_ROLE]
+    if {
+        "path": implementation_record["path"],
+        "sha256": implementation_record["sha256"],
+    } != _implementation_artifact(authority):
+        raise GoldenV3PromotionError(
+            "Golden-v3 manifest promotion implementation changed"
+        )
     contract, generation_authority, generation_generator = _generation_context(
         authority, generation_contract_id
     )
@@ -1248,11 +1559,8 @@ def _validate_accepted_job(
     if bound[authority_role].sha256 != generation_authority.sha256:
         raise GoldenV3PromotionError("Golden-v3 manifest generation authority changed")
     generator_role = contract["manifest_generator_role"]
-    if generator_role is None:
-        if generation_generator is not None:
-            raise GoldenV3PromotionError("Golden-v3 generation contract is inconsistent")
-    elif (
-        generation_generator is None
+    if (
+        not isinstance(generator_role, str)
         or bound[generator_role].sha256 != generation_generator.sha256
     ):
         raise GoldenV3PromotionError("Golden-v3 manifest generation generator changed")
@@ -1268,8 +1576,14 @@ def _validate_accepted_job(
         PromotionPaths(raw=raw.path, master=master.path, receipt=receipt_binding.path),
         authority,
     )
-    if same_path(raw.path, master.path) or raw.sha256 != master.sha256 or raw.data != master.data:
-        raise GoldenV3PromotionError("Golden-v3 raw/master byte identity contract failed")
+    if (
+        same_path(raw.path, master.path)
+        or raw.sha256 != master.sha256
+        or raw.data != master.data
+    ):
+        raise GoldenV3PromotionError(
+            "Golden-v3 raw/master byte identity contract failed"
+        )
     strict_report = bound[V3_STRICT_REPORT_ROLE]
     _validate_strict_report(strict_report, candidate=master, authority=authority)
     packet = _validate_packet(
@@ -1296,10 +1610,12 @@ def _validate_accepted_job(
         )
         for role in authority.document["review_contract"]["blind_role_order"]
     )
-    _validate_review_set(
-        root_review, blind_reviews, packet=packet, authority=authority
-    )
+    _validate_review_set(root_review, blind_reviews, packet=packet, authority=authority)
     receipt = _strict_json(receipt_binding.data, label="Golden-v3 acceptance receipt")
+    if _canonical_json(receipt) != receipt_binding.data:
+        raise GoldenV3PromotionError(
+            "Golden-v3 acceptance receipt bytes are not canonical"
+        )
     _validate_receipt_links(
         receipt,
         authority=authority,
@@ -1322,7 +1638,9 @@ def _validate_accepted_job(
     }
     candidate_id = receipt.get("candidate_id")
     if candidate_id not in candidate_ids:
-        raise GoldenV3PromotionError("Golden-v3 receipt candidate id is not preregistered")
+        raise GoldenV3PromotionError(
+            "Golden-v3 receipt candidate id is not preregistered"
+        )
     _validate_embedded_generation_seals(
         receipt.get("generation_seals"),
         generation_contract_id=generation_contract_id,
@@ -1341,10 +1659,13 @@ def _validate_accepted_job(
     primary = blind_reviews[0]
     if (
         not isinstance(automated, dict)
-        or automated != {"status": "passed", "report_path": strict_report.relative}
+        or not _exact_json_equal(
+            automated,
+            {"status": "passed", "report_path": strict_report.relative},
+        )
         or not isinstance(vision, dict)
         or vision.get("decision") != "accepted"
-        or vision.get("score") != primary.score
+        or not _exact_json_equal(vision.get("score"), primary.score)
         or vision.get("report_path") != primary.binding.relative
         or vision.get("reviewer") != primary.document["reviewer"]
         or vision.get("reviewed_at") != primary.document["created_at"]
@@ -1400,42 +1721,405 @@ def verify_accepted_manifest_golden_v3(
 ) -> dict[str, Any]:
     authority = load_authority()
     manifest_binding = _bind(manifest_path, label="Golden-v3 production manifest")
-    manifest = _strict_json(manifest_binding.data, label="Golden-v3 production manifest")
+    manifest = _strict_json(
+        manifest_binding.data, label="Golden-v3 production manifest"
+    )
     return _validate_accepted_job(golden_style, manifest, authority=authority)
 
 
-def _write_exclusive(path: Path, payload: bytes, *, label: str) -> BoundArtifact:
+def _stat_signature(metadata: os.stat_result) -> tuple[int, int, int, int]:
+    return (
+        metadata.st_dev,
+        metadata.st_ino,
+        metadata.st_size,
+        metadata.st_mtime_ns,
+    )
+
+
+def _stat_is_reparse(metadata: os.stat_result) -> bool:
+    attributes = getattr(metadata, "st_file_attributes", 0)
+    reparse_flag = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+    return stat.S_ISLNK(metadata.st_mode) or bool(attributes & reparse_flag)
+
+
+def _windows_open_directory(path: Path) -> int:
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    create_file = kernel32.CreateFileW
+    create_file.argtypes = [
+        ctypes.c_wchar_p,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+    ]
+    create_file.restype = ctypes.c_void_p
+    handle = create_file(
+        os.fspath(path),
+        0x0001 | 0x0080,  # FILE_LIST_DIRECTORY | FILE_READ_ATTRIBUTES
+        0x0001 | 0x0002,  # share read/write, but never delete
+        None,
+        3,  # OPEN_EXISTING
+        0x02000000 | 0x00200000,
+        # FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT
+        None,
+    )
+    invalid = ctypes.c_void_p(-1).value
+    if handle in {None, invalid}:
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number), path)
+    return int(handle)
+
+
+def _windows_directory_identity(handle: int) -> tuple[int, int]:
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    get_information = kernel32.GetFileInformationByHandle
+    get_information.argtypes = [
+        ctypes.c_void_p,
+        ctypes.POINTER(_WindowsFileInformation),
+    ]
+    get_information.restype = ctypes.c_int
+    information = _WindowsFileInformation()
+    if not get_information(ctypes.c_void_p(handle), ctypes.byref(information)):
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number))
+    if not information.attributes & 0x10 or information.attributes & 0x400:
+        raise GoldenV3PromotionError(
+            "Golden-v3 output ancestor is not a plain directory"
+        )
+    inode = (information.file_index_high << 32) | information.file_index_low
+    return information.volume_serial, inode
+
+
+def _windows_close_handle(handle: int) -> None:
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    close_handle = kernel32.CloseHandle
+    close_handle.argtypes = [ctypes.c_void_p]
+    close_handle.restype = ctypes.c_int
+    if not close_handle(ctypes.c_void_p(handle)):
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number))
+
+
+def _close_parent_anchor(anchor: _ParentAnchor) -> None:
+    first_error: OSError | None = None
+    while anchor.linux_fds:
+        try:
+            os.close(anchor.linux_fds.pop())
+        except OSError as exc:
+            first_error = first_error or exc
+    while anchor.windows_handles:
+        try:
+            _windows_close_handle(anchor.windows_handles.pop())
+        except OSError as exc:
+            first_error = first_error or exc
+    if first_error is not None:
+        raise first_error
+
+
+def _open_parent_anchor(parent: Path, *, label: str) -> _ParentAnchor:
+    if not os.path.lexists(parent):
+        raise GoldenV3PromotionError(
+            f"{label} parent must already exist before promotion: {parent}"
+        )
+    try:
+        assert_no_reparse_components(parent, label=f"{label} parent")
+        lexical_parent = Path(os.path.abspath(os.fspath(parent)))
+        resolved_parent = lexical_parent.resolve(strict=True)
+        root = REPO_ROOT.resolve(strict=True)
+        relative = resolved_parent.relative_to(root)
+        metadata = os.lstat(lexical_parent)
+    except (OSError, ValueError, ReleasePathError) as exc:
+        raise GoldenV3PromotionError(f"cannot anchor {label} parent: {exc}") from exc
+    if (
+        not same_path(lexical_parent, resolved_parent)
+        or not stat.S_ISDIR(metadata.st_mode)
+        or _stat_is_reparse(metadata)
+    ):
+        raise GoldenV3PromotionError(f"{label} parent is not a plain directory")
+    anchor = _ParentAnchor(
+        path=resolved_parent,
+        identity=(metadata.st_dev, metadata.st_ino),
+        linux_fds=[],
+        windows_handles=[],
+        windows_identities=[],
+    )
+    try:
+        if sys.platform.startswith("linux"):
+            flags = (
+                os.O_RDONLY
+                | getattr(os, "O_DIRECTORY", 0)
+                | getattr(os, "O_CLOEXEC", 0)
+                | getattr(os, "O_NOFOLLOW", 0)
+            )
+            descriptor = os.open(root, flags)
+            anchor.linux_fds.append(descriptor)
+            for part in relative.parts:
+                descriptor = os.open(part, flags, dir_fd=descriptor)
+                anchor.linux_fds.append(descriptor)
+            opened = os.fstat(anchor.parent_fd)
+            if (
+                not stat.S_ISDIR(opened.st_mode)
+                or (opened.st_dev, opened.st_ino) != anchor.identity
+            ):
+                raise GoldenV3PromotionError(f"{label} parent identity changed")
+        elif os.name == "nt":
+            current = root
+            for part in (None, *relative.parts):
+                if part is not None:
+                    current /= part
+                handle = _windows_open_directory(current)
+                anchor.windows_handles.append(handle)
+                anchor.windows_identities.append(_windows_directory_identity(handle))
+            if anchor.windows_identities[-1][1] != anchor.identity[1]:
+                raise GoldenV3PromotionError(f"{label} parent identity changed")
+        else:
+            raise GoldenV3PromotionError(
+                "Golden-v3 anchored writes require Windows or Linux"
+            )
+        _assert_parent_anchor(anchor, label=label)
+        return anchor
+    except BaseException:
+        try:
+            _close_parent_anchor(anchor)
+        except OSError:
+            pass
+        raise
+
+
+def _assert_parent_anchor(anchor: _ParentAnchor, *, label: str) -> None:
+    try:
+        assert_no_reparse_components(anchor.path, label=f"{label} parent")
+        metadata = os.lstat(anchor.path)
+    except (OSError, ReleasePathError) as exc:
+        raise GoldenV3PromotionError(
+            f"{label} parent anchor disappeared: {exc}"
+        ) from exc
+    if (
+        not stat.S_ISDIR(metadata.st_mode)
+        or _stat_is_reparse(metadata)
+        or (metadata.st_dev, metadata.st_ino) != anchor.identity
+    ):
+        raise GoldenV3PromotionError(f"{label} parent anchor identity changed")
+    if anchor.parent_fd is not None:
+        opened = os.fstat(anchor.parent_fd)
+        if (opened.st_dev, opened.st_ino) != anchor.identity:
+            raise GoldenV3PromotionError(f"{label} parent handle identity changed")
+    elif anchor.windows_handles:
+        current = [
+            _windows_directory_identity(handle) for handle in anchor.windows_handles
+        ]
+        if current != anchor.windows_identities:
+            raise GoldenV3PromotionError(f"{label} ancestor handle identity changed")
+
+
+def _before_output_open_hook(path: Path) -> None:
+    """Test seam invoked only while the output parent chain is anchored."""
+
+
+def _before_cleanup_unlink_hook(path: Path) -> None:
+    """Test seam invoked before cleanup acquires its parent anchor."""
+
+
+def _lstat_from_anchor(anchor: _ParentAnchor, name: str) -> os.stat_result:
+    if anchor.parent_fd is not None:
+        return os.stat(name, dir_fd=anchor.parent_fd, follow_symlinks=False)
+    return os.stat(anchor.path / name, follow_symlinks=False)
+
+
+def _open_from_anchor(anchor: _ParentAnchor, name: str, flags: int) -> int:
+    if anchor.parent_fd is not None:
+        return os.open(name, flags, 0o600, dir_fd=anchor.parent_fd)
+    return os.open(anchor.path / name, flags, 0o600)
+
+
+def _write_all(descriptor: int, payload: bytes) -> None:
+    remaining = memoryview(payload)
+    while remaining:
+        written = os.write(descriptor, remaining)
+        if written <= 0:
+            raise OSError("short write while creating Golden-v3 output")
+        remaining = remaining[written:]
+
+
+def _unlink_created_entry(
+    anchor: _ParentAnchor,
+    name: str,
+    signature: tuple[int, int, int, int],
+    *,
+    label: str,
+) -> None:
+    """Remove only the still-visible plain file created under this anchor."""
+
+    _assert_parent_anchor(anchor, label=label)
+    metadata = _lstat_from_anchor(anchor, name)
+    if (
+        not stat.S_ISREG(metadata.st_mode)
+        or _stat_is_reparse(metadata)
+        or metadata.st_nlink != 1
+        or _stat_signature(metadata) != signature
+    ):
+        return
+    if anchor.parent_fd is not None:
+        os.unlink(name, dir_fd=anchor.parent_fd)
+    else:
+        os.unlink(anchor.path / name)
+
+
+def _write_exclusive(path: Path, payload: bytes, *, label: str) -> _CreatedOutput:
     try:
         resolved, _ = require_trackable_path(
             path, label=label, must_exist=False, require_file=True
         )
     except ReleasePathError as exc:
         raise GoldenV3PromotionError(str(exc)) from exc
-    resolved.parent.mkdir(parents=True, exist_ok=True)
+    anchor = _open_parent_anchor(resolved.parent, label=label)
+    descriptor: int | None = None
+    signature: tuple[int, int, int, int] | None = None
+    created_entry = False
+    completed = False
     try:
-        with resolved.open("xb") as stream:
-            stream.write(payload)
-            stream.flush()
-            os.fsync(stream.fileno())
+        _before_output_open_hook(resolved)
+        _assert_parent_anchor(anchor, label=label)
+        flags = (
+            os.O_WRONLY
+            | os.O_CREAT
+            | os.O_EXCL
+            | getattr(os, "O_BINARY", 0)
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0)
+        )
+        descriptor = _open_from_anchor(anchor, resolved.name, flags)
+        created_entry = True
+        initial = os.fstat(descriptor)
+        if (
+            not stat.S_ISREG(initial.st_mode)
+            or _stat_is_reparse(initial)
+            or initial.st_nlink != 1
+        ):
+            raise GoldenV3PromotionError(f"{label} is not a new plain file")
+        _write_all(descriptor, payload)
+        os.fsync(descriptor)
+        final = os.fstat(descriptor)
+        visible = _lstat_from_anchor(anchor, resolved.name)
+        signature = _stat_signature(final)
+        if (
+            not stat.S_ISREG(final.st_mode)
+            or _stat_is_reparse(final)
+            or final.st_nlink != 1
+            or signature != _stat_signature(visible)
+            or final.st_size != len(payload)
+        ):
+            raise GoldenV3PromotionError(f"{label} changed during exclusive creation")
+        os.close(descriptor)
+        descriptor = None
+        _assert_parent_anchor(anchor, label=label)
+        binding = _bind(resolved, label=label)
+        if binding.signature != signature or binding.data != payload:
+            raise GoldenV3PromotionError(
+                f"{label} bytes changed after exclusive creation"
+            )
+        completed = True
+        return _CreatedOutput(binding=binding, parent_identity=anchor.identity)
     except FileExistsError as exc:
         raise GoldenV3PromotionError(f"refusing to overwrite existing {label}") from exc
-    except BaseException:
-        resolved.unlink(missing_ok=True)
-        raise
-    binding = _bind(resolved, label=label)
-    if binding.data != payload:
-        resolved.unlink(missing_ok=True)
-        raise GoldenV3PromotionError(f"{label} bytes changed after exclusive creation")
-    return binding
-
-
-def _cleanup_created(created: Sequence[tuple[Path, str]]) -> None:
-    for path, expected_sha in reversed(created):
+    finally:
+        if descriptor is not None:
+            try:
+                final = os.fstat(descriptor)
+                signature = _stat_signature(final)
+            except OSError:
+                pass
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+        if not completed and created_entry and signature is not None:
+            try:
+                _unlink_created_entry(
+                    anchor,
+                    resolved.name,
+                    signature,
+                    label=label,
+                )
+            except (OSError, GoldenV3PromotionError):
+                # Ownership uncertainty is fail-closed: retain debris rather
+                # than risk deleting an exchanged path.
+                pass
         try:
-            if path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == expected_sha:
-                path.unlink()
+            _close_parent_anchor(anchor)
         except OSError:
+            pass
+
+
+def _cleanup_created(created: Sequence[_CreatedOutput]) -> None:
+    for owned in reversed(created):
+        path = owned.binding.path
+        try:
+            _before_cleanup_unlink_hook(path)
+            anchor = _open_parent_anchor(path.parent, label=owned.binding.label)
+        except (OSError, GoldenV3PromotionError):
             continue
+        descriptor: int | None = None
+        try:
+            if anchor.identity != owned.parent_identity:
+                continue
+            metadata = _lstat_from_anchor(anchor, path.name)
+            if (
+                not stat.S_ISREG(metadata.st_mode)
+                or _stat_is_reparse(metadata)
+                or metadata.st_nlink != 1
+                or _stat_signature(metadata) != owned.binding.signature
+            ):
+                continue
+            flags = (
+                os.O_RDONLY
+                | getattr(os, "O_BINARY", 0)
+                | getattr(os, "O_CLOEXEC", 0)
+                | getattr(os, "O_NOFOLLOW", 0)
+            )
+            descriptor = _open_from_anchor(anchor, path.name, flags)
+            before = os.fstat(descriptor)
+            digest = hashlib.sha256()
+            bytes_read = 0
+            for chunk in iter(lambda: os.read(descriptor, 1024 * 1024), b""):
+                digest.update(chunk)
+                bytes_read += len(chunk)
+            after = os.fstat(descriptor)
+            visible = _lstat_from_anchor(anchor, path.name)
+            if (
+                _stat_signature(before) != owned.binding.signature
+                or _stat_signature(after) != owned.binding.signature
+                or _stat_signature(visible) != owned.binding.signature
+                or bytes_read != after.st_size
+                or digest.hexdigest() != owned.binding.sha256
+            ):
+                continue
+            os.close(descriptor)
+            descriptor = None
+            _assert_parent_anchor(anchor, label=owned.binding.label)
+            if (
+                _stat_signature(_lstat_from_anchor(anchor, path.name))
+                != owned.binding.signature
+            ):
+                continue
+            if anchor.parent_fd is not None:
+                os.unlink(path.name, dir_fd=anchor.parent_fd)
+            else:
+                os.unlink(path)
+        except (OSError, GoldenV3PromotionError):
+            continue
+        finally:
+            if descriptor is not None:
+                try:
+                    os.close(descriptor)
+                except OSError:
+                    pass
+            try:
+                _close_parent_anchor(anchor)
+            except OSError:
+                pass
 
 
 def promote_candidate(
@@ -1463,14 +2147,22 @@ def promote_candidate(
         )
     _validate_output_paths(paths, authority)
     manifest_binding = _bind(paths.manifest, label="Golden-v3 production manifest")
-    manifest = _strict_json(manifest_binding.data, label="Golden-v3 production manifest")
-    _schema_errors(manifest, authority.schemas["production_manifest"], label="production manifest")
+    manifest = _strict_json(
+        manifest_binding.data, label="Golden-v3 production manifest"
+    )
+    _schema_errors(
+        manifest, authority.schemas["production_manifest"], label="production manifest"
+    )
     jobs = manifest.get("jobs")
     if not isinstance(jobs, list):
         raise GoldenV3PromotionError("production manifest jobs must be an array")
     if any(isinstance(job, dict) and job.get("id") == JOB_ID for job in jobs):
-        raise GoldenV3PromotionError("refusing to replace an existing Golden-v3 manifest job")
-    candidate = _bind(candidate_path, label="runtime Golden-v3 candidate", trackable=False)
+        raise GoldenV3PromotionError(
+            "refusing to replace an existing Golden-v3 manifest job"
+        )
+    candidate = _bind(
+        candidate_path, label="runtime Golden-v3 candidate", trackable=False
+    )
     if any(
         isinstance(job, dict)
         and job.get("status") in {"accepted", "tiled", "staging", "published"}
@@ -1486,7 +2178,9 @@ def promote_candidate(
         candidate_id=candidate_id,
         candidate=candidate,
     )
-    strict_report = _bind(strict_audit_report_path, label="Golden-v3 strict audit report")
+    strict_report = _bind(
+        strict_audit_report_path, label="Golden-v3 strict audit report"
+    )
     _validate_strict_report(strict_report, candidate=candidate, authority=authority)
     packet_binding = _bind(blind_packet_path, label="Golden-v3 blind packet")
     packet = _validate_packet(
@@ -1518,9 +2212,7 @@ def promote_candidate(
         )
         for path, role in zip(review_paths, blind_roles, strict=True)
     )
-    _validate_review_set(
-        root_review, blind_reviews, packet=packet, authority=authority
-    )
+    _validate_review_set(root_review, blind_reviews, packet=packet, authority=authority)
     accepted_at = utc_now()
     accepted_datetime = _parse_timestamp(
         accepted_at, label="Golden-v3 system acceptance time"
@@ -1528,13 +2220,17 @@ def promote_candidate(
     if any(review.created_at > accepted_datetime for review in blind_reviews):
         raise GoldenV3PromotionError("system acceptance time predates a blind review")
 
-    created: list[tuple[Path, str]] = []
+    created: list[_CreatedOutput] = []
     committed = False
     try:
-        raw = _write_exclusive(paths.raw, candidate.data, label="Golden-v3 raw")
-        created.append((raw.path, raw.sha256))
-        master = _write_exclusive(paths.master, candidate.data, label="Golden-v3 master")
-        created.append((master.path, master.sha256))
+        raw_output = _write_exclusive(paths.raw, candidate.data, label="Golden-v3 raw")
+        raw = raw_output.binding
+        created.append(raw_output)
+        master_output = _write_exclusive(
+            paths.master, candidate.data, label="Golden-v3 master"
+        )
+        master = master_output.binding
+        created.append(master_output)
         receipt_document = _receipt_document(
             authority=authority,
             generation_contract_id=generation_contract_id,
@@ -1556,10 +2252,11 @@ def promote_candidate(
             label="Golden-v3 acceptance receipt",
         )
         receipt_payload = _canonical_json(receipt_document)
-        receipt = _write_exclusive(
+        receipt_output = _write_exclusive(
             paths.receipt, receipt_payload, label="Golden-v3 acceptance receipt"
         )
-        created.append((receipt.path, receipt.sha256))
+        receipt = receipt_output.binding
+        created.append(receipt_output)
         job = _project_job(
             authority=authority,
             generation_contract_id=generation_contract_id,
@@ -1580,8 +2277,10 @@ def promote_candidate(
         all_bindings: Iterable[BoundArtifact] = (
             manifest_binding,
             authority.binding,
+            authority.promotion_implementation,
             authority.strict_authority,
             authority.derivation_authority,
+            authority.derivation_generator,
             authority.balanced_authority,
             authority.balanced_generator,
             authority.balanced_open_authority,

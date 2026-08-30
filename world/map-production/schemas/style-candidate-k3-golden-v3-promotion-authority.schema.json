@@ -8,10 +8,10 @@
     "schema_version",
     "id",
     "status",
-    "candidate_evaluations_before_freeze",
-    "threshold_selection_from_candidate_values",
+    "freeze_scope",
     "promotion_performed",
     "runtime_bindings",
+    "promotion_implementation",
     "authorities",
     "bound_schemas",
     "identity",
@@ -29,9 +29,20 @@
     },
     "schema_version": { "const": "3.0.0" },
     "id": { "const": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v3" },
-    "status": { "const": "frozen-before-candidate-evaluation" },
-    "candidate_evaluations_before_freeze": { "const": 0 },
-    "threshold_selection_from_candidate_values": { "const": false },
+    "status": { "const": "frozen-before-active-contract-candidate-evaluation" },
+    "freeze_scope": {
+      "const": {
+        "active_generation_contract_id": "balanced-open-phase-v3",
+        "candidate_evaluations_before_freeze": 0,
+        "candidate_images_read_before_freeze": 0,
+        "audit_results_read_before_freeze": 0,
+        "threshold_selection_from_candidate_values": false,
+        "legacy_contract_status": {
+          "four-candidate-v1": "evaluated-and-rejected-before-this-revision; compatibility-only",
+          "balanced-phase-v2": "evaluated-and-rejected-before-this-revision; compatibility-only"
+        }
+      }
+    },
     "promotion_performed": { "const": false },
     "runtime_bindings": {
       "type": "object",
@@ -55,12 +66,16 @@
       },
       "additionalProperties": false
     },
+    "promotion_implementation": {
+      "$ref": "#/definitions/self_hashed_implementation"
+    },
     "authorities": {
       "type": "object",
-      "required": ["strict_audit", "four_candidate_derivation", "balanced_phase_v2", "balanced_phase_v2_generator", "balanced_open_phase_v3", "balanced_open_phase_v3_generator"],
+      "required": ["strict_audit", "four_candidate_derivation", "four_candidate_generator", "balanced_phase_v2", "balanced_phase_v2_generator", "balanced_open_phase_v3", "balanced_open_phase_v3_generator"],
       "properties": {
         "strict_audit": { "$ref": "#/definitions/artifact" },
         "four_candidate_derivation": { "$ref": "#/definitions/artifact" },
+        "four_candidate_generator": { "$ref": "#/definitions/artifact" },
         "balanced_phase_v2": { "$ref": "#/definitions/artifact" },
         "balanced_phase_v2_generator": { "$ref": "#/definitions/artifact" },
         "balanced_open_phase_v3": { "$ref": "#/definitions/artifact" },
@@ -135,7 +150,7 @@
           "const": {
             "four-candidate-v1": {
               "manifest_authority_role": "golden-v3-four-candidate-derivation-authority",
-              "manifest_generator_role": null,
+              "manifest_generator_role": "golden-v3-four-candidate-generator",
               "seal_schema_id": "sstory.k3.golden-v3.four-candidate-output-seal.v1",
               "runtime_attestation": "runtime-profile-id-string",
               "required_runtime_profile_ids": null,
@@ -342,7 +357,9 @@
             "four-candidate-v1": [
               "golden-raw-output",
               "golden-v3-promotion-authority",
+              "golden-v3-promotion-implementation",
               "golden-v3-four-candidate-derivation-authority",
+              "golden-v3-four-candidate-generator",
               "golden-v3-strict-audit-authority",
               "golden-v3-strict-audit-report",
               "golden-v3-root-vision-authorization",
@@ -354,6 +371,7 @@
             "balanced-phase-v2": [
               "golden-raw-output",
               "golden-v3-promotion-authority",
+              "golden-v3-promotion-implementation",
               "golden-v3-balanced-phase-v2-authority",
               "golden-v3-balanced-phase-v2-generator",
               "golden-v3-strict-audit-authority",
@@ -367,6 +385,7 @@
             "balanced-open-phase-v3": [
               "golden-raw-output",
               "golden-v3-promotion-authority",
+              "golden-v3-promotion-implementation",
               "golden-v3-balanced-open-phase-v3-authority",
               "golden-v3-balanced-open-phase-v3-generator",
               "golden-v3-strict-audit-authority",
@@ -458,6 +477,20 @@
           "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
         },
         "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "self_hashed_implementation": {
+      "type": "object",
+      "required": ["path", "sha256", "hash_mode"],
+      "properties": {
+        "path": {
+          "const": "scripts/map-production/promote_style_candidate_k3_golden_v3.py"
+        },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "hash_mode": {
+          "const": "sha256-zero-expected-authority-and-self-hashes-v1"
+        }
       },
       "additionalProperties": false
     }

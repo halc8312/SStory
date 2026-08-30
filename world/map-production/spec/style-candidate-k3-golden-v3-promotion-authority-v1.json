@@ -2,9 +2,18 @@
   "$schema": "https://sstory.example/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
   "schema_version": "3.0.0",
   "id": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v3",
-  "status": "frozen-before-candidate-evaluation",
-  "candidate_evaluations_before_freeze": 0,
-  "threshold_selection_from_candidate_values": false,
+  "status": "frozen-before-active-contract-candidate-evaluation",
+  "freeze_scope": {
+    "active_generation_contract_id": "balanced-open-phase-v3",
+    "candidate_evaluations_before_freeze": 0,
+    "candidate_images_read_before_freeze": 0,
+    "audit_results_read_before_freeze": 0,
+    "threshold_selection_from_candidate_values": false,
+    "legacy_contract_status": {
+      "four-candidate-v1": "evaluated-and-rejected-before-this-revision; compatibility-only",
+      "balanced-phase-v2": "evaluated-and-rejected-before-this-revision; compatibility-only"
+    }
+  },
   "promotion_performed": false,
   "runtime_bindings": {
     "candidate": null,
@@ -15,6 +24,11 @@
     "blind_reviews": null,
     "acceptance_receipt": null
   },
+  "promotion_implementation": {
+    "path": "scripts/map-production/promote_style_candidate_k3_golden_v3.py",
+    "sha256": "f080e7ac51cc95ce010de5b3626f082df08a4a3f5c03dd45217b499109ebf313",
+    "hash_mode": "sha256-zero-expected-authority-and-self-hashes-v1"
+  },
   "authorities": {
     "strict_audit": {
       "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
@@ -23,6 +37,10 @@
     "four_candidate_derivation": {
       "path": "world/map-production/spec/style-candidate-k3-golden-v3-four-candidate-derivation-preregistration-v1.json",
       "sha256": "b1e5550ea73189540dae5469ee16521df8b5e3a39b689a349882e811d0ed44ac"
+    },
+    "four_candidate_generator": {
+      "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_four_candidate_phase_v1.py",
+      "sha256": "5a38aece70641c8bda224e076ed41bdd09de0ad9421590cb7aae729936e63b76"
     },
     "balanced_phase_v2": {
       "path": "world/map-production/spec/style-candidate-k3-golden-v3-balanced-phase-preregistration-v2.json",
@@ -44,11 +62,11 @@
   "bound_schemas": {
     "authority": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
-      "sha256": "3cf9c4dcbd0433cd75467526d33ddf915072af3de259a9adebe39374369aea43"
+      "sha256": "8b1898f11ea551065af5f6ae842f49977945c1395126812134b712f8e2feb270"
     },
     "acceptance_receipt": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
-      "sha256": "03bf7691a7faa1554aacb5ea6b5364d316bbc16cbba20b1b17c1122d940d9f91"
+      "sha256": "acc54fe1ad0f77a472d7c9e52e6011f8adcf97cf64b986e98e8fccad5de58539"
     },
     "qa_report": {
       "path": "world/map-production/schemas/qa-report.schema.json",
@@ -87,7 +105,7 @@
     "contracts": {
       "four-candidate-v1": {
         "manifest_authority_role": "golden-v3-four-candidate-derivation-authority",
-        "manifest_generator_role": null,
+        "manifest_generator_role": "golden-v3-four-candidate-generator",
         "seal_schema_id": "sstory.k3.golden-v3.four-candidate-output-seal.v1",
         "runtime_attestation": "runtime-profile-id-string",
         "required_runtime_profile_ids": null,
@@ -234,7 +252,9 @@
       "four-candidate-v1": [
         "golden-raw-output",
         "golden-v3-promotion-authority",
+        "golden-v3-promotion-implementation",
         "golden-v3-four-candidate-derivation-authority",
+        "golden-v3-four-candidate-generator",
         "golden-v3-strict-audit-authority",
         "golden-v3-strict-audit-report",
         "golden-v3-root-vision-authorization",
@@ -246,6 +266,7 @@
       "balanced-phase-v2": [
         "golden-raw-output",
         "golden-v3-promotion-authority",
+        "golden-v3-promotion-implementation",
         "golden-v3-balanced-phase-v2-authority",
         "golden-v3-balanced-phase-v2-generator",
         "golden-v3-strict-audit-authority",
@@ -259,6 +280,7 @@
       "balanced-open-phase-v3": [
         "golden-raw-output",
         "golden-v3-promotion-authority",
+        "golden-v3-promotion-implementation",
         "golden-v3-balanced-open-phase-v3-authority",
         "golden-v3-balanced-open-phase-v3-generator",
         "golden-v3-strict-audit-authority",
