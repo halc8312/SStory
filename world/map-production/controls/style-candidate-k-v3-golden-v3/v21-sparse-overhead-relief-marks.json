@@ -1,0 +1,222 @@
+{
+  "schema_version": "1.0.0",
+  "interface": "sstory-k3-sparse-overhead-relief-v21-marks-v1",
+  "replacement": {
+    "value": 255,
+    "original_pixels": 1777,
+    "minimum_pixels": 6500,
+    "polygon_xy": [
+      [1041, 65],
+      [1076, 49],
+      [1108, 59],
+      [1128, 84],
+      [1117, 109],
+      [1131, 132],
+      [1117, 159],
+      [1093, 171],
+      [1077, 202],
+      [1049, 196],
+      [1034, 176],
+      [1041, 151],
+      [1030, 132],
+      [1037, 107],
+      [1031, 86]
+    ],
+    "smoothing_sigma": 2.2,
+    "threshold": 112
+  },
+  "styles": {
+    "lighting": {
+      "direction_xyz": [-4.0, -3.0, 8.0]
+    },
+    "volume": {
+      "height_scale": 8.0,
+      "hillshade_exposure": 50.0,
+      "elevation_gain": 2.0,
+      "delta_limit": 12.0,
+      "edge_zero": 4.0,
+      "edge_full": 10.0,
+      "noise_wavelengths": [72, 41, 23, 13],
+      "noise_amplitudes": [0.14, 0.32, 0.22, 0.08],
+      "mass_gain": 0.2,
+      "domain_warp": 6.0,
+      "field_quantum": 4096,
+      "shade_quantum": 256
+    }
+  },
+  "systems": [
+    {
+      "body_id": "body-00",
+      "value": 32,
+      "base_l_delta": -5.0,
+      "base_a_delta": 1.0,
+      "base_b_delta": 2.5,
+      "crest": [[1271, 68], [1292, 84], [1306, 108], [1314, 137]],
+      "spurs": [[[1305, 110], [1326, 120]]],
+      "valleys": [],
+      "saddle_gap": {"center_fraction": 0.56, "width": 13.0},
+      "relief_scale": 1.0,
+      "noise_salt": 658,
+      "noise_major_xy": [0.731353701619, -0.681998360062],
+      "noise_minor_xy": [0.681998360062, 0.731353701619],
+      "noise_aspect": 1.06,
+      "mass_anchors": [
+        {"center_xy": [1259, 59], "amplitude": 1.0, "radius_long": 86.1, "radius_short": 57.4, "major_xy": [0.951056516295, 0.309016994375], "minor_xy": [-0.309016994375, 0.951056516295], "source_normalized_xy": [0.24, 0.2], "source_degrees": 18},
+        {"center_xy": [1311, 140], "amplitude": 0.66, "radius_long": 73.8, "radius_short": 51.25, "major_xy": [0.891006524188, -0.45399049974], "minor_xy": [0.45399049974, 0.891006524188], "source_normalized_xy": [0.66, 0.7], "source_degrees": -27},
+        {"center_xy": [1325, 81], "amplitude": -0.24, "radius_long": 63.55, "radius_short": 49.2, "major_xy": [0.754709580223, 0.656059028991], "minor_xy": [-0.656059028991, 0.754709580223], "source_normalized_xy": [0.78, 0.34], "source_degrees": 41}
+      ]
+    },
+    {
+      "body_id": "body-01",
+      "value": 64,
+      "base_l_delta": -5.5,
+      "base_a_delta": 1.25,
+      "base_b_delta": 2.75,
+      "crest": [[1419, 84], [1438, 101], [1447, 125], [1443, 151]],
+      "spurs": [[[1438, 102], [1458, 111]]],
+      "valleys": [[[1424, 171], [1434, 165], [1438, 157]]],
+      "saddle_gap": null,
+      "relief_scale": 0.95,
+      "noise_salt": 211,
+      "noise_major_xy": [0.681998360062, 0.731353701619],
+      "noise_minor_xy": [-0.731353701619, 0.681998360062],
+      "noise_aspect": 0.94,
+      "mass_anchors": [
+        {"center_xy": [1409, 71], "amplitude": 0.58, "radius_long": 72.798915, "radius_short": 51.387469, "major_xy": [0.961261695938, -0.275637355817], "minor_xy": [0.275637355817, 0.961261695938], "source_normalized_xy": [0.29, 0.17], "source_degrees": -16},
+        {"center_xy": [1455, 123], "amplitude": 1.0, "radius_long": 92.069216, "radius_short": 62.093192, "major_xy": [0.857167300702, 0.51503807491], "minor_xy": [-0.51503807491, 0.857167300702], "source_normalized_xy": [0.68, 0.46], "source_degrees": 31},
+        {"center_xy": [1447, 183], "amplitude": 0.44, "radius_long": 68.516626, "radius_short": 49.246325, "major_xy": [0.992546151641, 0.121869343405], "minor_xy": [-0.121869343405, 0.992546151641], "source_normalized_xy": [0.43, 0.82], "source_degrees": 7},
+        {"center_xy": [1480, 163], "amplitude": -0.22, "radius_long": 62.093192, "radius_short": 49.246325, "major_xy": [0.788010753607, -0.615661475326], "minor_xy": [0.615661475326, 0.788010753607], "source_normalized_xy": [0.78, 0.76], "source_degrees": -38}
+      ]
+    },
+    {
+      "body_id": "body-02",
+      "value": 96,
+      "base_l_delta": -4.5,
+      "base_a_delta": 0.75,
+      "base_b_delta": 2.25,
+      "crest": [[1179, 216], [1200, 234], [1213, 257], [1208, 282]],
+      "spurs": [[[1200, 235], [1220, 240]]],
+      "valleys": [],
+      "saddle_gap": {"center_fraction": 0.53, "width": 12.0},
+      "relief_scale": 1.05,
+      "noise_salt": 307,
+      "noise_major_xy": [0.529919264233, 0.848048096156],
+      "noise_minor_xy": [-0.848048096156, 0.529919264233],
+      "noise_aspect": 1.1,
+      "mass_anchors": [
+        {"center_xy": [1176, 220], "amplitude": 1.0, "radius_long": 86.104181, "radius_short": 59.316214, "major_xy": [0.777145961457, 0.62932039105], "minor_xy": [-0.62932039105, 0.777145961457], "source_normalized_xy": [0.24, 0.33], "source_degrees": 39},
+        {"center_xy": [1231, 269], "amplitude": 0.58, "radius_long": 65.056492, "radius_short": 47.835656, "major_xy": [0.987688340595, -0.15643446504], "minor_xy": [0.15643446504, 0.987688340595], "source_normalized_xy": [0.68, 0.67], "source_degrees": -9},
+        {"center_xy": [1238, 202], "amplitude": -0.23, "radius_long": 57.402787, "radius_short": 42.095377, "major_xy": [0.913545457643, 0.406736643076], "minor_xy": [-0.406736643076, 0.913545457643], "source_normalized_xy": [0.74, 0.2], "source_degrees": 24}
+      ]
+    },
+    {
+      "body_id": "body-03",
+      "value": 128,
+      "base_l_delta": -5.5,
+      "base_a_delta": 1.0,
+      "base_b_delta": 2.5,
+      "crest": [[1339, 245], [1363, 254], [1386, 247], [1410, 260], [1431, 278]],
+      "spurs": [[[1386, 248], [1400, 230]]],
+      "valleys": [[[1383, 294], [1394, 284], [1402, 273]]],
+      "saddle_gap": null,
+      "relief_scale": 1.0,
+      "noise_salt": 401,
+      "noise_major_xy": [0.529919264233, 0.848048096156],
+      "noise_minor_xy": [-0.848048096156, 0.529919264233],
+      "noise_aspect": 1.1,
+      "mass_anchors": [
+        {"center_xy": [1332, 258], "amplitude": 0.48, "radius_long": 82.56062, "radius_short": 61.920465, "major_xy": [0.857167300702, -0.51503807491], "minor_xy": [0.51503807491, 0.857167300702], "source_normalized_xy": [0.16, 0.42], "source_degrees": -31},
+        {"center_xy": [1398, 229], "amplitude": 1.0, "radius_long": 113.520853, "radius_short": 72.240543, "major_xy": [0.99756405026, 0.069756473744], "minor_xy": [-0.069756473744, 0.99756405026], "source_normalized_xy": [0.48, 0.25], "source_degrees": 4},
+        {"center_xy": [1466, 297], "amplitude": 0.62, "radius_long": 95.460717, "radius_short": 64.500484, "major_xy": [0.838670567945, 0.544639035015], "minor_xy": [-0.544639035015, 0.838670567945], "source_normalized_xy": [0.81, 0.67], "source_degrees": 33},
+        {"center_xy": [1408, 306], "amplitude": -0.26, "radius_long": 79.980601, "radius_short": 61.920465, "major_xy": [0.978147600734, -0.207911690818], "minor_xy": [0.207911690818, 0.978147600734], "source_normalized_xy": [0.53, 0.73], "source_degrees": -12}
+      ]
+    },
+    {
+      "body_id": "body-04",
+      "value": 160,
+      "base_l_delta": -5.0,
+      "base_a_delta": 1.25,
+      "base_b_delta": 2.25,
+      "crest": [[1097, 340], [1117, 354], [1135, 375], [1152, 392]],
+      "spurs": [[[1135, 375], [1155, 383]]],
+      "valleys": [[[1090, 402], [1102, 393], [1112, 383]]],
+      "saddle_gap": null,
+      "relief_scale": 0.95,
+      "noise_salt": 503,
+      "noise_major_xy": [0.974370064785, 0.224951054344],
+      "noise_minor_xy": [-0.224951054344, 0.974370064785],
+      "noise_aspect": 1.0,
+      "mass_anchors": [
+        {"center_xy": [1091, 333], "amplitude": 0.67, "radius_long": 77.734162, "radius_short": 53.982057, "major_xy": [0.891006524188, 0.45399049974], "minor_xy": [-0.45399049974, 0.891006524188], "source_normalized_xy": [0.24, 0.22], "source_degrees": 27},
+        {"center_xy": [1154, 361], "amplitude": 1.0, "radius_long": 97.167703, "radius_short": 64.778469, "major_xy": [0.951056516295, -0.309016994375], "minor_xy": [0.309016994375, 0.951056516295], "source_normalized_xy": [0.66, 0.43], "source_degrees": -18},
+        {"center_xy": [1109, 413], "amplitude": 0.41, "radius_long": 69.097033, "radius_short": 49.663493, "major_xy": [0.731353701619, 0.681998360062], "minor_xy": [-0.681998360062, 0.731353701619], "source_normalized_xy": [0.35, 0.79], "source_degrees": 43},
+        {"center_xy": [1169, 429], "amplitude": -0.25, "radius_long": 64.778469, "radius_short": 49.663493, "major_xy": [0.996194698092, 0.087155742748], "minor_xy": [-0.087155742748, 0.996194698092], "source_normalized_xy": [0.78, 0.76], "source_degrees": 5}
+      ]
+    },
+    {
+      "body_id": "body-05",
+      "value": 192,
+      "base_l_delta": -6.0,
+      "base_a_delta": 1.0,
+      "base_b_delta": 2.75,
+      "crest": [[1253, 348], [1276, 365], [1288, 389], [1283, 413]],
+      "spurs": [[[1277, 366], [1297, 371]]],
+      "valleys": [],
+      "saddle_gap": {"center_fraction": 0.64, "width": 14.0},
+      "relief_scale": 1.05,
+      "noise_salt": 638,
+      "noise_major_xy": [0.874619707139, 0.484809620246],
+      "noise_minor_xy": [-0.484809620246, 0.874619707139],
+      "noise_aspect": 0.97,
+      "mass_anchors": [
+        {"center_xy": [1268, 356], "amplitude": 1.0, "radius_long": 81.918104, "radius_short": 53.342021, "major_xy": [0.913545457643, -0.406736643076], "minor_xy": [0.406736643076, 0.913545457643], "source_normalized_xy": [0.34, 0.22], "source_degrees": -24},
+        {"center_xy": [1304, 412], "amplitude": 0.59, "radius_long": 72.392743, "radius_short": 49.531877, "major_xy": [0.961261695938, 0.275637355817], "minor_xy": [-0.275637355817, 0.961261695938], "source_normalized_xy": [0.66, 0.75], "source_degrees": 16},
+        {"center_xy": [1308, 367], "amplitude": -0.23, "radius_long": 57.152165, "radius_short": 41.911588, "major_xy": [0.766044443119, 0.642787609687], "minor_xy": [-0.642787609687, 0.766044443119], "source_normalized_xy": [0.72, 0.39], "source_degrees": 40}
+      ]
+    },
+    {
+      "body_id": "body-06",
+      "value": 224,
+      "base_l_delta": -4.5,
+      "base_a_delta": 0.75,
+      "base_b_delta": 2.0,
+      "crest": [[1399, 392], [1423, 406], [1445, 426], [1468, 440]],
+      "spurs": [[[1423, 406], [1443, 410]]],
+      "valleys": [[[1461, 451], [1453, 443]]],
+      "saddle_gap": null,
+      "relief_scale": 0.9,
+      "noise_salt": 701,
+      "noise_major_xy": [0.529919264233, 0.848048096156],
+      "noise_minor_xy": [-0.848048096156, 0.529919264233],
+      "noise_aspect": 1.1,
+      "mass_anchors": [
+        {"center_xy": [1393, 411], "amplitude": 0.46, "radius_long": 52.756499, "radius_short": 39.141919, "major_xy": [0.981627183448, 0.190808995377], "minor_xy": [-0.190808995377, 0.981627183448], "source_normalized_xy": [0.19, 0.48], "source_degrees": 11},
+        {"center_xy": [1434, 388], "amplitude": 0.78, "radius_long": 66.37108, "radius_short": 45.949209, "major_xy": [0.809016994375, -0.587785252292], "minor_xy": [0.587785252292, 0.809016994375], "source_normalized_xy": [0.51, 0.27], "source_degrees": -36},
+        {"center_xy": [1470, 431], "amplitude": 1.0, "radius_long": 71.476547, "radius_short": 49.352854, "major_xy": [0.920504853452, 0.390731128489], "minor_xy": [-0.390731128489, 0.920504853452], "source_normalized_xy": [0.8, 0.65], "source_degrees": 23},
+        {"center_xy": [1422, 444], "amplitude": -0.21, "radius_long": 47.651031, "radius_short": 37.440096, "major_xy": [0.996194698092, -0.087155742748], "minor_xy": [0.087155742748, 0.996194698092], "source_normalized_xy": [0.42, 0.78], "source_degrees": -5}
+      ]
+    },
+    {
+      "body_id": "body-07",
+      "value": 255,
+      "base_l_delta": -5.0,
+      "base_a_delta": 1.0,
+      "base_b_delta": 2.5,
+      "crest": [[1050, 85], [1075, 97], [1091, 118], [1090, 142], [1080, 165], [1076, 184]],
+      "spurs": [[[1091, 119], [1111, 128]]],
+      "valleys": [[[1110, 169], [1104, 162], [1099, 158]]],
+      "saddle_gap": null,
+      "relief_scale": 1.0,
+      "noise_salt": 846,
+      "noise_major_xy": [0.978147600734, -0.207911690818],
+      "noise_minor_xy": [0.207911690818, 0.978147600734],
+      "noise_aspect": 1.12,
+      "mass_anchors": [
+        {"center_xy": [1055, 73], "amplitude": 0.66, "radius_long": 66.299647, "radius_short": 46.041422, "major_xy": [0.829037572555, 0.559192903471], "minor_xy": [-0.559192903471, 0.829037572555], "source_normalized_xy": [0.25, 0.16], "source_degrees": 34},
+        {"center_xy": [1089, 115], "amplitude": 1.0, "radius_long": 84.716216, "radius_short": 53.408049, "major_xy": [0.970295726276, -0.2419218956], "minor_xy": [0.2419218956, 0.970295726276], "source_normalized_xy": [0.59, 0.43], "source_degrees": -14},
+        {"center_xy": [1067, 170], "amplitude": 0.52, "radius_long": 64.45799, "radius_short": 44.199765, "major_xy": [0.990268068742, 0.13917310096], "minor_xy": [-0.13917310096, 0.990268068742], "source_normalized_xy": [0.37, 0.79], "source_degrees": 8},
+        {"center_xy": [1105, 153], "amplitude": -0.26, "radius_long": 55.249706, "radius_short": 42.358108, "major_xy": [0.754709580223, -0.656059028991], "minor_xy": [0.656059028991, 0.754709580223], "source_normalized_xy": [0.79, 0.72], "source_degrees": -41}
+      ]
+    }
+  ]
+}

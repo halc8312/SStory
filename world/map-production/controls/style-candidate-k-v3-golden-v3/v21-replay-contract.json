@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "interface": "sstory-k3-sparse-overhead-relief-v21-replay-v1",
+  "baseline_v18": {
+    "path": "world/map-production/style-assets/k3-v18-reconstruction-base.png",
+    "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+  },
+  "foundation_v19": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/foundation-v19-canonical.png",
+    "sha256": "2f80740f1ef6a6abec2774ab01294e92069f96809ae94473ee723b0aa8b6f214"
+  },
+  "v19_body_control": {
+    "path": "world/map-production/controls/style-candidate-k-v3-semantic-cleanup/k3-v52-canonical-body-control.png",
+    "sha256": "7527b0be4d7a042c5fd33e499b96806bcbbd6a1b614086c7c0fbdf308b83666b"
+  },
+  "v20_body_control": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v20-canonical-body-control.png",
+    "sha256": "aad51a5a92ee0de7c84ecfef4ba9f44c6e99af5add404ebec0f712c808b5e713"
+  },
+  "ridge_marks": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v21-sparse-overhead-relief-marks.json",
+    "sha256": "b775de198ff5efeb4bd7ea55e27ac7f876320e8381755458cfda00973d069680"
+  },
+  "search_summary": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v21-relief-search-summary.json",
+    "sha256": "2669f81b718fdaaf0c9e0cb6187f1beaae5626396a305f3a13ae62e43beb62cd"
+  },
+  "search_script": {
+    "path": "scripts/map-production/search_style_candidate_k3_relief_v21.py",
+    "sha256": "14ed368c0d61faf7f9e2d850d17dd5af573091f31b5af03247f881d3548cfa02"
+  },
+  "permission_mask": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/permission.png",
+    "sha256": "efa65224fd9a1f7623d6a3770b1f7006912e92318ae86c9643a90ba95d22b5dc"
+  },
+  "protected_mask": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/protected-features.png",
+    "sha256": "8863e1937fbe3c57e36db26606db7cd73ac4fc805ef4d6cfbbe69008448b2f19"
+  },
+  "road_calm_mask": {
+    "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/masks/road-calm-18px.png",
+    "sha256": "b4fd7dbb0957c2f31499f9cc5366d252bc3013128b6f818d0cb52ae9b9056d98"
+  }
+}
