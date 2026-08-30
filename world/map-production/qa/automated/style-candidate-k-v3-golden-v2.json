@@ -19,11 +19,11 @@
   },
   "provenance_receipt": {
     "path": "world/map-production/prompts/style-candidate-k-v3-golden-v2.provenance-receipt.json",
-    "sha256": "e1f98265de43eb4884ef26a4e36aca7a345404f66b3a13b3615b5dc23ae8bdab"
+    "sha256": "fc0b89b532bffb4f8829d3c8ee75ceb6a5a9fc23ef989d7f961dd58930153cbd"
   },
   "root_review": {
     "path": "world/map-production/qa/style-candidate-k-v3-golden-v2-root-review.json",
-    "sha256": "02e55a9c094b9a9e79c38c1f9404016950f0b1de68b331d89db4a4a7fbcfb500"
+    "sha256": "82ed6e726ca50b2a00ba4c9df722698e84fcebf4d28d446d02b592f17dae9c09"
   },
   "views": {
     "native": {

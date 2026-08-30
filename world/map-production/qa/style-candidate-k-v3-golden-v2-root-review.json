@@ -1,104 +1,189 @@
 {
   "schema_version": "1.0.0",
-  "id": "style-candidate-k-v3-semantic-cleanup-root-authorization-v2",
   "job_id": "style-candidate-k-v3-semantic-cleanup",
+  "image_path": "world/map-production/candidates/style-candidate-k-v3-golden-v2.png",
+  "image_sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
   "created_at": "2026-08-30T08:33:39Z",
   "reviewer": "codex-root-agent",
   "status": "complete",
-  "review_mode": "root-authority",
-  "source_temporary_root_review_sha256": "91851dbeb3623c65eae6976cfe0b3961fb45c87bbf0789bd86c738dae4eeb69b",
-  "candidate": {
-    "path": "world/map-production/candidates/style-candidate-k-v3-golden-v2.png",
-    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
-  },
-  "native": {
-    "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-native.png",
-    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
-  },
+  "golden_reference": false,
+  "review_mode": "standard",
+  "acceptance_threshold": 94,
   "review_views": [
     {
-      "id": "native",
-      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-native.png",
-      "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a",
+      "id": "overview",
+      "label": "全体構図",
       "complete": true,
-      "evidence": "Inspected the exact 1536x1024 native view: coast, islands, river, city walls, roads, fields, and all eight highland bodies remain crisp and spatially coherent, with no blank, clipped, or overwritten region."
+      "evidence": "Inspected the exact 1536x1024 native view and the bound 25-percent full-board view.",
+      "notes": "Coast, islands, river, city, port, fields, and the eight-system highland group remained spatially coherent without a pasted-panel appearance."
     },
     {
-      "id": "full25",
-      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full25.png",
-      "sha256": "2648cc8ec2a9714dce0d0c41ed9cd0a51463593fde344e76b3d72b2fc5d07bd9",
+      "id": "original",
+      "label": "原寸100%",
       "complete": true,
-      "evidence": "Inspected the exact 25-percent full-board view: the coastline, central city, port, waterways, fields, and eight-system highland group preserve clear global hierarchy and remain identifiable without a pasted-panel appearance."
+      "evidence": "Inspected world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-native.png, whose SHA-256 equals the candidate SHA-256.",
+      "notes": "Coast, river edges, city walls, roads, fields, and highland bodies appeared crisp with no blank, clipped, or overwritten region."
     },
     {
-      "id": "full50",
-      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-full50.png",
-      "sha256": "1bfb21cd8415a237548dc36cc040411695ea934df3ce18436f73d6df3f35475a",
+      "id": "zoom",
+      "label": "200%・400%拡大",
       "complete": true,
-      "evidence": "Inspected the exact 50-percent full-board view: city and transport geometry remain legible, shore and river edges stay stable, and the highland treatment integrates with the surrounding parchment texture without seams or halos."
+      "evidence": "Inspected the bound highland 200-percent and 400-percent evidence views.",
+      "notes": "The review recorded additional line-spacing, saddle, valley, and local-direction information at 400 percent beyond the 200-percent view."
     },
     {
-      "id": "highland200",
-      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland200.png",
-      "sha256": "fd3e717400642a524dd61787191216c728a04f55ae8d19af05fa30da2ff20cc3",
+      "id": "nine_regions",
+      "label": "中央・四隅・四辺の9領域",
       "complete": true,
-      "evidence": "Inspected the exact highland 200-percent view: eight separate overhead relief systems are visible with distinct silhouettes, internal directions, spacing, saddles, and valley indentations; the foundation remains quiet and planar."
+      "evidence": "Scanned the full native board, including the center, all corners, and all edge regions.",
+      "notes": "No blank region, watermark, signature, frame fragment, or clipped map feature was recorded."
     },
     {
-      "id": "highland400",
-      "path": "world/map-production/qa/evidence/style-candidate-k-v3-golden-v2/review-highland400.png",
-      "sha256": "68a58bbf012cfe4792e83df9d48e04ff6149221a2e2a7ecdaa12da3ed01069fc",
+      "id": "control_overlay",
+      "label": "制御図との半透明重ね合わせ",
       "complete": true,
-      "evidence": "Inspected the exact highland 400-percent view: system-specific fine line spacing and local relief structure become more legible while body edges, the bordering road, and the neighboring city remain stable; no particle, dash-bundle, or resampling damage appears."
+      "evidence": "Used the separately recorded exact pixel audit bound to the same candidate SHA-256.",
+      "notes": "The audit reported zero protected-pixel, road-corridor, and outside-highland changes and exactly eight non-touching highland components."
+    },
+    {
+      "id": "parent_zoom",
+      "label": "親ズーム画像との比較",
+      "complete": true,
+      "evidence": "Compared the native, 25-percent, and 50-percent bound views for hierarchy and material continuity.",
+      "notes": "Palette, parchment texture, coast, river, city, roads, and fields retained the frozen parent treatment while the highland area remained locally bounded."
+    },
+    {
+      "id": "neighbor_seams",
+      "label": "四方向の隣接合成",
+      "complete": true,
+      "evidence": "Reviewed all four outer edges in the native and 50-percent full-board views; this canonical style board has no production-sheet neighbors.",
+      "notes": "No rectangular patch seam, doubled border, or highland-body halo was recorded; production neighbor composites remain a later bounded-sheet requirement."
+    },
+    {
+      "id": "vector_overlay",
+      "label": "ベクターラベル・道路・POI重畳",
+      "complete": true,
+      "evidence": "Inspected road corridors, city approaches, and the highland field in the native and 50-percent views.",
+      "notes": "Road and city geometry remained readable and the audit reported zero road-corridor pixel changes; live vector overlay remains a production-sheet requirement."
+    },
+    {
+      "id": "desktop",
+      "label": "Leafletデスクトップ表示",
+      "complete": true,
+      "evidence": "Applicability reviewed: this artifact is a canonical 1536x1024 style candidate, not a tiled production sheet.",
+      "notes": "Desktop browser QA was therefore not claimed; the native and reduced full-board evidence views were used for this pre-blind style review."
+    },
+    {
+      "id": "mobile",
+      "label": "Leafletモバイル表示",
+      "complete": true,
+      "evidence": "Applicability reviewed: this artifact is a canonical style candidate and has no mobile tile bundle.",
+      "notes": "Mobile browser QA remains mandatory for accepted bounded production sheets and was not inferred from this review."
     }
   ],
   "immediate_failures": [
     {
       "id": "eight-system-topology",
+      "label": "8山系の分離・可算性違反",
       "detected": false,
-      "evidence": "Exactly eight non-touching highland systems are visibly countable in native, 25-percent, 50-percent, 200-percent, and 400-percent views."
+      "evidence": "The Root review counted exactly eight non-touching highland systems in the native, reduced, and enlarged views."
     },
     {
       "id": "side-view-or-shared-projection",
+      "label": "側面図化・共有投影",
       "detected": false,
-      "evidence": "Every highland body reads in a consistent overhead plan view; none becomes a scenic side face and no two bodies collapse into a shared projection."
+      "evidence": "The Root review read every highland body as an overhead system and did not record a shared scenic side projection."
     },
     {
       "id": "panel-seam-or-body-halo",
+      "label": "パネル継ぎ目・山体ハロー",
       "detected": false,
-      "evidence": "The highland field follows the map-edge and road context with stable tonal integration; no rectangular pasted seam, doubled border, or light or dark body halo is visible at any reviewed scale."
+      "evidence": "No rectangular pasted seam, doubled border, or light or dark body halo was recorded in the five bound views."
     },
     {
       "id": "white-particle-pill-hole-or-crater",
+      "label": "白粒・カプセル・穴・クレーター",
       "detected": false,
-      "evidence": "No bright isolated particle, pill-shaped mark, punched hole, crater, or similar high-contrast defect is visible in the native or enlarged highland views."
+      "evidence": "The Root review did not identify a bright isolated particle, pill-shaped mark, punched hole, crater, or similar high-contrast defect."
     },
     {
       "id": "root-river-vein-fingerprint-or-contour",
+      "label": "根・河川・指紋・輪郭線代替",
       "detected": false,
-      "evidence": "Internal relief lines remain sparse, nested, and system-specific inside eight bounded overhead bodies; they do not read as roots, river veins, fingerprints, or a generic contour-only substitute."
+      "evidence": "The Root review described the internal relief as system-specific and did not flag a root, river-vein, fingerprint, or generic contour-only substitution."
     },
     {
       "id": "fern-fishbone-dash-bundle-or-repetition",
+      "label": "シダ・魚骨・破線束・機械反復",
       "detected": false,
-      "evidence": "No fern branching, fishbone grammar, repeated parallel dash bundle, chained marks, or mechanical wallpaper cadence appears in the highland bodies."
+      "evidence": "No fern branching, fishbone grammar, repeated parallel dash bundle, chained marks, or wallpaper cadence was recorded by the Root review."
     },
     {
       "id": "no-200-to-400-information-gain",
+      "label": "200%から400%の情報増加なし",
       "detected": false,
-      "evidence": "The 400-percent view exposes additional legible line spacing, saddle, valley, and local direction information beyond the 200-percent view rather than merely enlarging an empty field."
+      "evidence": "The Root review recorded additional fine relief information in the 400-percent view beyond the 200-percent view."
     },
     {
       "id": "protected-geometry-difference",
+      "label": "保護正典形状の差分",
       "detected": false,
-      "evidence": "Coast, river, city, road, field, and highland-body boundaries remain visually coincident across all five bound views; no protected canonical geometry shifts or disappears."
+      "evidence": "The bound exact audit reported zero protected-pixel, outside-highland, and road-corridor differences."
     }
   ],
-  "acceptance_threshold": 94,
+  "scores": [
+    {
+      "id": "canon_geometry",
+      "label": "正典・地形形状との一致",
+      "maximum": 25,
+      "score": 25,
+      "notes": "The exact audit and native inspection recorded unchanged protected geometry and exactly eight non-touching highland systems."
+    },
+    {
+      "id": "parent_continuity",
+      "label": "親子ズームの連続性",
+      "maximum": 15,
+      "score": 15,
+      "notes": "The frozen coast, river, city, road, field, parchment, and surrounding material remained visually continuous across the bound scales."
+    },
+    {
+      "id": "seam_continuity",
+      "label": "隣接画像の継ぎ目",
+      "maximum": 15,
+      "score": 15,
+      "notes": "No panel edge, patch seam, doubled border, or body halo was recorded in the candidate review."
+    },
+    {
+      "id": "style_consistency",
+      "label": "画風・色・線密度",
+      "maximum": 15,
+      "score": 14,
+      "notes": "The Root review found the overhead highland treatment cohesive with the muted parchment map, with only a small reserve for later blind review."
+    },
+    {
+      "id": "detail_density",
+      "label": "縮尺相応の情報量",
+      "maximum": 10,
+      "score": 9,
+      "notes": "The Root review recorded useful scale-dependent relief information at 200 and 400 percent while retaining quiet planar foundations."
+    },
+    {
+      "id": "artifact_integrity",
+      "label": "生成破綻・反復模様",
+      "maximum": 10,
+      "score": 9,
+      "notes": "No immediate-failure artifact was identified by this Root review; the remaining point was reserved for independent inspection."
+    },
+    {
+      "id": "vector_readability",
+      "label": "ベクター重畳時の可読性",
+      "maximum": 10,
+      "score": 9,
+      "notes": "Road and city geometry stayed legible and protected corridors were unchanged, while live overlay remained outside this style-candidate review."
+    }
+  ],
   "total_score": 96,
   "decision": "accepted",
-  "authorizes_blind_review": true,
-  "golden_reference": false,
-  "acceptance_inferred": false,
-  "summary": "Accepted for anonymous blind review at 96/100 after direct inspection of all five exact views. The candidate preserves the canonical map hierarchy and protected geometry, keeps eight overhead relief systems distinct, adds useful fine highland information from 200 to 400 percent, and shows none of the eight immediate-failure morphologies."
+  "summary": "The Root review accepted the candidate for anonymous blind review at 96/100 after inspecting the exact five bound views and the bound automated audit. This report records only that historical Root decision; the later independent blind review rejected the candidate, so it is not a Golden reference and does not authorize release.",
+  "required_changes": []
 }
