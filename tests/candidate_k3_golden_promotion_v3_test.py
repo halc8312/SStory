@@ -396,6 +396,97 @@ class PromotionV3Fixture:
             candidate=replace(candidate, relative=selected_path),
         )
 
+    def use_balanced_open_generation(self) -> None:
+        authority = promotion.load_authority()
+        balanced_open = json.loads(
+            authority.balanced_open_authority.data.decode("utf-8")
+        )
+        self.generation_contract_id = promotion.BALANCED_OPEN_PHASE_V3
+        self.candidate_id = "E150-M500"
+        certificate = {
+            "eligible_records": 96,
+            "maximum_numerator": 0,
+            "maximum_variance_product": 1,
+            "maximum_correlation_q20": 0,
+        }
+        construction_receipt = {
+            "amplitude_matching_iterations": 4,
+            "amplitude_lag_certificate": copy.deepcopy(certificate),
+            "unit_lag_certificate": copy.deepcopy(certificate),
+            "quiet_clipped_pixels": 0,
+            "short_dark_repairs": 0,
+            "short_dark_pixels": 0,
+            "topology_repairs": 0,
+            "topology_pixels": 0,
+        }
+        candidates = []
+        for index, record in enumerate(balanced_open["candidates"]["records"]):
+            selected = record["candidate_id"] == self.candidate_id
+            candidates.append(
+                {
+                    "candidate_id": record["candidate_id"],
+                    "path": record["output_path"],
+                    "sha256": (
+                        self.candidate_sha256
+                        if selected
+                        else hashlib.sha256(
+                            f"synthetic-balanced-open-nonselected-{index}".encode(
+                                "ascii"
+                            )
+                        ).hexdigest()
+                    ),
+                    "bytes": self.candidate.stat().st_size if selected else index + 201,
+                    "construction_receipt": copy.deepcopy(construction_receipt),
+                }
+            )
+        profiles = balanced_open["cli_contract"]["required_comparison_profile_ids"]
+        self.seal_paths = tuple(
+            self.evidence_root / f"synthetic-balanced-open-{index}-seal.json"
+            for index in range(len(profiles))
+        )
+        firewall_sha = promotion.balanced_open_derivation.source_bindings(
+            balanced_open
+        )["sealed-v19-statistics-firewall"]["sha256"]
+        for path, profile in zip(self.seal_paths, profiles, strict=True):
+            path.write_bytes(
+                promotion.balanced_open_derivation.canonical_output_seal_json(
+                    {
+                        "schema_id": (
+                            "sstory.k3.golden-v3."
+                            "balanced-open-phase-v3-output-seal.v1"
+                        ),
+                        "authority_self_sha256": balanced_open[
+                            "canonical_self_sha256"
+                        ],
+                        "statistics_firewall_sha256": firewall_sha,
+                        "runtime_attestation": (
+                            promotion.balanced_open_derivation.expected_runtime_attestation(
+                                balanced_open, profile
+                            )
+                        ),
+                        "candidate_count": 4,
+                        "candidates": copy.deepcopy(candidates),
+                    }
+                )
+            )
+        candidate = promotion._bind(
+            self.candidate,
+            label="synthetic balanced-open candidate",
+            trackable=False,
+        )
+        selected_path = next(
+            record["output_path"]
+            for record in balanced_open["candidates"]["records"]
+            if record["candidate_id"] == self.candidate_id
+        )
+        self.seal_bindings, self.seal_summaries = promotion._validate_generation_seals(
+            self.seal_paths,
+            authority=authority,
+            generation_contract_id=self.generation_contract_id,
+            candidate_id=self.candidate_id,
+            candidate=replace(candidate, relative=selected_path),
+        )
+
     def promote(self) -> dict[str, object]:
         with self.promotion_patches():
             return promotion.promote_candidate(
@@ -455,7 +546,7 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertFalse(authority.document["promotion_performed"])
         self.assertEqual(authority.document["candidate_evaluations_before_freeze"], 0)
         self.assertFalse(authority.document["threshold_selection_from_candidate_values"])
-        self.assertEqual(authority.document["schema_version"], "2.0.0")
+        self.assertEqual(authority.document["schema_version"], "3.0.0")
         self.assertEqual(
             authority.balanced_authority.sha256,
             "f108d6e8c66d9e64723e53b881b6931131573f260e6bf43c96a9efafd5eabe80",
@@ -463,6 +554,14 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertEqual(
             authority.balanced_generator.sha256,
             "da33c03ac0724086803b500b8f13ad6edf09898f6489870197738b86e3587981",
+        )
+        self.assertEqual(
+            authority.balanced_open_authority.sha256,
+            "3c914b573a2415a06dff195f0b4f155082b15667d12409dd9195ead67c2e05a9",
+        )
+        self.assertEqual(
+            authority.balanced_open_generator.sha256,
+            "ca09af2760c3d0acb958e0e6e7afa92f010aef2593eda2e712c3a8f4e0e76b52",
         )
 
     def test_canonical_synthetic_seals_pass_real_cross_profile_validator(self) -> None:
@@ -551,6 +650,81 @@ class CandidateK3GoldenPromotionV3Test(unittest.TestCase):
         self.assertEqual(
             evidence["generation_contract_id"], promotion.BALANCED_PHASE_V2
         )
+
+    def test_balanced_open_phase_v3_promotes_with_canonical_phase5_provenance(
+        self,
+    ) -> None:
+        self.fixture.use_balanced_open_generation()
+        result = self.fixture.promote()
+        self.assertEqual(result["candidate_id"], "E150-M500")
+        self.assertEqual(
+            result["generation_contract_id"], promotion.BALANCED_OPEN_PHASE_V3
+        )
+        receipt = json.loads(self.fixture.paths.receipt.read_text(encoding="utf-8"))
+        self.assertEqual(receipt["schema_version"], "3.0.0")
+        self.assertEqual(
+            receipt["generation_contract_id"], promotion.BALANCED_OPEN_PHASE_V3
+        )
+        self.assertEqual(
+            receipt["generation_authority"]["sha256"],
+            promotion.load_authority().balanced_open_authority.sha256,
+        )
+        self.assertEqual(
+            receipt["generation_generator"]["sha256"],
+            promotion.load_authority().balanced_open_generator.sha256,
+        )
+        evidence = self.fixture.verify_phase5()
+        self.assertEqual(
+            evidence["generation_contract_id"], promotion.BALANCED_OPEN_PHASE_V3
+        )
+
+    def test_mixed_balanced_v2_and_balanced_open_v3_seals_fail(self) -> None:
+        self.fixture.use_balanced_generation()
+        balanced_v2_seal = self.fixture.seal_paths[0]
+        self.fixture.use_balanced_open_generation()
+        candidate = promotion._bind(
+            self.fixture.candidate,
+            label="synthetic mixed-balanced-generation candidate",
+            trackable=False,
+        )
+        contract = promotion.load_authority().document["generation_contract"][
+            "contracts"
+        ][promotion.BALANCED_OPEN_PHASE_V3]
+        sealed_candidate = replace(candidate, relative=contract["output_paths"][0])
+        with self.assertRaises(promotion.GoldenV3PromotionError):
+            promotion._validate_generation_seals(
+                (self.fixture.seal_paths[0], balanced_v2_seal),
+                authority=promotion.load_authority(),
+                generation_contract_id=promotion.BALANCED_OPEN_PHASE_V3,
+                candidate_id=self.fixture.candidate_id,
+                candidate=sealed_candidate,
+            )
+
+    def test_balanced_open_phase5_rejects_construction_receipt_tamper(self) -> None:
+        self.fixture.use_balanced_open_generation()
+        self.fixture.promote()
+        receipt = json.loads(self.fixture.paths.receipt.read_text(encoding="utf-8"))
+        summary = receipt["generation_seals"][0]
+        seal = json.loads(summary["payload_utf8"])
+        seal["candidates"][0]["construction_receipt"][
+            "amplitude_matching_iterations"
+        ] = 5
+        payload = promotion.balanced_open_derivation.canonical_output_seal_json(seal)
+        summary["payload_utf8"] = payload.decode("utf-8")
+        summary["sha256"] = hashlib.sha256(payload).hexdigest()
+        self.fixture._write_json(self.fixture.paths.receipt, receipt)
+        manifest = json.loads(self.fixture.manifest.read_text(encoding="utf-8"))
+        receipt_input = next(
+            item
+            for item in manifest["jobs"][0]["inputs"]
+            if item["role"] == promotion.V3_ACCEPTANCE_RECEIPT_ROLE
+        )
+        receipt_input["sha256"] = digest(self.fixture.paths.receipt)
+        self.fixture._write_json(self.fixture.manifest, manifest)
+        with self.assertRaisesRegex(
+            phase5.Phase5BuildError, "iteration receipt changed"
+        ):
+            self.fixture.verify_phase5()
 
     def test_mixed_v1_and_balanced_seals_fail_before_promotion(self) -> None:
         v1_seal = self.fixture.seal_paths[0]

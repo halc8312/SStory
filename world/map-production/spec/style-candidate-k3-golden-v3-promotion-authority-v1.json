@@ -1,7 +1,7 @@
 {
   "$schema": "https://sstory.example/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
-  "schema_version": "2.0.0",
-  "id": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v2",
+  "schema_version": "3.0.0",
+  "id": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v3",
   "status": "frozen-before-candidate-evaluation",
   "candidate_evaluations_before_freeze": 0,
   "threshold_selection_from_candidate_values": false,
@@ -31,16 +31,24 @@
     "balanced_phase_v2_generator": {
       "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_balanced_phase_v2.py",
       "sha256": "da33c03ac0724086803b500b8f13ad6edf09898f6489870197738b86e3587981"
+    },
+    "balanced_open_phase_v3": {
+      "path": "world/map-production/spec/style-candidate-k3-golden-v3-balanced-open-phase-preregistration-v3.json",
+      "sha256": "3c914b573a2415a06dff195f0b4f155082b15667d12409dd9195ead67c2e05a9"
+    },
+    "balanced_open_phase_v3_generator": {
+      "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_balanced_open_phase_v3.py",
+      "sha256": "ca09af2760c3d0acb958e0e6e7afa92f010aef2593eda2e712c3a8f4e0e76b52"
     }
   },
   "bound_schemas": {
     "authority": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
-      "sha256": "9116884dbbb3579ea12409cb5d211051c4df05216ef69dd7d2ced351d46a2417"
+      "sha256": "3cf9c4dcbd0433cd75467526d33ddf915072af3de259a9adebe39374369aea43"
     },
     "acceptance_receipt": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
-      "sha256": "16aee0135a095661fb6d18bfefe4e50bbfc47d8aabc03b1cd633b16a175eece9"
+      "sha256": "03bf7691a7faa1554aacb5ea6b5364d316bbc16cbba20b1b17c1122d940d9f91"
     },
     "qa_report": {
       "path": "world/map-production/schemas/qa-report.schema.json",
@@ -108,6 +116,24 @@
           "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M450.png",
           "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M400.png",
           "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M450.png"
+        ]
+      },
+      "balanced-open-phase-v3": {
+        "manifest_authority_role": "golden-v3-balanced-open-phase-v3-authority",
+        "manifest_generator_role": "golden-v3-balanced-open-phase-v3-generator",
+        "seal_schema_id": "sstory.k3.golden-v3.balanced-open-phase-v3-output-seal.v1",
+        "runtime_attestation": "structured-exact-common-and-profile",
+        "required_runtime_profile_ids": [
+          "windows-local-opencv-python-4.13.0.92",
+          "linux-ci-opencv-python-headless-4.13.0.92"
+        ],
+        "generation_seal_count": 2,
+        "candidate_ids": ["E150-M500", "E150-M550", "E200-M500", "E200-M550"],
+        "output_paths": [
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E150-M500.png",
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E150-M550.png",
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E200-M500.png",
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E200-M550.png"
         ]
       }
     }
@@ -229,6 +255,19 @@
         "independent-vision-review-a",
         "independent-vision-review-b",
         "golden-v3-acceptance-receipt"
+      ],
+      "balanced-open-phase-v3": [
+        "golden-raw-output",
+        "golden-v3-promotion-authority",
+        "golden-v3-balanced-open-phase-v3-authority",
+        "golden-v3-balanced-open-phase-v3-generator",
+        "golden-v3-strict-audit-authority",
+        "golden-v3-strict-audit-report",
+        "golden-v3-root-vision-authorization",
+        "blind-review-packet",
+        "independent-vision-review-a",
+        "independent-vision-review-b",
+        "golden-v3-acceptance-receipt"
       ]
     },
     "history_state_order": [
@@ -250,6 +289,10 @@
       "balanced-phase-v2": {
         "model": "sstory-k3-golden-v3-balanced-independent-band-phase-v2",
         "attempt": 1
+      },
+      "balanced-open-phase-v3": {
+        "model": "sstory-k3-golden-v3-balanced-open-independent-band-phase-v3",
+        "attempt": 1
       }
     },
     "notes": "Accepted only through the frozen candidate-blind Golden-v3 promotion authority.",
@@ -257,8 +300,8 @@
     "history_actor_source": "acceptance-receipt-authorized-by"
   },
   "receipt_contract": {
-    "schema_version": "2.0.0",
-    "id": "sstory-k3-golden-v3-acceptance-receipt-v2",
+    "schema_version": "3.0.0",
+    "id": "sstory-k3-golden-v3-acceptance-receipt-v3",
     "status": "accepted",
     "promotion_performed": true
   },

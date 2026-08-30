@@ -26,6 +26,7 @@ from PIL import Image
 import audit_style_candidate_k3_golden_v3 as strict_audit
 import generate_style_candidate_k3_golden_v3_four_candidate_phase_v1 as derivation
 import generate_style_candidate_k3_golden_v3_balanced_phase_v2 as balanced_derivation
+import generate_style_candidate_k3_golden_v3_balanced_open_phase_v3 as balanced_open_derivation
 import promote_style_candidate_k3_golden_v2 as manifest_cas
 from production_common import REPO_ROOT, parse_rfc3339, utc_now
 from release_bound_artifact import (
@@ -50,18 +51,25 @@ AUTHORITY_PATH = (
     "style-candidate-k3-golden-v3-promotion-authority-v1.json"
 )
 EXPECTED_AUTHORITY_SHA256 = (
-    "37766c595214cde3c277b0147b93dae2b17daf07c811de9c1581d1a5d8cf11e0"
+    "7ed1f30653f1d74b75b0b7404516ffa9b7363ce9c9ad6527235d98256dfc6495"
 )
 JOB_ID = "style-candidate-k-v3-golden-v3"
 FOUR_CANDIDATE_V1 = "four-candidate-v1"
 BALANCED_PHASE_V2 = "balanced-phase-v2"
-GENERATION_CONTRACT_IDS = (FOUR_CANDIDATE_V1, BALANCED_PHASE_V2)
+BALANCED_OPEN_PHASE_V3 = "balanced-open-phase-v3"
+GENERATION_CONTRACT_IDS = (
+    FOUR_CANDIDATE_V1,
+    BALANCED_PHASE_V2,
+    BALANCED_OPEN_PHASE_V3,
+)
 
 V3_ACCEPTANCE_RECEIPT_ROLE = "golden-v3-acceptance-receipt"
 V3_PROMOTION_AUTHORITY_ROLE = "golden-v3-promotion-authority"
 V3_DERIVATION_AUTHORITY_ROLE = "golden-v3-four-candidate-derivation-authority"
 V3_BALANCED_AUTHORITY_ROLE = "golden-v3-balanced-phase-v2-authority"
 V3_BALANCED_GENERATOR_ROLE = "golden-v3-balanced-phase-v2-generator"
+V3_BALANCED_OPEN_AUTHORITY_ROLE = "golden-v3-balanced-open-phase-v3-authority"
+V3_BALANCED_OPEN_GENERATOR_ROLE = "golden-v3-balanced-open-phase-v3-generator"
 V3_STRICT_AUTHORITY_ROLE = "golden-v3-strict-audit-authority"
 V3_STRICT_REPORT_ROLE = "golden-v3-strict-audit-report"
 V3_ROOT_REVIEW_ROLE = "golden-v3-root-vision-authorization"
@@ -74,6 +82,8 @@ V3_ONLY_ROLES = frozenset(
         V3_DERIVATION_AUTHORITY_ROLE,
         V3_BALANCED_AUTHORITY_ROLE,
         V3_BALANCED_GENERATOR_ROLE,
+        V3_BALANCED_OPEN_AUTHORITY_ROLE,
+        V3_BALANCED_OPEN_GENERATOR_ROLE,
         V3_STRICT_AUTHORITY_ROLE,
         V3_STRICT_REPORT_ROLE,
         V3_ROOT_REVIEW_ROLE,
@@ -131,6 +141,8 @@ class AuthorityBundle:
     derivation_authority: BoundArtifact
     balanced_authority: BoundArtifact
     balanced_generator: BoundArtifact
+    balanced_open_authority: BoundArtifact
+    balanced_open_generator: BoundArtifact
     schemas: dict[str, BoundArtifact]
 
 
@@ -261,6 +273,8 @@ def load_authority() -> AuthorityBundle:
         "four_candidate_derivation",
         "balanced_phase_v2",
         "balanced_phase_v2_generator",
+        "balanced_open_phase_v3",
+        "balanced_open_phase_v3_generator",
     }:
         raise GoldenV3PromotionError("Golden-v3 authority reference set changed")
     strict_authority = _bind_record(
@@ -277,6 +291,14 @@ def load_authority() -> AuthorityBundle:
     balanced_generator = _bind_record(
         authorities["balanced_phase_v2_generator"],
         label="Golden-v3 balanced-phase-v2 generator",
+    )
+    balanced_open_authority = _bind_record(
+        authorities["balanced_open_phase_v3"],
+        label="Golden-v3 balanced-open-phase-v3 authority",
+    )
+    balanced_open_generator = _bind_record(
+        authorities["balanced_open_phase_v3_generator"],
+        label="Golden-v3 balanced-open-phase-v3 generator",
     )
     if strict_authority.sha256 != strict_audit.EXPECTED_AUTHORITY_SHA256:
         raise GoldenV3PromotionError("strict-v3 authority identity changed")
@@ -295,6 +317,20 @@ def load_authority() -> AuthorityBundle:
         ) from exc
     if balanced_generator.path != Path(balanced_derivation.__file__).resolve():
         raise GoldenV3PromotionError("balanced-phase-v2 generator path changed")
+    if balanced_open_authority.path != balanced_open_derivation.AUTHORITY_PATH.resolve():
+        raise GoldenV3PromotionError("balanced-open-phase-v3 authority path changed")
+    balanced_open_document = _strict_json(
+        balanced_open_authority.data,
+        label="Golden-v3 balanced-open-phase-v3 authority",
+    )
+    try:
+        balanced_open_derivation.validate_authority(balanced_open_document)
+    except balanced_open_derivation.DerivationError as exc:
+        raise GoldenV3PromotionError(
+            f"balanced-open-phase-v3 authority validation failed: {exc}"
+        ) from exc
+    if balanced_open_generator.path != Path(balanced_open_derivation.__file__).resolve():
+        raise GoldenV3PromotionError("balanced-open-phase-v3 generator path changed")
     return AuthorityBundle(
         binding=authority,
         document=document,
@@ -302,6 +338,8 @@ def load_authority() -> AuthorityBundle:
         derivation_authority=derivation_authority,
         balanced_authority=balanced_authority,
         balanced_generator=balanced_generator,
+        balanced_open_authority=balanced_open_authority,
+        balanced_open_generator=balanced_open_generator,
         schemas=schemas,
     )
 
@@ -366,7 +404,13 @@ def _generation_context(
     contract = contracts[generation_contract_id]
     if generation_contract_id == FOUR_CANDIDATE_V1:
         return contract, authority.derivation_authority, None
-    return contract, authority.balanced_authority, authority.balanced_generator
+    if generation_contract_id == BALANCED_PHASE_V2:
+        return contract, authority.balanced_authority, authority.balanced_generator
+    return (
+        contract,
+        authority.balanced_open_authority,
+        authority.balanced_open_generator,
+    )
 
 
 def _validate_generation_payload(
@@ -386,10 +430,19 @@ def _validate_generation_payload(
         if generation_contract_id == FOUR_CANDIDATE_V1:
             seal = derivation.validate_output_seal_payload(payload, document)
             profile = seal["runtime_profile_id"]
-        else:
+        elif generation_contract_id == BALANCED_PHASE_V2:
             seal = balanced_derivation.validate_output_seal_payload(payload, document)
             profile = seal["runtime_attestation"]["profile_id"]
-    except (derivation.DerivationError, balanced_derivation.DerivationError) as exc:
+        else:
+            seal = balanced_open_derivation.validate_output_seal_payload(
+                payload, document
+            )
+            profile = seal["runtime_attestation"]["profile_id"]
+    except (
+        derivation.DerivationError,
+        balanced_derivation.DerivationError,
+        balanced_open_derivation.DerivationError,
+    ) as exc:
         raise GoldenV3PromotionError(str(exc)) from exc
     if seal.get("schema_id") != contract["seal_schema_id"]:
         raise GoldenV3PromotionError("Golden-v3 generation seal schema changed")
@@ -943,8 +996,8 @@ def _receipt_document(
     )
     return {
         "$schema": "https://sstory.example/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
-        "schema_version": "2.0.0",
-        "id": "sstory-k3-golden-v3-acceptance-receipt-v2",
+        "schema_version": "3.0.0",
+        "id": "sstory-k3-golden-v3-acceptance-receipt-v3",
         "job_id": JOB_ID,
         "status": "accepted",
         "acceptance_threshold": threshold,
@@ -1531,6 +1584,8 @@ def promote_candidate(
             authority.derivation_authority,
             authority.balanced_authority,
             authority.balanced_generator,
+            authority.balanced_open_authority,
+            authority.balanced_open_generator,
             *authority.schemas.values(),
             candidate,
             *seal_bindings,

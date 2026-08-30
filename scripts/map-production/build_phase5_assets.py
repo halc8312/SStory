@@ -1996,6 +1996,7 @@ def _verify_manifest_golden_style_v3(
     if evidence.get("generation_contract_id") not in (
         golden_v3_promotion.FOUR_CANDIDATE_V1,
         golden_v3_promotion.BALANCED_PHASE_V2,
+        golden_v3_promotion.BALANCED_OPEN_PHASE_V3,
     ):
         raise Phase5BuildError("Golden v3 generation discriminator is missing or invalid")
     return evidence
