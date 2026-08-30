@@ -36,8 +36,43 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "7bf147420b6baed542c05da97591fcc28c357436e312fb2275845153edd56fbf"
+SPEC_SHA256 = "fbdaf2aa25a9f7046cf3a05e7cbfaa4822edd40af83d133e0a2cc8b44051ac54"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
+DEV_R20_CLOSED_STATUS = "failed-and-closed-before-measurement"
+DEV_R20_CLOSED_ROLE = (
+    "development-only premeasurement population failure evidence; both private "
+    "audits passed, calibration tiny-speck population 0 and holdout tiny-speck "
+    "population 1 each missed formal minimum 4 and development floor 6, every other "
+    "endpoint passed both minima, no numeric metric or threshold search started, one "
+    "read-only postmortem ran exactly once, all Root and Independent initial snapshots "
+    "and receipts remain immutable, and no dev-r20 root, key, private material, "
+    "control, reference, pixel, identity, code, commitment, label, decision, "
+    "measurement, nonce, public surface, or postmortem output is reusable"
+)
+DEV_R20_FAILURE_AUDIT_REL = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json"
+)
+# Frozen only after the sanitized tracked audit was finalized byte-for-byte.
+DEV_R20_FAILURE_AUDIT_RAW_SHA256 = (
+    "e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8"
+)
+# Frozen from canonical_json_bytes() over the same finalized semantic payload.
+DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256 = (
+    "c176212723a240021d1379794231c47a1909ad3222c4f54e93db04c8230f7560"
+)
+DEV_R20_CLOSED_SECRET_SCOPE = (
+    "closed non-authority dev-r20 only; the retained development key, root, output, "
+    "and commitment are forensic evidence only and cannot become formal authority or "
+    "be reused"
+)
+DEV_R20_CLOSED_REVIEWER_ACCESS_CONTRACT = (
+    "the formal blind key remains only in a dedicated custodian process; every closed "
+    "development blind key through dev-r20 remains only in its retained Git-ignored "
+    "private probe root and is never reused; neither Vision review process may read or "
+    "inherit any key or private audit role, and both must use visual page inspection "
+    "only until both official initial snapshots and receipts exist before reconciliation "
+    "and label sealing"
+)
 R20_DEVELOPMENT_BASIS = (
     "reference constants, strictly monotone bounded soft-unit score structure, "
     "worst-case truth aggregation, and fixed filters were designed from the "
@@ -76,12 +111,13 @@ R20_DEVELOPMENT_BASIS = (
     "and all five visible flags remain exact; every prior corpus remains "
     "development-only; dev-r19 then closed before population aggregation or numeric "
     "measurement because its holdout obvious-artifact duplicate pair was labeled "
-    "clean severity 0 with no visible flags; fresh dev-r20 preserves the full dev-r19 "
-    "artifact catalog, tier/metric/threshold/population/rate contracts, reject "
-    "severity-band policy, and clean duplicate, and changes only the obvious-artifact "
-    "duplicate construction to a keyed 12-bar finite axial short-line payload whose "
-    "native-pixel geometry is statically checked but whose Vision outcome is not "
-    "guaranteed"
+    "clean severity 0 with no visible flags; dev-r20 preserved the full dev-r19 "
+    "artifact catalog, tier/metric/threshold/population/rate contracts, reject severity-"
+    "band policy, and clean duplicate, changed only the obvious-artifact duplicate "
+    "construction to a keyed 12-bar finite axial short-line payload, passed both private "
+    "audits, and then closed before measurement because calibration tiny-speck "
+    "population 0 and holdout tiny-speck population 1 each missed formal minimum 4 and "
+    "development floor 6 while every other endpoint passed both minima"
 )
 
 
@@ -1351,6 +1387,8 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "dev_r19_failure_audit_sha256",
             "dev_r20_status",
             "dev_r20_role",
+            "dev_r20_failure_audit",
+            "dev_r20_failure_audit_sha256",
         },
         "r6 development history",
     )
@@ -1562,17 +1600,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "microtexture-v2-r6-dev-r19-development-failure.json"
         or history.get("dev_r19_failure_audit_sha256")
         != "96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0"
-        or history.get("dev_r20_status") != "fresh-development-only"
-        or history.get("dev_r20_role")
-        != "fresh one-shot development role used only to strengthen the obvious-"
-        "artifact duplicate sentinel after the closed dev-r19 prepopulation private-"
-        "audit miss; it preserves all 200 dev-r19 artifact morphologies, every design "
-        "tier, metric, threshold, population and rate contract, the dev-r19 reject "
-        "severity-band duplicate policy, and the clean duplicate construction, and "
-        "changes only the obvious-artifact duplicate payload to a fresh-keyed finite "
-        "axial short-line sentinel with static geometry checks; Vision truth is not "
-        "guaranteed, all identities and audit roles remain private, and it can never "
-        "supply formal authority"
+        or history.get("dev_r20_status") != DEV_R20_CLOSED_STATUS
+        or history.get("dev_r20_role") != DEV_R20_CLOSED_ROLE
+        or history.get("dev_r20_failure_audit") != DEV_R20_FAILURE_AUDIT_REL
+        or history.get("dev_r20_failure_audit_sha256")
+        != DEV_R20_FAILURE_AUDIT_RAW_SHA256
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -1590,7 +1622,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": "non-authority dev-r20 only; no development key, root, output, or commitment can become formal authority",
+        "scope": DEV_R20_CLOSED_SECRET_SCOPE,
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
         "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r20/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
@@ -2544,15 +2576,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     ):
         if not isinstance(public_policy.get(field), str) or not public_policy[field]:
             raise RuntimeError(f"r6 public identity policy missing {field}")
-    if public_policy.get("reviewer_access_contract") != (
-        "the formal blind key remains only in a dedicated custodian process; "
-        "every closed development blind key through dev-r19 remains only in its "
-        "retained Git-ignored private probe root and is never reused; the fresh dev-r20 "
-        "blind key remains only in its separate Git-ignored private probe root and "
-        "tracked custodian runner; neither Vision review process may read or inherit "
-        "any key or private audit role, and both must use visual page inspection only "
-        "until both official initial snapshots and receipts exist before reconciliation "
-        "and label sealing"
+    if (
+        public_policy.get("reviewer_access_contract")
+        != DEV_R20_CLOSED_REVIEWER_ACCESS_CONTRACT
     ):
         raise RuntimeError("r6 dev-r20 reviewer-access contract drift")
     if (
@@ -6400,10 +6426,460 @@ def validate_dev_r19_premeasurement_private_audit_failure(value: Any) -> None:
         require_exact_keys(value[field], keys, f"{context}.{field}")
 
 
+def validate_dev_r20_premeasurement_failure(value: Any) -> None:
+    """Validate the exact sanitized dev-r20 population-gate failure evidence."""
+
+    context = "closed dev-r20 premeasurement population failure audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "failure_phase",
+            "failure_class",
+            "measurement_started",
+            "selection_status",
+            "development_hard_threshold",
+            "calibration_endpoint_performance",
+            "holdout_endpoint_performance",
+            "threshold_selection_audit",
+            "one_shot_contract",
+            "vision_review",
+            "private_audit",
+            "population_audit",
+            "failure_marker_summary",
+            "hash_bindings",
+            "absent_measurement_artifacts",
+            "postmortem",
+            "root_cause",
+            "successor_constraints",
+            "secret_handling",
+        },
+        context,
+    )
+    timestamp = value["audit_recorded_at"]
+    if (
+        not isinstance(timestamp, str)
+        or re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z", timestamp
+        )
+        is None
+    ):
+        raise RuntimeError(f"{context}.audit_recorded_at must be canonical UTC text")
+    parse_utc_timestamp(timestamp, f"{context}.audit_recorded_at")
+    expected_header = {
+        "artifact": "microtexture-v2-r6-dev-r20-development-premeasurement-population-failure-audit",
+        "schema_version": "microtexture-v2-r6-development-premeasurement-population-failure-audit/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "development_edition": "r20",
+        "outcome": "failed_closed",
+        "failure_phase": "private-audits-passed-then-premeasurement-population-audit",
+        "failure_class": "both-split-tiny-speck-population-shortfall",
+        "measurement_started": False,
+        "selection_status": "not_started_population_gate_failed",
+        "development_hard_threshold": None,
+        "calibration_endpoint_performance": None,
+        "holdout_endpoint_performance": None,
+        "threshold_selection_audit": None,
+    }
+    for field, expected in expected_header.items():
+        _require_exact_json_value(value[field], expected, f"{context}.{field}")
+    if sha256_bytes(canonical_json_bytes(value)) != (
+        DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256
+    ):
+        raise RuntimeError(f"{context} canonical semantic digest drift")
+
+    _require_exact_json_value(
+        value["one_shot_contract"],
+        {
+            "generation_completed_exactly_once": True,
+            "root_vision_completed_exactly_once_before_private_reveal": True,
+            "independent_vision_completed_exactly_once_before_private_reveal": True,
+            "all_440_records_reviewed_by_each_reviewer": True,
+            "root_initial_snapshot_and_receipt_sealed_exactly_once": True,
+            "independent_initial_snapshot_and_receipt_sealed_exactly_once": True,
+            "root_and_independent_decisions_reconciled_exactly_once_before_preflight": True,
+            "review_preflight_invoked_exactly_once": True,
+            "review_preflight_passed": True,
+            "labels_sealed_exactly_once_before_private_reveal": True,
+            "private_reveal_started_after_label_seal": True,
+            "private_audit_started_exactly_once": True,
+            "private_sentinel_audit_passed": True,
+            "population_audit_started_exactly_once": True,
+            "population_audit_passed": False,
+            "analysis_started_exactly_once": True,
+            "numeric_metric_called": False,
+            "threshold_search_started": False,
+            "development_threshold_selected": False,
+            "postmortem_invoked_exactly_once": True,
+            "formal_cli_invoked": False,
+            "formal_marker_created": False,
+            "formal_threshold_created": False,
+            "locked_clean_v18_decoded_or_measured": False,
+            "failure_marker_created": True,
+            "rerun_resume_relabel_retune_subset_topup_resample_or_reuse_for_r20_forbidden": True,
+            "r20_closed": True,
+        },
+        f"{context}.one_shot_contract",
+    )
+
+    vision = value["vision_review"]
+    require_exact_keys(
+        vision,
+        {
+            "records_per_split_per_reviewer",
+            "review_boards_per_split_per_reviewer",
+            "logical_comparison_fields",
+            "evidence_notes_excluded_from_logical_comparison",
+            "initial_snapshots_persisted_immutably",
+            "initial_snapshots_official_decision_dsl_conformant",
+            "initial_snapshot_receipts_verified",
+            "splits",
+            "all_differences_reinspected_native_then_evidence",
+            "final_reconciled",
+            "canonical_labels_equal_both_reviewers",
+            "total_initial_logical_and_notes_only_difference_count",
+            "initial_snapshots_and_receipts_preserved_after_reconciliation",
+            "bilateral_initial_visible_flag_intersection_gate",
+        },
+        f"{context}.vision_review",
+    )
+    expected_review_keys = {
+        "root_initial_decisions_sha256",
+        "root_initial_receipt_sha256",
+        "independent_initial_decisions_sha256",
+        "independent_initial_receipt_sha256",
+        "initial_exact_logical_agreement",
+        "initial_logical_difference_count",
+        "initial_notes_only_difference_count",
+        "all_differences_reinspected_native_then_evidence",
+        "reconciled",
+        "root_final_decisions_sha256",
+        "independent_final_decisions_sha256",
+        "canonical_final_decisions_sha256",
+        "completed_labels_sha256",
+        "record_dispositions",
+        "reconciled_final_official_parser_and_ev3_passed",
+        "final_visible_flags_subset_of_both_initial_flag_sets",
+    }
+    expected_review_summary = {
+        "calibration": {
+            "differences": (78, 42),
+            "final_sha256": (
+                "5b8b74d8059c240b2b32b62c849e93793967334bb62dae82193fc1ac7ceb362b"
+            ),
+            "completed_labels_sha256": (
+                "77cc8209f5e2d2ce7ea7806bca9cdcadbdbbba96fb01467edf073f963f1eb559"
+            ),
+            "record_dispositions": {"clean": 88, "warning": 46, "reject": 86},
+        },
+        "holdout": {
+            "differences": (63, 81),
+            "final_sha256": (
+                "1f266a23f9086011db14e5ad47be75ae9e516fcd4007a3a587dd2ed3c6c365c0"
+            ),
+            "completed_labels_sha256": (
+                "7fbbf24d9942c7eef184181a0480cb60ae36ebb63e1d5fa5fd6b61e2184514bd"
+            ),
+            "record_dispositions": {"clean": 70, "warning": 54, "reject": 96},
+        },
+    }
+    if set(vision["splits"]) != set(expected_review_summary):
+        raise RuntimeError(f"{context} Vision split coverage drift")
+    total_differences = 0
+    for split, expected in expected_review_summary.items():
+        review = vision["splits"][split]
+        require_exact_keys(review, expected_review_keys, f"{context}.vision.{split}")
+        require_exact_keys(
+            review["record_dispositions"],
+            {"clean", "warning", "reject"},
+            f"{context}.vision.{split}.record_dispositions",
+        )
+        hash_fields = {field for field in review if field.endswith("_sha256")}
+        if any(
+            not isinstance(review[field], str)
+            or re.fullmatch(r"[0-9a-f]{64}", review[field]) is None
+            for field in hash_fields
+        ):
+            raise RuntimeError(f"{context}.{split} Vision SHA-256 binding drift")
+        logical, notes_only = expected["differences"]
+        final_sha = expected["final_sha256"]
+        if (
+            review["initial_exact_logical_agreement"] is not False
+            or review["initial_logical_difference_count"] != logical
+            or review["initial_notes_only_difference_count"] != notes_only
+            or review["all_differences_reinspected_native_then_evidence"] is not True
+            or review["reconciled"] is not True
+            or review["root_final_decisions_sha256"] != final_sha
+            or review["independent_final_decisions_sha256"] != final_sha
+            or review["canonical_final_decisions_sha256"] != final_sha
+            or review["completed_labels_sha256"]
+            != expected["completed_labels_sha256"]
+            or review["record_dispositions"] != expected["record_dispositions"]
+            or sum(review["record_dispositions"].values()) != 220
+            or review["reconciled_final_official_parser_and_ev3_passed"] is not True
+            or review["final_visible_flags_subset_of_both_initial_flag_sets"]
+            is not True
+        ):
+            raise RuntimeError(f"{context}.{split} reconciliation contract drift")
+        total_differences += logical + notes_only
+    if (
+        vision["records_per_split_per_reviewer"] != 220
+        or vision["review_boards_per_split_per_reviewer"] != 37
+        or vision["logical_comparison_fields"]
+        != ["page", "row", "anonymous_code", "disposition", "severity", "flags"]
+        or vision["evidence_notes_excluded_from_logical_comparison"] is not True
+        or vision["initial_snapshots_persisted_immutably"] is not True
+        or vision["initial_snapshots_official_decision_dsl_conformant"] is not True
+        or vision["initial_snapshot_receipts_verified"] is not True
+        or vision["all_differences_reinspected_native_then_evidence"] is not True
+        or vision["final_reconciled"] is not True
+        or vision["canonical_labels_equal_both_reviewers"] is not True
+        or total_differences != 264
+        or vision["total_initial_logical_and_notes_only_difference_count"] != 264
+        or vision[
+            "initial_snapshots_and_receipts_preserved_after_reconciliation"
+        ]
+        is not True
+    ):
+        raise RuntimeError(f"{context} Vision review contract drift")
+    _require_exact_json_value(
+        vision["bilateral_initial_visible_flag_intersection_gate"],
+        {
+            "revision": "dev-r17-bilateral-initial-visible-flag-intersection-gate-v1",
+            "manifest_sha256": "f042250290f80d4304923e3b564746e8311515f5c649811678db934bb3ad6ffd",
+            "both_official_initial_snapshots_and_receipts_required": True,
+            "final_visible_flag_set_relation": "subset-of-root-initial-intersection-independent-initial",
+            "private_role_input": False,
+            "passed": True,
+        },
+        f"{context}.vision_review.bilateral_initial_visible_flag_intersection_gate",
+    )
+
+    _require_exact_json_value(
+        value["private_audit"],
+        {
+            "all_splits_passed": True,
+            "anonymous_code_page_row_private_identity_or_pixel_binding_tracked": False,
+            "splits": {
+                split: {
+                    "record_count": 220,
+                    "artifact_record_count": 200,
+                    "protocol_zero_record_count": 16,
+                    "duplicate_audit_record_count": 4,
+                    "contact_sheet_count": 185,
+                    "review_board_count": 37,
+                    "regenerated_public_commitments_matched": True,
+                    "regenerated_contact_sheet_bytes_matched": True,
+                    "regenerated_review_board_bytes_matched": True,
+                    "protocol_zero_audit_passed": True,
+                    "duplicate_audit_passed": True,
+                }
+                for split in ("calibration", "holdout")
+            },
+        },
+        f"{context}.private_audit",
+    )
+
+    population_counts = {
+        "calibration": [26, 30, 44, 38, 11, 0, 10, 10, 23, 12],
+        "holdout": [21, 30, 49, 40, 12, 1, 12, 13, 24, 14],
+    }
+    formal_minima = [15, 10, 30, 4, 8, 4, 4, 8, 8, 6]
+    development_floors = [19, 13, 38, 6, 10, 6, 6, 10, 10, 8]
+    expected_population_splits: dict[str, Any] = {}
+    for split, counts in population_counts.items():
+        formal = {
+            endpoint_id: {
+                "unique_cluster_count": counts[index],
+                "minimum_unique_clusters": formal_minima[index],
+                "count_passed": counts[index] >= formal_minima[index],
+            }
+            for index, endpoint_id in enumerate(EXPECTED_ENDPOINT_IDS)
+        }
+        development = {
+            endpoint_id: {
+                "unique_cluster_count": counts[index],
+                "development_minimum_unique_clusters": development_floors[index],
+                "count_passed": counts[index] >= development_floors[index],
+            }
+            for index, endpoint_id in enumerate(EXPECTED_ENDPOINT_IDS)
+        }
+        formal_passed = all(endpoint["count_passed"] for endpoint in formal.values())
+        development_passed = all(
+            endpoint["count_passed"] for endpoint in development.values()
+        )
+        expected_population_splits[split] = {
+            "split": split,
+            "condition_cluster_count": 100,
+            "all_eligible_clusters_exact_polarity_pairs": True,
+            "formal_endpoint_minimums": formal,
+            "formal_endpoint_minimums_passed": formal_passed,
+            "development_safety_floors": development,
+            "development_safety_floors_passed": development_passed,
+            "passed": formal_passed and development_passed,
+        }
+    _require_exact_json_value(
+        value["population_audit"],
+        {
+            "eligible_artifact_condition_clusters_per_split": 100,
+            "all_eligible_artifact_condition_clusters_exact_polarity_pairs": True,
+            "splits": expected_population_splits,
+            "passed": False,
+        },
+        f"{context}.population_audit",
+    )
+
+    _require_exact_json_value(
+        value["failure_marker_summary"],
+        {
+            "artifact": "microtexture-v2-r6-development-analysis-failure",
+            "schema_version": "microtexture-v2-r6-development-analysis-failure/1",
+            "authority": False,
+            "formal_use_forbidden": True,
+            "development_edition": "r20",
+            "development_closed": True,
+            "measurement_started": False,
+            "error_type": "RuntimeError",
+            "message": "development endpoint population premeasurement audit failed",
+        },
+        f"{context}.failure_marker_summary",
+    )
+    expected_hash_bindings = {
+        "captured_repository_head": "9c5849406a378ab280e2ea0817810078cb4ec791",
+        "preregistered_spec_sha256": "7bf147420b6baed542c05da97591fcc28c357436e312fb2275845153edd56fbf",
+        "implementation_bindings_sha256": "ee1c86a94cf0d393afc55b68405c1dd51f98cb4a01942eac679799d40b1ce923",
+        "development_authority_manifest_sha256": "584deb41c74d8beeff030c33f1ed0116c4e583c9c60a41e010fb6233972b05a2",
+        "dev_r19_failure_audit_sha256": "96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0",
+        "development_boundary_sha256": "09ce5502e5f437382314c1cd5370e21614b56d1d0e11b52120aadacdb68b7bc5",
+        "generation_start_sha256": "6da4c328ff76bf5000014559a9fac009f9de5e95dfae90a75d07557e019e211e",
+        "generation_summary_sha256": "9d8499b0c71eef1a346c0c1fddbb30ba4d66ede7e8f41017aa5aa2502da473fa",
+        "generation_seal_sha256": "ce5cd42f49a244bb24f297a86913ad66584faf8a74599cc3697c9a737bbe5dd8",
+        "generation_completion_sha256": "b806e15b7e0336f37ff4bb0db2d4dd1e3e8209617fcaec857482f3fa5301cbc6",
+        "blind_key_commitment": "5ebfccbed8cbed2b72ab5bbf4dd853315a2a35f093b8a1e3a8b3446d4a2f7e1a",
+        "calibration_manifest_sha256": "240eb30274cd79fc746a4c8db261f9f137f58b62f158e57da85b0c2a5eff2aae",
+        "calibration_blank_labels_sha256": "fc2b602f87b2ef6c39f925509ff10f8809094380c3998d086c130554d178bc9d",
+        "calibration_review_index_sha256": "73ce760b07579205932bdb2f97f810b3fd93c051a69ade3770b1ab819cc592cc",
+        "holdout_manifest_sha256": "c39f52a6c822b5d65ddd9ae7f695b23e2e360b6aaa8f7e0c17c0e1a10645fe71",
+        "holdout_blank_labels_sha256": "ce7ecd44e80422b5085bdb51d466b52bd99bd80379a256d07538baa0b616fabb",
+        "holdout_review_index_sha256": "b621373828b18b41c0543df9db348c3ae290dc741b7fd55c309d519cddf6b9b8",
+        "label_seal_receipt_sha256": "035102d8de09f9a294aadf830a85927c85f5ab592fa0cc2da9bf8107258e018c",
+        "population_audit_sha256": "b11dd5fb4920048c83b3f96761480f05735641ed05025586ec753ad2f7364f26",
+        "failure_marker_sha256": "ea39ba6ac301fe7bd7c914fd21ec2a8e39e1a1faa43268b1a4c7df0ba0642bd4",
+    }
+    _require_exact_json_value(
+        value["hash_bindings"], expected_hash_bindings, f"{context}.hash_bindings"
+    )
+    for field, digest in value["hash_bindings"].items():
+        expected_length = 40 if field == "captured_repository_head" else 64
+        if not isinstance(digest, str) or re.fullmatch(
+            rf"[0-9a-f]{{{expected_length}}}", digest
+        ) is None:
+            raise RuntimeError(f"{context} malformed hash binding: {field}")
+
+    _require_exact_json_value(
+        value["absent_measurement_artifacts"],
+        {
+            "calibration_measurements_present": False,
+            "holdout_measurements_present": False,
+            "analysis_result_present": False,
+            "threshold_selection_result_present": False,
+            "holdout_endpoint_result_present": False,
+        },
+        f"{context}.absent_measurement_artifacts",
+    )
+    _require_exact_json_value(
+        value["postmortem"],
+        {
+            "invoked_exactly_once": True,
+            "read_only": True,
+            "raw_output_tracked": False,
+            "sanitized_aggregate_only_in_this_audit": True,
+            "anonymous_code_to_private_identity_mapping_tracked": False,
+            "used_to_relabel_resample_subset_topup_retune_or_select_a_threshold": False,
+        },
+        f"{context}.postmortem",
+    )
+    _require_exact_json_value(
+        value["root_cause"],
+        {
+            "generation_or_runtime_failure": False,
+            "decision_reconciliation_failure": False,
+            "private_audit_failure": False,
+            "population_feasibility": "Calibration tiny-speck reject population 0 and holdout tiny-speck reject population 1 each missed formal minimum 4 and development floor 6; every other endpoint in both splits passed both minima.",
+            "premature_measurement_ruled_out": "The edition closed at the premeasurement population gate before the first numeric metric; no score, candidate threshold, selected threshold, or holdout endpoint result exists.",
+            "postmortem": "One read-only invocation confirmed only the sanitized aggregate cause and supplied no raw output, code, page, row, locator, private identity mapping, repair, or tuning.",
+            "repair_forbidden": "The sealed dev-r20 edition cannot be repaired by relabeling, rerunning, resuming, replacing, subsetting, topping up, resampling the key, regenerating, retuning, or reusing any dev-r20 material.",
+        },
+        f"{context}.root_cause",
+    )
+    _require_exact_json_value(
+        value["successor_constraints"],
+        {
+            "r20_data_role": "development_only_premeasurement_population_failure_evidence",
+            "formal_r6_must_not_start_from_r20_failure": True,
+            "successor_preregistered_in_this_audit": False,
+            "any_successor_must_be_fully_fresh": True,
+            "successor_requires_fresh_preregistered_revision": True,
+            "successor_requires_fresh_root_key_public_nonces_hmac_domains_parameter_nonces_controls_references_identities_codes_commitments_labels_decisions_and_measurements": True,
+            "r20_root_key_private_material_controls_references_pixels_identities_codes_commitments_labels_decisions_measurements_nonces_public_surfaces_and_postmortem_output_reuse_forbidden": True,
+            "formal_endpoint_population_and_rate_minima_must_not_be_weakened": True,
+            "development_safety_floors_must_not_be_weakened": True,
+            "formal_and_development_minima_must_remain_unchanged": True,
+            "successor_may_use_only_this_sanitized_aggregate_failure_evidence": True,
+            "successor_authority_must_be_committed_pushed_and_dual_ci_green_before_generation": True,
+            "formal_r6_root_and_environment_must_remain_absent": True,
+        },
+        f"{context}.successor_constraints",
+    )
+    _require_exact_json_value(
+        value["secret_handling"],
+        {
+            "blind_key_present_in_this_artifact": False,
+            "blind_key_value_logged_or_tracked": False,
+            "anonymous_code_to_private_identity_mapping_tracked": False,
+            "private_labels_measurements_identities_or_pixels_tracked": False,
+            "postmortem_raw_output_tracked": False,
+            "development_blind_key_and_private_material_reuse_forbidden": True,
+            "closed_development_root_reuse_forbidden": True,
+        },
+        f"{context}.secret_handling",
+    )
+
+
+def _verify_tracked_dev_r20_failure_audit(
+    repository: Path, captured_head: str, spec: dict[str, Any]
+) -> bytes:
+    """Bind the retired dev-r20 status to its exact tracked sanitized audit."""
+
+    history = spec.get("history")
+    if not isinstance(history, dict) or (
+        history.get("dev_r20_status") != DEV_R20_CLOSED_STATUS
+        or history.get("dev_r20_role") != DEV_R20_CLOSED_ROLE
+        or history.get("dev_r20_failure_audit") != DEV_R20_FAILURE_AUDIT_REL
+        or history.get("dev_r20_failure_audit_sha256")
+        != DEV_R20_FAILURE_AUDIT_RAW_SHA256
+    ):
+        raise RuntimeError("closed dev-r20 failure audit history binding drift")
+    payload = _tracked_worktree_bytes(
+        repository, captured_head, DEV_R20_FAILURE_AUDIT_REL
+    )
+    if sha256_bytes(payload) != DEV_R20_FAILURE_AUDIT_RAW_SHA256:
+        raise RuntimeError("closed dev-r20 failure audit tracked SHA drift")
+    validate_dev_r20_premeasurement_failure(json.loads(payload.decode("utf-8")))
+    return payload
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind every closed development audit through dev-r19 and fresh dev-r20."""
+    """Bind every closed development audit through retired dev-r20."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -6581,23 +7057,7 @@ def verify_tracked_development_history(
         json.loads(dev_r19_payload.decode("utf-8"))
     )
 
-    if (
-        history.get("dev_r20_status") != "fresh-development-only"
-        or history.get("dev_r20_role")
-        != "fresh one-shot development role used only to strengthen the obvious-"
-        "artifact duplicate sentinel after the closed dev-r19 prepopulation private-"
-        "audit miss; it preserves all 200 dev-r19 artifact morphologies, every design "
-        "tier, metric, threshold, population and rate contract, the dev-r19 reject "
-        "severity-band duplicate policy, and the clean duplicate construction, and "
-        "changes only the obvious-artifact duplicate payload to a fresh-keyed finite "
-        "axial short-line sentinel with static geometry checks; Vision truth is not "
-        "guaranteed, all identities and audit roles remain private, and it can never "
-        "supply formal authority"
-        or {"dev_r20_failure_audit", "dev_r20_failure_audit_sha256"}.intersection(
-            history
-        )
-    ):
-        raise RuntimeError("fresh dev-r20 development history binding drift")
+    _verify_tracked_dev_r20_failure_audit(repository, captured_head, spec)
 
     # Preserve the historical return contract; callers use this function for its
     # fail-closed checks, but earlier code returned the dev-r7 payload.
@@ -6663,9 +7123,26 @@ def verify_tracked_foundation_corpus_provenance(
     return payloads
 
 
+def _reject_closed_dev_r20_formal_operation() -> None:
+    """Validate retirement evidence, then reject before formal root/key/env access."""
+
+    spec = load_spec()
+    # This path is derived from the tracked code location; do not consult the formal
+    # artifact-root environment (or any blind-key source) on the retirement path.
+    repository = CODE_ROOT.parents[2]
+    captured_head = _git(CODE_ROOT, "rev-parse", "HEAD").decode().strip()
+    _verify_tracked_dev_r20_failure_audit(repository, captured_head, spec)
+    assert_head_unchanged(captured_head)
+    raise RuntimeError(
+        "formal r6 operation is blocked: dev-r20 failed and closed before measurement; "
+        "no closed development material can authorize a formal run"
+    )
+
+
 def operation_preflight(
     *, require_receipt: bool, include_locked_clean_reference: bool = False
 ) -> dict[str, Any]:
+    _reject_closed_dev_r20_formal_operation()
     spec = load_spec()
     key = blind_key()
     commitment = blind_commitment(key)

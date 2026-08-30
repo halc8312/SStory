@@ -1653,6 +1653,29 @@ from control_catalog import contact_sheet_pages, expected_controls  # noqa: E402
 from metrics_v2_r6 import measure  # noqa: E402
 
 
+_R20_CLOSED_SPEC_CHANGED_PATHS = {
+    "history.dev_r20_status": common.DEV_R20_CLOSED_STATUS,
+    "history.dev_r20_role": common.DEV_R20_CLOSED_ROLE,
+    "history.dev_r20_failure_audit": common.DEV_R20_FAILURE_AUDIT_REL,
+    "history.dev_r20_failure_audit_sha256": (
+        common.DEV_R20_FAILURE_AUDIT_RAW_SHA256
+    ),
+    "metric_definition.development_basis": common.R20_DEVELOPMENT_BASIS,
+    "development_probe_secret_handling.scope": (
+        common.DEV_R20_CLOSED_SECRET_SCOPE
+    ),
+    "public_identity_policy.reviewer_access_contract": (
+        common.DEV_R20_CLOSED_REVIEWER_ACCESS_CONTRACT
+    ),
+}
+_R20_RETIRED_OPERATIONS = frozenset(
+    {"generate", "preflight", "analyze", "postmortem", "review-crops"}
+)
+_R20_FROZEN_FRESH_SPEC_CANONICAL_SHA256 = (
+    "a9d369f8735e8f5bd83c3c330d2f11acb564896c0b16c771cb33b41cc78f3cc8"
+)
+
+
 def _sha256(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
 
@@ -2816,6 +2839,76 @@ def _validate_dev_r20_spec_authority(value: dict[str, Any]) -> None:
         raise RuntimeError("development dev-r20 materialized predecessor round-trip drift")
 
 
+def _project_closed_dev_r20_authority_to_fresh_r20(
+    value: dict[str, Any],
+) -> dict[str, Any]:
+    """Project the closed tracked spec to the exact frozen fresh-r20 authority view."""
+
+    projected = deepcopy(value)
+    history = projected["history"]
+    history["dev_r20_status"] = _R20_HISTORY_STATUS
+    history["dev_r20_role"] = _R20_HISTORY_ROLE
+    history.pop("dev_r20_failure_audit", None)
+    history.pop("dev_r20_failure_audit_sha256", None)
+    projected["metric_definition"]["development_basis"] = _R20_DEVELOPMENT_BASIS
+    projected["development_probe_secret_handling"]["scope"] = _R20_SECRET_SCOPE
+    projected["public_identity_policy"]["reviewer_access_contract"] = (
+        _R20_REVIEWER_ACCESS_CONTRACT
+    )
+    return projected
+
+
+def _validate_closed_dev_r20_spec_authority(value: dict[str, Any]) -> None:
+    """Validate closure fields and revalidate the preserved fresh-r20 authority."""
+
+    expected_closed_paths = {
+        "history.dev_r20_status",
+        "history.dev_r20_role",
+        "history.dev_r20_failure_audit",
+        "history.dev_r20_failure_audit_sha256",
+        "metric_definition.development_basis",
+        "development_probe_secret_handling.scope",
+        "public_identity_policy.reviewer_access_contract",
+    }
+    if set(_R20_CLOSED_SPEC_CHANGED_PATHS) != expected_closed_paths:
+        raise RuntimeError("development closed dev-r20 projection pathset drift")
+    for dotted_path, expected in _R20_CLOSED_SPEC_CHANGED_PATHS.items():
+        actual: Any = value
+        for component in dotted_path.split("."):
+            if not isinstance(actual, dict) or component not in actual:
+                raise RuntimeError(
+                    f"development closed dev-r20 path missing: {dotted_path}"
+                )
+            actual = actual[component]
+        if actual != expected:
+            raise RuntimeError(f"development closed dev-r20 path drift: {dotted_path}")
+
+    projected_fresh_r20 = _project_closed_dev_r20_authority_to_fresh_r20(value)
+    _validate_dev_r20_spec_authority(projected_fresh_r20)
+    if _sha256(common.canonical_json_bytes(projected_fresh_r20)) != (
+        _R20_FROZEN_FRESH_SPEC_CANONICAL_SHA256
+    ):
+        raise RuntimeError("development closed dev-r20 authority round-trip drift")
+
+    closed_round_trip = deepcopy(projected_fresh_r20)
+    for dotted_path, expected in _R20_CLOSED_SPEC_CHANGED_PATHS.items():
+        components = dotted_path.split(".")
+        target: Any = closed_round_trip
+        for component in components[:-1]:
+            if not isinstance(target, dict) or component not in target:
+                raise RuntimeError(
+                    f"development closed dev-r20 round-trip path missing: {dotted_path}"
+                )
+            target = target[component]
+        if not isinstance(target, dict):
+            raise RuntimeError(
+                f"development closed dev-r20 round-trip parent drift: {dotted_path}"
+            )
+        target[components[-1]] = deepcopy(expected)
+    if closed_round_trip != value:
+        raise RuntimeError("development closed dev-r20 authority round-trip drift")
+
+
 def _load_spec() -> tuple[dict[str, Any], str]:
     payload = (CODE_ROOT / "preregistered-spec.json").read_bytes()
     digest = _sha256(payload)
@@ -2823,8 +2916,24 @@ def _load_spec() -> tuple[dict[str, Any], str]:
         raise RuntimeError("development preregistered spec SHA drift")
     value = json.loads(payload.decode("utf-8"))
     common.validate_preregistered_spec(value)
-    _validate_dev_r20_spec_authority(value)
+    _validate_closed_dev_r20_spec_authority(value)
     return value, digest
+
+
+def _reject_retired_dev_r20_operation(operation: str) -> None:
+    """Validate tracked closure evidence, then reject without private/root/env reads."""
+
+    if operation not in _R20_RETIRED_OPERATIONS:
+        raise RuntimeError("unknown retired dev-r20 operation")
+    spec, _spec_sha = _load_spec()
+    captured_head = _git_head()
+    common._verify_tracked_dev_r20_failure_audit(REPO_ROOT, captured_head, spec)
+    common.assert_head_unchanged(captured_head)
+    raise RuntimeError(
+        f"development dev-r20 {operation} is permanently retired: the edition failed "
+        "and closed before measurement; rerun, resume, regeneration, relabeling, "
+        "postmortem replay, and review-crop writes are forbidden"
+    )
 
 
 def _public_nonces(spec: dict[str, Any]) -> dict[str, str]:
@@ -4121,6 +4230,7 @@ def _review_preflight() -> tuple[
 
 
 def preflight() -> None:
+    _reject_retired_dev_r20_operation("preflight")
     _spec, _state, _generation_binding, prepared = _public_preflight()
     _assert_development_boundary(root_must_not_exist=False)
     print(
@@ -4404,6 +4514,7 @@ def _regenerate_and_audit_population(
 
 
 def analyze() -> None:
+    _reject_retired_dev_r20_operation("analyze")
     spec, state, generation_binding, prepared = _public_preflight()
     _assert_private_analysis_boundary(analysis_must_exist=False)
     if PRIVATE_ANALYSIS_ROOT.exists() or PRIVATE_ANALYSIS_ROOT.is_symlink():
@@ -4610,6 +4721,7 @@ def analyze() -> None:
 
 def postmortem() -> None:
     """Read-only reveal for a closed development probe; never emits key material."""
+    _reject_retired_dev_r20_operation("postmortem")
     failure = PRIVATE_ANALYSIS_ROOT / "FAILED.dev.json"
     if not failure.is_file():
         raise RuntimeError("development postmortem requires a closed failed probe")
@@ -4693,6 +4805,7 @@ def postmortem() -> None:
 
 
 def generate() -> None:
+    _reject_retired_dev_r20_operation("generate")
     _assert_development_boundary(root_must_not_exist=True)
     spec, spec_sha = _load_spec()
     captured_head, bindings_sha = _tracked_input_preflight(spec, spec_sha)
@@ -4892,6 +5005,7 @@ def generate() -> None:
 
 
 def review_crops(split: str, page_index: int) -> None:
+    _reject_retired_dev_r20_operation("review-crops")
     if (
         split not in {"calibration", "holdout"}
         or not 1 <= page_index <= EXPECTED_REVIEW_PAGES_PER_SPLIT
@@ -4982,6 +5096,7 @@ def main() -> None:
     parser.add_argument("--split", choices=("calibration", "holdout"))
     parser.add_argument("--page", type=int)
     arguments = parser.parse_args()
+    _reject_retired_dev_r20_operation(arguments.command)
     if arguments.command == "generate":
         generate()
     elif arguments.command == "preflight":
