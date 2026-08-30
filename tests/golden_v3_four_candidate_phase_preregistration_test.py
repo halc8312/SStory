@@ -98,30 +98,57 @@ class GoldenV3FourCandidatePhasePreregistrationTest(unittest.TestCase):
         with self.assertRaises(generator.DerivationError):
             generator.validate_authority(changed)
 
-    def test_emit_is_fail_closed_while_statistics_firewall_is_unsealed(self) -> None:
-        with self.assertRaisesRegex(generator.DerivationError, "intentionally unsealed"):
-            generator.load_statistics_firewall(self.authority)
-
-    def test_unsealed_build_and_emit_fail_before_any_raster_decode(self) -> None:
-        decode_names = ("_decode_bound_rgb", "_decode_bound_gray", "_decode_bound_mask")
-        decode_mocks = [
-            mock.patch.object(
-                generator,
-                name,
-                side_effect=AssertionError(f"unexpected real decode through {name}"),
-            )
-            for name in decode_names
+    def test_statistics_firewall_authority_is_sealed_and_source_bound(self) -> None:
+        config = self.authority["derivation"]["v19_statistical_authority"]
+        self.assertEqual(config["firewall_status"], "sealed-canonical-statistics-authority")
+        self.assertEqual(config["future_artifact_path"], generator.STATISTICS_FIREWALL_PATH)
+        self.assertEqual(
+            config["future_artifact_sha256"], generator.STATISTICS_FIREWALL_SHA256
+        )
+        policy = self.authority["input_policy"]
+        self.assertEqual(policy["exact_source_binding_count"], 28)
+        self.assertEqual(len(policy["source_bindings"]), 28)
+        binding = generator.source_bindings(self.authority)[
+            "sealed-v19-statistics-firewall"
         ]
-        with decode_mocks[0] as rgb, decode_mocks[1] as gray, decode_mocks[2] as mask:
-            with self.assertRaisesRegex(generator.DerivationError, "intentionally unsealed"):
-                generator.build_payloads(self.authority)
-            rgb.assert_not_called()
-            gray.assert_not_called()
-            mask.assert_not_called()
+        self.assertEqual(binding["path"], generator.STATISTICS_FIREWALL_PATH)
+        self.assertEqual(binding["sha256"], generator.STATISTICS_FIREWALL_SHA256)
 
+    def test_sealed_loader_accepts_only_sha_bound_synthetic_canonical_bytes(self) -> None:
+        payload = extractor.canonical_statistics_json(self.synthetic_statistics_record())
+        digest = generator.sha256_bytes(payload)
+        authority = copy.deepcopy(self.authority)
+        relative = "synthetic/v19-statistics-firewall.json"
+        config = authority["derivation"]["v19_statistical_authority"]
+        config["future_artifact_path"] = relative
+        config["future_artifact_sha256"] = digest
+        binding = generator.source_bindings(authority)[
+            "sealed-v19-statistics-firewall"
+        ]
+        binding["path"] = relative
+        binding["sha256"] = digest
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / relative
+            path.parent.mkdir(parents=True)
+            path.write_bytes(payload)
+            with (
+                mock.patch.object(generator, "ROOT", root),
+                mock.patch.object(generator, "STATISTICS_FIREWALL_PATH", relative),
+                mock.patch.object(generator, "STATISTICS_FIREWALL_SHA256", digest),
+            ):
+                records = generator.load_statistics_firewall(authority)
+                path.write_bytes(payload + b" ")
+                with self.assertRaisesRegex(generator.DerivationError, "SHA-256 changed"):
+                    generator.load_statistics_firewall(authority)
+        self.assertEqual(len(records), 7)
+
+    def test_sealed_emit_dispatch_checks_firewall_without_raster_decode(self) -> None:
+        profile = self.authority["runtime"]["allowed_profiles"][0]["id"]
         with (
-            mock.patch.object(generator, "_runtime_gate", return_value="synthetic"),
-            mock.patch.object(generator, "check_bound_sources"),
+            mock.patch.object(generator, "_runtime_gate", return_value=profile),
+            mock.patch.object(generator, "check_bound_sources") as source_check,
+            mock.patch.object(generator, "emit") as emit_mock,
             mock.patch.object(
                 generator,
                 "_decode_bound_rgb",
@@ -137,11 +164,23 @@ class GoldenV3FourCandidatePhasePreregistrationTest(unittest.TestCase):
                 "_decode_bound_mask",
                 side_effect=AssertionError("unexpected mask decode"),
             ) as mask,
+            mock.patch("sys.stdout", new_callable=io.StringIO),
             redirect_stderr(io.StringIO()),
         ):
-            with self.assertRaises(SystemExit) as caught:
-                generator.main(["--emit"])
-        self.assertEqual(caught.exception.code, 2)
+            self.assertEqual(generator.main(["--emit"]), 0)
+        source_check.assert_called_once()
+        checked_roles = source_check.call_args.kwargs["roles"]
+        self.assertEqual(
+            checked_roles,
+            set(
+                self.authority["input_policy"][
+                    "candidate_generator_read_allowlist_roles"
+                ]
+            ),
+        )
+        self.assertIn("sealed-v19-statistics-firewall", checked_roles)
+        emit_mock.assert_called_once()
+        self.assertEqual(emit_mock.call_args.args[1], profile)
         rgb.assert_not_called()
         gray.assert_not_called()
         mask.assert_not_called()
@@ -438,9 +477,6 @@ class GoldenV3FourCandidatePhasePreregistrationTest(unittest.TestCase):
 
     def test_exclusive_final_reservation_publishes_once_without_overwrite(self) -> None:
         authority = copy.deepcopy(self.authority)
-        authority["derivation"]["v19_statistical_authority"][
-            "future_artifact_sha256"
-        ] = "1" * 64
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             payloads = [
@@ -464,9 +500,6 @@ class GoldenV3FourCandidatePhasePreregistrationTest(unittest.TestCase):
 
     def test_compare_only_cli_requires_cross_profile_four_png_byte_equality(self) -> None:
         authority = copy.deepcopy(self.authority)
-        authority["derivation"]["v19_statistical_authority"][
-            "future_artifact_sha256"
-        ] = "2" * 64
         profiles = [
             profile["id"] for profile in authority["runtime"]["allowed_profiles"]
         ]
@@ -550,9 +583,14 @@ class GoldenV3FourCandidatePhasePreregistrationTest(unittest.TestCase):
         self.assertNotIn("v19-byte-closed-replay-module", allowlist)
         self.assertNotIn("v21-dev20-search-summary", allowlist)
         self.assertIn("sealed-v19-statistics-firewall", allowlist)
+        self.assertIn(
+            "sealed-v19-statistics-firewall",
+            generator.source_bindings(self.authority),
+        )
 
     def test_generator_has_no_forbidden_replay_or_summary_calls(self) -> None:
         source = MODULE_PATH.read_text(encoding="utf-8")
+        self.assertNotIn('discard("sealed-v19-statistics-firewall")', source)
         tree = ast.parse(source)
         called_attributes = {
             node.func.attr

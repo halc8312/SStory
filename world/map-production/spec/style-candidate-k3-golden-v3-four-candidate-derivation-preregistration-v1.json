@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "interface": "sstory-k3-golden-v3-four-candidate-derivation-preregistration-v1",
-  "status": "preregistered-code-only-not-generated",
+  "status": "preregistered-statistics-sealed-candidates-not-generated",
   "immutable_plan": true,
   "strict_audit_authority": {
     "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
@@ -45,7 +45,7 @@
     "opencv_rng_seed": 17720
   },
   "input_policy": {
-    "exact_source_binding_count": 27,
+    "exact_source_binding_count": 28,
     "unlisted_inputs_forbidden": true,
     "tracked_worktree_bytes_must_match_sha256": true,
     "candidate_generator_read_allowlist_roles": [
@@ -96,6 +96,12 @@
         "path": "scripts/map-production/extract_style_candidate_k3_golden_v3_v19_statistics.py",
         "sha256": "26ea56e203ffb8b9899d8d04042bfd8e9d0e14281f2b55fe55bc99b270cca955",
         "use": "statistics artifact canonical serializer and source provenance only; candidate emit never reads or imports it"
+      },
+      {
+        "role": "sealed-v19-statistics-firewall",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v19-statistics-firewall.json",
+        "sha256": "23cd5086a91dac4b49654527ed24d8283c6fe8033fa64a307d41de3a6797f903",
+        "use": "sole canonical one-dimensional Q16.16 v19 statistical input for candidate emission"
       },
       {
         "role": "v19-byte-closed-replay-contract",
@@ -265,9 +271,9 @@
       }
     },
     "v19_statistical_authority": {
-      "firewall_status": "schema-frozen-unsealed-no-real-statistics-extracted",
+      "firewall_status": "sealed-canonical-statistics-authority",
       "future_artifact_path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v19-statistics-firewall.json",
-      "future_artifact_sha256": null,
+      "future_artifact_sha256": "23cd5086a91dac4b49654527ed24d8283c6fe8033fa64a307d41de3a6797f903",
       "emit_requires_sealed_sha256": true,
       "single_frozen_source": "one byte-closed v19 replay result; quantized contour_field supplies scalar PSD/CDF and the same replay supplies Lab medians",
       "body_medians": "three-element [L,a,b] componentwise Q16.16 Lab medians from reconstructed v19 bodies 1-7 on their exact coverage anchors",
