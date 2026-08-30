@@ -264,12 +264,12 @@ references、commitments、labels、decisions、measurementsをisolated root内�
 `world/map-production/qa/microtexture-v2-r6-dev-r19-development-failure.json`、raw SHA-256は
 `96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0`です。`dev-r19`のroot / key / private material / outputは再利用しません。
 
-唯一のpreregistered successor `dev-r20`のstatusは`fresh-development-only`です。exact roleは
-`fresh one-shot development role used only to strengthen the obvious-artifact duplicate sentinel after the closed dev-r19 prepopulation private-audit miss; it preserves all 200 dev-r19 artifact morphologies, every design tier, metric, threshold, population and rate contract, the dev-r19 reject severity-band duplicate policy, and the clean duplicate construction, and changes only the obvious-artifact duplicate payload to a fresh-keyed finite axial short-line sentinel with static geometry checks; Vision truth is not guaranteed, all identities and audit roles remain private, and it can never supply formal authority`
-です。
+`dev-r20`のstatusは`failed-and-closed-before-measurement`です。exact roleは
+`development-only premeasurement population failure evidence; both private audits passed, calibration tiny-speck population 0 and holdout tiny-speck population 1 each missed formal minimum 4 and development floor 6, every other endpoint passed both minima, no numeric metric or threshold search started, one read-only postmortem ran exactly once, all Root and Independent initial snapshots and receipts remain immutable, and no dev-r20 root, key, private material, control, reference, pixel, identity, code, commitment, label, decision, measurement, nonce, public surface, or postmortem output is reusable`
+です。両private auditはpassしましたが、calibration / holdoutのtiny-speck population `0` / `1`がformal minimum `4`とdevelopment floor `6`をともにmissし、他の全endpointは両minimumをpassしました。numeric metricとthreshold searchを開始せず閉鎖し、read-only sanitized postmortemは一度だけです。auditは`world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json`、raw SHA-256は`e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8`です。successorはpreregisterしていません。
 
 `dev-r20`はschedule / sentinel revisionsは`dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1` /
-`dev-r20-keyed-axial-short-line-duplicate-sentinel-v1`です。`obvious-artifact` duplicateのみをfresh-keyed positive `+12.0 L`のaxial bar `12`本へ変更します。各barはencoded `24×3 px`、各exact metric quadrantに`3`本、各quadrantにhorizontal / verticalの両方を含み、center間Chebyshev distanceは`>=32 px`、support guardは`>=2 px`、nonzero supportは`864 px`です。pairはrequested delta、decoded residual、metricがexactに等しく、reference、control、anonymous code、control IDは異なります。Vision truthとprivate audit passは保証しません。
+`dev-r20-keyed-axial-short-line-duplicate-sentinel-v1`です。`obvious-artifact` duplicateのみを当該editionのfresh-keyed positive `+12.0 L`のaxial bar `12`本へ変更しました。各barはencoded `24×3 px`、各exact metric quadrantに`3`本、各quadrantにhorizontal / verticalの両方を含み、center間Chebyshev distanceは`>=32 px`、support guardは`>=2 px`、nonzero supportは`864 px`です。pairはrequested delta、decoded residual、metricがexactに等しく、reference、control、anonymous code、control IDは異なります。このgeometry contractと両private auditはpassしましたが、アーティファクトpopulation全体のVision truthは保証されず、tiny-speck population gateをfailしました。
 
 clean duplicate、`dev-r19`のreject severity-band policy、全200アーティファクト形態、全design tier、metric、threshold、population、rate contractは不変です。fullアーティファクト形態 / sanitized r19 basis / sentinel manifest SHA-256は
 `9eb2326011658d095fe7ae5b1ded80ae3af890483633622e2c7ad34e03385365` /
@@ -279,7 +279,7 @@ clean duplicate、`dev-r19`のreject severity-band policy、全200アーティ�
 `3b87c5aabee0c8c8641d80496123a4f2dd58ca60f6da2bcf822e6bc7dfa80368` /
 `584deb41c74d8beeff030c33f1ed0116c4e583c9c60a41e010fb6233972b05a2`です。
 
-fresh rootは`tmp/map-production/microtexture-v2-r6-dev-r20`、public noncesは`r6-calibration-v15` / `r6-holdout-v15`です。condition-cluster / render-seed / opaque-code / private-reference-transformはv15、public payload commitmentはv16、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv14です。protocol-zero nonce basesは`1251000` / `1261000`、アーティファクトbasesは`1273000` / `1283000`、duplicate-audit noncesは`1291000..1291002` / `1301000..1301002`です。exact authority commitのpushと同一commitのUbuntu / Windows CI両方のgreenより前にgenerationを開始できません。`dev-r20`はformal authorityを供給できず、formal stageはblockedです。
+消費済みclosed rootは`tmp/map-production/microtexture-v2-r6-dev-r20`、public noncesは`r6-calibration-v15` / `r6-holdout-v15`です。condition-cluster / render-seed / opaque-code / private-reference-transformはv15、public payload commitmentはv16、key commitment / foundation-offset / foundation-assignment / delta / private-control-idはv14です。protocol-zero nonce basesは`1251000` / `1261000`、アーティファクトbasesは`1273000` / `1283000`、duplicate-audit noncesは`1291000..1291002` / `1301000..1301002`です。generationはexact authority commitのpushと同一commitのUbuntu / Windows CI両方のgreen後に一度だけ実行済みです。`dev-r20`はformal authorityを供給できず、全root / key / material / outputを再利用しません。formal stageはblockedです。
 
 ## Golden 候補の二段階昇格
 

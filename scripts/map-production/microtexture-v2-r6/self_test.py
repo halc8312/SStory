@@ -138,8 +138,17 @@ DEV_R19_FAILURE_AUDIT_RELATIVE = (
 DEV_R19_FAILURE_AUDIT_SHA256 = (
     "96d93fe63be2ff6171ade926dbace188b6fd5eacf748a6f03a787781a5d248d0"
 )
+DEV_R20_FAILURE_AUDIT_RELATIVE = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r20-development-failure.json"
+)
+DEV_R20_FAILURE_AUDIT_SHA256 = (
+    "e8689321135e8c5d3fb038fbaa7c3ccbe644999905f4a3d3834fa30969ff27c8"
+)
+DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256 = (
+    "c176212723a240021d1379794231c47a1909ad3222c4f54e93db04c8230f7560"
+)
 R20_PREREGISTERED_SPEC_SHA256 = (
-    "7bf147420b6baed542c05da97591fcc28c357436e312fb2275845153edd56fbf"
+    "fbdaf2aa25a9f7046cf3a05e7cbfaa4822edd40af83d133e0a2cc8b44051ac54"
 )
 
 
@@ -2216,20 +2225,42 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             )
         self.assertFalse(np.array_equal(deltas["calibration"], deltas["holdout"]))
 
-    def test_dev_r20_materialized_authority_projects_exactly_to_r19(self) -> None:
-        projected = development_probe._project_materialized_r20_authority_to_r19(
+    def test_closed_dev_r20_projects_exactly_to_frozen_fresh_r20_and_r19(
+        self,
+    ) -> None:
+        development_probe._validate_closed_dev_r20_spec_authority(self.spec)
+        fresh_r20 = development_probe._project_closed_dev_r20_authority_to_fresh_r20(
             self.spec
+        )
+        development_probe._validate_dev_r20_spec_authority(fresh_r20)
+        self.assertEqual(fresh_r20["history"]["dev_r20_status"], "fresh-development-only")
+        self.assertNotIn("dev_r20_failure_audit", fresh_r20["history"])
+        self.assertNotIn("dev_r20_failure_audit_sha256", fresh_r20["history"])
+
+        projected = development_probe._project_materialized_r20_authority_to_r19(
+            fresh_r20
         )
         development_probe._validate_dev_r19_spec_authority(projected)
         self.assertEqual(
-            development_probe._materialize_dev_r20_spec(projected), self.spec
+            development_probe._materialize_dev_r20_spec(projected), fresh_r20
         )
         self.assertNotIn("dev_r20_status", projected["history"])
         self.assertEqual(projected["history"]["dev_r19_status"], "fresh-development-only")
         self.assertEqual(len(projected["population_anchor_schedule"]), 84)
         self.assertEqual(len(self.spec["population_anchor_schedule"]), 105)
 
-    def test_dev_r20_runner_is_tracked_authority_with_isolated_root(self) -> None:
+        closed_round_trip = copy.deepcopy(fresh_r20)
+        for dotted_path, expected in (
+            development_probe._R20_CLOSED_SPEC_CHANGED_PATHS.items()
+        ):
+            components = dotted_path.split(".")
+            target = closed_round_trip
+            for component in components[:-1]:
+                target = target[component]
+            target[components[-1]] = copy.deepcopy(expected)
+        self.assertEqual(closed_round_trip, self.spec)
+
+    def test_dev_r20_runner_is_retired_with_isolated_forensic_root(self) -> None:
         self.assertEqual(development_probe.DEVELOPMENT_EDITION, "r20")
         self.assertEqual(common.SPEC_SHA256, R20_PREREGISTERED_SPEC_SHA256)
         self.assertEqual(
@@ -2256,7 +2287,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             "5c182b83ea230ab3f3fc19f26fcf3369f41d40cef5a50cbc8cf9f072d37d6383",
         )
         development_probe._validate_dev_r20_probe_authority_manifest()
-        development_probe._validate_dev_r20_spec_authority(self.spec)
+        development_probe._validate_closed_dev_r20_spec_authority(self.spec)
         self.assertIn("development_probe.py", self.spec["authority_files"])
         secret_handling = self.spec["development_probe_secret_handling"]
         self.assertTrue(
@@ -2287,13 +2318,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             / secret_handling["ignored_private_key_required_repo_relative"],
             development_probe.DEV_ROOT / "private" / "development-key.bin",
         )
-        captured_head = development_probe._git_head()
-        self.assertEqual(
-            development_probe._validate_development_key_git_boundary(
-                self.spec, captured_head
-            ),
-            development_probe.DEV_ROOT / "private" / "development-key.bin",
-        )
+        self.assertEqual(secret_handling["scope"], common.DEV_R20_CLOSED_SECRET_SCOPE)
 
     def test_dev_r20_runner_rejects_spec_bytes_outside_frozen_sha(self) -> None:
         frozen_sha = common.SPEC_SHA256
@@ -2309,6 +2334,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(common.SPEC_SHA256, frozen_sha)
 
     def test_dev_r20_materialized_authority_mutations_fail_closed(self) -> None:
+        fresh_r20 = development_probe._project_closed_dev_r20_authority_to_fresh_r20(
+            self.spec
+        )
         mutations: list[tuple[str, tuple[str, ...], object]] = [
             (
                 "schedule revision",
@@ -2424,7 +2452,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ),
         ]
         for label, path, replacement in mutations:
-            changed = copy.deepcopy(self.spec)
+            changed = copy.deepcopy(fresh_r20)
             target = changed
             for component in path[:-1]:
                 target = target[component]
@@ -2434,6 +2462,206 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 r"development dev-r20 (?:schedule authority|materialized path) drift",
             ):
                 development_probe._validate_dev_r20_spec_authority(changed)
+
+    def test_closed_dev_r20_projection_fields_and_round_trip_fail_closed(self) -> None:
+        for dotted_path, expected in (
+            development_probe._R20_CLOSED_SPEC_CHANGED_PATHS.items()
+        ):
+            changed = copy.deepcopy(self.spec)
+            components = dotted_path.split(".")
+            target = changed
+            for component in components[:-1]:
+                target = target[component]
+            replacement: object
+            if isinstance(expected, bool):
+                replacement = not expected
+            elif isinstance(expected, str):
+                replacement = expected + "-tampered"
+            else:
+                replacement = None
+            target[components[-1]] = replacement
+            with self.subTest(path=dotted_path), self.assertRaisesRegex(
+                RuntimeError, "development closed dev-r20 path drift"
+            ):
+                development_probe._validate_closed_dev_r20_spec_authority(changed)
+
+        changed = copy.deepcopy(self.spec)
+        changed["history"]["unexpected_closed_r20_field"] = True
+        with self.assertRaises(RuntimeError):
+            development_probe._validate_closed_dev_r20_spec_authority(changed)
+
+    def test_all_dev_r20_cli_operations_retire_before_root_key_or_private_access(
+        self,
+    ) -> None:
+        operations = (
+            ("generate", development_probe.generate, ()),
+            ("preflight", development_probe.preflight, ()),
+            ("analyze", development_probe.analyze, ()),
+            ("postmortem", development_probe.postmortem, ()),
+            ("review-crops", development_probe.review_crops, ("calibration", 1)),
+        )
+        for operation, entrypoint, arguments in operations:
+            dev_root = mock.MagicMock(name=f"{operation}_dev_root")
+            private_root = mock.MagicMock(name=f"{operation}_private_root")
+            formal_root = mock.MagicMock(name=f"{operation}_formal_root")
+            with (
+                self.subTest(operation=operation),
+                mock.patch.object(
+                    development_probe,
+                    "_reject_retired_dev_r20_operation",
+                    side_effect=RuntimeError("permanently retired before private access"),
+                ) as retired,
+                mock.patch.object(development_probe, "DEV_ROOT", dev_root),
+                mock.patch.object(
+                    development_probe, "PRIVATE_ANALYSIS_ROOT", private_root
+                ),
+                mock.patch.object(development_probe, "FORMAL_ROOT", formal_root),
+                mock.patch.object(development_probe, "_load_spec") as load_spec,
+                mock.patch.object(
+                    development_probe, "_generation_preflight"
+                ) as generation_preflight,
+                mock.patch.object(
+                    development_probe, "_public_preflight"
+                ) as public_preflight,
+                mock.patch.object(
+                    development_probe, "_review_preflight"
+                ) as review_preflight,
+                mock.patch.object(
+                    development_probe, "_assert_development_boundary"
+                ) as development_boundary,
+                mock.patch.object(
+                    development_probe, "_assert_private_analysis_boundary"
+                ) as private_boundary,
+                mock.patch.object(
+                    development_probe.secrets, "token_bytes"
+                ) as token_bytes,
+            ):
+                with self.assertRaisesRegex(RuntimeError, "permanently retired"):
+                    entrypoint(*arguments)
+            retired.assert_called_once_with(operation)
+            for untouched in (
+                load_spec,
+                generation_preflight,
+                public_preflight,
+                review_preflight,
+                development_boundary,
+                private_boundary,
+                token_bytes,
+            ):
+                untouched.assert_not_called()
+            self.assertEqual(dev_root.mock_calls, [])
+            self.assertEqual(private_root.mock_calls, [])
+            self.assertEqual(formal_root.mock_calls, [])
+
+    def test_retired_dev_r20_guard_validates_audit_before_private_access(
+        self,
+    ) -> None:
+        repository = development_probe.REPO_ROOT
+        captured_head = "b" * 40
+        exact_payload = (repository / DEV_R20_FAILURE_AUDIT_RELATIVE).read_bytes()
+        for operation in sorted(development_probe._R20_RETIRED_OPERATIONS):
+            dev_root = mock.MagicMock(name=f"{operation}_dev_root")
+            private_root = mock.MagicMock(name=f"{operation}_private_root")
+            formal_root = mock.MagicMock(name=f"{operation}_formal_root")
+            with (
+                self.subTest(kind="verified", operation=operation),
+                mock.patch.object(
+                    development_probe,
+                    "_load_spec",
+                    return_value=(self.spec, common.SPEC_SHA256),
+                ),
+                mock.patch.object(
+                    development_probe, "_git_head", return_value=captured_head
+                ),
+                mock.patch.object(
+                    common, "_tracked_worktree_bytes", return_value=exact_payload
+                ) as tracked,
+                mock.patch.object(common, "assert_head_unchanged") as stable,
+                mock.patch.object(development_probe, "DEV_ROOT", dev_root),
+                mock.patch.object(
+                    development_probe, "PRIVATE_ANALYSIS_ROOT", private_root
+                ),
+                mock.patch.object(development_probe, "FORMAL_ROOT", formal_root),
+                mock.patch.object(
+                    development_probe.secrets, "token_bytes"
+                ) as token_bytes,
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError,
+                    f"development dev-r20 {operation} is permanently retired",
+                ):
+                    development_probe._reject_retired_dev_r20_operation(operation)
+            tracked.assert_called_once_with(
+                repository, captured_head, DEV_R20_FAILURE_AUDIT_RELATIVE
+            )
+            stable.assert_called_once_with(captured_head)
+            token_bytes.assert_not_called()
+            self.assertEqual(dev_root.mock_calls, [])
+            self.assertEqual(private_root.mock_calls, [])
+            self.assertEqual(formal_root.mock_calls, [])
+
+        for label, supplied, message in (
+            (
+                "missing",
+                RuntimeError("missing dev-r20 failure audit"),
+                "missing dev-r20 failure audit",
+            ),
+            (
+                "tampered",
+                exact_payload + b"\n",
+                "closed dev-r20 failure audit tracked SHA drift",
+            ),
+        ):
+            dev_root = mock.MagicMock(name=f"{label}_dev_root")
+            private_root = mock.MagicMock(name=f"{label}_private_root")
+            formal_root = mock.MagicMock(name=f"{label}_formal_root")
+
+            def tracked_bytes(
+                observed_repository: Path,
+                observed_head: str,
+                relative: str,
+            ) -> bytes:
+                self.assertEqual(observed_repository, repository)
+                self.assertEqual(observed_head, captured_head)
+                self.assertEqual(relative, DEV_R20_FAILURE_AUDIT_RELATIVE)
+                if isinstance(supplied, BaseException):
+                    raise supplied
+                self.assertIsInstance(supplied, bytes)
+                return supplied
+
+            with (
+                self.subTest(kind=label),
+                mock.patch.object(
+                    development_probe,
+                    "_load_spec",
+                    return_value=(self.spec, common.SPEC_SHA256),
+                ),
+                mock.patch.object(
+                    development_probe, "_git_head", return_value=captured_head
+                ),
+                mock.patch.object(
+                    common, "_tracked_worktree_bytes", side_effect=tracked_bytes
+                ) as tracked,
+                mock.patch.object(common, "assert_head_unchanged") as stable,
+                mock.patch.object(development_probe, "DEV_ROOT", dev_root),
+                mock.patch.object(
+                    development_probe, "PRIVATE_ANALYSIS_ROOT", private_root
+                ),
+                mock.patch.object(development_probe, "FORMAL_ROOT", formal_root),
+                mock.patch.object(
+                    development_probe.secrets, "token_bytes"
+                ) as token_bytes,
+            ):
+                with self.assertRaisesRegex(RuntimeError, message):
+                    development_probe._reject_retired_dev_r20_operation("analyze")
+            tracked.assert_called_once_with(
+                repository, captured_head, DEV_R20_FAILURE_AUDIT_RELATIVE
+            )
+            stable.assert_not_called()
+            token_bytes.assert_not_called()
+            self.assertEqual(dev_root.mock_calls, [])
+            self.assertEqual(private_root.mock_calls, [])
+            self.assertEqual(formal_root.mock_calls, [])
 
     def test_dev_r17_runner_rejects_unignored_private_key_path(self) -> None:
         completed = development_probe.subprocess.CompletedProcess
@@ -2741,6 +2969,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
 
             output = io.StringIO()
             with (
+                mock.patch.object(
+                    development_probe, "_reject_retired_dev_r20_operation"
+                ),
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(development_probe, "_assert_development_boundary"),
                 mock.patch.object(
@@ -2829,6 +3060,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             root = Path(directory) / "dev-r17"
             key_path = root / "private" / "development-key.bin"
             with (
+                mock.patch.object(
+                    development_probe, "_reject_retired_dev_r20_operation"
+                ),
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(development_probe, "_assert_development_boundary"),
                 mock.patch.object(
@@ -2912,6 +3146,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 root = Path(directory) / "dev-r17"
                 key_path = root / "private" / "development-key.bin"
                 with (
+                    mock.patch.object(
+                        development_probe, "_reject_retired_dev_r20_operation"
+                    ),
                     mock.patch.object(development_probe, "DEV_ROOT", root),
                     mock.patch.object(development_probe, "_assert_development_boundary"),
                     mock.patch.object(
@@ -2980,6 +3217,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             root = Path(directory) / "dev-r17"
             key_path = root / "private" / "development-key.bin"
             with (
+                mock.patch.object(
+                    development_probe, "_reject_retired_dev_r20_operation"
+                ),
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(development_probe, "_assert_development_boundary"),
                 mock.patch.object(
@@ -3032,6 +3272,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                     return original_write(path, value)
 
                 with (
+                    mock.patch.object(
+                        development_probe, "_reject_retired_dev_r20_operation"
+                    ),
                     mock.patch.object(development_probe, "DEV_ROOT", root),
                     mock.patch.object(development_probe, "_assert_development_boundary"),
                     mock.patch.object(
@@ -3098,6 +3341,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 return original_write(path, value)
 
             with (
+                mock.patch.object(
+                    development_probe, "_reject_retired_dev_r20_operation"
+                ),
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(development_probe, "_assert_development_boundary"),
                 mock.patch.object(
@@ -3587,6 +3833,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             key_path.parent.mkdir(parents=True)
             key_path.write_bytes(b"k" * 32)
             with (
+                mock.patch.object(
+                    development_probe, "_reject_retired_dev_r20_operation"
+                ),
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(
                     development_probe, "PRIVATE_ANALYSIS_ROOT", analysis_root
@@ -3980,6 +4229,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "dev-r17"
             with (
+                mock.patch.object(
+                    development_probe, "_reject_retired_dev_r20_operation"
+                ),
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(
                     development_probe,
@@ -4023,6 +4275,9 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "dev-r17"
             with (
+                mock.patch.object(
+                    development_probe, "_reject_retired_dev_r20_operation"
+                ),
                 mock.patch.object(development_probe, "DEV_ROOT", root),
                 mock.patch.object(
                     development_probe,
@@ -7758,7 +8013,264 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(RuntimeError):
                 common.validate_dev_r19_premeasurement_private_audit_failure(changed)
 
-    def test_tracked_development_history_reads_through_dev_r19_in_order(self) -> None:
+    def test_dev_r20_population_failure_audit_is_strict_closed_and_truthful(
+        self,
+    ) -> None:
+        payload = (
+            common.repository_root() / DEV_R20_FAILURE_AUDIT_RELATIVE
+        ).read_bytes()
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), DEV_R20_FAILURE_AUDIT_SHA256)
+        self.assertEqual(common.DEV_R20_FAILURE_AUDIT_REL, DEV_R20_FAILURE_AUDIT_RELATIVE)
+        self.assertEqual(
+            common.DEV_R20_FAILURE_AUDIT_RAW_SHA256, DEV_R20_FAILURE_AUDIT_SHA256
+        )
+        audit = json.loads(payload.decode("utf-8"))
+        common.validate_dev_r20_premeasurement_failure(audit)
+        self.assertEqual(
+            hashlib.sha256(common.canonical_json_bytes(audit)).hexdigest(),
+            DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256,
+        )
+        self.assertEqual(
+            common.DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256,
+            DEV_R20_FAILURE_AUDIT_CANONICAL_SHA256,
+        )
+        self.assertEqual(audit["development_edition"], "r20")
+        self.assertEqual(audit["outcome"], "failed_closed")
+        self.assertEqual(
+            audit["failure_phase"],
+            "private-audits-passed-then-premeasurement-population-audit",
+        )
+        self.assertEqual(
+            audit["failure_class"], "both-split-tiny-speck-population-shortfall"
+        )
+        self.assertFalse(audit["measurement_started"])
+        self.assertEqual(
+            audit["selection_status"], "not_started_population_gate_failed"
+        )
+        for field in (
+            "development_hard_threshold",
+            "calibration_endpoint_performance",
+            "holdout_endpoint_performance",
+            "threshold_selection_audit",
+        ):
+            self.assertIsNone(audit[field])
+
+        one_shot = audit["one_shot_contract"]
+        for field in (
+            "generation_completed_exactly_once",
+            "root_vision_completed_exactly_once_before_private_reveal",
+            "independent_vision_completed_exactly_once_before_private_reveal",
+            "all_440_records_reviewed_by_each_reviewer",
+            "root_initial_snapshot_and_receipt_sealed_exactly_once",
+            "independent_initial_snapshot_and_receipt_sealed_exactly_once",
+            "root_and_independent_decisions_reconciled_exactly_once_before_preflight",
+            "review_preflight_invoked_exactly_once",
+            "review_preflight_passed",
+            "labels_sealed_exactly_once_before_private_reveal",
+            "private_reveal_started_after_label_seal",
+            "private_audit_started_exactly_once",
+            "private_sentinel_audit_passed",
+            "population_audit_started_exactly_once",
+            "analysis_started_exactly_once",
+            "postmortem_invoked_exactly_once",
+            "failure_marker_created",
+            "rerun_resume_relabel_retune_subset_topup_resample_or_reuse_for_r20_forbidden",
+            "r20_closed",
+        ):
+            self.assertTrue(one_shot[field], field)
+        for field in (
+            "population_audit_passed",
+            "numeric_metric_called",
+            "threshold_search_started",
+            "development_threshold_selected",
+            "formal_cli_invoked",
+            "formal_marker_created",
+            "formal_threshold_created",
+            "locked_clean_v18_decoded_or_measured",
+        ):
+            self.assertFalse(one_shot[field], field)
+
+        expected_reviews = {
+            "calibration": {
+                "root_initial": "88501ad63a72d844e2dbfd88314f08ff2e725086a9873a503ea70a3c8e970946",
+                "root_receipt": "d6ba3153ac2d53b49bf3de6573cac3967b2a715d07807df15194b34668c46645",
+                "independent_initial": "00c71a2450c8f5759d40e795f66baec9d93152442e17e9cb9249d199187abf8b",
+                "independent_receipt": "2fd2e726257e76af61eec20faf156e0bacc61fd2a39a53494205f8108db18ff2",
+                "logical": 78,
+                "notes": 42,
+                "final": "5b8b74d8059c240b2b32b62c849e93793967334bb62dae82193fc1ac7ceb362b",
+                "labels": "77cc8209f5e2d2ce7ea7806bca9cdcadbdbbba96fb01467edf073f963f1eb559",
+                "dispositions": {"clean": 88, "warning": 46, "reject": 86},
+            },
+            "holdout": {
+                "root_initial": "b234a05aa889a265bb3bc7ed42db7d46679ddfadaea83de7738ae8b9b3e6689d",
+                "root_receipt": "87653dea7749016646e9753a6ad07a5f4eee8227932bd974d55f7d6191545744",
+                "independent_initial": "44659b299977e43fcaebc716329cd12d2cb226258dd2d9c408a88aeb165d293e",
+                "independent_receipt": "bd9532bb15eecfbe99c55ef71d4738e375e5750bc50c03f1bc72ffbc069e1ba8",
+                "logical": 63,
+                "notes": 81,
+                "final": "1f266a23f9086011db14e5ad47be75ae9e516fcd4007a3a587dd2ed3c6c365c0",
+                "labels": "7fbbf24d9942c7eef184181a0480cb60ae36ebb63e1d5fa5fd6b61e2184514bd",
+                "dispositions": {"clean": 70, "warning": 54, "reject": 96},
+            },
+        }
+        vision = audit["vision_review"]
+        self.assertEqual(
+            vision["total_initial_logical_and_notes_only_difference_count"], 264
+        )
+        for split, expected in expected_reviews.items():
+            review = vision["splits"][split]
+            self.assertEqual(
+                review["root_initial_decisions_sha256"], expected["root_initial"]
+            )
+            self.assertEqual(
+                review["root_initial_receipt_sha256"], expected["root_receipt"]
+            )
+            self.assertEqual(
+                review["independent_initial_decisions_sha256"],
+                expected["independent_initial"],
+            )
+            self.assertEqual(
+                review["independent_initial_receipt_sha256"],
+                expected["independent_receipt"],
+            )
+            self.assertEqual(
+                review["initial_logical_difference_count"], expected["logical"]
+            )
+            self.assertEqual(
+                review["initial_notes_only_difference_count"], expected["notes"]
+            )
+            for field in (
+                "root_final_decisions_sha256",
+                "independent_final_decisions_sha256",
+                "canonical_final_decisions_sha256",
+            ):
+                self.assertEqual(review[field], expected["final"])
+            self.assertEqual(review["completed_labels_sha256"], expected["labels"])
+            self.assertEqual(review["record_dispositions"], expected["dispositions"])
+            self.assertTrue(review["reconciled_final_official_parser_and_ev3_passed"])
+            self.assertTrue(
+                review["final_visible_flags_subset_of_both_initial_flag_sets"]
+            )
+
+        private = audit["private_audit"]
+        self.assertTrue(private["all_splits_passed"])
+        self.assertFalse(
+            private["anonymous_code_page_row_private_identity_or_pixel_binding_tracked"]
+        )
+        for split in ("calibration", "holdout"):
+            self.assertTrue(private["splits"][split]["protocol_zero_audit_passed"])
+            self.assertTrue(private["splits"][split]["duplicate_audit_passed"])
+
+        counts = {
+            "calibration": [26, 30, 44, 38, 11, 0, 10, 10, 23, 12],
+            "holdout": [21, 30, 49, 40, 12, 1, 12, 13, 24, 14],
+        }
+        population = audit["population_audit"]
+        for split, split_counts in counts.items():
+            split_population = population["splits"][split]
+            formal = split_population["formal_endpoint_minimums"]
+            development = split_population["development_safety_floors"]
+            for index, endpoint_id in enumerate(common.EXPECTED_ENDPOINT_IDS):
+                self.assertEqual(
+                    formal[endpoint_id]["unique_cluster_count"], split_counts[index]
+                )
+                self.assertEqual(
+                    development[endpoint_id]["unique_cluster_count"],
+                    split_counts[index],
+                )
+                expected_pass = endpoint_id != "tiny_speck_reject_detection"
+                self.assertIs(formal[endpoint_id]["count_passed"], expected_pass)
+                self.assertIs(development[endpoint_id]["count_passed"], expected_pass)
+            self.assertFalse(split_population["passed"])
+        self.assertFalse(population["passed"])
+        self.assertEqual(
+            audit["hash_bindings"]["population_audit_sha256"],
+            "b11dd5fb4920048c83b3f96761480f05735641ed05025586ec753ad2f7364f26",
+        )
+        self.assertTrue(
+            all(not present for present in audit["absent_measurement_artifacts"].values())
+        )
+        self.assertTrue(audit["postmortem"]["invoked_exactly_once"])
+        self.assertTrue(audit["postmortem"]["read_only"])
+        self.assertFalse(audit["postmortem"]["raw_output_tracked"])
+        self.assertTrue(
+            audit["successor_constraints"]["formal_r6_must_not_start_from_r20_failure"]
+        )
+
+    def test_dev_r20_population_failure_all_fields_and_hashes_fail_closed(
+        self,
+    ) -> None:
+        audit = json.loads(
+            (common.repository_root() / DEV_R20_FAILURE_AUDIT_RELATIVE).read_text(
+                encoding="utf-8"
+            )
+        )
+
+        def leaf_paths(value: object, prefix: tuple[object, ...] = ()) -> list[tuple[object, ...]]:
+            paths: list[tuple[object, ...]] = []
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    paths.extend(leaf_paths(child, (*prefix, key)))
+            elif isinstance(value, list):
+                for index, child in enumerate(value):
+                    paths.extend(leaf_paths(child, (*prefix, index)))
+            else:
+                paths.append(prefix)
+            return paths
+
+        def dict_paths(value: object, prefix: tuple[object, ...] = ()) -> list[tuple[object, ...]]:
+            paths: list[tuple[object, ...]] = []
+            if isinstance(value, dict):
+                paths.append(prefix)
+                for key, child in value.items():
+                    paths.extend(dict_paths(child, (*prefix, key)))
+            elif isinstance(value, list):
+                for index, child in enumerate(value):
+                    paths.extend(dict_paths(child, (*prefix, index)))
+            return paths
+
+        def resolve(document: object, path: tuple[object, ...]) -> object:
+            target = document
+            for component in path:
+                target = target[component]  # type: ignore[index]
+            return target
+
+        for path in leaf_paths(audit):
+            changed = copy.deepcopy(audit)
+            parent = resolve(changed, path[:-1])
+            current = parent[path[-1]]  # type: ignore[index]
+            if isinstance(current, bool):
+                replacement: object = not current
+            elif isinstance(current, int):
+                replacement = current + 1
+            elif isinstance(current, float):
+                replacement = current + 1.0
+            elif isinstance(current, str):
+                replacement = current + "-tampered"
+            elif current is None:
+                replacement = "tampered-null"
+            else:
+                self.fail(f"unsupported JSON leaf at {path}: {type(current)}")
+            parent[path[-1]] = replacement  # type: ignore[index]
+            with self.subTest(kind="leaf", path=path), self.assertRaises(RuntimeError):
+                common.validate_dev_r20_premeasurement_failure(changed)
+
+        for path in dict_paths(audit):
+            changed = copy.deepcopy(audit)
+            target = resolve(changed, path)
+            target["unexpected"] = "forbidden"  # type: ignore[index]
+            with self.subTest(kind="unknown", path=path), self.assertRaises(RuntimeError):
+                common.validate_dev_r20_premeasurement_failure(changed)
+
+            changed = copy.deepcopy(audit)
+            target = resolve(changed, path)
+            first_key = next(iter(target))  # type: ignore[arg-type]
+            del target[first_key]  # type: ignore[index]
+            with self.subTest(kind="missing", path=path), self.assertRaises(RuntimeError):
+                common.validate_dev_r20_premeasurement_failure(changed)
+
+    def test_tracked_development_history_reads_through_dev_r20_in_order(self) -> None:
         repository = common.repository_root()
         captured_head = "c" * 40
         spec = copy.deepcopy(self.spec)
@@ -7792,7 +8304,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         history["dev_r19_failure_audit_sha256"] = DEV_R19_FAILURE_AUDIT_SHA256
         relatives = [
             history[f"dev_r{edition}_failure_audit"]
-            for edition in (7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)
+            for edition in (7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
         ]
         payloads = {
             relative: (repository / relative).read_bytes() for relative in relatives
@@ -7818,6 +8330,28 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             [call.args[2] for call in tracked.call_args_list],
             relatives,
         )
+
+        tampered_payloads = dict(payloads)
+        tampered_payloads[DEV_R20_FAILURE_AUDIT_RELATIVE] = (
+            payloads[DEV_R20_FAILURE_AUDIT_RELATIVE] + b"\n"
+        )
+
+        def tampered_tracked_bytes(
+            _repository: Path, _head: str, relative: str
+        ) -> bytes:
+            return tampered_payloads[relative]
+
+        with (
+            mock.patch.object(
+                common,
+                "_tracked_worktree_bytes",
+                side_effect=tampered_tracked_bytes,
+            ),
+            self.assertRaisesRegex(RuntimeError, "dev-r20 failure audit tracked SHA drift"),
+        ):
+            common.verify_tracked_development_history(
+                repository, captured_head, spec
+            )
 
         contradictory = copy.deepcopy(spec)
         contradictory["history"]["dev_r19_status"] = "fresh-development-only"
@@ -7880,6 +8414,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ("dev_r20_status", "formal-authority"),
             ("dev_r20_role", "changed"),
             ("dev_r20_failure_audit", DEV_R19_FAILURE_AUDIT_RELATIVE),
+            ("dev_r20_failure_audit_sha256", DEV_R19_FAILURE_AUDIT_SHA256),
         ):
             changed = copy.deepcopy(spec)
             changed["history"][field] = replacement
@@ -7889,14 +8424,28 @@ class MicrotextureR6SelfTest(unittest.TestCase):
                 ),
                 self.subTest(field=field),
                 self.assertRaisesRegex(
-                    RuntimeError, "fresh dev-r20 development history binding"
+                    RuntimeError, "closed dev-r20 failure audit history binding"
                 ),
             ):
                 common.verify_tracked_development_history(
                     repository, captured_head, changed
                 )
 
-    def test_dev_r19_history_is_fail_closed_and_dev_r20_is_fresh(
+        incomplete = copy.deepcopy(spec)
+        del incomplete["history"]["dev_r20_failure_audit_sha256"]
+        with (
+            mock.patch.object(
+                common, "_tracked_worktree_bytes", side_effect=tracked_bytes
+            ),
+            self.assertRaisesRegex(
+                RuntimeError, "closed dev-r20 failure audit history binding"
+            ),
+        ):
+            common.verify_tracked_development_history(
+                repository, captured_head, incomplete
+            )
+
+    def test_development_history_is_fail_closed_through_retired_dev_r20(
         self,
     ) -> None:
         history = self.spec["history"]
@@ -8063,18 +8612,16 @@ class MicrotextureR6SelfTest(unittest.TestCase):
         self.assertEqual(
             history["dev_r19_failure_audit_sha256"], DEV_R19_FAILURE_AUDIT_SHA256
         )
-        self.assertEqual(history["dev_r20_status"], "fresh-development-only")
+        self.assertEqual(history["dev_r20_status"], common.DEV_R20_CLOSED_STATUS)
         self.assertEqual(
             history["dev_r20_role"],
-            "fresh one-shot development role used only to strengthen the obvious-"
-            "artifact duplicate sentinel after the closed dev-r19 prepopulation "
-            "private-audit miss; it preserves all 200 dev-r19 artifact morphologies, "
-            "every design tier, metric, threshold, population and rate contract, the "
-            "dev-r19 reject severity-band duplicate policy, and the clean duplicate "
-            "construction, and changes only the obvious-artifact duplicate payload to a "
-            "fresh-keyed finite axial short-line sentinel with static geometry checks; "
-            "Vision truth is not guaranteed, all identities and audit roles remain "
-            "private, and it can never supply formal authority",
+            common.DEV_R20_CLOSED_ROLE,
+        )
+        self.assertEqual(
+            history["dev_r20_failure_audit"], DEV_R20_FAILURE_AUDIT_RELATIVE
+        )
+        self.assertEqual(
+            history["dev_r20_failure_audit_sha256"], DEV_R20_FAILURE_AUDIT_SHA256
         )
         guardrails = self.spec["metric_definition"][
             "score_reference_revision_guardrails"
@@ -8163,6 +8710,8 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ("dev_r19_failure_audit_sha256", DEV_R18_FAILURE_AUDIT_SHA256),
             ("dev_r20_status", "formal-authority"),
             ("dev_r20_role", "reuses dev-r19 authority"),
+            ("dev_r20_failure_audit", DEV_R19_FAILURE_AUDIT_RELATIVE),
+            ("dev_r20_failure_audit_sha256", DEV_R19_FAILURE_AUDIT_SHA256),
         ):
             changed = copy.deepcopy(self.spec)
             changed["history"][field] = drift
@@ -8228,7 +8777,7 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             ).hexdigest(),
             "88860fea0dbdf5ebfa454bf7f038aae53c957808d4c4d344b1ea0fc8e54042e9",
         )
-        development_probe._validate_dev_r20_spec_authority(self.spec)
+        development_probe._validate_closed_dev_r20_spec_authority(self.spec)
         mutations: list[dict[str, object]] = []
         changed = copy.deepcopy(self.spec)
         changed["population_anchor_schedule"]["subset_selection_forbidden"] = False
@@ -10519,6 +11068,80 @@ class MicrotextureR6SelfTest(unittest.TestCase):
             preflight.assert_called_once_with(
                 require_receipt=True, include_locked_clean_reference=True
             )
+
+    def test_formal_preflight_rejects_verified_missing_or_tampered_dev_r20_failure(
+        self,
+    ) -> None:
+        repository = common.repository_root()
+        captured_head = "a" * 40
+        exact_payload = (repository / DEV_R20_FAILURE_AUDIT_RELATIVE).read_bytes()
+        scenarios: tuple[tuple[str, object, str], ...] = (
+            (
+                "verified-failure",
+                exact_payload,
+                "formal r6 operation is blocked: dev-r20 failed and closed",
+            ),
+            (
+                "missing-audit",
+                RuntimeError("missing dev-r20 failure audit"),
+                "missing dev-r20 failure audit",
+            ),
+            (
+                "tampered-audit",
+                exact_payload + b"\n",
+                "closed dev-r20 failure audit tracked SHA drift",
+            ),
+        )
+        for label, supplied, message in scenarios:
+            def tracked_bytes(
+                observed_repository: Path,
+                observed_head: str,
+                relative: str,
+            ) -> bytes:
+                self.assertEqual(observed_repository, repository)
+                self.assertEqual(observed_head, captured_head)
+                self.assertEqual(relative, DEV_R20_FAILURE_AUDIT_RELATIVE)
+                if isinstance(supplied, BaseException):
+                    raise supplied
+                self.assertIsInstance(supplied, bytes)
+                return supplied
+
+            with (
+                self.subTest(label=label),
+                mock.patch.object(common, "load_spec", return_value=self.spec),
+                mock.patch.object(
+                    common, "repository_root", return_value=repository
+                ),
+                mock.patch.object(
+                    common, "_git", return_value=(captured_head + "\n").encode("ascii")
+                ),
+                mock.patch.object(
+                    common, "_tracked_worktree_bytes", side_effect=tracked_bytes
+                ) as tracked,
+                mock.patch.object(common, "assert_head_unchanged"),
+                mock.patch.object(common, "blind_key") as blind_key,
+                mock.patch.object(common, "artifact_root") as artifact_root,
+                mock.patch.object(common, "runtime_fingerprint") as runtime,
+                mock.patch.object(
+                    common, "validate_implementation_bindings"
+                ) as bindings,
+                mock.patch.object(
+                    common, "load_threshold_authority_receipt"
+                ) as threshold_receipt,
+            ):
+                with self.assertRaisesRegex(RuntimeError, message):
+                    common.operation_preflight(
+                        require_receipt=False,
+                        include_locked_clean_reference=False,
+                    )
+            tracked.assert_called_once_with(
+                repository, captured_head, DEV_R20_FAILURE_AUDIT_RELATIVE
+            )
+            blind_key.assert_not_called()
+            artifact_root.assert_not_called()
+            runtime.assert_not_called()
+            bindings.assert_not_called()
+            threshold_receipt.assert_not_called()
 
     def test_locked_provenance_helper_checks_all_five_tracked_bindings(self) -> None:
         pairs = (
