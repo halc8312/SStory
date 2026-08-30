@@ -205,6 +205,59 @@ plan forbids retries, parameter changes, and extra candidates, so this run
 stopped without visual selection. No Golden v3 candidate was accepted,
 promoted, or designated.
 
+## Balanced phase-v2 successor result
+
+The candidate-blind balanced phase-v2 successor was frozen at commit
+`311a1853ad726ce7131a96e7a4e85e5adbfafc0d`. Its exact Windows and Ubuntu
+CI passed in run
+`https://github.com/halc8312/SStory/actions/runs/33328692375` before any
+candidate generation. The preregistration authority file SHA-256 is
+`f108d6e8c66d9e64723e53b881b6931131573f260e6bf43c96a9efafd5eabe80`,
+its canonical self-hash is
+`d988562227aa3bb8642ca492dd8333f0061fe30f9522ef2b7a98fce505107d1d`,
+and the bound generator SHA-256 is
+`da33c03ac0724086803b500b8f13ad6edf09898f6489870197738b86e3587981`.
+The strict audit authority remained unchanged at SHA-256
+`c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7`.
+
+Exactly the four preregistered candidates were emitted once under each of
+the distinct runtime profiles
+`windows-local-opencv-python-4.13.0.92` and
+`linux-ci-opencv-python-headless-4.13.0.92`. Their sealed inventories matched
+in candidate order, recorded path, PNG SHA-256, and byte count. No PNG was
+opened or visually inspected before or after the strict audits.
+
+| Candidate | PNG SHA-256 | bytes | coverage 50/25 | quiet | dash | orientation | texture 4/8 | closed loops | Result |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| B125-M400 | `2922c169412f2175296a7b1f211dc859f02ec098af7132aac989bc1b040a89de` | 4,720,044 | 375/345 | .907596 | 1 | .032998 | .611504/1.092067 | 14 | reject |
+| B125-M450 | `0296de620ab98a43ddbc8b0f2154a12ab6ad35e6dde6004aff11c71d2d7bda3b` | 4,720,044 | 375/345 | .907583 | 1 | .033116 | .614750/1.099730 | 16 | reject |
+| B150-M400 | `dfd7341b204cf0b02d89d3d5d65aa6ed77f270819b8763671c15fc405ee01336` | 4,720,044 | 374/345 | .907570 | 1 | .032379 | .613528/1.095419 | 11 | reject |
+| B150-M450 | `3da341e8239263b040b345371a4a5c0098464f542f76dc3caa14329ab9d6a552` | 4,720,044 | 375/345 | .907626 | 0 | .032241 | .616721/1.102715 | 18 | reject |
+
+All four failed these five frozen gates:
+
+- `closed_loop_count_zero`;
+- `quiet_fraction_range_0_908_0_925`;
+- `repetition_A_max_1_over_20`;
+- `repetition_unit_max_1_over_20`;
+- `sub8_unit_max_0_42`.
+
+Additional failures were exact and candidate-specific:
+
+- B125-M400 and B150-M400 also failed `dash_bundle_pairs_zero`,
+  `sub8_total_max_0_42`, `texture_ratio_4_range_0_615_0_64`, and
+  `texture_ratio_8_range_1_10_1_20`;
+- B125-M450 also failed `dash_bundle_pairs_zero`,
+  `texture_ratio_4_range_0_615_0_64`, and
+  `texture_ratio_8_range_1_10_1_20`;
+- B150-M450 had no additional failed gate beyond the five common failures.
+
+Canonical strict rejection audit reports are stored under
+`world/map-production/qa/automated/` for the four candidate IDs. The sealed
+plan forbids retry, parameter change, and extra candidates, so this successor
+stopped immediately after the four one-shot audits. No visual selection,
+promotion, acceptance, or Golden v3 designation was performed.
+
 ## v21 tooling checkpoint
 
 The following development tooling is fail-closed, but not production-ready:
