@@ -1,0 +1,449 @@
+{
+  "schema_version": "2.0.0",
+  "interface": "sstory-k3-golden-v3-balanced-phase-preregistration-v2",
+  "status": "preregistered-candidates-not-generated",
+  "immutable_plan": true,
+  "canonical_self_sha256": "d988562227aa3bb8642ca492dd8333f0061fe30f9522ef2b7a98fce505107d1d",
+  "strict_audit_authority": {
+    "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
+    "sha256": "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7",
+    "policy": "unchanged independent post-seal audit; no gate copied into construction"
+  },
+  "runtime": {
+    "common": {
+      "python_implementation": "CPython",
+      "python_version": "3.12.10",
+      "opencv_api": "4.13.0",
+      "numpy": "2.3.5",
+      "pillow": "12.3.0",
+      "byteorder": "little",
+      "opencv_threads": 1
+    },
+    "allowed_profiles": [
+      {
+        "id": "windows-local-opencv-python-4.13.0.92",
+        "platform_system": "Windows",
+        "platform_machine": "AMD64",
+        "opencv_distributions": [
+          {
+            "name": "opencv-python",
+            "version": "4.13.0.92"
+          }
+        ],
+        "opencv_build_sha256": "8a55f551e40cf84d0fa7e2509bb9544da66782a8cbc017d7ce27a9de0ef9c1ac"
+      },
+      {
+        "id": "windows-ci-opencv-python-headless-4.13.0.92",
+        "platform_system": "Windows",
+        "platform_machine": "AMD64",
+        "opencv_distributions": [
+          {
+            "name": "opencv-python-headless",
+            "version": "4.13.0.92"
+          }
+        ],
+        "opencv_build_sha256": "fc048a2b6c657a1e163e8591b98100d585d65bacf1d1f1a6e28659cae3b531f1"
+      },
+      {
+        "id": "linux-ci-opencv-python-headless-4.13.0.92",
+        "platform_system": "Linux",
+        "platform_machine": "x86_64",
+        "opencv_distributions": [
+          {
+            "name": "opencv-python-headless",
+            "version": "4.13.0.92"
+          }
+        ],
+        "opencv_build_sha256": "9e0b6b5d3c457d7794d56f55acd3afdadd8fd4b5a8a562e78bcab4fadaf1e604"
+      }
+    ],
+    "profile_selection": "exactly one profile must match system, machine, installed OpenCV distribution set, and OpenCV build-information SHA-256",
+    "opencv_rng_seed": 17720
+  },
+  "input_policy": {
+    "unlisted_inputs_forbidden": true,
+    "tracked_worktree_bytes_must_match_sha256": true,
+    "transitive_v1_closure_required_for_emit": true,
+    "emit_read_snapshot": "snapshot each inherited v1 emit-allowlist source from one read that verifies its bound SHA-256 and tracked identity; subsequent decode or import uses only those immutable bytes",
+    "candidate_generator_forbidden_reads": [
+      "candidate PNGs",
+      "tmp outputs",
+      "rejection reports",
+      "development status",
+      "measurement-inside mask",
+      "texture-reference mask",
+      "strict audit implementation",
+      "strict metric core"
+    ],
+    "validate_only_roles": [
+      "strict-audit-authority-reference-only",
+      "v1-derivation-authority",
+      "v1-helper-module",
+      "balanced-phase-v2-generator",
+      "balanced-phase-v2-synthetic-tests",
+      "sealed-v19-statistics-firewall"
+    ],
+    "source_bindings": [
+      {
+        "role": "strict-audit-authority-reference-only",
+        "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
+        "sha256": "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7",
+        "use": "identity only; never parsed for construction thresholds or metrics"
+      },
+      {
+        "role": "v1-derivation-authority",
+        "path": "world/map-production/spec/style-candidate-k3-golden-v3-four-candidate-derivation-preregistration-v1.json",
+        "sha256": "b1e5550ea73189540dae5469ee16521df8b5e3a39b689a349882e811d0ed44ac",
+        "use": "bind inherited runtime, statistical firewall, controls, and transitive source closure"
+      },
+      {
+        "role": "v1-helper-module",
+        "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_four_candidate_phase_v1.py",
+        "sha256": "5a38aece70641c8bda224e076ed41bdd09de0ad9421590cb7aae729936e63b76",
+        "use": "SHA-bound fixed-point, phase, control reconstruction, finalization, and PNG primitives"
+      },
+      {
+        "role": "balanced-phase-v2-generator",
+        "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_balanced_phase_v2.py",
+        "sha256": "da33c03ac0724086803b500b8f13ad6edf09898f6489870197738b86e3587981",
+        "use": "exact successor construction and closed CLI"
+      },
+      {
+        "role": "balanced-phase-v2-synthetic-tests",
+        "path": "tests/golden_v3_balanced_phase_preregistration_test.py",
+        "sha256": "cf87e47d8be34cbcaf3296f9956562e105f7176cc0d01321174826be8f56b4a8",
+        "use": "synthetic-only executable contract"
+      },
+      {
+        "role": "sealed-v19-statistics-firewall",
+        "path": "world/map-production/controls/style-candidate-k-v3-golden-v3/v19-statistics-firewall.json",
+        "sha256": "23cd5086a91dac4b49654527ed24d8283c6fe8033fa64a307d41de3a6797f903",
+        "use": "sole one-dimensional source statistics; loaded only during explicit emit"
+      }
+    ]
+  },
+  "derivation": {
+    "algorithm": "sstory-k3-golden-v3-balanced-independent-band-phase-v2",
+    "seed_root": "sstory-k3-golden-v3-balanced-phase-v2",
+    "seed_rule": {
+      "hash_algorithm": "SHA-256",
+      "label_encoding": "UTF-8",
+      "label_format": "seed_root:body-id:band-id",
+      "body_id_format": "body-{one-based-index:02d}",
+      "digest_byte_range": [
+        0,
+        8
+      ],
+      "integer_byteorder": "big",
+      "integer_signed": false,
+      "test_vectors": [
+        {
+          "body_id": "body-01",
+          "band_id": "g2-g4",
+          "label": "sstory-k3-golden-v3-balanced-phase-v2:body-01:g2-g4",
+          "sha256": "e742297980b1b2546f7bf74ea428d5ab5908f603e34fdd7a3e298790fa3aba74",
+          "uint64": 16663927173051167316
+        },
+        {
+          "body_id": "body-08",
+          "band_id": "envelope",
+          "label": "sstory-k3-golden-v3-balanced-phase-v2:body-08:envelope",
+          "sha256": "29ba78b6460e30ab64b7504f35ab1a47b9a049973d09138b4590efb5cde71a80",
+          "uint64": 3006848425477943467
+        }
+      ]
+    },
+    "band_ids": [
+      "g2-g4",
+      "g4-g8",
+      "g8-g24",
+      "envelope"
+    ],
+    "phase_policy": {
+      "independent_surrogate_per_band": true,
+      "rank_map_count_per_surrogate": 1,
+      "same_phase_table_for_all_candidates": true,
+      "post_filter_remap": false,
+      "sub2_gain": [
+        0,
+        1
+      ]
+    },
+    "filters": {
+      "G2": {
+        "q_bits": 30,
+        "radius": 8,
+        "coefficients": [
+          71851,
+          468526,
+          2379372,
+          9410600,
+          28986689,
+          69535452,
+          129909328,
+          189016957,
+          214184274,
+          189016957,
+          129909328,
+          69535452,
+          28986689,
+          9410600,
+          2379372,
+          468526,
+          71851
+        ],
+        "canonical_sha256": "b3506b745d252cc4df42172297897ff52cc88ea41726a7bf5c56839c02a543fd"
+      },
+      "G4_G8_G24": "literal inherited kernels from the SHA-bound v1 authority",
+      "construction_boxes": {
+        "widths": [
+          5,
+          17,
+          33
+        ],
+        "q_bits": 30,
+        "coefficient_rule": "floor(2^30/width), distribute remainder center-out symmetrically",
+        "border": "half-sample-symmetric-reflect",
+        "rounding": "nearest-ties-away-after-each-pass"
+      }
+    },
+    "local_energy_equalization": {
+      "window_width": 17,
+      "minimum_rms_l_q16": 65536,
+      "restore_body_wide_rms": true
+    },
+    "envelope": {
+      "hash": "splitmix64-coordinate",
+      "band": "box17-minus-box33",
+      "rms_q16": 65536,
+      "clip_q16": [
+        -131072,
+        131072
+      ],
+      "gain_rational": [
+        3,
+        100
+      ],
+      "multiplier_bounds_rational": [
+        [
+          94,
+          100
+        ],
+        [
+          106,
+          100
+        ]
+      ]
+    },
+    "construction_repair": {
+      "short_dark": {
+        "local_mean_width": 5,
+        "floor_l_q16": 327680,
+        "connectivity": 8,
+        "area_range": [
+          3,
+          128
+        ],
+        "max_bbox_dimension_range": [
+          3,
+          16
+        ],
+        "minimum_aspect_rational": [
+          2,
+          1
+        ],
+        "replacement_dilation_radius": 2
+      },
+      "open_topology": {
+        "local_mean_width": 33,
+        "floor_l_q16": 196608,
+        "background_connectivity": 8,
+        "path_connectivity": 4,
+        "path_replacement_radius": 1,
+        "path_tie_order": [
+          "cost",
+          "y",
+          "x"
+        ]
+      },
+      "maximum_repairs_per_stage_per_body": 64,
+      "per_stage_pixel_budget_rational": [
+        1,
+        200
+      ],
+      "combined_pixel_budget_rational": [
+        1,
+        100
+      ],
+      "failure_policy": "fail entire derivation; no resample, retry, or partial emit"
+    },
+    "fixed_gains": {
+      "g2_to_g4": [
+        1,
+        1
+      ],
+      "statistical_overall": [
+        41,
+        40
+      ],
+      "dev20_g24": [
+        1,
+        1
+      ],
+      "sub2": [
+        0,
+        1
+      ]
+    },
+    "body_8_policy": "unchanged v1 equal-body aggregate; no body-255 statistic",
+    "finalization": {
+      "chroma": "constant v1 firewall body median a/b",
+      "restore": "unchanged v1 outside-foundation precedence and four v18 byte locks",
+      "png": "unchanged v1-bound manual filter-0 encoder"
+    }
+  },
+  "candidates": {
+    "exact_count": 4,
+    "ordering": "listed order only",
+    "parameter_changes_forbidden": true,
+    "extra_candidates_forbidden": true,
+    "records": [
+      {
+        "candidate_id": "B125-M400",
+        "sub2_gain_rational": [
+          0,
+          1
+        ],
+        "g2_to_g4_gain_rational": [
+          1,
+          1
+        ],
+        "g4_to_g8_gain_rational": [
+          5,
+          4
+        ],
+        "g8_to_g24_gain_rational": [
+          4,
+          1
+        ],
+        "statistical_overall_gain_rational": [
+          41,
+          40
+        ],
+        "dev20_g24_gain_rational": [
+          1,
+          1
+        ],
+        "output_path": "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M400.png"
+      },
+      {
+        "candidate_id": "B125-M450",
+        "sub2_gain_rational": [
+          0,
+          1
+        ],
+        "g2_to_g4_gain_rational": [
+          1,
+          1
+        ],
+        "g4_to_g8_gain_rational": [
+          5,
+          4
+        ],
+        "g8_to_g24_gain_rational": [
+          9,
+          2
+        ],
+        "statistical_overall_gain_rational": [
+          41,
+          40
+        ],
+        "dev20_g24_gain_rational": [
+          1,
+          1
+        ],
+        "output_path": "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M450.png"
+      },
+      {
+        "candidate_id": "B150-M400",
+        "sub2_gain_rational": [
+          0,
+          1
+        ],
+        "g2_to_g4_gain_rational": [
+          1,
+          1
+        ],
+        "g4_to_g8_gain_rational": [
+          3,
+          2
+        ],
+        "g8_to_g24_gain_rational": [
+          4,
+          1
+        ],
+        "statistical_overall_gain_rational": [
+          41,
+          40
+        ],
+        "dev20_g24_gain_rational": [
+          1,
+          1
+        ],
+        "output_path": "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M400.png"
+      },
+      {
+        "candidate_id": "B150-M450",
+        "sub2_gain_rational": [
+          0,
+          1
+        ],
+        "g2_to_g4_gain_rational": [
+          1,
+          1
+        ],
+        "g4_to_g8_gain_rational": [
+          3,
+          2
+        ],
+        "g8_to_g24_gain_rational": [
+          9,
+          2
+        ],
+        "statistical_overall_gain_rational": [
+          41,
+          40
+        ],
+        "dev20_g24_gain_rational": [
+          1,
+          1
+        ],
+        "output_path": "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M450.png"
+      }
+    ]
+  },
+  "cli_contract": {
+    "default_mode": "validate-only",
+    "preflight": "hash inherited v1 emit-read closure without raster decode",
+    "emit": "explicit --emit only; exact four in memory; publication independently obtains the actual SHA-bound v1 runtime attestation; no evaluation",
+    "compare_seals": "compare canonical structured attestations for exactly the two required profiles without PNG reads",
+    "required_comparison_profile_ids": [
+      "windows-local-opencv-python-4.13.0.92",
+      "linux-ci-opencv-python-headless-4.13.0.92"
+    ],
+    "runtime_attestation_schema": {
+      "exact_keys": [
+        "profile_id",
+        "common",
+        "profile"
+      ],
+      "common": "exact actual values equal to runtime.common after the SHA-bound v1 runtime gate",
+      "profile": "exact actual values equal to the allowed_profiles record selected by the SHA-bound v1 runtime gate"
+    },
+    "output_directory": "tmp/map-production/k3-golden-v3-balanced-phase-v2",
+    "staging_directory": "tmp/map-production/k3-golden-v3-balanced-phase-v2.staging",
+    "seal_path": "tmp/map-production/k3-golden-v3-balanced-phase-v2/sealed-output-sha256.json",
+    "overwrite": "exclusive same-parent staging, verified complete, then atomic no-replace rename; existing staging or final directory rejected",
+    "parameter_overrides": "none"
+  }
+}
