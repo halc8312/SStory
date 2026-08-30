@@ -35,8 +35,16 @@ AUTHORITY_PATH = ROOT / (
     "world/map-production/spec/"
     "style-candidate-k3-golden-v3-four-candidate-derivation-preregistration-v1.json"
 )
-AUTHORITY_SHA256 = "16831a60572054f9ecf243304862d75483807dd67472ce9b17880fb7e85866d2"
+AUTHORITY_SHA256 = "b1e5550ea73189540dae5469ee16521df8b5e3a39b689a349882e811d0ed44ac"
 STRICT_AUTHORITY_SHA256 = "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7"
+STATISTICS_FIREWALL_PATH = (
+    "world/map-production/controls/style-candidate-k-v3-golden-v3/"
+    "v19-statistics-firewall.json"
+)
+STATISTICS_FIREWALL_SHA256 = (
+    "23cd5086a91dac4b49654527ed24d8283c6fe8033fa64a307d41de3a6797f903"
+)
+EXPECTED_SOURCE_BINDING_COUNT = 28
 INTERFACE = "sstory-k3-golden-v3-four-candidate-derivation-preregistration-v1"
 ALGORITHM = "sstory-k3-golden-v3-four-candidate-statistical-phase-derivation-v1"
 BODY_VALUES = (32, 64, 96, 128, 160, 192, 224, 255)
@@ -243,7 +251,8 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
     if (
         authority["schema_version"] != "1.0.0"
         or authority["interface"] != INTERFACE
-        or authority["status"] != "preregistered-code-only-not-generated"
+        or authority["status"]
+        != "preregistered-statistics-sealed-candidates-not-generated"
         or authority["immutable_plan"] is not True
     ):
         raise DerivationError("authority identity/status changed")
@@ -261,7 +270,8 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
     bindings = policy.get("source_bindings") if isinstance(policy, dict) else None
     if (
         not isinstance(bindings, list)
-        or policy.get("exact_source_binding_count") != len(bindings)
+        or policy.get("exact_source_binding_count") != EXPECTED_SOURCE_BINDING_COUNT
+        or len(bindings) != EXPECTED_SOURCE_BINDING_COUNT
         or policy.get("unlisted_inputs_forbidden") is not True
         or policy.get("tracked_worktree_bytes_must_match_sha256") is not True
     ):
@@ -310,7 +320,7 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
         "v19 replay imports or raw raster reads",
     ]:
         raise DerivationError("candidate generator forbidden-call closure changed")
-    if any(role not in roles for role in expected_emit_roles[:-1]):
+    if any(role not in roles for role in expected_emit_roles):
         raise DerivationError("candidate generator allowlist names an unbound source")
     binding_by_role = {record["role"]: record for record in bindings}
     extractor_role = "v19-statistics-firewall-extractor-provenance-only"
@@ -323,6 +333,15 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
         or extractor_role in expected_emit_roles
     ):
         raise DerivationError("statistics extractor binding/read firewall changed")
+    statistics_role = "sealed-v19-statistics-firewall"
+    if (
+        statistics_role not in binding_by_role
+        or binding_by_role[statistics_role]["path"] != STATISTICS_FIREWALL_PATH
+        or binding_by_role[statistics_role]["sha256"]
+        != STATISTICS_FIREWALL_SHA256
+        or statistics_role not in expected_emit_roles
+    ):
+        raise DerivationError("sealed statistics firewall binding changed")
 
     derivation = authority["derivation"]
     if (
@@ -347,8 +366,9 @@ def validate_authority(authority: Mapping[str, Any]) -> None:
         v19.get("raw_spatial_pixels_allowed") is not False
         or v19.get("candidate_generator_reads_v19_replay") is not False
         or v19.get("firewall_status")
-        != "schema-frozen-unsealed-no-real-statistics-extracted"
-        or v19.get("future_artifact_sha256") is not None
+        != "sealed-canonical-statistics-authority"
+        or v19.get("future_artifact_path") != STATISTICS_FIREWALL_PATH
+        or v19.get("future_artifact_sha256") != STATISTICS_FIREWALL_SHA256
     ):
         raise DerivationError("raw v19 spatial pixels became allowed")
     schema = v19.get("artifact_schema", {})
@@ -1397,13 +1417,21 @@ def parse_statistics_firewall_payload(
 def load_statistics_firewall(authority: Mapping[str, Any]) -> list[BodyStatistics]:
     config = authority["derivation"]["v19_statistical_authority"]
     digest = config["future_artifact_sha256"]
-    if not isinstance(digest, str) or SHA256_PATTERN.fullmatch(digest) is None:
-        raise DerivationError(
-            "statistics firewall is intentionally unsealed; --emit is unavailable"
-        )
-    path = ROOT / _safe_relative(
+    relative = _safe_relative(
         config["future_artifact_path"], label="statistics firewall"
     )
+    binding = source_bindings(authority).get("sealed-v19-statistics-firewall")
+    if (
+        not isinstance(digest, str)
+        or SHA256_PATTERN.fullmatch(digest) is None
+        or digest != STATISTICS_FIREWALL_SHA256
+        or relative != STATISTICS_FIREWALL_PATH
+        or not isinstance(binding, dict)
+        or binding.get("path") != relative
+        or binding.get("sha256") != digest
+    ):
+        raise DerivationError("sealed statistics firewall authority changed")
+    path = ROOT / relative
     if path.is_symlink() or not path.is_file():
         raise DerivationError("sealed statistics firewall must be a regular file")
     try:
@@ -1803,7 +1831,6 @@ def main(argv: list[str] | None = None) -> int:
             allowed = set(
                 authority["input_policy"]["candidate_generator_read_allowlist_roles"]
             )
-            allowed.discard("sealed-v19-statistics-firewall")
             check_bound_sources(authority, roles=allowed)
             emit(authority, runtime_profile_id)
             print("emitted exactly four preregistered candidates; no audit was run")
