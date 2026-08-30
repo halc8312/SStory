@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "id": "sstory-k3-golden-v2-pixel-audit-control",
+  "algorithm": "sstory-k3-golden-v2-independent-pixel-audit-v2",
+  "image": {
+    "mode": "RGB",
+    "size": [
+      1536,
+      1024
+    ]
+  },
+  "candidate": {
+    "sha256": "f2cb6e72ad1fb6e46a8ef0ed881418fd2f7d465edc514113d498714d4d94820a"
+  },
+  "baseline": {
+    "reproduction_role": "golden-v2-pixel-audit-baseline",
+    "sha256": "013320af2f3296200a7d0b179e3a495f1e7905462213a6c645d85669dec02882"
+  },
+  "masks": {
+    "measurement_inside": {
+      "reproduction_role": "golden-v2-mask-measurement-inside",
+      "path": "masks/measurement-inside.png",
+      "sha256": "bbf721e7bdb3dee6fd8bb999237cca3966240d477199a24bb650b7ee6815e624"
+    },
+    "texture_reference": {
+      "reproduction_role": "golden-v2-mask-texture-reference",
+      "path": "masks/texture-reference.png",
+      "sha256": "2d9cdb96097526968df72564a6f6513703f821d4e6849becc16d4c0a08f90eea"
+    },
+    "permission": {
+      "reproduction_role": "golden-v2-mask-permission",
+      "path": "masks/permission.png",
+      "sha256": "41e7fd45b2188b0ee918ed712be782fec2c58f14f1f4391089abb48d3704a535"
+    },
+    "protected_features": {
+      "reproduction_role": "golden-v2-mask-protected-features",
+      "path": "masks/protected-features.png",
+      "sha256": "585f133d596f49ecea280223b814db22fed8c169ec3f9bce8544f7b7525dd607"
+    },
+    "road_calm_18px": {
+      "reproduction_role": "golden-v2-mask-road-calm-18px",
+      "path": "masks/road-calm-18px.png",
+      "sha256": "22434242cce4af83c0ba12637124102734b818dd087b94c0b94c7dadd7cdb4bc"
+    },
+    "selected_components": {
+      "reproduction_role": "golden-v2-mask-selected-components",
+      "path": "masks/selected-components.png",
+      "sha256": "c025f9f20c0a942e932fbd7e0c2d17a71a9928bcdb2400420b41c7f5dbc7d16e"
+    }
+  }
+}

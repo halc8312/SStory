@@ -283,6 +283,65 @@ clean duplicate、`dev-r19`のreject severity-band policy、全200アーティ�
 
 ## Golden 候補の二段階昇格
 
+### Golden v2 TEMP emissionから二名blind reviewまで
+
+Golden v2の制作入口は、追跡済みv18/v19 authorityだけから決定的に再構成する固定CLIです。`renderer-config.json` にseed、donor、controlの完全な順序を固定し、`emit_style_candidate_k3_golden_v2.py` は同じCLIをread-closure内で新しいprocessとして2回実行します。両PNG bytesが一致した場合だけ、原寸・25%・50%・highland 200%・highland 400%の5 viewと、独立pixel auditorの実測値をTEMPへ出します。この段階ではRoot/blind Vision evidence、採用判断、receipt、Golden acceptanceを作りません。
+
+新規checkoutでは、最初に追跡済みaudit controlと6枚のbinary maskが凍結v19から再導出できることを確認します。controlを保守目的で初めて作る場合だけ`--write`を使い、通常の制作では`--verify-existing`だけを使います。
+
+```powershell
+node scripts/run-python.js scripts/map-production/generate_style_candidate_k3_golden_v2_controls.py --verify-existing
+
+$tempGolden = "tmp/map-production/k3-golden-v2-review-v1"
+node scripts/run-python.js scripts/map-production/emit_style_candidate_k3_golden_v2.py --temporary-output-root $tempGolden
+```
+
+emitterが成功したら、Root担当者の実IDを使ってTEMP draftを作ります。生成されたJSONは未レビューのチェックリストです。Root担当者自身が5 viewを実見し、各`complete`と具体的`evidence`、8項目の`detected`と具体的`evidence`、`total_score`、`decision`、`summary`、`created_at`を実際のレビュー内容・完了時刻へ更新しなければなりません。94点以上、即時不合格ゼロ、`decision: accepted`、`authorizes_blind_review: true`を満たさない限り`prepare`は停止します。
+
+```powershell
+$rootReviewer = $env:GOLDEN_V2_ROOT_REVIEWER
+$authorizedBy = $env:GOLDEN_V2_AUTHORIZED_BY
+if ([string]::IsNullOrWhiteSpace($rootReviewer) -or [string]::IsNullOrWhiteSpace($authorizedBy)) {
+  throw "Set GOLDEN_V2_ROOT_REVIEWER and GOLDEN_V2_AUTHORIZED_BY to real actor IDs."
+}
+
+node scripts/run-python.js scripts/map-production/create_golden_v2_review_template.py root --emission "$tempGolden/emission.json" --reviewer $rootReviewer --output "$tempGolden/root-review.json"
+
+# STOP: Root担当者が5 viewを実見し、draftを完成させるまでprepareしない。
+$prepareResult = node scripts/run-python.js scripts/map-production/promote_style_candidate_k3_golden_v2.py prepare --emission "$tempGolden/emission.json" --root-review "$tempGolden/root-review.json" --authorized-by $authorizedBy | ConvertFrom-Json
+$blindPacket = $prepareResult.blind_packet.path
+```
+
+即時不合格IDは次の8件の完全一致です。別名、追加、省略、順序変更は拒否されます。
+
+1. `eight-system-topology`
+2. `side-view-or-shared-projection`
+3. `panel-seam-or-body-halo`
+4. `white-particle-pill-hole-or-crater`
+5. `root-river-vein-fingerprint-or-contour`
+6. `fern-fishbone-dash-bundle-or-repetition`
+7. `no-200-to-400-information-gain`
+8. `protected-geometry-difference`
+
+`prepare`はRoot authorizationを検証し、candidateを永続化して自動QAまで進め、source lineageを含まないcontent-addressed匿名packetを作ります。ここでもacceptedにはなりません。blind reviewerには匿名packetと自分のdraftだけを渡し、candidate path、donor、control、generation lineage、Root score、相手の報告を渡しません。A/BはRoot担当者とも相互とも、Unicode NFKC・空白圧縮・casefold後に異なる実在担当者でなければなりません。
+
+```powershell
+$reviewerA = $env:GOLDEN_V2_REVIEWER_A
+$reviewerB = $env:GOLDEN_V2_REVIEWER_B
+if ([string]::IsNullOrWhiteSpace($reviewerA) -or [string]::IsNullOrWhiteSpace($reviewerB)) {
+  throw "Set GOLDEN_V2_REVIEWER_A and GOLDEN_V2_REVIEWER_B to two real, distinct reviewer IDs."
+}
+
+node scripts/run-python.js scripts/map-production/create_golden_v2_review_template.py blind --packet $blindPacket --role a --reviewer-id $reviewerA --output world/map-production/qa/style-candidate-k-v3-golden-v2-review-a.json
+node scripts/run-python.js scripts/map-production/create_golden_v2_review_template.py blind --packet $blindPacket --role b --reviewer-id $reviewerB --output world/map-production/qa/style-candidate-k-v3-golden-v2-review-b.json
+
+# STOP: A/Bが互いの結果を見ず、匿名5 viewを実見して各draftを完成させる。
+git add -- $blindPacket world/map-production/qa/blind-packets/phase4-k3-v2/views world/map-production/qa/style-candidate-k-v3-golden-v2-review-a.json world/map-production/qa/style-candidate-k-v3-golden-v2-review-b.json
+node scripts/run-python.js scripts/map-production/promote_style_candidate_k3_golden_v2.py accept --review-a world/map-production/qa/style-candidate-k-v3-golden-v2-review-a.json --review-b world/map-production/qa/style-candidate-k-v3-golden-v2-review-b.json --authorized-by $authorizedBy
+```
+
+blind draftは`status: draft`、`decision: pending`、全score `null`、全evidence空で生成されます。各担当者が匿名packetの固定5 viewを含む10チェックを完了し、8 immediate-failureを実見で判定し、7 score軸とsummaryを埋め、個別に94点以上・即時不合格ゼロでacceptedにしない限り、`accept`は失敗します。ツール実行や自動pixel gateのpassをVision evidenceの代用にしてはいけません。TEMP emission、draft、`prepare`成功のいずれもPhase 5開始やGolden採用を意味しません。
+
 `scripts/map-production/promote_style_candidate_k3_golden.py` は K3 v20 の昇格を二段階に分離します。
 
 1. `prepare` は、固定 TEMP root の exact v20 receipt/候補/mask/contact と全入力を SHA-256 で固定します。さらに v19 は、固定 v18、生成 layout control、exact ImageGen prompt、generation receipt、全 authority を列挙した永続 receipt と `scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py` の byte-exact replay が必要です。この v19 契約が未作成の間は `missing exact v19 provenance contract` で停止します。raw/final の同一バイト、永続パスだけの正規化 receipt、自動検査を確認しても、manifest は `planned -> inputs-ready -> generated -> automated-qa` までしか進みません。
