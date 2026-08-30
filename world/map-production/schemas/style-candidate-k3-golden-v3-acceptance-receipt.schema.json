@@ -20,6 +20,7 @@
     "generation_generator",
     "generation_seals",
     "strict_audit_authority",
+    "strict_audit_implementation",
     "strict_audit_report",
     "root_review",
     "blind_packet",
@@ -63,6 +64,7 @@
       }
     },
     "strict_audit_authority": { "$ref": "#/definitions/artifact" },
+    "strict_audit_implementation": { "$ref": "#/definitions/artifact" },
     "strict_audit_report": { "$ref": "#/definitions/artifact" },
     "root_review": { "$ref": "#/definitions/review" },
     "blind_packet": { "$ref": "#/definitions/artifact" },

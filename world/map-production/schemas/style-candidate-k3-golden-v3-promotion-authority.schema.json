@@ -71,9 +71,10 @@
     },
     "authorities": {
       "type": "object",
-      "required": ["strict_audit", "four_candidate_derivation", "four_candidate_generator", "balanced_phase_v2", "balanced_phase_v2_generator", "balanced_open_phase_v3", "balanced_open_phase_v3_generator"],
+      "required": ["strict_audit", "strict_audit_implementation", "four_candidate_derivation", "four_candidate_generator", "balanced_phase_v2", "balanced_phase_v2_generator", "balanced_open_phase_v3", "balanced_open_phase_v3_generator"],
       "properties": {
         "strict_audit": { "$ref": "#/definitions/artifact" },
+        "strict_audit_implementation": { "$ref": "#/definitions/artifact" },
         "four_candidate_derivation": { "$ref": "#/definitions/artifact" },
         "four_candidate_generator": { "$ref": "#/definitions/artifact" },
         "balanced_phase_v2": { "$ref": "#/definitions/artifact" },
@@ -209,7 +210,8 @@
         "promotion_or_golden_designation_performed",
         "canonical_report_bytes",
         "recompute_before_promotion",
-        "recompute_during_phase5_verification"
+        "recompute_during_phase5_verification",
+        "implementation_dependency_closure"
       ],
       "properties": {
         "report_schema_version": { "const": "1.0.0" },
@@ -220,7 +222,24 @@
         "promotion_or_golden_designation_performed": { "const": false },
         "canonical_report_bytes": { "const": true },
         "recompute_before_promotion": { "const": true },
-        "recompute_during_phase5_verification": { "const": true }
+        "recompute_during_phase5_verification": { "const": true },
+        "implementation_dependency_closure": {
+          "const": {
+            "audit_module": "authorities.strict_audit_implementation",
+            "authority": "authorities.strict_audit",
+            "authority_bound_source_records": [
+              "alpha_zero_derivation",
+              "v2_metric_value_source",
+              "strict_core_binding"
+            ],
+            "authority_bound_runtime_records": [
+              "dependency_lock",
+              "ci_workflow",
+              "synthetic_golden_vector_test"
+            ],
+            "validation_timing": "audit-and-transitive-source-sha-before-exec; runtime-artifact-sha-before-metric-use"
+          }
+        }
       },
       "additionalProperties": false
     },
@@ -361,6 +380,7 @@
               "golden-v3-four-candidate-derivation-authority",
               "golden-v3-four-candidate-generator",
               "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-implementation",
               "golden-v3-strict-audit-report",
               "golden-v3-root-vision-authorization",
               "blind-review-packet",
@@ -375,6 +395,7 @@
               "golden-v3-balanced-phase-v2-authority",
               "golden-v3-balanced-phase-v2-generator",
               "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-implementation",
               "golden-v3-strict-audit-report",
               "golden-v3-root-vision-authorization",
               "blind-review-packet",
@@ -389,6 +410,7 @@
               "golden-v3-balanced-open-phase-v3-authority",
               "golden-v3-balanced-open-phase-v3-generator",
               "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-implementation",
               "golden-v3-strict-audit-report",
               "golden-v3-root-vision-authorization",
               "blind-review-packet",
@@ -482,12 +504,12 @@
     },
     "self_hashed_implementation": {
       "type": "object",
-      "required": ["path", "sha256", "hash_mode"],
+      "required": ["path", "canonical_self_sha256", "hash_mode"],
       "properties": {
         "path": {
           "const": "scripts/map-production/promote_style_candidate_k3_golden_v3.py"
         },
-        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "canonical_self_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
         "hash_mode": {
           "const": "sha256-zero-expected-authority-and-self-hashes-v1"
         }

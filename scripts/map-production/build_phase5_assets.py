@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib
 import json
 import math
 import os
@@ -44,7 +45,6 @@ from promote_phase5_renderer_outputs import (
     RendererPromotionError,
     _rename_directory_no_replace,
 )
-import promote_style_candidate_k3_golden_v2 as golden_v2_promotion
 import promote_style_candidate_k3_golden_v3 as golden_v3_promotion
 from release_bound_artifact import (
     BoundArtifact,
@@ -182,9 +182,6 @@ GOLDEN_SHARED_PREPARED_ROLES = frozenset(
         "persistent-automated-audit",
     }
 )
-GOLDEN_V2_PREPARED_ONLY_ROLES = frozenset(
-    golden_v2_promotion.PREPARED_INPUT_ROLES - GOLDEN_SHARED_PREPARED_ROLES
-)
 GOLDEN_BLIND_PACKET_VIEW_IDS = (
     "native",
     "full25",
@@ -192,6 +189,40 @@ GOLDEN_BLIND_PACKET_VIEW_IDS = (
     "highland200",
     "highland400",
 )
+# Keep legacy-v2 dispatch data inert until the verifier has selected that
+# compatibility-only path.  Importing the old promoter executes its pixel
+# auditor, so a module-level import would run those bytes before the active-v3
+# authority has had a chance to bind its strict-audit dependency closure.
+GOLDEN_V2_PREPARED_INPUT_ROLES = frozenset(
+    {
+        "golden-raw-output",
+        "promotion-provenance",
+        "root-vision-authorization",
+        "persistent-automated-audit",
+        "deterministic-replay-output",
+        "deterministic-replay-output-2",
+        GOLDEN_BLIND_PACKET_ROLE,
+        *(f"root-review-view-{name}" for name in GOLDEN_BLIND_PACKET_VIEW_IDS),
+    }
+)
+GOLDEN_V2_PREPARED_ONLY_ROLES = frozenset(
+    GOLDEN_V2_PREPARED_INPUT_ROLES - GOLDEN_SHARED_PREPARED_ROLES
+)
+_golden_v2_promotion: Any | None = None
+
+
+def _load_golden_v2_promotion() -> Any:
+    """Load the compatibility-only v2 verifier after dispatch selects it."""
+
+    global _golden_v2_promotion
+    if _golden_v2_promotion is None:
+        module = importlib.import_module("promote_style_candidate_k3_golden_v2")
+        if frozenset(module.PREPARED_INPUT_ROLES) != GOLDEN_V2_PREPARED_INPUT_ROLES:
+            raise Phase5BuildError("Golden v2 prepared-input role set changed")
+        _golden_v2_promotion = module
+    return _golden_v2_promotion
+
+
 GOLDEN_PHASE4_IMMEDIATE_FAILURE_IDS = (
     "eight-system-topology",
     "side-view-or-shared-projection",
@@ -611,6 +642,16 @@ def _phase5_json_path_references(
         and value.get("generated_by") == GENERATOR_ID
         and isinstance(value.get("artifacts"), list)
     )
+    golden_v3_generation_authority = (
+        isinstance(value, dict)
+        and value.get("interface")
+        in {
+            "sstory-k3-golden-v3-four-candidate-derivation-preregistration-v1",
+            "sstory-k3-golden-v3-balanced-phase-preregistration-v2",
+            "sstory-k3-golden-v3-balanced-open-phase-preregistration-v3",
+        }
+        and value.get("immutable_plan") is True
+    )
 
     def walk(
         item: Any,
@@ -634,6 +675,19 @@ def _phase5_json_path_references(
             if not isinstance(raw_path, str):
                 continue
             folded = key.casefold()
+            if golden_v3_generation_authority and (
+                (
+                    folded == "output_path"
+                    and location.startswith("$.candidates.records[")
+                    and location.endswith("]")
+                )
+                or (folded == "seal_path" and location == "$.cli_contract")
+            ):
+                # These are preregistered runtime destinations, not source
+                # artifacts. Accepted evidence binds candidate payloads
+                # through the two embedded cross-profile seals; the seal
+                # files themselves are intentionally not persisted.
+                continue
             hash_key: str | None = None
             if folded == "path":
                 hash_key = next(
@@ -722,6 +776,7 @@ def bind_phase5_artifact_graph(
 
     registry: dict[str, BoundArtifact] = {}
     pending = list(roots)
+    root_ids = {root.identity for root in pending}
     active = _BOUND_ARTIFACT_CONTEXT.get()
     known = dict(active) if active is not None else {}
     known.update({root.identity: root for root in pending})
@@ -755,6 +810,21 @@ def bind_phase5_artifact_graph(
             value = document.json_value()
         except BoundArtifactError as exc:
             raise Phase5BuildError(str(exc)) from exc
+        if (
+            document.identity not in root_ids
+            and isinstance(value, dict)
+            and value.get("interface")
+            in {
+                "sstory-k3-golden-v3-four-candidate-derivation-preregistration-v1",
+                "sstory-k3-golden-v3-balanced-phase-preregistration-v2",
+                "sstory-k3-golden-v3-balanced-open-phase-preregistration-v3",
+            }
+            and value.get("immutable_plan") is True
+        ):
+            # A nested preregistration is already raw-SHA-bound by its parent.
+            # Only a selected manifest authority root expands its own sources;
+            # this avoids importing rejected historical runtime destinations.
+            continue
         for (
             raw_path,
             claimed,
@@ -1556,6 +1626,8 @@ def _validate_v2_prepared_authority(
     hand-written provenance/audit shell that merely has fresh hashes.
     """
 
+    golden_v2_promotion = _load_golden_v2_promotion()
+
     inputs = job.get("inputs")
     if not isinstance(inputs, list):
         raise Phase5BuildError(
@@ -1603,6 +1675,8 @@ def _assert_v2_packet_pixels_match_root_views(
 ) -> None:
     """Prove each anonymous PNG is only a re-encoding of its Root view."""
 
+    golden_v2_promotion = _load_golden_v2_promotion()
+
     for name, packet_record in zip(GOLDEN_BLIND_PACKET_VIEW_IDS, packet_views):
         packet_image: Image.Image | None = None
         root_image: Image.Image | None = None
@@ -1642,6 +1716,8 @@ def _verify_manifest_golden_style_v2(
     master.  v2 deliberately does not: both reviews must bind the immutable
     anonymous packet, whose five fixed views are each SHA-bound here again.
     """
+
+    golden_v2_promotion = _load_golden_v2_promotion()
 
     golden_path, golden_sha = verify_hashed_file(
         golden_style, "source index golden_style"
@@ -1998,7 +2074,9 @@ def _verify_manifest_golden_style_v3(
         golden_v3_promotion.BALANCED_PHASE_V2,
         golden_v3_promotion.BALANCED_OPEN_PHASE_V3,
     ):
-        raise Phase5BuildError("Golden v3 generation discriminator is missing or invalid")
+        raise Phase5BuildError(
+            "Golden v3 generation discriminator is missing or invalid"
+        )
     return evidence
 
 

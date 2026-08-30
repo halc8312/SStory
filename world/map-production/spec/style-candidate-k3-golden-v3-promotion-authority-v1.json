@@ -26,13 +26,17 @@
   },
   "promotion_implementation": {
     "path": "scripts/map-production/promote_style_candidate_k3_golden_v3.py",
-    "sha256": "f080e7ac51cc95ce010de5b3626f082df08a4a3f5c03dd45217b499109ebf313",
+    "canonical_self_sha256": "76505d9171b9998bf645aa5bcc1686bc1188ed16f6ce88563a537fc0f0bd4b65",
     "hash_mode": "sha256-zero-expected-authority-and-self-hashes-v1"
   },
   "authorities": {
     "strict_audit": {
       "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
       "sha256": "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7"
+    },
+    "strict_audit_implementation": {
+      "path": "scripts/map-production/audit_style_candidate_k3_golden_v3.py",
+      "sha256": "b039b970d8a7140a7326942c139a7d2e0420736e3b48fe4162364736313abb5a"
     },
     "four_candidate_derivation": {
       "path": "world/map-production/spec/style-candidate-k3-golden-v3-four-candidate-derivation-preregistration-v1.json",
@@ -62,11 +66,11 @@
   "bound_schemas": {
     "authority": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
-      "sha256": "8b1898f11ea551065af5f6ae842f49977945c1395126812134b712f8e2feb270"
+      "sha256": "f8551ae1f2a6e34d449483f7c25f49d4c72a5e8fd38d6ca1023e3a9d81ed900a"
     },
     "acceptance_receipt": {
       "path": "world/map-production/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
-      "sha256": "acc54fe1ad0f77a472d7c9e52e6011f8adcf97cf64b986e98e8fccad5de58539"
+      "sha256": "f8a35fce65389320809a2d03f78c10ffae9085c2e317e4d0b2d24ef7c7f802f1"
     },
     "qa_report": {
       "path": "world/map-production/schemas/qa-report.schema.json",
@@ -165,7 +169,22 @@
     "promotion_or_golden_designation_performed": false,
     "canonical_report_bytes": true,
     "recompute_before_promotion": true,
-    "recompute_during_phase5_verification": true
+    "recompute_during_phase5_verification": true,
+    "implementation_dependency_closure": {
+      "audit_module": "authorities.strict_audit_implementation",
+      "authority": "authorities.strict_audit",
+      "authority_bound_source_records": [
+        "alpha_zero_derivation",
+        "v2_metric_value_source",
+        "strict_core_binding"
+      ],
+      "authority_bound_runtime_records": [
+        "dependency_lock",
+        "ci_workflow",
+        "synthetic_golden_vector_test"
+      ],
+      "validation_timing": "audit-and-transitive-source-sha-before-exec; runtime-artifact-sha-before-metric-use"
+    }
   },
   "review_contract": {
     "root_review_count": 1,
@@ -256,6 +275,7 @@
         "golden-v3-four-candidate-derivation-authority",
         "golden-v3-four-candidate-generator",
         "golden-v3-strict-audit-authority",
+        "golden-v3-strict-audit-implementation",
         "golden-v3-strict-audit-report",
         "golden-v3-root-vision-authorization",
         "blind-review-packet",
@@ -270,6 +290,7 @@
         "golden-v3-balanced-phase-v2-authority",
         "golden-v3-balanced-phase-v2-generator",
         "golden-v3-strict-audit-authority",
+        "golden-v3-strict-audit-implementation",
         "golden-v3-strict-audit-report",
         "golden-v3-root-vision-authorization",
         "blind-review-packet",
@@ -284,6 +305,7 @@
         "golden-v3-balanced-open-phase-v3-authority",
         "golden-v3-balanced-open-phase-v3-generator",
         "golden-v3-strict-audit-authority",
+        "golden-v3-strict-audit-implementation",
         "golden-v3-strict-audit-report",
         "golden-v3-root-vision-authorization",
         "blind-review-packet",

@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import ctypes
 import hashlib
+import importlib
 import json
 import os
 import re
@@ -27,8 +28,6 @@ from typing import Any, Iterable, Mapping, Sequence
 import numpy as np
 from PIL import Image
 
-import audit_style_candidate_k3_golden_v3 as strict_audit
-import promote_style_candidate_k3_golden_v2 as manifest_cas
 from production_common import REPO_ROOT, parse_rfc3339, utc_now
 from release_bound_artifact import (
     BoundArtifact,
@@ -52,8 +51,8 @@ AUTHORITY_PATH = (
     "style-candidate-k3-golden-v3-promotion-authority-v1.json"
 )
 # fmt: off
-EXPECTED_AUTHORITY_SHA256 = "801a020367dab0390ddc9080961778a148e6de6f073eb2e3b7a24aa7a453a347"
-EXPECTED_IMPLEMENTATION_SELF_SHA256 = "f080e7ac51cc95ce010de5b3626f082df08a4a3f5c03dd45217b499109ebf313"
+EXPECTED_AUTHORITY_SHA256 = "ee2766c3e27c1cf2ad4f8c4bcb44eafbb2952eba1b5a4db0ad04dca17fc809a9"
+EXPECTED_IMPLEMENTATION_SELF_SHA256 = "76505d9171b9998bf645aa5bcc1686bc1188ed16f6ce88563a537fc0f0bd4b65"
 # fmt: on
 IMPLEMENTATION_HASH_MODE = "sha256-zero-expected-authority-and-self-hashes-v1"
 FOUR_CANDIDATE_AUTHORITY_PATH = REPO_ROOT / (
@@ -68,17 +67,30 @@ BALANCED_OPEN_AUTHORITY_PATH = REPO_ROOT / (
     "world/map-production/spec/"
     "style-candidate-k3-golden-v3-balanced-open-phase-preregistration-v3.json"
 )
+STRICT_AUDIT_IMPLEMENTATION_PATH = (
+    REPO_ROOT / "scripts/map-production/audit_style_candidate_k3_golden_v3.py"
+)
 FOUR_CANDIDATE_MODULE_NAME = "_sstory_bound_golden_v3_four_candidate_phase_v1"
 BALANCED_MODULE_NAME = "_sstory_bound_golden_v3_balanced_phase_v2"
 BALANCED_OPEN_MODULE_NAME = "_sstory_bound_golden_v3_balanced_open_phase_v3"
+STRICT_AUDIT_MODULE_NAME = "_sstory_bound_golden_v3_strict_audit"
+STRICT_AUDIT_V2_MODULE_NAME = "audit_style_candidate_k3_golden_v2"
+STRICT_AUDIT_V19_MODULE_NAME = "build_style_candidate_k3_sparse_ridgeline_v19"
+STRICT_AUDIT_CORE_MODULE_NAME = "golden_v3_strict_metric_core"
 derivation: ModuleType | None = None
 balanced_derivation: ModuleType | None = None
 balanced_open_derivation: ModuleType | None = None
+strict_audit: ModuleType | None = None
+strict_audit_v2: ModuleType | None = None
+strict_audit_v19: ModuleType | None = None
+strict_audit_core: ModuleType | None = None
+manifest_cas: ModuleType | None = None
 _bound_module_sha256: dict[str, str] = {}
 JOB_ID = "style-candidate-k-v3-golden-v3"
 FOUR_CANDIDATE_V1 = "four-candidate-v1"
 BALANCED_PHASE_V2 = "balanced-phase-v2"
 BALANCED_OPEN_PHASE_V3 = "balanced-open-phase-v3"
+ACTIVE_GENERATION_CONTRACT_ID = BALANCED_OPEN_PHASE_V3
 GENERATION_CONTRACT_IDS = (
     FOUR_CANDIDATE_V1,
     BALANCED_PHASE_V2,
@@ -95,6 +107,7 @@ V3_BALANCED_GENERATOR_ROLE = "golden-v3-balanced-phase-v2-generator"
 V3_BALANCED_OPEN_AUTHORITY_ROLE = "golden-v3-balanced-open-phase-v3-authority"
 V3_BALANCED_OPEN_GENERATOR_ROLE = "golden-v3-balanced-open-phase-v3-generator"
 V3_STRICT_AUTHORITY_ROLE = "golden-v3-strict-audit-authority"
+V3_STRICT_IMPLEMENTATION_ROLE = "golden-v3-strict-audit-implementation"
 V3_STRICT_REPORT_ROLE = "golden-v3-strict-audit-report"
 V3_ROOT_REVIEW_ROLE = "golden-v3-root-vision-authorization"
 RAW_ROLE = "golden-raw-output"
@@ -111,6 +124,7 @@ V3_ONLY_ROLES = frozenset(
         V3_BALANCED_OPEN_AUTHORITY_ROLE,
         V3_BALANCED_OPEN_GENERATOR_ROLE,
         V3_STRICT_AUTHORITY_ROLE,
+        V3_STRICT_IMPLEMENTATION_ROLE,
         V3_STRICT_REPORT_ROLE,
         V3_ROOT_REVIEW_ROLE,
     }
@@ -173,7 +187,6 @@ class _ParentAnchor:
 @dataclass(frozen=True)
 class _CreatedOutput:
     binding: BoundArtifact
-    parent_identity: tuple[int, int]
 
 
 @dataclass(frozen=True)
@@ -183,6 +196,10 @@ class AuthorityBundle:
     promotion_implementation: BoundArtifact
     promotion_implementation_sha256: str
     strict_authority: BoundArtifact
+    strict_implementation: BoundArtifact
+    strict_module: ModuleType
+    strict_dependencies: tuple[BoundArtifact, ...]
+    strict_dependency_modules: tuple[ModuleType, ...]
     derivation_authority: BoundArtifact
     derivation_generator: BoundArtifact
     derivation_module: ModuleType
@@ -300,10 +317,15 @@ def _implementation_self_sha256(payload: bytes) -> str:
 
 def _load_bound_module(binding: BoundArtifact, *, name: str) -> ModuleType:
     global derivation, balanced_derivation, balanced_open_derivation
+    global strict_audit, strict_audit_v2, strict_audit_v19, strict_audit_core
     public_names = {
         FOUR_CANDIDATE_MODULE_NAME: "derivation",
         BALANCED_MODULE_NAME: "balanced_derivation",
         BALANCED_OPEN_MODULE_NAME: "balanced_open_derivation",
+        STRICT_AUDIT_MODULE_NAME: "strict_audit",
+        STRICT_AUDIT_V2_MODULE_NAME: "strict_audit_v2",
+        STRICT_AUDIT_V19_MODULE_NAME: "strict_audit_v19",
+        STRICT_AUDIT_CORE_MODULE_NAME: "strict_audit_core",
     }
     if name not in public_names:
         raise GoldenV3PromotionError("unknown bound Golden-v3 module name")
@@ -330,21 +352,26 @@ def _load_bound_module(binding: BoundArtifact, *, name: str) -> ModuleType:
         else:
             sys.modules[name] = previous
         raise
-    if name == FOUR_CANDIDATE_MODULE_NAME:
-        derivation = module
-    elif name == BALANCED_MODULE_NAME:
-        balanced_derivation = module
-    else:
-        balanced_open_derivation = module
+    globals()[public_names[name]] = module
     _bound_module_sha256[name] = binding.sha256
     return module
 
 
 def _implementation_artifact(authority: AuthorityBundle) -> dict[str, str]:
-    return {
-        "path": authority.promotion_implementation.relative,
-        "sha256": authority.promotion_implementation_sha256,
-    }
+    return _artifact(authority.promotion_implementation)
+
+
+def _require_active_generation_contract(
+    authority: AuthorityBundle, generation_contract_id: str
+) -> None:
+    active = authority.document["freeze_scope"]["active_generation_contract_id"]
+    if active != ACTIVE_GENERATION_CONTRACT_ID:
+        raise GoldenV3PromotionError("Golden-v3 active generation contract changed")
+    if generation_contract_id != active:
+        raise GoldenV3PromotionError(
+            "new Golden-v3 promotion is restricted to the active "
+            f"{active} contract; legacy contracts are verification-only"
+        )
 
 
 def _canonical_json(value: Mapping[str, Any]) -> bytes:
@@ -405,6 +432,7 @@ def _schema_errors(
 
 
 def load_authority() -> AuthorityBundle:
+    global manifest_cas
     authority = _bind(AUTHORITY_PATH, label="Golden-v3 promotion authority")
     if authority.sha256 != EXPECTED_AUTHORITY_SHA256:
         raise GoldenV3PromotionError(
@@ -428,9 +456,10 @@ def load_authority() -> AuthorityBundle:
     implementation_record = document.get("promotion_implementation")
     if (
         not isinstance(implementation_record, dict)
-        or set(implementation_record) != {"path", "sha256", "hash_mode"}
+        or set(implementation_record) != {"path", "canonical_self_sha256", "hash_mode"}
         or implementation_record.get("hash_mode") != IMPLEMENTATION_HASH_MODE
-        or implementation_record.get("sha256") != EXPECTED_IMPLEMENTATION_SELF_SHA256
+        or implementation_record.get("canonical_self_sha256")
+        != EXPECTED_IMPLEMENTATION_SELF_SHA256
     ):
         raise GoldenV3PromotionError(
             "Golden-v3 promotion implementation self-binding changed"
@@ -442,13 +471,14 @@ def load_authority() -> AuthorityBundle:
     if promotion_implementation.path != Path(__file__).resolve():
         raise GoldenV3PromotionError("Golden-v3 promotion implementation path changed")
     implementation_sha256 = _implementation_self_sha256(promotion_implementation.data)
-    if implementation_sha256 != implementation_record["sha256"]:
+    if implementation_sha256 != implementation_record["canonical_self_sha256"]:
         raise GoldenV3PromotionError(
             "Golden-v3 promotion implementation canonical SHA-256 changed"
         )
     authorities = document.get("authorities")
     if not isinstance(authorities, dict) or set(authorities) != {
         "strict_audit",
+        "strict_audit_implementation",
         "four_candidate_derivation",
         "four_candidate_generator",
         "balanced_phase_v2",
@@ -459,6 +489,10 @@ def load_authority() -> AuthorityBundle:
         raise GoldenV3PromotionError("Golden-v3 authority reference set changed")
     strict_authority = _bind_record(
         authorities["strict_audit"], label="Golden-v3 strict audit authority"
+    )
+    strict_implementation = _bind_record(
+        authorities["strict_audit_implementation"],
+        label="Golden-v3 strict audit implementation",
     )
     derivation_authority = _bind_record(
         authorities["four_candidate_derivation"],
@@ -484,8 +518,82 @@ def load_authority() -> AuthorityBundle:
         authorities["balanced_open_phase_v3_generator"],
         label="Golden-v3 balanced-open-phase-v3 generator",
     )
-    if strict_authority.sha256 != strict_audit.EXPECTED_AUTHORITY_SHA256:
+    strict_document = _strict_json(
+        strict_authority.data, label="Golden-v3 strict audit authority"
+    )
+    alpha_record = strict_document.get("alpha_zero_derivation")
+    v2_record = strict_document.get("v2_metric_value_source")
+    core_record = strict_document.get("strict_core_binding")
+    if not all(
+        isinstance(record, dict) for record in (alpha_record, v2_record, core_record)
+    ):
+        raise GoldenV3PromotionError(
+            "Golden-v3 strict audit local dependency records changed"
+        )
+    dependency_specs = (
+        (
+            {
+                "path": alpha_record.get("source_path"),
+                "sha256": alpha_record.get("source_sha256"),
+            },
+            "Golden-v3 strict audit v19 dependency",
+            STRICT_AUDIT_V19_MODULE_NAME,
+            "scripts/map-production/build_style_candidate_k3_sparse_ridgeline_v19.py",
+        ),
+        (
+            {"path": v2_record.get("path"), "sha256": v2_record.get("sha256")},
+            "Golden-v3 strict audit v2 dependency",
+            STRICT_AUDIT_V2_MODULE_NAME,
+            "scripts/map-production/audit_style_candidate_k3_golden_v2.py",
+        ),
+        (
+            {"path": core_record.get("path"), "sha256": core_record.get("sha256")},
+            "Golden-v3 strict audit core dependency",
+            STRICT_AUDIT_CORE_MODULE_NAME,
+            "scripts/map-production/golden_v3_strict_metric_core.py",
+        ),
+    )
+    strict_dependencies = tuple(
+        _bind_record(record, label=label) for record, label, _, _ in dependency_specs
+    )
+    for binding, (_, label, _, expected_path) in zip(
+        strict_dependencies, dependency_specs, strict=True
+    ):
+        if binding.relative != expected_path:
+            raise GoldenV3PromotionError(f"{label} path changed")
+    strict_dependency_modules = tuple(
+        _load_bound_module(binding, name=module_name)
+        for binding, (_, _, module_name, _) in zip(
+            strict_dependencies, dependency_specs, strict=True
+        )
+    )
+    if any(
+        Path(module.__file__).resolve() != binding.path
+        for binding, module in zip(
+            strict_dependencies, strict_dependency_modules, strict=True
+        )
+    ):
+        raise GoldenV3PromotionError("Golden-v3 strict audit dependency path changed")
+    if strict_implementation.path != STRICT_AUDIT_IMPLEMENTATION_PATH.resolve():
+        raise GoldenV3PromotionError("strict-v3 audit implementation path changed")
+    strict_module = _load_bound_module(
+        strict_implementation,
+        name=STRICT_AUDIT_MODULE_NAME,
+    )
+    if Path(strict_module.__file__).resolve() != strict_implementation.path:
+        raise GoldenV3PromotionError("strict-v3 audit implementation path changed")
+    if (REPO_ROOT / strict_module.AUTHORITY_PATH).resolve() != strict_authority.path:
+        raise GoldenV3PromotionError("strict-v3 audit module authority path changed")
+    if strict_authority.sha256 != strict_module.EXPECTED_AUTHORITY_SHA256:
         raise GoldenV3PromotionError("strict-v3 authority identity changed")
+    if strict_module.v19 is not strict_dependency_modules[0]:
+        raise GoldenV3PromotionError("strict-v3 v19 dependency snapshot changed")
+    if strict_module.v2 is not strict_dependency_modules[1]:
+        raise GoldenV3PromotionError("strict-v3 v2 dependency snapshot changed")
+    if strict_module.strict is not strict_dependency_modules[2]:
+        raise GoldenV3PromotionError("strict-v3 core dependency snapshot changed")
+    if manifest_cas is None:
+        manifest_cas = importlib.import_module("promote_style_candidate_k3_golden_v2")
     if derivation_authority.path != FOUR_CANDIDATE_AUTHORITY_PATH.resolve():
         raise GoldenV3PromotionError("four-candidate derivation authority path changed")
     derivation_module = _load_bound_module(
@@ -550,6 +658,10 @@ def load_authority() -> AuthorityBundle:
         promotion_implementation=promotion_implementation,
         promotion_implementation_sha256=implementation_sha256,
         strict_authority=strict_authority,
+        strict_implementation=strict_implementation,
+        strict_module=strict_module,
+        strict_dependencies=strict_dependencies,
+        strict_dependency_modules=strict_dependency_modules,
         derivation_authority=derivation_authority,
         derivation_generator=derivation_generator,
         derivation_module=derivation_module,
@@ -853,10 +965,13 @@ def _validate_embedded_generation_seals(
         raise GoldenV3PromotionError(f"Golden-v3 embedded {exc}") from exc
 
 
-def _recomputed_strict_report(candidate_path: Path) -> dict[str, Any]:
+def _recomputed_strict_report(
+    candidate_path: Path, *, authority: AuthorityBundle
+) -> dict[str, Any]:
+    strict_module = authority.strict_module
     try:
-        return strict_audit.audit_candidate(candidate_path)
-    except strict_audit.GoldenV3StrictAuditError as exc:
+        return strict_module.audit_candidate(candidate_path, root=REPO_ROOT)
+    except strict_module.GoldenV3StrictAuditError as exc:
         raise GoldenV3PromotionError(f"strict-v3 recomputation failed: {exc}") from exc
 
 
@@ -878,19 +993,18 @@ def _validate_strict_report(
         "promotion_or_golden_designation_performed": False,
     }
     for key, expected in exact.items():
-        if report.get(key) != expected:
+        if not _exact_json_equal(report.get(key), expected):
             raise GoldenV3PromotionError(
                 f"Golden-v3 strict audit report {key} must be {expected!r}"
             )
     candidate_record = report.get("candidate")
-    if (
-        not isinstance(candidate_record, dict)
-        or set(candidate_record) != {"binding", "sha256", "bytes", "path_recorded"}
-        or candidate_record.get("binding") != "runtime-only"
-        or candidate_record.get("sha256") != candidate.sha256
-        or candidate_record.get("bytes") != len(candidate.data)
-        or candidate_record.get("path_recorded") is not False
-    ):
+    expected_candidate = {
+        "binding": "runtime-only",
+        "sha256": candidate.sha256,
+        "bytes": len(candidate.data),
+        "path_recorded": False,
+    }
+    if not _exact_json_equal(candidate_record, expected_candidate):
         raise GoldenV3PromotionError(
             "Golden-v3 strict audit candidate binding does not match the selected bytes"
         )
@@ -901,7 +1015,7 @@ def _validate_strict_report(
         or not all(value is True for value in gates.values())
     ):
         raise GoldenV3PromotionError("Golden-v3 strict audit gate map is not all-pass")
-    if strict_audit.canonical_json(report) != binding.data:
+    if authority.strict_module.canonical_json(report) != binding.data:
         raise GoldenV3PromotionError(
             "Golden-v3 strict audit report bytes are not canonical"
         )
@@ -919,12 +1033,12 @@ def _validate_strict_report(
         raise GoldenV3PromotionError(
             "Golden-v3 strict audit report runtime profile is not authorized"
         )
-    recomputed = _recomputed_strict_report(candidate.path)
+    recomputed = _recomputed_strict_report(candidate.path, authority=authority)
     stored_comparable = dict(report)
     recomputed_comparable = dict(recomputed)
     stored_comparable.pop("runtime_profile", None)
     recomputed_comparable.pop("runtime_profile", None)
-    if stored_comparable != recomputed_comparable:
+    if not _exact_json_equal(stored_comparable, recomputed_comparable):
         raise GoldenV3PromotionError(
             "Golden-v3 strict audit report does not equal independently recomputed pixels"
         )
@@ -986,14 +1100,15 @@ def _validate_packet(
         raise GoldenV3PromotionError("Golden-v3 blind packet duplicates a view payload")
     identity = authority.document["identity"]
     source_size = (identity["canvas_width"], identity["canvas_height"])
+    strict_module = authority.strict_module
     try:
-        source_pixels = strict_audit._decode_rgb(
+        source_pixels = strict_module._decode_rgb(
             candidate.data,
             size=source_size,
             label="Golden-v3 promoted master",
             strict_candidate=True,
         )
-    except strict_audit.GoldenV3StrictAuditError as exc:
+    except strict_module.GoldenV3StrictAuditError as exc:
         raise GoldenV3PromotionError(
             f"Golden-v3 promoted master PNG contract failed: {exc}"
         ) from exc
@@ -1008,13 +1123,13 @@ def _validate_packet(
                 try:
                     expected_pixels = np.asarray(rendered, dtype=np.uint8)
                     try:
-                        actual_pixels = strict_audit._decode_rgb(
+                        actual_pixels = strict_module._decode_rgb(
                             view.data,
                             size=tuple(spec["size"]),
                             label=f"Golden-v3 blind view {spec['id']}",
                             strict_candidate=True,
                         )
-                    except strict_audit.GoldenV3StrictAuditError as exc:
+                    except strict_module.GoldenV3StrictAuditError as exc:
                         raise GoldenV3PromotionError(
                             f"Golden-v3 blind view {spec['id']} PNG contract failed: {exc}"
                         ) from exc
@@ -1267,6 +1382,7 @@ def _receipt_document(
         "generation_generator": _artifact(generation_generator),
         "generation_seals": generation_seals,
         "strict_audit_authority": _artifact(authority.strict_authority),
+        "strict_audit_implementation": _artifact(authority.strict_implementation),
         "strict_audit_report": _artifact(strict_report),
         "root_review": _review_receipt_record(root_review),
         "blind_packet": _artifact(packet.binding),
@@ -1316,6 +1432,7 @@ def _project_job(
     bindings.extend(
         (
             authority.strict_authority,
+            authority.strict_implementation,
             strict_report,
             root_review.binding,
             packet.binding,
@@ -1449,6 +1566,7 @@ def _validate_receipt_links(
         "promotion_implementation": _implementation_artifact(authority),
         "generation_authority": _artifact(generation_authority),
         "strict_audit_authority": _artifact(authority.strict_authority),
+        "strict_audit_implementation": _artifact(authority.strict_implementation),
         "strict_audit_report": _artifact(strict_report),
         "blind_packet": _artifact(packet.binding),
     }
@@ -1566,6 +1684,11 @@ def _validate_accepted_job(
         raise GoldenV3PromotionError("Golden-v3 manifest generation generator changed")
     if bound[V3_STRICT_AUTHORITY_ROLE].sha256 != authority.strict_authority.sha256:
         raise GoldenV3PromotionError("Golden-v3 manifest strict authority changed")
+    if (
+        bound[V3_STRICT_IMPLEMENTATION_ROLE].sha256
+        != authority.strict_implementation.sha256
+    ):
+        raise GoldenV3PromotionError("Golden-v3 manifest strict implementation changed")
     master = _bind_record(
         {"path": master_record["path"], "sha256": master_record["sha256"]},
         label="Golden-v3 manifest master",
@@ -1918,10 +2041,6 @@ def _before_output_open_hook(path: Path) -> None:
     """Test seam invoked only while the output parent chain is anchored."""
 
 
-def _before_cleanup_unlink_hook(path: Path) -> None:
-    """Test seam invoked before cleanup acquires its parent anchor."""
-
-
 def _lstat_from_anchor(anchor: _ParentAnchor, name: str) -> os.stat_result:
     if anchor.parent_fd is not None:
         return os.stat(name, dir_fd=anchor.parent_fd, follow_symlinks=False)
@@ -1943,30 +2062,6 @@ def _write_all(descriptor: int, payload: bytes) -> None:
         remaining = remaining[written:]
 
 
-def _unlink_created_entry(
-    anchor: _ParentAnchor,
-    name: str,
-    signature: tuple[int, int, int, int],
-    *,
-    label: str,
-) -> None:
-    """Remove only the still-visible plain file created under this anchor."""
-
-    _assert_parent_anchor(anchor, label=label)
-    metadata = _lstat_from_anchor(anchor, name)
-    if (
-        not stat.S_ISREG(metadata.st_mode)
-        or _stat_is_reparse(metadata)
-        or metadata.st_nlink != 1
-        or _stat_signature(metadata) != signature
-    ):
-        return
-    if anchor.parent_fd is not None:
-        os.unlink(name, dir_fd=anchor.parent_fd)
-    else:
-        os.unlink(anchor.path / name)
-
-
 def _write_exclusive(path: Path, payload: bytes, *, label: str) -> _CreatedOutput:
     try:
         resolved, _ = require_trackable_path(
@@ -1977,8 +2072,6 @@ def _write_exclusive(path: Path, payload: bytes, *, label: str) -> _CreatedOutpu
     anchor = _open_parent_anchor(resolved.parent, label=label)
     descriptor: int | None = None
     signature: tuple[int, int, int, int] | None = None
-    created_entry = False
-    completed = False
     try:
         _before_output_open_hook(resolved)
         _assert_parent_anchor(anchor, label=label)
@@ -1991,7 +2084,6 @@ def _write_exclusive(path: Path, payload: bytes, *, label: str) -> _CreatedOutpu
             | getattr(os, "O_NOFOLLOW", 0)
         )
         descriptor = _open_from_anchor(anchor, resolved.name, flags)
-        created_entry = True
         initial = os.fstat(descriptor)
         if (
             not stat.S_ISREG(initial.st_mode)
@@ -2020,8 +2112,7 @@ def _write_exclusive(path: Path, payload: bytes, *, label: str) -> _CreatedOutpu
             raise GoldenV3PromotionError(
                 f"{label} bytes changed after exclusive creation"
             )
-        completed = True
-        return _CreatedOutput(binding=binding, parent_identity=anchor.identity)
+        return _CreatedOutput(binding=binding)
     except FileExistsError as exc:
         raise GoldenV3PromotionError(f"refusing to overwrite existing {label}") from exc
     finally:
@@ -2035,18 +2126,6 @@ def _write_exclusive(path: Path, payload: bytes, *, label: str) -> _CreatedOutpu
                 os.close(descriptor)
             except OSError:
                 pass
-        if not completed and created_entry and signature is not None:
-            try:
-                _unlink_created_entry(
-                    anchor,
-                    resolved.name,
-                    signature,
-                    label=label,
-                )
-            except (OSError, GoldenV3PromotionError):
-                # Ownership uncertainty is fail-closed: retain debris rather
-                # than risk deleting an exchanged path.
-                pass
         try:
             _close_parent_anchor(anchor)
         except OSError:
@@ -2054,72 +2133,12 @@ def _write_exclusive(path: Path, payload: bytes, *, label: str) -> _CreatedOutpu
 
 
 def _cleanup_created(created: Sequence[_CreatedOutput]) -> None:
-    for owned in reversed(created):
-        path = owned.binding.path
-        try:
-            _before_cleanup_unlink_hook(path)
-            anchor = _open_parent_anchor(path.parent, label=owned.binding.label)
-        except (OSError, GoldenV3PromotionError):
-            continue
-        descriptor: int | None = None
-        try:
-            if anchor.identity != owned.parent_identity:
-                continue
-            metadata = _lstat_from_anchor(anchor, path.name)
-            if (
-                not stat.S_ISREG(metadata.st_mode)
-                or _stat_is_reparse(metadata)
-                or metadata.st_nlink != 1
-                or _stat_signature(metadata) != owned.binding.signature
-            ):
-                continue
-            flags = (
-                os.O_RDONLY
-                | getattr(os, "O_BINARY", 0)
-                | getattr(os, "O_CLOEXEC", 0)
-                | getattr(os, "O_NOFOLLOW", 0)
-            )
-            descriptor = _open_from_anchor(anchor, path.name, flags)
-            before = os.fstat(descriptor)
-            digest = hashlib.sha256()
-            bytes_read = 0
-            for chunk in iter(lambda: os.read(descriptor, 1024 * 1024), b""):
-                digest.update(chunk)
-                bytes_read += len(chunk)
-            after = os.fstat(descriptor)
-            visible = _lstat_from_anchor(anchor, path.name)
-            if (
-                _stat_signature(before) != owned.binding.signature
-                or _stat_signature(after) != owned.binding.signature
-                or _stat_signature(visible) != owned.binding.signature
-                or bytes_read != after.st_size
-                or digest.hexdigest() != owned.binding.sha256
-            ):
-                continue
-            os.close(descriptor)
-            descriptor = None
-            _assert_parent_anchor(anchor, label=owned.binding.label)
-            if (
-                _stat_signature(_lstat_from_anchor(anchor, path.name))
-                != owned.binding.signature
-            ):
-                continue
-            if anchor.parent_fd is not None:
-                os.unlink(path.name, dir_fd=anchor.parent_fd)
-            else:
-                os.unlink(path)
-        except (OSError, GoldenV3PromotionError):
-            continue
-        finally:
-            if descriptor is not None:
-                try:
-                    os.close(descriptor)
-                except OSError:
-                    pass
-            try:
-                _close_parent_anchor(anchor)
-            except OSError:
-                pass
+    # Completed output names are predictable. Once their creation handles are
+    # closed, no portable unlink-by-name operation can prove that the visible
+    # basename is still the inode created by this transaction at the instant
+    # of deletion. Retain fail-closed debris rather than risk deleting an
+    # exchanged user file; every future attempt refuses to overwrite it.
+    del created
 
 
 def promote_candidate(
@@ -2139,6 +2158,7 @@ def promote_candidate(
     if not actor:
         raise GoldenV3PromotionError("authorized_by must be non-empty")
     authority = load_authority()
+    _require_active_generation_contract(authority, generation_contract_id)
     _generation_context(authority, generation_contract_id)
     blind_roles = tuple(authority.document["review_contract"]["blind_role_order"])
     if len(review_paths) != authority.document["review_contract"]["blind_review_count"]:
@@ -2221,7 +2241,7 @@ def promote_candidate(
         raise GoldenV3PromotionError("system acceptance time predates a blind review")
 
     created: list[_CreatedOutput] = []
-    committed = False
+    commit_started = False
     try:
         raw_output = _write_exclusive(paths.raw, candidate.data, label="Golden-v3 raw")
         raw = raw_output.binding
@@ -2279,6 +2299,8 @@ def promote_candidate(
             authority.binding,
             authority.promotion_implementation,
             authority.strict_authority,
+            authority.strict_implementation,
+            *authority.strict_dependencies,
             authority.derivation_authority,
             authority.derivation_generator,
             authority.balanced_authority,
@@ -2302,6 +2324,7 @@ def promote_candidate(
         except BoundArtifactError as exc:
             raise GoldenV3PromotionError(str(exc)) from exc
         try:
+            commit_started = True
             commit = manifest_cas._conditional_manifest_replace(
                 paths.manifest, projected, expected=manifest_binding
             )
@@ -2309,7 +2332,6 @@ def promote_candidate(
             raise GoldenV3ManifestCommitUnknownError(str(exc)) from exc
         except manifest_cas.K3GoldenPromotionV2Error as exc:
             raise GoldenV3PromotionError(str(exc)) from exc
-        committed = True
         return {
             "status": "accepted",
             "job_id": JOB_ID,
@@ -2329,7 +2351,7 @@ def promote_candidate(
     except GoldenV3ManifestCommitUnknownError:
         raise
     except BaseException:
-        if not committed:
+        if not commit_started:
             _cleanup_created(created)
         raise
 
@@ -2339,7 +2361,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--generation-contract",
         required=True,
-        choices=GENERATION_CONTRACT_IDS,
+        choices=(ACTIVE_GENERATION_CONTRACT_ID,),
         dest="generation_contract_id",
     )
     parser.add_argument("--candidate-id", required=True)
