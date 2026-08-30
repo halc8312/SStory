@@ -1,0 +1,162 @@
+{
+  "artifact": "microtexture-v2-r6-dev-r21-development-public-preflight-failure-audit",
+  "schema_version": "microtexture-v2-r6-development-public-preflight-failure-audit/1",
+  "authority": false,
+  "formal_use_forbidden": true,
+  "audit_recorded_at": "2026-08-30T09:19:03.508Z",
+  "development_edition": "r21",
+  "outcome": "failed_closed",
+  "failure_phase": "public-preflight-before-label-seal-or-private-reveal",
+  "failure_class": "sealed-initial-decision-dsl-noncanonical-flag-list",
+  "measurement_started": false,
+  "selection_status": "not_started_public_preflight_failed",
+  "development_hard_threshold": null,
+  "calibration_endpoint_performance": null,
+  "holdout_endpoint_performance": null,
+  "threshold_selection_audit": null,
+  "one_shot_contract": {
+    "generation_completed_exactly_once": true,
+    "root_vision_completed_exactly_once_before_private_reveal": true,
+    "independent_vision_completed_exactly_once_before_private_reveal": true,
+    "all_440_records_reviewed_by_each_reviewer": true,
+    "root_initial_snapshot_and_receipt_sealed_exactly_once": true,
+    "independent_initial_snapshot_and_receipt_sealed_exactly_once": true,
+    "root_and_independent_decisions_reconciled_exactly_once_before_preflight": true,
+    "official_preflight_invocation_operator_observation": {
+      "observed_count": 1,
+      "machine_receipt_available": false
+    },
+    "official_preflight_passed": false,
+    "labels_sealed": false,
+    "private_reveal_started": false,
+    "private_audit_started": false,
+    "population_audit_started": false,
+    "analysis_started": false,
+    "numeric_metric_called": false,
+    "threshold_search_started": false,
+    "development_threshold_selected": false,
+    "postmortem_invoked": false,
+    "development_key_bytes_read_by_failed_preflight": false,
+    "development_key_bytes_logged": false,
+    "development_key_bytes_tracked": false,
+    "formal_cli_invoked": false,
+    "formal_marker_created": false,
+    "formal_threshold_created": false,
+    "locked_clean_v18_decoded_or_measured": false,
+    "rerun_resume_relabel_reconcile_reseal_repair_or_reuse_for_r21_forbidden": true,
+    "r21_closed": true
+  },
+  "public_preflight_failure": {
+    "error_type": "RuntimeError",
+    "message": "decision DSL flag drift",
+    "first_failure_split": "calibration",
+    "first_failure_reviewer": "root",
+    "first_failure_file": "decisions-root.initial.dev.txt",
+    "first_failure_line": 6,
+    "observed_flag_token": "lp",
+    "required_canonical_flag_token": "l,p",
+    "strict_parser_weakened": false,
+    "initial_snapshot_or_receipt_modified_after_failure": false,
+    "complete_noncanonical_lp_scope": {
+      "calibration": {
+        "root_initial_occurrences": 33,
+        "independent_initial_occurrences": 32,
+        "vision_final_occurrences": 32,
+        "root_final_occurrences": 32,
+        "independent_final_occurrences": 32
+      },
+      "holdout": {
+        "root_initial_occurrences": 33,
+        "independent_initial_occurrences": 32,
+        "vision_final_occurrences": 32,
+        "root_final_occurrences": 32,
+        "independent_final_occurrences": 32
+      }
+    }
+  },
+  "vision_review": {
+    "records_per_split_per_reviewer": 220,
+    "review_boards_per_split_per_reviewer": 37,
+    "initial_snapshots_persisted_immutably": true,
+    "initial_snapshot_receipts_verified_by_exact_public_bytes": true,
+    "initial_snapshots_official_decision_dsl_conformant": false,
+    "final_three_way_exact_bytes": true,
+    "official_bilateral_initial_flag_gate_completed": false,
+    "splits": {
+      "calibration": {
+        "root_initial_decisions_sha256": "037dcc3985bca90f4f78249a9ea4c52e5240373bac2b1a3cfddc4c247c3843e6",
+        "root_initial_receipt_sha256": "2a8fef7f1ba5613164907086ed1e6f8dfe4627ab46c1b5e79e56947bcba71b3b",
+        "independent_initial_decisions_sha256": "18360c191f5db6e1f3855ea5237b407a31ed5e031d5afb9bb81cf636533e519f",
+        "independent_initial_receipt_sha256": "95d0ce82aaf8e5684b9b6b998a6e1e75d95326655b1bd7a4b9e87292de8dc945",
+        "canonical_final_decisions_sha256": "26a4f549e49aff35c21e65293960ca18e50b991117d72873d8738c8e069b900e"
+      },
+      "holdout": {
+        "root_initial_decisions_sha256": "371e4ff4856727697fea49be09dd114987779d9ccfe7e2b59f254fcfe401cdd9",
+        "root_initial_receipt_sha256": "93c172b073b3eca2bc6d89adc298e500fa9bc59ccb2c852dc33ee7ce684f4d11",
+        "independent_initial_decisions_sha256": "a84b38811a21e15dd0464b49bcd08469fa749a86640bd7b83f32c89abb62437f",
+        "independent_initial_receipt_sha256": "2865c533abc15fa0e9649cf60052dcf6d8c03027f58265a649892f2101002f69",
+        "canonical_final_decisions_sha256": "b2fdf49a01523933f54757fcf249f6e585e07b3b00d8aace796a17c94f5d29fa"
+      }
+    }
+  },
+  "hash_bindings": {
+    "captured_repository_head": "d179c5d1a3237374f03a5cf8c78d7637ed997c29",
+    "preregistered_spec_sha256": "27441b6a5f11294528618e4548566484d59fc1ada739d10e97974034e952a145",
+    "implementation_bindings_sha256": "94b13104c1df412315ef7268bf5adb3dd872fafc94118157c3af0bdb35651570",
+    "development_authority_manifest_sha256": "9d164cbb51dbe7da120a3692f5d7cd881a13262a425976886f2016cbfdda2557",
+    "development_boundary_sha256": "04cb425c5286075cd5df462623cdcd032ceeab4b9dd020d62c20c7f23e78abe8",
+    "generation_start_sha256": "41945ce122d033ba55e94711b7fd0cf4a631806f3b3f320a0e4988970804fac8",
+    "generation_summary_sha256": "e39c6445395b687434af4081623ec7783fcb692dee7e018e8da1720ae6ee9fed",
+    "generation_seal_sha256": "1d95d05f2a62e6f0af04d5dd971a781c2167535915e7a2339f278512f77bb533",
+    "generation_completion_sha256": "81cfec7312fe24fb18991b689ae3cc0e6faf5b507436c4e553045fe88401c763",
+    "calibration_manifest_sha256": "b5da06b1e1ab1a925690370db7faf300585acbac26cedeaabf6d72fa5bc297a9",
+    "calibration_blank_labels_sha256": "ee0ce9e64c81cbd84fcbb1a923000b9b3b7d89b1c14bb0fb47d9aa6d226ff05c",
+    "calibration_review_index_sha256": "d867af0d00443487bebc6827d2af30ee4f481c625c31313578ac6552258fcd69",
+    "holdout_manifest_sha256": "32cd815cb6adda4c7cda1819d39cc0b0b2841703593a2ad828d9142b3966d980",
+    "holdout_blank_labels_sha256": "3c3bd147b968ca85e9a3d5b136ca10a8887519240c260052095c82f23a575612",
+    "holdout_review_index_sha256": "0f7d7c51b48c02264f9c8d56797d3b717b04aac37c3204aba3739e46a77618fb"
+  },
+  "absent_analysis_artifacts": {
+    "label_seal_receipt_present": false,
+    "private_analysis_root_present": false,
+    "private_audit_present": false,
+    "population_audit_present": false,
+    "calibration_measurements_present": false,
+    "holdout_measurements_present": false,
+    "analysis_result_present": false,
+    "failure_marker_present": false,
+    "threshold_selection_result_present": false,
+    "holdout_endpoint_result_present": false
+  },
+  "closed_root_retention": {
+    "retained_unchanged_for_forensic_evidence": true,
+    "sealed_initial_snapshots_and_receipts_unchanged": true,
+    "reconciled_final_decisions_unchanged": true,
+    "private_root_inspected_for_this_tracked_audit": false,
+    "calibration_review_crop_derivative_file_count": 13,
+    "all_review_crop_derivatives_non_reusable": true,
+    "all_other_dev_r21_derivatives_non_reusable": true
+  },
+  "root_cause": {
+    "generation_or_runtime_failure": false,
+    "vision_review_coverage_failure": false,
+    "reconciliation_byte_agreement_failure": false,
+    "decision_authoring_failure": "The public decision files contain concatenated flag token lp instead of canonical comma-separated l,p. The first official failure was calibration Root initial line 6; complete public inspection found 33 Root-initial and 32 Independent-initial occurrences per split plus 32 occurrences in each of the three final files per split.",
+    "parser_weakness_ruled_out": "The existing strict parser correctly rejected lp. The workflow defect was that receipt creation was not mechanically owned by a validator/writer that ran that parser before sealing.",
+    "premature_private_reveal_ruled_out": "The official public preflight stopped while parsing the sealed public initial snapshot, before label sealing, key read, private identity reveal, population aggregation, or numeric measurement.",
+    "repair_forbidden": "The sealed dev-r21 edition cannot be repaired by editing or resealing an initial snapshot or receipt, rerunning preflight, reconciling again, relabeling, resuming, regenerating, or reusing any dev-r21 material."
+  },
+  "successor_constraints": {
+    "r21_data_role": "development_only_public_preflight_failure_evidence",
+    "r21_morphology_or_metric_evidence_for_retuning": false,
+    "r21_private_material_revealed": false,
+    "r21_public_or_private_material_reuse_forbidden": true,
+    "fresh_successor_required": true,
+    "successor_must_preserve_r21_morphology_tiers_minima_metric_threshold_population_and_rate_contracts": true,
+    "successor_must_use_fresh_root_key_domains_nonces_controls_references_identities_codes_commitments_labels_decisions_and_public_surface": true,
+    "successor_must_validate_each_initial_snapshot_with_the_official_strict_parser_before_receipt_sealing": true,
+    "successor_receipt_writer_must_refuse_invalid_dsl_and_own_exclusive_receipt_creation": true,
+    "strict_decision_parser_relaxation_forbidden": true,
+    "formal_stage_remains_blocked": true
+  }
+}

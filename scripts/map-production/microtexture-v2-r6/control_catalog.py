@@ -116,8 +116,11 @@ _R19_SCHEDULE_REVISION = (
 _R20_SCHEDULE_REVISION = (
     "dev-r20-strong-finite-duplicate-short-line-sentinel-schedule-v1"
 )
-_SCHEDULE_REVISION = (
+_R21_SCHEDULE_REVISION = (
     "dev-r21-symmetric-hard-point-speck-population-schedule-v1"
+)
+_SCHEDULE_REVISION = (
+    "dev-r22-r21-morphology-strict-preseal-decision-schedule-v1"
 )
 _R19_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
     b"microtexture-v2-r6/public-payload-commitment/v15/"
@@ -125,7 +128,10 @@ _R19_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
 _R20_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
     b"microtexture-v2-r6/public-payload-commitment/v16/"
 )
-_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v17/"
+_R21_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = (
+    b"microtexture-v2-r6/public-payload-commitment/v17/"
+)
+_PUBLIC_PAYLOAD_COMMITMENT_PREFIX = b"microtexture-v2-r6/public-payload-commitment/v18/"
 _PUBLIC_R15_WARNING_ANCHOR_REVISION = (
     "dev-r14-quantized-direct-visible-sparse-warning-v1"
 )
@@ -160,16 +166,27 @@ _R20_DUPLICATE_AUDIT_NONCES = {
     "calibration": (1291000, 1291001, 1291002),
     "holdout": (1301000, 1301001, 1301002),
 }
-_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v16/"
-_FOUNDATION_OFFSET_LANE = "foundation-offset-v15"
-_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v15"
-_DELTA_LANE = "delta-v15"
-_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v15/"
-_ARTIFACT_NONCE_BASES = {"calibration": 1373000, "holdout": 1383000}
-_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1351000, "holdout": 1361000}
-_DUPLICATE_AUDIT_NONCES = {
+_R21_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v16/"
+_R21_FOUNDATION_OFFSET_LANE = "foundation-offset-v15"
+_R21_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v15"
+_R21_DELTA_LANE = "delta-v15"
+_R21_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v15/"
+_R21_ARTIFACT_NONCE_BASES = {"calibration": 1373000, "holdout": 1383000}
+_R21_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1351000, "holdout": 1361000}
+_R21_DUPLICATE_AUDIT_NONCES = {
     "calibration": (1391000, 1391001, 1391002),
     "holdout": (1401000, 1401001, 1401002),
+}
+_PRIVATE_REFERENCE_TRANSFORM_PREFIX = b"private-reference-transform-v17/"
+_FOUNDATION_OFFSET_LANE = "foundation-offset-v16"
+_FOUNDATION_ASSIGNMENT_LANE = "foundation-assignment-v16"
+_DELTA_LANE = "delta-v16"
+_PRIVATE_CONTROL_ID_PREFIX = b"microtexture-v2-r6/private-control-id/v16/"
+_ARTIFACT_NONCE_BASES = {"calibration": 1473000, "holdout": 1483000}
+_PROTOCOL_ZERO_NONCE_BASES = {"calibration": 1451000, "holdout": 1461000}
+_DUPLICATE_AUDIT_NONCES = {
+    "calibration": (1491000, 1491001, 1491002),
+    "holdout": (1501000, 1501001, 1501002),
 }
 _R20_PUBLIC_NONCES = {
     "calibration": "r6-calibration-v15",
@@ -548,7 +565,7 @@ _R21_HARD_POINT_SPECK_REVISION = "dev-r21-reject-speck-encoded-hard-plus-v1"
 _R21_HARD_POINT_SPECK_MANIFEST = {
     "revision": _R21_HARD_POINT_SPECK_REVISION,
     "inherited_schedule_revision": _R20_SCHEDULE_REVISION,
-    "schedule_revision": _SCHEDULE_REVISION,
+    "schedule_revision": _R21_SCHEDULE_REVISION,
     "sanitized_r20_basis": _R21_SANITIZED_R20_BASIS,
     "sanitized_r20_basis_sha256": _R21_SANITIZED_R20_BASIS_SHA256,
     "family": "artifact-speck",
@@ -3759,6 +3776,16 @@ def _r20_artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
     )
 
 
+def _r21_artifact_variants(split: str) -> dict[str, list[dict[str, Any]]]:
+    """Reconstruct the exact closed r21 artifact catalog parameters."""
+
+    return _artifact_variants(
+        split,
+        _schedule_revision_override=_R21_SCHEDULE_REVISION,
+        _artifact_nonce_bases_override=_R21_ARTIFACT_NONCE_BASES,
+    )
+
+
 def _validate_dev_r17_morphology_schedules() -> None:
     _validate_dev_r17_reference_prequalification_design()
     sparse_families = (
@@ -4574,7 +4601,7 @@ def dev_r21_authority_binding() -> dict[str, Any]:
     """Return the tracked, public r21 catalog authority without runtime material."""
 
     return {
-        "schedule_revision": _SCHEDULE_REVISION,
+        "schedule_revision": _R21_SCHEDULE_REVISION,
         "predecessor_schedule_revision": _R20_SCHEDULE_REVISION,
         "duplicate_equivalence_policy_revision": (
             _R19_DUPLICATE_EQUIVALENCE_POLICY_REVISION
@@ -4591,19 +4618,20 @@ def dev_r21_authority_binding() -> dict[str, Any]:
             _R20_DUPLICATE_SENTINEL_MANIFEST_SHA256
         ),
         "public_payload_commitment_prefix": (
-            _PUBLIC_PAYLOAD_COMMITMENT_PREFIX.decode("ascii")
+            _R21_PUBLIC_PAYLOAD_COMMITMENT_PREFIX.decode("ascii")
         ),
         "private_reference_transform_prefix": (
-            _PRIVATE_REFERENCE_TRANSFORM_PREFIX.decode("ascii")
+            _R21_PRIVATE_REFERENCE_TRANSFORM_PREFIX.decode("ascii")
         ),
-        "foundation_offset_lane": _FOUNDATION_OFFSET_LANE,
-        "foundation_assignment_lane": _FOUNDATION_ASSIGNMENT_LANE,
-        "delta_lane": _DELTA_LANE,
-        "private_control_id_prefix": _PRIVATE_CONTROL_ID_PREFIX.decode("ascii"),
-        "artifact_nonce_bases": dict(_ARTIFACT_NONCE_BASES),
-        "protocol_zero_nonce_bases": dict(_PROTOCOL_ZERO_NONCE_BASES),
+        "foundation_offset_lane": _R21_FOUNDATION_OFFSET_LANE,
+        "foundation_assignment_lane": _R21_FOUNDATION_ASSIGNMENT_LANE,
+        "delta_lane": _R21_DELTA_LANE,
+        "private_control_id_prefix": _R21_PRIVATE_CONTROL_ID_PREFIX.decode("ascii"),
+        "artifact_nonce_bases": dict(_R21_ARTIFACT_NONCE_BASES),
+        "protocol_zero_nonce_bases": dict(_R21_PROTOCOL_ZERO_NONCE_BASES),
         "duplicate_audit_nonces": {
-            split: list(values) for split, values in _DUPLICATE_AUDIT_NONCES.items()
+            split: list(values)
+            for split, values in _R21_DUPLICATE_AUDIT_NONCES.items()
         },
         "speck_reinforcement_revision": _R18_SPECK_REINFORCEMENT_REVISION,
         "speck_reinforcement_manifest_sha256": (
@@ -4626,6 +4654,46 @@ def dev_r21_authority_binding() -> dict[str, Any]:
         "exact_morphology_change_count_across_splits": 20,
         "obvious_artifact_duplicate_sentinel_change_count_across_splits": 0,
         "clean_duplicate_construction_change_count_across_splits": 0,
+    }
+
+
+def dev_r22_authority_binding() -> dict[str, Any]:
+    """Return the tracked, public r22 catalog authority without runtime material."""
+
+    binding = dev_r21_authority_binding()
+    return {
+        **binding,
+        "schedule_revision": _SCHEDULE_REVISION,
+        "predecessor_schedule_revision": _R21_SCHEDULE_REVISION,
+        "source_dev_r21_failure_audit_sha256": (
+            "89229d2b5f0b6c91c61cea6547127cc4441fd7cc6bd02d6cc17a3c7aec2d61bd"
+        ),
+        "decision_preseal_receipt_writer_revision": (
+            "dev-r22-strict-initial-decision-receipt-writer-v1"
+        ),
+        "public_payload_commitment_prefix": (
+            _PUBLIC_PAYLOAD_COMMITMENT_PREFIX.decode("ascii")
+        ),
+        "private_reference_transform_prefix": (
+            _PRIVATE_REFERENCE_TRANSFORM_PREFIX.decode("ascii")
+        ),
+        "foundation_offset_lane": _FOUNDATION_OFFSET_LANE,
+        "foundation_assignment_lane": _FOUNDATION_ASSIGNMENT_LANE,
+        "delta_lane": _DELTA_LANE,
+        "private_control_id_prefix": _PRIVATE_CONTROL_ID_PREFIX.decode("ascii"),
+        "artifact_nonce_bases": dict(_ARTIFACT_NONCE_BASES),
+        "protocol_zero_nonce_bases": dict(_PROTOCOL_ZERO_NONCE_BASES),
+        "duplicate_audit_nonces": {
+            split: list(values) for split, values in _DUPLICATE_AUDIT_NONCES.items()
+        },
+        "preserved_predecessor_morphology_sha256": (
+            _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "predecessor_full_artifact_morphology_sha256": (
+            _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        ),
+        "preserved_predecessor_morphology_conditions_across_splits": 200,
+        "exact_morphology_change_count_across_splits": 0,
     }
 
 
@@ -5815,7 +5883,7 @@ def _validate_dev_r21_morphology_schedules() -> None:
         set(manifest) != manifest_keys
         or manifest["revision"] != _R21_HARD_POINT_SPECK_REVISION
         or manifest["inherited_schedule_revision"] != _R20_SCHEDULE_REVISION
-        or manifest["schedule_revision"] != _SCHEDULE_REVISION
+        or manifest["schedule_revision"] != _R21_SCHEDULE_REVISION
         or manifest["sanitized_r20_basis"] != basis
         or manifest["sanitized_r20_basis_sha256"]
         != _R21_SANITIZED_R20_BASIS_SHA256
@@ -5920,7 +5988,7 @@ def _validate_dev_r21_morphology_schedules() -> None:
         return min(capacities)
 
     predecessor = {split: _r20_artifact_variants(split) for split in splits}
-    current = {split: _artifact_variants(split) for split in splits}
+    current = {split: _r21_artifact_variants(split) for split in splits}
     expected_change_set = {
         (split, family, index)
         for split in splits
@@ -6119,7 +6187,7 @@ def _validate_dev_r21_morphology_schedules() -> None:
             )
             or len(target_tuples[split]) != 10
             or any(
-                parameters.get("schedule_revision") != _SCHEDULE_REVISION
+                parameters.get("schedule_revision") != _R21_SCHEDULE_REVISION
                 for variants in current[split].values()
                 for parameters in variants
             )
@@ -6174,12 +6242,12 @@ def _validate_dev_r21_morphology_schedules() -> None:
     predecessor_nonces: dict[str, set[int]] = {}
     for split in splits:
         current_nonces[split] = {
-            _ARTIFACT_NONCE_BASES[split] + family_offset + index
+            _R21_ARTIFACT_NONCE_BASES[split] + family_offset + index
             for family_offset in (0, 100, 200, 300, 400)
             for index in range(20)
         } | {
-            _PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
-        } | set(_DUPLICATE_AUDIT_NONCES[split])
+            _R21_PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
+        } | set(_R21_DUPLICATE_AUDIT_NONCES[split])
         predecessor_nonces[split] = {
             r20_binding["artifact_nonce_bases"][split] + family_offset + index
             for family_offset in (0, 100, 200, 300, 400)
@@ -6195,6 +6263,117 @@ def _validate_dev_r21_morphology_schedules() -> None:
             raise RuntimeError(f"r21 fresh nonce-space drift: {split}")
     if current_nonces["calibration"] & current_nonces["holdout"]:
         raise RuntimeError("r21 calibration/holdout nonce-space overlap")
+
+
+def _validate_dev_r22_morphology_schedules() -> None:
+    """Prove r22 preserves every r21 morphology while rotating all identities."""
+
+    _validate_dev_r21_morphology_schedules()
+    binding = dev_r22_authority_binding()
+    if (
+        binding["schedule_revision"] != _SCHEDULE_REVISION
+        or binding["predecessor_schedule_revision"] != _R21_SCHEDULE_REVISION
+        or binding["source_dev_r21_failure_audit_sha256"]
+        != "89229d2b5f0b6c91c61cea6547127cc4441fd7cc6bd02d6cc17a3c7aec2d61bd"
+        or binding["decision_preseal_receipt_writer_revision"]
+        != "dev-r22-strict-initial-decision-receipt-writer-v1"
+        or binding["public_payload_commitment_prefix"]
+        != "microtexture-v2-r6/public-payload-commitment/v18/"
+        or binding["private_reference_transform_prefix"]
+        != "private-reference-transform-v17/"
+        or binding["foundation_offset_lane"] != "foundation-offset-v16"
+        or binding["foundation_assignment_lane"]
+        != "foundation-assignment-v16"
+        or binding["delta_lane"] != "delta-v16"
+        or binding["private_control_id_prefix"]
+        != "microtexture-v2-r6/private-control-id/v16/"
+        or binding["artifact_nonce_bases"]
+        != {"calibration": 1473000, "holdout": 1483000}
+        or binding["protocol_zero_nonce_bases"]
+        != {"calibration": 1451000, "holdout": 1461000}
+        or binding["duplicate_audit_nonces"]
+        != {
+            "calibration": [1491000, 1491001, 1491002],
+            "holdout": [1501000, 1501001, 1501002],
+        }
+        or binding["predecessor_full_artifact_morphology_sha256"]
+        != _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        or binding["preserved_predecessor_morphology_sha256"]
+        != _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        or binding["preserved_predecessor_morphology_conditions_across_splits"]
+        != 200
+        or binding["full_artifact_morphology_sha256"]
+        != _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+        or binding["exact_morphology_change_count_across_splits"] != 0
+        or binding["obvious_artifact_duplicate_sentinel_change_count_across_splits"]
+        != 0
+        or binding["clean_duplicate_construction_change_count_across_splits"] != 0
+    ):
+        raise RuntimeError("r22 catalog authority binding drift")
+
+    def morphology(parameters: dict[str, Any]) -> dict[str, Any]:
+        return {
+            key: value
+            for key, value in parameters.items()
+            if key not in {"schedule_revision", "condition_nonce"}
+        }
+
+    full_r22: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    for split in ("calibration", "holdout"):
+        predecessor = _r21_artifact_variants(split)
+        current = _artifact_variants(split)
+        full_r22[split] = {}
+        for family, variants in current.items():
+            if any(
+                morphology(parameters)
+                != morphology(predecessor[family][index])
+                for index, parameters in enumerate(variants)
+            ):
+                raise RuntimeError(f"r22 preserved r21 morphology drift: {split}/{family}")
+            if any(
+                parameters.get("schedule_revision") != _SCHEDULE_REVISION
+                for parameters in variants
+            ):
+                raise RuntimeError(f"r22 schedule revision drift: {split}/{family}")
+            full_r22[split][family] = [morphology(item) for item in variants]
+    if (
+        sum(
+            len(variants)
+            for families in full_r22.values()
+            for variants in families.values()
+        )
+        != 200
+        or sha256_bytes(canonical_json_bytes(full_r22))
+        != _R21_FULL_ARTIFACT_MORPHOLOGY_SHA256
+    ):
+        raise RuntimeError("r22 preserved full r21 morphology SHA drift")
+
+    r21_binding = dev_r21_authority_binding()
+    current_nonces: dict[str, set[int]] = {}
+    predecessor_nonces: dict[str, set[int]] = {}
+    for split in ("calibration", "holdout"):
+        current_nonces[split] = {
+            _ARTIFACT_NONCE_BASES[split] + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {
+            _PROTOCOL_ZERO_NONCE_BASES[split] + index for index in range(16)
+        } | set(_DUPLICATE_AUDIT_NONCES[split])
+        predecessor_nonces[split] = {
+            r21_binding["artifact_nonce_bases"][split] + family_offset + index
+            for family_offset in (0, 100, 200, 300, 400)
+            for index in range(20)
+        } | {
+            r21_binding["protocol_zero_nonce_bases"][split] + index
+            for index in range(16)
+        } | set(r21_binding["duplicate_audit_nonces"][split])
+        if (
+            len(current_nonces[split]) != 119
+            or current_nonces[split] & predecessor_nonces[split]
+        ):
+            raise RuntimeError(f"r22 fresh nonce-space drift: {split}")
+    if current_nonces["calibration"] & current_nonces["holdout"]:
+        raise RuntimeError("r22 calibration/holdout nonce-space overlap")
 
 
 def _encode_png(values: np.ndarray, compression: int) -> bytes:
@@ -6383,7 +6562,7 @@ def _expected_controls_bounded(
             )
         )
 
-    _validate_dev_r21_morphology_schedules()
+    _validate_dev_r22_morphology_schedules()
     artifact_variants = _artifact_variants(split)
     for family, variants in artifact_variants.items():
         for variant_index, parameters in enumerate(variants):

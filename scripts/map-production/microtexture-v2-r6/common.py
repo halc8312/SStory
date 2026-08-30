@@ -36,7 +36,7 @@ from metrics_v2_r6 import (
 CODE_ROOT = Path(__file__).resolve().parent
 SPEC_PATH = CODE_ROOT / "preregistered-spec.json"
 # Replaced with the final byte hash only after every authority file is frozen.
-SPEC_SHA256 = "27441b6a5f11294528618e4548566484d59fc1ada739d10e97974034e952a145"
+SPEC_SHA256 = "071aec1d27ccdcad9dd837e820edd014f7ae8cd6a351bae8a36b66a51f63455b"
 BINDINGS_PATH = CODE_ROOT / "implementation-bindings.json"
 DEV_R20_CLOSED_STATUS = "failed-and-closed-before-measurement"
 DEV_R20_CLOSED_ROLE = (
@@ -119,8 +119,8 @@ R20_DEVELOPMENT_BASIS = (
     "population 0 and holdout tiny-speck population 1 each missed formal minimum 4 and "
     "development floor 6 while every other endpoint passed both minima"
 )
-DEV_R21_STATUS = "fresh-development-only"
-DEV_R21_ROLE = (
+DEV_R21_FRESH_STATUS = "fresh-development-only"
+DEV_R21_FRESH_ROLE = (
     "fresh one-shot development role used only to strengthen the reject-tier "
     "artifact-speck population after the closed dev-r20 premeasurement tiny-speck "
     "population miss; it changes exactly the ten preregistered reject-speck "
@@ -130,11 +130,11 @@ DEV_R21_ROLE = (
     "and both r20 duplicate constructions; Vision truth is not guaranteed, all "
     "identities and audit roles remain private, and it can never supply formal authority"
 )
-DEV_R21_SECRET_SCOPE = (
+DEV_R21_FRESH_SECRET_SCOPE = (
     "non-authority dev-r21 only; no development key, root, output, or commitment "
     "can become formal authority"
 )
-DEV_R21_REVIEWER_ACCESS_CONTRACT = (
+DEV_R21_FRESH_REVIEWER_ACCESS_CONTRACT = (
     "the formal blind key remains only in a dedicated custodian process; every closed "
     "development blind key through dev-r20 remains only in its retained Git-ignored "
     "private probe root and is never reused; the fresh dev-r21 blind key remains only "
@@ -173,6 +173,104 @@ R21_RENDERING_DUPLICATE_AUDIT_CONTRACT = (
     "private references, controls, identities, and commitments, while requested "
     "deltas, decoded residuals, and metrics remain exact within each pair and labels "
     "satisfy the preserved dev-r19 reject-band policy"
+)
+DEV_R21_CLOSED_STATUS = "failed-and-closed-before-analysis"
+DEV_R21_CLOSED_ROLE = (
+    "development-only public-preflight failure evidence; generation, both blind "
+    "440-record reviews, immutable initial snapshots and receipts, and bilateral "
+    "reconciliation completed exactly once, but the one official public preflight "
+    "stopped at calibration Root initial line 6 because concatenated flag token lp "
+    "was not canonical comma-separated l,p; no label seal, private reveal, private "
+    "audit, population audit, analysis, numeric measurement, threshold search, or "
+    "postmortem started, all sealed snapshots and receipts remain immutable, and no "
+    "dev-r21 root, key, private material, control, reference, pixel, identity, code, "
+    "commitment, label, decision, measurement, nonce, or public surface is reusable"
+)
+DEV_R21_FAILURE_AUDIT_REL = (
+    "world/map-production/qa/microtexture-v2-r6-dev-r21-development-failure.json"
+)
+DEV_R21_FAILURE_AUDIT_RAW_SHA256 = (
+    "89229d2b5f0b6c91c61cea6547127cc4441fd7cc6bd02d6cc17a3c7aec2d61bd"
+)
+DEV_R21_FAILURE_AUDIT_CANONICAL_SHA256 = (
+    "ffa5759cd56417deb1e6c53310e52f73ecdd6fe7929129939b464d0c049542cd"
+)
+DEV_R21_CLOSED_SECRET_SCOPE = (
+    "closed non-authority dev-r21 only; the retained development key, root, output, "
+    "and commitment are forensic evidence only and cannot become formal authority or "
+    "be reused"
+)
+DEV_R21_CLOSED_REVIEWER_ACCESS_CONTRACT = (
+    "the formal blind key remains only in a dedicated custodian process; every closed "
+    "development blind key through dev-r21 remains only in its retained Git-ignored "
+    "private probe root and is never reused; neither Vision review process may read or "
+    "inherit any key or private audit role, and both must use visual page inspection "
+    "only until each initial snapshot passes the public strict pre-seal validator and "
+    "both official snapshots and receipts exist before reconciliation and label sealing"
+)
+DEV_R21_STATUS = DEV_R21_CLOSED_STATUS
+DEV_R21_ROLE = DEV_R21_CLOSED_ROLE
+DEV_R22_STATUS = "fresh-development-only"
+DEV_R22_ROLE = (
+    "fresh one-shot development role after the closed dev-r21 public-preflight "
+    "decision-authoring failure; it preserves all 200 dev-r21 artifact morphologies, "
+    "both duplicate constructions, every design tier cardinality, metric, threshold, "
+    "population and rate contract, changes no morphology or numeric requirement, "
+    "requires every initial decision snapshot to pass the same strict public parser "
+    "before receipt sealing, uses entirely fresh identities, domains, nonces, controls, "
+    "references, commitments and public surfaces, and can never supply formal authority"
+)
+DEV_R22_SECRET_SCOPE = (
+    "non-authority dev-r22 only; no development key, root, output, or commitment "
+    "can become formal authority"
+)
+DEV_R22_REVIEWER_ACCESS_CONTRACT = (
+    "the formal blind key remains only in a dedicated custodian process; every closed "
+    "development blind key through dev-r21 remains only in its retained Git-ignored "
+    "private probe root and is never reused; the fresh dev-r22 blind key remains only "
+    "in its separate Git-ignored private probe root and tracked custodian runner; "
+    "neither Vision review process may read or inherit any key or private audit role, "
+    "and both must use visual page inspection only; each initial snapshot must pass "
+    "the public strict pre-seal validator before its receipt is created, and both "
+    "official snapshots and receipts must exist before reconciliation and label sealing"
+)
+R22_DEVELOPMENT_BASIS = (
+    R21_DEVELOPMENT_BASIS
+    + "; dev-r21 then closed at its one official public preflight because a sealed "
+    "calibration Root initial decision used concatenated flags lp instead of canonical "
+    "comma-separated l,p; label sealing, private reveal, population aggregation, "
+    "numeric measurement, and threshold search never started, so fresh dev-r22 changes "
+    "no morphology, tier, metric, threshold, population, or rate contract and adds only "
+    "a mandatory public strict-parser validation step before each initial receipt seal"
+)
+R22_EXACT_VARIANT_SOURCE = (
+    "the tracked control_catalog.py named by implementation-bindings.json; r22 "
+    "preserves all 200 hash-bound r21 artifact morphologies and both duplicate "
+    "constructions byte-for-byte at the morphology level while fresh domains and "
+    "nonces make every control, reference, identity, code, and commitment new"
+)
+R22_CATALOG_DUPLICATE_AUDIT_CONTRACT = (
+    "one fresh-keyed clean and one fresh-keyed obvious-artifact private semantic-"
+    "replicate cluster; both constructions are identical to r21 at the morphology "
+    "level while fresh r22 domains and nonces make every reference, control, code, "
+    "control identity, and commitment new; pair deltas, decoded residuals, and metrics "
+    "remain exact"
+)
+R22_RENDERING_DUPLICATE_AUDIT_CONTRACT = (
+    "the clean semantic audit group preserves its exact-zero construction and the "
+    "obvious-artifact group preserves the r20 finite axial short-line construction; "
+    "fresh r22 keying, domains, and nonces produce separately coded records with new "
+    "private references, controls, identities, and commitments, while requested "
+    "deltas, decoded residuals, and metrics remain exact within each pair and labels "
+    "satisfy the preserved dev-r19 reject-band policy"
+)
+R22_INITIAL_DECISION_PRESEAL_VALIDATION_CONTRACT = (
+    "the public seal-initial-decisions command exclusively owns initial receipt "
+    "creation; before writing it must parse the exact unsealed snapshot with the same "
+    "fail-closed decision DSL parser used by official preflight, require canonical "
+    "comma-separated flags in g,t,b,l,p order plus exact 220-record page/row coverage "
+    "and printed-code binding, refuse an existing receipt, and write only the exact "
+    "lowercase SHA-256 two-spaces snapshot-basename newline receipt"
 )
 
 
@@ -1338,6 +1436,120 @@ R21_REJECT_SPECK_OVERLAY_MANIFEST_SHA256 = (
     "9f85d79300a23b9c6f7cec27048d91cd8b1bcce98e395f792797a795156210cc"
 )
 
+# Preserve the complete fresh-r21 schedule as the closed predecessor.  Fresh r22
+# changes no morphology or numeric contract; it only rotates every identity/nonce
+# namespace and requires strict public decision parsing before receipt sealing.
+R21_POPULATION_ANCHOR_SCHEDULE = POPULATION_ANCHOR_SCHEDULE
+R22_SCHEDULE_REVISION = (
+    "dev-r22-r21-morphology-strict-preseal-decision-schedule-v1"
+)
+R22_PARAMETER_NONCE_BASES = {
+    "calibration_artifact": 1473000,
+    "holdout_artifact": 1483000,
+    "calibration_protocol_zero": 1451000,
+    "holdout_protocol_zero": 1461000,
+    "calibration_duplicate_audit": [1491000, 1491001, 1491002],
+    "holdout_duplicate_audit": [1501000, 1501001, 1501002],
+}
+R22_SANITIZED_R21_BASIS = {
+    "failure_class": "sealed-initial-decision-dsl-noncanonical-flag-list",
+    "source_failure_audit_sha256": DEV_R21_FAILURE_AUDIT_RAW_SHA256,
+    "official_public_preflight_invocation_operator_observation": {
+        "observed_count": 1,
+        "machine_receipt_available": False,
+    },
+    "official_public_preflight_passed": False,
+    "first_failure": {
+        "split": "calibration",
+        "reviewer": "root",
+        "file": "decisions-root.initial.dev.txt",
+        "line": 6,
+        "message": "decision DSL flag drift",
+        "observed_flag_token": "lp",
+        "required_canonical_flag_token": "l,p",
+    },
+    "generation_completed": True,
+    "both_blind_reviews_completed": True,
+    "initial_snapshots_and_receipts_immutable": True,
+    "final_three_way_decision_bytes_reconciled": True,
+    "labels_sealed": False,
+    "private_reveal_started": False,
+    "population_audit_started": False,
+    "analysis_started": False,
+    "numeric_measurement_started": False,
+    "threshold_search_started": False,
+    "postmortem_invoked": False,
+}
+R22_SANITIZED_R21_BASIS_SHA256 = (
+    "62dc7c4e5f31211cd5ea2fa7cbb43ebc2944e7e88bf1db79e6c1b4b738843e86"
+)
+_r22_population_anchor_schedule: dict[str, Any] = {}
+for _key, _value in R21_POPULATION_ANCHOR_SCHEDULE.items():
+    if _key == "revision":
+        _r22_population_anchor_schedule[_key] = R22_SCHEDULE_REVISION
+        _r22_population_anchor_schedule["fresh_from_closed_dev_r21"] = True
+        _r22_population_anchor_schedule["r21_parameter_nonce_reuse_forbidden"] = True
+        _r22_population_anchor_schedule["r22_parameter_nonce_bases"] = (
+            R22_PARAMETER_NONCE_BASES
+        )
+        _r22_population_anchor_schedule["inherited_r21_schedule_revision"] = (
+            R21_POPULATION_ANCHOR_SCHEDULE["revision"]
+        )
+        _r22_population_anchor_schedule["r22_sanitized_r21_basis"] = (
+            R22_SANITIZED_R21_BASIS
+        )
+        _r22_population_anchor_schedule["r22_sanitized_r21_basis_sha256"] = (
+            R22_SANITIZED_R21_BASIS_SHA256
+        )
+        _r22_population_anchor_schedule[
+            "r22_preserved_r21_artifact_morphology_conditions_across_splits"
+        ] = 200
+        _r22_population_anchor_schedule[
+            "r22_preserved_r21_artifact_morphology_sha256"
+        ] = "99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595"
+        _r22_population_anchor_schedule[
+            "r22_exact_morphology_change_count_across_splits"
+        ] = 0
+        _r22_population_anchor_schedule[
+            "r22_morphology_tier_minimum_metric_threshold_population_and_rate_"
+            "changes_forbidden"
+        ] = True
+        _r22_population_anchor_schedule[
+            "r22_initial_decision_preseal_validation_required"
+        ] = True
+        _r22_population_anchor_schedule[
+            "r22_generation_review_preseal_reconciliation_preflight_label_seal_"
+            "private_reveal_measurement_threshold_or_audit_started"
+        ] = False
+        continue
+    _r22_population_anchor_schedule[_key] = _value
+POPULATION_ANCHOR_SCHEDULE = _r22_population_anchor_schedule
+del _r22_population_anchor_schedule, _key, _value
+
+R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
+    "revision",
+    "fresh_from_closed_dev_r21",
+    "r21_parameter_nonce_reuse_forbidden",
+    "r22_parameter_nonce_bases",
+    "inherited_r21_schedule_revision",
+    "r22_sanitized_r21_basis",
+    "r22_sanitized_r21_basis_sha256",
+    "r22_preserved_r21_artifact_morphology_conditions_across_splits",
+    "r22_preserved_r21_artifact_morphology_sha256",
+    "r22_exact_morphology_change_count_across_splits",
+    "r22_morphology_tier_minimum_metric_threshold_population_and_rate_changes_"
+    "forbidden",
+    "r22_initial_decision_preseal_validation_required",
+    "r22_generation_review_preseal_reconciliation_preflight_label_seal_private_"
+    "reveal_measurement_threshold_or_audit_started",
+)
+R22_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256 = (
+    "428d7dcbf3aa796bfa419cd1f0e852f0207a52a6971ccb329c82a075abbeda07"
+)
+R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256 = (
+    "ee63cf45a728caa0c1635ddf41b89ee60d864ea5f3787890a036c877a96bfc60"
+)
+
 R20_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS = (
     "revision",
     "fresh_from_closed_dev_r18",
@@ -1644,6 +1856,10 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             "dev_r20_failure_audit_sha256",
             "dev_r21_status",
             "dev_r21_role",
+            "dev_r21_failure_audit",
+            "dev_r21_failure_audit_sha256",
+            "dev_r22_status",
+            "dev_r22_role",
         },
         "r6 development history",
     )
@@ -1860,8 +2076,13 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or history.get("dev_r20_failure_audit") != DEV_R20_FAILURE_AUDIT_REL
         or history.get("dev_r20_failure_audit_sha256")
         != DEV_R20_FAILURE_AUDIT_RAW_SHA256
-        or history.get("dev_r21_status") != DEV_R21_STATUS
-        or history.get("dev_r21_role") != DEV_R21_ROLE
+        or history.get("dev_r21_status") != DEV_R21_CLOSED_STATUS
+        or history.get("dev_r21_role") != DEV_R21_CLOSED_ROLE
+        or history.get("dev_r21_failure_audit") != DEV_R21_FAILURE_AUDIT_REL
+        or history.get("dev_r21_failure_audit_sha256")
+        != DEV_R21_FAILURE_AUDIT_RAW_SHA256
+        or history.get("dev_r22_status") != DEV_R22_STATUS
+        or history.get("dev_r22_role") != DEV_R22_ROLE
     ):
         raise RuntimeError("r6 closed-development provenance contract drift")
     roots = value.get("roots")
@@ -1879,10 +2100,10 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     if roots["formal_blind_key_artifact_or_log_persistence_forbidden"] is not True:
         raise RuntimeError("r6 formal blind-key persistence contract drift")
     expected_development_secret_handling = {
-        "scope": DEV_R21_SECRET_SCOPE,
+        "scope": DEV_R22_SECRET_SCOPE,
         "fresh_key_generation": "secrets.token_bytes(32) inside the tracked development runner",
-        "development_artifact_root_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r21",
-        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r21/private/development-key.bin",
+        "development_artifact_root_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r22",
+        "ignored_private_key_required_repo_relative": "tmp/map-production/microtexture-v2-r6-dev-r22/private/development-key.bin",
         "gitignore_required_repo_relative": ".gitignore",
         "gitignore_required_pattern": "/tmp*/",
         "gitignore_must_be_tracked_and_worktree_bytes_must_match_captured_head": True,
@@ -2165,7 +2386,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         or definition.get("parallel_pair_ratio_diagnostic_only") is not True
         or definition.get("diagnostic_branch_flag_cutoff") != 0.5
         or definition.get("artifact_dependent_score_denominators_forbidden") is not True
-        or definition.get("development_basis") != R21_DEVELOPMENT_BASIS
+        or definition.get("development_basis") != R22_DEVELOPMENT_BASIS
         or definition.get("score_normalization")
         != "unit_soft(x, reference)=0 when x<=0 else (2/pi)*atan(x/reference), "
         "where reference is a frozen fixed half-scale and every finite positive "
@@ -2341,15 +2562,15 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     r21_manifest_for_code_hash["splits"] = normalized_splits
     changed_schedule_values = {
         key: anchor_schedule[key]
-        for key in R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
+        for key in R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_KEYS
     }
     if (
-        len(anchor_schedule) != 118
+        len(anchor_schedule) != 130
         or list(anchor_schedule) != list(POPULATION_ANCHOR_SCHEDULE)
         or sha256_bytes(canonical_json_bytes(sorted(anchor_schedule)))
-        != R21_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
+        != R22_POPULATION_ANCHOR_SCHEDULE_KEYSET_SHA256
         or sha256_bytes(canonical_json_bytes(changed_schedule_values))
-        != R21_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
+        != R22_POPULATION_ANCHOR_SCHEDULE_CHANGED_VALUES_SHA256
         or sha256_bytes(
             canonical_json_bytes(anchor_schedule["speck_reject_anchor_schedule"])
         )
@@ -2394,8 +2615,14 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         != anchor_schedule["r21_reject_speck_overlay_manifest_sha256"]
         or anchor_schedule["r21_reject_speck_overlay_manifest_sha256"]
         != R21_REJECT_SPECK_OVERLAY_MANIFEST_SHA256
+        or sha256_bytes(
+            canonical_json_bytes(anchor_schedule["r22_sanitized_r21_basis"])
+        )
+        != anchor_schedule["r22_sanitized_r21_basis_sha256"]
+        or anchor_schedule["r22_sanitized_r21_basis_sha256"]
+        != R22_SANITIZED_R21_BASIS_SHA256
     ):
-        raise RuntimeError("r6 dev-r21 population-anchor authority digest drift")
+        raise RuntimeError("r6 dev-r22 population-anchor authority digest drift")
     formal_minima = {
         endpoint["id"]: int(endpoint["minimum_unique_clusters"])
         for endpoint in EXPECTED_ENDPOINT_DEFINITIONS
@@ -2571,6 +2798,31 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             != 10
             for split in ("calibration", "holdout")
         )
+        or anchor_schedule["fresh_from_closed_dev_r21"] is not True
+        or anchor_schedule["r21_parameter_nonce_reuse_forbidden"] is not True
+        or anchor_schedule["r22_parameter_nonce_bases"] != R22_PARAMETER_NONCE_BASES
+        or anchor_schedule["inherited_r21_schedule_revision"]
+        != R21_POPULATION_ANCHOR_SCHEDULE["revision"]
+        or anchor_schedule["r22_sanitized_r21_basis"] != R22_SANITIZED_R21_BASIS
+        or anchor_schedule[
+            "r22_preserved_r21_artifact_morphology_conditions_across_splits"
+        ]
+        != 200
+        or anchor_schedule["r22_preserved_r21_artifact_morphology_sha256"]
+        != "99aa3643bdddc0cd1257cbda0b5784cf08f90b80f947ef34ca90c71093046595"
+        or anchor_schedule["r22_exact_morphology_change_count_across_splits"] != 0
+        or anchor_schedule[
+            "r22_morphology_tier_minimum_metric_threshold_population_and_rate_"
+            "changes_forbidden"
+        ]
+        is not True
+        or anchor_schedule["r22_initial_decision_preseal_validation_required"]
+        is not True
+        or anchor_schedule[
+            "r22_generation_review_preseal_reconciliation_preflight_label_seal_"
+            "private_reveal_measurement_threshold_or_audit_started"
+        ]
+        is not False
         or anchor_schedule["r20_duplicate_sentinel_manifest"]["construction"][
             "bar_count_in_metric_window"
         ]
@@ -2652,7 +2904,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         "inclusive 3..12 pixel guard-banded interior of the unchanged 2..13 pixel "
         "coherence support"
         or rendering.get("duplicate_audit_contract")
-        != R21_RENDERING_DUPLICATE_AUDIT_CONTRACT
+        != R22_RENDERING_DUPLICATE_AUDIT_CONTRACT
     ):
         raise RuntimeError("r6 rendering population cardinality drift")
 
@@ -2737,7 +2989,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         raise RuntimeError("r6 control catalog cardinality drift")
     if (
         catalog.get("exact_variant_source")
-        != R21_EXACT_VARIANT_SOURCE
+        != R22_EXACT_VARIANT_SOURCE
         or catalog.get("artifact_contract")
         != "five morphology families, exactly 20 nonzero conditions per family, "
         "paired dark/light polarities, one replicate per polarity, and no zero-count "
@@ -2746,7 +2998,7 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
         != "secret-HMAC-derived; cluster mates may share a v15/v16/v17 source asset "
         "but every record receives a distinct keyed private reference transform"
         or catalog.get("duplicate_audit_contract")
-        != R21_CATALOG_DUPLICATE_AUDIT_CONTRACT
+        != R22_CATALOG_DUPLICATE_AUDIT_CONTRACT
     ):
         raise RuntimeError("r6 artifact catalog contract drift")
     if catalog.get("split_separation") != (
@@ -2780,11 +3032,11 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     }:
         raise RuntimeError("r6 private reference-transform contract drift")
     if catalog.get("private_identity_domains") != {
-        "private_reference_transform_prefix": "private-reference-transform-v16/",
-        "foundation_offset_lane": "foundation-offset-v15",
-        "foundation_assignment_lane": "foundation-assignment-v15",
-        "delta_lane": "delta-v15",
-        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v15/",
+        "private_reference_transform_prefix": "private-reference-transform-v17/",
+        "foundation_offset_lane": "foundation-offset-v16",
+        "foundation_assignment_lane": "foundation-assignment-v16",
+        "delta_lane": "delta-v16",
+        "private_control_id_prefix": "microtexture-v2-r6/private-control-id/v16/",
     }:
         raise RuntimeError("r6 private identity domain contract drift")
 
@@ -2844,28 +3096,28 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
     for split_name in ("calibration", "holdout"):
         split_contract = value.get("splits", {}).get(split_name, {})
         if (
-            split_contract.get("public_nonce") != f"r6-{split_name}-v16"
+            split_contract.get("public_nonce") != f"r6-{split_name}-v17"
             or split_contract.get("default_replicates_per_variant") != 1
             or split_contract.get("duplicate_audit_replicates_per_variant") != 2
         ):
             raise RuntimeError(f"r6 split replicate contract drift: {split_name}")
     blind = value.get("blind_derivation", {})
     if (
-        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v15"
-        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v16/"
-        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v16/"
+        blind.get("key_commitment_message") != "microtexture-v2-r6/key-commitment/v16"
+        or blind.get("seed_message_prefix") != "microtexture-v2-r6/render-seed/v17/"
+        or blind.get("code_message_prefix") != "microtexture-v2-r6/opaque-code/v17/"
         or blind.get("formal_secret_value_artifact_or_log_persistence_forbidden")
         is not True
     ):
-        raise RuntimeError("r6 revision-16 blind derivation domain drift")
+        raise RuntimeError("r6 revision-17 blind derivation domain drift")
     if (
         cluster.get("message_prefix")
-        != "microtexture-v2-r6/private-condition-cluster/v16/"
+        != "microtexture-v2-r6/private-condition-cluster/v17/"
         or value.get("rendering", {}).get("public_commitment_domain")
-        != "microtexture-v2-r6/public-payload-commitment/v17/"
+        != "microtexture-v2-r6/public-payload-commitment/v18/"
         "{control|reference|delta}/{anonymous_code}/{raw-sha256-bytes}"
     ):
-        raise RuntimeError("r6 revision-16/17 private/public commitment domain drift")
+        raise RuntimeError("r6 revision-17/18 private/public commitment domain drift")
     metric_window = value["canvas"]["metric_window"]
     if (
         metric_window.get("xywh") != [128, 96, 256, 192]
@@ -2896,9 +3148,9 @@ def validate_preregistered_spec(value: dict[str, Any]) -> None:
             raise RuntimeError(f"r6 public identity policy missing {field}")
     if (
         public_policy.get("reviewer_access_contract")
-        != DEV_R21_REVIEWER_ACCESS_CONTRACT
+        != DEV_R22_REVIEWER_ACCESS_CONTRACT
     ):
-        raise RuntimeError("r6 dev-r21 reviewer-access contract drift")
+        raise RuntimeError("r6 dev-r22 reviewer-access contract drift")
     if (
         value["contact_sheets"].get("all_220_source_panels_unique_in_every_view")
         is not True
@@ -7194,10 +7446,169 @@ def _verify_tracked_dev_r20_failure_audit(
     return payload
 
 
+def validate_dev_r21_public_preflight_failure(value: Any) -> None:
+    """Validate the exact sanitized dev-r21 public-preflight failure evidence."""
+
+    context = "closed dev-r21 public-preflight failure audit"
+    require_exact_keys(
+        value,
+        {
+            "artifact",
+            "schema_version",
+            "authority",
+            "formal_use_forbidden",
+            "audit_recorded_at",
+            "development_edition",
+            "outcome",
+            "failure_phase",
+            "failure_class",
+            "measurement_started",
+            "selection_status",
+            "development_hard_threshold",
+            "calibration_endpoint_performance",
+            "holdout_endpoint_performance",
+            "threshold_selection_audit",
+            "one_shot_contract",
+            "public_preflight_failure",
+            "vision_review",
+            "hash_bindings",
+            "absent_analysis_artifacts",
+            "closed_root_retention",
+            "root_cause",
+            "successor_constraints",
+        },
+        context,
+    )
+    timestamp = value["audit_recorded_at"]
+    if (
+        not isinstance(timestamp, str)
+        or re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z",
+            timestamp,
+        )
+        is None
+    ):
+        raise RuntimeError(f"{context}.audit_recorded_at must be canonical UTC text")
+    parse_utc_timestamp(timestamp, f"{context}.audit_recorded_at")
+    expected_header = {
+        "artifact": "microtexture-v2-r6-dev-r21-development-public-preflight-failure-audit",
+        "schema_version": "microtexture-v2-r6-development-public-preflight-failure-audit/1",
+        "authority": False,
+        "formal_use_forbidden": True,
+        "development_edition": "r21",
+        "outcome": "failed_closed",
+        "failure_phase": "public-preflight-before-label-seal-or-private-reveal",
+        "failure_class": "sealed-initial-decision-dsl-noncanonical-flag-list",
+        "measurement_started": False,
+        "selection_status": "not_started_public_preflight_failed",
+        "development_hard_threshold": None,
+        "calibration_endpoint_performance": None,
+        "holdout_endpoint_performance": None,
+        "threshold_selection_audit": None,
+    }
+    for field, expected in expected_header.items():
+        _require_exact_json_value(value[field], expected, f"{context}.{field}")
+    if sha256_bytes(canonical_json_bytes(value)) != (
+        DEV_R21_FAILURE_AUDIT_CANONICAL_SHA256
+    ):
+        raise RuntimeError(f"{context} canonical semantic digest drift")
+
+    one_shot = value["one_shot_contract"]
+    if (
+        one_shot.get("official_preflight_invocation_operator_observation")
+        != {"observed_count": 1, "machine_receipt_available": False}
+        or one_shot.get("official_preflight_passed") is not False
+        or one_shot.get("labels_sealed") is not False
+        or one_shot.get("private_reveal_started") is not False
+        or one_shot.get("private_audit_started") is not False
+        or one_shot.get("population_audit_started") is not False
+        or one_shot.get("analysis_started") is not False
+        or one_shot.get("numeric_metric_called") is not False
+        or one_shot.get("threshold_search_started") is not False
+        or one_shot.get("postmortem_invoked") is not False
+        or one_shot.get("development_key_bytes_read_by_failed_preflight") is not False
+        or one_shot.get("development_key_bytes_logged") is not False
+        or one_shot.get("development_key_bytes_tracked") is not False
+        or one_shot.get("r21_closed") is not True
+    ):
+        raise RuntimeError(f"{context} one-shot boundary drift")
+
+    failure = value["public_preflight_failure"]
+    if (
+        failure.get("error_type") != "RuntimeError"
+        or failure.get("message") != "decision DSL flag drift"
+        or failure.get("first_failure_split") != "calibration"
+        or failure.get("first_failure_reviewer") != "root"
+        or failure.get("first_failure_file") != "decisions-root.initial.dev.txt"
+        or failure.get("first_failure_line") != 6
+        or failure.get("observed_flag_token") != "lp"
+        or failure.get("required_canonical_flag_token") != "l,p"
+        or failure.get("strict_parser_weakened") is not False
+        or failure.get("initial_snapshot_or_receipt_modified_after_failure")
+        is not False
+        or failure.get("complete_noncanonical_lp_scope")
+        != {
+            split: {
+                "root_initial_occurrences": 33,
+                "independent_initial_occurrences": 32,
+                "vision_final_occurrences": 32,
+                "root_final_occurrences": 32,
+                "independent_final_occurrences": 32,
+            }
+            for split in ("calibration", "holdout")
+        }
+    ):
+        raise RuntimeError(f"{context} public failure scope drift")
+
+    if value["closed_root_retention"] != {
+        "retained_unchanged_for_forensic_evidence": True,
+        "sealed_initial_snapshots_and_receipts_unchanged": True,
+        "reconciled_final_decisions_unchanged": True,
+        "private_root_inspected_for_this_tracked_audit": False,
+        "calibration_review_crop_derivative_file_count": 13,
+        "all_review_crop_derivatives_non_reusable": True,
+        "all_other_dev_r21_derivatives_non_reusable": True,
+    }:
+        raise RuntimeError(f"{context} closed-root retention drift")
+    if any(
+        not isinstance(digest, str)
+        or re.fullmatch(
+            rf"[0-9a-f]{{{40 if field == 'captured_repository_head' else 64}}}",
+            digest,
+        )
+        is None
+        for field, digest in value["hash_bindings"].items()
+    ):
+        raise RuntimeError(f"{context} malformed public hash binding")
+
+
+def _verify_tracked_dev_r21_failure_audit(
+    repository: Path, captured_head: str, spec: dict[str, Any]
+) -> bytes:
+    """Bind the retired dev-r21 status to its exact tracked sanitized audit."""
+
+    history = spec.get("history")
+    if not isinstance(history, dict) or (
+        history.get("dev_r21_status") != DEV_R21_CLOSED_STATUS
+        or history.get("dev_r21_role") != DEV_R21_CLOSED_ROLE
+        or history.get("dev_r21_failure_audit") != DEV_R21_FAILURE_AUDIT_REL
+        or history.get("dev_r21_failure_audit_sha256")
+        != DEV_R21_FAILURE_AUDIT_RAW_SHA256
+    ):
+        raise RuntimeError("closed dev-r21 failure audit history binding drift")
+    payload = _tracked_worktree_bytes(
+        repository, captured_head, DEV_R21_FAILURE_AUDIT_REL
+    )
+    if sha256_bytes(payload) != DEV_R21_FAILURE_AUDIT_RAW_SHA256:
+        raise RuntimeError("closed dev-r21 failure audit tracked SHA drift")
+    validate_dev_r21_public_preflight_failure(json.loads(payload.decode("utf-8")))
+    return payload
+
+
 def verify_tracked_development_history(
     repository: Path, captured_head: str, spec: dict[str, Any]
 ) -> bytes:
-    """Bind every closed development audit through retired dev-r20."""
+    """Bind every closed development audit through retired dev-r21."""
 
     history = spec["history"]
     relative = history["dev_r7_failure_audit"]
@@ -7376,6 +7787,7 @@ def verify_tracked_development_history(
     )
 
     _verify_tracked_dev_r20_failure_audit(repository, captured_head, spec)
+    _verify_tracked_dev_r21_failure_audit(repository, captured_head, spec)
 
     # Preserve the historical return contract; callers use this function for its
     # fail-closed checks, but earlier code returned the dev-r7 payload.
@@ -7441,7 +7853,7 @@ def verify_tracked_foundation_corpus_provenance(
     return payloads
 
 
-def _reject_closed_dev_r20_formal_operation() -> None:
+def _reject_closed_dev_r21_formal_operation() -> None:
     """Validate retirement evidence, then reject before formal root/key/env access."""
 
     spec = load_spec()
@@ -7450,9 +7862,10 @@ def _reject_closed_dev_r20_formal_operation() -> None:
     repository = CODE_ROOT.parents[2]
     captured_head = _git(CODE_ROOT, "rev-parse", "HEAD").decode().strip()
     _verify_tracked_dev_r20_failure_audit(repository, captured_head, spec)
+    _verify_tracked_dev_r21_failure_audit(repository, captured_head, spec)
     assert_head_unchanged(captured_head)
     raise RuntimeError(
-        "formal r6 operation is blocked: dev-r20 failed and closed before measurement; "
+        "formal r6 operation is blocked: dev-r21 failed and closed before analysis; "
         "no closed development material can authorize a formal run"
     )
 
@@ -7460,7 +7873,7 @@ def _reject_closed_dev_r20_formal_operation() -> None:
 def operation_preflight(
     *, require_receipt: bool, include_locked_clean_reference: bool = False
 ) -> dict[str, Any]:
-    _reject_closed_dev_r20_formal_operation()
+    _reject_closed_dev_r21_formal_operation()
     spec = load_spec()
     key = blind_key()
     commitment = blind_commitment(key)
