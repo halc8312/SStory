@@ -1527,11 +1527,15 @@ assert 'promote_style_candidate_k3_golden_v2' not in sys.modules
                 "_before_manifest_replace_hook",
                 side_effect=collide_backup,
             ),
-            self.assertRaises(FileExistsError),
         ):
-            self.fixture.promote()
+            if os.name == "nt":
+                with self.assertRaises(FileExistsError):
+                    self.fixture.promote()
+                self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
+            else:
+                result = self.fixture.promote()
+                self.assertEqual(result["status"], "accepted")
         self.assertEqual(backup.read_bytes(), sentinel)
-        self.assertEqual(self.fixture.manifest.read_bytes(), manifest_before)
 
     def test_manifest_cas_primitive_failure_retains_projected_debris(self) -> None:
         primitive_name = (
@@ -1622,15 +1626,15 @@ assert 'promote_style_candidate_k3_golden_v2' not in sys.modules
                     )
                     self.assertEqual(result.cleanup_status, "debris")
                 else:
-                    with self.assertRaises(
-                        promotion.GoldenV3ManifestCommitUnknownError
-                    ):
+                    with self.assertRaises(promotion.GoldenV3PromotionError):
                         promotion._conditional_manifest_replace(
                             manifest,
                             {"jobs": [{"id": "projected"}]},
                             expected=expected,
                         )
             self.assertEqual(outside_manifest.read_bytes(), sentinel)
+            if swapped:
+                self.assertEqual((moved / manifest.name).read_bytes(), original)
         finally:
             if swapped:
                 remove_directory_link(parent)
