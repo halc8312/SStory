@@ -1,0 +1,540 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sstory.example/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
+  "title": "SStory Golden v3 candidate-blind promotion authority",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "id",
+    "status",
+    "freeze_scope",
+    "promotion_performed",
+    "runtime_bindings",
+    "promotion_implementation",
+    "authorities",
+    "bound_schemas",
+    "identity",
+    "output_contract",
+    "generation_contract",
+    "strict_audit_contract",
+    "review_contract",
+    "manifest_contract",
+    "receipt_contract",
+    "failure_policy"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://sstory.example/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json"
+    },
+    "schema_version": { "const": "3.0.0" },
+    "id": { "const": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v3" },
+    "status": { "const": "frozen-before-active-contract-candidate-evaluation" },
+    "freeze_scope": {
+      "const": {
+        "active_generation_contract_id": "balanced-open-phase-v3",
+        "candidate_evaluations_before_freeze": 0,
+        "candidate_images_read_before_freeze": 0,
+        "audit_results_read_before_freeze": 0,
+        "threshold_selection_from_candidate_values": false,
+        "legacy_contract_status": {
+          "four-candidate-v1": "evaluated-and-rejected-before-this-revision; compatibility-only",
+          "balanced-phase-v2": "evaluated-and-rejected-before-this-revision; compatibility-only"
+        }
+      }
+    },
+    "promotion_performed": { "const": false },
+    "runtime_bindings": {
+      "type": "object",
+      "required": [
+        "candidate",
+        "generation_seals",
+        "strict_audit_report",
+        "root_review",
+        "blind_packet",
+        "blind_reviews",
+        "acceptance_receipt"
+      ],
+      "properties": {
+        "candidate": { "type": "null" },
+        "generation_seals": { "type": "null" },
+        "strict_audit_report": { "type": "null" },
+        "root_review": { "type": "null" },
+        "blind_packet": { "type": "null" },
+        "blind_reviews": { "type": "null" },
+        "acceptance_receipt": { "type": "null" }
+      },
+      "additionalProperties": false
+    },
+    "promotion_implementation": {
+      "$ref": "#/definitions/self_hashed_implementation"
+    },
+    "authorities": {
+      "type": "object",
+      "required": ["strict_audit", "strict_audit_implementation", "four_candidate_derivation", "four_candidate_generator", "balanced_phase_v2", "balanced_phase_v2_generator", "balanced_open_phase_v3", "balanced_open_phase_v3_generator"],
+      "properties": {
+        "strict_audit": { "$ref": "#/definitions/artifact" },
+        "strict_audit_implementation": { "$ref": "#/definitions/artifact" },
+        "four_candidate_derivation": { "$ref": "#/definitions/artifact" },
+        "four_candidate_generator": { "$ref": "#/definitions/artifact" },
+        "balanced_phase_v2": { "$ref": "#/definitions/artifact" },
+        "balanced_phase_v2_generator": { "$ref": "#/definitions/artifact" },
+        "balanced_open_phase_v3": { "$ref": "#/definitions/artifact" },
+        "balanced_open_phase_v3_generator": { "$ref": "#/definitions/artifact" }
+      },
+      "additionalProperties": false
+    },
+    "bound_schemas": {
+      "type": "object",
+      "required": ["authority", "acceptance_receipt", "qa_report", "production_manifest"],
+      "properties": {
+        "authority": { "$ref": "#/definitions/artifact" },
+        "acceptance_receipt": { "$ref": "#/definitions/artifact" },
+        "qa_report": { "$ref": "#/definitions/artifact" },
+        "production_manifest": { "$ref": "#/definitions/artifact" }
+      },
+      "additionalProperties": false
+    },
+    "identity": {
+      "type": "object",
+      "required": ["job_id", "sheet_id", "canvas_width", "canvas_height", "color_profile"],
+      "properties": {
+        "job_id": { "const": "style-candidate-k-v3-golden-v3" },
+        "sheet_id": { "const": "style-candidate-k" },
+        "canvas_width": { "const": 1536 },
+        "canvas_height": { "const": 1024 },
+        "color_profile": { "const": "untagged RGB" }
+      },
+      "additionalProperties": false
+    },
+    "output_contract": {
+      "type": "object",
+      "required": ["raw_root", "master_root", "receipt_root", "exclusive_create", "overwrite_allowed"],
+      "properties": {
+        "raw_root": { "const": "world/map-production/candidates" },
+        "master_root": { "const": "world/map-production/candidates" },
+        "receipt_root": { "const": "world/map-production/prompts" },
+        "exclusive_create": { "const": true },
+        "overwrite_allowed": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "generation_contract": {
+      "type": "object",
+      "required": [
+        "candidate_count",
+        "generation_seal_count",
+        "discriminator_field",
+        "mixed_generation_evidence",
+        "distinct_runtime_profiles",
+        "candidate_must_match_both_seals",
+        "runtime_candidate_argument_path_persisted",
+        "seal_payloads_embedded_in_receipt",
+        "seal_source_paths_persisted",
+        "embedded_seal_candidate_paths",
+        "contracts"
+      ],
+      "properties": {
+        "candidate_count": { "const": 4 },
+        "generation_seal_count": { "const": 2 },
+        "discriminator_field": { "const": "generation_contract_id" },
+        "mixed_generation_evidence": { "const": "reject-without-fallback" },
+        "distinct_runtime_profiles": { "const": true },
+        "candidate_must_match_both_seals": { "const": true },
+        "runtime_candidate_argument_path_persisted": { "const": false },
+        "seal_payloads_embedded_in_receipt": { "const": true },
+        "seal_source_paths_persisted": { "const": false },
+        "embedded_seal_candidate_paths": {
+          "const": "preregistered-output-paths-only"
+        },
+        "contracts": {
+          "const": {
+            "four-candidate-v1": {
+              "manifest_authority_role": "golden-v3-four-candidate-derivation-authority",
+              "manifest_generator_role": "golden-v3-four-candidate-generator",
+              "seal_schema_id": "sstory.k3.golden-v3.four-candidate-output-seal.v1",
+              "runtime_attestation": "runtime-profile-id-string",
+              "required_runtime_profile_ids": null,
+              "generation_seal_count": 2,
+              "candidate_ids": ["F094-M148", "F094-M155", "F097-M148", "F097-M155"],
+              "output_paths": [
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M148.png",
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M155.png",
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M148.png",
+                "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M155.png"
+              ]
+            },
+            "balanced-phase-v2": {
+              "manifest_authority_role": "golden-v3-balanced-phase-v2-authority",
+              "manifest_generator_role": "golden-v3-balanced-phase-v2-generator",
+              "seal_schema_id": "sstory.k3.golden-v3.balanced-phase-v2-output-seal.v1",
+              "runtime_attestation": "structured-exact-common-and-profile",
+              "required_runtime_profile_ids": ["windows-local-opencv-python-4.13.0.92", "linux-ci-opencv-python-headless-4.13.0.92"],
+              "generation_seal_count": 2,
+              "candidate_ids": ["B125-M400", "B125-M450", "B150-M400", "B150-M450"],
+              "output_paths": [
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M400.png",
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M450.png",
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M400.png",
+                "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M450.png"
+              ]
+            },
+            "balanced-open-phase-v3": {
+              "manifest_authority_role": "golden-v3-balanced-open-phase-v3-authority",
+              "manifest_generator_role": "golden-v3-balanced-open-phase-v3-generator",
+              "seal_schema_id": "sstory.k3.golden-v3.balanced-open-phase-v3-output-seal.v1",
+              "runtime_attestation": "structured-exact-common-and-profile",
+              "required_runtime_profile_ids": ["windows-local-opencv-python-4.13.0.92", "linux-ci-opencv-python-headless-4.13.0.92"],
+              "generation_seal_count": 2,
+              "candidate_ids": ["E150-M500", "E150-M550", "E200-M500", "E200-M550"],
+              "output_paths": [
+                "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E150-M500.png",
+                "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E150-M550.png",
+                "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E200-M500.png",
+                "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E200-M550.png"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "strict_audit_contract": {
+      "type": "object",
+      "required": [
+        "report_schema_version",
+        "report_id",
+        "algorithm",
+        "passed",
+        "failed_gates",
+        "promotion_or_golden_designation_performed",
+        "canonical_report_bytes",
+        "recompute_before_promotion",
+        "recompute_during_phase5_verification",
+        "implementation_dependency_closure"
+      ],
+      "properties": {
+        "report_schema_version": { "const": "1.0.0" },
+        "report_id": { "const": "style-candidate-k-v3-golden-v3-strict-independent-pixel-audit" },
+        "algorithm": { "const": "sstory-k3-golden-v3-strict-independent-pixel-audit-v1" },
+        "passed": { "const": true },
+        "failed_gates": { "type": "array", "maxItems": 0 },
+        "promotion_or_golden_designation_performed": { "const": false },
+        "canonical_report_bytes": { "const": true },
+        "recompute_before_promotion": { "const": true },
+        "recompute_during_phase5_verification": { "const": true },
+        "implementation_dependency_closure": {
+          "const": {
+            "audit_module": "authorities.strict_audit_implementation",
+            "authority": "authorities.strict_audit",
+            "authority_bound_source_records": [
+              "alpha_zero_derivation",
+              "v2_metric_value_source",
+              "strict_core_binding"
+            ],
+            "authority_bound_runtime_records": [
+              "dependency_lock",
+              "ci_workflow",
+              "synthetic_golden_vector_test"
+            ],
+            "validation_timing": "audit-and-transitive-source-sha-before-exec; runtime-artifact-sha-before-metric-use"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "review_contract": {
+      "type": "object",
+      "required": [
+        "root_review_count",
+        "root_role",
+        "blind_review_count",
+        "acceptance_threshold",
+        "blind_role_order",
+        "identity_normalization",
+        "reviewer_identity_format",
+        "all_reviewer_identities_distinct",
+        "blind_review_mode",
+        "review_target",
+        "packet_contract",
+        "view_derivation",
+        "exact_five_view_ids",
+        "review_view_ids",
+        "immediate_failure_ids",
+        "score_axes",
+        "score_axis_count",
+        "score_maximum_total",
+        "reviews_after_root",
+        "acceptance_not_before_reviews"
+      ],
+      "properties": {
+        "root_review_count": { "const": 1 },
+        "root_role": { "const": "golden-v3-root-vision-authorization" },
+        "blind_review_count": { "const": 2 },
+        "acceptance_threshold": { "const": 94 },
+        "blind_role_order": {
+          "const": ["independent-vision-review-a", "independent-vision-review-b"]
+        },
+        "identity_normalization": { "const": "unicode-nfkc-whitespace-collapse-casefold" },
+        "reviewer_identity_format": { "const": "<manifest-role>/<identity>" },
+        "all_reviewer_identities_distinct": { "const": true },
+        "blind_review_mode": { "const": "blind-independent" },
+        "review_target": {
+          "const": "promoted-master-attestation-backed-by-anonymous-packet"
+        },
+        "packet_contract": {
+          "const": {
+            "schema_version": "1.0.0",
+            "id": "sstory-k3-golden-v3-anonymous-five-view-packet-v1",
+            "canonical_json": "utf-8-indent-2-ensure-ascii-false-allow-nan-false-trailing-lf",
+            "review_reports_bind_packet_path_and_sha256": true,
+            "reviewer_confirmed_exact_five": true,
+            "unique_view_paths": true,
+            "unique_view_payload_sha256": true
+          }
+        },
+        "view_derivation": {
+          "const": {
+            "source": "promoted-master-rgb-pixels",
+            "decoder": "strict-v3-candidate-png-contract",
+            "mode": "RGB",
+            "resampling": "Pillow.Image.Resampling.LANCZOS",
+            "views": [
+              { "id": "native", "crop": null, "size": [1536, 1024] },
+              { "id": "full25", "crop": null, "size": [384, 256] },
+              { "id": "full50", "crop": null, "size": [768, 512] },
+              { "id": "highland200", "crop": [930, 0, 1536, 560], "size": [1212, 1120] },
+              { "id": "highland400", "crop": [930, 0, 1536, 560], "size": [2424, 2240] }
+            ]
+          }
+        },
+        "exact_five_view_ids": {
+          "const": ["native", "full25", "full50", "highland200", "highland400"]
+        },
+        "review_view_ids": {
+          "const": [
+            "native",
+            "full25",
+            "full50",
+            "highland200",
+            "highland400",
+            "control-overlay",
+            "parent-zoom",
+            "neighbor-seams",
+            "desktop",
+            "mobile"
+          ]
+        },
+        "immediate_failure_ids": {
+          "const": [
+            "eight-system-topology",
+            "side-view-or-shared-projection",
+            "panel-seam-or-body-halo",
+            "white-particle-pill-hole-or-crater",
+            "root-river-vein-fingerprint-or-contour",
+            "fern-fishbone-dash-bundle-or-repetition",
+            "no-200-to-400-information-gain",
+            "protected-geometry-difference"
+          ]
+        },
+        "score_axes": {
+          "const": [
+            { "id": "canon_geometry", "maximum": 25 },
+            { "id": "parent_continuity", "maximum": 15 },
+            { "id": "seam_continuity", "maximum": 15 },
+            { "id": "style_consistency", "maximum": 15 },
+            { "id": "detail_density", "maximum": 10 },
+            { "id": "artifact_integrity", "maximum": 10 },
+            { "id": "vector_readability", "maximum": 10 }
+          ]
+        },
+        "score_axis_count": { "const": 7 },
+        "score_maximum_total": { "const": 100 },
+        "reviews_after_root": { "const": true },
+        "acceptance_not_before_reviews": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "manifest_contract": {
+      "type": "object",
+      "required": [
+        "receipt_role",
+        "input_role_orders",
+        "history_state_order",
+        "status",
+        "bounds",
+        "zoom",
+        "generation_by_contract",
+        "notes",
+        "pre_vision_history_timestamp_source",
+        "history_actor_source"
+      ],
+      "properties": {
+        "receipt_role": { "const": "golden-v3-acceptance-receipt" },
+        "input_role_orders": {
+          "const": {
+            "four-candidate-v1": [
+              "golden-raw-output",
+              "golden-v3-promotion-authority",
+              "golden-v3-promotion-implementation",
+              "golden-v3-four-candidate-derivation-authority",
+              "golden-v3-four-candidate-generator",
+              "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-implementation",
+              "golden-v3-strict-audit-report",
+              "golden-v3-root-vision-authorization",
+              "blind-review-packet",
+              "independent-vision-review-a",
+              "independent-vision-review-b",
+              "golden-v3-acceptance-receipt"
+            ],
+            "balanced-phase-v2": [
+              "golden-raw-output",
+              "golden-v3-promotion-authority",
+              "golden-v3-promotion-implementation",
+              "golden-v3-balanced-phase-v2-authority",
+              "golden-v3-balanced-phase-v2-generator",
+              "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-implementation",
+              "golden-v3-strict-audit-report",
+              "golden-v3-root-vision-authorization",
+              "blind-review-packet",
+              "independent-vision-review-a",
+              "independent-vision-review-b",
+              "golden-v3-acceptance-receipt"
+            ],
+            "balanced-open-phase-v3": [
+              "golden-raw-output",
+              "golden-v3-promotion-authority",
+              "golden-v3-promotion-implementation",
+              "golden-v3-balanced-open-phase-v3-authority",
+              "golden-v3-balanced-open-phase-v3-generator",
+              "golden-v3-strict-audit-authority",
+              "golden-v3-strict-audit-implementation",
+              "golden-v3-strict-audit-report",
+              "golden-v3-root-vision-authorization",
+              "blind-review-packet",
+              "independent-vision-review-a",
+              "independent-vision-review-b",
+              "golden-v3-acceptance-receipt"
+            ]
+          }
+        },
+        "history_state_order": {
+          "const": ["planned", "inputs-ready", "generated", "automated-qa", "vision-qa", "accepted"]
+        },
+        "status": { "const": "accepted" },
+        "bounds": {
+          "const": { "west": 0, "south": 0, "east": 10000, "north": 10000 }
+        },
+        "zoom": { "const": { "min": 0, "max": 2, "native": 2 } },
+        "generation_by_contract": {
+          "const": {
+            "four-candidate-v1": {
+              "model": "sstory-k3-golden-v3-four-candidate-phase-v1",
+              "attempt": 1
+            },
+            "balanced-phase-v2": {
+              "model": "sstory-k3-golden-v3-balanced-independent-band-phase-v2",
+              "attempt": 1
+            },
+            "balanced-open-phase-v3": {
+              "model": "sstory-k3-golden-v3-balanced-open-independent-band-phase-v3",
+              "attempt": 1
+            }
+          }
+        },
+        "notes": {
+          "const": "Accepted only through the frozen candidate-blind Golden-v3 promotion authority."
+        },
+        "pre_vision_history_timestamp_source": {
+          "const": "blind-packet-created-at"
+        },
+        "history_actor_source": {
+          "const": "acceptance-receipt-authorized-by"
+        }
+      },
+      "additionalProperties": false
+    },
+    "receipt_contract": {
+      "type": "object",
+      "required": ["schema_version", "id", "status", "promotion_performed"],
+      "properties": {
+        "schema_version": { "const": "3.0.0" },
+        "id": { "const": "sstory-k3-golden-v3-acceptance-receipt-v3" },
+        "status": { "const": "accepted" },
+        "promotion_performed": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "failure_policy": {
+      "type": "object",
+      "required": [
+        "missing_or_malformed_input",
+        "binding_change",
+        "partial_v3_manifest_evidence",
+        "mixed_v2_v3_manifest_evidence",
+        "existing_output",
+        "candidate_gate_failure",
+        "manifest_writer_model",
+        "noncooperative_namespace_race",
+        "noncooperative_guarantee",
+        "windows_backup_namespace",
+        "created_path_cleanup"
+      ],
+      "properties": {
+        "missing_or_malformed_input": { "const": "fail-closed-before-write" },
+        "binding_change": { "const": "fail-closed-before-manifest-commit" },
+        "partial_v3_manifest_evidence": { "const": "reject-without-legacy-fallback" },
+        "mixed_v2_v3_manifest_evidence": { "const": "reject-without-dispatch" },
+        "existing_output": { "const": "refuse-without-overwrite" },
+        "candidate_gate_failure": { "const": "reject-without-promotion" },
+        "manifest_writer_model": {
+          "const": "single-cooperative-writer-respecting-fixed-exclusive-lock"
+        },
+        "noncooperative_namespace_race": {
+          "const": "atomic-retention-plus-unknown-manual-reconciliation"
+        },
+        "noncooperative_guarantee": {
+          "const": "manifest-target-bytes-atomically-retained-no-silent-success-not-conditional-inode-overwrite-prevention"
+        },
+        "windows_backup_namespace": {
+          "const": "exclusive-unpredictable-reservation; post-close-noncooperative-backup-basename-replacement-excluded"
+        },
+        "created_path_cleanup": {
+          "const": "retain-by-name-debris-never-unlink-when-ownership-ambiguous"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?![A-Za-z]:/)(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "self_hashed_implementation": {
+      "type": "object",
+      "required": ["path", "canonical_self_sha256", "hash_mode"],
+      "properties": {
+        "path": {
+          "const": "scripts/map-production/promote_style_candidate_k3_golden_v3.py"
+        },
+        "canonical_self_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "hash_mode": {
+          "const": "sha256-zero-expected-authority-and-self-hashes-v1"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

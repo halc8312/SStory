@@ -1,0 +1,365 @@
+{
+  "$schema": "https://sstory.example/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
+  "schema_version": "3.0.0",
+  "id": "sstory-k3-golden-v3-candidate-blind-promotion-authority-v3",
+  "status": "frozen-before-active-contract-candidate-evaluation",
+  "freeze_scope": {
+    "active_generation_contract_id": "balanced-open-phase-v3",
+    "candidate_evaluations_before_freeze": 0,
+    "candidate_images_read_before_freeze": 0,
+    "audit_results_read_before_freeze": 0,
+    "threshold_selection_from_candidate_values": false,
+    "legacy_contract_status": {
+      "four-candidate-v1": "evaluated-and-rejected-before-this-revision; compatibility-only",
+      "balanced-phase-v2": "evaluated-and-rejected-before-this-revision; compatibility-only"
+    }
+  },
+  "promotion_performed": false,
+  "runtime_bindings": {
+    "candidate": null,
+    "generation_seals": null,
+    "strict_audit_report": null,
+    "root_review": null,
+    "blind_packet": null,
+    "blind_reviews": null,
+    "acceptance_receipt": null
+  },
+  "promotion_implementation": {
+    "path": "scripts/map-production/promote_style_candidate_k3_golden_v3.py",
+    "canonical_self_sha256": "391d1d28ce22df76200e8d8cba88b646fbb8bfa829507f9fb4e5925bd711d9c3",
+    "hash_mode": "sha256-zero-expected-authority-and-self-hashes-v1"
+  },
+  "authorities": {
+    "strict_audit": {
+      "path": "world/map-production/spec/style-candidate-k3-golden-v3-strict-audit-authority.json",
+      "sha256": "c27b41e6336974c5ce5fe11c86cefc67ed35851650680c33379c3510444884d7"
+    },
+    "strict_audit_implementation": {
+      "path": "scripts/map-production/audit_style_candidate_k3_golden_v3.py",
+      "sha256": "b039b970d8a7140a7326942c139a7d2e0420736e3b48fe4162364736313abb5a"
+    },
+    "four_candidate_derivation": {
+      "path": "world/map-production/spec/style-candidate-k3-golden-v3-four-candidate-derivation-preregistration-v1.json",
+      "sha256": "b1e5550ea73189540dae5469ee16521df8b5e3a39b689a349882e811d0ed44ac"
+    },
+    "four_candidate_generator": {
+      "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_four_candidate_phase_v1.py",
+      "sha256": "5a38aece70641c8bda224e076ed41bdd09de0ad9421590cb7aae729936e63b76"
+    },
+    "balanced_phase_v2": {
+      "path": "world/map-production/spec/style-candidate-k3-golden-v3-balanced-phase-preregistration-v2.json",
+      "sha256": "f108d6e8c66d9e64723e53b881b6931131573f260e6bf43c96a9efafd5eabe80"
+    },
+    "balanced_phase_v2_generator": {
+      "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_balanced_phase_v2.py",
+      "sha256": "da33c03ac0724086803b500b8f13ad6edf09898f6489870197738b86e3587981"
+    },
+    "balanced_open_phase_v3": {
+      "path": "world/map-production/spec/style-candidate-k3-golden-v3-balanced-open-phase-preregistration-v3.json",
+      "sha256": "3c914b573a2415a06dff195f0b4f155082b15667d12409dd9195ead67c2e05a9"
+    },
+    "balanced_open_phase_v3_generator": {
+      "path": "scripts/map-production/generate_style_candidate_k3_golden_v3_balanced_open_phase_v3.py",
+      "sha256": "ca09af2760c3d0acb958e0e6e7afa92f010aef2593eda2e712c3a8f4e0e76b52"
+    }
+  },
+  "bound_schemas": {
+    "authority": {
+      "path": "world/map-production/schemas/style-candidate-k3-golden-v3-promotion-authority.schema.json",
+      "sha256": "0620ab8afb092dfe1d3b3ace5c977d66eb85a3761b50bb0eb8e615e27ab6b2e2"
+    },
+    "acceptance_receipt": {
+      "path": "world/map-production/schemas/style-candidate-k3-golden-v3-acceptance-receipt.schema.json",
+      "sha256": "f8a35fce65389320809a2d03f78c10ffae9085c2e317e4d0b2d24ef7c7f802f1"
+    },
+    "qa_report": {
+      "path": "world/map-production/schemas/qa-report.schema.json",
+      "sha256": "e31b505baae56dfa8ac1b4995e9355620e516b87f81544a08b83ff0ebb0f32db"
+    },
+    "production_manifest": {
+      "path": "world/map-production/schemas/production-manifest.schema.json",
+      "sha256": "809dd5b4b379c955cbcfdfc7f87c7aa55067043d07a22bb4340ddde03cd98240"
+    }
+  },
+  "identity": {
+    "job_id": "style-candidate-k-v3-golden-v3",
+    "sheet_id": "style-candidate-k",
+    "canvas_width": 1536,
+    "canvas_height": 1024,
+    "color_profile": "untagged RGB"
+  },
+  "output_contract": {
+    "raw_root": "world/map-production/candidates",
+    "master_root": "world/map-production/candidates",
+    "receipt_root": "world/map-production/prompts",
+    "exclusive_create": true,
+    "overwrite_allowed": false
+  },
+  "generation_contract": {
+    "candidate_count": 4,
+    "generation_seal_count": 2,
+    "discriminator_field": "generation_contract_id",
+    "mixed_generation_evidence": "reject-without-fallback",
+    "distinct_runtime_profiles": true,
+    "candidate_must_match_both_seals": true,
+    "runtime_candidate_argument_path_persisted": false,
+    "seal_payloads_embedded_in_receipt": true,
+    "seal_source_paths_persisted": false,
+    "embedded_seal_candidate_paths": "preregistered-output-paths-only",
+    "contracts": {
+      "four-candidate-v1": {
+        "manifest_authority_role": "golden-v3-four-candidate-derivation-authority",
+        "manifest_generator_role": "golden-v3-four-candidate-generator",
+        "seal_schema_id": "sstory.k3.golden-v3.four-candidate-output-seal.v1",
+        "runtime_attestation": "runtime-profile-id-string",
+        "required_runtime_profile_ids": null,
+        "generation_seal_count": 2,
+        "candidate_ids": ["F094-M148", "F094-M155", "F097-M148", "F097-M155"],
+        "output_paths": [
+          "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M148.png",
+          "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F094-M155.png",
+          "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M148.png",
+          "tmp/map-production/k3-golden-v3-preregistered-four/style-candidate-k-v3-golden-v3-F097-M155.png"
+        ]
+      },
+      "balanced-phase-v2": {
+        "manifest_authority_role": "golden-v3-balanced-phase-v2-authority",
+        "manifest_generator_role": "golden-v3-balanced-phase-v2-generator",
+        "seal_schema_id": "sstory.k3.golden-v3.balanced-phase-v2-output-seal.v1",
+        "runtime_attestation": "structured-exact-common-and-profile",
+        "required_runtime_profile_ids": [
+          "windows-local-opencv-python-4.13.0.92",
+          "linux-ci-opencv-python-headless-4.13.0.92"
+        ],
+        "generation_seal_count": 2,
+        "candidate_ids": ["B125-M400", "B125-M450", "B150-M400", "B150-M450"],
+        "output_paths": [
+          "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M400.png",
+          "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B125-M450.png",
+          "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M400.png",
+          "tmp/map-production/k3-golden-v3-balanced-phase-v2/style-candidate-k-v3-golden-v3-B150-M450.png"
+        ]
+      },
+      "balanced-open-phase-v3": {
+        "manifest_authority_role": "golden-v3-balanced-open-phase-v3-authority",
+        "manifest_generator_role": "golden-v3-balanced-open-phase-v3-generator",
+        "seal_schema_id": "sstory.k3.golden-v3.balanced-open-phase-v3-output-seal.v1",
+        "runtime_attestation": "structured-exact-common-and-profile",
+        "required_runtime_profile_ids": [
+          "windows-local-opencv-python-4.13.0.92",
+          "linux-ci-opencv-python-headless-4.13.0.92"
+        ],
+        "generation_seal_count": 2,
+        "candidate_ids": ["E150-M500", "E150-M550", "E200-M500", "E200-M550"],
+        "output_paths": [
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E150-M500.png",
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E150-M550.png",
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E200-M500.png",
+          "tmp/map-production/k3-golden-v3-balanced-open-phase-v3/style-candidate-k-v3-golden-v3-E200-M550.png"
+        ]
+      }
+    }
+  },
+  "strict_audit_contract": {
+    "report_schema_version": "1.0.0",
+    "report_id": "style-candidate-k-v3-golden-v3-strict-independent-pixel-audit",
+    "algorithm": "sstory-k3-golden-v3-strict-independent-pixel-audit-v1",
+    "passed": true,
+    "failed_gates": [],
+    "promotion_or_golden_designation_performed": false,
+    "canonical_report_bytes": true,
+    "recompute_before_promotion": true,
+    "recompute_during_phase5_verification": true,
+    "implementation_dependency_closure": {
+      "audit_module": "authorities.strict_audit_implementation",
+      "authority": "authorities.strict_audit",
+      "authority_bound_source_records": [
+        "alpha_zero_derivation",
+        "v2_metric_value_source",
+        "strict_core_binding"
+      ],
+      "authority_bound_runtime_records": [
+        "dependency_lock",
+        "ci_workflow",
+        "synthetic_golden_vector_test"
+      ],
+      "validation_timing": "audit-and-transitive-source-sha-before-exec; runtime-artifact-sha-before-metric-use"
+    }
+  },
+  "review_contract": {
+    "root_review_count": 1,
+    "root_role": "golden-v3-root-vision-authorization",
+    "blind_review_count": 2,
+    "acceptance_threshold": 94,
+    "blind_role_order": [
+      "independent-vision-review-a",
+      "independent-vision-review-b"
+    ],
+    "identity_normalization": "unicode-nfkc-whitespace-collapse-casefold",
+    "reviewer_identity_format": "<manifest-role>/<identity>",
+    "all_reviewer_identities_distinct": true,
+    "blind_review_mode": "blind-independent",
+    "review_target": "promoted-master-attestation-backed-by-anonymous-packet",
+    "packet_contract": {
+      "schema_version": "1.0.0",
+      "id": "sstory-k3-golden-v3-anonymous-five-view-packet-v1",
+      "canonical_json": "utf-8-indent-2-ensure-ascii-false-allow-nan-false-trailing-lf",
+      "review_reports_bind_packet_path_and_sha256": true,
+      "reviewer_confirmed_exact_five": true,
+      "unique_view_paths": true,
+      "unique_view_payload_sha256": true
+    },
+    "view_derivation": {
+      "source": "promoted-master-rgb-pixels",
+      "decoder": "strict-v3-candidate-png-contract",
+      "mode": "RGB",
+      "resampling": "Pillow.Image.Resampling.LANCZOS",
+      "views": [
+        { "id": "native", "crop": null, "size": [1536, 1024] },
+        { "id": "full25", "crop": null, "size": [384, 256] },
+        { "id": "full50", "crop": null, "size": [768, 512] },
+        { "id": "highland200", "crop": [930, 0, 1536, 560], "size": [1212, 1120] },
+        { "id": "highland400", "crop": [930, 0, 1536, 560], "size": [2424, 2240] }
+      ]
+    },
+    "exact_five_view_ids": [
+      "native",
+      "full25",
+      "full50",
+      "highland200",
+      "highland400"
+    ],
+    "review_view_ids": [
+      "native",
+      "full25",
+      "full50",
+      "highland200",
+      "highland400",
+      "control-overlay",
+      "parent-zoom",
+      "neighbor-seams",
+      "desktop",
+      "mobile"
+    ],
+    "immediate_failure_ids": [
+      "eight-system-topology",
+      "side-view-or-shared-projection",
+      "panel-seam-or-body-halo",
+      "white-particle-pill-hole-or-crater",
+      "root-river-vein-fingerprint-or-contour",
+      "fern-fishbone-dash-bundle-or-repetition",
+      "no-200-to-400-information-gain",
+      "protected-geometry-difference"
+    ],
+    "score_axes": [
+      { "id": "canon_geometry", "maximum": 25 },
+      { "id": "parent_continuity", "maximum": 15 },
+      { "id": "seam_continuity", "maximum": 15 },
+      { "id": "style_consistency", "maximum": 15 },
+      { "id": "detail_density", "maximum": 10 },
+      { "id": "artifact_integrity", "maximum": 10 },
+      { "id": "vector_readability", "maximum": 10 }
+    ],
+    "score_axis_count": 7,
+    "score_maximum_total": 100,
+    "reviews_after_root": true,
+    "acceptance_not_before_reviews": true
+  },
+  "manifest_contract": {
+    "receipt_role": "golden-v3-acceptance-receipt",
+    "input_role_orders": {
+      "four-candidate-v1": [
+        "golden-raw-output",
+        "golden-v3-promotion-authority",
+        "golden-v3-promotion-implementation",
+        "golden-v3-four-candidate-derivation-authority",
+        "golden-v3-four-candidate-generator",
+        "golden-v3-strict-audit-authority",
+        "golden-v3-strict-audit-implementation",
+        "golden-v3-strict-audit-report",
+        "golden-v3-root-vision-authorization",
+        "blind-review-packet",
+        "independent-vision-review-a",
+        "independent-vision-review-b",
+        "golden-v3-acceptance-receipt"
+      ],
+      "balanced-phase-v2": [
+        "golden-raw-output",
+        "golden-v3-promotion-authority",
+        "golden-v3-promotion-implementation",
+        "golden-v3-balanced-phase-v2-authority",
+        "golden-v3-balanced-phase-v2-generator",
+        "golden-v3-strict-audit-authority",
+        "golden-v3-strict-audit-implementation",
+        "golden-v3-strict-audit-report",
+        "golden-v3-root-vision-authorization",
+        "blind-review-packet",
+        "independent-vision-review-a",
+        "independent-vision-review-b",
+        "golden-v3-acceptance-receipt"
+      ],
+      "balanced-open-phase-v3": [
+        "golden-raw-output",
+        "golden-v3-promotion-authority",
+        "golden-v3-promotion-implementation",
+        "golden-v3-balanced-open-phase-v3-authority",
+        "golden-v3-balanced-open-phase-v3-generator",
+        "golden-v3-strict-audit-authority",
+        "golden-v3-strict-audit-implementation",
+        "golden-v3-strict-audit-report",
+        "golden-v3-root-vision-authorization",
+        "blind-review-packet",
+        "independent-vision-review-a",
+        "independent-vision-review-b",
+        "golden-v3-acceptance-receipt"
+      ]
+    },
+    "history_state_order": [
+      "planned",
+      "inputs-ready",
+      "generated",
+      "automated-qa",
+      "vision-qa",
+      "accepted"
+    ],
+    "status": "accepted",
+    "bounds": { "west": 0, "south": 0, "east": 10000, "north": 10000 },
+    "zoom": { "min": 0, "max": 2, "native": 2 },
+    "generation_by_contract": {
+      "four-candidate-v1": {
+        "model": "sstory-k3-golden-v3-four-candidate-phase-v1",
+        "attempt": 1
+      },
+      "balanced-phase-v2": {
+        "model": "sstory-k3-golden-v3-balanced-independent-band-phase-v2",
+        "attempt": 1
+      },
+      "balanced-open-phase-v3": {
+        "model": "sstory-k3-golden-v3-balanced-open-independent-band-phase-v3",
+        "attempt": 1
+      }
+    },
+    "notes": "Accepted only through the frozen candidate-blind Golden-v3 promotion authority.",
+    "pre_vision_history_timestamp_source": "blind-packet-created-at",
+    "history_actor_source": "acceptance-receipt-authorized-by"
+  },
+  "receipt_contract": {
+    "schema_version": "3.0.0",
+    "id": "sstory-k3-golden-v3-acceptance-receipt-v3",
+    "status": "accepted",
+    "promotion_performed": true
+  },
+  "failure_policy": {
+    "missing_or_malformed_input": "fail-closed-before-write",
+    "binding_change": "fail-closed-before-manifest-commit",
+    "partial_v3_manifest_evidence": "reject-without-legacy-fallback",
+    "mixed_v2_v3_manifest_evidence": "reject-without-dispatch",
+    "existing_output": "refuse-without-overwrite",
+    "candidate_gate_failure": "reject-without-promotion",
+    "manifest_writer_model": "single-cooperative-writer-respecting-fixed-exclusive-lock",
+    "noncooperative_namespace_race": "atomic-retention-plus-unknown-manual-reconciliation",
+    "noncooperative_guarantee": "manifest-target-bytes-atomically-retained-no-silent-success-not-conditional-inode-overwrite-prevention",
+    "windows_backup_namespace": "exclusive-unpredictable-reservation; post-close-noncooperative-backup-basename-replacement-excluded",
+    "created_path_cleanup": "retain-by-name-debris-never-unlink-when-ownership-ambiguous"
+  }
+}
