@@ -305,3 +305,37 @@ Do not stage as production-ready authority:
 
 No promotion, acceptance, blind-review approval, or Golden designation is
 recorded by this status file.
+
+## Balanced-open phase-v3 terminal derivation failure
+
+The balanced-open phase-v3 emit gate was cleared by exact green Windows and
+Ubuntu CI for preregistration PR #154 at
+`ddb23055486683f031c72ab32cc71ac22f597e00` and promotion PR #155 at
+`f76e4dc89734af68409da7eacb45b851c872f994`. The fixed emit then ran exactly
+once on Windows and exactly once on Linux. Both executions exited 2 with the
+same normalized error line:
+
+`Balanced-open-phase-v3 derivation failed closed: construction lag certificate has too few lags for a support`
+
+The line's SHA-256 is
+`e6548a0eee30577b3aede8854da514c4f29923751e3731f4784cc74ccc96745e`.
+
+Neither platform left the output directory, staging directory, or output
+seal: the published candidate-file count is zero, while the number of
+in-memory candidates reached before failure is unknown. No profile-seal
+comparison, strict audit, PNG opening, visual review, promotion, acceptance,
+or Golden designation followed. The observed condition is
+`support_eligible < minimum_eligible_lags_per_support` in `lag_certificate`,
+whose frozen minimum is 4. The line does not identify the failing candidate,
+body, construction stage, support erosion, or eligible-record count, so those
+fields remain explicitly unresolved and must not be inferred.
+
+This balanced-open phase-v3 is closed: retry, authority mutation, and tuning
+under its identity are forbidden. Any successor must use a new identity, a
+candidate-blind frozen preregistration, and exact cross-platform CI before
+emit.
+
+The canonical closed receipt is
+`world/map-production/qa/style-candidate-k3-golden-v3-balanced-open-phase-v3-derivation-failure.json`
+with raw SHA-256
+`fff5e6a1e0b059a2deb98ec5dd206b326b53c576e7fc6bcdbaca671c387627ca`.
